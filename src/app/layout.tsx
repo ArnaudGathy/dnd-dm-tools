@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { NavBar } from "@/components/navbar/NavBar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -13,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Dungeons & Dragons - Dungeon Master tools",
+  title: "D&D - Dungeon Master tools",
   description: "A toolkit for DnD DMs",
 };
 
@@ -25,9 +26,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased`}
       >
-        {children}
+        <NavBar />
+        <main className="mx-auto max-w-[1450px] p-4">{children}</main>
       </body>
     </html>
   );

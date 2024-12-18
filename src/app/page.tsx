@@ -1,3 +1,5 @@
+import Encounters from "@/app/encounters/page";
+
 export default function Home() {
-  return <div>Hello world ! </div>;
+  return <Encounters />;
 }

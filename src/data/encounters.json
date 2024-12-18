@@ -1,0 +1,184 @@
+[
+  {
+    "id": 1,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Marins noyés",
+    "location": {
+      "name": "Repos du dragon",
+      "mapMarker": "A0"
+    },
+    "ennemies": {
+      "1": [2, 2, 2],
+      "2": [2, 2, 2]
+    },
+    "informations": [
+      "Les zombis se dirigent vers les personnages (4 cases / tour) + Foncer",
+      "Attaque de corps à corps normale",
+      "Si les personnages fuient, ils ne suivent pas",
+      "Informer les joueurs sur l’effet 'robustesse de la non vie' du genre 'le zombi aurait dû mourir' ou 'il crie de souffrance'. Comprendre = INT DD10"
+    ]
+  },
+  {
+    "id": 2,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Tunnel d'entrée",
+    "location": {
+      "name": "Grotte de Poussemer",
+      "mapMarker": "B1"
+    },
+    "ennemies": {
+      "1": [1],
+      "2": [1, 4, 4]
+    },
+    "informations": [
+      "Taille G : 2x2 cases",
+      "Attaque de portée 3 cases",
+      "Mouvement lent hors de l'eau : 1 case / tour"
+    ]
+  },
+  {
+    "id": 3,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Champignonnière",
+    "location": {
+      "name": "Grotte de Poussemer",
+      "mapMarker": "B2"
+    },
+    "ennemies": {
+      "1": [3, 3, 3],
+      "2": [3, 3, 3, 3, 3]
+    },
+    "informations": [
+      "Attaque par surprise (faux semblant)",
+      "Attaque multiples",
+      "Déplacement lent : 1 case par tour",
+      "Jouer sur l’effet de surprise et attaques espacées"
+    ],
+    "loot": [
+      "Nature ou survie DD12 pour trouver 1d6 champignons tête de coeur (durée 15 min)"
+    ]
+  },
+  {
+    "id": 4,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Garde-manger",
+    "location": {
+      "name": "Grotte de Poussemer",
+      "mapMarker": "B3"
+    },
+    "ennemies": {
+      "1": [4, 4, 4, 4, 4, 4],
+      "2": [4, 4, 4, 4, 4, 4, 4, 4]
+    },
+    "informations": [
+      "Identifier le nid : Nature DD15",
+      "S’accroche (T1) et suce le sang (T2)"
+    ]
+  },
+  {
+    "id": 5,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "La grotte au Cristal - partie 1",
+    "location": {
+      "name": "Grotte de Poussemer",
+      "mapMarker": "B6"
+    },
+    "ennemies": {
+      "1": [6, 6],
+      "2": [6, 6, 6]
+    },
+    "informations": [
+      "Explose à la mort",
+      "Attaque souffle de feu en cône",
+      "Plusieurs immunités"
+    ]
+  },
+  {
+    "id": 6,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "La grotte au Cristal - partie 2",
+    "location": {
+      "name": "Grotte de Poussemer",
+      "mapMarker": "B6"
+    },
+    "ennemies": {
+      "1": [5],
+      "2": [5, 6, 6]
+    },
+    "informations": [
+      "résistant contondant, tranchant et perforant, vulnérable froid, immunisé feu",
+      "Brûle lorsque touché par une attaque au corps a corps",
+      "Attaques multiples - queue + morsure"
+    ],
+    "loots": ["25x morceaux d’obsidienne de 10po chacun"]
+  },
+  {
+    "id": 7,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Pont principal - Harpie",
+    "location": {
+      "name": "Epave de la rose des vents",
+      "mapMarker": "C1"
+    },
+    "ennemies": {
+      "1": [8],
+      "2": [8, 8]
+    },
+    "informations": [
+      "Combat activé après long repos ou après avoir looté le coffre du capitaine",
+      "Peut être raisonné (elle leur parle)",
+      "Le harpie lance direct chant captivant sur un joueur qui se déplace vers elle",
+      "JdS SAG DD11, réitère chaque tour, terrain difficile ou frappé par allié",
+      "Double attaque : Griffe et gourdin",
+      "Part si : Convaincue (Persuasion DD18), PV -50%, rendre son butin (si déjà looté), les faire se retourner contre la 2eme harpie"
+    ],
+    "loots": [
+      "Bracelet en or de 25po",
+      "Anneau d’oreille en or de 25po",
+      "2x oeil de tigre de 10po chacune",
+      "Héliotrope de 25po"
+    ]
+  },
+  {
+    "id": 8,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Pont principal - Zombies",
+    "location": {
+      "name": "Epave de la rose des vents",
+      "mapMarker": "C4"
+    },
+    "ennemies": {
+      "1": [2, 2],
+      "2": [2, 2, 2, 2]
+    },
+    "informations": [
+      "Zombis alertés et prêts si : La barre est tombée, la porte a du être enfoncée plusieurs fois",
+      "Trou du coffre vers la cale !"
+    ],
+    "loots": [
+      "Bourse de 50po",
+      "Outils de cartographe",
+      "Une dague",
+      "Boussole de 25po"
+    ]
+  },
+  {
+    "id": 9,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Pont inférieur",
+    "location": {
+      "name": "Epave de la rose des vents",
+      "mapMarker": "C8"
+    },
+    "ennemies": {
+      "1": [7, 2],
+      "2": [7, 2, 2, 2]
+    },
+    "informations": [
+      "Goule attaque au 2ème tour",
+      "Griffe = CON DD10 pour Paralysé (sauf elfe), rejoue chaque tour",
+      "Trou du coffre vers la cale !"
+    ],
+    "loots": ["Voir table de loot page 25"]
+  }
+]

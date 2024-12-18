@@ -1,0 +1,383 @@
+[
+  {
+    "name": "Pieuvre Serviteur des Spores",
+    "id": 1,
+    "type": "Plante",
+    "size": "G",
+    "alignment": "Non alignée",
+    "armorClass": 11,
+    "hitPoints": "52 (8d10 + 8)",
+    "speed": {
+      "walk": "1.5 m",
+      "swim": "15 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 13,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 6,
+      "charisma": 1
+    },
+    "immunities": ["Aveuglé", "Charmé", "Effrayé", "Paralysé"],
+    "senses": {
+      "blindSight": "9 m",
+      "passivePerception": 8
+    },
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Tentacules",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "4.5 m",
+        "target": "1 cible",
+        "hit": "7 (1d8 + 3) dégâts contondants"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Apnée",
+        "description": "La pieuvre peut retenir son souffle hors de l'eau pendant 1 heure."
+      },
+      {
+        "name": "Respiration aquatique",
+        "description": "La pieuvre ne peut respirer que sous l'eau."
+      }
+    ]
+  },
+  {
+    "name": "Zombi",
+    "id": 2,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 8,
+    "hitPoints": "22 (3d8 + 9)",
+    "speed": {
+      "walk": "6 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 6,
+      "constitution": 16,
+      "intelligence": 3,
+      "wisdom": 6,
+      "charisma": 5
+    },
+    "savingThrows": {
+      "wisdom": "+0"
+    },
+    "immunities": ["Dégâts de poison", "État empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 8
+    },
+    "languages": ["Langues connues de son vivant, ne parle pas"],
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Coup",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d6 + 1) dégâts contondants"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Robustesse de la non-vie",
+        "description": "Si les dégâts réduisent le zombi à 0 PV, il doit faire un jet de sauvegarde de Constitution DD 5 + dégâts subis. En cas de succès, il tombe à 1 PV. Sauf en cas de dégats radiants ou de coup critique."
+      }
+    ]
+  },
+  {
+    "name": "Thallophyte Violette",
+    "id": 3,
+    "type": "Plante",
+    "size": "M",
+    "alignment": "Non alignée",
+    "armorClass": 5,
+    "hitPoints": "18 (4d8)",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 3,
+      "dexterity": 1,
+      "constitution": 10,
+      "intelligence": 0,
+      "wisdom": 3,
+      "charisma": 1
+    },
+    "immunities": ["Assourdi", "Aveuglé", "Effrayé"],
+    "senses": {
+      "blindSight": "9 m",
+      "passivePerception": 6
+    },
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "La thallophyte effectue 1d4 attaques de Contact putréfiant."
+      },
+      {
+        "name": "Contact putréfiant",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d8) dégâts nécrotiques"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Faux-semblant",
+        "description": "Si elle reste immobile, elle a avantage sur son jet d'initiative. Un test d'Investigation DD 18 est nécessaire pour la détecter."
+      }
+    ]
+  },
+  {
+    "name": "Stirge",
+    "id": 4,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Non alignée",
+    "armorClass": 14,
+    "hitPoints": "2 (1d4)",
+    "speed": {
+      "walk": "3 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 4,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 8,
+      "charisma": 6
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Suction du sang",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d4+3) dégâts perforants, la stirge se fixe et inflige 5 (1d4+3) PV au début du tour de la cible."
+      }
+    ]
+  },
+  {
+    "name": "Serpent de Feu",
+    "id": 5,
+    "type": "Élémentaire",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 14,
+    "hitPoints": "22 (5d8)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 14,
+      "constitution": 11,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "vulnerabilities": ["Froid"],
+    "resistances": ["Contondants", "Perforants", "Tranchants (non magiques)"],
+    "immunities": ["Feu"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Igné (ne parle pas)"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le serpent effectue une attaque de Morsure et de Queue."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "3 (1d4 + 1) dégâts perforants + 3 (1d6) dégâts de feu"
+      },
+      {
+        "name": "Queue",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "3 (1d4 + 1) dégâts contondants + 3 (1d6) dégâts de feu"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Corps brûlant",
+        "description": "Une créature en contact avec le serpent subit 3 (1d6) dégâts de feu."
+      }
+    ]
+  },
+  {
+    "name": "Guivre-Follette",
+    "id": 6,
+    "type": "Élémentaire",
+    "size": "P",
+    "alignment": "Généralement Neutre",
+    "armorClass": 12,
+    "hitPoints": "22 (5d6 + 5)",
+    "speed": {
+      "walk": "9 m",
+      "fly": "9 m"
+    },
+    "abilities": {
+      "strength": 6,
+      "dexterity": 14,
+      "constitution": 12,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 11
+    },
+    "immunities": ["Feu", "Poison", "Empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Draconique", "Igné"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Déflagration funèbre",
+        "description": "Lorsqu’une guivre-follette meurt, elle explose dans un nuage de vapeurs toxiques. Chaque créature dans un rayon de 1,5 m de la guivre-follette doit réussir un jet de sauvegarde de Constitution DD 11 sous peine de subir 4 (1d8) dégâts de poison."
+      },
+      {
+        "name": "Être singulier",
+        "description": "La guivre-follette peut se passer de nourriture, de boisson et de sommeil."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d4 + 2) dégâts de feu"
+      },
+      {
+        "name": "Souffle bouillant (Recharge 6)",
+        "description": "La guivre-follette exhale de la vapeur brûlante sous forme de cône de 4,5 m. Chaque créature prise dans le cône doit réussir un jet de sauvegarde de Dextérité DD 11 et subit 4 (1d8) dégâts de feu en cas d’échec, la moitié en cas de réussite."
+      }
+    ]
+  },
+  {
+    "name": "Goule",
+    "id": 7,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Généralement Chaotique Mauvais",
+    "armorClass": 12,
+    "hitPoints": "22 (5d8)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 15,
+      "constitution": 10,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 6
+    },
+    "immunities": ["Poison", "Charmé", "Empoisonné", "Épuisement"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Griffe",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (2d4 + 2) dégâts tranchants. Si la cible est une créature autre qu’un Mort-vivant, elle doit réussir un jet de sauvegarde de Constitution DD 10 sous peine d’être paralysée pendant 1 minute. La cible peut refaire le jet de sauvegarde à la fin de chacun de ses tours."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "9 (2d6 + 2) dégâts perforants"
+      }
+    ]
+  },
+  {
+    "name": "Harpie",
+    "id": 8,
+    "type": "Créature monstrueuse",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 11,
+    "hitPoints": "38 (7d8 + 7)",
+    "speed": {
+      "walk": "6 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 13,
+      "constitution": 12,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 13
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "languages": ["Commun"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "La harpie effectue deux attaques : une avec ses griffes et une avec son gourdin."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "6 (2d4 + 1) dégâts tranchants"
+      },
+      {
+        "name": "Gourdin",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "3 (1d4 + 1) dégâts contondants"
+      },
+      {
+        "name": "Chant captivant",
+        "description": "La harpie chante une mélodie magique. Les humanoïdes et géants situés à 90 m ou moins et qui entendent le chant doivent réussir un jet de sauvegarde de Sagesse DD 11 sous peine d’être charmés jusqu’à la fin du chant. 1 cible charmée doit se déplacer vers la harpie par le chemin le plus court. Elle peut retenter un jet de sauvegarde à la fin de chacun de ses tours. 1 cible qui réussit est immunisée contre ce chant pendant 24 heures."
+      }
+    ]
+  }
+]
