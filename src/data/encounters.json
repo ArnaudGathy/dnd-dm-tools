@@ -149,7 +149,7 @@
     },
     "ennemies": {
       "1": [2, 2],
-      "2": [2, 2, 2, 2]
+      "2": [2, 2, 2]
     },
     "informations": [
       "Zombis alertés et prêts si : La barre est tombée, la porte a du être enfoncée plusieurs fois",
