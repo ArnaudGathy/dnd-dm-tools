@@ -29,36 +29,38 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <StatBlock creature={creature} isCollapsible={false} />
       </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Rencontré dans :</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ul>
-            {entries(encounteredIn).map(([location, encounters]) => (
-              <li key={location}>
-                {location}
-                <ul className="ml-6">
-                  {entries(encounters).map(([encounter, encounters]) => (
-                    <li key={encounter}>
-                      {encounter}
-                      <ul className="ml-6">
-                        {encounters.map((encounter) => (
-                          <li key={encounter.id}>
-                            <Link href={`/encounters/${encounter.id}`}>
-                              {encounter.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    </li>
-                  ))}
-                </ul>
-              </li>
-            ))}
-          </ul>
-        </CardContent>
-      </Card>
+      {!!Object.keys(encounteredIn).length && (
+        <Card>
+          <CardHeader>
+            <CardTitle>Rencontré dans :</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul>
+              {entries(encounteredIn).map(([location, encounters]) => (
+                <li key={location}>
+                  {location}
+                  <ul className="ml-6">
+                    {entries(encounters).map(([encounter, encounters]) => (
+                      <li key={encounter}>
+                        {encounter}
+                        <ul className="ml-6">
+                          {encounters.map((encounter) => (
+                            <li key={encounter.id}>
+                              <Link href={`/encounters/${encounter.id}`}>
+                                {encounter.name}
+                              </Link>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    ))}
+                  </ul>
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      )}
     </div>
   );
 };

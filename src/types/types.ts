@@ -31,21 +31,40 @@ export type Encounter = {
     name: string;
     mapMarker: string;
   };
-  ennemies: {
+  ennemies: Partial<{
     [key: string]: number[];
-  };
+  }>;
   informations: string[];
   loots?: string[];
 };
 
-export enum Characteristics {
-  STR = "strength",
-  DEX = "dexterity",
-  CON = "constitution",
-  INT = "intelligence",
-  WIS = "wisdom",
-  CHA = "charisma",
-}
+export type Characteristics =
+  | "strength"
+  | "dexterity"
+  | "constitution"
+  | "intelligence"
+  | "wisdom"
+  | "charisma";
+
+export type Skills =
+  | "acrobatics"
+  | "animalHandling"
+  | "arcana"
+  | "athletics"
+  | "deception"
+  | "history"
+  | "insight"
+  | "intimidation"
+  | "investigation"
+  | "medicine"
+  | "nature"
+  | "perception"
+  | "performance"
+  | "persuasion"
+  | "religion"
+  | "sleightOfHand"
+  | "stealth"
+  | "survival";
 
 export type Creature = {
   name: string;
@@ -61,6 +80,7 @@ export type Creature = {
     fly?: string;
   };
   abilities: Record<Characteristics, number>;
+  skills?: Partial<Record<Skills, string>>;
   immunities?: string[];
   vulnerabilities?: string[];
   resistances?: string[];

@@ -16,6 +16,8 @@ import {
   translatedSenses,
   getHPAsString,
   getChallengeRatingAsFraction,
+  translateSkill,
+  replaceMetersWithSquares,
 } from "@/utils/utils";
 import { entries } from "remeda";
 import { ReactNode, useState } from "react";
@@ -155,6 +157,14 @@ export const StatBlock = ({
             </div>
 
             <div className="flex flex-col border-t-2 pt-4">
+              {creature.skills && (
+                <StatCell
+                  name="Compétences"
+                  stat={entries(creature.skills)
+                    .map((t) => `${translateSkill(t[0])} ${t[1]}`)
+                    .join(", ")}
+                />
+              )}
               {creature.savingThrows && (
                 <StatCell
                   name="Jets de sauvegarde"
@@ -252,7 +262,9 @@ export const StatBlock = ({
                     {action.reach && (
                       <span
                         className={clsx({ "text-primary": isUnCommonReach })}
-                      >{`${getDistanceInSquares(action.reach)} cases`}</span>
+                      >
+                        {replaceMetersWithSquares(action.reach)}
+                      </span>
                     )}
                     {action.target && (
                       <span

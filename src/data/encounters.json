@@ -8,8 +8,7 @@
       "mapMarker": "A0"
     },
     "ennemies": {
-      "1": [2, 2, 2],
-      "2": [2, 2, 2]
+      "1": [2, 2, 2]
     },
     "informations": [
       "Les zombis se dirigent vers les personnages (4 cases / tour) + Foncer",
@@ -179,6 +178,47 @@
       "Griffe = CON DD10 pour Paralysé (sauf elfe), rejoue chaque tour",
       "Trou du coffre vers la cale !"
     ],
-    "loots": ["Voir table de loot page 25"]
+    "loots": ["Fouiller les caisses : 1d6 loots, roll dans la table page 25"]
+  },
+  {
+    "id": 10,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Renégats Kobold",
+    "location": {
+      "name": "Exploration",
+      "mapMarker": "E0"
+    },
+    "ennemies": {
+      "1": [10, 11, 12, 12],
+      "2": [10, 10, 11, 11, 12, 12],
+      "3": [10, 10, 10, 11, 11, 11, 12, 12]
+    },
+    "informations": [
+      "Discrétion Kobold : D20 + 2 vs DD perception passive. Tout joueur en échec est surpris (passe son tour)",
+      "Peut discuter, abandonne le combat contre de l'or ou de la nourriture."
+    ],
+    "loots": [
+      "2 potions de guérison (2d4 + 2)",
+      "1 parchemin de détection de la magie (détecte la magie dans les 9m pendant 10min)"
+    ]
+  },
+  {
+    "id": 11,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Il court il court, le Hibours",
+    "location": {
+      "name": "Exploration",
+      "mapMarker": "E0"
+    },
+    "ennemies": {
+      "3": [9]
+    },
+    "informations": [
+      "Personnage au CaC remarque le sifflet autours du cou. 1 Action + FOR DD12 pour le voler. 1 action + Dressage DD12 pour siffler. En cas de réussite, le hibours se calme mais ne quitte pas la zone."
+    ],
+    "loots": [
+      "Anneau de communication animale (Permet de parler avec des animaux une fois par jour) - Doit être attuned !",
+      "1d6 Plumes impressionnantes, 10po chacune"
+    ]
   }
 ]

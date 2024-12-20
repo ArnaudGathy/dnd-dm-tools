@@ -8,8 +8,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import dynamic from "next/dynamic";
+import { typedEncounters } from "@/utils/utils";
+import { flat, unique } from "remeda";
 
 const PartyLevelSelect = () => {
+  const availableLevels = unique(
+    flat(typedEncounters.map((encounter) => Object.keys(encounter.ennemies))),
+  );
+
   return (
     <Select
       defaultValue={localStorage.getItem("partyLevel") || undefined}
@@ -22,7 +28,7 @@ const PartyLevelSelect = () => {
         <SelectValue placeholder="Lvl" />
       </SelectTrigger>
       <SelectContent>
-        {["1", "2"].map((level) => (
+        {availableLevels.map((level) => (
           <SelectItem key={level} value={level}>
             {level}
           </SelectItem>

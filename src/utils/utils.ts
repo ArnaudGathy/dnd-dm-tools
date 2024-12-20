@@ -5,6 +5,7 @@ import {
   Encounter,
   Participant,
   Party,
+  Skills,
 } from "@/types/types";
 import creatures from "@/data/creatures.json";
 import parties from "@/data/parties.json";
@@ -60,6 +61,30 @@ export const translatedSenses = (sense: keyof Creature["senses"]) => {
   return translations[sense];
 };
 
+export const translateSkill = (skill: Skills) => {
+  const translations = {
+    acrobatics: "Acrobatie",
+    animalHandling: "Dressage",
+    arcana: "Arcanes",
+    athletics: "Athlétisme",
+    deception: "Tromperie",
+    history: "Histoire",
+    insight: "Perception",
+    intimidation: "Intimidation",
+    investigation: "Investigation",
+    medicine: "Médecine",
+    nature: "Nature",
+    perception: "Perception",
+    performance: "Représentation",
+    persuasion: "Persuasion",
+    religion: "Religion",
+    sleightOfHand: "Escamotage",
+    stealth: "Discrétion",
+    survival: "Survie",
+  } satisfies Record<keyof Creature["skills"], string>;
+  return translations[skill];
+};
+
 export const shortenAbilityName = (ability: string) => {
   return ability
     .replace("strength", "FOR")
@@ -81,6 +106,17 @@ export const getDistanceInSquares = (distance: string) => {
   return parseFloat(distance.split(" m")[0]) / 1.5;
 };
 
+export const replaceMetersWithSquares = (input: string) => {
+  return input.replace(/\b\d+(\.\d+)?\b(?:\s*m)?/g, (match) => {
+    const number = parseFloat(match);
+    const replacedNumber = (number / 1.5).toString();
+    if (match.includes("m")) {
+      return replacedNumber + " cases";
+    }
+    return replacedNumber;
+  });
+};
+
 export const getModifier = (ability: number) => {
   return Math.floor((ability - 10) / 2);
 };
@@ -96,9 +132,7 @@ export const roll = (value: number) => {
 };
 
 export const getInitiative = (creature: Creature) => {
-  return (
-    roll(20) + getModifierFromCreature(creature, Characteristics.DEX)
-  ).toString();
+  return (roll(20) + getModifierFromCreature(creature, "dexterity")).toString();
 };
 
 export const getParticipantFromCharacters = () => {
@@ -133,6 +167,30 @@ export const getCreatureFromId = (creatureId: number) => {
   return typedCreatures.find((creature) => creature.id === creatureId);
 };
 
+const findClosestIndex = (partyLevels: string[], partylevel: string) => {
+  const target = parseFloat(partylevel);
+  return partyLevels.reduce((closestIndex, level, index) => {
+    const levelNumber = parseFloat(level);
+    const closestLevelNumber = parseFloat(partyLevels[closestIndex]);
+    return Math.abs(levelNumber - target) <
+      Math.abs(closestLevelNumber - target)
+      ? index
+      : closestIndex;
+  }, 0);
+};
+
+export const getEnnemiesFromEncounter = ({
+  encounter,
+  partyLevel,
+}: {
+  encounter: Encounter;
+  partyLevel: string;
+}) => {
+  const ennemiesList = encounter.ennemies;
+  const closestIndex = findClosestIndex(Object.keys(ennemiesList), partyLevel);
+  return Object.values(ennemiesList)[closestIndex] ?? [];
+};
+
 export const getCreaturesFromIds = (creatureIds: number[]) => {
   const creaturesList = creatureIds.reduce((acc: Creature[], id) => {
     const creature = typedCreatures.find((creature) => creature.id === id);
@@ -156,7 +214,7 @@ export const getParticipantFromEncounter = ({
   encounter: Encounter;
   partyLevel: string;
 }) => {
-  const ennemiesIds = encounter.ennemies[partyLevel];
+  const ennemiesIds = getEnnemiesFromEncounter({ encounter, partyLevel });
   const creaturesList = ennemiesIds.map((id) =>
     typedCreatures.find((creature) => creature.id === id),
   );
