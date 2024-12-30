@@ -19,12 +19,13 @@ export const typedEncounters: Encounter[] = encounters;
 export const typedParties: Party[] = parties;
 
 export const creatureColors = [
-  "#ad05b0",
-  "#4f4f4f",
-  "#704e13",
-  "#570303",
-  "#05330a",
   "#ffffff",
+  "#ff7f00",
+  "#7fff00",
+  "#00ffff",
+  "#ffd700",
+  "#653900",
+  "#ee82ee",
 ];
 
 export const groupEncounters = (encounters: Encounter[]) => {

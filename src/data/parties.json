@@ -4,29 +4,29 @@
     "name": "La Mifa",
     "characters": [
       {
-        "name": "Aarim",
+        "name": "Arim",
         "player": "Arcady",
-        "color": "#0b6e15"
+        "color": "#a30719"
       },
       {
         "name": "Baalian",
         "player": "Logan",
-        "color": "#a30719"
+        "color": "#4b0082"
       },
       {
         "name": "Cirbul",
         "player": "Anthony",
-        "color": "#ffffff"
+        "color": "#ff1493"
       },
       {
         "name": "Erevan",
         "player": "Loïc",
-        "color": "#ccb400"
+        "color": "#0b6e15"
       },
       {
         "name": "Pepnac",
         "player": "Mathias",
-        "color": "#071ea3"
+        "color": "#0000ff"
       }
     ]
   },
@@ -42,12 +42,12 @@
       {
         "name": "Jul",
         "player": "Julien",
-        "color": "#071ea3"
+        "color": "#0000ff"
       },
       {
         "name": "Bénouz",
         "player": "Bénédict",
-        "color": "#ccb400"
+        "color": "#4b0082"
       },
       {
         "name": "Maria",

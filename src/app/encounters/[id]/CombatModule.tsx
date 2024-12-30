@@ -16,6 +16,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { getPartyLevel } from "@/utils/localStorageUtils";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+const hitValues = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
 const sortParticipant = (a: Participant, b: Participant) => {
   const aInit = b.init !== "" ? parseInt(b.init) : Infinity;
@@ -101,6 +108,25 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
           .toSorted(sortParticipant),
       );
     };
+
+  const handleUpdatePlayerHp =
+    (participant: Participant) => (e: ChangeEvent<HTMLInputElement>) => {
+      const newHp = e.target.value;
+      setListOfParticipants((current) =>
+        current.map((p) =>
+          p.id === participant.id ? { ...p, hp: newHp, currentHp: newHp } : p,
+        ),
+      );
+    };
+
+  const handleSubtractHp = (participant: Participant, hp: string) => {
+    const newHp = Math.max(parseInt(participant.currentHp) - parseInt(hp), 0);
+    setListOfParticipants((current) =>
+      current.map((p) =>
+        p.id === participant.id ? { ...p, currentHp: newHp.toString() } : p,
+      ),
+    );
+  };
 
   useEffect(() => {
     document.addEventListener("keydown", handleKeyDown, true);
@@ -207,10 +233,10 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                   <div className="w-10 text-center text-sm">
                     {participant.init === "" ? (
                       <Input
-                        className="w-10"
+                        className="w-14"
                         id="init"
+                        placeholder="INIT"
                         onBlur={handleUpdateInit(participant)}
-                        onFocus={(event) => event.target.select()}
                       />
                     ) : (
                       participant.init
@@ -220,15 +246,51 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     {participant.name}
                   </div>
                   <div className="flex-1 text-center">
-                    {participant.hp && (
+                    {participant.hp === "" ? (
+                      <Input
+                        className="w-14"
+                        id="hp"
+                        placeholder="PV"
+                        onBlur={handleUpdatePlayerHp(participant)}
+                      />
+                    ) : (
                       <div className="flex items-center gap-4">
-                        <Progress
-                          value={
-                            (parseInt(participant.currentHp) /
-                              parseInt(participant.hp)) *
-                            100
-                          }
-                        />
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Progress
+                              value={
+                                (parseInt(participant.currentHp) /
+                                  parseInt(participant.hp)) *
+                                100
+                              }
+                            />
+                          </PopoverTrigger>
+                          <PopoverContent className="flex w-full flex-col gap-4">
+                            Soustraire des PVs
+                            <div className="grid grid-cols-5 grid-rows-2 gap-2">
+                              {hitValues.map((value) => (
+                                <Button
+                                  key={value}
+                                  variant="secondary"
+                                  onClick={() =>
+                                    handleSubtractHp(participant, value)
+                                  }
+                                >
+                                  {`-${value}`}
+                                </Button>
+                              ))}
+                            </div>
+                            <div>
+                              <Input
+                                placeholder="PV"
+                                type="text"
+                                onBlur={(e) =>
+                                  handleSubtractHp(participant, e.target.value)
+                                }
+                              />
+                            </div>
+                          </PopoverContent>
+                        </Popover>
                         <Input
                           className="w-10"
                           id="test"
