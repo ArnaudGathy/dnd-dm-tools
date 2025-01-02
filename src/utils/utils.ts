@@ -18,7 +18,7 @@ export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedParties: Party[] = parties;
 
-export const creatureColors = [
+export const commonCreatureColors = [
   "#ffffff",
   "#ff7f00",
   "#7fff00",
@@ -148,7 +148,7 @@ export const getParticipantFromCharacters = () => {
     init: "",
     hp: "",
     currentHp: "",
-    id: uuidv4(),
+    uuid: uuidv4(),
     isPlayer: true,
   }));
 };
@@ -208,6 +208,26 @@ export const getCreaturesFromIds = (creatureIds: number[]) => {
   return creaturesList;
 };
 
+const getCreatureColor = (
+  creature: Creature,
+  index: number,
+  currentColorIndex: { [key: number]: number },
+) => {
+  if (creature.colors) {
+    const newColorIndex =
+      currentColorIndex[creature.id] !== undefined
+        ? currentColorIndex[creature.id] + 1
+        : 0;
+    currentColorIndex[creature.id] = newColorIndex;
+
+    return creature.colors[newColorIndex];
+  }
+
+  return index > commonCreatureColors.length - 1
+    ? "#000000"
+    : commonCreatureColors[index];
+};
+
 export const getParticipantFromEncounter = ({
   encounter,
   partyLevel,
@@ -220,21 +240,21 @@ export const getParticipantFromEncounter = ({
     typedCreatures.find((creature) => creature.id === id),
   );
 
+  const currentColorIndex: { [key: number]: number } = {};
   return creaturesList.reduce((acc: Participant[], creature, index) => {
     if (creature) {
       const hp = getHPAsString(creature);
+
       return [
         ...acc,
         {
+          id: creature.id,
           name: creature.name,
           init: getInitiative(creature),
           hp,
           currentHp: hp,
-          color:
-            index > creatureColors.length - 1
-              ? "#000000"
-              : creatureColors[index],
-          id: uuidv4(),
+          color: getCreatureColor(creature, index, currentColorIndex),
+          uuid: uuidv4(),
         },
       ];
     }

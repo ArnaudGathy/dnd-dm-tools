@@ -21,6 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import Link from "next/link";
 
 const hitValues = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
@@ -68,7 +69,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
           ...listOfParticipants,
           {
             ...participant,
-            id: uuidv4(),
+            uuid: uuidv4(),
             currentHp: participant.hp,
             init: participant.init || roll(20).toString(),
           },
@@ -93,7 +94,9 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       if (participant.hp && newHP <= parseInt(participant.hp) && newHP >= 0) {
         setListOfParticipants((current) =>
           current.map((p) =>
-            p.id === participant.id ? { ...p, currentHp: newHP.toString() } : p,
+            p.uuid === participant.uuid
+              ? { ...p, currentHp: newHP.toString() }
+              : p,
           ),
         );
       }
@@ -104,7 +107,9 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       const newInit = e.target.value;
       setListOfParticipants((current) =>
         current
-          .map((p) => (p.id === participant.id ? { ...p, init: newInit } : p))
+          .map((p) =>
+            p.uuid === participant.uuid ? { ...p, init: newInit } : p,
+          )
           .toSorted(sortParticipant),
       );
     };
@@ -114,16 +119,22 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       const newHp = e.target.value;
       setListOfParticipants((current) =>
         current.map((p) =>
-          p.id === participant.id ? { ...p, hp: newHp, currentHp: newHp } : p,
+          p.uuid === participant.uuid
+            ? { ...p, hp: newHp, currentHp: newHp }
+            : p,
         ),
       );
     };
 
   const handleSubtractHp = (participant: Participant, hp: string) => {
+    if (hp === "") {
+      return;
+    }
+
     const newHp = Math.max(parseInt(participant.currentHp) - parseInt(hp), 0);
     setListOfParticipants((current) =>
       current.map((p) =>
-        p.id === participant.id ? { ...p, currentHp: newHp.toString() } : p,
+        p.uuid === participant.uuid ? { ...p, currentHp: newHp.toString() } : p,
       ),
     );
   };
@@ -218,7 +229,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
             {listOfParticipants.map((participant) => {
               return (
                 <div
-                  key={participant.id}
+                  key={participant.uuid}
                   className={clsx(
                     "flex min-h-10 w-full items-center gap-4 space-x-2 transition-opacity",
                     {
@@ -227,8 +238,16 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                   )}
                 >
                   <div
-                    style={{ backgroundColor: participant.color }}
-                    className="h-5 w-5 rounded-full"
+                    style={{
+                      backgroundColor: participant.id
+                        ? participant.color
+                        : "transparent",
+                      borderColor: participant.color,
+                    }}
+                    className={clsx("rounded-full", {
+                      "h-5 w-5 border-2": !participant.id,
+                      "h-5 w-5": participant.id,
+                    })}
                   />
                   <div className="w-10 text-center text-sm">
                     {participant.init === "" ? (
@@ -242,8 +261,18 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       participant.init
                     )}
                   </div>
-                  <div className="w-[300px] truncate px-4 text-center font-bold">
-                    {participant.name}
+                  <div
+                    className={clsx("w-[300px] truncate px-4 text-center", {
+                      "font-bold": !participant.id,
+                    })}
+                  >
+                    {participant.id ? (
+                      <Link href={`#${participant.id}`}>
+                        {participant.name}
+                      </Link>
+                    ) : (
+                      participant.name
+                    )}
                   </div>
                   <div className="flex-1 text-center">
                     {participant.hp === "" ? (

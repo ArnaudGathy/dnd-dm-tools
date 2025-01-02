@@ -24,7 +24,7 @@ const EncounterById = async ({
           <InfoModule encounter={encounter} />
           <StatBlocksModule encounter={encounter} />
         </div>
-        <div className="flex w-[50%] flex-col gap-4">
+        <div className="sticky top-4 flex w-[50%] flex-col gap-4">
           <CombatModuleWrapper encounter={encounter} />
         </div>
       </div>

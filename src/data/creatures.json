@@ -90,7 +90,8 @@
         "name": "Robustesse de la non-vie",
         "description": "Si les dégâts réduisent le zombi à 0 PV, il doit faire un jet de sauvegarde de Constitution DD 5 + dégâts subis. En cas de succès, il tombe à 1 PV. Sauf en cas de dégats radiants ou de coup critique."
       }
-    ]
+    ],
+    "colors": ["#aad09a", "#57abbb", "#d3bf69"]
   },
   {
     "name": "Thallophyte Violette",
@@ -229,7 +230,8 @@
         "name": "Corps brûlant",
         "description": "Une créature en contact avec le serpent subit 3 (1d6) dégâts de feu."
       }
-    ]
+    ],
+    "colors": ["#c95a08"]
   },
   {
     "name": "Guivre-Follette",
@@ -326,7 +328,8 @@
         "target": "1 cible",
         "hit": "9 (2d6 + 2) dégâts perforants"
       }
-    ]
+    ],
+    "colors": ["#1f6391"]
   },
   {
     "name": "Harpie",
@@ -378,7 +381,8 @@
         "name": "Chant captivant",
         "description": "La harpie chante une mélodie magique. Les humanoïdes et géants situés à 90 m ou moins et qui entendent le chant doivent réussir un jet de sauvegarde de Sagesse DD 11 sous peine d’être charmés jusqu’à la fin du chant. 1 cible charmée doit se déplacer vers la harpie par le chemin le plus court. Elle peut retenter un jet de sauvegarde à la fin de chacun de ses tours. 1 cible qui réussit est immunisée contre ce chant pendant 24 heures."
       }
-    ]
+    ],
+    "colors": ["#0c7ec9", "#6b462f"]
   },
   {
     "name": "Hibours",
@@ -434,7 +438,8 @@
         "target": "1 cible",
         "hit": "14 (2d8 + 5) dégâts tranchants"
       }
-    ]
+    ],
+    "colors": ["#855842"]
   },
   {
     "name": "Kobold Bricoleur",

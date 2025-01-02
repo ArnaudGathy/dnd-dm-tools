@@ -6,8 +6,9 @@ export type ParticipantToAdd = {
 };
 
 export type Participant = ParticipantToAdd & {
+  id?: number;
   currentHp: string;
-  id: string;
+  uuid: string;
   isPlayer?: boolean;
 };
 
@@ -105,4 +106,5 @@ export type Creature = {
     name: string;
     description: string;
   }>;
+  colors?: Array<string>;
 };

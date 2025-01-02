@@ -62,7 +62,7 @@ export const StatBlock = ({
   const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
-    <Card>
+    <Card id={creature.id.toString()}>
       <CardHeader>
         <CardTitle className="flex justify-between">
           {creature.name}
