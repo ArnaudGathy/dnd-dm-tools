@@ -190,12 +190,13 @@
       "mapMarker": "E0"
     },
     "ennemies": {
-      "1": [10, 11, 12, 12],
-      "2": [10, 10, 11, 11, 12, 12],
-      "3": [10, 10, 10, 11, 11, 11, 12, 12]
+      "1": [12, 12, 11, 10],
+      "2": [12, 12, 11, 11, 10, 10],
+      "3": [12, 12, 11, 11, 11, 10, 10, 10]
     },
     "informations": [
       "Discrétion Kobold : D20 + 2 vs DD perception passive. Tout joueur en échec est surpris (passe son tour)",
+      "Avantage en groupe, désavantage au soleil",
       "Peut discuter, abandonne le combat contre de l'or ou de la nourriture."
     ],
     "loots": [

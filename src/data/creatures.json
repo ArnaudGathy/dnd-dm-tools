@@ -442,16 +442,15 @@
     "colors": ["#855842"]
   },
   {
-    "name": "Kobold Bricoleur",
+    "name": "Kobold Bouclier",
     "id": 10,
     "type": "Humanoïde",
     "size": "P",
     "alignment": "Tout alignement",
-    "armorClass": 12,
+    "armorClass": 14,
     "hitPoints": "10 (3d6)",
     "speed": {
-      "walk": "9 m",
-      "fly": "3 m"
+      "walk": "9 m"
     },
     "abilities": {
       "strength": 7,
@@ -461,10 +460,6 @@
       "wisdom": 7,
       "charisma": 9
     },
-    "skills": {
-      "arcana": "+4",
-      "perception": "+0"
-    },
     "senses": {
       "darkvision": "18 m",
       "passivePerception": 10
@@ -472,10 +467,6 @@
     "languages": ["Commun", "Draconique"],
     "challengeRating": 0.25,
     "traits": [
-      {
-        "name": "Esprit curieux (1/jour)",
-        "description": "Le kobold peut lancer détection de la magie sans composantes, utilisant Intelligence comme caractéristique d’incantation."
-      },
       {
         "name": "Sensibilité au soleil",
         "description": "Quand le kobold est exposé à la lumière du soleil, il a désavantage aux jets d’attaque et aux tests de Sagesse (Perception) basés sur la vue."
@@ -498,19 +489,19 @@
         "name": "Flammes alchimiques (Recharge 6)",
         "description": "Le kobold lance des flammes sous forme d’un cône de 4,5 m. Les cibles doivent réussir un jet de Dextérité DD 12 ou subir 10 (3d6) dégâts de feu en cas d’échec, ou la moitié en cas de réussite."
       }
-    ]
+    ],
+    "colors": ["#58d860", "#276cad"]
   },
   {
-    "name": "Kobold Ailé",
+    "name": "Kobold lancier",
     "id": 11,
     "type": "Humanoïde",
     "size": "P",
     "alignment": "Tout alignement",
-    "armorClass": 13,
+    "armorClass": 12,
     "hitPoints": "7 (3d6 - 3)",
     "speed": {
-      "walk": "9 m",
-      "fly": "9 m"
+      "walk": "9 m"
     },
     "abilities": {
       "strength": 7,
@@ -538,7 +529,7 @@
     ],
     "actions": [
       {
-        "name": "Dague",
+        "name": "Lance",
         "type": "Melee ou distance",
         "modifier": "+5",
         "reach": "1.5 m ou portée 6/18 m",
@@ -552,7 +543,8 @@
         "target": "1 cible juste en dessous du kobold",
         "hit": "6 (1d6 + 3) dégâts contondants"
       }
-    ]
+    ],
+    "colors": ["#09700d", "#77d7cc"]
   },
   {
     "name": "Kobold",
@@ -606,6 +598,7 @@
         "target": "1 cible",
         "hit": "4 (1d4 + 2) dégâts contondants"
       }
-    ]
+    ],
+    "colors": ["#dc0005", "#e08023"]
   }
 ]
