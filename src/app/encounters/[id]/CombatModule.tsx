@@ -22,6 +22,7 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import Link from "next/link";
+import { TooltipComponent } from "@/components/ui/tooltip";
 
 const hitValues = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
 
@@ -45,6 +46,18 @@ const defaultState = {
   color: "#DD1D47",
 };
 
+const getHPBarColor = (hpPercent: number) => {
+  if (hpPercent <= 25) {
+    return "bg-red-600";
+  }
+
+  if (hpPercent <= 50) {
+    return "bg-orange-500";
+  }
+
+  return "bg-green-700";
+};
+
 export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const partyLevel = getPartyLevel();
 
@@ -61,6 +74,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   );
   const [participant, setParticipant] =
     useState<ParticipantToAdd>(defaultState);
+  const [hpChangeMode, setHpChangeMode] = useState<"add" | "sub">("sub");
 
   const handleAddParticipant = useCallback(() => {
     if (participant.name && participant.color) {
@@ -88,7 +102,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
     [handleAddParticipant],
   );
 
-  const handleUpdateHP =
+  const handleUpdateCurrentHP =
     (participant: Participant) => (e: ChangeEvent<HTMLInputElement>) => {
       const newHP = parseInt(e.target.value);
       if (participant.hp && newHP <= parseInt(participant.hp) && newHP >= 0) {
@@ -97,6 +111,18 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
             p.uuid === participant.uuid
               ? { ...p, currentHp: newHP.toString() }
               : p,
+          ),
+        );
+      }
+    };
+
+  const handleUpdateMaxHP =
+    (participant: Participant) => (e: ChangeEvent<HTMLInputElement>) => {
+      const newHP = parseInt(e.target.value);
+      if (participant.hp && newHP >= 0) {
+        setListOfParticipants((current) =>
+          current.map((p) =>
+            p.uuid === participant.uuid ? { ...p, hp: newHP.toString() } : p,
           ),
         );
       }
@@ -114,24 +140,15 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       );
     };
 
-  const handleUpdatePlayerHp =
-    (participant: Participant) => (e: ChangeEvent<HTMLInputElement>) => {
-      const newHp = e.target.value;
-      setListOfParticipants((current) =>
-        current.map((p) =>
-          p.uuid === participant.uuid
-            ? { ...p, hp: newHp, currentHp: newHp }
-            : p,
-        ),
-      );
-    };
-
-  const handleSubtractHp = (participant: Participant, hp: string) => {
+  const handleChangeHp = (participant: Participant, hp: string) => {
     if (hp === "") {
       return;
     }
 
-    const newHp = Math.max(parseInt(participant.currentHp) - parseInt(hp), 0);
+    const newHp =
+      hpChangeMode === "sub"
+        ? Math.max(parseInt(participant.currentHp) - parseInt(hp), 0)
+        : parseInt(participant.currentHp) + parseInt(hp);
     setListOfParticipants((current) =>
       current.map((p) =>
         p.uuid === participant.uuid ? { ...p, currentHp: newHp.toString() } : p,
@@ -227,6 +244,9 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
 
           <div className="flex flex-col gap-2">
             {listOfParticipants.map((participant) => {
+              const hpPercent =
+                (parseInt(participant.currentHp) / parseInt(participant.hp)) *
+                100;
               return (
                 <div
                   key={participant.uuid}
@@ -250,83 +270,113 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     })}
                   />
                   <div className="w-10 text-center text-sm">
-                    {participant.init === "" ? (
-                      <Input
-                        className="w-14"
-                        id="init"
-                        placeholder="INIT"
-                        onBlur={handleUpdateInit(participant)}
-                      />
-                    ) : (
-                      participant.init
-                    )}
+                    <Input
+                      className="w-10"
+                      id="init"
+                      defaultValue={participant.init}
+                      onBlur={handleUpdateInit(participant)}
+                      onFocus={(event) => event.target.select()}
+                    />
                   </div>
-                  <div
-                    className={clsx("w-[300px] truncate px-4 text-center", {
-                      "font-bold": !participant.id,
-                    })}
-                  >
-                    {participant.id ? (
-                      <Link href={`#${participant.id}`}>
-                        {participant.name}
-                      </Link>
-                    ) : (
-                      participant.name
-                    )}
+                  <div className={clsx("w-[175px] truncate px-4 text-center")}>
+                    <TooltipComponent definition={participant.name}>
+                      {participant.id ? (
+                        <Link href={`#${participant.id}`}>
+                          {participant.name}
+                        </Link>
+                      ) : (
+                        <span>{participant.name}</span>
+                      )}
+                    </TooltipComponent>
                   </div>
                   <div className="flex-1 text-center">
-                    {participant.hp === "" ? (
-                      <Input
-                        className="w-14"
-                        id="hp"
-                        placeholder="PV"
-                        onBlur={handleUpdatePlayerHp(participant)}
-                      />
-                    ) : (
+                    {participant.hp !== "" && (
                       <div className="flex items-center gap-4">
                         <Popover>
                           <PopoverTrigger asChild>
-                            <Progress
-                              value={
-                                (parseInt(participant.currentHp) /
-                                  parseInt(participant.hp)) *
-                                100
-                              }
-                            />
+                            <div className="relative w-full">
+                              <Progress
+                                classNameTop={clsx(getHPBarColor(hpPercent))}
+                                value={hpPercent}
+                              />
+                              <span className="absolute left-[50%] top-[1px] -translate-x-1/2 transform font-bold leading-4">
+                                {participant.currentHp} / {participant.hp}
+                              </span>
+                            </div>
                           </PopoverTrigger>
                           <PopoverContent className="flex w-full flex-col gap-4">
-                            Soustraire des PVs
-                            <div className="grid grid-cols-5 grid-rows-2 gap-2">
-                              {hitValues.map((value) => (
-                                <Button
-                                  key={value}
-                                  variant="secondary"
-                                  onClick={() =>
-                                    handleSubtractHp(participant, value)
-                                  }
-                                >
-                                  {`-${value}`}
-                                </Button>
-                              ))}
-                            </div>
-                            <div>
+                            <div className="flex items-center gap-1">
                               <Input
-                                placeholder="PV"
-                                type="text"
-                                onBlur={(e) =>
-                                  handleSubtractHp(participant, e.target.value)
-                                }
+                                className="w-12"
+                                id="hp"
+                                value={participant.currentHp}
+                                onChange={handleUpdateCurrentHP(participant)}
+                                onFocus={(event) => event.target.select()}
+                              />
+                              <span>/</span>
+                              <Input
+                                className="w-12"
+                                id="currentHp"
+                                value={participant.hp}
+                                onChange={handleUpdateMaxHP(participant)}
+                                onFocus={(event) => event.target.select()}
                               />
                             </div>
+                            <div>
+                              <div className="mb-2 flex gap-2">
+                                <Button
+                                  className="bg-green-900 font-mono text-xs"
+                                  size="xs"
+                                  variant="outline"
+                                  onClick={() => setHpChangeMode("add")}
+                                >
+                                  +
+                                </Button>
+                                <Button
+                                  className="bg-red-900 font-mono text-xs"
+                                  size="xs"
+                                  variant="outline"
+                                  onClick={() => setHpChangeMode("sub")}
+                                >
+                                  -
+                                </Button>
+                                <h4 className="text-xl font-semibold tracking-tight">
+                                  {hpChangeMode === "sub"
+                                    ? "Soustraire"
+                                    : "Ajouter"}
+                                </h4>
+                              </div>
+                              <div className="flex gap-2">
+                                {hitValues.map((value) => (
+                                  <Button
+                                    key={value}
+                                    className={clsx("font-mono text-xs", {
+                                      "bg-green-900": hpChangeMode === "add",
+                                      "bg-red-900": hpChangeMode === "sub",
+                                    })}
+                                    variant="secondary"
+                                    size="sm"
+                                    onClick={() =>
+                                      handleChangeHp(participant, value)
+                                    }
+                                  >
+                                    {`${hpChangeMode === "sub" ? "-" : "+"}${value}`}
+                                  </Button>
+                                ))}
+                                <Input
+                                  className="w-12"
+                                  placeholder="PV"
+                                  type="text"
+                                  onBlur={(e) =>
+                                    handleChangeHp(participant, e.target.value)
+                                  }
+                                />
+                              </div>
+                            </div>
+                            <div>test</div>
                           </PopoverContent>
                         </Popover>
-                        <Input
-                          className="w-10"
-                          id="test"
-                          value={participant.currentHp}
-                          onChange={handleUpdateHP(participant)}
-                          onFocus={(event) => event.target.select()}
-                        />
+                        <div className="size-6 scale-150"></div>
                       </div>
                     )}
                   </div>

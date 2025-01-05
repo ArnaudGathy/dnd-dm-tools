@@ -7,7 +7,7 @@ import { notFound } from "next/navigation";
 import { getPartyLevel } from "@/utils/localStorageUtils";
 import { StatBlock } from "@/app/creatures/StatBlock";
 
-export const StatBlocksModule = ({ encounter }: { encounter: Encounter }) => {
+const StatBlocksModule = ({ encounter }: { encounter: Encounter }) => {
   const partyLevel = getPartyLevel();
   const creatures = getCreaturesFromIds(
     unique(getEnnemiesFromEncounter({ encounter, partyLevel })),
@@ -25,3 +25,5 @@ export const StatBlocksModule = ({ encounter }: { encounter: Encounter }) => {
     </div>
   );
 };
+
+export default StatBlocksModule;
