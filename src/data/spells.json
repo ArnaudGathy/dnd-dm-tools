@@ -1,0 +1,190 @@
+[
+  {
+    "id": 1,
+    "name": "Moquerie cruelle",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "18 mètres",
+    "components": "V",
+    "duration": "instantanée",
+    "description": "Vous vomissez un flot d'insultes entremêlées de subtils enchantements sur une créature à portée et que vous pouvez voir. Si la cible peut vous entendre (il n'est pas nécessaire qu'elle comprenne mais juste qu'elle devine votre intention), elle doit réussir un jet de sauvegarde de Sagesse ou subir 1d4 dégâts psychiques et avoir un désavantage au prochain jet d'attaque qu'elle fera avant la fin de son prochain tour. Les dégâts de ce sort augmentent de 1d4 lorsque vous atteignez le niveau 5 (2d4), le niveau 11 (3d4) et le niveau 17 (4d4). ",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affecté",
+      "damage": {
+        "1": "1d4",
+        "5": "2d4",
+        "11": "3d4",
+        "17": "4d4"
+      },
+      "effects": [
+        "Désavantage au prochain jet d'attaque avant la fin de son prochain tour"
+      ],
+      "restrictions": ["La cible doit pouvoir entendre"]
+    }
+  },
+  {
+    "id": 2,
+    "name": "Main de mage",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "9 mètres",
+    "components": "V, S",
+    "duration": "1 minute",
+    "description": "Une main spectrale apparaît à un point précis choisi à portée. La main expire à la fin de la durée du sort ou si elle est révoquée au prix d'une action. La main disparaît si elle se retrouve à plus de 9 mètres du lanceur de sorts ou si ce sort est jeté une nouvelle fois. Le lanceur de sorts peut utiliser son action pour contrôler la main. La main peut manipuler un objet, ouvrir une porte ou un contenant non verrouillé, ranger ou récupérer un objet d'un contenant ouvert, ou bien verser le contenu d'une fiole. La main peut être déplacée jusqu'à 9 mètres à chaque fois que vous l'utilisez. La main ne peut attaquer, activer des objets magiques ou transporter plus de 5 kg. "
+  },
+  {
+    "id": 3,
+    "name": "Fou rire de Tasha",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 mètres",
+    "components": "V, S, M (de minuscules tartes et une plume qui est agitée dans les airs)",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": " Une créature de votre choix, que vous pouvez voir et à portée, a l'impression que tout ce qu'elle perçoit est hilarant et lui provoque une intense crise de fou rire. La cible doit réussir un jet de sauvegarde de Sagesse sous peine de tomber à terre, et être incapable d'agir et de se relever pour toute la durée du sort. Une créature ayant une Intelligence de 4 ou moins ne peut pas être affectée par ce sort. À la fin de chacun de ses tours, et à chaque fois qu'elle subit des dégâts, la cible peut effectuer un nouveau jet de sauvegarde de Sagesse. La cible a un avantage à son jet de sauvegarde s'il est déclenché par des dégâts. En cas de réussite, le sort prend fin. ",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affecté",
+      "effects": ["prone", "incapacitated"],
+      "restrictions": ["INT >= 5"],
+      "recovery": "JdS SAG à la fin de chaque tour ainsi que lorsqu'elle se fait attaquer, avec avantage."
+    }
+  },
+  {
+    "id": 4,
+    "name": "Mot de guérison",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "18 mètres",
+    "components": "V",
+    "duration": "instantanée",
+    "description": "Une créature visible de votre choix récupère des points de vie à hauteur de 1d4 + le modificateur de votre caractéristique d'incantation. Ce sort n'a pas d'effet sur les morts-vivants et les artificiels. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, les points de vie récupérés augmentent de 1d4 pour chaque niveau d'emplacement au-delà du niveau 1. "
+  },
+  {
+    "id": 5,
+    "name": "Charme-personne",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 mètres",
+    "components": "V, S",
+    "duration": "1 heure",
+    "description": "Vous pouvez tenter de charmer un humanoïde que vous pouvez voir à portée. Ce dernier doit effectuer un jet de sauvegarde de Sagesse, avec un avantage à son jet si vous ou vos compagnons le combattez. En cas d'échec, il est charmé jusqu'à la fin de la durée du sort ou jusqu'à ce que vous ou vos compagnons cherchiez à lui nuire. La créature charmée vous considère comme un bon ami. Quand le sort prend fin, la créature sait que vous l'avez charmée. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, vous pouvez cibler une créature supplémentaire pour chaque niveau d'emplacement au-delà du niveau 1. Les créatures doivent se trouver à 9 mètres maximum les unes des autres lorsque vous les ciblez. "
+  },
+  {
+    "id": 6,
+    "name": "Déguisement",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "1 heure",
+    "description": "Vous changez d'apparence jusqu'à ce que le sort prenne fin ou que vous utilisiez une action pour le dissiper. Le changement inclut vos vêtements, votre armure, vos armes et les autres objets que vous portez. Vous pouvez paraître 30 cm plus grand ou plus petit, mince, obèse, ou entre les deux. Vous ne pouvez pas modifier votre type morphologique. Vous devez donc prendre une forme qui présente un arrangement similaire des membres. Par ailleurs, l'ampleur de l'illusion ne tient qu'à vous. Les modifications apportées par ce sort ne résistent pas à une inspection physique. Par exemple, si vous utilisez ce sort pour ajouter un chapeau à votre accoutrement, les objets passeront à travers le chapeau et si on y touche, on ne sentira pas sa présence ou on tâtera plutôt votre tête et votre chevelure. Si vous utilisez ce sort pour paraître plus mince, la main d'une personne qui veut vous toucher entrera en contact avec votre corps alors que sa main semble libre d'obstruction. Pour détecter que vous êtes déguisé, une créature peut utiliser son action pour inspecter votre apparence et elle doit réussir un jet d'Intelligence (Investigation) contre le DD de sauvegarde de votre sort. "
+  },
+
+  {
+    "id": 7,
+    "name": "Rayon de givre",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "18 mètres",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Un faisceau glacial de lumière bleuâtre se dirige vers une créature dans la portée du sort. Effectuez une attaque à distance avec un sort contre la cible. S'il touche, la cible subit 1d8 dégâts de froid et sa vitesse est réduite de 3 mètres jusqu'à début de votre prochain tour. Les dégâts du sort augmentent de 1d8 lorsque vous atteignez le niveau 5 (2d8), le niveau 11 (3d8) et le niveau 17 (4d8). ",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "1d8",
+        "5": "2d8",
+        "11": "3d8",
+        "17": "4d8"
+      },
+      "effects": [
+        "Vitesse de déplacement réduit de 2 cases jusqu'au début du prochain tour du caster"
+      ]
+    }
+  },
+  {
+    "id": 8,
+    "name": "Illusion mineure",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "6 cases",
+    "components": "S, M",
+    "duration": "1 minute",
+    "description": "Le lanceur de sorts crée un son ou l'image d'un objet à portée pendant une minute. Cette illusion se termine également si elle est révoquée au prix d'une action ou si ce sort est lancé une nouvelle fois. Si l'illusion est un son, le volume peut aller d'un simple chuchotement à un cri. Il peut s'agir de votre voix, de la voix de quelqu'un d'autre, du rugissement d'un lion, d'un roulement de tambours, ou tout autre son que vous choisissez. Le son peut autant ne pas diminuer en intensité pendant la durée du sort qu'être discret et produit à différents instants dans cet intervalle de temps. Si l'illusion est une image ou un objet (comme une chaise, des traces de pas boueuses ou un petit coffre) elle ne peut pas être plus large qu'un cube de 1,50 mètre d'arête. Cette image ne peut produire de son, lumière, odeur ou tout autre effet sensoriel. Une interaction physique avec l'image révèle l'illusion, car elle peut être traversée par n'importe quoi. Si une créature utilise une action pour examiner le son ou l'image, elle peut comprendre qu'il s'agit d'une illusion grâce à un jet d'Intelligence (Investigation) contre le DD de sauvegarde de votre sort. Si une créature discerne l'illusion pour ce qu'elle est, l'illusion s'évanouit pour la créature. "
+  },
+  {
+    "id": 9,
+    "name": "Protection contre les armes",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "1 round",
+    "description": "Vous tendez votre main et tracez un symbole de protection dans les airs. Jusqu'à la fin de votre prochain tour, vous obtenez la résistance contre les dégâts contondants, tranchants et perforants infligés par des attaques avec arme. ",
+    "combat": {
+      "type": "status",
+      "effects": [
+        "Résistance (1/2) aux dégâts d'armes jusqu'à la fin du prochain tour."
+      ]
+    }
+  },
+  {
+    "id": 10,
+    "name": "Viser juste",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "6 cases",
+    "components": "S",
+    "duration": "concentration, jusqu'à 1 round",
+    "description": "Vous tendez votre main et pointez un doigt en direction d'une cible à portée. Votre magie vous aide à trouver une petite faille dans les défenses de votre cible. Lors de votre prochain tour, vous obtenez un avantage pour votre premier jet d'attaque contre la cible, à condition que le sort ne soit pas déjà terminé. ",
+    "combat": {
+      "type": "status",
+      "effects": [
+        "La prochaine attaque du lanceur contre cette cible profite d'un avantage"
+      ]
+    }
+  },
+  {
+    "id": 11,
+    "name": "Projectile magique",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "36 mètres",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Vous créez trois fléchettes de force magique d'un bleu lumineux. Chaque fléchette atteint une créature de votre choix que vous pouvez voir et dans la limite de portée du sort. Chaque projectile inflige 1d4 + 1 dégâts de force à sa cible. Les fléchettes frappent simultanément, et peuvent frapper une ou plusieurs créatures. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, il crée une fléchette additionnelle pour chaque niveau d'emplacement au-delà du niveau 1. ",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "3x 1d4 + 1"
+      },
+      "spellLevelScale": "+1 projectile"
+    }
+  },
+  {
+    "id": 12,
+    "name": "Vague tonnante",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle (cube de 4,50 mètres d'arête)",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Une vague de force de tonnerre émane de vous. Toute créature se trouvant dans un cube de 4,50 mètres d'arête prenant origine à partir de vous-même doit effectuer un jet de sauvegarde de Constitution. En cas d'échec, la créature subit 2d8 dégâts de tonnerre et est repoussée de 3 mètres de vous. En cas de réussite, elle subit la moitié de ces dégâts et n'est pas repoussée. En outre, les objets non fixés qui se trouvent entièrement dans la zone d'effet sont automatiquement repoussés de 3 mètres par l'effet du sort, et le sort émet un coup de tonnerre audible jusqu'à 90 mètres. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, les dégâts augmentent de 1d8 pour chaque niveau d'emplacement au-delà du niveau 1. ",
+    "combat": {
+      "type": "save",
+      "save": "constitution",
+      "saveSuccess": "1/2 dégâts, pas repoussée",
+      "damage": {
+        "1": "2d8"
+      },
+      "spellLevelScale": "1d8",
+      "effects": [
+        "Repousse les cibles et objets de 3 cases",
+        "Produit un bruit de 90m de portée"
+      ]
+    }
+  }
+]

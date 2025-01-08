@@ -12,7 +12,7 @@ const Home = () => {
   return (
     <div>
       <h1 className={"mb-4 scroll-m-20 text-2xl font-bold tracking-tight"}>
-        Créatures
+        Liste des créatures
       </h1>
 
       <div className="grid grid-cols-5 grid-rows-6 gap-4">

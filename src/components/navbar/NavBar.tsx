@@ -27,6 +27,7 @@ export const NavBar = () => {
             <NavigationMenuList>
               <NavBarItem to="/encounters" label="Rencontres" />
               <NavBarItem to="/creatures" label="Créatures" />
+              <NavBarItem to="/spells" label="Sorts" />
             </NavigationMenuList>
           </NavigationMenu>
         </div>

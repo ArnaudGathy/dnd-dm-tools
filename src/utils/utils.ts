@@ -1,6 +1,7 @@
 import {
   Character,
   Characteristics,
+  Condition,
   Creature,
   Encounter,
   Participant,
@@ -13,10 +14,15 @@ import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
 import { getParty } from "@/utils/localStorageUtils";
 import { entries, groupBy, prop, reduce, sortBy } from "remeda";
+import conditions from "@/data/conditions.json";
+import spellList from "@/data/spells.json";
+import { Spell, spellsSchema } from "@/types/schemas";
 
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedParties: Party[] = parties;
+export const typedConditions: Condition[] = conditions;
+export const typedSpells: Spell[] = spellsSchema.parse(spellList);
 
 export const commonCreatureColors = [
   "#ffffff",
@@ -149,7 +155,6 @@ export const getParticipantFromCharacters = () => {
     hp: "",
     currentHp: "",
     uuid: uuidv4(),
-    isPlayer: true,
   }));
 };
 

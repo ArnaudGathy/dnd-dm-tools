@@ -4,29 +4,44 @@
     "name": "La Mifa",
     "characters": [
       {
+        "id": 1,
         "name": "Arim",
         "player": "Arcady",
-        "color": "#a30719"
+        "color": "#a30719",
+        "gameClass": "Paladin",
+        "spells": []
       },
       {
+        "id": 2,
         "name": "Baalian",
         "player": "Logan",
-        "color": "#4b0082"
+        "color": "#4b0082",
+        "gameClass": "Sorcier",
+        "spells": []
       },
       {
+        "id": 3,
         "name": "Cirbul",
         "player": "Anthony",
-        "color": "#ff1493"
+        "color": "#ff1493",
+        "gameClass": "Barde",
+        "spells": [1, 2, 3, 4, 5, 6]
       },
       {
+        "id": 4,
         "name": "Erevan",
         "player": "Loïc",
-        "color": "#0b6e15"
+        "color": "#0b6e15",
+        "gameClass": "Roublard",
+        "spells": []
       },
       {
+        "id": 5,
         "name": "Pepnac",
         "player": "Mathias",
-        "color": "#0000ff"
+        "color": "#0000ff",
+        "gameClass": "Roublard",
+        "spells": []
       }
     ]
   },
@@ -35,24 +50,36 @@
     "name": "Le SIF",
     "characters": [
       {
+        "id": 6,
         "name": "Jul",
         "player": "Julien",
-        "color": "#0000ff"
+        "color": "#0000ff",
+        "gameClass": "",
+        "spells": []
       },
       {
+        "id": 7,
         "name": "Bénouz",
         "player": "Bénédict",
-        "color": "#4b0082"
+        "color": "#4b0082",
+        "gameClass": "",
+        "spells": []
       },
       {
+        "id": 8,
         "name": "Barney",
         "player": "Jason",
-        "color": "#a30719"
+        "color": "#a30719",
+        "gameClass": "Paladin",
+        "spells": []
       },
       {
+        "id": 9,
         "name": "Sora",
         "player": "Lauréanne",
-        "color": "#0b6e15"
+        "color": "#0b6e15",
+        "gameClass": "Ensorceleur",
+        "spells": [7, 8, 9, 10, 11, 12]
       }
     ]
   }

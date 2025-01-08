@@ -1,3 +1,10 @@
+export type Condition = {
+  title: string;
+  icon: string;
+  description: string;
+  bullets?: string[];
+};
+
 export type ParticipantToAdd = {
   name: string;
   init: string;
@@ -9,13 +16,17 @@ export type Participant = ParticipantToAdd & {
   id?: number;
   currentHp: string;
   uuid: string;
-  isPlayer?: boolean;
+  conditions?: Condition[];
+  notes?: string[];
 };
 
 export type Character = {
+  id: number;
   name: string;
   player: string;
   color: string;
+  spells: number[];
+  gameClass: string;
 };
 
 export type Party = {

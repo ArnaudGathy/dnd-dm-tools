@@ -1,14 +1,26 @@
 "use client";
 
 import { ChangeEvent, useCallback, useEffect, useState } from "react";
-import { Encounter, Participant, ParticipantToAdd } from "@/types/types";
+import {
+  Condition,
+  Encounter,
+  Participant,
+  ParticipantToAdd,
+} from "@/types/types";
 import {
   getParticipantFromCharacters,
   getParticipantFromEncounter,
   roll,
+  typedConditions,
 } from "@/utils/utils";
 import { v4 as uuidv4 } from "uuid";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { clsx } from "clsx";
 import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
@@ -23,27 +35,29 @@ import {
 } from "@/components/ui/popover";
 import Link from "next/link";
 import { TooltipComponent } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 
-const hitValues = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
-
-const sortParticipant = (a: Participant, b: Participant) => {
-  const aInit = b.init !== "" ? parseInt(b.init) : Infinity;
-  const bInit = a.init !== "" ? parseInt(a.init) : Infinity;
-
-  if (aInit === bInit) {
-    return b.isPlayer ? 1 : -1;
-  }
-
-  return aInit - bInit;
-};
-
-const defaultState = {
+const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
+const HIT_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+const DEFAULT_STATE = {
   id: "",
   currentHp: "",
   name: "",
   init: "",
   hp: "",
   color: "#DD1D47",
+};
+
+const sortParticipant = (a: Participant, b: Participant) => {
+  const aInit = b.init !== "" ? parseInt(b.init) : Infinity;
+  const bInit = a.init !== "" ? parseInt(a.init) : Infinity;
+
+  if (aInit === bInit) {
+    return b.id ? -1 : 1;
+  }
+
+  return aInit - bInit;
 };
 
 const getHPBarColor = (hpPercent: number) => {
@@ -56,6 +70,29 @@ const getHPBarColor = (hpPercent: number) => {
   }
 
   return "bg-green-700";
+};
+
+const ConditionImage = ({
+  condition,
+  className,
+  onClick,
+}: {
+  condition: Condition;
+  size?: string;
+  className?: string;
+  onClick?: () => void;
+}) => {
+  return (
+    <TooltipComponent definition={condition.title}>
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        alt="icon"
+        className={cn("size-10", className)}
+        src={`../conditions/${condition.icon}.png`}
+        onClick={onClick}
+      />
+    </TooltipComponent>
+  );
 };
 
 export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
@@ -73,7 +110,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
     ].toSorted(sortParticipant),
   );
   const [participant, setParticipant] =
-    useState<ParticipantToAdd>(defaultState);
+    useState<ParticipantToAdd>(DEFAULT_STATE);
   const [hpChangeMode, setHpChangeMode] = useState<"add" | "sub">("sub");
 
   const handleAddParticipant = useCallback(() => {
@@ -89,7 +126,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
           },
         ].toSorted(sortParticipant),
       );
-      setParticipant(defaultState);
+      setParticipant(DEFAULT_STATE);
     }
   }, [listOfParticipants, participant]);
 
@@ -153,6 +190,22 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       current.map((p) =>
         p.uuid === participant.uuid ? { ...p, currentHp: newHp.toString() } : p,
       ),
+    );
+  };
+
+  const handleSetCondition = (
+    participant: Participant,
+    condition: Condition,
+  ) => {
+    setListOfParticipants((current) =>
+      current.map((p) => {
+        const newConditions = p.conditions?.includes(condition)
+          ? p.conditions?.filter((c) => c.title !== condition.title)
+          : [...(p.conditions || []), condition];
+        return p.uuid === participant.uuid
+          ? { ...p, conditions: newConditions }
+          : p;
+      }),
     );
   };
 
@@ -305,6 +358,9 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                             </div>
                           </PopoverTrigger>
                           <PopoverContent className="flex w-full flex-col gap-4">
+                            <h4 className="text-xl font-semibold tracking-tight">
+                              Points de vie
+                            </h4>
                             <div className="flex items-center gap-1">
                               <Input
                                 className="w-12"
@@ -323,7 +379,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                               />
                             </div>
                             <div>
-                              <div className="mb-2 flex gap-2">
+                              <div className="mb-2 flex items-center gap-2">
                                 <Button
                                   className="bg-green-900 font-mono text-xs"
                                   size="xs"
@@ -340,14 +396,14 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                 >
                                   -
                                 </Button>
-                                <h4 className="text-xl font-semibold tracking-tight">
+                                <span>
                                   {hpChangeMode === "sub"
-                                    ? "Soustraire"
+                                    ? "Enlever"
                                     : "Ajouter"}
-                                </h4>
+                                </span>
                               </div>
                               <div className="flex gap-2">
-                                {hitValues.map((value) => (
+                                {HIT_VALUES.map((value) => (
                                   <Button
                                     key={value}
                                     className={clsx("font-mono text-xs", {
@@ -373,12 +429,142 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                 />
                               </div>
                             </div>
-                            <div>test</div>
+
+                            <h4 className="text-xl font-semibold tracking-tight">
+                              États et effets
+                            </h4>
+                            <div className="flex max-w-[500px] flex-wrap gap-2">
+                              {typedConditions.map((condition) => (
+                                <div
+                                  key={condition.title}
+                                  className={clsx("flex items-center gap-2")}
+                                >
+                                  <ConditionImage
+                                    className={clsx("cursor-pointer", {
+                                      "box-border rounded-lg border-2 border-blue-600":
+                                        participant.conditions?.includes(
+                                          condition,
+                                        ),
+                                    })}
+                                    condition={condition}
+                                    onClick={() =>
+                                      handleSetCondition(participant, condition)
+                                    }
+                                  />
+                                </div>
+                              ))}
+                            </div>
+                            <div className="flex gap-2">
+                              <Input
+                                className="w-full"
+                                placeholder="Note"
+                                type="text"
+                                onBlur={(e) =>
+                                  handleSetCondition(participant, {
+                                    title: "Note",
+                                    description: e.target.value,
+                                    icon: "custom",
+                                  })
+                                }
+                              />
+                              <Button className="bg-red-900">+</Button>
+                            </div>
                           </PopoverContent>
                         </Popover>
-                        <div className="size-6 scale-150"></div>
                       </div>
                     )}
+                  </div>
+                  <div className="flex gap-2">
+                    {participant.conditions?.map((condition, index) => {
+                      const remainingElements =
+                        (participant.conditions?.length || 0) - index - 1;
+
+                      if (index > MAX_CONDITIONS_BEFORE_ELLIPSIS) {
+                        return null;
+                      }
+
+                      if (
+                        index === MAX_CONDITIONS_BEFORE_ELLIPSIS &&
+                        remainingElements >= 1
+                      ) {
+                        return (
+                          <Popover key={index}>
+                            <PopoverTrigger asChild>
+                              <EllipsisHorizontalIcon
+                                key={condition.icon}
+                                className="size-8"
+                              />
+                            </PopoverTrigger>
+                            <PopoverContent className="w-full">
+                              <div className="flex gap-2">
+                                {participant.conditions
+                                  ?.toSpliced(0, index)
+                                  .map((condition) => (
+                                    <ConditionImage
+                                      key={condition.title}
+                                      className="size-8"
+                                      condition={condition}
+                                    />
+                                  ))}
+                              </div>
+                            </PopoverContent>
+                          </Popover>
+                        );
+                      }
+
+                      return (
+                        <Popover key={index}>
+                          <PopoverTrigger asChild>
+                            <div>
+                              <ConditionImage
+                                className="size-8"
+                                condition={condition}
+                              />
+                            </div>
+                          </PopoverTrigger>
+                          <PopoverContent className="min-w-[500px]">
+                            <Card>
+                              <CardHeader>
+                                <CardTitle>
+                                  <div className="flex justify-between">
+                                    {condition.title}{" "}
+                                    <Button
+                                      variant="secondary"
+                                      size="xs"
+                                      onClick={() =>
+                                        handleSetCondition(
+                                          participant,
+                                          condition,
+                                        )
+                                      }
+                                    >
+                                      -
+                                    </Button>
+                                  </div>
+                                </CardTitle>
+                                {condition.description && (
+                                  <CardDescription>
+                                    {condition.description}
+                                  </CardDescription>
+                                )}
+                              </CardHeader>
+                              {condition.bullets &&
+                                !!condition.bullets.length && (
+                                  <CardContent>
+                                    <ul className="list-inside list-disc space-y-2 leading-5">
+                                      {condition.bullets.map(
+                                        (bullet, index) => (
+                                          <li key={index}>{bullet}</li>
+                                        ),
+                                      )}
+                                    </ul>
+                                  </CardContent>
+                                )}
+                            </Card>
+                          </PopoverContent>
+                        </Popover>
+                      );
+                    })}
                   </div>
                 </div>
               );
