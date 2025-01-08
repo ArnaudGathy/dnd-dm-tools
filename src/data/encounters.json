@@ -48,7 +48,7 @@
       "2": [3, 3, 3, 3, 3]
     },
     "informations": [
-      "Attaque par surprise (faux semblant)",
+      "Attaque par surprise (faux semblant). Investigation DD 18 pour détecter.",
       "Attaque multiples",
       "Déplacement lent : 1 case par tour",
       "Jouer sur l’effet de surprise et attaques espacées"
