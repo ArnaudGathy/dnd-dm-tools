@@ -20,7 +20,7 @@ import {
   replaceMetersWithSquares,
 } from "@/utils/utils";
 import { entries } from "remeda";
-import { ReactNode, useState } from "react";
+import { useState } from "react";
 import {
   ArrowsPointingInIcon,
   ArrowsPointingOutIcon,
@@ -28,29 +28,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-
-const StatCell = ({
-  name,
-  stat,
-  isHighlighted = false,
-}: {
-  name: ReactNode;
-  stat: ReactNode;
-  isHighlighted?: boolean;
-}) => {
-  return (
-    <div>
-      <span className={clsx("mr-2 text-muted-foreground")}>{name}</span>
-      <span
-        className={clsx("space-x-4", {
-          "text-indigo-400": isHighlighted,
-        })}
-      >
-        {stat}
-      </span>
-    </div>
-  );
-};
+import { StatCell } from "@/app/creatures/StatCell";
 
 export const StatBlock = ({
   creature,

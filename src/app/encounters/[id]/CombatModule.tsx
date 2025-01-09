@@ -12,6 +12,7 @@ import {
   getParticipantFromEncounter,
   roll,
   typedConditions,
+  typedSpells,
 } from "@/utils/utils";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -35,8 +36,9 @@ import {
 } from "@/components/ui/popover";
 import Link from "next/link";
 import { TooltipComponent } from "@/components/ui/tooltip";
-import { cn } from "@/lib/utils";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
+import { filter, pipe, prop, sortBy } from "remeda";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 const HIT_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
@@ -48,6 +50,11 @@ const DEFAULT_STATE = {
   hp: "",
   color: "#DD1D47",
 };
+
+const spellsWithEffects = pipe(
+  filter(typedSpells, (spell) => (spell.combat?.effects?.length ?? 0) > 0),
+  sortBy(prop("name")),
+);
 
 const sortParticipant = (a: Participant, b: Participant) => {
   const aInit = b.init !== "" ? parseInt(b.init) : Infinity;
@@ -70,29 +77,6 @@ const getHPBarColor = (hpPercent: number) => {
   }
 
   return "bg-green-700";
-};
-
-const ConditionImage = ({
-  condition,
-  className,
-  onClick,
-}: {
-  condition: Condition;
-  size?: string;
-  className?: string;
-  onClick?: () => void;
-}) => {
-  return (
-    <TooltipComponent definition={condition.title}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        alt="icon"
-        className={cn("size-10", className)}
-        src={`../conditions/${condition.icon}.png`}
-        onClick={onClick}
-      />
-    </TooltipComponent>
-  );
 };
 
 export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
@@ -357,7 +341,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                               </span>
                             </div>
                           </PopoverTrigger>
-                          <PopoverContent className="flex w-full flex-col gap-4">
+                          <PopoverContent className="flex h-[450px] w-[575px] flex-col gap-4 overflow-auto">
                             <h4 className="text-xl font-semibold tracking-tight">
                               Points de vie
                             </h4>
@@ -377,12 +361,10 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                 onChange={handleUpdateMaxHP(participant)}
                                 onFocus={(event) => event.target.select()}
                               />
-                            </div>
-                            <div>
-                              <div className="mb-2 flex items-center gap-2">
+                              <div className="flex items-center gap-2">
                                 <Button
                                   className="bg-green-900 font-mono text-xs"
-                                  size="xs"
+                                  size="sm"
                                   variant="outline"
                                   onClick={() => setHpChangeMode("add")}
                                 >
@@ -390,7 +372,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                 </Button>
                                 <Button
                                   className="bg-red-900 font-mono text-xs"
-                                  size="xs"
+                                  size="sm"
                                   variant="outline"
                                   onClick={() => setHpChangeMode("sub")}
                                 >
@@ -402,6 +384,8 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                     : "Ajouter"}
                                 </span>
                               </div>
+                            </div>
+                            <div>
                               <div className="flex gap-2">
                                 {HIT_VALUES.map((value) => (
                                   <Button
@@ -452,6 +436,35 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                     }
                                   />
                                 </div>
+                              ))}
+                            </div>
+                            <div className="flex flex-wrap gap-2">
+                              {spellsWithEffects.map((spell) => (
+                                <Button
+                                  key={spell.id}
+                                  size="xs"
+                                  variant="secondary"
+                                  onClick={() => {
+                                    if (spell.combat?.effects) {
+                                      spell.combat.effects.forEach((effect) => {
+                                        const condition = typedConditions.find(
+                                          (c) => c.icon === effect,
+                                        );
+
+                                        handleSetCondition(
+                                          participant,
+                                          condition ?? {
+                                            title: spell.name,
+                                            description: effect,
+                                            icon: "spell",
+                                          },
+                                        );
+                                      });
+                                    }
+                                  }}
+                                >
+                                  {spell.name}
+                                </Button>
                               ))}
                             </div>
                             <div className="flex gap-2">

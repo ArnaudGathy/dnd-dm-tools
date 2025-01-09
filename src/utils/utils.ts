@@ -34,6 +34,26 @@ export const commonCreatureColors = [
   "#ee82ee",
 ];
 
+export const conditionExists = (condition: string) => {
+  return [
+    "blinded",
+    "charmed",
+    "deafened",
+    "exhausted",
+    "frightened",
+    "grappled",
+    "incapacitated",
+    "invisible",
+    "paralyzed",
+    "petrified",
+    "poisoned",
+    "prone",
+    "restrained",
+    "stunned",
+    "unconscious",
+  ].includes(condition);
+};
+
 export const groupEncounters = (encounters: Encounter[]) => {
   return reduce(
     entries(
@@ -106,6 +126,13 @@ export const getHPAsString = (creature: Creature) => {
   return creature.hitPoints.split("(")[0].trim();
 };
 
+export const getDistanceInSquareOrAsIs = (distance: string) => {
+  if (!distance.match(/^\d+\sm$/)) {
+    return distance;
+  }
+  return `${getDistanceInSquares(distance)} cases`;
+};
+
 export const getDistanceInSquares = (distance: string) => {
   if (!distance.match(/m/)) {
     throw new Error("Invalid speed. Speed must be in meters.");
@@ -167,6 +194,10 @@ export const getEncounterFromId = (encounterId: string) => {
   }
 
   return encounter;
+};
+
+export const getSpellFromId = (spellId: number) => {
+  return typedSpells.find((spell) => spell.id === spellId);
 };
 
 export const getCreatureFromId = (creatureId: number) => {

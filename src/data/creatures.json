@@ -263,7 +263,7 @@
     "traits": [
       {
         "name": "Déflagration funèbre",
-        "description": "Lorsqu’une guivre-follette meurt, elle explose dans un nuage de vapeurs toxiques. Chaque créature dans un rayon de 1,5 m de la guivre-follette doit réussir un jet de sauvegarde de Constitution DD 11 sous peine de subir 4 (1d8) dégâts de poison."
+        "description": "Lorsqu’une guivre-follette meurt, elle explose dans un nuage de vapeurs toxiques. Chaque créature dans un rayon de 1 case de la guivre-follette doit réussir un jet de sauvegarde de Constitution DD 11 sous peine de subir 4 (1d8) dégâts de poison."
       },
       {
         "name": "Être singulier",

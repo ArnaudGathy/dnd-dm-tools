@@ -6,7 +6,7 @@
     "bullets": [
       "Votre seule option de déplacement est de ramper, sauf si vous vous relevez (coute la moitié des mouvements).",
       "Vous avez un désavantage sur les jets d'attaque.",
-      "Les jets d'attaque contre vous ont l'avantage si l'attaquant est à 1,5 m de vous, sinon les jets d'attaque ont un désavantage."
+      "Les jets d'attaque contre vous ont l'avantage si l'attaquant est à 1 case de vous, sinon les jets d'attaque ont un désavantage."
     ]
   },
   {
@@ -109,7 +109,7 @@
       "Vous êtes incapacités, ne pouvez pas bouger ni parler, et n'êtes pas conscient de votre environnement.",
       "Vous laissez tomber tout ce que vous tenez et tombez à terre.",
       "Les jets d'attaque contre vous ont l'avantage.",
-      "Toute attaque qui vous touche est un coup critique si l'attaquant est à 1,5 m de vous.",
+      "Toute attaque qui vous touche est un coup critique si l'attaquant est à 1 case de vous.",
       "Vous échouez automatiquement aux jets de sauvegarde de Force et de Dextérité."
     ]
   },
@@ -131,7 +131,7 @@
     "bullets": [
       "Vous êtes incapacités et ne pouvez ni bouger ni parler.",
       "Les jets d'attaque contre vous ont l'avantage.",
-      "Toute attaque qui vous touche est un coup critique si l'attaquant est à 1,5 m de vous.",
+      "Toute attaque qui vous touche est un coup critique si l'attaquant est à 1 case de vous.",
       "Vous échouez automatiquement aux jets de sauvegarde de Force et de Dextérité."
     ]
   },

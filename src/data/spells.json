@@ -4,7 +4,7 @@
     "name": "Moquerie cruelle",
     "level": 0,
     "castingTime": "1 action",
-    "range": "18 mètres",
+    "range": "18 m",
     "components": "V",
     "duration": "instantanée",
     "description": "Vous vomissez un flot d'insultes entremêlées de subtils enchantements sur une créature à portée et que vous pouvez voir. Si la cible peut vous entendre (il n'est pas nécessaire qu'elle comprenne mais juste qu'elle devine votre intention), elle doit réussir un jet de sauvegarde de Sagesse ou subir 1d4 dégâts psychiques et avoir un désavantage au prochain jet d'attaque qu'elle fera avant la fin de son prochain tour. Les dégâts de ce sort augmentent de 1d4 lorsque vous atteignez le niveau 5 (2d4), le niveau 11 (3d4) et le niveau 17 (4d4). ",
@@ -29,18 +29,18 @@
     "name": "Main de mage",
     "level": 0,
     "castingTime": "1 action",
-    "range": "9 mètres",
+    "range": "9 m",
     "components": "V, S",
     "duration": "1 minute",
-    "description": "Une main spectrale apparaît à un point précis choisi à portée. La main expire à la fin de la durée du sort ou si elle est révoquée au prix d'une action. La main disparaît si elle se retrouve à plus de 9 mètres du lanceur de sorts ou si ce sort est jeté une nouvelle fois. Le lanceur de sorts peut utiliser son action pour contrôler la main. La main peut manipuler un objet, ouvrir une porte ou un contenant non verrouillé, ranger ou récupérer un objet d'un contenant ouvert, ou bien verser le contenu d'une fiole. La main peut être déplacée jusqu'à 9 mètres à chaque fois que vous l'utilisez. La main ne peut attaquer, activer des objets magiques ou transporter plus de 5 kg. "
+    "description": "Une main spectrale apparaît à un point précis choisi à portée. La main expire à la fin de la durée du sort ou si elle est révoquée au prix d'une action. La main disparaît si elle se retrouve à plus de 9 m du lanceur de sorts ou si ce sort est jeté une nouvelle fois. Le lanceur de sorts peut utiliser son action pour contrôler la main. La main peut manipuler un objet, ouvrir une porte ou un contenant non verrouillé, ranger ou récupérer un objet d'un contenant ouvert, ou bien verser le contenu d'une fiole. La main peut être déplacée jusqu'à 9 m à chaque fois que vous l'utilisez. La main ne peut attaquer, activer des objets magiques ou transporter plus de 5 kg. "
   },
   {
     "id": 3,
     "name": "Fou rire de Tasha",
     "level": 1,
     "castingTime": "1 action",
-    "range": "9 mètres",
-    "components": "V, S, M (de minuscules tartes et une plume qui est agitée dans les airs)",
+    "range": "9 m",
+    "components": "V, S, M",
     "duration": "concentration, jusqu'à 1 minute",
     "description": " Une créature de votre choix, que vous pouvez voir et à portée, a l'impression que tout ce qu'elle perçoit est hilarant et lui provoque une intense crise de fou rire. La cible doit réussir un jet de sauvegarde de Sagesse sous peine de tomber à terre, et être incapable d'agir et de se relever pour toute la durée du sort. Une créature ayant une Intelligence de 4 ou moins ne peut pas être affectée par ce sort. À la fin de chacun de ses tours, et à chaque fois qu'elle subit des dégâts, la cible peut effectuer un nouveau jet de sauvegarde de Sagesse. La cible a un avantage à son jet de sauvegarde s'il est déclenché par des dégâts. En cas de réussite, le sort prend fin. ",
     "combat": {
@@ -49,7 +49,7 @@
       "saveSuccess": "Non affecté",
       "effects": ["prone", "incapacitated"],
       "restrictions": ["INT >= 5"],
-      "recovery": "JdS SAG à la fin de chaque tour ainsi que lorsqu'elle se fait attaquer, avec avantage."
+      "recovery": "JdS SAG à la fin de chaque tour. Ainsi que lorsqu'elle se fait attaquer, avec avantage."
     }
   },
   {
@@ -57,7 +57,7 @@
     "name": "Mot de guérison",
     "level": 1,
     "castingTime": "1 action bonus",
-    "range": "18 mètres",
+    "range": "18 m",
     "components": "V",
     "duration": "instantanée",
     "description": "Une créature visible de votre choix récupère des points de vie à hauteur de 1d4 + le modificateur de votre caractéristique d'incantation. Ce sort n'a pas d'effet sur les morts-vivants et les artificiels. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, les points de vie récupérés augmentent de 1d4 pour chaque niveau d'emplacement au-delà du niveau 1. "
@@ -67,10 +67,10 @@
     "name": "Charme-personne",
     "level": 1,
     "castingTime": "1 action",
-    "range": "9 mètres",
+    "range": "9 m",
     "components": "V, S",
     "duration": "1 heure",
-    "description": "Vous pouvez tenter de charmer un humanoïde que vous pouvez voir à portée. Ce dernier doit effectuer un jet de sauvegarde de Sagesse, avec un avantage à son jet si vous ou vos compagnons le combattez. En cas d'échec, il est charmé jusqu'à la fin de la durée du sort ou jusqu'à ce que vous ou vos compagnons cherchiez à lui nuire. La créature charmée vous considère comme un bon ami. Quand le sort prend fin, la créature sait que vous l'avez charmée. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, vous pouvez cibler une créature supplémentaire pour chaque niveau d'emplacement au-delà du niveau 1. Les créatures doivent se trouver à 9 mètres maximum les unes des autres lorsque vous les ciblez. "
+    "description": "Vous pouvez tenter de charmer un humanoïde que vous pouvez voir à portée. Ce dernier doit effectuer un jet de sauvegarde de Sagesse, avec un avantage à son jet si vous ou vos compagnons le combattez. En cas d'échec, il est charmé jusqu'à la fin de la durée du sort ou jusqu'à ce que vous ou vos compagnons cherchiez à lui nuire. La créature charmée vous considère comme un bon ami. Quand le sort prend fin, la créature sait que vous l'avez charmée. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, vous pouvez cibler une créature supplémentaire pour chaque niveau d'emplacement au-delà du niveau 1. Les créatures doivent se trouver à 9 m maximum les unes des autres lorsque vous les ciblez. "
   },
   {
     "id": 6,
@@ -88,10 +88,10 @@
     "name": "Rayon de givre",
     "level": 0,
     "castingTime": "1 action",
-    "range": "18 mètres",
+    "range": "18 m",
     "components": "V, S",
     "duration": "instantanée",
-    "description": "Un faisceau glacial de lumière bleuâtre se dirige vers une créature dans la portée du sort. Effectuez une attaque à distance avec un sort contre la cible. S'il touche, la cible subit 1d8 dégâts de froid et sa vitesse est réduite de 3 mètres jusqu'à début de votre prochain tour. Les dégâts du sort augmentent de 1d8 lorsque vous atteignez le niveau 5 (2d8), le niveau 11 (3d8) et le niveau 17 (4d8). ",
+    "description": "Un faisceau glacial de lumière bleuâtre se dirige vers une créature dans la portée du sort. Effectuez une attaque à distance avec un sort contre la cible. S'il touche, la cible subit 1d8 dégâts de froid et sa vitesse est réduite de 3 m jusqu'à début de votre prochain tour. Les dégâts du sort augmentent de 1d8 lorsque vous atteignez le niveau 5 (2d8), le niveau 11 (3d8) et le niveau 17 (4d8). ",
     "combat": {
       "type": "attack",
       "damage": {
@@ -123,13 +123,7 @@
     "range": "personnelle",
     "components": "V, S",
     "duration": "1 round",
-    "description": "Vous tendez votre main et tracez un symbole de protection dans les airs. Jusqu'à la fin de votre prochain tour, vous obtenez la résistance contre les dégâts contondants, tranchants et perforants infligés par des attaques avec arme. ",
-    "combat": {
-      "type": "status",
-      "effects": [
-        "Résistance (1/2) aux dégâts d'armes jusqu'à la fin du prochain tour."
-      ]
-    }
+    "description": "Vous tendez votre main et tracez un symbole de protection dans les airs. Jusqu'à la fin de votre prochain tour, vous obtenez la résistance contre les dégâts contondants, tranchants et perforants infligés par des attaques avec arme. "
   },
   {
     "id": 10,
@@ -152,7 +146,7 @@
     "name": "Projectile magique",
     "level": 1,
     "castingTime": "1 action",
-    "range": "36 mètres",
+    "range": "36 m",
     "components": "V, S",
     "duration": "instantanée",
     "description": "Vous créez trois fléchettes de force magique d'un bleu lumineux. Chaque fléchette atteint une créature de votre choix que vous pouvez voir et dans la limite de portée du sort. Chaque projectile inflige 1d4 + 1 dégâts de force à sa cible. Les fléchettes frappent simultanément, et peuvent frapper une ou plusieurs créatures. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, il crée une fléchette additionnelle pour chaque niveau d'emplacement au-delà du niveau 1. ",
@@ -172,7 +166,7 @@
     "range": "personnelle (cube de 4,50 mètres d'arête)",
     "components": "V, S",
     "duration": "instantanée",
-    "description": "Une vague de force de tonnerre émane de vous. Toute créature se trouvant dans un cube de 4,50 mètres d'arête prenant origine à partir de vous-même doit effectuer un jet de sauvegarde de Constitution. En cas d'échec, la créature subit 2d8 dégâts de tonnerre et est repoussée de 3 mètres de vous. En cas de réussite, elle subit la moitié de ces dégâts et n'est pas repoussée. En outre, les objets non fixés qui se trouvent entièrement dans la zone d'effet sont automatiquement repoussés de 3 mètres par l'effet du sort, et le sort émet un coup de tonnerre audible jusqu'à 90 mètres. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, les dégâts augmentent de 1d8 pour chaque niveau d'emplacement au-delà du niveau 1. ",
+    "description": "Une vague de force de tonnerre émane de vous. Toute créature se trouvant dans un cube de 4,50 m d'arête prenant origine à partir de vous-même doit effectuer un jet de sauvegarde de Constitution. En cas d'échec, la créature subit 2d8 dégâts de tonnerre et est repoussée de 3 m de vous. En cas de réussite, elle subit la moitié de ces dégâts et n'est pas repoussée. En outre, les objets non fixés qui se trouvent entièrement dans la zone d'effet sont automatiquement repoussés de 3 m par l'effet du sort, et le sort émet un coup de tonnerre audible jusqu'à 90 m. Aux niveaux supérieurs. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau 2 ou supérieur, les dégâts augmentent de 1d8 pour chaque niveau d'emplacement au-delà du niveau 1. ",
     "combat": {
       "type": "save",
       "save": "constitution",
@@ -180,11 +174,124 @@
       "damage": {
         "1": "2d8"
       },
-      "spellLevelScale": "1d8",
+      "spellLevelScale": "+1d8"
+    }
+  },
+  {
+    "id": 13,
+    "name": "Trait de feu",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Vous lancez un trait de feu sur une créature ou un objet dans la portée du sort. Effectuez une attaque à distance avec un sort contre la cible. Si l'attaque touche, la cible subit 1d10 dégâts de feu. Un objet inflammable touché par ce sort prend feu s’il n’est pas porté ou transporté. Les dégâts de ce sort augmentent de 1d10 lorsque vous atteignez le niveau 5 (2d10), le niveau 11 (3d10) et le niveau 17 (4d10).",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "1d10",
+        "5": "2d10",
+        "11": "3d10",
+        "17": "4d10"
+      }
+    }
+  },
+  {
+    "id": 14,
+    "name": "Murmures dissonants",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V",
+    "duration": "instantanée",
+    "description": "Vous murmurez une mélodie discordante qui ne peut être entendue que par une créature de votre choix dans la portée du sort. La cible doit effectuer un jet de sauvegarde de Sagesse. En cas d'échec, elle subit 3d6 dégâts psychiques et doit immédiatement utiliser sa réaction pour s'éloigner le plus possible de vous. La créature ne bouge pas dans un terrain manifestement dangereux, comme une falaise. En cas de réussite, elle subit la moitié des dégâts et ne doit pas se déplacer. Les dégâts augmentent de 1d6 lorsque vous lancez ce sort avec un emplacement de niveau supérieur.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "1/2 dégâts, pas de déplacement",
+      "damage": {
+        "1": "3d6"
+      },
+      "spellLevelScale": "+1d6",
       "effects": [
-        "Repousse les cibles et objets de 3 cases",
-        "Produit un bruit de 90m de portée"
+        "S'éloigne du lanceur immédiatement (réaction). Ne se déplace pas sur un terrain dangereux."
       ]
     }
+  },
+  {
+    "id": 15,
+    "name": "Explosion occulte",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Un faisceau d'énergie crépitante s'élance vers une créature dans la portée du sort. Effectuez une attaque à distance avec un sort contre la cible. Si l'attaque touche, la cible subit 1d10 dégâts de force. Le sort bénéficie des invocations occultes pour des effets supplémentaires selon le choix de l'incantateur. Les dégâts augmentent de 1d10 lorsque vous atteignez le niveau 5 (2d10), le niveau 11 (3d10) et le niveau 17 (4d10).",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "1d10",
+        "5": "2d10",
+        "11": "3d10",
+        "17": "4d10"
+      }
+    }
+  },
+  {
+    "id": 16,
+    "name": "Thaumaturgie",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V",
+    "duration": "1 minute",
+    "description": "Vous manifestez un signe mineur de votre puissance divine, créant l'un des effets magiques suivants dans la portée du sort : votre voix s’amplifie, un tremblement mineur se produit au sol, une flamme vacille, brille, s’assombrit ou change de couleur, vous ouvrez ou fermez une porte ou une fenêtre non verrouillée, ou vous changez temporairement l'apparence de vos yeux. Vous pouvez activer jusqu’à trois de ces effets en même temps."
+  },
+  {
+    "id": 17,
+    "name": "Armure d'Agathys",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S, M",
+    "duration": "1 heure",
+    "description": "Une force magique protectrice vous enveloppe, vous offrant 5 points de vie temporaires et infligeant 5 dégâts de froid à toute créature qui vous touche avec une attaque de mêlée pendant la durée du sort. Lorsque vous lancez ce sort en utilisant un emplacement de niveau supérieur, les points de vie temporaires et les dégâts augmentent de 5 pour chaque niveau d’emplacement supérieur."
+  },
+  {
+    "id": 18,
+    "name": "Maléfice",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "27 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu’à 1 heure",
+    "description": "Vous placez une malédiction sur une créature que vous pouvez voir dans la portée du sort. Jusqu'à la fin du sort, vous infligez 1d6 dégâts nécrotiques supplémentaires à la cible chaque fois que vous lui portez des dégâts. De plus, choisissez une caractéristique. La cible a un désavantage aux tests de caractéristique associés à cette caractéristique. Si la cible tombe à 0 points de vie avant que ce sort prenne fin, vous pouvez utiliser une action bonus pour maudire une autre créature.",
+    "combat": {
+      "type": "status",
+      "effects": [
+        "+1d6 nécro subits par les attaques du lanceur du sort.",
+        "Désavantage aux tests d’une caractéristique choisie"
+      ]
+    }
+  },
+  {
+    "id": 19,
+    "name": "Compréhension des langues",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S, M",
+    "duration": "1 heure",
+    "description": "Pendant la durée du sort, vous comprenez le sens littéral de tout langage parlé que vous entendez. Vous comprenez également tout texte écrit que vous voyez, mais vous devez être à moins de 9 mètres de l'écrit. Il vous faut environ une minute pour lire une page de texte. Ce sort ne déchiffre pas les messages codés ou magiques tels que les glyphes, sauf s'ils contiennent du texte clair lisible."
+  },
+  {
+    "id": 20,
+    "name": "Image silencieuse",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu’à 10 minutes",
+    "description": "Vous créez l'image d'un objet, d'une créature ou d'une scène visible dans la portée du sort. L'image est purement visuelle, dépourvue de son, d'odeur ou d'autres stimuli sensoriels. Vous pouvez utiliser votre action pour déplacer l'image dans un espace dans les limites de portée. En interagissant physiquement avec l'image, une créature peut déterminer qu'il s'agit d'une illusion avec un test d'Intelligence (Investigation) contre le DD de sauvegarde de votre sort. Si une créature discerne l'illusion, elle devient translucide pour elle."
   }
 ]

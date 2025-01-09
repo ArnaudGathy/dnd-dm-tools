@@ -17,7 +17,7 @@
         "player": "Logan",
         "color": "#4b0082",
         "gameClass": "Sorcier",
-        "spells": []
+        "spells": [8, 15, 16, 17, 18, 19, 20]
       },
       {
         "id": 3,
@@ -25,7 +25,7 @@
         "player": "Anthony",
         "color": "#ff1493",
         "gameClass": "Barde",
-        "spells": [1, 2, 3, 4, 5, 6]
+        "spells": [1, 2, 3, 4, 5, 6, 14]
       },
       {
         "id": 4,
@@ -33,7 +33,7 @@
         "player": "Loïc",
         "color": "#0b6e15",
         "gameClass": "Roublard",
-        "spells": []
+        "spells": [13]
       },
       {
         "id": 5,
@@ -41,7 +41,7 @@
         "player": "Mathias",
         "color": "#0000ff",
         "gameClass": "Roublard",
-        "spells": []
+        "spells": [8]
       }
     ]
   },

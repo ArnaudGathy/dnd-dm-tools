@@ -10,7 +10,7 @@ const Encounters = () => {
     <div className="grid grid-rows-2 gap-4">
       {entries(groupedEncounters).map(([scenario, encounters]) => (
         <div key={scenario}>
-          <h1 className="mb-6 mt-4 text-2xl font-semibold leading-none tracking-tight">
+          <h1 className="mb-6 text-2xl font-semibold leading-none tracking-tight">
             {scenario}
           </h1>
           <div className="grid grid-cols-4 gap-4">
