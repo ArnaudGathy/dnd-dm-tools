@@ -101,7 +101,7 @@
         "17": "4d8"
       },
       "effects": [
-        "Vitesse de déplacement réduit de 2 cases jusqu'au début du prochain tour du caster"
+        "Vitesse de déplacement réduit de 2 cases jusqu'au début du prochain tour du lanceur"
       ]
     }
   },
@@ -174,6 +174,7 @@
       "damage": {
         "1": "2d8"
       },
+      "effects": ["Repoussé de 2 cases"],
       "spellLevelScale": "+1d8"
     }
   },
@@ -293,5 +294,311 @@
     "components": "V, S, M",
     "duration": "concentration, jusqu’à 10 minutes",
     "description": "Vous créez l'image d'un objet, d'une créature ou d'une scène visible dans la portée du sort. L'image est purement visuelle, dépourvue de son, d'odeur ou d'autres stimuli sensoriels. Vous pouvez utiliser votre action pour déplacer l'image dans un espace dans les limites de portée. En interagissant physiquement avec l'image, une créature peut déterminer qu'il s'agit d'une illusion avec un test d'Intelligence (Investigation) contre le DD de sauvegarde de votre sort. Si une créature discerne l'illusion, elle devient translucide pour elle."
+  },
+  {
+    "id": 21,
+    "name": "Appel de familier (rituel)",
+    "level": 1,
+    "castingTime": "1 heure",
+    "range": "3 m",
+    "components": "V, S, M",
+    "duration": "instantanée",
+    "description": "Vous obtenez les services d’un familier, un esprit qui prend une forme animale de votre choix : chauve-souris, chat, crabe, crapaud, faucon, hibou, lézard, pieuvre, poisson, rat, serpent, araignée ou belette. Le familier apparaît dans une case libre à portée. Il agit indépendamment de vous, mais il obéit à vos ordres. Pendant que le familier est à 30 mètres ou moins de vous, vous pouvez communiquer avec lui par télépathie. Vous pouvez utiliser une action pour voir à travers ses yeux et entendre par ses oreilles jusqu’à la fin de votre prochain tour, et ce, tant qu’il est dans ce rayon. En tant qu'action bonus, vous pouvez révoquer le familier temporairement ou définitivement."
+  },
+  {
+    "id": 22,
+    "name": "Aspersion d'acide",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Vous projetez une goutte d’acide sur une ou deux créatures à portée. Les cibles doivent réussir un jet de sauvegarde de Dextérité ou subir 1d6 dégâts d’acide. Les dégâts de ce sort augmentent de 1d6 lorsque vous atteignez le niveau 5 (2d6), le niveau 11 (3d6) et le niveau 17 (4d6).",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Non affecté",
+      "damage": {
+        "1": "1d6",
+        "5": "2d6",
+        "11": "3d6",
+        "17": "4d6"
+      }
+    }
+  },
+  {
+    "id": 23,
+    "name": "Bouclier",
+    "level": 1,
+    "castingTime": "1 réaction (attaque physique)",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "1 round",
+    "description": "Une barrière invisible de force magique apparaît pour vous protéger. Jusqu’au début de votre prochain tour, vous bénéficiez d’un bonus de +5 à la CA, y compris contre l’attaque déclenchant ce sort, et vous n’êtes pas affecté par le sort projectile magique."
+  },
+  {
+    "id": 24,
+    "name": "Graisse",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "1 minute",
+    "description": "Vous couvrez une surface au sol de 3 mètres de côté à portée d’une fine couche de graisse. Cette zone devient un terrain difficile pour la durée. Toute créature se tenant dans la zone doit réussir un jet de sauvegarde de Dextérité ou tomber à terre (prone). Les créatures qui pénètrent dans la zone ou y terminent leur tour doivent également effectuer ce jet.",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Ne tombe pas",
+      "effects": ["prone"]
+    }
+  },
+  {
+    "id": 25,
+    "name": "Lumières dansantes",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Vous créez jusqu’à quatre lumières torchères qui apparaissent dans un rayon de 36 mètres. Vous pouvez utiliser une action pour déplacer les lumières jusqu’à 18 mètres à l’intérieur de cette portée. Les lumières peuvent prendre la forme d’une humanoïde lumineuse si elles sont regroupées, mais elles ne peuvent produire qu’une lumière douce d’un rayon de 3 mètres."
+  },
+  {
+    "id": 26,
+    "name": "Mains brûlantes",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "4,5 m (cône)",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Une gerbe de flammes s’échappe de vos mains. Toute créature dans un cône de 4,5 mètres doit réussir un jet de sauvegarde de Dextérité ou subir 3d6 dégâts de feu. Une créature réussissant le jet subit la moitié des dégâts. Les dégâts augmentent de 1d6 pour chaque niveau d'emplacement de sort au-delà du premier.",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "1/2 dégâts",
+      "damage": {
+        "1": "3d6"
+      },
+      "spellLevelScale": "+1d6"
+    }
+  },
+  {
+    "id": 27,
+    "name": "Orbe chromatique",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "27 m",
+    "components": "V, S, M",
+    "duration": "instantanée",
+    "description": "Vous projetez un orbe scintillant d'énergie sur une créature à portée. Vous choisissez le type de dégâts (acide, froid, feu, foudre, poison ou tonnerre) au moment de lancer le sort. Effectuez une attaque à distance avec un sort contre la cible. Si l’attaque touche, la cible subit 3d8 dégâts du type choisi. Lorsque vous lancez ce sort en utilisant un emplacement de niveau supérieur, les dégâts augmentent de 1d8 par niveau d’emplacement au-delà du premier.",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "3d8"
+      },
+      "spellLevelScale": "+1d8"
+    }
+  },
+  {
+    "id": 28,
+    "name": "Saut",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu’à 1 minute",
+    "description": "La distance de saut d'une créature que vous touchez est triplée jusqu'à la fin du sort."
+  },
+  {
+    "id": 29,
+    "name": "Bénédiction",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Vous bénissez jusqu’à trois créatures de votre choix à portée. À chaque fois qu’une cible effectue un jet d’attaque ou un jet de sauvegarde avant la fin du sort, elle peut lancer un d4 et ajouter le résultat au jet."
+  },
+  {
+    "id": 30,
+    "name": "Bouclier de la foi",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Un champ lumineux entoure une créature de votre choix à portée, lui conférant un bonus de +2 à la CA pour la durée."
+  },
+  {
+    "id": 31,
+    "name": "Injonction",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V",
+    "duration": "1 round",
+    "description": "Vous prononcez un mot de commandement à une créature que vous pouvez voir et qui est à portée. La cible doit réussir un jet de sauvegarde de Sagesse ou obéir à la commande pendant son prochain tour. Les cibles qui ne comprennent pas votre langue ou sont immunisées contre le charme ne sont pas affectées.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affecté",
+      "effects": ["Suit la commande du lanceur du sort à son prochain tour"],
+      "restrictions": [
+        "Voir la cible",
+        "Doit comprendre la langue",
+        "Sensible au charme"
+      ]
+    }
+  },
+  {
+    "id": 32,
+    "name": "Détection de la magie",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Pendant la durée, vous sentez la présence de la magie dans un rayon de 9 m autour de vous. Si vous détectez de la magie, vous pouvez utiliser votre action pour voir une faible aura autour de tout objet ou créature portant de la magie, et vous apprendrez également son école, si elle en a une. Le sort peut pénétrer la plupart des barrières, mais il est bloqué par 30 cm de pierre, 2,5 cm de métal commun, une fine feuille de plomb ou 1 m de bois ou de terre."
+  },
+  {
+    "id": 33,
+    "name": "Détection du mal et du bien",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Pendant la durée, vous savez si un céleste, un fiélon, un mort-vivant, une créature fée ou une créature élémentaire se trouve à 9 m de vous, ainsi que la localisation de ces créatures. Le sort détecte également la présence de lieux ou objets consacrés ou profanés, comme ceux affectés par le sort consécration ou profanation. Le sort peut pénétrer la plupart des barrières, mais il est bloqué par 30 cm de pierre, 2,5 cm de métal commun, une fine feuille de plomb ou 1 m de bois ou de terre."
+  },
+  {
+    "id": 34,
+    "name": "Détection du poison et des maladies",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Pendant la durée, vous détectez la présence et l'emplacement de poisons, de créatures venimeuses et de maladies dans un rayon de 9 m autour de vous. Vous identifiez également le type de poison, de créature venimeuse ou de maladie présente. Le sort peut pénétrer la plupart des barrières, mais il est bloqué par 30 cm de pierre, 2,5 cm de métal commun, une fine feuille de plomb ou 1 m de bois ou de terre."
+  },
+  {
+    "id": 35,
+    "name": "Duel forcé",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "9 m",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Vous forcez une créature à portée que vous pouvez voir à se concentrer uniquement sur vous. La cible doit réussir un jet de sauvegarde de Sagesse ou être désavantagée à ses jets d'attaque contre toute autre créature que vous. Ce désavantage persiste tant que vous restez à portée et que le sort est actif.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affecté",
+      "effects": [
+        "Désavantage sur les attaques contre d'autres cibles que le Paladin"
+      ],
+      "restrictions": ["Doit voir la cible"]
+    }
+  },
+  {
+    "id": 36,
+    "name": "Faveur divine",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Votre prière vous imprègne d’une puissance divine. Jusqu’à la fin du sort, vos attaques avec des armes infligent 1d4 dégâts radiants supplémentaires en cas de réussite."
+  },
+  {
+    "id": 37,
+    "name": "Frappe ardente",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "personnelle",
+    "components": "V",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "La prochaine fois que vous touchez une créature avec une arme pendant la durée du sort, votre attaque inflige 1d6 dégâts de feu supplémentaires. De plus, la cible doit réussir un jet de sauvegarde de Dextérité ou prendre feu. Une créature en feu subit 1d6 dégâts de feu à la fin de chacun de ses tours tant qu'elle ne s'éteint pas (action).",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Ne prends pas feu",
+      "damage": {
+        "1": "1d6"
+      },
+      "effects": [
+        "Enflammée - 1d6 dégats à la fin de chaque tour jusqu'a extinction (1 action)"
+      ]
+    }
+  },
+  {
+    "id": 38,
+    "name": "Frappe colérique",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "personnelle",
+    "components": "V",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "La prochaine fois que vous touchez une créature avec une arme pendant la durée du sort, votre attaque inspire une terreur magique. La cible doit réussir un jet de sauvegarde de Sagesse ou être effrayée de vous jusqu’à la fin du sort.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affectée",
+      "effects": ["frightened"]
+    }
+  },
+  {
+    "id": 39,
+    "name": "Frappe tonitruante",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "personnelle",
+    "components": "V",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "La prochaine fois que vous touchez une créature avec une arme pendant la durée du sort, votre attaque résonne d'un bruit de tonnerre audible jusqu’à 90 m. La cible doit réussir un jet de sauvegarde de Force ou être repoussée de 3 m et tomber à terre (prone).",
+    "combat": {
+      "type": "save",
+      "save": "strength",
+      "saveSuccess": "Non repoussée ni renversée",
+      "effects": ["Repoussé de 2 cases", "prone"]
+    }
+  },
+  {
+    "id": 40,
+    "name": "Héroïsme",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Une créature que vous touchez est imprégnée de bravoure. Elle est immunisée contre l'état effrayé et gagne des points de vie temporaires égaux à votre modificateur de caractéristique d'incantation au début de chacun de ses tours tant que le sort est actif."
+  },
+  {
+    "id": 41,
+    "name": "Protection contre le mal et le bien",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Une créature que vous touchez est protégée contre certains types de créatures : célestes, fiélons, morts-vivants, fées et élémentaires. Les créatures de ces types ont un désavantage à leurs jets d’attaque contre la cible et elle ne peut pas être charmée, effrayée ou possédée par elles. Si la cible est déjà charmée, effrayée ou possédée par une telle créature, elle refait immédiatement un jet de sauvegarde avec un avantage pour mettre fin à l’effet."
+  },
+  {
+    "id": 42,
+    "name": "Purification de la nourriture et de l’eau",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "1,5 m",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Toute la nourriture et l’eau non magique dans un rayon de 1,5 m centré sur un point à portée sont purifiées et rendues exemptes de poison et de maladie."
+  },
+  {
+    "id": 43,
+    "name": "Soin des blessures",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Une créature que vous touchez regagne un nombre de points de vie égal à 1d8 + votre modificateur de caractéristique d'incantation. Les points de vie restaurés augmentent de 1d8 pour chaque niveau d’emplacement supérieur utilisé pour lancer le sort."
   }
 ]

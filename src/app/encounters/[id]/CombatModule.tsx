@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Condition,
   Encounter,
@@ -28,7 +28,7 @@ import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { getPartyLevel } from "@/utils/localStorageUtils";
+import { getParty, getPartyLevel } from "@/utils/localStorageUtils";
 import {
   Popover,
   PopoverContent,
@@ -38,7 +38,7 @@ import Link from "next/link";
 import { TooltipComponent } from "@/components/ui/tooltip";
 import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
 import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
-import { filter, pipe, prop, sortBy } from "remeda";
+import { filter, flatMap, pipe, prop, sortBy, unique, values } from "remeda";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 const HIT_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
@@ -81,12 +81,13 @@ const getHPBarColor = (hpPercent: number) => {
 
 export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const partyLevel = getPartyLevel();
+  const party = getParty();
 
   const [shouldShowAddParticipant, setShouldShowAddParticipant] =
     useState(false);
   const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(
     [
-      ...getParticipantFromCharacters(),
+      ...getParticipantFromCharacters(party),
       ...getParticipantFromEncounter({
         encounter,
         partyLevel,
@@ -121,6 +122,31 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       }
     },
     [handleAddParticipant],
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyDown, true);
+    return () => {
+      document.removeEventListener("keydown", handleKeyDown, true);
+    };
+  }, [handleKeyDown]);
+
+  if (!party) {
+    throw new Error("Party not found");
+  }
+
+  const partySpells = useMemo(
+    () =>
+      pipe(
+        party.characters,
+        values(),
+        flatMap((character) => character.spells),
+        unique(),
+      ),
+    [party],
+  );
+  const spellsWithEffectsFromParty = filter(spellsWithEffects, (spell) =>
+    partySpells.includes(spell.id),
   );
 
   const handleUpdateCurrentHP =
@@ -192,13 +218,6 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       }),
     );
   };
-
-  useEffect(() => {
-    document.addEventListener("keydown", handleKeyDown, true);
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown, true);
-    };
-  }, [handleKeyDown]);
 
   return (
     <>
@@ -439,7 +458,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                               ))}
                             </div>
                             <div className="flex flex-wrap gap-2">
-                              {spellsWithEffects.map((spell) => (
+                              {spellsWithEffectsFromParty.map((spell) => (
                                 <Button
                                   key={spell.id}
                                   size="xs"

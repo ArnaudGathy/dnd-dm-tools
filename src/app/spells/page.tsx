@@ -1,6 +1,6 @@
 "use client";
 
-import { typedParties, typedSpells } from "@/utils/utils";
+import { typedSpells } from "@/utils/utils";
 import {
   entries,
   filter,
@@ -13,41 +13,68 @@ import {
   prop,
   reduce,
   sortBy,
+  unique,
+  values,
 } from "remeda";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/components/ui/Link";
 import { Spell } from "@/types/schemas";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Party } from "@/types/types";
+import { getParty } from "@/utils/localStorageUtils";
+import dynamic from "next/dynamic";
 
-const spellsByPlayer = pipe(
-  typedParties,
-  flatMap(prop("characters")),
-  sortBy(prop("name")),
-  reduce((spellsByPlayer: { [key: string]: Spell[] }, player) => {
-    if (!spellsByPlayer[player.name]) {
-      const spellList = pipe(
-        player.spells,
-        map((id) => find(typedSpells, (spell) => spell.id === id)),
-        filter(isDefined),
-        sortBy(prop("name")),
-      );
+const getSpellsByPlayer = (party: Party) =>
+  pipe(
+    party.characters,
+    sortBy(prop("name")),
+    reduce((spellsByPlayer: { [key: string]: Spell[] }, player) => {
+      if (!spellsByPlayer[player.name]) {
+        const spellList = pipe(
+          player.spells,
+          map((id) => find(typedSpells, (spell) => spell.id === id)),
+          filter(isDefined),
+          sortBy(prop("name")),
+        );
 
-      if (spellList.length > 0) {
-        return {
-          ...spellsByPlayer,
-          [player.name]: spellList,
-        };
+        if (spellList.length > 0) {
+          return {
+            ...spellsByPlayer,
+            [player.name]: spellList,
+          };
+        }
       }
-    }
-    return spellsByPlayer;
-  }, {}),
-);
+      return spellsByPlayer;
+    }, {}),
+  );
 
-const spellsByLevel = groupBy(sortBy(typedSpells, prop("name")), prop("level"));
+const getSpellsByLevel = (party: Party) => {
+  const partySpells = pipe(
+    party.characters,
+    values(),
+    flatMap((character) => character.spells),
+    unique(),
+  );
+  return pipe(
+    typedSpells,
+    filter((spell) => partySpells.includes(spell.id)),
+    sortBy(prop("name")),
+    groupBy(prop("level")),
+  );
+};
 
 const Spells = () => {
+  const party = getParty();
+
   const [displayBy, setDisplayBy] = useState("player");
+
+  if (!party) {
+    return null;
+  }
+
+  const spellsByPlayer = getSpellsByPlayer(party);
+  const spellsByLevel = getSpellsByLevel(party);
 
   const getList = (): { [key: string]: Spell[] } => {
     if (displayBy === "level") {
@@ -105,4 +132,4 @@ const Spells = () => {
   );
 };
 
-export default Spells;
+export default dynamic(() => Promise.resolve(Spells), { ssr: false });

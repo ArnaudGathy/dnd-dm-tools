@@ -11,9 +11,13 @@ export const EffectsBlock = ({ effects }: { effects: string[] }) => {
           {effects.map((effect) => {
             const condition = typedConditions.find((c) => c.icon === effect);
             return condition ? (
-              <ConditionImage condition={condition} className="size-6" />
+              <ConditionImage
+                key={effect}
+                condition={condition}
+                className="size-6"
+              />
             ) : (
-              <span>{effect}</span>
+              <span key={effect}>{effect}</span>
             );
           })}
         </span>

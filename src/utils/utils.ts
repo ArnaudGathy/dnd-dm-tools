@@ -12,7 +12,6 @@ import creatures from "@/data/creatures.json";
 import parties from "@/data/parties.json";
 import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
-import { getParty } from "@/utils/localStorageUtils";
 import { entries, groupBy, prop, reduce, sortBy } from "remeda";
 import conditions from "@/data/conditions.json";
 import spellList from "@/data/spells.json";
@@ -169,8 +168,7 @@ export const getInitiative = (creature: Creature) => {
   return (roll(20) + getModifierFromCreature(creature, "dexterity")).toString();
 };
 
-export const getParticipantFromCharacters = () => {
-  const party = getParty();
+export const getParticipantFromCharacters = (party: Party | null) => {
   if (!party) {
     throw new Error("Party not found");
   }
