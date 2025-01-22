@@ -44,7 +44,8 @@
         "name": "Respiration aquatique",
         "description": "La pieuvre ne peut respirer que sous l'eau."
       }
-    ]
+    ],
+    "colors": ["#bb3d3d"]
   },
   {
     "name": "Zombi",
@@ -173,6 +174,16 @@
         "target": "1 cible",
         "hit": "5 (1d4+3) dégâts perforants, la stirge se fixe et inflige 5 (1d4+3) PV au début du tour de la cible."
       }
+    ],
+    "colors": [
+      "#bd3333",
+      "#0b1e4f",
+      "#055f93",
+      "#7c919d",
+      "#bd3333",
+      "#0b1e4f",
+      "#055f93",
+      "#7c919d"
     ]
   },
   {
@@ -283,7 +294,8 @@
         "name": "Souffle bouillant (Recharge 6)",
         "description": "La guivre-follette exhale de la vapeur brûlante sous forme de cône de 4,5 m. Chaque créature prise dans le cône doit réussir un jet de sauvegarde de Dextérité DD 11 et subit 4 (1d8) dégâts de feu en cas d’échec, la moitié en cas de réussite."
       }
-    ]
+    ],
+    "colors": ["#f57100", "#4f1b07"]
   },
   {
     "name": "Goule",

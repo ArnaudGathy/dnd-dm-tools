@@ -27,7 +27,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { UserPlusIcon, BookOpenIcon } from "@heroicons/react/24/solid";
 import { getParty, getPartyLevel } from "@/utils/localStorageUtils";
 import {
   Popover,
@@ -346,7 +346,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     </TooltipComponent>
                   </div>
                   <div className="flex-1 text-center">
-                    {participant.hp !== "" && (
+                    {participant.hp !== "" ? (
                       <div className="flex items-center gap-4">
                         <Popover>
                           <PopoverTrigger asChild>
@@ -504,6 +504,14 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                           </PopoverContent>
                         </Popover>
                       </div>
+                    ) : (
+                      <Link
+                        href={`/spells?player=${participant.name}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <BookOpenIcon className="size-6" />
+                      </Link>
                     )}
                   </div>
                   <div className="flex gap-2">

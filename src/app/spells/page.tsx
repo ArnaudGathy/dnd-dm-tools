@@ -24,6 +24,7 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Party } from "@/types/types";
 import { getParty } from "@/utils/localStorageUtils";
 import dynamic from "next/dynamic";
+import { useSearchParams } from "next/navigation";
 
 const getSpellsByPlayer = (party: Party) =>
   pipe(
@@ -41,7 +42,7 @@ const getSpellsByPlayer = (party: Party) =>
         if (spellList.length > 0) {
           return {
             ...spellsByPlayer,
-            [player.name]: spellList,
+            [player.name.toLowerCase()]: spellList,
           };
         }
       }
@@ -65,6 +66,9 @@ const getSpellsByLevel = (party: Party) => {
 };
 
 const Spells = () => {
+  const searchParams = useSearchParams();
+  const player = searchParams.get("player")?.toLowerCase();
+
   const party = getParty();
 
   const [displayBy, setDisplayBy] = useState("player");
@@ -80,9 +84,14 @@ const Spells = () => {
     if (displayBy === "level") {
       return spellsByLevel;
     }
+
     if (displayBy === "player") {
+      if (player) {
+        return { [player]: spellsByPlayer[player] };
+      }
       return spellsByPlayer;
     }
+
     return {};
   };
 
@@ -114,7 +123,9 @@ const Spells = () => {
         {entries(getList()).map(([name, spells]) => (
           <Card key={name}>
             <CardHeader>
-              <CardTitle>{`${getPrefix()} ${name}`}</CardTitle>
+              <CardTitle>
+                {getPrefix()} <span className="capitalize">{name}</span>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <ul>
