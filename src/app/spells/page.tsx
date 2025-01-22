@@ -2,6 +2,7 @@
 
 import { typedSpells } from "@/utils/utils";
 import {
+  capitalize,
   entries,
   filter,
   find,
@@ -24,11 +25,16 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Party } from "@/types/types";
 import { getParty } from "@/utils/localStorageUtils";
 import dynamic from "next/dynamic";
-import { useSearchParams } from "next/navigation";
-
-const getSpellsByPlayer = (party: Party) =>
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { clsx } from "clsx";
+import { Button } from "@/components/ui/button";
+import { XMarkIcon } from "@heroicons/react/16/solid";
+const getSpellsByPlayer = (party: Party, playerName?: string) =>
   pipe(
     party.characters,
+    filter(
+      (character) => !playerName || character.name.toLowerCase() === playerName,
+    ),
     sortBy(prop("name")),
     reduce((spellsByPlayer: { [key: string]: Spell[] }, player) => {
       if (!spellsByPlayer[player.name]) {
@@ -50,9 +56,12 @@ const getSpellsByPlayer = (party: Party) =>
     }, {}),
   );
 
-const getSpellsByLevel = (party: Party) => {
+const getSpellsByLevel = (party: Party, playerName?: string) => {
   const partySpells = pipe(
     party.characters,
+    filter(
+      (character) => !playerName || character.name.toLowerCase() === playerName,
+    ),
     values(),
     flatMap((character) => character.spells),
     unique(),
@@ -67,6 +76,8 @@ const getSpellsByLevel = (party: Party) => {
 
 const Spells = () => {
   const searchParams = useSearchParams();
+  const router = useRouter();
+  const pathName = usePathname();
   const player = searchParams.get("player")?.toLowerCase();
 
   const party = getParty();
@@ -77,8 +88,8 @@ const Spells = () => {
     return null;
   }
 
-  const spellsByPlayer = getSpellsByPlayer(party);
-  const spellsByLevel = getSpellsByLevel(party);
+  const spellsByPlayer = getSpellsByPlayer(party, player);
+  const spellsByLevel = getSpellsByLevel(party, player);
 
   const getList = (): { [key: string]: Spell[] } => {
     if (displayBy === "level") {
@@ -86,9 +97,6 @@ const Spells = () => {
     }
 
     if (displayBy === "player") {
-      if (player) {
-        return { [player]: spellsByPlayer[player] };
-      }
       return spellsByPlayer;
     }
 
@@ -104,9 +112,23 @@ const Spells = () => {
 
   return (
     <div>
-      <h1 className={"mb-4 scroll-m-20 text-2xl font-bold tracking-tight"}>
-        Liste des sorts
-      </h1>
+      <div className="flex gap-4">
+        <h1 className={"mb-4 scroll-m-20 text-2xl font-bold tracking-tight"}>
+          Liste des sorts {player ? `de ${capitalize(player)}` : ""}
+        </h1>
+        {player && (
+          <Button
+            size="xs"
+            onClick={() => {
+              const params = new URLSearchParams(searchParams);
+              params.delete("player");
+              router.replace(`${pathName}?${params.toString()}`);
+            }}
+          >
+            <XMarkIcon className="size-4" />
+          </Button>
+        )}
+      </div>
 
       <Tabs defaultValue={displayBy} className="mb-4 w-[400px]">
         <TabsList>
@@ -123,9 +145,16 @@ const Spells = () => {
         {entries(getList()).map(([name, spells]) => (
           <Card key={name}>
             <CardHeader>
-              <CardTitle>
-                {getPrefix()} <span className="capitalize">{name}</span>
-              </CardTitle>
+              <CardTitle
+                className={clsx({ "cursor-pointer": displayBy === "player" })}
+                onClick={() => {
+                  if (displayBy === "player") {
+                    const params = new URLSearchParams(searchParams);
+                    params.set("player", name);
+                    router.replace(`${pathName}?${params.toString()}`);
+                  }
+                }}
+              >{`${getPrefix()} ${capitalize(name)}`}</CardTitle>
             </CardHeader>
             <CardContent>
               <ul>
