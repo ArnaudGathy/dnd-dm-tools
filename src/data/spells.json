@@ -600,5 +600,125 @@
     "components": "V, S",
     "duration": "instantanée",
     "description": "Une créature que vous touchez regagne un nombre de points de vie égal à 1d8 + votre modificateur de caractéristique d'incantation. Les points de vie restaurés augmentent de 1d8 pour chaque niveau d’emplacement supérieur utilisé pour lancer le sort."
+  },
+  {
+    "id": 45,
+    "name": "Sanctuaire",
+    "level": 1,
+    "castingTime": "1 action bonus",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "1 minute",
+    "description": "Vous protégez une créature à portée contre les attaques. Jusqu’à la fin du sort, toute créature qui cible la créature protégée par une attaque ou un sort néfaste doit d'abord réussir un jet de sauvegarde de Sagesse. En cas d'échec, la créature doit choisir une nouvelle cible ou perdre l'attaque ou le sort. Ce sort ne protège pas la créature protégée des effets de zone, tels qu'une explosion de boule de feu. Si la créature protégée effectue une attaque ou lance un sort qui affecte une créature ennemie, ce sort prend fin.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "La cible peut attaquer ou lancer son sort comme prévu",
+      "effects": [
+        "Protection contre les attaques directes tant que la cible n'attaque pas"
+      ]
+    }
+  },
+  {
+    "id": 46,
+    "name": "Flamme sacrée",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Une flamme radieuse tombe sur une créature que vous pouvez voir à portée. La cible doit réussir un jet de sauvegarde de Dextérité ou subir 1d8 dégâts radiants. La cible ne bénéficie d'aucun abri contre ce sort. Les dégâts de ce sort augmentent de 1d8 lorsque vous atteignez le niveau 5 (2d8), le niveau 11 (3d8) et le niveau 17 (4d8).",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Aucun dégât",
+      "damage": {
+        "1": "1d8",
+        "5": "2d8",
+        "11": "3d8",
+        "17": "4d8"
+      }
+    }
+  },
+  {
+    "id": 47,
+    "name": "Aide",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "8 heures",
+    "description": "Vos paroles renforcent jusqu'à trois créatures à portée, leur accordant 5 points de vie temporaires pour la durée du sort. Lorsque vous utilisez un emplacement de sort de niveau supérieur, les points de vie temporaires augmentent de 5 par niveau au-delà du premier."
+  },
+  {
+    "id": 48,
+    "name": "Lumière",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, M",
+    "duration": "1 heure",
+    "description": "Vous touchez un objet qui ne dépasse pas 3 mètres dans toutes ses dimensions. Jusqu'à la fin du sort, l'objet émet une lumière vive dans un rayon de 6 mètres et une lumière faible dans un rayon supplémentaire de 6 mètres. La lumière peut être de la couleur de votre choix. Couvrir complètement l'objet avec quelque chose d'opaque bloque la lumière. Le sort prend fin si vous le lancez à nouveau ou si vous révoquez l'effet (action). Si vous ciblez un objet tenu ou porté par une créature hostile, cette créature doit réussir un jet de sauvegarde de Dextérité pour éviter le sort.",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Le sort échoue",
+      "effects": [
+        "Illumine un objet de 6 m de lumière vive et 6 m de lumière faible"
+      ]
+    }
+  },
+  {
+    "id": 49,
+    "name": "Détection des pensées",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Pendant la durée, vous pouvez lire les pensées superficielles d'une créature que vous pouvez voir à portée de 9 m. Si vous voulez sonder plus profondément, la créature doit réussir un jet de sauvegarde de Sagesse ou vous obtenez un aperçu de ses pensées, de ses émotions ou de ce qui occupe son esprit. Une créature consciente de votre tentative peut choisir de bloquer l'accès en réussissant son jet de sauvegarde. Le sort est bloqué par 30 cm de pierre, 2,5 cm de métal commun, une fine feuille de plomb ou 1 m de bois ou de terre.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Les pensées ne sont pas sondées",
+      "effects": [
+        "Lecture des pensées superficielles ou profondes selon le cas"
+      ]
+    }
+  },
+  {
+    "id": 50,
+    "name": "Force fantasmagorique",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Vous créez une illusion qui prend racine dans l'esprit d'une créature à portée. La cible doit réussir un jet de sauvegarde d'Intelligence ou être piégée par une illusion réaliste que seule elle peut voir. Tant qu'elle y croit, elle subit 1d6 dégâts psychiques à chaque tour si l'illusion semble capable de lui faire du mal. La cible peut utiliser une action pour inspecter l'illusion et refaire son jet de sauvegarde pour en discerner la nature.",
+    "combat": {
+      "type": "save",
+      "save": "intelligence",
+      "saveSuccess": "L'illusion n'affecte pas la cible",
+      "damage": {
+        "1": "1d6"
+      },
+      "effects": [
+        "Création d'une illusion réaliste infligeant des dégâts psychiques si crédible"
+      ]
+    }
+  },
+  {
+    "id": 51,
+    "name": "Assistance",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Vous touchez une créature et lui apportez une aide mineure. Une fois avant la fin du sort, la cible peut ajouter 1d4 à un jet de caractéristique de son choix. Elle peut lancer le d4 après avoir vu le jet de d20, mais avant de savoir si le jet est un succès ou un échec.",
+    "combat": {
+      "type": "status",
+      "effects": ["Ajoute 1d4 à un jet de caractéristique choisi"]
+    }
   }
 ]
