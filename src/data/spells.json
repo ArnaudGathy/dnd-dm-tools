@@ -609,15 +609,7 @@
     "range": "9 m",
     "components": "V, S, M",
     "duration": "1 minute",
-    "description": "Vous protégez une créature à portée contre les attaques. Jusqu’à la fin du sort, toute créature qui cible la créature protégée par une attaque ou un sort néfaste doit d'abord réussir un jet de sauvegarde de Sagesse. En cas d'échec, la créature doit choisir une nouvelle cible ou perdre l'attaque ou le sort. Ce sort ne protège pas la créature protégée des effets de zone, tels qu'une explosion de boule de feu. Si la créature protégée effectue une attaque ou lance un sort qui affecte une créature ennemie, ce sort prend fin.",
-    "combat": {
-      "type": "save",
-      "save": "wisdom",
-      "saveSuccess": "La cible peut attaquer ou lancer son sort comme prévu",
-      "effects": [
-        "Protection contre les attaques directes tant que la cible n'attaque pas"
-      ]
-    }
+    "description": "Vous protégez une créature à portée contre les attaques. Jusqu’à la fin du sort, toute créature qui cible la créature protégée par une attaque ou un sort néfaste doit d'abord réussir un jet de sauvegarde de Sagesse. En cas d'échec, la créature doit choisir une nouvelle cible ou perdre l'attaque ou le sort. Ce sort ne protège pas la créature protégée des effets de zone, tels qu'une explosion de boule de feu. Si la créature protégée effectue une attaque ou lance un sort qui affecte une créature ennemie, ce sort prend fin."
   },
   {
     "id": 46,
@@ -658,15 +650,7 @@
     "range": "contact",
     "components": "V, M",
     "duration": "1 heure",
-    "description": "Vous touchez un objet qui ne dépasse pas 3 mètres dans toutes ses dimensions. Jusqu'à la fin du sort, l'objet émet une lumière vive dans un rayon de 6 mètres et une lumière faible dans un rayon supplémentaire de 6 mètres. La lumière peut être de la couleur de votre choix. Couvrir complètement l'objet avec quelque chose d'opaque bloque la lumière. Le sort prend fin si vous le lancez à nouveau ou si vous révoquez l'effet (action). Si vous ciblez un objet tenu ou porté par une créature hostile, cette créature doit réussir un jet de sauvegarde de Dextérité pour éviter le sort.",
-    "combat": {
-      "type": "save",
-      "save": "dexterity",
-      "saveSuccess": "Le sort échoue",
-      "effects": [
-        "Illumine un objet de 6 m de lumière vive et 6 m de lumière faible"
-      ]
-    }
+    "description": "Vous touchez un objet qui ne dépasse pas 3 mètres dans toutes ses dimensions. Jusqu'à la fin du sort, l'objet émet une lumière vive dans un rayon de 6 mètres et une lumière faible dans un rayon supplémentaire de 6 mètres. La lumière peut être de la couleur de votre choix. Couvrir complètement l'objet avec quelque chose d'opaque bloque la lumière. Le sort prend fin si vous le lancez à nouveau ou si vous révoquez l'effet (action). Si vous ciblez un objet tenu ou porté par une créature hostile, cette créature doit réussir un jet de sauvegarde de Dextérité pour éviter le sort."
   },
   {
     "id": 49,
@@ -676,15 +660,7 @@
     "range": "personnelle",
     "components": "V, S, M",
     "duration": "concentration, jusqu'à 1 minute",
-    "description": "Pendant la durée, vous pouvez lire les pensées superficielles d'une créature que vous pouvez voir à portée de 9 m. Si vous voulez sonder plus profondément, la créature doit réussir un jet de sauvegarde de Sagesse ou vous obtenez un aperçu de ses pensées, de ses émotions ou de ce qui occupe son esprit. Une créature consciente de votre tentative peut choisir de bloquer l'accès en réussissant son jet de sauvegarde. Le sort est bloqué par 30 cm de pierre, 2,5 cm de métal commun, une fine feuille de plomb ou 1 m de bois ou de terre.",
-    "combat": {
-      "type": "save",
-      "save": "wisdom",
-      "saveSuccess": "Les pensées ne sont pas sondées",
-      "effects": [
-        "Lecture des pensées superficielles ou profondes selon le cas"
-      ]
-    }
+    "description": "Pendant la durée, vous pouvez lire les pensées superficielles d'une créature que vous pouvez voir à portée de 9 m. Si vous voulez sonder plus profondément, la créature doit réussir un jet de sauvegarde de Sagesse ou vous obtenez un aperçu de ses pensées, de ses émotions ou de ce qui occupe son esprit. Une créature consciente de votre tentative peut choisir de bloquer l'accès en réussissant son jet de sauvegarde. Le sort est bloqué par 30 cm de pierre, 2,5 cm de métal commun, une fine feuille de plomb ou 1 m de bois ou de terre."
   },
   {
     "id": 50,
@@ -694,18 +670,7 @@
     "range": "18 m",
     "components": "V, S, M",
     "duration": "concentration, jusqu'à 1 minute",
-    "description": "Vous créez une illusion qui prend racine dans l'esprit d'une créature à portée. La cible doit réussir un jet de sauvegarde d'Intelligence ou être piégée par une illusion réaliste que seule elle peut voir. Tant qu'elle y croit, elle subit 1d6 dégâts psychiques à chaque tour si l'illusion semble capable de lui faire du mal. La cible peut utiliser une action pour inspecter l'illusion et refaire son jet de sauvegarde pour en discerner la nature.",
-    "combat": {
-      "type": "save",
-      "save": "intelligence",
-      "saveSuccess": "L'illusion n'affecte pas la cible",
-      "damage": {
-        "1": "1d6"
-      },
-      "effects": [
-        "Création d'une illusion réaliste infligeant des dégâts psychiques si crédible"
-      ]
-    }
+    "description": "Vous créez une illusion qui prend racine dans l'esprit d'une créature à portée. La cible doit réussir un jet de sauvegarde d'Intelligence ou être piégée par une illusion réaliste que seule elle peut voir. Tant qu'elle y croit, elle subit 1d6 dégâts psychiques à chaque tour si l'illusion semble capable de lui faire du mal. La cible peut utiliser une action pour inspecter l'illusion et refaire son jet de sauvegarde pour en discerner la nature."
   },
   {
     "id": 51,
@@ -715,10 +680,23 @@
     "range": "contact",
     "components": "V, S",
     "duration": "concentration, jusqu'à 1 minute",
-    "description": "Vous touchez une créature et lui apportez une aide mineure. Une fois avant la fin du sort, la cible peut ajouter 1d4 à un jet de caractéristique de son choix. Elle peut lancer le d4 après avoir vu le jet de d20, mais avant de savoir si le jet est un succès ou un échec.",
+    "description": "Vous touchez une créature et lui apportez une aide mineure. Une fois avant la fin du sort, la cible peut ajouter 1d4 à un jet de caractéristique de son choix. Elle peut lancer le d4 après avoir vu le jet de d20, mais avant de savoir si le jet est un succès ou un échec."
+  },
+  {
+    "id": 52,
+    "name": "Couronne de démence",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Une créature que vous pouvez voir à portée doit réussir un jet de sauvegarde de Sagesse ou être charmée pour la durée du sort. Pendant que la créature est charmée de cette manière, une couronne de fer apparaît autour de sa tête et une folie l’envahit. La créature doit utiliser son action avant de se déplacer pour effectuer une attaque de mêlée contre une créature autre que vous que vous choisissez mentalement. Elle peut agir normalement si aucune autre créature ne se trouve à portée. À la fin de chacun de ses tours, la cible peut effectuer un nouveau jet de sauvegarde de Sagesse. En cas de réussite, le sort prend fin.",
     "combat": {
-      "type": "status",
-      "effects": ["Ajoute 1d4 à un jet de caractéristique choisi"]
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non charmée",
+      "recovery": "JdS SAG à la fin de chaque tour.",
+      "effects": ["charmed", "Attaquant une cible désignée par le lanceur"]
     }
   }
 ]
