@@ -26,7 +26,7 @@
   },
   {
     "id": 2,
-    "name": "Main de mage",
+    "name": "Main du mage",
     "level": 0,
     "castingTime": "1 action",
     "range": "9 m",
@@ -698,5 +698,33 @@
       "recovery": "JdS SAG à la fin de chaque tour.",
       "effects": ["charmed", "Attaquant une cible désignée par le lanceur"]
     }
+  },
+  {
+    "id": 53,
+    "name": "Sommeil",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "27 m",
+    "components": "V, S, M",
+    "duration": "1 minute",
+    "description": "Ce sort envoie des créatures dans un état magique de sommeil. Lancez 5d8, le total est le nombre de points de vie des créatures affectées par ce sort. Les créatures dans un rayon de 6 m centré sur un point que vous choisissez à portée sont affectées dans l'ordre croissant de leurs points de vie actuels (en commençant par celles qui en ont le moins). Ignorez les créatures inconscientes. Une créature affectée tombe inconsciente jusqu'à ce que le sort prenne fin, qu'elle subisse des dégâts ou que quelqu'un utilise une action pour la secouer ou la réveiller. Lorsque vous lancez ce sort en utilisant un emplacement de sort de niveau supérieur, lancez 2d8 supplémentaires pour chaque niveau d'emplacement supérieur.",
+    "combat": {
+      "type": "status",
+      "spellLevelScale": "+2d8 pv",
+      "recovery": "Subir des dégats, se faire réveiller",
+      "effects": [
+        "Endort les cibles dont les PV totaux sont inférieurs à la valeur déterminée, en commençant par les plus faibles"
+      ]
+    }
+  },
+  {
+    "id": 54,
+    "name": "Réparation",
+    "level": 0,
+    "castingTime": "1 minute",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Vous touchez un objet cassé ou endommagé, tel qu'une chaîne brisée ou un rouage fissuré. Tant que le bris ou la fissure n'excède pas 30 cm dans toutes les dimensions, vous le réparez, restaurant l'objet à son état initial. Ce sort ne peut pas restaurer de la magie sur un objet magique endommagé."
   }
 ]
