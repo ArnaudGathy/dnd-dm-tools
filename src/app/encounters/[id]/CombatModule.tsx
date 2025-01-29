@@ -350,7 +350,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       <div className="flex items-center gap-4">
                         <Popover>
                           <PopoverTrigger asChild>
-                            <div className="relative w-full">
+                            <div className="relative w-full hover:cursor-pointer">
                               <Progress
                                 classNameTop={clsx(getHPBarColor(hpPercent))}
                                 value={hpPercent}
@@ -505,13 +505,15 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                         </Popover>
                       </div>
                     ) : (
-                      <Link
-                        href={`/spells?player=${participant.name}`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <BookOpenIcon className="size-6" />
-                      </Link>
+                      <div className="w-6">
+                        <Link
+                          href={`/spells?player=${participant.name}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <BookOpenIcon className="size-6" />
+                        </Link>
+                      </div>
                     )}
                   </div>
                   <div className="flex gap-2">

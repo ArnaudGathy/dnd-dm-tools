@@ -612,5 +612,244 @@
       }
     ],
     "colors": ["#dc0005", "#e08023"]
+  },
+  {
+    "name": "Manticore",
+    "id": 13,
+    "type": "Monstruosité",
+    "size": "G",
+    "alignment": "Généralement Mauvais",
+    "armorClass": 14,
+    "hitPoints": "68 (8d10 + 24)",
+    "speed": {
+      "walk": "9 m",
+      "fly": "15 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 16,
+      "constitution": 17,
+      "intelligence": 7,
+      "wisdom": 12,
+      "charisma": 8
+    },
+    "senses": {
+      "darkvision": "30 m",
+      "passivePerception": 11
+    },
+    "languages": ["Commun"],
+    "challengeRating": 3,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "La manticore effectue trois attaques parmi : 1 avec sa morsure, 2 avec ses griffes ou 3 avec ses dards."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (1d8 + 3) dégâts perforants"
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "6 (1d6 + 3) dégâts tranchants"
+      },
+      {
+        "name": "Dards",
+        "type": "Distance",
+        "modifier": "+5",
+        "reach": "portée 30/90 m",
+        "target": "1 cible",
+        "hit": "7 (1d8 + 3) dégâts perforants"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Dards",
+        "description": "La manticore possède une queue hérissée de dards qu'elle peut projeter à distance. Elle en a jusqu'à 24 et en régénère 1d10 par jour."
+      },
+      {
+        "name": "Vol",
+        "description": "La manticore peut parcourir de longues distances en vol et préfère attaquer en piqué avant de remonter hors de portée."
+      }
+    ]
+  },
+  {
+    "name": "Vrilléclair",
+    "id": 14,
+    "type": "Dragon",
+    "size": "M",
+    "alignment": "Généralement Loyal Mauvais",
+    "armorClass": 17,
+    "hitPoints": "52 (8d8 + 16)",
+    "speed": {
+      "walk": "9 m",
+      "burrow": "4.5 m",
+      "fly": "18 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 10,
+      "constitution": 15,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 15
+    },
+    "savingThrows": {
+      "dexterity": "+2",
+      "constitution": "+4",
+      "wisdom": "+2",
+      "charisma": "+4"
+    },
+    "skills": {
+      "stealth": "+2",
+      "perception": "+4"
+    },
+    "immunities": ["Foudre"],
+    "senses": {
+      "blindSight": "3 m",
+      "darkvision": "18 m",
+      "passivePerception": 14
+    },
+    "languages": ["Draconique"],
+    "challengeRating": 3,
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "8 (1d10 + 3) dégâts perforants + 3 (1d6) dégâts de foudre"
+      },
+      {
+        "name": "Souffle de foudre (recharge 5-6)",
+        "description": "Le dragon exhale de la foudre sous forme d’une ligne de 9 m de long pour 1.5 m de large. Chaque créature prise dans la ligne effectue un jet de sauvegarde de Dextérité DD 12 et subit 22 (4d10) dégâts de foudre en cas d’échec, la moitié en cas de réussite."
+      }
+    ],
+    "colors": ["#0021ff"]
+  },
+  {
+    "name": "Aïdron",
+    "id": 15,
+    "type": "Dragon",
+    "size": "M",
+    "alignment": "Généralement Loyal Bon",
+    "armorClass": 17,
+    "hitPoints": "32 (5d8 + 10)",
+    "speed": {
+      "walk": "6 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 10,
+      "constitution": 15,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 15
+    },
+    "savingThrows": {
+      "dexterity": "+2",
+      "constitution": "+4",
+      "wisdom": "+2",
+      "charisma": "+4"
+    },
+    "skills": {
+      "stealth": "+2",
+      "perception": "+4"
+    },
+    "immunities": ["Foudre"],
+    "senses": {
+      "blindSight": "3 m",
+      "darkvision": "18 m",
+      "passivePerception": 14
+    },
+    "languages": ["Draconique"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Amphibie",
+        "description": "Le dragon peut respirer sous l’eau comme à l’air libre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "8 (1d10 + 3) dégâts perforants"
+      },
+      {
+        "name": "Souffle (Recharge 5-6)",
+        "description": "Le dragon utilise l’un des souffles suivants :"
+      },
+      {
+        "name": "Souffle de foudre",
+        "description": "Le dragon exhale de la foudre sous forme d’une ligne de 12 m de long pour 1.5 m de large. Chaque créature prise dans la ligne effectue un jet de sauvegarde de Dextérité DD 12 et subit 16 (3d10) dégâts de foudre en cas d’échec, la moitié en cas de réussite."
+      },
+      {
+        "name": "Souffle répulsif",
+        "description": "Le dragon exhale une vague d’énergie sous forme d’un cône de 9 m. Chaque créature prise dans la zone doit réussir un jet de sauvegarde de Force DD 12 sous peine d’être repoussée du dragon d’un maximum de 9 m."
+      }
+    ],
+    "colors": ["#ffb45e"]
+  },
+  {
+    "name": "Esprits draconique (effet)",
+    "id": 16,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 0,
+    "hitPoints": "1",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -100,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "1-2 Bénédiction d'Astalagan",
+        "description": "Une lueur de bronze enveloppe les participants et soigne +1d4 + 4 PV"
+      },
+      {
+        "name": "3-4 Flammes de Clyssavar",
+        "description": "Une lueur dorée s'abat sur Vrilléclair. Doit réussir un JdS DEX DD12 sous peine de subir 2d6 dégats de feu."
+      },
+      {
+        "name": "5-6 Présent d'Eldenemir",
+        "description": "Le souffle de Vrilléclair se recharge alors qu'une lueur bleue l'enveloppe"
+      },
+      {
+        "name": "7-8 Fureur de Sharruth",
+        "description": "JdS DEX DD12 sous peine de subir 1d6 dégats de feu alors que la lumière rouge se mue en flammes."
+      },
+      {
+        "name": "9-10 Passe-passe de Turadaer",
+        "description": "Une lueur d'airan chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
+      }
+    ]
   }
 ]

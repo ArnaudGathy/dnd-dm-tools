@@ -205,7 +205,7 @@ export const StatBlock = ({
               </div>
             )}
 
-            <div className="flex flex-col border-t-2 pt-4">
+            <div className="flex flex-col gap-2 border-t-2 pt-4">
               {creature.actions.map((action) => {
                 if (action.description) {
                   return (

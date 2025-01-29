@@ -222,5 +222,76 @@
       "Anneau de communication animale (Permet de parler avec des animaux une fois par jour) - Doit être attuned !",
       "1d6 Plumes impressionnantes, 10po chacune"
     ]
+  },
+  {
+    "id": 12,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Ruines de la rotonde",
+    "location": {
+      "name": "L'observatoire de la falaise",
+      "mapMarker": "D2"
+    },
+    "ennemies": {
+      "3": [4, 4, 4, 4, 4, 4, 4, 4, 11, 11]
+    },
+    "informations": [
+      "6 stirges sur joueurs, 2 stirges (bleu clair) sur kobolds",
+      "Si les joueurs aident les kobolds, les kobolds aident les joueurs"
+    ]
+  },
+  {
+    "id": 13,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Camp des Kobolds",
+    "location": {
+      "name": "L'observatoire de la falaise",
+      "mapMarker": "D3"
+    },
+    "ennemies": {
+      "3": [12, 12, 10, 11, 11]
+    },
+    "informations": ["Charisme DD13 pour les convaincre"]
+  },
+  {
+    "id": 14,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Tour de l'observatoire",
+    "location": {
+      "name": "L'observatoire de la falaise",
+      "mapMarker": "D5"
+    },
+    "ennemies": {
+      "3": [13]
+    },
+    "informations": [
+      "Se déplacer discrètement ou tourner les statues EST et NORD : Discrétion DD14"
+    ],
+    "loots": [
+      "4500 PC",
+      "2200 PA",
+      "13 PO",
+      "5 fragments de quartz bleu (10 po chacun)",
+      "5 jaspe bleu (50 po chacun)",
+      "Un éventail émaillé de poudre de gemme bleu (25 po)"
+    ]
+  },
+  {
+    "id": 15,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "name": "Ruines de la rotonde - Vrilléclair",
+    "location": {
+      "name": "L'observatoire de la falaise",
+      "mapMarker": "D2"
+    },
+    "ennemies": {
+      "3": [14, 15, 16]
+    },
+    "informations": [
+      "Aïdron souffle si nécessaire. Libérer Aidron = 1 action",
+      "Après le premier esprit draconique, fait comprendre aux joueurs les effets",
+      "Détruire les éffigies pour arrêter les effets. En toucher une pour le déclencher",
+      "Toucher le mécanisme (immunisé) distrait Vrilléclair qui attaque le joueur, désavantage jet d'attaque et JdS jusqu'à son prochain tour.",
+      "Vous croyez me faire obstacle, parasites ? La puissance de mes ancêtres sera bientôt mienne. - Filez avant que je ne me lasse de ce petit jeu et que je vous élimine jusqu'au dernier. - Les dragons chromatiques sont les souverains légitimes de ce monde, inclinez-vous devant les enfants de Tiamat ! - Assez ! Ce projet est trop important pour être entravé par des minables dans votre genre."
+    ]
   }
 ]

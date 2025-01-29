@@ -12,7 +12,9 @@ export const StatCell = ({
 }) => {
   return (
     <div className="flex">
-      <span className={clsx("mr-2 text-muted-foreground")}>{name}</span>
+      <span className={clsx("mr-2 text-nowrap text-muted-foreground")}>
+        {name}
+      </span>
       <span
         className={clsx("space-x-4", {
           "text-indigo-400": isHighlighted,
