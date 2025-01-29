@@ -187,7 +187,7 @@
     "name": "Renégats Kobold",
     "location": {
       "name": "Exploration",
-      "mapMarker": "E0"
+      "mapMarker": "X1"
     },
     "ennemies": {
       "1": [12, 12, 11, 10],
@@ -210,7 +210,7 @@
     "name": "Il court il court, le Hibours",
     "location": {
       "name": "Exploration",
-      "mapMarker": "E0"
+      "mapMarker": "X2"
     },
     "ennemies": {
       "3": [9]
