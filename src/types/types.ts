@@ -113,6 +113,7 @@ export type Creature = {
     target?: string;
     hit?: string;
   }>;
+  reactions?: Array<{ name: string; description: string }>;
   traits?: Array<{
     name: string;
     description: string;

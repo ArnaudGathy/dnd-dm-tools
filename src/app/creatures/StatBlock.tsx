@@ -115,7 +115,6 @@ export const StatBlock = ({
                 stat={getChallengeRatingAsFraction(creature.challengeRating)}
               />
             </div>
-
             <div className="flex gap-8 border-t-2 pt-4">
               {entries(creature.abilities).map(([name, value]) => {
                 const modifier = getModifier(value);
@@ -133,7 +132,6 @@ export const StatBlock = ({
                 );
               })}
             </div>
-
             <div className="flex flex-col border-t-2 pt-4">
               {creature.skills && (
                 <StatCell
@@ -204,7 +202,17 @@ export const StatBlock = ({
                 ))}
               </div>
             )}
-
+            {creature.reactions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                {creature.reactions.map((reaction) => (
+                  <StatCell
+                    key={reaction.name}
+                    name={reaction.name}
+                    stat={reaction.description}
+                  />
+                ))}
+              </div>
+            )}
             <div className="flex flex-col gap-2 border-t-2 pt-4">
               {creature.actions.map((action) => {
                 if (action.description) {

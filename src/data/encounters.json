@@ -293,5 +293,131 @@
       "Toucher le mécanisme (immunisé) distrait Vrilléclair qui attaque le joueur, désavantage jet d'attaque et JdS jusqu'à son prochain tour.",
       "Vous croyez me faire obstacle, parasites ? La puissance de mes ancêtres sera bientôt mienne. - Filez avant que je ne me lasse de ce petit jeu et que je vous élimine jusqu'au dernier. - Les dragons chromatiques sont les souverains légitimes de ce monde, inclinez-vous devant les enfants de Tiamat ! - Assez ! Ce projet est trop important pour être entravé par des minables dans votre genre."
     ]
+  },
+  {
+    "id": 16,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Embuscade gobeline",
+    "location": {
+      "name": "Embuscade gobeline",
+      "mapMarker": "A1"
+    },
+    "ennemies": {
+      "1": [17, 17, 18, 18]
+    },
+    "informations": [
+      "Surprise : Discrétion (+6) VS perception passive. Baern 11, Barback 10, Lucifier 7, Eleni 13",
+      "Le dernier survivant prend la fuite en direction de la piste"
+    ]
+  },
+  {
+    "id": 17,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Poste de guet des gobelins",
+    "location": {
+      "name": "Le repaire des Rocagueules",
+      "mapMarker": "H2"
+    },
+    "ennemies": {
+      "1": [17, 18, 19]
+    },
+    "informations": [
+      "Une fois le chef vaincu, les gobelins fuient vers H3 libérer les loups"
+    ],
+    "loots": ["Chef gobelin : Sacoche de ceinture contenant 16pa"]
+  },
+  {
+    "id": 18,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Le chenil",
+    "location": {
+      "name": "Le repaire des Rocagueules",
+      "mapMarker": "H3"
+    },
+    "ennemies": {
+      "1": [20, 20, 20, 17, 18]
+    },
+    "informations": ["2 gobelins arrivent après 2 rounds"]
+  },
+  {
+    "id": 19,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Passage escarpé",
+    "location": {
+      "name": "Le repaire des Rocagueules",
+      "mapMarker": "H4"
+    },
+    "ennemies": {
+      "1": [21]
+    },
+    "informations": [
+      "Surprise si perception passive < 13",
+      "Serpent avantage aux attaques",
+      "Joueur Acrobatie DD10 pour ne pas s'éffondrer",
+      "Effondrement 2d6 + prone (JdS DEX 10 pour 1/2 dégâts)"
+    ]
+  },
+  {
+    "id": 20,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Tanière des gobelins",
+    "location": {
+      "name": "Le repaire des Rocagueules",
+      "mapMarker": "H6"
+    },
+    "ennemies": {
+      "1": [17, 17, 18, 18, 19, 19, 23]
+    },
+    "informations": [
+      "Le chef ne participe pas au combat et reste a coté de Sildar",
+      "Si le combat tourne mal pour eux, le chef suspends Sildar au dessus du vide et leur demande d'arrêter pour négocier. Il demande de tuer Klarg en échange de la vie de Sildar.",
+      "Si les joueurs refusent, Silvar est laché et tombe inconscient et commence ses jets de survie",
+      "Si les joueurs acceptent et reviennent plus tard, il leur demande encore 40po en échange de la vie de Sildar"
+    ],
+    "loots": ["Sacoche de ceinture contenant 21pc.", "3 agates (10po chaque)"]
+  },
+  {
+    "id": 21,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Bassins jumeaux",
+    "location": {
+      "name": "Le repaire des Rocagueules",
+      "mapMarker": "H7"
+    },
+    "ennemies": {
+      "1": [17, 17, 18, 20, 20]
+    },
+    "informations": [
+      "Ne peuvent pas être surpris si les vannes ont été ouvertes",
+      "Un gobelin de moins si l'archer a été tué",
+      "Un gobelin cours vers la prochaine zone alerter les autres (il dit ce qu'il fait)"
+    ]
+  },
+  {
+    "id": 22,
+    "scenario": "Les tréfonds de Phancreux",
+    "name": "Antre de Klarg",
+    "location": {
+      "name": "Le repaire des Rocagueules",
+      "mapMarker": "H8"
+    },
+    "ennemies": {
+      "1": [22, 17, 18, 20]
+    },
+    "informations": [
+      "Si prévenu, pas de surprise possible",
+      "'Qui ose défier Klarg ?', 'Klarg empilera vos os pour en faire un throne !'",
+      "Feu 1d6 degats a qui marche dedans",
+      "Abri 1/2 derrières les caisses. Symbole de lion bleu sur les caisses",
+      "Si Klarg est dernier en vie, il s'enfuit par la cheminée. DEX DD10 ou entravé. DEX DD10 pour se décoincer"
+    ],
+    "loots": [
+      "Caisses frappées d'une tête de lion bleu",
+      "Dans le coffre de Klarg :",
+      "1700 pc",
+      "150 pa",
+      "2 potions de guérison",
+      "1 statuette de grenouille aux yeux d'or (40po)"
+    ]
   }
 ]

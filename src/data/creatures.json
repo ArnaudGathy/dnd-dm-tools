@@ -851,5 +851,364 @@
         "description": "Une lueur d'airan chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
       }
     ]
+  },
+  {
+    "name": "Gobelin Ėpee",
+    "id": 17,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "7 (2d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts tranchants"
+      }
+    ],
+    "colors": ["#ff0000", "#463636"]
+  },
+  {
+    "name": "Gobelin Archer",
+    "id": 18,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "7 (2d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Arc court",
+        "type": "Distance",
+        "modifier": "+4",
+        "reach": "portée 24/96 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "colors": ["#7a00ff", "#296c0b"]
+  },
+  {
+    "name": "Gobelin Chef",
+    "id": 19,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 17,
+    "hitPoints": "21 (6d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 10
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le chef gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le chef gobelin effectue deux attaques avec son cimeterre. La seconde attaque est désavantagée."
+      },
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts tranchants"
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 9/36 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "reactions": [
+      {
+        "name": "Attaque redirigée",
+        "description": "Quand une créature dans le champ de vision du chef gobelin le vise avec une attaque, il peut choisir un autre gobelin allié à 1.5 m ou moins de lui. Les deux gobelins échangent leur position et le gobelin choisi devient la cible de l’attaque à la place du premier."
+      }
+    ],
+    "colors": ["#937a39", "#808080"]
+  },
+  {
+    "name": "Loup",
+    "id": 20,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 15,
+      "constitution": 12,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 6
+    },
+    "skills": {
+      "stealth": "+4",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "Le loup a un avantage aux jets de Sagesse (Perception) basés sur l’odorat ou l’ouïe."
+      },
+      {
+        "name": "Tactique de groupe",
+        "description": "Le loup a un avantage aux jets d’attaque contre une créature si au moins l’un de ses alliés est à 1,50 m ou moins de la créature et n’est pas incapable d’agir."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (2d4 + 2) dégâts perforants. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 11 pour ne pas être à terre."
+      }
+    ],
+    "colors": ["#e3f3f5", "#748b8c", "#283538"]
+  },
+  {
+    "name": "Serpent Venimeux",
+    "id": 21,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "2 (1d4)",
+    "speed": {
+      "walk": "9 m",
+      "swim": "9 m"
+    },
+    "abilities": {
+      "strength": 2,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 1,
+      "wisdom": 10,
+      "charisma": 3
+    },
+    "senses": {
+      "blindSight": "3 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1 (1) dégât perforant et la cible doit réussir un jet de sauvegarde de Constitution DD 10 ou subir 5 (2d4) dégâts de poison, ou la moitié en cas de réussite."
+      }
+    ],
+    "colors": ["#ea3c07"]
+  },
+  {
+    "name": "Gobelours",
+    "id": 22,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 16,
+    "hitPoints": "27 (5d8 + 5)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 13,
+      "intelligence": 8,
+      "wisdom": 11,
+      "charisma": 9
+    },
+    "skills": {
+      "stealth": "+6",
+      "survival": "+2"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Attaque surprise",
+        "description": "Si un gobelours surprend une créature et touche avec une attaque lors du premier round de combat, la cible subit 7 (2d6) dégâts supplémentaires."
+      },
+      {
+        "name": "Brutal",
+        "description": "Une arme de corps à corps inflige un dé de dégâts supplémentaire lorsque le gobelours réussit son attaque."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morgenstern",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "11 (2d8 + 2) dégâts perforants."
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 9/36 m",
+        "target": "1 cible",
+        "hit": "9 (2d6 + 2) dégâts perforants en mêlée, ou 5 (1d6 + 2) dégâts perforants à distance."
+      }
+    ],
+    "colors": ["#937a39"]
+  },
+  {
+    "name": "Sildar Halledhiver",
+    "id": 23,
+    "type": "Humanoïde (Humain)",
+    "size": "M",
+    "alignment": "Neutre Bon",
+    "armorClass": 10,
+    "hitPoints": "27 (5d8 + 5)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "savingThrows": {
+      "strength": "+3",
+      "constitution": "+3"
+    },
+    "skills": {
+      "perception": "+2"
+    },
+    "senses": {
+      "passivePerception": 12
+    },
+    "languages": ["Commun"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Sildar effectue deux attaques d'une arme de corps a corps."
+      },
+      {
+        "name": "Arme de joueur",
+        "description": "Un joueur peut l'équiper d'une arme."
+      },
+      {
+        "name": "Cimeterre gobeline",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1d6 dégâts tranchants"
+      }
+    ],
+    "reactions": [
+      {
+        "name": "Parade",
+        "description": "Quand un assaillant que Sildar voit est censé le toucher avec une attaque de corps à corps, Sildar peut lancer un d6 et en ajouter le résultat à sa CA contre l’attaque concernée, à condition qu’il manie lui-même une arme de corps à corps."
+      }
+    ]
   }
 ]

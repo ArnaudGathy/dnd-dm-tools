@@ -84,5 +84,43 @@
         "spells": [7, 8, 9, 10, 11, 12]
       }
     ]
+  },
+  {
+    "id": 3,
+    "name": "Phandelver",
+    "characters": [
+      {
+        "id": 10,
+        "name": "Baern",
+        "player": "Logan",
+        "color": "#56350d",
+        "gameClass": "Guerrier",
+        "spells": []
+      },
+      {
+        "id": 11,
+        "name": "Barback",
+        "player": "Alfred",
+        "color": "#a30719",
+        "gameClass": "Barbare",
+        "spells": []
+      },
+      {
+        "id": 12,
+        "name": "Lucifier",
+        "player": "Max",
+        "color": "#ff1493",
+        "gameClass": "Barde",
+        "spells": []
+      },
+      {
+        "id": 13,
+        "name": "Eleni",
+        "player": "Lara",
+        "color": "#0b6e15",
+        "gameClass": "Druidesse",
+        "spells": []
+      }
+    ]
   }
 ]
