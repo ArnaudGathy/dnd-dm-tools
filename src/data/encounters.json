@@ -390,7 +390,8 @@
       "Ne peuvent pas être surpris si les vannes ont été ouvertes",
       "Un gobelin de moins si l'archer a été tué",
       "Un gobelin cours vers la prochaine zone alerter les autres (il dit ce qu'il fait)"
-    ]
+    ],
+    "loots": ["Dans le bassin, 1 perle (100po)"]
   },
   {
     "id": 22,
@@ -406,6 +407,7 @@
     "informations": [
       "Si prévenu, pas de surprise possible",
       "'Qui ose défier Klarg ?', 'Klarg empilera vos os pour en faire un throne !'",
+      "Klarg parle du nain envoyé au chateau par le roi Grol",
       "Feu 1d6 degats a qui marche dedans",
       "Abri 1/2 derrières les caisses. Symbole de lion bleu sur les caisses",
       "Si Klarg est dernier en vie, il s'enfuit par la cheminée. DEX DD10 ou entravé. DEX DD10 pour se décoincer"
