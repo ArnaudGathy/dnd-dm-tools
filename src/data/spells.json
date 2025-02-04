@@ -299,6 +299,7 @@
     "id": 21,
     "name": "Appel de familier (rituel)",
     "level": 1,
+    "isRitual": true,
     "castingTime": "1 heure",
     "range": "3 m",
     "components": "V, S, M",
@@ -453,6 +454,7 @@
     "id": 32,
     "name": "Détection de la magie",
     "level": 1,
+    "isRitual": true,
     "castingTime": "1 action",
     "range": "personnelle",
     "components": "V, S",
@@ -463,6 +465,7 @@
     "id": 33,
     "name": "Détection du mal et du bien",
     "level": 1,
+    "isRitual": true,
     "castingTime": "1 action",
     "range": "personnelle",
     "components": "V, S",
@@ -473,6 +476,7 @@
     "id": 34,
     "name": "Détection du poison et des maladies",
     "level": 1,
+    "isRitual": true,
     "castingTime": "1 action",
     "range": "9 m",
     "components": "V, S, M",
@@ -585,6 +589,7 @@
     "id": 42,
     "name": "Purification de la nourriture et de l’eau",
     "level": 1,
+    "isRitual": true,
     "castingTime": "1 action",
     "range": "1,5 m",
     "components": "V, S",
@@ -726,5 +731,162 @@
     "components": "V, S",
     "duration": "instantanée",
     "description": "Vous touchez un objet cassé ou endommagé, tel qu'une chaîne brisée ou un rouage fissuré. Tant que le bris ou la fissure n'excède pas 30 cm dans toutes les dimensions, vous le réparez, restaurant l'objet à son état initial. Ce sort ne peut pas restaurer de la magie sur un objet magique endommagé."
+  },
+  {
+    "id": 55,
+    "name": "Serviteur invisible",
+    "level": 1,
+    "isRitual": true,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "1 heure",
+    "description": "Ce sort crée une force invisible, dépourvue de forme et d'intellect, mais capable d'accomplir des tâches simples sur votre ordre jusqu'à la fin du sort. Le serviteur se matérialise au sol, dans un emplacement inoccupé situé à portée. Il a une CA de 10, 1 pv, une Force de 2 et il est incapable d'attaquer. S'il tombe à 0 point de vie, le sort se termine. Une fois à chacun de vos tours, vous pouvez utiliser une action bonus pour ordonner mentalement à votre serviteur de se déplacer d'un maximum de 4,50 mètres et d'interagir avec un objet. Le serviteur peut accomplir des tâches simples, à la portée d'un domestique humain, comme aller chercher des affaires, faire le ménage, repriser, plier les habits, allumer la cheminée, servir les plats et la boisson, etc. Une fois que vous avez donné votre ordre, il fait de son mieux pour y obéir jusqu'à ce qu'il ait terminé. Il attend alors l'ordre suivant. Si vous ordonnez à votre serviteur d'accomplir une tâche qui l'éloigne à plus de 18 mètres de vous, le sort se termine."
+  },
+  {
+    "id": 56,
+    "name": "Sauvagerie primitive",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "S",
+    "duration": "instantanée",
+    "description": "Vous canalisez la puissance brute de la nature pour attaquer. Faites une attaque de sort au corps à corps contre une créature dans votre portée. En cas de succès, la cible subit 1d10 dégâts tranchants, alors que vos ongles ou vos dents s’allongent brièvement pour infliger une morsure ou une griffure. Les dégâts du sort augmentent de 1d10 lorsque vous atteignez le niveau 5 (2d10), le niveau 11 (3d10) et le niveau 17 (4d10).",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "1d10",
+        "5": "2d10",
+        "11": "3d10",
+        "17": "4d10"
+      }
+    }
+  },
+  {
+    "id": 57,
+    "name": "Embrasement",
+    "level": 0,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V",
+    "duration": "instantanée",
+    "description": "Vous désignez une créature visible à portée. Cette créature doit réussir un jet de sauvegarde de Dextérité ou prendre 1d8 dégâts de feu. Un objet inflammable qui n'est ni porté ni transporté prend feu. Les dégâts du sort augmentent de 1d8 lorsque vous atteignez le niveau 5 (2d8), le niveau 11 (3d8) et le niveau 17 (4d8).",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Non affecté",
+      "damage": {
+        "1": "1d8",
+        "5": "2d8",
+        "11": "3d8",
+        "17": "4d8"
+      }
+    }
+  },
+  {
+    "id": 58,
+    "name": "Amitié avec les animaux",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "24 heures",
+    "description": "Ce sort vous permet de convaincre une bête que vous ne lui voulez aucun mal. Choisissez une bête à portée que vous pouvez voir. Elle doit réussir un jet de sauvegarde de Sagesse ou être charmée par vous pour la durée du sort. Si vous ou un de vos compagnons lui causez du tort, le sort prend fin.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affecté",
+      "effects": ["charmed"],
+      "recovery": "Attaqué par un allié"
+    },
+    "isRitual": true
+  },
+  {
+    "id": 59,
+    "name": "Baies nourricières",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S, M",
+    "duration": "instantanée",
+    "description": "Jusqu'à dix baies magiques apparaissent dans votre main et sont imprégnées de magie. Une créature peut utiliser une action pour manger une baie. Cela lui restaure 1 point de vie et lui fournit assez de nourriture pour un jour entier."
+  },
+  {
+    "id": 60,
+    "name": "Communication avec les animaux",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "10 minutes",
+    "description": "Vous obtenez la capacité de comprendre et de communiquer verbalement avec les bêtes pendant la durée du sort. Les connaissances et la conscience des bêtes sont limitées par leur intelligence, mais elles peuvent vous donner des informations sur des créatures proches, des lieux et des événements qu'elles ont perçus récemment.",
+    "isRitual": true
+  },
+  {
+    "id": 61,
+    "name": "Création ou destruction d'eau",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "instantanée",
+    "description": "Vous créez ou détruisez de l'eau dans un rayon de 9 mètres. Vous pouvez créer jusqu'à 10 litres d'eau propre dans un contenant ouvert ou faire tomber de l'eau sous forme de pluie dans un cube de 9 mètres de côté. Alternativement, vous pouvez détruire jusqu'à 10 litres d'eau dans un contenant ou réduire une pluie naturelle dans une zone d'effet identique.",
+    "isRitual": true
+  },
+  {
+    "id": 62,
+    "name": "Enchevêtrement",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Des vignes surgissent du sol dans un carré de 6 mètres de côté centré sur un point à portée. Cette zone devient un terrain difficile. Toute créature dans la zone doit réussir un jet de sauvegarde de Force ou être entravée jusqu'à la fin du sort. Une créature entravée peut utiliser son action pour tenter de se libérer en réussissant un autre jet de sauvegarde de Force.",
+    "combat": {
+      "type": "save",
+      "save": "strength",
+      "saveSuccess": "Non entravée",
+      "effects": ["Terrain difficile", "restrained"],
+      "recovery": "JdS FOR pour se libérer"
+    }
+  },
+  {
+    "id": 63,
+    "name": "Grande foulée",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 heure",
+    "description": "Une créature que vous touchez voit sa vitesse de déplacement augmenter de 3 mètres jusqu'à la fin du sort."
+  },
+  {
+    "id": 64,
+    "name": "Lueurs féeriques",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Chaque objet dans un cube de 6 mètres de côté centré sur un point à portée est illuminé d'une lumière bleue, verte ou violette. Toute créature dans la zone doit réussir un jet de sauvegarde de Dextérité ou être affectée par la lumière. Une créature affectée ne peut pas bénéficier d'invisibilité et les attaques contre elle ont l'avantage.",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "Non affecté",
+      "effects": [
+        "Révèle les créatures invisibles & empêche l'invisibilité",
+        "Attaquant avantagé contre elle"
+      ]
+    }
+  },
+  {
+    "id": 65,
+    "name": "Nappe de brouillard",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 1 heure",
+    "description": "Vous créez un brouillard épais remplissant une sphère de 6 mètres de rayon centrée sur un point à portée. La zone est fortement obscurcie et le brouillard se dissipe à la fin du sort ou en présence d'un vent modéré ou fort."
   }
 ]

@@ -40,6 +40,7 @@ const spellSchema = z
     id: z.number(),
     name: z.string(),
     level: z.number(),
+    isRitual: z.boolean().optional(),
     castingTime: z.string(),
     range: z.string(),
     components: z.string(),

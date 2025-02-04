@@ -369,9 +369,8 @@
       "1": [17, 17, 18, 18, 19, 19, 23]
     },
     "informations": [
-      "Le chef ne participe pas au combat et reste a coté de Sildar",
-      "Si le combat tourne mal pour eux, le chef suspends Sildar au dessus du vide et leur demande d'arrêter pour négocier. Il demande de tuer Klarg en échange de la vie de Sildar.",
-      "Si les joueurs refusent, Silvar est laché et tombe inconscient et commence ses jets de survie",
+      "Le chef suspends Sildar apres 1 tour, et demande d'arrêter pour négocier. Il demande de tuer Klarg en échange de la vie de Sildar.",
+      "Si les joueurs refusent, Sildar est lâché et tombe inconscient et commence ses jets de survie (public)",
       "Si les joueurs acceptent et reviennent plus tard, il leur demande encore 40po en échange de la vie de Sildar"
     ],
     "loots": ["Sacoche de ceinture contenant 21pc.", "3 agates (10po chaque)"]

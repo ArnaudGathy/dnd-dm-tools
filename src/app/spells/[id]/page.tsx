@@ -16,6 +16,7 @@ import { filter, flatMap, pipe, prop, sortBy } from "remeda";
 import { StatCell } from "@/app/creatures/StatCell";
 import DamageBlock from "@/app/spells/[id]/DamageBlock";
 import { EffectsBlock } from "@/app/spells/[id]/EffectsBlock";
+import { SparklesIcon } from "@heroicons/react/24/outline";
 
 const SpellDetails = async ({
   params,
@@ -41,7 +42,10 @@ const SpellDetails = async ({
       <div className="col-span-2">
         <Card>
           <CardHeader>
-            <CardTitle>{spell.name}</CardTitle>
+            <CardTitle className="flex gap-2">
+              {spell.isRitual && <SparklesIcon className="size-6" />}{" "}
+              {spell.name}
+            </CardTitle>
             <CardDescription>Niveau {spell.level}</CardDescription>
           </CardHeader>
           <CardContent>
