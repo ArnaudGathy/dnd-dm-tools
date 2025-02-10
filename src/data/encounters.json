@@ -261,7 +261,7 @@
       "mapMarker": "D5"
     },
     "ennemies": {
-      "3": [13]
+      "3": [13, 20, 20]
     },
     "informations": [
       "Se déplacer discrètement ou tourner les statues EST et NORD : Discrétion DD14"

@@ -36,9 +36,19 @@ import {
 } from "@/components/ui/popover";
 import Link from "next/link";
 import { TooltipComponent } from "@/components/ui/tooltip";
-import { EllipsisHorizontalIcon } from "@heroicons/react/24/outline";
+import { EllipsisHorizontalIcon, XMarkIcon } from "@heroicons/react/24/outline";
 import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
-import { filter, flatMap, pipe, prop, sortBy, unique, values } from "remeda";
+import {
+  filter,
+  flatMap,
+  map,
+  pipe,
+  prop,
+  sortBy,
+  unique,
+  values,
+} from "remeda";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 const HIT_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
@@ -106,6 +116,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
           {
             ...participant,
             uuid: uuidv4(),
+            id: -1,
             currentHp: participant.hp,
             init: participant.init || roll(20).toString(),
           },
@@ -114,6 +125,12 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       setParticipant(DEFAULT_STATE);
     }
   }, [listOfParticipants, participant]);
+
+  const handleRemoveParticipant = (participant: Participant) => {
+    setListOfParticipants((current) =>
+      current.filter((p) => p.uuid !== participant.uuid),
+    );
+  };
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -134,6 +151,16 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   if (!party) {
     throw new Error("Party not found");
   }
+
+  const playersWithSpells = useMemo(
+    () =>
+      pipe(
+        party.characters,
+        filter((character) => character.spells.length > 0),
+        map(prop("name")),
+      ),
+    [party],
+  );
 
   const partySpells = useMemo(
     () =>
@@ -313,18 +340,32 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     },
                   )}
                 >
-                  <div
-                    style={{
-                      backgroundColor: participant.id
-                        ? participant.color
-                        : "transparent",
-                      borderColor: participant.color,
-                    }}
-                    className={clsx("rounded-full", {
-                      "h-5 w-5 border-2": !participant.id,
-                      "h-5 w-5": participant.id,
-                    })}
-                  />
+                  <div className="w-4">
+                    {!!participant.id ? (
+                      <div
+                        style={{
+                          backgroundColor: participant.id
+                            ? participant.color
+                            : "transparent",
+                          borderColor: participant.color,
+                        }}
+                        className={clsx("rounded-full", {
+                          "h-5 w-5 border-2": !participant.id,
+                          "h-5 w-5": participant.id,
+                        })}
+                      />
+                    ) : playersWithSpells.includes(participant.name) ? (
+                      <div className="w-6">
+                        <Link
+                          href={`/spells?player=${participant.name}&sortBy=level`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          <BookOpenIcon className="size-6" />
+                        </Link>
+                      </div>
+                    ) : null}
+                  </div>
                   <div className="w-10 text-center text-sm">
                     <Input
                       className="w-10"
@@ -346,7 +387,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     </TooltipComponent>
                   </div>
                   <div className="flex-1 text-center">
-                    {participant.hp !== "" ? (
+                    {participant.hp !== "" && (
                       <div className="flex items-center gap-4">
                         <Popover>
                           <PopoverTrigger asChild>
@@ -504,16 +545,6 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                           </PopoverContent>
                         </Popover>
                       </div>
-                    ) : (
-                      <div className="w-6">
-                        <Link
-                          href={`/spells?player=${participant.name}`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <BookOpenIcon className="size-6" />
-                        </Link>
-                      </div>
                     )}
                   </div>
                   <div className="flex gap-2">
@@ -608,6 +639,14 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       );
                     })}
                   </div>
+                  <ConfirmDialog
+                    description="Supprimer cet élément est irréversible."
+                    onConfirm={() => handleRemoveParticipant(participant)}
+                  >
+                    <Button variant="ghost" size="xs">
+                      <XMarkIcon className="size-4" />
+                    </Button>
+                  </ConfirmDialog>
                 </div>
               );
             })}

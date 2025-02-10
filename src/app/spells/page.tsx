@@ -79,10 +79,11 @@ const Spells = () => {
   const router = useRouter();
   const pathName = usePathname();
   const player = searchParams.get("player")?.toLowerCase();
+  const sortBy = searchParams.get("sortBy");
 
   const party = getParty();
 
-  const [displayBy, setDisplayBy] = useState("player");
+  const [displayBy, setDisplayBy] = useState(sortBy ?? "player");
 
   if (!party) {
     return null;
