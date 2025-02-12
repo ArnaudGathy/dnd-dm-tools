@@ -320,3 +320,7 @@ export const getChallengeRatingAsFraction = (
 
   return `${numerator}/${denominator}`;
 };
+
+export const getYoutubeUrlFromId = (id: string) => {
+  return `https://www.youtube.com/embed/${id}?loop=1&playlist=${id}`;
+};

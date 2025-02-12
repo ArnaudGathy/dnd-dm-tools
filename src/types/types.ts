@@ -43,6 +43,7 @@ export type Encounter = {
     name: string;
     mapMarker: string;
   };
+  youtubeId?: string;
   ennemies: Partial<{
     [key: string]: number[];
   }>;

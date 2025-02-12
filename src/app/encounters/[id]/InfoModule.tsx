@@ -9,6 +9,7 @@ import {
   BanknotesIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/solid";
+import { getYoutubeUrlFromId } from "@/utils/utils";
 
 const List = ({ list }: { list: string[] }) => {
   return (
@@ -36,28 +37,40 @@ export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
     <>
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center justify-between">
-            <div>
-              {encounter.location.mapMarker} - {encounter.name}
-            </div>
-            <div className="flex gap-2">
-              {encounter.loots && (
+          <CardTitle>
+            <div className="flex items-center justify-between">
+              <div>
+                {encounter.location.mapMarker} - {encounter.name}
+              </div>
+              <div className="flex gap-2">
+                {encounter.loots && (
+                  <Button
+                    variant={showLoots ? "secondary" : "outline"}
+                    onClick={() => setShowLoots((cur) => !cur)}
+                  >
+                    <BanknotesIcon className="size-6" />
+                    Loot
+                  </Button>
+                )}
                 <Button
-                  variant={showLoots ? "secondary" : "outline"}
-                  onClick={() => setShowLoots((cur) => !cur)}
+                  variant={showInfo ? "secondary" : "outline"}
+                  onClick={() => setShowInfo((cur) => !cur)}
                 >
-                  <BanknotesIcon className="size-6" />
-                  Loot
+                  <InformationCircleIcon className="size-6" />
+                  Info
                 </Button>
-              )}
-              <Button
-                variant={showInfo ? "secondary" : "outline"}
-                onClick={() => setShowInfo((cur) => !cur)}
-              >
-                <InformationCircleIcon className="size-6" />
-                Info
-              </Button>
+              </div>
             </div>
+
+            {encounter.youtubeId && (
+              <iframe
+                width="100%"
+                height="45"
+                src={getYoutubeUrlFromId(encounter.youtubeId)}
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerPolicy="strict-origin-when-cross-origin"
+              ></iframe>
+            )}
           </CardTitle>
         </CardHeader>
       </Card>
