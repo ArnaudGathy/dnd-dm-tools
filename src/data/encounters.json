@@ -228,6 +228,7 @@
     "id": 12,
     "scenario": "Les dragons de l'île aux tempêtes",
     "name": "Ruines de la rotonde",
+    "youtubeId": "2GX9lVHfnxs",
     "location": {
       "name": "L'observatoire de la falaise",
       "mapMarker": "D2"
@@ -257,6 +258,7 @@
     "id": 14,
     "scenario": "Les dragons de l'île aux tempêtes",
     "name": "Tour de l'observatoire",
+    "youtubeId": "Yx-QqEc2Feg",
     "location": {
       "name": "L'observatoire de la falaise",
       "mapMarker": "D5"
@@ -280,6 +282,7 @@
     "id": 15,
     "scenario": "Les dragons de l'île aux tempêtes",
     "name": "Ruines de la rotonde - Vrilléclair",
+    "youtubeId": "EnKmg16Zqkc",
     "location": {
       "name": "L'observatoire de la falaise",
       "mapMarker": "D2"

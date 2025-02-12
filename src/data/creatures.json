@@ -832,24 +832,24 @@
         "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
       },
       {
-        "name": "1-2 Bénédiction d'Astalagan",
+        "name": "1-2 Bronze",
         "description": "Une lueur de bronze enveloppe les participants et soigne +1d4 + 4 PV"
       },
       {
-        "name": "3-4 Flammes de Clyssavar",
+        "name": "3-4 Or",
         "description": "Une lueur dorée s'abat sur Vrilléclair. Doit réussir un JdS DEX DD12 sous peine de subir 2d6 dégats de feu."
       },
       {
-        "name": "5-6 Présent d'Eldenemir",
+        "name": "5-6 Bleu",
         "description": "Le souffle de Vrilléclair se recharge alors qu'une lueur bleue l'enveloppe"
       },
       {
-        "name": "7-8 Fureur de Sharruth",
+        "name": "7-8 Rouge",
         "description": "JdS DEX DD12 sous peine de subir 1d6 dégats de feu alors que la lumière rouge se mue en flammes."
       },
       {
-        "name": "9-10 Passe-passe de Turadaer",
-        "description": "Une lueur d'airan chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
+        "name": "9-10 Argent",
+        "description": "Une lueur d'argent chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
       }
     ]
   },
