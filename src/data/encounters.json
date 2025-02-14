@@ -288,7 +288,7 @@
       "mapMarker": "D2"
     },
     "ennemies": {
-      "3": [14, 15, 16]
+      "3": [14, 15, 16, 10, 10, 12, 12]
     },
     "informations": [
       "Aïdron souffle si nécessaire. Libérer Aidron = 1 action",

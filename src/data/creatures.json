@@ -510,7 +510,7 @@
     "type": "Humanoïde",
     "size": "P",
     "alignment": "Tout alignement",
-    "armorClass": 12,
+    "armorClass": 13,
     "hitPoints": "7 (3d6 - 3)",
     "speed": {
       "walk": "9 m"

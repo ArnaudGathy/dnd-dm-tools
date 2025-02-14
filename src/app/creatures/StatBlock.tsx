@@ -147,24 +147,28 @@ export const StatBlock = ({
                   stat={entries(creature.savingThrows)
                     .map((t) => `${shortenAbilityName(t[0])} ${t[1]}`)
                     .join(", ")}
+                  highlightClassName="text-purple-400"
                 />
               )}
               {creature.vulnerabilities && (
                 <StatCell
                   name="Vulnérabilités (x2)"
                   stat={creature.vulnerabilities.join(", ")}
+                  highlightClassName="text-orange-400"
                 />
               )}
               {creature.resistances && (
                 <StatCell
                   name="Résistances (x0,5)"
                   stat={creature.resistances.join(", ")}
+                  highlightClassName="text-orange-400"
                 />
               )}
               {creature.immunities && (
                 <StatCell
                   name="Immunités (x0)"
                   stat={creature.immunities.join(", ")}
+                  highlightClassName="text-orange-400"
                 />
               )}
 
