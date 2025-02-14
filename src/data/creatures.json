@@ -749,7 +749,7 @@
     },
     "abilities": {
       "strength": 17,
-      "dexterity": 10,
+      "dexterity": -1000,
       "constitution": 15,
       "intelligence": 12,
       "wisdom": 11,
@@ -802,56 +802,6 @@
       }
     ],
     "colors": ["#ffb45e"]
-  },
-  {
-    "name": "Esprits draconique (effet)",
-    "id": 16,
-    "type": "Effet",
-    "size": "M",
-    "alignment": "N/A",
-    "armorClass": 0,
-    "hitPoints": "1",
-    "speed": {
-      "walk": "1.5 m"
-    },
-    "abilities": {
-      "strength": 0,
-      "dexterity": -100,
-      "constitution": 0,
-      "intelligence": 0,
-      "wisdom": 0,
-      "charisma": 0
-    },
-    "senses": {
-      "passivePerception": 0
-    },
-    "challengeRating": 0,
-    "actions": [
-      {
-        "name": "Esprits draconiques",
-        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
-      },
-      {
-        "name": "1-2 Bronze",
-        "description": "Une lueur de bronze enveloppe les participants et soigne +1d4 + 4 PV"
-      },
-      {
-        "name": "3-4 Or",
-        "description": "Une lueur dorée s'abat sur Vrilléclair. Doit réussir un JdS DEX DD12 sous peine de subir 2d6 dégats de feu."
-      },
-      {
-        "name": "5-6 Bleu",
-        "description": "Le souffle de Vrilléclair se recharge alors qu'une lueur bleue l'enveloppe"
-      },
-      {
-        "name": "7-8 Rouge",
-        "description": "JdS DEX DD12 sous peine de subir 1d6 dégats de feu alors que la lumière rouge se mue en flammes."
-      },
-      {
-        "name": "9-10 Argent",
-        "description": "Une lueur d'argent chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
-      }
-    ]
   },
   {
     "name": "Gobelin Ėpee",
@@ -1207,5 +1157,180 @@
         "description": "Quand un assaillant que Sildar voit est censé le toucher avec une attaque de corps à corps, Sildar peut lancer un d6 et en ajouter le résultat à sa CA contre l’attaque concernée, à condition qu’il manie lui-même une arme de corps à corps."
       }
     ]
+  },
+  {
+    "name": "Totem Bronze",
+    "id": 24,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -100,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets"
+      },
+      {
+        "name": "1-2 Bronze",
+        "description": "Une lueur de bronze enveloppe les participants et soigne +1d4 + 4 PV"
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Or",
+    "id": 25,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -200,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "3-4 Or",
+        "description": "Une lueur dorée s'abat sur Vrilléclair. Doit réussir un JdS DEX DD12 sous peine de subir 2d6 dégats de feu."
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Bleu",
+    "id": 26,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -300,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "5-6 Bleu",
+        "description": "Le souffle de Vrilléclair se recharge alors qu'une lueur bleue l'enveloppe"
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Rouge",
+    "id": 27,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -400,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "7-8 Rouge",
+        "description": "JdS DEX DD12 sous peine de subir 1d6 dégats de feu alors que la lumière rouge se mue en flammes."
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Argent",
+    "id": 28,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -500,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "9-10 Argent",
+        "description": "Une lueur d'argent chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
+      }
+    ],
+    "colors": ["#000"]
   }
 ]
