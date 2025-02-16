@@ -888,5 +888,202 @@
     "components": "V, S",
     "duration": "concentration, jusqu'à 1 heure",
     "description": "Vous créez un brouillard épais remplissant une sphère de 6 mètres de rayon centrée sur un point à portée. La zone est fortement obscurcie et le brouillard se dissipe à la fin du sort ou en présence d'un vent modéré ou fort."
+  },
+  {
+    "id": 66,
+    "name": "Arme spirituelle",
+    "level": 2,
+    "castingTime": "1 action bonus",
+    "range": "18 m",
+    "components": "V, S",
+    "duration": "1 minute",
+    "description": "Vous créez une arme spectrale flottante à un point à portée. Lorsque vous lancez ce sort, vous pouvez effectuer une attaque de sort de corps à corps contre une créature dans un rayon de 1,50 m autour de l’arme. En cas de succès, la cible subit 1d8 + votre modificateur de caractéristique d’incantation en dégâts de force. À chacun de vos tours, par une action bonus, vous pouvez déplacer l’arme de 6 m et attaquer à nouveau. Lorsque vous lancez ce sort en utilisant un emplacement de niveau supérieur, les dégâts augmentent de 1d8 pour chaque niveau au-delà du deuxième.",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "1d8 + mod sorts"
+      },
+      "spellLevelScale": "+1d8"
+    }
+  },
+  {
+    "id": 67,
+    "name": "Restauration partielle",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Vous touchez une créature et mettez fin à une maladie ou à un état qui l’affecte. Cet état peut être aveugle, sourd, paralysé ou empoisonné."
+  },
+  {
+    "id": 68,
+    "name": "Blessure",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Votre main est entourée d'une énergie négative. Faites une attaque de sort au corps à corps contre une créature à portée. En cas de succès, la cible subit 3d10 dégâts nécrotiques. Lorsque vous lancez ce sort avec un emplacement de niveau supérieur, les dégâts augmentent de 1d10 par niveau d’emplacement au-delà du premier.",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "3d10"
+      },
+      "spellLevelScale": "+1d10"
+    }
+  },
+  {
+    "id": 69,
+    "name": "Éclair traçant",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V",
+    "duration": "instantanée",
+    "description": "Un éclair jaillit vers une créature visible à portée. La cible doit réussir un jet de sauvegarde de Dextérité ou subir 4d6 dégâts de foudre. Lorsque vous lancez ce sort en utilisant un emplacement de niveau supérieur, les dégâts augmentent de 1d6 par niveau d’emplacement au-delà du premier.",
+    "combat": {
+      "type": "save",
+      "save": "dexterity",
+      "saveSuccess": "1/2 dégâts",
+      "damage": {
+        "1": "4d6"
+      },
+      "spellLevelScale": "+1d6"
+    }
+  },
+  {
+    "id": 70,
+    "name": "Fléau",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Jusqu'à trois créatures à portée doivent réussir un jet de sauvegarde de Charisme ou être affectées. Tant que le sort dure, chaque fois qu'une créature affectée effectue un jet d'attaque ou de sauvegarde, elle doit soustraire 1d4 de son jet.",
+    "combat": {
+      "type": "save",
+      "save": "charisma",
+      "saveSuccess": "Non affecté",
+      "effects": ["Soustrait 1d4 aux jets d'attaque et de sauvegarde"]
+    }
+  },
+  {
+    "id": 71,
+    "name": "Augure",
+    "level": 2,
+    "castingTime": "1 minute",
+    "range": "personnelle",
+    "components": "V, S, M",
+    "duration": "instantanée",
+    "description": "Vous utilisez un présage divin pour obtenir un aperçu des résultats probables d'une action spécifique que vous comptez entreprendre dans les 30 prochaines minutes. Le MJ vous fournit une réponse parmi : 'bon présage', 'mauvais présage', 'mélange des deux' ou 'aucun présage'."
+  },
+  {
+    "id": 72,
+    "name": "Cécité/surdité",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V",
+    "duration": "1 minute",
+    "description": "Vous pouvez rendre un ennemi aveugle ou sourd. Une créature située à portée doit réussir un jet de sauvegarde de Constitution ou être aveugle ou sourde (selon votre choix) pour la durée du sort. Elle peut refaire un jet de sauvegarde à la fin de chacun de ses tours pour mettre fin à l'effet.",
+    "combat": {
+      "type": "save",
+      "save": "constitution",
+      "saveSuccess": "Non affecté",
+      "effects": ["blinded", "deafened"]
+    }
+  },
+  {
+    "id": 73,
+    "name": "Flamme éternelle",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S, M",
+    "duration": "jusqu'à dissipation",
+    "description": "Vous touchez un objet et y allumez une flamme magique semblable à une torche. La flamme ne dégage pas de chaleur et ne consomme pas d'oxygène. Elle peut être couverte ou cachée, mais elle ne peut être éteinte par des moyens conventionnels."
+  },
+  {
+    "id": 74,
+    "name": "Immobilisation de personne",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Une créature humanoïde que vous pouvez voir à portée doit réussir un jet de sauvegarde de Sagesse ou être paralysée pour la durée du sort. Elle peut refaire un jet de sauvegarde à la fin de chacun de ses tours pour mettre fin à l'effet.",
+    "combat": {
+      "type": "save",
+      "save": "wisdom",
+      "saveSuccess": "Non affecté",
+      "effects": ["paralyzed"]
+    }
+  },
+  {
+    "id": 75,
+    "name": "Lien de protection",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "9 m",
+    "components": "V, S, M",
+    "duration": "1 heure",
+    "description": "Vous liez magiquement deux créatures consentantes dans un rayon de 9 m. Tant qu'elles sont à moins de cette portée l'une de l'autre, elles partagent les dégâts subis, répartis à parts égales entre elles."
+  },
+  {
+    "id": 76,
+    "name": "Localisation d'objet",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Vous ressentez la direction et la distance d'un objet spécifique connu à portée de 300 mètres, à condition qu'il ne soit pas bloqué par du plomb."
+  },
+  {
+    "id": 77,
+    "name": "Préservation des morts",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "contact",
+    "components": "V, S, M",
+    "duration": "10 jours",
+    "description": "Vous touchez un cadavre ou un objet organique et l'empêchez de se décomposer. Il ne peut être transformé en mort-vivant pendant la durée du sort."
+  },
+  {
+    "id": 78,
+    "name": "Sens des pièges",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "personnelle",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Vous avez une perception surnaturelle des pièges à portée de 30 mètres, vous alertant de leur présence mais sans révéler leur emplacement exact."
+  },
+  {
+    "id": 79,
+    "name": "Silence",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S",
+    "duration": "concentration, jusqu'à 10 minutes",
+    "description": "Vous créez une sphère de 6 mètres de rayon où aucun son ne peut être émis ou entendu, rendant la zone idéale pour la furtivité ou la protection contre les sorts vocaux."
+  },
+  {
+    "id": 80,
+    "name": "Zone de vérité",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S",
+    "duration": "10 minutes",
+    "description": "Vous créez une zone de 4,50 mètres de rayon où les créatures doivent réussir un jet de sauvegarde de Charisme ou être incapables de mentir sciemment.",
+    "combat": {
+      "type": "save",
+      "save": "charisma",
+      "saveSuccess": "Non affecté",
+      "effects": ["Incapable de mentir"]
+    }
   }
 ]
