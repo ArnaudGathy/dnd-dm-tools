@@ -3,13 +3,10 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Encounter } from "@/types/types";
-import { useState } from "react";
 import { clsx } from "clsx";
-import {
-  BanknotesIcon,
-  InformationCircleIcon,
-} from "@heroicons/react/24/solid";
 import { getYoutubeUrlFromId } from "@/utils/utils";
+import Link from "next/link";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/16/solid";
 
 const List = ({ list }: { list: string[] }) => {
   return (
@@ -30,36 +27,27 @@ const List = ({ list }: { list: string[] }) => {
 };
 
 export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
-  const [showInfo, setShowInfo] = useState(true);
-  const [showLoots, setShowLoots] = useState(true);
-
   return (
     <>
       <Card>
         <CardHeader>
           <CardTitle>
             <div className="flex items-center justify-between">
+              {encounter.id - 1 > 0 && (
+                <Button size="xs" variant="ghost">
+                  <Link href={`/encounters/${encounter.id - 1}`}>
+                    <ArrowLeftIcon className="size-4" />
+                  </Link>
+                </Button>
+              )}
               <div>
                 {encounter.location.mapMarker} - {encounter.name}
               </div>
-              <div className="flex gap-2">
-                {encounter.loots && (
-                  <Button
-                    variant={showLoots ? "secondary" : "outline"}
-                    onClick={() => setShowLoots((cur) => !cur)}
-                  >
-                    <BanknotesIcon className="size-6" />
-                    Loot
-                  </Button>
-                )}
-                <Button
-                  variant={showInfo ? "secondary" : "outline"}
-                  onClick={() => setShowInfo((cur) => !cur)}
-                >
-                  <InformationCircleIcon className="size-6" />
-                  Info
-                </Button>
-              </div>
+              <Button size="xs" variant="ghost">
+                <Link href={`/encounters/${encounter.id + 1}`}>
+                  <ArrowRightIcon className="size-4" />
+                </Link>
+              </Button>
             </div>
 
             {encounter.youtubeId && (
@@ -75,31 +63,27 @@ export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
         </CardHeader>
       </Card>
 
-      {(showInfo || showLoots) && (
-        <div className="flex gap-4">
-          {showInfo && (
-            <Card className="flex-1">
-              <CardHeader>
-                <CardTitle>Informations</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <List list={encounter.informations} />
-              </CardContent>
-            </Card>
-          )}
+      <div className="flex gap-4">
+        <Card className="flex-1">
+          <CardHeader>
+            <CardTitle>Informations</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <List list={encounter.informations} />
+          </CardContent>
+        </Card>
 
-          {showLoots && encounter.loots && (
-            <Card className={clsx("flex-1", { "max-w-[50%]": showInfo })}>
-              <CardHeader>
-                <CardTitle>Loots</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <List list={encounter.loots} />
-              </CardContent>
-            </Card>
-          )}
-        </div>
-      )}
+        {encounter.loots && (
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle>Loots</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <List list={encounter.loots} />
+            </CardContent>
+          </Card>
+        )}
+      </div>
     </>
   );
 };

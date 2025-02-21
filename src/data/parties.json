@@ -127,5 +127,35 @@
         ]
       }
     ]
+  },
+  {
+    "id": 4,
+    "name": "Girls",
+    "characters": [
+      {
+        "id": 14,
+        "name": "todo",
+        "player": "Magaly",
+        "color": "#56350d",
+        "gameClass": "Clerc",
+        "spells": []
+      },
+      {
+        "id": 15,
+        "name": "todo",
+        "player": "Sounia",
+        "color": "#a30719",
+        "gameClass": "",
+        "spells": []
+      },
+      {
+        "id": 16,
+        "name": "Todo",
+        "player": "Bénédicte",
+        "color": "#ff1493",
+        "gameClass": "Barbare",
+        "spells": []
+      }
+    ]
   }
 ]

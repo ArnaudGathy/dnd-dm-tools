@@ -1,8 +1,8 @@
 [
   {
+    "name": "Marins noyés",
     "id": 1,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Marins noyés",
     "location": {
       "name": "Repos du dragon",
       "mapMarker": "A0"
@@ -18,9 +18,9 @@
     ]
   },
   {
+    "name": "Tunnel d'entrée",
     "id": 2,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Tunnel d'entrée",
     "location": {
       "name": "Grotte de Poussemer",
       "mapMarker": "B1"
@@ -36,9 +36,9 @@
     ]
   },
   {
+    "name": "Champignonnière",
     "id": 3,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Champignonnière",
     "location": {
       "name": "Grotte de Poussemer",
       "mapMarker": "B2"
@@ -58,9 +58,9 @@
     ]
   },
   {
+    "name": "Garde-manger",
     "id": 4,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Garde-manger",
     "location": {
       "name": "Grotte de Poussemer",
       "mapMarker": "B3"
@@ -75,9 +75,9 @@
     ]
   },
   {
+    "name": "La grotte au Cristal - partie 1",
     "id": 5,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "La grotte au Cristal - partie 1",
     "location": {
       "name": "Grotte de Poussemer",
       "mapMarker": "B6"
@@ -93,9 +93,9 @@
     ]
   },
   {
+    "name": "La grotte au Cristal - partie 2",
     "id": 6,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "La grotte au Cristal - partie 2",
     "location": {
       "name": "Grotte de Poussemer",
       "mapMarker": "B6"
@@ -112,9 +112,9 @@
     "loots": ["25x morceaux d’obsidienne de 10po chacun"]
   },
   {
+    "name": "Pont principal - Harpie",
     "id": 7,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Pont principal - Harpie",
     "location": {
       "name": "Epave de la rose des vents",
       "mapMarker": "C1"
@@ -139,9 +139,9 @@
     ]
   },
   {
+    "name": "Pont principal - Zombies",
     "id": 8,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Pont principal - Zombies",
     "location": {
       "name": "Epave de la rose des vents",
       "mapMarker": "C4"
@@ -162,9 +162,9 @@
     ]
   },
   {
+    "name": "Pont inférieur",
     "id": 9,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Pont inférieur",
     "location": {
       "name": "Epave de la rose des vents",
       "mapMarker": "C8"
@@ -182,9 +182,9 @@
     "loots": ["Fouiller les caisses : 1d6 loots, roll dans la table page 25"]
   },
   {
+    "name": "Renégats Kobold",
     "id": 10,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Renégats Kobold",
     "location": {
       "name": "Exploration",
       "mapMarker": "X1"
@@ -205,9 +205,9 @@
     ]
   },
   {
+    "name": "Il court il court, le Hibours",
     "id": 11,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Il court il court, le Hibours",
     "location": {
       "name": "Exploration",
       "mapMarker": "X2"
@@ -225,9 +225,9 @@
     "youtubeId": "n8bmE76sETo"
   },
   {
+    "name": "Ruines de la rotonde",
     "id": 12,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Ruines de la rotonde",
     "youtubeId": "2GX9lVHfnxs",
     "location": {
       "name": "L'observatoire de la falaise",
@@ -242,9 +242,9 @@
     ]
   },
   {
+    "name": "Camp des Kobolds",
     "id": 13,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Camp des Kobolds",
     "location": {
       "name": "L'observatoire de la falaise",
       "mapMarker": "D3"
@@ -255,9 +255,9 @@
     "informations": ["Charisme DD13 pour les convaincre"]
   },
   {
+    "name": "Tour de l'observatoire",
     "id": 14,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Tour de l'observatoire",
     "youtubeId": "Yx-QqEc2Feg",
     "location": {
       "name": "L'observatoire de la falaise",
@@ -279,9 +279,9 @@
     ]
   },
   {
+    "name": "Ruines de la rotonde - Vrilléclair",
     "id": 15,
     "scenario": "Les dragons de l'île aux tempêtes",
-    "name": "Ruines de la rotonde - Vrilléclair",
     "youtubeId": "EnKmg16Zqkc",
     "location": {
       "name": "L'observatoire de la falaise",
@@ -299,15 +299,16 @@
     ]
   },
   {
+    "name": "Embuscade gobeline",
     "id": 16,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Embuscade gobeline",
     "location": {
       "name": "Embuscade gobeline",
       "mapMarker": "A1"
     },
     "ennemies": {
-      "1": [17, 17, 18, 18]
+      "3": [17, 18, 18],
+      "4": [17, 17, 18, 18]
     },
     "informations": [
       "Surprise : Discrétion (+6) VS perception passive. Baern 11, Barback 10, Lucifier 7, Eleni 13",
@@ -315,15 +316,16 @@
     ]
   },
   {
+    "name": "Poste de guet des gobelins",
     "id": 17,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Poste de guet des gobelins",
     "location": {
       "name": "Le repaire des Rocagueules",
       "mapMarker": "H2"
     },
     "ennemies": {
-      "1": [17, 18, 19]
+      "3": [18, 19],
+      "4": [17, 18, 19]
     },
     "informations": [
       "Une fois le chef vaincu, les gobelins fuient vers H3 libérer les loups"
@@ -331,22 +333,23 @@
     "loots": ["Chef gobelin : Sacoche de ceinture contenant 16pa"]
   },
   {
+    "name": "Le chenil",
     "id": 18,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Le chenil",
     "location": {
       "name": "Le repaire des Rocagueules",
       "mapMarker": "H3"
     },
     "ennemies": {
-      "1": [20, 20, 20, 17, 18]
+      "3": [20, 20, 20, 17],
+      "4": [20, 20, 20, 17, 18]
     },
     "informations": ["2 gobelins arrivent après 2 rounds"]
   },
   {
+    "name": "Passage escarpé",
     "id": 19,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Passage escarpé",
     "location": {
       "name": "Le repaire des Rocagueules",
       "mapMarker": "H4"
@@ -362,15 +365,16 @@
     ]
   },
   {
+    "name": "Tanière des gobelins",
     "id": 20,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Tanière des gobelins",
     "location": {
       "name": "Le repaire des Rocagueules",
       "mapMarker": "H6"
     },
     "ennemies": {
-      "1": [17, 17, 18, 18, 19, 19, 23]
+      "3": [17, 17, 18, 18, 19, 23],
+      "4": [17, 17, 18, 18, 19, 19, 23]
     },
     "informations": [
       "Le chef suspends Sildar apres 1 tour, et demande d'arrêter pour négocier. Il demande de tuer Klarg en échange de la vie de Sildar.",
@@ -380,15 +384,16 @@
     "loots": ["Sacoche de ceinture contenant 21pc.", "3 agates (10po chaque)"]
   },
   {
+    "name": "Bassins jumeaux",
     "id": 21,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Bassins jumeaux",
     "location": {
       "name": "Le repaire des Rocagueules",
       "mapMarker": "H7"
     },
     "ennemies": {
-      "1": [17, 17, 18, 20, 20]
+      "3": [17, 18, 20, 20],
+      "4": [17, 17, 18, 20, 20]
     },
     "informations": [
       "Ne peuvent pas être surpris si les vannes ont été ouvertes",
@@ -398,15 +403,16 @@
     "loots": ["Dans le bassin, 1 perle (100po)"]
   },
   {
+    "name": "Antre de Klarg",
     "id": 22,
     "scenario": "Les tréfonds de Phancreux",
-    "name": "Antre de Klarg",
     "location": {
       "name": "Le repaire des Rocagueules",
       "mapMarker": "H8"
     },
     "ennemies": {
-      "1": [22, 17, 18, 20]
+      "3": [22, 17, 20],
+      "4": [22, 17, 18, 20]
     },
     "informations": [
       "Si prévenu, pas de surprise possible",
