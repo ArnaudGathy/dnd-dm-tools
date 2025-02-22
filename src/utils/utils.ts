@@ -4,6 +4,8 @@ import {
   Condition,
   Creature,
   Encounter,
+  EncounterEnemy,
+  isEnemyObject,
   Participant,
   Party,
   Skills,
@@ -12,7 +14,7 @@ import creatures from "@/data/creatures.json";
 import parties from "@/data/parties.json";
 import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
-import { entries, groupBy, prop, reduce, sortBy } from "remeda";
+import { entries, groupBy, isPlainObject, prop, reduce, sortBy } from "remeda";
 import conditions from "@/data/conditions.json";
 import spellList from "@/data/spells.json";
 import { Spell, spellsSchema } from "@/types/schemas";
@@ -270,12 +272,12 @@ export const getParticipantFromEncounter = ({
   partyLevel: string;
 }) => {
   const ennemiesIds = getEnnemiesFromEncounter({ encounter, partyLevel });
-  const creaturesList = ennemiesIds.map((id) =>
-    typedCreatures.find((creature) => creature.id === id),
-  );
 
   const currentColorIndex: { [key: number]: number } = {};
-  return creaturesList.reduce((acc: Participant[], creature, index) => {
+  return ennemiesIds.reduce((acc: Participant[], enemy, index) => {
+    const enemyId = getIdFromEnemy(enemy);
+    const creature = typedCreatures.find((creature) => creature.id === enemyId);
+
     if (creature) {
       const hp = getHPAsString(creature);
 
@@ -283,11 +285,17 @@ export const getParticipantFromEncounter = ({
         ...acc,
         {
           id: creature.id,
-          name: creature.name,
+          name:
+            isEnemyObject(enemy) && enemy.variant
+              ? `${creature.name} (${enemy.variant})`
+              : creature.name,
           init: getInitiative(creature),
           hp,
           currentHp: hp,
-          color: getCreatureColor(creature, index, currentColorIndex),
+          color:
+            isEnemyObject(enemy) && enemy.color
+              ? enemy.color
+              : getCreatureColor(creature, index, currentColorIndex),
           uuid: uuidv4(),
         },
       ];
@@ -323,4 +331,11 @@ export const getChallengeRatingAsFraction = (
 
 export const getYoutubeUrlFromId = (id: string) => {
   return `https://www.youtube.com/embed/${id}?loop=1&playlist=${id}`;
+};
+
+export const getIdFromEnemy = (enemy: EncounterEnemy) => {
+  if (isPlainObject(enemy)) {
+    return enemy.id;
+  }
+  return enemy;
 };

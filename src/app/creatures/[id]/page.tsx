@@ -1,10 +1,11 @@
 import {
   getCreatureFromId,
+  getIdFromEnemy,
   groupEncounters,
   typedEncounters,
 } from "@/utils/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { entries, filter, flat, unique, values } from "remeda";
+import { entries, filter, flat, map, unique, values } from "remeda";
 import { Link } from "@/components/ui/Link";
 import { notFound } from "next/navigation";
 import { StatBlock } from "@/app/creatures/StatBlock";
@@ -19,7 +20,14 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   const encounteredIn = groupEncounters(
     filter(typedEncounters, (encounter) =>
-      unique(flat(values(encounter.ennemies))).includes(creature.id),
+      unique(
+        map(flat(values(encounter.ennemies)), (enemy) => {
+          if (enemy) {
+            return getIdFromEnemy(enemy);
+          }
+          return undefined;
+        }),
+      ).includes(creature.id),
     ),
   );
 

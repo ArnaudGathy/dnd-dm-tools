@@ -1,8 +1,12 @@
 "use client";
 
 import { Encounter } from "@/types/types";
-import { getCreaturesFromIds, getEnnemiesFromEncounter } from "@/utils/utils";
-import { unique } from "remeda";
+import {
+  getCreaturesFromIds,
+  getEnnemiesFromEncounter,
+  getIdFromEnemy,
+} from "@/utils/utils";
+import { map, unique } from "remeda";
 import { notFound } from "next/navigation";
 import { getPartyLevel } from "@/utils/localStorageUtils";
 import { StatBlock } from "@/app/creatures/StatBlock";
@@ -10,7 +14,11 @@ import { StatBlock } from "@/app/creatures/StatBlock";
 const StatBlocksModule = ({ encounter }: { encounter: Encounter }) => {
   const partyLevel = getPartyLevel();
   const creatures = getCreaturesFromIds(
-    unique(getEnnemiesFromEncounter({ encounter, partyLevel })),
+    unique(
+      map(getEnnemiesFromEncounter({ encounter, partyLevel }), (enemy) =>
+        getIdFromEnemy(enemy),
+      ),
+    ),
   );
 
   if (!creatures) {

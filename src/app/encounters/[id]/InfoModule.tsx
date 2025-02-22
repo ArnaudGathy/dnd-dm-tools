@@ -64,16 +64,18 @@ export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
       </Card>
 
       <div className="flex gap-4">
-        <Card className="flex-1">
-          <CardHeader>
-            <CardTitle>Informations</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <List list={encounter.informations} />
-          </CardContent>
-        </Card>
+        {!!encounter.informations?.length && (
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle>Informations</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <List list={encounter.informations} />
+            </CardContent>
+          </Card>
+        )}
 
-        {encounter.loots && (
+        {!!encounter.loots?.length && (
           <Card className="flex-1">
             <CardHeader>
               <CardTitle>Loots</CardTitle>

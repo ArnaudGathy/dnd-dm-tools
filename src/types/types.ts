@@ -35,6 +35,9 @@ export type Party = {
   characters: Character[];
 };
 
+type EnemyObject = { id: number; color?: string; variant?: string };
+export type EncounterEnemy = number | EnemyObject;
+
 export type Encounter = {
   id: number;
   scenario: string;
@@ -45,10 +48,14 @@ export type Encounter = {
   };
   youtubeId?: string;
   ennemies: Partial<{
-    [key: string]: number[];
+    [key: string]: Array<EncounterEnemy>;
   }>;
   informations: string[];
   loots?: string[];
+};
+
+export const isEnemyObject = (enemy: unknown): enemy is EnemyObject => {
+  return (enemy as EnemyObject)?.id !== undefined;
 };
 
 export type Characteristics =
