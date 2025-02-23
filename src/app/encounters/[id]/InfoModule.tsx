@@ -16,7 +16,7 @@ const List = ({ list }: { list: string[] }) => {
         return (
           <li
             key={info}
-            className={clsx("my-2", { "text-indigo-400": shouldEmphasize })}
+            className={clsx("my-2", { "text-green-600": shouldEmphasize })}
           >
             {info}
           </li>

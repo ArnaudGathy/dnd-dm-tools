@@ -30,6 +30,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { StatCell } from "@/app/creatures/StatCell";
 
+const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
+  return <h5 className="mb-2 text-neutral-300 underline">{children}</h5>;
+};
+
 export const StatBlock = ({
   creature,
   isCollapsible = true,
@@ -90,29 +94,45 @@ export const StatBlock = ({
         <CardContent>
           <div className="space-y-4">
             <div className="flex gap-8">
-              <StatCell name="CA" stat={creature.armorClass} isHighlighted />
+              <StatCell
+                name="CA"
+                stat={creature.armorClass}
+                isHighlighted
+                isInline
+              />
               <StatCell
                 name="Vit."
                 stat={getDistanceInSquares(creature.speed.walk)}
                 isHighlighted
+                isInline
               />
 
               {creature.speed.swim && (
                 <StatCell
                   name="Nage"
                   stat={getDistanceInSquares(creature.speed.swim)}
+                  isInline
                 />
               )}
               {creature.speed.fly && (
                 <StatCell
                   name="Vol"
                   stat={getDistanceInSquares(creature.speed.fly)}
+                  isInline
                 />
               )}
-              <StatCell name="PV" stat={getHPAsString(creature)} />
+              {creature.speed.climb && (
+                <StatCell
+                  name="Escal."
+                  stat={getDistanceInSquares(creature.speed.climb)}
+                  isInline
+                />
+              )}
+              <StatCell name="PV" stat={getHPAsString(creature)} isInline />
               <StatCell
                 name="FP"
                 stat={getChallengeRatingAsFraction(creature.challengeRating)}
+                isInline
               />
             </div>
             <div className="flex gap-8 border-t-2 pt-4">
@@ -128,11 +148,13 @@ export const StatBlock = ({
                         {Math.sign(modifier) === 1 ? `+${modifier}` : modifier}
                       </span>
                     }
+                    isInline
                   />
                 );
               })}
             </div>
             <div className="flex flex-col border-t-2 pt-4">
+              <CategoryTitle>Général</CategoryTitle>
               {creature.skills && (
                 <StatCell
                   name="Compétences"
@@ -179,7 +201,7 @@ export const StatBlock = ({
                 entries(creature.senses).map(([name, value]) => {
                   let stat = value;
                   if (
-                    ["darkvision", "blindSight"].includes(name) &&
+                    ["darkvision", "blindSight", "trueSight"].includes(name) &&
                     typeof value === "string"
                   ) {
                     stat = `${getDistanceInSquares(value)} cases`;
@@ -197,6 +219,7 @@ export const StatBlock = ({
 
             {creature.traits && (
               <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>Traits</CategoryTitle>
                 {creature.traits.map((trait) => (
                   <StatCell
                     key={trait.name}
@@ -206,18 +229,8 @@ export const StatBlock = ({
                 ))}
               </div>
             )}
-            {creature.reactions && (
-              <div className="flex flex-col border-t-2 pt-4">
-                {creature.reactions.map((reaction) => (
-                  <StatCell
-                    key={reaction.name}
-                    name={reaction.name}
-                    stat={reaction.description}
-                  />
-                ))}
-              </div>
-            )}
             <div className="flex flex-col gap-2 border-t-2 pt-4">
+              <CategoryTitle>Actions</CategoryTitle>
               {creature.actions.map((action) => {
                 if (action.description) {
                   return (
@@ -281,6 +294,32 @@ export const StatBlock = ({
                 );
               })}
             </div>
+
+            {creature.bonusActions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>Actions bonus</CategoryTitle>
+                {creature.bonusActions.map((bonus) => (
+                  <StatCell
+                    key={bonus.name}
+                    name={bonus.name}
+                    stat={bonus.description}
+                  />
+                ))}
+              </div>
+            )}
+
+            {creature.reactions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>Réactions</CategoryTitle>
+                {creature.reactions.map((reaction) => (
+                  <StatCell
+                    key={reaction.name}
+                    name={reaction.name}
+                    stat={reaction.description}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </CardContent>
       )}

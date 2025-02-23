@@ -1100,7 +1100,7 @@
         "hit": "9 (2d6 + 2) dégâts perforants en mêlée, ou 5 (1d6 + 2) dégâts perforants à distance."
       }
     ],
-    "colors": ["#937a39"]
+    "colors": ["#6b4a04", "#1c5fd0"]
   },
   {
     "name": "Sildar Halledhiver",
@@ -1332,5 +1332,360 @@
       }
     ],
     "colors": ["#000"]
+  },
+  {
+    "name": "Voyou Fer-rouge",
+    "id": 29,
+    "type": "Humanoïde",
+    "size": "M",
+    "alignment": "Généralement Neutre Mauvais",
+    "armorClass": 11,
+    "hitPoints": "16 (3d8 + 3)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 9,
+      "wisdom": 9,
+      "charisma": 11
+    },
+    "skills": {
+      "intimidation": "+2"
+    },
+    "senses": {
+      "passivePerception": 9
+    },
+    "languages": ["Commun"],
+    "challengeRating": 0.5,
+    "actions": [
+      {
+        "name": "Épée courte",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      }
+    ],
+    "colors": ["#f10000", "#1c8811", "#1383c5", "#fd7400"]
+  },
+  {
+    "name": "Bandit",
+    "id": 30,
+    "type": "Humanoïde",
+    "size": "M",
+    "alignment": "Tout alignement non loyal",
+    "armorClass": 12,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 11,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "skills": {
+      "athletics": "+2",
+      "intimidation": "+2"
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "languages": ["Commun"],
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 1) dégâts tranchants."
+      },
+      {
+        "name": "Arbalète légère",
+        "type": "Distance",
+        "modifier": "+3",
+        "reach": "portée 24/96 m",
+        "target": "1 cible",
+        "hit": "5 (1d8 + 1) dégâts perforants."
+      }
+    ],
+    "colors": ["#132a5e", "#b47f12", "#21c412"]
+  },
+  {
+    "name": "Squelette",
+    "id": 31,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 13,
+    "hitPoints": "13 (2d8 + 4)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 6,
+      "wisdom": 8,
+      "charisma": 5
+    },
+    "vulnerabilities": ["Contondants"],
+    "immunities": ["Poison", "État empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Langues connues de son vivant"],
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Épée courte",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      },
+      {
+        "name": "Arc court",
+        "type": "Distance",
+        "modifier": "+4",
+        "reach": "portée 24/96 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      },
+      {
+        "name": "Lance",
+        "type": "Melee ou distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 6/18 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "colors": ["#f50000", "#1323f6"]
+  },
+  {
+    "name": "Nothic",
+    "id": 32,
+    "type": "Aberration",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "45 (6d8 + 18)",
+    "speed": {
+      "walk": "9 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 16,
+      "constitution": 16,
+      "intelligence": 13,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "skills": {
+      "arcana": "+3",
+      "stealth": "+5",
+      "insight": "+4",
+      "perception": "+2"
+    },
+    "senses": {
+      "trueSight": "36 m",
+      "passivePerception": 12
+    },
+    "languages": ["Commun des profondeurs"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Vue aiguisée",
+        "description": "Le nothic a un avantage aux jets de Sagesse (Perception) faisant appel à la vue."
+      },
+      {
+        "name": "Camouflage",
+        "description": "Peut se cacher dans une zone de visibilité partielle"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le nothic effectue deux attaques avec ses griffes."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "6 (1d6 + 3) dégâts tranchants."
+      },
+      {
+        "name": "Regard de putréfaction (recharge 4-6)",
+        "description": "Le nothic prend pour cible une créature qu'il peut voir dans un rayon de 9 mètres autour de lui. La cible doit réussir un jet de sauvegarde de Constitution DD 12 contre cette magie ou prendre 10 (3d6) dégâts nécrotiques."
+      },
+      {
+        "name": "Intuition mystérieuse",
+        "description": "La cible fais un JdS de SAG DD14, Si le Nothic l’emporte, il apprend un fait ou un secret de la cible."
+      }
+    ],
+    "colors": ["#062157"]
+  },
+  {
+    "name": "Quasit",
+    "id": 33,
+    "type": "Fiélon (Démon, Métamorphe)",
+    "size": "TP",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 13,
+    "hitPoints": "7 (3d4)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 5,
+      "dexterity": 17,
+      "constitution": 10,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "skills": {
+      "stealth": "+5"
+    },
+    "resistances": [
+      "Froid",
+      "Feu",
+      "Foudre",
+      "Contondant, Perforant, Tranchant (non magiques)"
+    ],
+    "immunities": ["Poison", "Empoisonné"],
+    "senses": {
+      "darkvision": "36 m",
+      "passivePerception": 10
+    },
+    "languages": ["Abyssal", "Commun"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Métamorphe",
+        "description": "Le quasit peut utiliser son action pour se transformer en une forme animale ressemblant à une chauve-souris (vitesse de vol 12 m), un mille-pattes (vitesse de marche 12 m, escalade 12 m), ou un crapaud (vitesse de marche 12 m, nage 12 m), ou revenir à sa forme d'origine. Ses statistiques sont identiques dans chaque forme, à l’exception de ses vitesses qui changent. L'équipement qu'il porte n'est pas transformé. Il revient à sa forme d'origine s'il meurt."
+      },
+      {
+        "name": "Résistance à la magie",
+        "description": "Le quasit a un avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Griffes (Morsure en forme animale)",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d4 + 3) dégâts perforants et la cible doit réussir un jet de sauvegarde de Constitution DD 10 ou subir 5 (2d4) dégâts de poison et être empoisonnée pendant 1 minute. La cible peut refaire le jet de sauvegarde à la fin de chacun de ses tours, mettant fin à l'effet sur elle en cas de réussite."
+      },
+      {
+        "name": "Terreur (1/jour)",
+        "description": "Le quasit choisit une créature dans un rayon de 6 m de lui. Cette créature doit réussir un jet de sauvegarde de Sagesse DD 10 ou être effrayée pendant 1 minute. La cible peut refaire le jet de sauvegarde à la fin de chacun de ses tours, mettant fin à l'effet sur elle en cas de réussite."
+      },
+      {
+        "name": "Invisibilité",
+        "description": "Le quasit devient invisible jusqu'à ce qu'il attaque ou lance un sort, ou jusqu'à ce que sa concentration soit interrompue (comme s'il se concentrait sur un sort). Tout équipement porté ou transporté par le quasit est invisible avec lui."
+      }
+    ],
+    "colors": ["#21c412"]
+  },
+  {
+    "name": "Iarno Albrek",
+    "id": 34,
+    "type": "Humanoïde (Humain, Magicien)",
+    "size": "M",
+    "alignment": "Loyal Mauvais",
+    "armorClass": 13,
+    "hitPoints": "22 (5d8)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 11,
+      "intelligence": 17,
+      "wisdom": 12,
+      "charisma": 11
+    },
+    "savingThrows": {
+      "intelligence": "+5",
+      "wisdom": "+3"
+    },
+    "skills": {
+      "arcana": "+5",
+      "history": "+5"
+    },
+    "senses": {
+      "passivePerception": 11
+    },
+    "languages": ["Commun", "Draconique", "Elfique", "Nain"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Équipement spécial",
+        "description": "Bâton-de-verre possède un bâton de défense. Tant qu’il a ce bâton en main, il peut consacrer une action pour lancer le sort armure du mage et jouer sa réaction pour lancer le sort bouclier."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Armure du mage",
+        "description": "CA passe à 16"
+      },
+      {
+        "name": "Attaques multiples",
+        "description": "Bâton-de-verre effectue deux attaques de Décharge électrique."
+      },
+      {
+        "name": "Décharge électrique",
+        "type": "Melee ou Distance",
+        "modifier": "+5",
+        "reach": "1.5 m ou portée 36 m",
+        "target": "1 cible",
+        "hit": "6 (1d6 + 3) dégâts de foudre."
+      },
+      {
+        "name": "Incantation",
+        "description": "Bâton-de-verre lance l’un des sorts suivants, sans la moindre composante matérielle, l’Intelligence étant sa caractéristique d’incantation (DD de sauvegarde des sorts 13) :"
+      },
+      {
+        "name": "À volonté",
+        "description": "Lumière, main du mage"
+      },
+      {
+        "name": "1/jour chacun",
+        "description": "Charme-personne, immobilisation de personne, projectile magique"
+      }
+    ],
+    "reactions": [
+      {
+        "name": "Bouclier",
+        "description": "+5 CA jusqu'au début du prochain tour."
+      }
+    ],
+    "bonusActions": [
+      {
+        "name": "Téléportation (2/jour)",
+        "description": "Bâton-de-verre se téléporte d’un maximum de 9 m (6 cases) avec tout l’équipement qu’il porte vers un espace inoccupé qu’il voit."
+      }
+    ],
+    "colors": ["#061f5b"]
   }
 ]

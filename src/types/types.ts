@@ -50,7 +50,7 @@ export type Encounter = {
   ennemies: Partial<{
     [key: string]: Array<EncounterEnemy>;
   }>;
-  informations: string[];
+  informations?: string[];
   loots?: string[];
 };
 
@@ -86,6 +86,16 @@ export type Skills =
   | "stealth"
   | "survival";
 
+type Action = {
+  name: string;
+  description?: string;
+  type?: string;
+  modifier?: string;
+  reach?: string;
+  target?: string;
+  hit?: string;
+};
+
 export type Creature = {
   name: string;
   id: number;
@@ -98,6 +108,7 @@ export type Creature = {
     walk: string;
     swim?: string;
     fly?: string;
+    climb?: string;
   };
   abilities: Record<Characteristics, number>;
   skills?: Partial<Record<Skills, string>>;
@@ -109,19 +120,13 @@ export type Creature = {
     blindSight?: string;
     darkvision?: string;
     passivePerception: number;
+    trueSight?: string;
   };
   languages?: string[];
   challengeRating: number;
-  actions: Array<{
-    name: string;
-    description?: string;
-    type?: string;
-    modifier?: string;
-    reach?: string;
-    target?: string;
-    hit?: string;
-  }>;
-  reactions?: Array<{ name: string; description: string }>;
+  actions: Array<Action>;
+  bonusActions?: Array<Action>;
+  reactions?: Array<Action>;
   traits?: Array<{
     name: string;
     description: string;

@@ -14,7 +14,7 @@ import creatures from "@/data/creatures.json";
 import parties from "@/data/parties.json";
 import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
-import { entries, groupBy, isPlainObject, prop, reduce, sortBy } from "remeda";
+import { entries, groupBy, isPlainObject, prop, reduce } from "remeda";
 import conditions from "@/data/conditions.json";
 import spellList from "@/data/spells.json";
 import { Spell, spellsSchema } from "@/types/schemas";
@@ -35,31 +35,16 @@ export const commonCreatureColors = [
   "#ee82ee",
 ];
 
-export const conditionExists = (condition: string) => {
-  return [
-    "blinded",
-    "charmed",
-    "deafened",
-    "exhausted",
-    "frightened",
-    "grappled",
-    "incapacitated",
-    "invisible",
-    "paralyzed",
-    "petrified",
-    "poisoned",
-    "prone",
-    "restrained",
-    "stunned",
-    "unconscious",
-  ].includes(condition);
-};
-
 export const groupEncounters = (encounters: Encounter[]) => {
   return reduce(
     entries(
       groupBy(
-        sortBy(encounters, (encounter) => encounter.location.mapMarker),
+        encounters.toSorted((a, b) => {
+          // Extract the number out of the mapMarker to avoid lexicographical sorting
+          const numA = parseInt(a.location.mapMarker.slice(1), 10);
+          const numB = parseInt(b.location.mapMarker.slice(1), 10);
+          return numA - numB;
+        }),
         prop("scenario"),
       ),
     ),
@@ -85,6 +70,7 @@ export const translatedSenses = (sense: keyof Creature["senses"]) => {
     darkvision: "Vision dans le noir",
     passivePerception: "Perception passive",
     blindSight: "Vision aveugle",
+    trueSight: "Vision véritable",
   } satisfies Record<keyof Creature["senses"], string>;
   return translations[sense];
 };
@@ -97,7 +83,7 @@ export const translateSkill = (skill: Skills) => {
     athletics: "Athlétisme",
     deception: "Tromperie",
     history: "Histoire",
-    insight: "Perception",
+    insight: "Perspicacité",
     intimidation: "Intimidation",
     investigation: "Investigation",
     medicine: "Médecine",
