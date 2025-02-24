@@ -161,9 +161,8 @@ export const getParticipantFromCharacters = (party: Party | null) => {
     throw new Error("Party not found");
   }
 
-  return party.characters.map(({ name, color }: Character) => ({
+  return party.characters.map(({ name }: Character) => ({
     name,
-    color,
     init: "",
     hp: "",
     currentHp: "",
@@ -325,3 +324,6 @@ export const getIdFromEnemy = (enemy: EncounterEnemy) => {
   }
   return enemy;
 };
+
+export const isConcentrationSpell = (spell: Spell) =>
+  spell.duration.includes("concentration");

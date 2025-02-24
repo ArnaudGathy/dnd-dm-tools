@@ -28,7 +28,8 @@ import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
-import { XMarkIcon } from "@heroicons/react/16/solid";
+import { SparklesIcon, XMarkIcon } from "@heroicons/react/16/solid";
+
 const getSpellsByPlayer = (party: Party, playerName?: string) =>
   pipe(
     party.characters,
@@ -160,7 +161,12 @@ const Spells = () => {
             <CardContent>
               <ul>
                 {spells.map((spell) => (
-                  <li key={spell.id}>
+                  <li key={spell.id} className="flex gap-2">
+                    <div className="w-4">
+                      {spell.isRitual && (
+                        <SparklesIcon className="size-4 text-emerald-500" />
+                      )}
+                    </div>
                     <Link href={`/spells/${spell.id}`}>{spell.name}</Link>
                   </li>
                 ))}

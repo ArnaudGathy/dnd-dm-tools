@@ -9,7 +9,7 @@ export type ParticipantToAdd = {
   name: string;
   init: string;
   hp: string;
-  color: string;
+  color?: string;
 };
 
 export type Participant = ParticipantToAdd & {
@@ -24,7 +24,6 @@ export type Character = {
   id: number;
   name: string;
   player: string;
-  color: string;
   spells: number[];
   gameClass: string;
 };

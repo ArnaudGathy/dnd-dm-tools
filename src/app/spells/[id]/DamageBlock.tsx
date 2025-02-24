@@ -22,7 +22,7 @@ const DamageBlock = ({ damages }: { damages: { [level: string]: string } }) => {
   );
   const damage = damages[highestDamageLevel.toString()];
 
-  return <StatCell name="Dégats" stat={damage} />;
+  return <StatCell name="Dégats" stat={damage} isInline />;
 };
 
 export default dynamic(() => Promise.resolve(DamageBlock), { ssr: false });
