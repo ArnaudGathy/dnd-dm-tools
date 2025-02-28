@@ -30,6 +30,7 @@ const StatBlocksModule = ({ encounter }: { encounter: Encounter }) => {
       {creatures.map((creature) => (
         <StatBlock key={creature.id} creature={creature} />
       ))}
+      <div className="h-[800px]" />
     </div>
   );
 };

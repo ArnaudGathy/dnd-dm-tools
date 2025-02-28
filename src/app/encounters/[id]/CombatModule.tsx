@@ -36,7 +36,11 @@ import {
 } from "@/components/ui/popover";
 import Link from "next/link";
 import { TooltipComponent } from "@/components/ui/tooltip";
-import { EllipsisHorizontalIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  EllipsisHorizontalIcon,
+  PlayIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
 import {
   filter,
@@ -49,6 +53,8 @@ import {
   values,
 } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { FastForwardIcon } from "lucide-react";
+import { usePathname, useRouter } from "next/navigation";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 const HIT_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
@@ -65,6 +71,16 @@ const spellsWithEffects = pipe(
   filter(typedSpells, (spell) => (spell.combat?.effects?.length ?? 0) > 0),
   sortBy(prop("name")),
 );
+
+const getNextTurn = (
+  turnsCounter: number | null,
+  listOfParticipantsLength: number,
+) => {
+  if (turnsCounter === null) {
+    return 0;
+  }
+  return (turnsCounter + 1) % listOfParticipantsLength;
+};
 
 const sortParticipant = (a: Participant, b: Participant) => {
   const aInit = b.init !== "" ? parseInt(b.init) : Infinity;
@@ -90,8 +106,13 @@ const getHPBarColor = (hpPercent: number) => {
 };
 
 export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
+  const router = useRouter();
+  const pathName = usePathname();
   const partyLevel = getPartyLevel();
   const party = getParty();
+  const [turnsCounter, setTurnsCounter] = useState(1);
+  const [currentTurnIndex, setCurrentTurnIndex] = useState<number | null>(null);
+  const hasCombatStarted = currentTurnIndex !== null;
 
   const [shouldShowAddParticipant, setShouldShowAddParticipant] =
     useState(false);
@@ -132,13 +153,36 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
     );
   };
 
+  const handleNextTurn = useCallback(() => {
+    if (currentTurnIndex === listOfParticipants.length - 1) {
+      setTurnsCounter((current) => current + 1);
+    }
+
+    const nexTurn = getNextTurn(currentTurnIndex, listOfParticipants.length);
+    const nextParticipantId = listOfParticipants[nexTurn].id;
+    if (nextParticipantId) {
+      router.replace(`${pathName}#${nextParticipantId}`);
+    } else {
+      router.replace(pathName);
+    }
+
+    setCurrentTurnIndex((current) =>
+      getNextTurn(current, listOfParticipants.length),
+    );
+  }, [currentTurnIndex, listOfParticipants, pathName, router]);
+
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
       if (e.key === "Enter") {
+        e.preventDefault();
         handleAddParticipant();
       }
+      if (e.key === " ") {
+        e.preventDefault();
+        handleNextTurn();
+      }
     },
-    [handleAddParticipant],
+    [handleAddParticipant, handleNextTurn],
   );
 
   useEffect(() => {
@@ -252,17 +296,29 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
         <CardHeader>
           <CardTitle>
             <div className="flex items-center justify-between">
-              Combat
-              <Button
-                variant={shouldShowAddParticipant ? "secondary" : "outline"}
-                size="default"
-                onClick={() =>
-                  setShouldShowAddParticipant((current) => !current)
-                }
-              >
-                <UserPlusIcon className="size-6" />
-                Participants
-              </Button>
+              <span>
+                {hasCombatStarted ? `Tour n°${turnsCounter}` : "Combat"}
+              </span>
+
+              <div className="space-x-2">
+                <Button
+                  variant={shouldShowAddParticipant ? "secondary" : "outline"}
+                  size="default"
+                  onClick={() =>
+                    setShouldShowAddParticipant((current) => !current)
+                  }
+                >
+                  <UserPlusIcon className="size-6" />
+                  Participants
+                </Button>
+                <Button size="sm" onClick={handleNextTurn}>
+                  {hasCombatStarted ? (
+                    <FastForwardIcon className="size-6" />
+                  ) : (
+                    <PlayIcon className="size-6" />
+                  )}
+                </Button>
+              </div>
             </div>
           </CardTitle>
         </CardHeader>
@@ -326,7 +382,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
           )}
 
           <div className="flex flex-col gap-2">
-            {listOfParticipants.map((participant) => {
+            {listOfParticipants.map((participant, index) => {
               const hpPercent =
                 (parseInt(participant.currentHp) / parseInt(participant.hp)) *
                 100;
@@ -334,9 +390,10 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                 <div
                   key={participant.uuid}
                   className={clsx(
-                    "flex min-h-10 w-full items-center gap-4 space-x-2 transition-opacity",
+                    "flex min-h-10 w-full items-center gap-4 space-x-2 px-4 py-1 transition duration-300",
                     {
                       "opacity-20": participant.currentHp === "0",
+                      "scale-[105%] bg-red-900": currentTurnIndex === index,
                     },
                   )}
                 >
