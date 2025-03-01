@@ -74,12 +74,23 @@ const spellsWithEffects = pipe(
 
 const getNextTurn = (
   turnsCounter: number | null,
-  listOfParticipantsLength: number,
+  listOfParticipants: Participant[],
+  countTurn?: () => void,
 ) => {
   if (turnsCounter === null) {
     return 0;
   }
-  return (turnsCounter + 1) % listOfParticipantsLength;
+
+  const nextTurn = (turnsCounter + 1) % listOfParticipants.length;
+  if (nextTurn === 0) {
+    countTurn?.();
+  }
+
+  if (parseInt(listOfParticipants[nextTurn].currentHp, 10) <= 0) {
+    return getNextTurn(nextTurn, listOfParticipants, countTurn);
+  }
+
+  return nextTurn;
 };
 
 const sortParticipant = (a: Participant, b: Participant) => {
@@ -154,11 +165,9 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   };
 
   const handleNextTurn = useCallback(() => {
-    if (currentTurnIndex === listOfParticipants.length - 1) {
-      setTurnsCounter((current) => current + 1);
-    }
-
-    const nexTurn = getNextTurn(currentTurnIndex, listOfParticipants.length);
+    const nexTurn = getNextTurn(currentTurnIndex, listOfParticipants, () =>
+      setTurnsCounter((current) => current + 1),
+    );
     const nextParticipantId = listOfParticipants[nexTurn].id;
     if (nextParticipantId) {
       router.replace(`${pathName}#${nextParticipantId}`);
@@ -166,9 +175,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       router.replace(pathName);
     }
 
-    setCurrentTurnIndex((current) =>
-      getNextTurn(current, listOfParticipants.length),
-    );
+    setCurrentTurnIndex((current) => getNextTurn(current, listOfParticipants));
   }, [currentTurnIndex, listOfParticipants, pathName, router]);
 
   const handleKeyDown = useCallback(
