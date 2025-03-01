@@ -1687,5 +1687,744 @@
       }
     ],
     "colors": ["#061f5b"]
+  },
+  {
+    "name": "Araignée",
+    "id": 35,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 12,
+    "hitPoints": "1 (1d4 - 1)",
+    "speed": {
+      "walk": "6 m",
+      "climb": "6 m"
+    },
+    "abilities": {
+      "strength": 2,
+      "dexterity": 14,
+      "constitution": 8,
+      "intelligence": 1,
+      "wisdom": 10,
+      "charisma": 2
+    },
+    "skills": {
+      "stealth": "+4"
+    },
+    "senses": {
+      "darkvision": "9 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Pattes d'araignée",
+        "description": "L'araignée peut escalader des surfaces difficiles et être au plafond la tête en bas sans avoir besoin d'effectuer un jet de caractéristique."
+      },
+      {
+        "name": "Sens de la toile",
+        "description": "Lorsqu'elle est en contact avec une toile, l'araignée connaît l'emplacement exact de toutes les créatures qui sont en contact avec cette toile."
+      },
+      {
+        "name": "Déplacement sur la toile",
+        "description": "L'araignée ignore les restrictions de mouvement causées par une toile d'araignée."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1 dégât perforant et la cible doit réussir un jet de sauvegarde de Constitution DD 9 ou subir 2 (1d4) dégâts de poison."
+      }
+    ],
+    "colors": ["#4b4b4b"]
+  },
+  {
+    "name": "Belette",
+    "id": 36,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "1 (1d4 - 1)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 3,
+      "dexterity": 16,
+      "constitution": 8,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 3
+    },
+    "skills": {
+      "stealth": "+5",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "La belette a un avantage aux jets de Sagesse (Perception) basés sur l'odorat ou l'ouïe."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1 dégât perforant."
+      }
+    ],
+    "colors": ["#805E24"]
+  },
+  {
+    "name": "Blaireau",
+    "id": 37,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "3 (1d4 + 1)",
+    "speed": {
+      "walk": "6 m",
+      "burrow": "1.5 m"
+    },
+    "abilities": {
+      "strength": 4,
+      "dexterity": 11,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 5
+    },
+    "senses": {
+      "darkvision": "9 m",
+      "passivePerception": 11
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "Le blaireau a un avantage aux jets de Sagesse (Perception) basés sur l'odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1 dégât perforant."
+      }
+    ],
+    "colors": ["#3E3E3E"]
+  },
+  {
+    "name": "Cerf",
+    "id": 38,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "4 (1d8)",
+    "speed": {
+      "walk": "15 m"
+    },
+    "abilities": {
+      "strength": 11,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 14,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 12
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "2 (1d4) dégâts perforants."
+      }
+    ],
+    "colors": ["#D4A76A"]
+  },
+  {
+    "name": "Chat",
+    "id": 39,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 12,
+    "hitPoints": "2 (1d4)",
+    "speed": {
+      "walk": "12 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 3,
+      "dexterity": 15,
+      "constitution": 10,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "stealth": "+4",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "Le chat a un avantage aux jets de Sagesse (Perception) basés sur l'odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+0",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1 dégât tranchant."
+      }
+    ],
+    "colors": ["#808080"]
+  },
+  {
+    "name": "Cheval de selle",
+    "id": 40,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "13 (2d10 + 2)",
+    "speed": {
+      "walk": "18 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Attaque au corps à corps",
+        "description": "+5 au toucher, allonge 1,50 m, une cible. Touché : 8 (2d4 + 3) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Cheval de trait",
+    "id": 41,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "19 (3d10 + 3)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 18,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Attaque au corps à corps",
+        "description": "+6 au toucher, allonge 1,50 m, une cible. Touché : 9 (2d4 + 4) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Élan",
+    "id": 42,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "13 (2d10 + 2)",
+    "speed": {
+      "walk": "15 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 6
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Charge",
+        "description": "Si l’élan se déplace d’au moins 6 mètres en ligne droite vers une cible, puis la touche lors d’une attaque avec un coup de tête dans le même tour, la cible subit 7 (2d6) dégâts supplémentaires. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 13 ou tomber à terre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Coup de tête",
+        "type": "Attaque au corps à corps",
+        "description": "+5 au toucher, allonge 1,50 m, une cible. Touché : 6 (1d6 + 3) dégâts contondants."
+      },
+      {
+        "name": "Sabots",
+        "type": "Attaque au corps à corps",
+        "description": "+8 au toucher, allonge 1,50 m, une cible au sol. Touché : 8 (2d4 + 3) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Chèvre",
+    "id": 43,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "4 (1d8)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 10,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Charge",
+        "description": "Si la chèvre se déplace d’au moins 6 mètres en ligne droite vers une cible, puis la touche lors d’une attaque avec un coup de tête dans le même tour, la cible subit 2 (1d4) dégâts contondants supplémentaires. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 10 ou tomber à terre."
+      },
+      {
+        "name": "Stable",
+        "description": "La chèvre a un avantage aux jets de sauvegarde de Force et de Dextérité contre les effets susceptibles de la faire tomber à terre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Coup de tête",
+        "type": "Attaque au corps à corps",
+        "description": "+3 au toucher, allonge 1,50 m, une cible. Touché : 3 (1d4 + 1) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Loup sanguinaire",
+    "id": 44,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 14,
+    "hitPoints": "37 (5d10 + 10)",
+    "speed": {
+      "walk": "15 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 15,
+      "constitution": 15,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "stealth": "+4",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "Le loup a un avantage aux jets de Sagesse (Perception) basés sur l’odorat ou l’ouïe."
+      },
+      {
+        "name": "Tactique de groupe",
+        "description": "Le loup a un avantage aux jets d’attaque contre une créature si au moins l’un de ses alliés est à 1,50 mètre ou moins de la créature et n’est pas incapable d’agir."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "10 (2d6 + 3) dégâts perforants. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 13 pour ne pas être jetée à terre."
+      }
+    ]
+  },
+  {
+    "name": "Molosse",
+    "id": 45,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 12,
+    "hitPoints": "5 (1d8 + 1)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 14,
+      "constitution": 12,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 0.125,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "Le molosse a un avantage aux jets de Sagesse (Perception) basés sur l’odorat ou l’ouïe."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d6 + 1) dégâts perforants. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 11 pour ne pas tomber à terre."
+      }
+    ]
+  },
+  {
+    "name": "Mule",
+    "id": 46,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 10,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.125,
+    "traits": [
+      {
+        "name": "Bête de somme",
+        "description": "La mule est considérée comme un animal de taille G pour déterminer sa capacité de charge."
+      },
+      {
+        "name": "Pied sûr",
+        "description": "La mule a un avantage aux jets de sauvegarde de Force et Dextérité effectués pour ne pas tomber à terre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d4 + 2) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Ours brun",
+    "id": 47,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 11,
+    "hitPoints": "34 (4d10 + 12)",
+    "speed": {
+      "walk": "12 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 19,
+      "dexterity": 10,
+      "constitution": 16,
+      "intelligence": 2,
+      "wisdom": 13,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "L’ours a un avantage aux jets de Sagesse (Perception) basés sur l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "L’ours réalise deux attaques : une avec ses griffes et une avec sa morsure."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "11 (2d6 + 4) dégâts tranchants."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "8 (1d8 + 4) dégâts perforants."
+      }
+    ]
+  },
+  {
+    "name": "Ours noir",
+    "id": 48,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 11,
+    "hitPoints": "19 (3d8 + 6)",
+    "speed": {
+      "walk": "12 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 10,
+      "constitution": 14,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 0.5,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "L’ours a un avantage aux jets de Sagesse (Perception) basés sur l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "L’ours réalise deux attaques : une avec ses griffes et une avec sa morsure."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (2d4 + 2) dégâts tranchants."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      }
+    ]
+  },
+  {
+    "name": "Rat",
+    "id": 49,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "1 (1d4 - 1)",
+    "speed": {
+      "walk": "6 m"
+    },
+    "abilities": {
+      "strength": 2,
+      "dexterity": 11,
+      "constitution": 9,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 4
+    },
+    "senses": {
+      "darkvision": "9 m",
+      "passivePerception": 10
+    },
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "Le rat a un avantage aux jets de Sagesse (Perception) basés sur l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+0",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "1 dégât perforant."
+      }
+    ]
+  },
+  {
+    "name": "Sanglier",
+    "id": 50,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 11,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 11,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 9,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 9
+    },
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Charge",
+        "description": "Si le sanglier se déplace d’au moins 6 mètres en ligne droite vers une cible, puis la touche lors d’une attaque avec ses défenses dans le même tour, la cible subit 3 (1d6) dégâts tranchants supplémentaires. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 11 pour ne pas être jetée à terre."
+      },
+      {
+        "name": "Implacable (Recharge après un repos court ou long)",
+        "description": "Si le sanglier subit 7 points de dégâts ou moins qui réduiraient ses points de vie à 0, il se retrouve à la place avec 1 point de vie."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Défenses",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d6 + 1) dégâts tranchants."
+      }
+    ]
+  },
+  {
+    "name": "Poney",
+    "id": 51,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 10,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (2d4 + 2) dégâts contondants."
+      }
+    ]
   }
 ]

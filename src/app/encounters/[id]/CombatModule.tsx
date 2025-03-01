@@ -27,7 +27,11 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { UserPlusIcon, BookOpenIcon } from "@heroicons/react/24/solid";
+import {
+  UserPlusIcon,
+  BookOpenIcon,
+  BugAntIcon,
+} from "@heroicons/react/24/solid";
 import { getParty, getPartyLevel } from "@/utils/localStorageUtils";
 import {
   Popover,
@@ -208,6 +212,16 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       pipe(
         party.characters,
         filter((character) => character.spells.length > 0),
+        map(prop("name")),
+      ),
+    [party],
+  );
+
+  const playersWithCreatures = useMemo(
+    () =>
+      pipe(
+        party.characters,
+        filter((character) => !!character.creatures),
         map(prop("name")),
       ),
     [party],
@@ -404,8 +418,8 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     },
                   )}
                 >
-                  <div className="w-4">
-                    {!!participant.id ? (
+                  <div className="w-2">
+                    {!!participant.id && (
                       <div
                         style={{
                           backgroundColor: participant.id
@@ -418,17 +432,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                           "h-5 w-5": participant.id,
                         })}
                       />
-                    ) : playersWithSpells.includes(participant.name) ? (
-                      <div className="w-6">
-                        <Link
-                          href={`/spells?player=${participant.name}&sortBy=level`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <BookOpenIcon className="size-6" />
-                        </Link>
-                      </div>
-                    ) : null}
+                    )}
                   </div>
                   <div className="w-10 text-center text-sm">
                     <Input
@@ -451,7 +455,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     </TooltipComponent>
                   </div>
                   <div className="flex-1 text-center">
-                    {participant.hp !== "" && (
+                    {participant.hp !== "" ? (
                       <div className="flex items-center gap-4">
                         <Popover>
                           <PopoverTrigger asChild>
@@ -608,6 +612,27 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                             </div>
                           </PopoverContent>
                         </Popover>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-4">
+                        {playersWithSpells.includes(participant.name) && (
+                          <Link
+                            href={`/spells?player=${participant.name}&sortBy=level`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <BookOpenIcon className="size-6" />
+                          </Link>
+                        )}
+                        {playersWithCreatures.includes(participant.name) && (
+                          <Link
+                            href={`/creatures?player=${participant.name}&sortBy=player`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <BugAntIcon className="size-6" />
+                          </Link>
+                        )}
                       </div>
                     )}
                   </div>

@@ -25,6 +25,7 @@ export type Character = {
   name: string;
   player: string;
   spells: number[];
+  creatures?: number[];
   gameClass: string;
 };
 

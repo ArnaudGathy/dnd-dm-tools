@@ -30,6 +30,11 @@ import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/16/solid";
 
+enum SORT_BY {
+  PLAYER = "player",
+  LEVEL = "level",
+}
+
 const getSpellsByPlayer = (party: Party, playerName?: string) =>
   pipe(
     party.characters,
@@ -79,12 +84,12 @@ const Spells = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
-  const player = searchParams.get("player")?.toLowerCase();
+  const player = searchParams.get(SORT_BY.PLAYER)?.toLowerCase();
   const sortBy = searchParams.get("sortBy");
 
   const party = getParty();
 
-  const [displayBy, setDisplayBy] = useState(sortBy ?? "player");
+  const [displayBy, setDisplayBy] = useState(sortBy ?? SORT_BY.PLAYER);
 
   if (!party) {
     return null;
@@ -94,19 +99,17 @@ const Spells = () => {
   const spellsByLevel = getSpellsByLevel(party, player);
 
   const getList = (): { [key: string]: Spell[] } => {
-    if (displayBy === "level") {
+    if (displayBy === SORT_BY.LEVEL) {
       return spellsByLevel;
     }
-
-    if (displayBy === "player") {
+    if (displayBy === SORT_BY.PLAYER) {
       return spellsByPlayer;
     }
-
-    return {};
+    throw new Error("Invalid displayBy");
   };
 
   const getPrefix = () => {
-    if (displayBy === "level") {
+    if (displayBy === SORT_BY.LEVEL) {
       return "Niveau ";
     }
     return "";
@@ -123,7 +126,7 @@ const Spells = () => {
             size="xs"
             onClick={() => {
               const params = new URLSearchParams(searchParams);
-              params.delete("player");
+              params.delete(SORT_BY.PLAYER);
               router.replace(`${pathName}?${params.toString()}`);
             }}
           >
@@ -134,10 +137,16 @@ const Spells = () => {
 
       <Tabs defaultValue={displayBy} className="mb-4 w-[400px]">
         <TabsList>
-          <TabsTrigger value="player" onClick={() => setDisplayBy("player")}>
+          <TabsTrigger
+            value={SORT_BY.PLAYER}
+            onClick={() => setDisplayBy(SORT_BY.PLAYER)}
+          >
             Par joueur
           </TabsTrigger>
-          <TabsTrigger value="level" onClick={() => setDisplayBy("level")}>
+          <TabsTrigger
+            value={SORT_BY.LEVEL}
+            onClick={() => setDisplayBy(SORT_BY.LEVEL)}
+          >
             Par niveau
           </TabsTrigger>
         </TabsList>
@@ -148,11 +157,13 @@ const Spells = () => {
           <Card key={name}>
             <CardHeader>
               <CardTitle
-                className={clsx({ "cursor-pointer": displayBy === "player" })}
+                className={clsx({
+                  "cursor-pointer": displayBy === SORT_BY.PLAYER,
+                })}
                 onClick={() => {
-                  if (displayBy === "player") {
+                  if (displayBy === SORT_BY.PLAYER) {
                     const params = new URLSearchParams(searchParams);
-                    params.set("player", name);
+                    params.set(SORT_BY.PLAYER, name);
                     router.replace(`${pathName}?${params.toString()}`);
                   }
                 }}
@@ -161,7 +172,7 @@ const Spells = () => {
             <CardContent>
               <ul>
                 {spells.map((spell) => (
-                  <li key={spell.id} className="flex gap-2">
+                  <li key={spell.id} className="flex items-center gap-2">
                     <div className="w-4">
                       {spell.isRitual && (
                         <SparklesIcon className="size-4 text-emerald-500" />
