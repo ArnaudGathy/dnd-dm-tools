@@ -288,12 +288,40 @@
       "mapMarker": "D2"
     },
     "ennemies": {
-      "3": [14, 10, 12, 12, 15, 24, 25, 26, 27, 28]
+      "3": [
+        14,
+        {
+          "id": 12,
+          "variant": "Épée",
+          "color": "#dc0005"
+        },
+        {
+          "id": 12,
+          "variant": "Épée",
+          "color": "#e08023"
+        },
+        {
+          "id": 12,
+          "variant": "Bouclier",
+          "color": "#58d860"
+        },
+        {
+          "id": 12,
+          "variant": "Bouclier",
+          "color": "#276cad"
+        },
+        15,
+        24,
+        25,
+        26,
+        27,
+        28
+      ]
     },
     "informations": [
-      "Libérer Aidron = 1 action. Produit 1 souffle sur commande pour 1 action bonus",
+      "Libérer Aidron = 1 action. Produit 1 fois son souffle sur commande pour 1 action bonus",
       "Détruire les éffigies pour arrêter les effets. Explosion de l'effet en zone lors de la destruction.",
-      "Toucher une éffigie pour la déclencher (1 fois par tour)",
+      "Toucher une éffigie pour la déclencher (1 fois par tour, les statues cessent de briller jusqu'au prochain tour)",
       "Toucher le mécanisme (immunisé) distrait Vrilléclair qui attaque le joueur, désavantage jet d'attaque et JdS jusqu'à son prochain tour.",
       "Vous croyez me faire obstacle, parasites ? La puissance de mes ancêtres sera bientôt mienne. - Filez avant que je ne me lasse de ce petit jeu et que je vous élimine jusqu'au dernier. - Les dragons chromatiques sont les souverains légitimes de ce monde, inclinez-vous devant les enfants de Tiamat ! - Assez ! Ce projet est trop important pour être entravé par des minables dans votre genre."
     ]

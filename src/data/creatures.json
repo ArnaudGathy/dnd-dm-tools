@@ -688,7 +688,7 @@
     "size": "M",
     "alignment": "Généralement Loyal Mauvais",
     "armorClass": 17,
-    "hitPoints": "52 (8d8 + 16)",
+    "hitPoints": "80 (8d8 + 16)",
     "speed": {
       "walk": "9 m",
       "burrow": "4.5 m",
@@ -731,7 +731,7 @@
       },
       {
         "name": "Souffle de foudre (recharge 5-6)",
-        "description": "Le dragon exhale de la foudre sous forme d’une ligne de 6 cases de long pour 1 case de large. Chaque créature prise dans la ligne effectue un jet de sauvegarde de Dextérité DD 12 et subit 22 (4d10) dégâts de foudre en cas d’échec, la moitié en cas de réussite."
+        "description": "Le dragon exhale de la foudre sous forme d’une ligne de 6 cases de long pour 1 case de large. Chaque créature prise dans la ligne effectue un jet de sauvegarde de Dextérité DD 12 et subit 22 (4d8) dégâts de foudre en cas d’échec, la moitié en cas de réussite."
       }
     ],
     "colors": ["#0021ff"]
