@@ -2426,5 +2426,62 @@
         "hit": "7 (2d4 + 2) dégâts contondants."
       }
     ]
+  },
+  {
+    "name": "Agent du Zentharim",
+    "id": 52,
+    "type": "Humanoïde",
+    "size": "M",
+    "alignment": "Généralement Neutre Chaotique",
+    "armorClass": 15,
+    "hitPoints": "65 (10d8 + 20)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 16,
+      "constitution": 14,
+      "intelligence": 14,
+      "wisdom": 11,
+      "charisma": 14
+    },
+    "savingThrows": {
+      "strength": "+4",
+      "dexterity": "+5",
+      "wisdom": "+2"
+    },
+    "skills": {
+      "athletics": "+4",
+      "deception": "+4"
+    },
+    "senses": {
+      "passivePerception": 11
+    },
+    "languages": ["Commun"],
+    "challengeRating": 2,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "2 attaques épée, 1 dague"
+      },
+      {
+        "name": "Épée longue",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "9 (1d8 + 3) dégâts tranchants."
+      },
+      {
+        "name": "Dague",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "5 (1d4 + 3) dégâts perforants."
+      }
+    ],
+    "colors": ["#f10000", "#1c8811", "#1383c5"]
   }
 ]

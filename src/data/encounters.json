@@ -320,7 +320,7 @@
     },
     "informations": [
       "Libérer Aidron = 1 action. Produit 1 fois son souffle sur commande pour 1 action bonus",
-      "Détruire les éffigies pour arrêter les effets. Explosion de l'effet en zone lors de la destruction.",
+      "Détruire les éffigies pour arrêter les effets. Explosion de l'effet en zone 3x3 lors de la destruction.",
       "Toucher une éffigie pour la déclencher (1 fois par tour, les statues cessent de briller jusqu'au prochain tour)",
       "Toucher le mécanisme (immunisé) distrait Vrilléclair qui attaque le joueur, désavantage jet d'attaque et JdS jusqu'à son prochain tour.",
       "Vous croyez me faire obstacle, parasites ? La puissance de mes ancêtres sera bientôt mienne. - Filez avant que je ne me lasse de ce petit jeu et que je vous élimine jusqu'au dernier. - Les dragons chromatiques sont les souverains légitimes de ce monde, inclinez-vous devant les enfants de Tiamat ! - Assez ! Ce projet est trop important pour être entravé par des minables dans votre genre."
@@ -651,5 +651,18 @@
       "+ autres (voir déroulé)"
     ],
     "youtubeId": "KwlVP3IfSLA"
+  },
+  {
+    "name": "Agents du Zentharim",
+    "id": 32,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Repos du dragon",
+      "mapMarker": "A1"
+    },
+    "ennemies": {
+      "1": [52, 52, 52]
+    },
+    "youtubeId": "2GX9lVHfnxs"
   }
 ]
