@@ -2640,11 +2640,11 @@
     "traits": [
       {
         "name": "Sol aberrant",
-        "description": "Terrain difficile sur 2 cases de rayon autours (5x5). Au début du tour, JdS FOR 10 pour ne pas être immobilisé pendant le tour."
+        "description": "Terrain difficile sur 2 cases de rayon. Au début du tour, JdS FOR 10 pour ne pas être immobilisé (0 mouvements) pendant le tour."
       },
       {
         "name": "Charabia",
-        "description": "Aura de 4 cases de rayon (9x9), au début du tour du joueur, JdS SAG 10 ou subir les effets : pas de réaction et lancer d8, 1-4, elle ne fait rien. 5-6 aucune action et utilise tous ses mouvements dans une direction aléatoire. 7-8 attaque une cible aléatoire à portée de 1 case max."
+        "description": "Aura de 4 cases de rayon, au début du tour du joueur, JdS SAG 10 ou être charmé : pas de réaction et lancer d8, 1-4, elle ne fait rien. 5-6 aucune action et utilise tous ses mouvements dans une direction aléatoire. 7-8 attaque une cible aléatoire à portée de 1 case max."
       }
     ],
     "actions": [
