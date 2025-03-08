@@ -2483,5 +2483,429 @@
       }
     ],
     "colors": ["#f10000", "#1c8811", "#1383c5"]
+  },
+  {
+    "name": "Cube gélatineux",
+    "id": 53,
+    "type": "Vase",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 6,
+    "hitPoints": "84 (8d10 + 40)",
+    "speed": {
+      "walk": "4.5 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 3,
+      "constitution": 20,
+      "intelligence": 1,
+      "wisdom": 6,
+      "charisma": 1
+    },
+    "immunities": [
+      "Assourdi",
+      "À terre",
+      "Aveuglé",
+      "Charmé",
+      "Effrayé",
+      "Épuisement"
+    ],
+    "senses": {
+      "blindSight": "18 m (aveugle au-delà de ce rayon)",
+      "passivePerception": 8
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Transparent",
+        "description": "Y compris lorsque le cube est visible, il est nécessaire de réussir un jet de Sagesse (Perception) DD 15 pour repérer le cube s’il n’a ni bougé ni attaqué. Une créature qui tente d’entrer dans l’espace du cube sans le savoir est surprise par le cube."
+      },
+      {
+        "name": "Vase cubique",
+        "description": "Si pénètre volontairement, engloutie avec désavantage au JdS. Libérer un allié FOR DD12 et subit 3d6 dégats dans l'opération. Les créatures à l'intérieur du cube sont visibles mais disposes d'un abri total. Le cube ne peut contenir qu'une seule créature de taille G ou jusqu'à quatre créatures de taille M ou inférieur en même temps.\n"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Pseudopode",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "10 (3d6) dégâts d’acide."
+      },
+      {
+        "name": "Engloutissement",
+        "description": "DEX DD12 pour esquiver d'une case ou engloutie (entravée). 3d6 direct, 6d6 ou 3d6 par nouveau tour du cube. Force DD 12 pour se libérer."
+      }
+    ],
+    "colors": ["#16d9f3"]
+  },
+  {
+    "name": "Mimique",
+    "id": 54,
+    "type": "Monstruosité (métamorphe)",
+    "size": "M",
+    "alignment": "Neutre",
+    "armorClass": 12,
+    "hitPoints": "58 (9d8 + 18)",
+    "speed": {
+      "walk": "4.5 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 12,
+      "constitution": 15,
+      "intelligence": 5,
+      "wisdom": 13,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+5"
+    },
+    "immunities": ["Acide", "À terre"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 11
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Collant",
+        "description": "Créature ou objet de taille <= TG est agrippée : Athlétisme ou Acrobatie DD13 avec désavantage pour se libérer."
+      },
+      {
+        "name": "Lutteur",
+        "description": "Le mimique a un avantage aux jets d’attaque effectués contre une créature qu’il agrippe."
+      },
+      {
+        "name": "Apparence trompeuse",
+        "description": "Tant que le mimique reste immobile, elle est indiscernable d’un objet ordinaire."
+      },
+      {
+        "name": "Métamorphe",
+        "description": "La mimique peut utiliser son action pour se métamorphoser en un objet, ou pour reprendre son aspect véritable informe. Ses statistiques sont les mêmes quelle que soit sa forme. L'équipement qu'elle porte ou transporte ne se transforme pas. Elle retrouve sa forme véritable lorsqu'elle meurt."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Pseudopode",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (1d8 + 3) dégâts contondants. Collé si touché"
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5 avantage si collé",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "7 (1d8 + 3 + 1d8) dégâts perforants + dégâts d’acide."
+      }
+    ],
+    "colors": ["#15ea76", "#a2128b"]
+  },
+  {
+    "name": "Babelien",
+    "id": 55,
+    "type": "Aberration",
+    "size": "M",
+    "alignment": "Neutre",
+    "armorClass": 9,
+    "hitPoints": "67 (9d8 + 27)",
+    "speed": {
+      "walk": "3 m",
+      "swim": "3 m"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 8,
+      "constitution": 16,
+      "intelligence": 3,
+      "wisdom": 10,
+      "charisma": 6
+    },
+    "immunities": ["À terre"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Sol aberrant",
+        "description": "Terrain difficile sur 2 cases de rayon autours (5x5). Au début du tour, JdS FOR 10 pour ne pas être immobilisé pendant le tour."
+      },
+      {
+        "name": "Charabia",
+        "description": "Aura de 4 cases de rayon (9x9), au début du tour du joueur, JdS SAG 10 ou subir les effets : pas de réaction et lancer d8, 1-4, elle ne fait rien. 5-6 aucune action et utilise tous ses mouvements dans une direction aléatoire. 7-8 attaque une cible aléatoire à portée de 1 case max."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le babelien effectue une attaque de morsure et, s’il le peut, utilise sa Salive aveuglante."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "target": "1 créature",
+        "hit": "17 (5d6) dégâts perforants. taille <= M, JdS FOR 10 ou prone. Si la cible est tuée, elle est absorbée par le babelien."
+      },
+      {
+        "name": "Salive aveuglante (Recharge 5-6)",
+        "type": "Ranged",
+        "reach": "4.5 m",
+        "hit": "(0d0) Zone 3x3 JdS DEX 13 ou aveuglé jusqu'auprochain tour du babelien"
+      }
+    ],
+    "colors": ["#e71c37"]
+  },
+  {
+    "name": "Crânefeu",
+    "id": 56,
+    "type": "Mort-vivant",
+    "size": "TP",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 13,
+    "hitPoints": "40 (9d4 + 18)",
+    "speed": {
+      "walk": "0 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 1,
+      "dexterity": 17,
+      "constitution": 14,
+      "intelligence": 16,
+      "wisdom": 10,
+      "charisma": 11
+    },
+    "skills": {
+      "perception": "+2",
+      "arcana": "+5"
+    },
+    "resistances": ["Foudre", "Nécrotique", "Perforant", "magie (avantage)"],
+    "immunities": [
+      "Feu",
+      "Froid",
+      "Poison",
+      "À terre",
+      "Charmé",
+      "Empoisonné",
+      "Paralysé",
+      "Effrayé"
+    ],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 12
+    },
+    "languages": ["Commun"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Illumination",
+        "description": "Le crânefeu émet une lumière faible dans un rayon de 4,50 mètres, une lumière vive dans un rayon de 4,50 mètres et une lumière faible sur 4,50 mètres supplémentaires. Il peut passer d’une option à l’autre en utilisant une action."
+      },
+      {
+        "name": "Résistance à la magie",
+        "description": "Le crânefeu a un avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Reconstitution",
+        "description": "Si le crânefeu est détruit, il récupère tous ses points de vie en 1 heure, à moins que de l’eau bénite ne soit versée sur ses restes, ou qu’un sort de Dissipation de la magie ou de Délivrance des malédictions ne lui soit lancé."
+      },
+      {
+        "name": "Incantation",
+        "description": "Sorts +5, DD 13. Sorts mineurs (à volonté) : Main de mage. Niveau 1 (3 emplacements de sorts) : Bouclier, Projectile magique. Niveau 2 (2 emplacements de sorts) : Flou, Sphère de feu. Niveau 3 (1 emplacement de sort) : Boule de feu\n"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le crânefeu effectue deux attaques de Rayon de feu."
+      },
+      {
+        "name": "Rayon de feu",
+        "type": "Distance",
+        "modifier": "+5",
+        "reach": "9 m",
+        "target": "1 cible",
+        "hit": "10 (3d6) dégâts de feu"
+      },
+      {
+        "name": "Projectiles magique (3x)",
+        "type": "Distance",
+        "modifier": "+5",
+        "reach": "36 m",
+        "target": "3 cibles",
+        "hit": "(3x 1d4 + 1) dégats de force"
+      },
+      {
+        "name": "Bouclier (3x)",
+        "description": "En réaction, +5 CA jusqu'au début du prochain tour"
+      },
+      {
+        "name": "Flou (2x)",
+        "description": "Tant que le sort dure, toutes les créatures ont un désavantage au jet d'attaque dirigé contre vous. Un attaquant est immunisé contre cet effet s'il n'utilise pas la vue, comme avec le combat aveugle, ou s'il peut voir à travers les illusions, comme avec une vision véritable."
+      },
+      {
+        "name": "Sphere de feu (2x)",
+        "description": "Voir sort"
+      },
+      {
+        "name": "Boule de feu (1x)",
+        "type": "Distance",
+        "reach": "45 m",
+        "target": "4c de rayon",
+        "hit": "(8d6) dégats de feu. JdS Dex DD13 pour moitié"
+      }
+    ],
+    "colors": ["#f84200"]
+  },
+  {
+    "name": "Méphite Boueux",
+    "id": 57,
+    "type": "Élémentaire",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 11,
+    "hitPoints": "27 (6d6 + 6)",
+    "speed": {
+      "walk": "6 m",
+      "swim": "6 m",
+      "fly": "7.5 m"
+    },
+    "skills": {
+      "stealth": "+3"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 9,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "immunities": ["Dégâts de poison", "Empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aquatique", "Terreux"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Mort explosive",
+        "description": "Lors de la mort, cible taille <= M, en zone autours du CaC, JdS DEX 11 ou être entravé jusqu'au prochain tour."
+      },
+      {
+        "name": "Apparence trompeuse",
+        "description": "Tant que le méphite reste immobile, il ne peut être distingué d’un tas de boue ordinaire."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Poing",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "4 (1d6 + 1) dégâts contondants"
+      },
+      {
+        "name": "Souffle boueux (Recharge 6)",
+        "description": "Cible taille <= M, sur une cible de CaC, JdS DEX 11 ou être entravé pendant 1 minute. Peut retenter le JdS à son tour."
+      }
+    ],
+    "colors": ["#8B4513", "#654321"]
+  },
+  {
+    "name": "Banshee",
+    "id": 58,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 12,
+    "hitPoints": "58 (13d8)",
+    "speed": {
+      "walk": "0 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 1,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 17
+    },
+    "savingThrows": {
+      "wisdom": "+2",
+      "charisma": "+5"
+    },
+    "resistances": [
+      "Acide",
+      "Foudre",
+      "Feu",
+      "Tonnerre",
+      "Contondants, perforants et tranchants d'attaques non magiques"
+    ],
+    "immunities": [
+      "Froid",
+      "Nécrotique",
+      "Poison",
+      "Charmé",
+      "Empoisonné",
+      "Agrippé",
+      "Entravé",
+      "Épuisement",
+      "Paralysé",
+      "Pétrifié",
+      "Effrayé"
+    ],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Elfe"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Détection de la vie",
+        "description": "Grâce à la magie, la banshee peut sentir la présence de créatures qui ne sont ni des morts-vivants ni des créatures artificielles jusqu’à 7,5 kilomètres de distance. Elle connaît dans quelle direction elles se trouvent, mais pas leur localisation exacte."
+      },
+      {
+        "name": "Déplacement intangible",
+        "description": "La banshee peut se déplacer à travers d’autres créatures ou des objets comme si elle traversait un terrain difficile. Elle subit 5 (1d10) dégâts de force si elle termine son tour à l’intérieur d’un objet."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Contact corrupteur",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "12 (3d6 + 2) dégâts nécrotiques"
+      },
+      {
+        "name": "Visage Effroyable",
+        "description": "Créature a 12 cases de la banshee JdS SAG 13 ou effrayé pendant 1min. Retenter à la fin de chacun de ses tours, avec désavantage. Si réussite, immunisé."
+      },
+      {
+        "name": "Hurlement (1/jour)",
+        "description": "A 6 cases de la banshee, JdS CON 13 ou tomber à 0 PV. Réussite, subir 3d6 dégats psy."
+      }
+    ],
+    "colors": ["#3ce2ff"]
   }
 ]

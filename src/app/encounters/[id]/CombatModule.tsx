@@ -443,7 +443,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       onFocus={(event) => event.target.select()}
                     />
                   </div>
-                  <div className={clsx("w-[175px] truncate px-4 text-center")}>
+                  <div className={clsx("w-[200px] truncate px-4 text-center")}>
                     <TooltipComponent definition={participant.name}>
                       {participant.id ? (
                         <Link href={`#${participant.id}`}>
@@ -636,98 +636,100 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       </div>
                     )}
                   </div>
-                  <div className="flex gap-2">
-                    {participant.conditions?.map((condition, index) => {
-                      const remainingElements =
-                        (participant.conditions?.length || 0) - index - 1;
+                  {participant.conditions && (
+                    <div className="flex gap-2">
+                      {participant.conditions.map((condition, index) => {
+                        const remainingElements =
+                          (participant.conditions?.length || 0) - index - 1;
 
-                      if (index > MAX_CONDITIONS_BEFORE_ELLIPSIS) {
-                        return null;
-                      }
+                        if (index > MAX_CONDITIONS_BEFORE_ELLIPSIS) {
+                          return null;
+                        }
 
-                      if (
-                        index === MAX_CONDITIONS_BEFORE_ELLIPSIS &&
-                        remainingElements >= 1
-                      ) {
+                        if (
+                          index === MAX_CONDITIONS_BEFORE_ELLIPSIS &&
+                          remainingElements >= 1
+                        ) {
+                          return (
+                            <Popover key={index}>
+                              <PopoverTrigger asChild>
+                                <EllipsisHorizontalIcon
+                                  key={condition.icon}
+                                  className="size-8"
+                                />
+                              </PopoverTrigger>
+                              <PopoverContent className="w-full">
+                                <div className="flex gap-2">
+                                  {participant.conditions
+                                    ?.toSpliced(0, index)
+                                    .map((condition) => (
+                                      <ConditionImage
+                                        key={condition.title}
+                                        className="size-8"
+                                        condition={condition}
+                                      />
+                                    ))}
+                                </div>
+                              </PopoverContent>
+                            </Popover>
+                          );
+                        }
+
                         return (
                           <Popover key={index}>
                             <PopoverTrigger asChild>
-                              <EllipsisHorizontalIcon
-                                key={condition.icon}
-                                className="size-8"
-                              />
-                            </PopoverTrigger>
-                            <PopoverContent className="w-full">
-                              <div className="flex gap-2">
-                                {participant.conditions
-                                  ?.toSpliced(0, index)
-                                  .map((condition) => (
-                                    <ConditionImage
-                                      key={condition.title}
-                                      className="size-8"
-                                      condition={condition}
-                                    />
-                                  ))}
+                              <div>
+                                <ConditionImage
+                                  className="size-8"
+                                  condition={condition}
+                                />
                               </div>
+                            </PopoverTrigger>
+                            <PopoverContent className="min-w-[500px]">
+                              <Card>
+                                <CardHeader>
+                                  <CardTitle>
+                                    <div className="flex justify-between">
+                                      {condition.title}{" "}
+                                      <Button
+                                        variant="secondary"
+                                        size="xs"
+                                        onClick={() =>
+                                          handleSetCondition(
+                                            participant,
+                                            condition,
+                                          )
+                                        }
+                                      >
+                                        -
+                                      </Button>
+                                    </div>
+                                  </CardTitle>
+                                  {condition.description && (
+                                    <CardDescription>
+                                      {condition.description}
+                                    </CardDescription>
+                                  )}
+                                </CardHeader>
+                                {condition.bullets &&
+                                  !!condition.bullets.length && (
+                                    <CardContent>
+                                      <ul className="list-inside list-disc space-y-2 leading-5">
+                                        {condition.bullets.map(
+                                          (bullet, index) => (
+                                            <li key={index}>{bullet}</li>
+                                          ),
+                                        )}
+                                      </ul>
+                                    </CardContent>
+                                  )}
+                              </Card>
                             </PopoverContent>
                           </Popover>
                         );
-                      }
-
-                      return (
-                        <Popover key={index}>
-                          <PopoverTrigger asChild>
-                            <div>
-                              <ConditionImage
-                                className="size-8"
-                                condition={condition}
-                              />
-                            </div>
-                          </PopoverTrigger>
-                          <PopoverContent className="min-w-[500px]">
-                            <Card>
-                              <CardHeader>
-                                <CardTitle>
-                                  <div className="flex justify-between">
-                                    {condition.title}{" "}
-                                    <Button
-                                      variant="secondary"
-                                      size="xs"
-                                      onClick={() =>
-                                        handleSetCondition(
-                                          participant,
-                                          condition,
-                                        )
-                                      }
-                                    >
-                                      -
-                                    </Button>
-                                  </div>
-                                </CardTitle>
-                                {condition.description && (
-                                  <CardDescription>
-                                    {condition.description}
-                                  </CardDescription>
-                                )}
-                              </CardHeader>
-                              {condition.bullets &&
-                                !!condition.bullets.length && (
-                                  <CardContent>
-                                    <ul className="list-inside list-disc space-y-2 leading-5">
-                                      {condition.bullets.map(
-                                        (bullet, index) => (
-                                          <li key={index}>{bullet}</li>
-                                        ),
-                                      )}
-                                    </ul>
-                                  </CardContent>
-                                )}
-                            </Card>
-                          </PopoverContent>
-                        </Popover>
-                      );
-                    })}
-                  </div>
+                      })}
+                    </div>
+                  )}
                   <ConfirmDialog
                     description="Supprimer cet élément est irréversible."
                     onConfirm={() => handleRemoveParticipant(participant)}

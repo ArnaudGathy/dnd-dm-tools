@@ -664,5 +664,113 @@
       "1": [52, 52, 52]
     },
     "youtubeId": "2GX9lVHfnxs"
+  },
+  {
+    "name": "Passage de la maison en ruines",
+    "id": 33,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S3"
+    },
+    "ennemies": {
+      "1": [53]
+    },
+    "loots": ["Bouclier ébréché (énigme)"],
+    "youtubeId": "oVZ8KGtZtwY"
+  },
+  {
+    "name": "Maison en ruines - coffres",
+    "id": 34,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S4"
+    },
+    "ennemies": {
+      "1": [54, 54]
+    },
+    "loots": [
+      "Coffre vert : 2 anneaux de communication",
+      "Coffre violet : Sceptre du gardien des pactes (donner description)"
+    ],
+    "youtubeId": "KPSVPFwOLyE"
+  },
+  {
+    "name": "Salle secrète du labo",
+    "id": 35,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S9"
+    },
+    "ennemies": {
+      "1": [55, 56]
+    },
+    "loots": [
+      "Bouclier de résistance au feu (+2 CA)",
+      "Un gros rubis d’une valeur de 1000po"
+    ],
+    "youtubeId": "WahaiTaVw2k"
+  },
+  {
+    "name": "Grande grotte",
+    "id": 36,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S11"
+    },
+    "ennemies": {
+      "1": [
+        4,
+        4,
+        4,
+        {
+          "id": 57,
+          "variant": "1",
+          "color": "#65340e"
+        },
+        {
+          "id": 57,
+          "variant": "2",
+          "color": "#65340e"
+        },
+        {
+          "id": 57,
+          "variant": "3",
+          "color": "#af5c1a"
+        },
+        {
+          "id": 57,
+          "variant": "4",
+          "color": "#af5c1a"
+        }
+      ]
+    },
+    "informations": [
+      "1. Vers les bords du bassin (piège de boue)",
+      "2. vers l'entrée (chute de stalactite)",
+      "3. Passe à gauche du bassin (piège chute)",
+      "4. Passe derrière le bassin (pop de stirges)"
+    ],
+    "youtubeId": "QnX4rkyygOg"
+  },
+  {
+    "name": "Pièce au mirroir",
+    "id": 37,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S12"
+    },
+    "ennemies": {
+      "1": [58]
+    },
+    "informations": [
+      "La banshee attend un grand respect de leur part, si ils offrent un objet de valeur elle répond à une question",
+      "En cas de refus, ou de non respect : elle attaque"
+    ],
+    "youtubeId": "k9H-qtO2E8I"
   }
 ]
