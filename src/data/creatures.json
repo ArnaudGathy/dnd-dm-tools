@@ -1646,6 +1646,10 @@
     ],
     "actions": [
       {
+        "name": "Lancer un sort",
+        "description": "Lancer un sort et dépenser un emplacement"
+      },
+      {
         "name": "Attaques multiples",
         "description": "Bâton-de-verre effectue deux attaques de Décharge électrique."
       },
@@ -2719,6 +2723,10 @@
     ],
     "actions": [
       {
+        "name": "Lancer un sort",
+        "description": "Lancer un sort et dépenser un emplacement"
+      },
+      {
         "name": "Attaques multiples",
         "description": "Le crânefeu effectue deux attaques de Rayon de feu."
       },
@@ -2879,5 +2887,142 @@
       }
     ],
     "colors": ["#3ce2ff"]
+  },
+  {
+    "name": "TzKal Zuk",
+    "id": 59,
+    "type": "Humanoïde",
+    "size": "G",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 14,
+    "hitPoints": "99",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 16,
+      "wisdom": 14,
+      "charisma": 13
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "savingThrows": {
+      "strength": "+3",
+      "wisdom": "+2"
+    },
+    "resistances": ["Feu"],
+    "legendaryResistances": [
+      {
+        "uses": 1,
+        "type": "save"
+      }
+    ],
+    "weaknesses": ["Glace"],
+    "immunities": ["Charmé", "Effrayé"],
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Résistance légendaire (1x/jour)",
+        "description": "En cas de JdS raté, peut choisir de réussir."
+      },
+      {
+        "name": "Armes du gladiateur",
+        "description": "Au début de chacun de ses tours, TzKal Zuk change d'armée équipée selon l'ordre des armes de la catégorie actions"
+      },
+      {
+        "name": "Bouclier de lave",
+        "description": "Un bouclier de lave entoure TzKal Zuk, ce qui lui confère +1 au CA et inflige 1d4 dégats à l'attaquant après une attaque de corps à corps."
+      },
+      {
+        "name": "Main de flammes",
+        "description": "Bonus de 1d4 dégats de feu à toute attaque portée avec une arme de corps à corps."
+      }
+    ],
+    "spellStats": {
+      "attackMod": 5,
+      "spellDC": 13,
+      "slots": {
+        "1": 4,
+        "2": 2
+      }
+    },
+    "spells": [26, 87, 86, 44],
+    "actions": [
+      {
+        "name": "Masse d'armes",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "(1d6 cont + 1d4 feu + 2)"
+      },
+      {
+        "name": "Épée longue",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "(1d8 tran + 1d4 feu + 2)"
+      },
+      {
+        "name": "Marteau de guerre",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "(1d10 cont + 1d4 feu + 2)"
+      },
+      {
+        "name": "Hallebarde",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "3 m",
+        "target": "1 cible",
+        "hit": "(1d10 tran + 1d4 feu + 2)"
+      },
+      {
+        "name": "Sort",
+        "description": "Utiliser un sort et dépenser un emplacement."
+      }
+    ],
+    "legendaryActionsSlots": 2,
+    "legendaryActions": [
+      {
+        "name": "Attaque à l'arme (1)",
+        "description": "Attaque avec l'arme actuellement équipée"
+      },
+      {
+        "name": "Flaque de lave (1)",
+        "description": "Zone 3x3, JdS DEX/FOR 15 pour sortir ou 1d8 feu. Terrain difficile. Rejouer JdS en cas d'entrée / fin de tour dans la zone."
+      },
+      {
+        "name": "Lance d'os (1)",
+        "type": "Ranged",
+        "modifier": "+5",
+        "reach": "9 m / 36 m",
+        "target": "1 cible",
+        "hit": "(1d6 perf + 1d4 feu + 2) Cible entravée, 1 action pour retirer la lance"
+      },
+      {
+        "name": "Intimidation draconique (2)",
+        "description": "JdS SAG 16 (n/a) ou injonction d'attaquer ses alliés. Rejoue JdS à la fin de chaque tour, ou lorsqu'elle subit des dégats."
+      }
+    ],
+    "lairActions": [
+      {
+        "name": "Éruption de gaz",
+        "description": "Apparition de 3 zones de 4x4 en jetant 1d6 dans le quadrant d'action des joueurs, JdS CON 14 (n/a) ou empoisonné jusqu'à la fin du prochain tour."
+      },
+      {
+        "name": "Flaques de lave",
+        "description": "Apparition de 5 zones de 3x3 en jetant 1d10 dans le quadrant d'action des joueurs. Voir effet dans l'action flaque de lave"
+      }
+    ],
+    "colors": ["#b41414"]
   }
 ]

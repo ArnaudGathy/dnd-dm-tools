@@ -394,7 +394,8 @@
       "damage": {
         "1": "3d6"
       },
-      "spellLevelScale": "+1d6"
+      "spellLevelScale": "+1d6",
+      "summary": "JdS DEX (1/2) ou 3d6 feu en cône de 3cases"
     }
   },
   {
@@ -1194,6 +1195,42 @@
       "type": "status",
       "effects": ["CA 13 + DEX"],
       "summary": "Au contact, donne CA 13+DEX"
+    }
+  },
+  {
+    "id": 86,
+    "name": "Rayon ardent",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "36 m",
+    "components": "V, S",
+    "duration": "instantanée",
+    "description": "Vous créez trois rayons de feu et les projetez sur des cibles à portée. Vous pouvez les diriger contre une même cible ou contre des cibles différentes. Faites une attaque de sort à distance pour chaque rayon. Si vous touchez, la cible reçoit 2d6 dégâts de feu.",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "3x 2d6"
+      },
+      "spellLevelScale": "+1 rayon par niveau au-delà du 2e",
+      "summary": "3x 2d6 dégâts de feu sur 3 cibles"
+    }
+  },
+  {
+    "id": 87,
+    "name": "Frappe de Zuk",
+    "level": 1,
+    "castingTime": "1 action",
+    "range": "1,5 m",
+    "components": "S",
+    "duration": "instantanée",
+    "description": "Ajoute 1d6 dégats de feu à l'attaque de corps à corps. L'ennemi doit faire un JdS CON ou PRONE",
+    "combat": {
+      "type": "attack",
+      "damage": {
+        "1": "1d6"
+      },
+      "effects": ["prone"],
+      "summary": "+1d6 feu attaque. JdS CON ou PRONE"
     }
   }
 ]

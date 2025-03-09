@@ -17,7 +17,6 @@ import {
   getHPAsString,
   getChallengeRatingAsFraction,
   translateSkill,
-  replaceMetersWithSquares,
   typedSpells,
 } from "@/utils/utils";
 import { entries } from "remeda";
@@ -31,6 +30,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { StatCell } from "@/app/creatures/StatCell";
+import { ActionBlock } from "@/app/creatures/ActionBlock";
 
 const typesMap = {
   attack: "A",
@@ -241,69 +241,51 @@ export const StatBlock = ({
             )}
             <div className="flex flex-col border-t-2 pt-4">
               <CategoryTitle>Actions</CategoryTitle>
-              {creature.actions.map((action) => {
-                if (action.description) {
-                  return (
-                    <StatCell
-                      key={action.name}
-                      name={action.name}
-                      stat={action.description}
-                    />
-                  );
-                }
-
-                const isUnCommonReach =
-                  action.reach && getDistanceInSquares(action.reach) > 1;
-                const isUncommonTarget =
-                  action.target &&
-                  parseInt(action.target.match(/\d/)?.[0] ?? "", 10) > 1;
-                const hitDice =
-                  action.hit &&
-                  (action.hit.match(/(?<=\().*?(?=\))/)?.[0] ?? "");
-                const hitType =
-                  action.hit &&
-                  (action.hit.match(/(?<=\)).*/)?.[0] ?? "").trim();
-
-                const attackDescription = (
-                  <>
-                    {action.type && (
-                      <span className="italic">{action.type}</span>
-                    )}
-                    {action.modifier && (
-                      <span className="text-indigo-400">{action.modifier}</span>
-                    )}
-                    {action.reach && (
-                      <span
-                        className={clsx({ "text-primary": isUnCommonReach })}
-                      >
-                        {replaceMetersWithSquares(action.reach)}
-                      </span>
-                    )}
-                    {action.target && (
-                      <span
-                        className={clsx({ "text-primary": isUncommonTarget })}
-                      >
-                        {action.target}
-                      </span>
-                    )}
-                    {action.hit && (
-                      <span>
-                        <span className="text-indigo-400">{hitDice}</span>{" "}
-                        <span>({hitType})</span>
-                      </span>
-                    )}
-                  </>
-                );
-
-                return (
-                  <StatCell
-                    key={action.name}
-                    name={action.name}
-                    stat={attackDescription}
-                  />
-                );
-              })}
+              {creature.actions.map((action) => (
+                <ActionBlock key={action.name} action={action} />
+              ))}
             </div>
+
+            {creature.legendaryActions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>
+                  Actions légendaires (
+                  {`${creature.legendaryActionsSlots} par tour`})
+                </CategoryTitle>
+                {creature.legendaryActions.map((action) => (
+                  <ActionBlock key={action.name} action={action} />
+                ))}
+              </div>
+            )}
+
+            {creature.lairActions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>
+                  Actions de repaire ({`1x par tour`})
+                </CategoryTitle>
+                {creature.lairActions.map((action) => (
+                  <ActionBlock key={action.name} action={action} />
+                ))}
+              </div>
+            )}
+
+            {creature.bonusActions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>Actions bonus</CategoryTitle>
+                {creature.bonusActions.map((action) => (
+                  <ActionBlock key={action.name} action={action} />
+                ))}
+              </div>
+            )}
+
+            {creature.reactions && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>Réactions</CategoryTitle>
+                {creature.reactions.map((action) => (
+                  <ActionBlock key={action.name} action={action} />
+                ))}
+              </div>
+            )}
 
             {creature.spellStats && (
               <div className="flex flex-col border-t-2 pt-4">
@@ -321,14 +303,15 @@ export const StatBlock = ({
                     isInline
                     isHighlighted
                   />
-                  {entries(creature.spellStats.slots).map(([level, slots]) => (
-                    <StatCell
-                      key={level}
-                      name={`Slots ${level}`}
-                      stat={slots}
-                      isInline
-                    />
-                  ))}
+                  {creature.spellStats.slots &&
+                    entries(creature.spellStats.slots).map(([level, slots]) => (
+                      <StatCell
+                        key={level}
+                        name={`Slots ${level}`}
+                        stat={slots}
+                        isInline
+                      />
+                    ))}
                 </div>
                 {!!creature.spells &&
                   creatureSpells.map((spell) => {
@@ -365,32 +348,6 @@ export const StatBlock = ({
                       </div>
                     );
                   })}
-              </div>
-            )}
-
-            {creature.bonusActions && (
-              <div className="flex flex-col border-t-2 pt-4">
-                <CategoryTitle>Actions bonus</CategoryTitle>
-                {creature.bonusActions.map((bonus) => (
-                  <StatCell
-                    key={bonus.name}
-                    name={bonus.name}
-                    stat={bonus.description}
-                  />
-                ))}
-              </div>
-            )}
-
-            {creature.reactions && (
-              <div className="flex flex-col border-t-2 pt-4">
-                <CategoryTitle>Réactions</CategoryTitle>
-                {creature.reactions.map((reaction) => (
-                  <StatCell
-                    key={reaction.name}
-                    name={reaction.name}
-                    stat={reaction.description}
-                  />
-                ))}
               </div>
             )}
           </div>

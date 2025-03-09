@@ -86,7 +86,7 @@ export type Skills =
   | "stealth"
   | "survival";
 
-type Action = {
+export type Action = {
   name: string;
   description?: string;
   type?: string;
@@ -125,12 +125,15 @@ export type Creature = {
   languages?: string[];
   challengeRating: number;
   actions: Array<Action>;
+  legendaryActions?: Array<Action>;
+  legendaryActionsSlots?: number;
+  lairActions?: Array<Action>;
   bonusActions?: Array<Action>;
   reactions?: Array<Action>;
   spellStats?: {
     attackMod: number;
     spellDC: number;
-    slots: Partial<Record<string, number>>;
+    slots?: Partial<Record<string, number>>;
   };
   spells?: number[];
   traits?: Array<{

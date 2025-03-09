@@ -776,5 +776,31 @@
       "En cas de refus, ou de non respect : elle attaque"
     ],
     "youtubeId": "k9H-qtO2E8I"
+  },
+  {
+    "name": "Arène - TzKal Zuk",
+    "id": 38,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S14"
+    },
+    "ennemies": {
+      "1": [59]
+    },
+    "youtubeId": "XZtL7PsJAoc"
+  },
+  {
+    "name": "Arène, détruite - TzKal Zuk",
+    "id": 39,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S15"
+    },
+    "ennemies": {
+      "1": [60]
+    },
+    "youtubeId": "XZtL7PsJAoc"
   }
 ]
