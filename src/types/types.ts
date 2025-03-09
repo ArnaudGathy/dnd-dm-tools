@@ -127,6 +127,12 @@ export type Creature = {
   actions: Array<Action>;
   bonusActions?: Array<Action>;
   reactions?: Array<Action>;
+  spellStats?: {
+    attackMod: number;
+    spellDC: number;
+    slots: Partial<Record<string, number>>;
+  };
+  spells?: number[];
   traits?: Array<{
     name: string;
     description: string;

@@ -18,17 +18,25 @@ import {
   getChallengeRatingAsFraction,
   translateSkill,
   replaceMetersWithSquares,
+  typedSpells,
 } from "@/utils/utils";
 import { entries } from "remeda";
 import { useState } from "react";
 import {
   ArrowsPointingInIcon,
   ArrowsPointingOutIcon,
+  BookOpenIcon,
   PhotoIcon,
 } from "@heroicons/react/24/solid";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { StatCell } from "@/app/creatures/StatCell";
+
+const typesMap = {
+  attack: "A",
+  save: "S",
+  status: "E",
+};
 
 const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
   return <h5 className="mb-2 text-neutral-300 underline">{children}</h5>;
@@ -42,6 +50,8 @@ export const StatBlock = ({
   isCollapsible?: boolean;
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+
+  const creatureSpells = (creature.spells ?? []).map((s) => typedSpells[s - 1]);
 
   return (
     <Card id={creature.id.toString()}>
@@ -229,7 +239,7 @@ export const StatBlock = ({
                 ))}
               </div>
             )}
-            <div className="flex flex-col gap-2 border-t-2 pt-4">
+            <div className="flex flex-col border-t-2 pt-4">
               <CategoryTitle>Actions</CategoryTitle>
               {creature.actions.map((action) => {
                 if (action.description) {
@@ -294,6 +304,69 @@ export const StatBlock = ({
                 );
               })}
             </div>
+
+            {creature.spellStats && (
+              <div className="flex flex-col border-t-2 pt-4">
+                <CategoryTitle>Sorts</CategoryTitle>
+                <div className="mb-2 flex gap-8">
+                  <StatCell
+                    name="Attaque des sorts"
+                    stat={`+${creature.spellStats.attackMod}`}
+                    isInline
+                    isHighlighted
+                  />
+                  <StatCell
+                    name="DD des sorts"
+                    stat={creature.spellStats.spellDC}
+                    isInline
+                    isHighlighted
+                  />
+                  {entries(creature.spellStats.slots).map(([level, slots]) => (
+                    <StatCell
+                      key={level}
+                      name={`Slots ${level}`}
+                      stat={slots}
+                      isInline
+                    />
+                  ))}
+                </div>
+                {!!creature.spells &&
+                  creatureSpells.map((spell) => {
+                    if (!spell) {
+                      return null;
+                    }
+
+                    return (
+                      <div key={spell.id} className="flex items-center gap-2">
+                        <div>
+                          <Link href={`/spells/${spell.id}`} target="_blank">
+                            <BookOpenIcon className="size-5" />
+                          </Link>
+                        </div>
+                        <div>{spell.level}</div>
+                        <div className="min-w-[150px] text-muted-foreground">
+                          {spell.name}
+                        </div>
+                        {spell.combat?.type && (
+                          <div
+                            className={clsx("min-w-[15px]", {
+                              ["text-pink-500"]: spell.combat.type === "save",
+                              ["text-red-500"]: spell.combat.type === "attack",
+                              ["text-yellow-500"]:
+                                spell.combat.type === "status",
+                            })}
+                          >
+                            {typesMap[spell.combat.type]}
+                          </div>
+                        )}
+                        {spell.combat?.summary && (
+                          <div>{spell.combat.summary}</div>
+                        )}
+                      </div>
+                    );
+                  })}
+              </div>
+            )}
 
             {creature.bonusActions && (
               <div className="flex flex-col border-t-2 pt-4">

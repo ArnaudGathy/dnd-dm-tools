@@ -707,6 +707,10 @@
     "ennemies": {
       "1": [55, 56]
     },
+    "informations": [
+      "Le crane leur parle et les supplie de les libérer",
+      "Parchemin biblio brûlent si non sauvé (1 action)"
+    ],
     "loots": [
       "Bouclier de résistance au feu (+2 CA)",
       "Un gros rubis d’une valeur de 1000po"

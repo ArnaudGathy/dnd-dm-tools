@@ -90,20 +90,22 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Card>
         )}
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Dans la liste de créatures de :</CardTitle>
-          </CardHeader>
-          <CardContent>
-            {
-              <ul>
-                {inPlayerList.map((player) => (
-                  <li key={player.name}> {player.name}</li>
-                ))}
-              </ul>
-            }
-          </CardContent>
-        </Card>
+        {!!Object.keys(inPlayerList).length && (
+          <Card>
+            <CardHeader>
+              <CardTitle>Dans la liste de créatures de :</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {
+                <ul>
+                  {inPlayerList.map((player) => (
+                    <li key={player.name}> {player.name}</li>
+                  ))}
+                </ul>
+              }
+            </CardContent>
+          </Card>
+        )}
       </div>
     </div>
   );

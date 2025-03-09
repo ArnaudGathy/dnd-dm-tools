@@ -17,6 +17,7 @@ export const CombatSchema = z.discriminatedUnion("type", [
     restrictions: z.array(z.string()).optional(),
     recovery: z.string().optional(),
     spellLevelScale: z.string().optional(),
+    summary: z.string().optional(),
   }),
   z.object({
     type: z.literal("attack"),
@@ -25,6 +26,7 @@ export const CombatSchema = z.discriminatedUnion("type", [
     restrictions: z.array(z.string()).optional(),
     recovery: z.string().optional(),
     spellLevelScale: z.string().optional(),
+    summary: z.string().optional(),
   }),
   z.object({
     type: z.literal("status"),
@@ -32,6 +34,7 @@ export const CombatSchema = z.discriminatedUnion("type", [
     restrictions: z.array(z.string()).optional(),
     recovery: z.string().optional(),
     spellLevelScale: z.string().optional(),
+    summary: z.string().optional(),
   }),
 ]);
 
