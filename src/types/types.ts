@@ -52,6 +52,7 @@ export type Encounter = {
   }>;
   informations?: string[];
   loots?: string[];
+  environmentTurnInitiative?: string;
 };
 
 export const isEnemyObject = (enemy: unknown): enemy is EnemyObject => {

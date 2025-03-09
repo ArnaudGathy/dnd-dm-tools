@@ -788,10 +788,11 @@
     "ennemies": {
       "1": [59]
     },
+    "environmentTurnInitiative": "20",
     "youtubeId": "XZtL7PsJAoc"
   },
   {
-    "name": "Arène, détruite - TzKal Zuk",
+    "name": "Arène - TzKal Zuk P2",
     "id": 39,
     "scenario": "Les dragons de l'île aux tempêtes",
     "location": {
@@ -801,6 +802,7 @@
     "ennemies": {
       "1": [60]
     },
+    "environmentTurnInitiative": "20",
     "youtubeId": "XZtL7PsJAoc"
   }
 ]

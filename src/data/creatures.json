@@ -2659,7 +2659,7 @@
       },
       {
         "name": "Salive aveuglante (Recharge 5-6)",
-        "type": "Ranged",
+        "type": "Distance",
         "reach": "4.5 m",
         "hit": "(0d0) Zone 3x3 JdS DEX 13 ou aveuglé jusqu'auprochain tour du babelien"
       }
@@ -2889,7 +2889,7 @@
     "colors": ["#3ce2ff"]
   },
   {
-    "name": "TzKal Zuk",
+    "name": "TzKal Zuk P1",
     "id": 59,
     "type": "Humanoïde",
     "size": "G",
@@ -2915,17 +2915,15 @@
       "wisdom": "+2"
     },
     "resistances": ["Feu"],
-    "legendaryResistances": [
-      {
-        "uses": 1,
-        "type": "save"
-      }
-    ],
     "weaknesses": ["Glace"],
     "immunities": ["Charmé", "Effrayé"],
     "languages": ["Commun", "Draconique"],
     "challengeRating": 4,
     "traits": [
+      {
+        "name": "Résistance magique",
+        "description": "Avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
       {
         "name": "Résistance légendaire (1x/jour)",
         "description": "En cas de JdS raté, peut choisir de réussir."
@@ -2951,12 +2949,12 @@
         "2": 2
       }
     },
-    "spells": [26, 87, 86, 44],
+    "spells": [26, 87, 86],
     "actions": [
       {
         "name": "Masse d'armes",
         "type": "Melee",
-        "modifier": "+5",
+        "modifier": "+4",
         "reach": "1.5 m",
         "target": "1 cible",
         "hit": "(1d6 cont + 1d4 feu + 2)"
@@ -2964,7 +2962,7 @@
       {
         "name": "Épée longue",
         "type": "Melee",
-        "modifier": "+5",
+        "modifier": "+4",
         "reach": "1.5 m",
         "target": "1 cible",
         "hit": "(1d8 tran + 1d4 feu + 2)"
@@ -2972,7 +2970,7 @@
       {
         "name": "Marteau de guerre",
         "type": "Melee",
-        "modifier": "+5",
+        "modifier": "+4",
         "reach": "1.5 m",
         "target": "1 cible",
         "hit": "(1d10 cont + 1d4 feu + 2)"
@@ -2980,7 +2978,7 @@
       {
         "name": "Hallebarde",
         "type": "Melee",
-        "modifier": "+5",
+        "modifier": "+4",
         "reach": "3 m",
         "target": "1 cible",
         "hit": "(1d10 tran + 1d4 feu + 2)"
@@ -3002,8 +3000,8 @@
       },
       {
         "name": "Lance d'os (1)",
-        "type": "Ranged",
-        "modifier": "+5",
+        "type": "Distance",
+        "modifier": "+4",
         "reach": "9 m / 36 m",
         "target": "1 cible",
         "hit": "(1d6 perf + 1d4 feu + 2) Cible entravée, 1 action pour retirer la lance"
@@ -3016,13 +3014,137 @@
     "lairActions": [
       {
         "name": "Éruption de gaz",
-        "description": "Apparition de 3 zones de 4x4 en jetant 1d6 dans le quadrant d'action des joueurs, JdS CON 14 (n/a) ou empoisonné jusqu'à la fin du prochain tour."
+        "description": "Apparition de 2 zones de 4x4 en jetant 4x2d6 pour chaque cadrant, JdS CON 12 (n/a) ou empoisonné jusqu'à la fin du prochain tour."
       },
       {
         "name": "Flaques de lave",
-        "description": "Apparition de 5 zones de 3x3 en jetant 1d10 dans le quadrant d'action des joueurs. Voir effet dans l'action flaque de lave"
+        "description": "Apparition de 5 zones de 3x3 en jetant 4x 5d12 pour chaque cadrant. Voir effet dans l'action flaque de lave"
       }
     ],
     "colors": ["#b41414"]
+  },
+  {
+    "name": "TzKal Zuk P2",
+    "id": 60,
+    "type": "Humanoïde",
+    "size": "TG",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 14,
+    "hitPoints": "99",
+    "speed": {
+      "walk": "9 m",
+      "fly": "15 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 16,
+      "wisdom": 14,
+      "charisma": 13
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "savingThrows": {
+      "strength": "+3",
+      "wisdom": "+2"
+    },
+    "weaknesses": ["Glace"],
+    "immunities": ["Feu", "Charmé", "Effrayé"],
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Résistance magique",
+        "description": "Avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Résistance légendaire (1x/jour)",
+        "description": "En cas de JdS raté, peut choisir de réussir."
+      },
+      {
+        "name": "Bouclier de lave",
+        "description": "Un bouclier de lave entoure TzKal Zuk, ce qui lui confère +1 au CA et inflige 1d4 dégats à l'attaquant après une attaque de corps à corps."
+      },
+      {
+        "name": "Main de flammes",
+        "description": "Bonus de 1d4 dégats de feu à toute attaque portée avec une arme de corps à corps."
+      }
+    ],
+    "spellStats": {
+      "attackMod": 5,
+      "spellDC": 13,
+      "slots": {
+        "1": 4,
+        "2": 2,
+        "3": 1
+      }
+    },
+    "spells": [26, 87, 86, 44],
+    "actions": [
+      {
+        "name": "Attaque multiples",
+        "description": "Attaque avec son épée longue et son fouet à chaque action"
+      },
+      {
+        "name": "Fouet de flammes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "6 m",
+        "target": "1 cible",
+        "hit": "(1d4 tranchant + 2d4 feu + 2) JdS FOR 12 (n/a) ou attiré au CàC"
+      },
+      {
+        "name": "Epée longue magique",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "3 m ou 12/36 m",
+        "target": "1 cible",
+        "hit": "(1d8 tran + 1d4 feu + 2) Si lancée, peut utiliser une action légendaire pour rappeler l'épée et ré-infliger les dégâts"
+      },
+      {
+        "name": "Sort",
+        "description": "Utiliser un sort et dépenser un emplacement."
+      }
+    ],
+    "legendaryActionsSlots": 2,
+    "legendaryActions": [
+      {
+        "name": "Attaque à l'arme (1)",
+        "description": "Attaque avec une arme au choix"
+      },
+      {
+        "name": "Rappel d'épée (1)",
+        "description": "Rappelle l'épée magique lancée auparavant, qui traverse tout ennemi sur sa route et ré-inflige les dégâts de base."
+      },
+      {
+        "name": "Lancer un sort (1)",
+        "description": "Lance un sort au choix et consomme un emplacement"
+      },
+      {
+        "name": "Repositionnement (2)",
+        "description": "S'envole tout en ignorant les attaques d'opportunités afin de se repositionner dans la portée de ses déplacement en vol. A l'atterrissage frappe le sol dans carré de 5x5 cases, 1d6 dégâts + JdS DEX 12 (n/a) prone"
+      },
+      {
+        "name": "Balayage calcinant (2)",
+        "description": "Frappe le sol dans une zone de 1 case tout autours de lui et inflige 1d6 dégats aux ennemis à portée. JdS DEX/FOR 14 (n/a) ou repoussé de 2 cases. Tout ennemi repoussé, subit aussi une attaque d'opportunité à l'épée longue."
+      }
+    ],
+    "lairActions": [
+      {
+        "name": "Cercles de flamme",
+        "description": "Un cercle de flamme de 3x3 cases et 1,5m de haut apparait autours de chaque joueur. Il obscure la vision et toute attaque à distance subit un désavantage. Traverser les flammes inflige 1d8 dégâts de feu."
+      },
+      {
+        "name": "Terreur",
+        "description": "L'énergie ambiante infuse TzKal Zuk qui émet un rugissement de rage dans un rayon de 7 cases. JdS SAG 12 (n/a) ou effrayé"
+      },
+      {
+        "name": "Chute de météores",
+        "description": "De nombreux stalactites ardents tombent du plafond de la caverne dans l'arène (voir carte). JdS DEX 12 ou 1d8 dégâts"
+      }
+    ],
+    "colors": ["#da7700"]
   }
 ]

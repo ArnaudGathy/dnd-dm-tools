@@ -49,6 +49,7 @@ import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
 import {
   filter,
   flatMap,
+  isDefined,
   map,
   pipe,
   prop,
@@ -132,13 +133,26 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const [shouldShowAddParticipant, setShouldShowAddParticipant] =
     useState(false);
   const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(
-    [
-      ...getParticipantFromCharacters(party),
-      ...getParticipantFromEncounter({
-        encounter,
-        partyLevel,
-      }),
-    ].toSorted(sortParticipant),
+    filter(
+      [
+        ...getParticipantFromCharacters(party),
+        ...getParticipantFromEncounter({
+          encounter,
+          partyLevel,
+        }),
+        encounter.environmentTurnInitiative
+          ? {
+              uuid: uuidv4(),
+              id: -99,
+              name: "Environement",
+              hp: "",
+              currentHp: "",
+              init: encounter.environmentTurnInitiative ?? "0",
+            }
+          : undefined,
+      ],
+      isDefined,
+    ).toSorted(sortParticipant),
   );
   const [participant, setParticipant] =
     useState<ParticipantToAdd>(DEFAULT_STATE);
@@ -404,6 +418,8 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
 
           <div className="flex flex-col gap-2">
             {listOfParticipants.map((participant, index) => {
+              const isEnvironment = participant.id === -99;
+              const isActiveTurn = currentTurnIndex === index;
               const hpPercent =
                 (parseInt(participant.currentHp) / parseInt(participant.hp)) *
                 100;
@@ -414,7 +430,8 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                     "flex min-h-10 w-full items-center gap-4 space-x-2 px-4 py-1 transition duration-300",
                     {
                       "opacity-20": participant.currentHp === "0",
-                      "scale-[105%] bg-red-900": currentTurnIndex === index,
+                      "scale-[105%] bg-red-900": isActiveTurn,
+                      "bg-stone-950": isEnvironment && !isActiveTurn,
                     },
                   )}
                 >
