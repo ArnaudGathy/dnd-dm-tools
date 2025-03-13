@@ -3146,5 +3146,75 @@
       }
     ],
     "colors": ["#da7700"]
+  },
+  {
+    "name": "Golem enchanté",
+    "id": 61,
+    "type": "Artificiel",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 17,
+    "hitPoints": "50",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 9,
+      "constitution": 16,
+      "intelligence": 3,
+      "wisdom": 11,
+      "charisma": 1
+    },
+    "immunities": [
+      "Poison",
+      "Psychique",
+      "Charmé",
+      "Épuisement",
+      "Effrayé",
+      "Paralysé",
+      "Pétrifié",
+      "Empoisonné"
+    ],
+    "resistances": ["Perforants", "Tranchants"],
+    "vulnerabilities": ["Contondant"],
+    "senses": {
+      "passivePerception": 10
+    },
+    "languages": ["Comprend les langues mais ne peut pas parler"],
+    "challengeRating": 5,
+    "traits": [
+      {
+        "name": "Résistance à la magie",
+        "description": "Le golem a un avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Armes magiques",
+        "description": "Les attaques avec une arme du golem sont magiques."
+      },
+      {
+        "name": "Renforcement des tablettes",
+        "description": "Les stats du golem sont amélioré par chaque tablette magique dont le golem est en possesion. Le nombre de tablettes est indiqué par la lettre 'N'"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le golem effectue 1 + N attaques de coup"
+      },
+      {
+        "name": "Coup",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "(1d8 + 3) dégâts contondants"
+      },
+      {
+        "name": "Rayon de feu (Recharge (6-N)-6)",
+        "description": "Le golem tire 1 + N rayons de feu sur 1+N cibles. JdS DEX 12 (n/a) ou 1d8 feu"
+      }
+    ],
+    "colors": ["#fa6800"]
   }
 ]

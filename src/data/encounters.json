@@ -753,10 +753,8 @@
       ]
     },
     "informations": [
-      "1. Vers les bords du bassin (piège de boue)",
-      "2. vers l'entrée (chute de stalactite)",
-      "3. Passe à gauche du bassin (piège chute)",
-      "4. Passe derrière le bassin (pop de stirges)"
+      "Effet de surprise des méphits",
+      "A la fin de chaque tour d'un participant, tirer une complication dans la table"
     ],
     "youtubeId": "QnX4rkyygOg"
   },
@@ -778,8 +776,25 @@
     "youtubeId": "k9H-qtO2E8I"
   },
   {
-    "name": "Arène - TzKal Zuk",
+    "name": "Entrée de l'arène",
     "id": 38,
+    "scenario": "Les dragons de l'île aux tempêtes",
+    "location": {
+      "name": "Caveau de Sharruth",
+      "mapMarker": "S13"
+    },
+    "ennemies": {
+      "1": [61]
+    },
+    "informations": [
+      "Selon le nombre de fragments échappés aux joueurs, sa force évolue (voir stats)",
+      "PV : 50 + (N x 25)"
+    ],
+    "youtubeId": "6pnMzBTUiIA"
+  },
+  {
+    "name": "Arène - TzKal Zuk",
+    "id": 39,
     "scenario": "Les dragons de l'île aux tempêtes",
     "location": {
       "name": "Caveau de Sharruth",
@@ -793,7 +808,7 @@
   },
   {
     "name": "Arène - TzKal Zuk P2",
-    "id": 39,
+    "id": 40,
     "scenario": "Les dragons de l'île aux tempêtes",
     "location": {
       "name": "Caveau de Sharruth",
