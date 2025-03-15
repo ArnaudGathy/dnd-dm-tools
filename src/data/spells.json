@@ -1252,5 +1252,15 @@
     "components": "V, S, M",
     "duration": "concentration, jusqu'à 1 heure",
     "description": "La créature que vous touchez devient invisible jusqu'à la fin du sort. Tout ce qu'elle porte et transporte reste invisible tant qu'elle le garde sur elle. Le sort se termine pour la cible qui attaque ou lance un sort."
+  },
+  {
+    "id": 90,
+    "name": "Nuée de dagues",
+    "level": 2,
+    "castingTime": "1 action",
+    "range": "18 m",
+    "components": "V, S, M",
+    "duration": "concentration, jusqu'à 1 minute",
+    "description": "Vous emplissez de dagues tournoyantes un cube de 1,50 mètre d'arête. Ce cube est centré sur un point de votre choix situé à portée. Une créature subit 4d4 dégâts tranchants quand elle entre dans la zone du sort pour la première fois d'un tour ou quand elle y débute son tour."
   }
 ]
