@@ -35,7 +35,12 @@ export type Party = {
   characters: Character[];
 };
 
-type EnemyObject = { id: number; color?: string; variant?: string };
+type EnemyObject = {
+  id: number;
+  color?: string;
+  variant?: string;
+  shouldHideInInitiativeTracker?: boolean;
+};
 export type EncounterEnemy = number | EnemyObject;
 
 export type Encounter = {

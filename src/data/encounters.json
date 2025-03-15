@@ -310,12 +310,12 @@
           "variant": "Bouclier",
           "color": "#276cad"
         },
-        15,
+        { "id": 15, "shouldHideInInitiativeTracker": true },
         24,
-        25,
-        26,
-        27,
-        28
+        { "id": 25, "shouldHideInInitiativeTracker": true },
+        { "id": 26, "shouldHideInInitiativeTracker": true },
+        { "id": 27, "shouldHideInInitiativeTracker": true },
+        { "id": 28, "shouldHideInInitiativeTracker": true }
       ]
     },
     "informations": [

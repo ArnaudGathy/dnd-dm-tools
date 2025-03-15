@@ -262,8 +262,10 @@ export const getParticipantFromEncounter = ({
   return ennemiesIds.reduce((acc: Participant[], enemy, index) => {
     const enemyId = getIdFromEnemy(enemy);
     const creature = typedCreatures.find((creature) => creature.id === enemyId);
+    const shouldSkip =
+      isEnemyObject(enemy) && enemy.shouldHideInInitiativeTracker;
 
-    if (creature) {
+    if (creature && !shouldSkip) {
       const hp = getHPAsString(creature);
 
       return [
