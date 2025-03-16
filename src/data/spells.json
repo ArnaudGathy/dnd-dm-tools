@@ -557,7 +557,7 @@
     "range": "personnelle",
     "components": "V",
     "duration": "concentration, jusqu'à 1 minute",
-    "description": "La prochaine fois que vous touchez une créature avec une arme pendant la durée du sort, votre attaque inspire une terreur magique. La cible doit réussir un jet de sauvegarde de Sagesse ou être effrayée de vous jusqu’à la fin du sort.",
+    "description": "La prochaine fois que vous touchez une créature avec une arme pendant la durée du sort, votre attaque inflige 1d6 degats psy et inspire une terreur magique. La cible doit réussir un jet de sauvegarde de Sagesse ou être effrayée de vous jusqu’à la fin du sort.",
     "combat": {
       "type": "save",
       "save": "wisdom",
@@ -573,7 +573,7 @@
     "range": "personnelle",
     "components": "V",
     "duration": "concentration, jusqu'à 1 minute",
-    "description": "La prochaine fois que vous touchez une créature avec une arme pendant la durée du sort, votre attaque résonne d'un bruit de tonnerre audible jusqu’à 90 m. La cible doit réussir un jet de sauvegarde de Force ou être repoussée de 3 m et tomber à terre (prone).",
+    "description": "La première fois que vous touchez une cible lors une attaque au corps à corps avec une arme pendant que le sort est actif, votre arme résonne tel un tonnerre audible à 90 mètres à la ronde, et l'attaque inflige 2d6 dégâts de tonnerre supplémentaires à la cible. De plus, si la cible est une créature, elle doit réussir un jet de sauvegarde de Force sous peine d'être repoussée de vous sur 3 mètres puis de tomber à terre.",
     "combat": {
       "type": "save",
       "save": "strength",
