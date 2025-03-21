@@ -12,7 +12,6 @@ import {
   getParticipantFromEncounter,
   roll,
   typedConditions,
-  typedSpells,
 } from "@/utils/utils";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -46,23 +45,13 @@ import {
   XMarkIcon,
 } from "@heroicons/react/24/outline";
 import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
-import {
-  filter,
-  flatMap,
-  isDefined,
-  map,
-  pipe,
-  prop,
-  sortBy,
-  unique,
-  values,
-} from "remeda";
+import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { FastForwardIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
-const HIT_VALUES = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+
 const DEFAULT_STATE = {
   id: "",
   currentHp: "",
@@ -71,11 +60,6 @@ const DEFAULT_STATE = {
   hp: "",
   color: "#DD1D47",
 };
-
-const spellsWithEffects = pipe(
-  filter(typedSpells, (spell) => (spell.combat?.effects?.length ?? 0) > 0),
-  sortBy(prop("name")),
-);
 
 const getNextTurn = (
   turnsCounter: number | null,
@@ -239,20 +223,6 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
         map(prop("name")),
       ),
     [party],
-  );
-
-  const partySpells = useMemo(
-    () =>
-      pipe(
-        party.characters,
-        values(),
-        flatMap((character) => character.spells),
-        unique(),
-      ),
-    [party],
-  );
-  const spellsWithEffectsFromParty = filter(spellsWithEffects, (spell) =>
-    partySpells.includes(spell.id),
   );
 
   const handleUpdateCurrentHP =
@@ -531,25 +501,32 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                               </div>
                             </div>
                             <div>
-                              <div className="flex gap-2">
-                                {HIT_VALUES.map((value) => (
-                                  <Button
-                                    key={value}
-                                    className={clsx("font-mono text-xs", {
-                                      "bg-green-900": hpChangeMode === "add",
-                                      "bg-red-900": hpChangeMode === "sub",
-                                    })}
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() =>
-                                      handleChangeHp(participant, value)
-                                    }
-                                  >
-                                    {`${hpChangeMode === "sub" ? "-" : "+"}${value}`}
-                                  </Button>
-                                ))}
+                              <div className="flex flex-wrap gap-2">
+                                {Array.from({ length: 29 }).map((_, index) => {
+                                  const value = (index + 1).toString();
+                                  return (
+                                    <Button
+                                      key={index}
+                                      className={clsx(
+                                        "h-8 w-11 font-mono text-xs",
+                                        {
+                                          "bg-green-900":
+                                            hpChangeMode === "add",
+                                          "bg-red-900": hpChangeMode === "sub",
+                                        },
+                                      )}
+                                      variant="secondary"
+                                      size="sm"
+                                      onClick={() =>
+                                        handleChangeHp(participant, value)
+                                      }
+                                    >
+                                      {`${hpChangeMode === "sub" ? "-" : "+"}${value}`}
+                                    </Button>
+                                  );
+                                })}
                                 <Input
-                                  className="w-12"
+                                  className="h-8 w-11"
                                   placeholder="PV"
                                   type="text"
                                   onBlur={(e) =>
@@ -581,35 +558,6 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                                     }
                                   />
                                 </div>
-                              ))}
-                            </div>
-                            <div className="flex flex-wrap gap-2">
-                              {spellsWithEffectsFromParty.map((spell) => (
-                                <Button
-                                  key={spell.id}
-                                  size="xs"
-                                  variant="secondary"
-                                  onClick={() => {
-                                    if (spell.combat?.effects) {
-                                      spell.combat.effects.forEach((effect) => {
-                                        const condition = typedConditions.find(
-                                          (c) => c.icon === effect,
-                                        );
-
-                                        handleSetCondition(
-                                          participant,
-                                          condition ?? {
-                                            title: spell.name,
-                                            description: effect,
-                                            icon: "spell",
-                                          },
-                                        );
-                                      });
-                                    }
-                                  }}
-                                >
-                                  {spell.name}
-                                </Button>
                               ))}
                             </div>
                             <div className="flex gap-2">

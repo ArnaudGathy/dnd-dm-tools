@@ -9,21 +9,24 @@ import {
   Participant,
   Party,
   Skills,
+  Spell,
 } from "@/types/types";
 import creatures from "@/data/creatures.json";
 import parties from "@/data/parties.json";
 import encounters from "@/data/encounters.json";
+import spellList from "@/data/spellList.json";
+import spells from "@/data/spells.json";
 import { v4 as uuidv4 } from "uuid";
 import { entries, groupBy, isPlainObject, prop, reduce } from "remeda";
 import conditions from "@/data/conditions.json";
-import spellList from "@/data/spells.json";
-import { Spell, spellsSchema } from "@/types/schemas";
+import { APISpell } from "@/types/schemas";
 
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedParties: Party[] = parties;
 export const typedConditions: Condition[] = conditions;
-export const typedSpells: Spell[] = spellsSchema.parse(spellList);
+export const typedSummarySpells: Spell[] = spellList;
+export const typedLocalSpells: APISpell[] = spells;
 
 export const commonCreatureColors = [
   "#ffffff",
@@ -109,22 +112,49 @@ export const shortenAbilityName = (ability: string) => {
     .replace("charisma", "CHA");
 };
 
+export const translateShortenedAbilityName = (ability: string) => {
+  return ability
+    .replace("str", "FOR")
+    .replace("dex", "DEX")
+    .replace("con", "CON")
+    .replace("int", "INT")
+    .replace("wis", "SAG")
+    .replace("cha", "CHA");
+};
+
 export const getHPAsString = (creature: Creature) => {
   return creature.hitPoints.split("(")[0].trim();
 };
 
-export const getDistanceInSquareOrAsIs = (distance: string) => {
-  if (!distance.match(/^\d+\sm$/)) {
+export const convertFromFeetToSquares = (distance: string) => {
+  // match "feet" or "mile"
+  if (!distance.match(/feet|mile/)) {
     return distance;
   }
-  return `${getDistanceInSquares(distance)} cases`;
+  return `${getDistanceInSquaresFromUSUnits(distance)} cases`;
 };
 
 export const getDistanceInSquares = (distance: string) => {
   if (!distance.match(/m/)) {
-    throw new Error("Invalid speed. Speed must be in meters.");
+    throw new Error("Invalid distance. Speed must be in meters.");
   }
   return parseFloat(distance.split(" m")[0]) / 1.5;
+};
+
+export const getDistanceInSquaresFromUSUnits = (distance: string) => {
+  if (distance.match(/feet/)) {
+    return convertFeetDistanceIntoSquares(
+      parseFloat(distance.split(" feet")[0]),
+    );
+  }
+  if (distance.match(/mile/)) {
+    return (parseFloat(distance.split(" mile")[0]) * 5280) / 5;
+  }
+  throw new Error("Invalid distance. Speed must be in feet or mile");
+};
+
+export const convertFeetDistanceIntoSquares = (distance: number) => {
+  return distance / 5;
 };
 
 export const replaceMetersWithSquares = (input: string) => {
@@ -179,10 +209,6 @@ export const getEncounterFromId = (encounterId: string) => {
   }
 
   return encounter;
-};
-
-export const getSpellFromId = (spellId: number) => {
-  return typedSpells.find((spell) => spell.id === spellId);
 };
 
 export const getCreatureFromId = (creatureId: number) => {
@@ -326,6 +352,3 @@ export const getIdFromEnemy = (enemy: EncounterEnemy) => {
   }
   return enemy;
 };
-
-export const isConcentrationSpell = (spell: Spell) =>
-  spell.duration.includes("concentration");

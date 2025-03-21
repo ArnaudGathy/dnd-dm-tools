@@ -1670,7 +1670,14 @@
         "2": 1
       }
     },
-    "spells": [2, 48, 85, 5, 11, 74],
+    "spells": [
+      "mage-hand",
+      "light",
+      "mage-armor",
+      "charm-person",
+      "magic-missile",
+      "hold-person"
+    ],
     "reactions": [
       {
         "name": "Bouclier",
@@ -2748,7 +2755,14 @@
         "3": 1
       }
     },
-    "spells": [2, 23, 11, 83, 84, 44],
+    "spells": [
+      "mage-hand",
+      "shield",
+      "magic-missile",
+      "blur",
+      "flaming-sphere",
+      "scorching-ray"
+    ],
     "colors": ["#f84200"]
   },
   {
@@ -2949,7 +2963,7 @@
         "2": 2
       }
     },
-    "spells": [26, 87, 86],
+    "spells": ["burning-hands", "scorching-ray"],
     "actions": [
       {
         "name": "Masse d'armes",
@@ -3081,7 +3095,7 @@
         "3": 1
       }
     },
-    "spells": [26, 87, 86, 44],
+    "spells": ["burning-hands", "scorching-ray", "fireball"],
     "actions": [
       {
         "name": "Attaque multiples",

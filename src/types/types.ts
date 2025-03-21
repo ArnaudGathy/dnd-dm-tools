@@ -24,7 +24,7 @@ export type Character = {
   id: number;
   name: string;
   player: string;
-  spells: number[];
+  spells: string[];
   creatures?: number[];
   gameClass: string;
 };
@@ -33,6 +33,13 @@ export type Party = {
   name: string;
   id: number;
   characters: Character[];
+};
+
+export type Spell = {
+  id: string;
+  name: string;
+  level: number;
+  isRitual?: boolean;
 };
 
 type EnemyObject = {
@@ -141,7 +148,7 @@ export type Creature = {
     spellDC: number;
     slots?: Partial<Record<string, number>>;
   };
-  spells?: number[];
+  spells?: string[];
   traits?: Array<{
     name: string;
     description: string;

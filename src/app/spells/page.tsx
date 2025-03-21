@@ -1,6 +1,5 @@
 "use client";
 
-import { typedSpells } from "@/utils/utils";
 import {
   capitalize,
   entries,
@@ -19,16 +18,16 @@ import {
 } from "remeda";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/components/ui/Link";
-import { Spell } from "@/types/schemas";
 import { useState } from "react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Party } from "@/types/types";
+import { Party, Spell } from "@/types/types";
 import { getParty } from "@/utils/localStorageUtils";
 import dynamic from "next/dynamic";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/16/solid";
+import { typedSummarySpells } from "@/utils/utils";
 
 enum SORT_BY {
   PLAYER = "player",
@@ -46,7 +45,7 @@ const getSpellsByPlayer = (party: Party, playerName?: string) =>
       if (!spellsByPlayer[player.name]) {
         const spellList = pipe(
           player.spells,
-          map((id) => find(typedSpells, (spell) => spell.id === id)),
+          map((id) => find(typedSummarySpells, (spell) => spell.id === id)),
           filter(isDefined),
           sortBy(prop("name")),
         );
@@ -73,7 +72,7 @@ const getSpellsByLevel = (party: Party, playerName?: string) => {
     unique(),
   );
   return pipe(
-    typedSpells,
+    typedSummarySpells,
     filter((spell) => partySpells.includes(spell.id)),
     sortBy(prop("name")),
     groupBy(prop("level")),
