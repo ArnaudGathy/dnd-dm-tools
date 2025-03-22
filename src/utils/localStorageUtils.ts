@@ -15,6 +15,6 @@ export const getParty = () => {
     return undefined;
   }
 
-  const partyId = parseInt(localStorage.getItem("party") || "1", 10);
+  const partyId = parseInt(localStorage.getItem("party") || "0", 10);
   return typedParties.find((party) => party.id === partyId);
 };

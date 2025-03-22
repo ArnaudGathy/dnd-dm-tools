@@ -13,7 +13,7 @@ import dynamic from "next/dynamic";
 const PartySelect = () => {
   return (
     <Select
-      defaultValue={localStorage.getItem("party") || undefined}
+      defaultValue={localStorage.getItem("party") ?? "0"}
       onValueChange={(value) => {
         localStorage.setItem("party", value);
         window.location.reload();
