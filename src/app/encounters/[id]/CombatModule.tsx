@@ -31,7 +31,7 @@ import {
   BookOpenIcon,
   BugAntIcon,
 } from "@heroicons/react/24/solid";
-import { getParty, getPartyLevel } from "@/utils/localStorageUtils";
+import { getPartyLevel, getParty } from "@/utils/localStorageUtils";
 import {
   Popover,
   PopoverContent,
@@ -119,7 +119,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(
     filter(
       [
-        ...getParticipantFromCharacters(party),
+        ...(party ? getParticipantFromCharacters(party) : []),
         ...getParticipantFromEncounter({
           encounter,
           partyLevel,
@@ -201,27 +201,27 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
     };
   }, [handleKeyDown]);
 
-  if (!party) {
-    throw new Error("Party not found");
-  }
-
   const playersWithSpells = useMemo(
     () =>
-      pipe(
-        party.characters,
-        filter((character) => character.spells.length > 0),
-        map(prop("name")),
-      ),
+      party
+        ? pipe(
+            party.characters,
+            filter((character) => character.spells.length > 0),
+            map(prop("name")),
+          )
+        : [],
     [party],
   );
 
   const playersWithCreatures = useMemo(
     () =>
-      pipe(
-        party.characters,
-        filter((character) => !!character.creatures),
-        map(prop("name")),
-      ),
+      party
+        ? pipe(
+            party.characters,
+            filter((character) => !!character.creatures),
+            map(prop("name")),
+          )
+        : [],
     [party],
   );
 

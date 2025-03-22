@@ -4,8 +4,23 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { auth } from "@/../auth";
+import { privateRoutes } from "@/constants/privateRoutes";
 
-export const NavBarItem = ({ to, label }: { to: string; label: string }) => {
+export const NavBarItem = async ({
+  to,
+  label,
+}: {
+  to: string;
+  label: string;
+}) => {
+  const session = await auth();
+  const isPrivateRoute = privateRoutes.includes(to);
+
+  if (isPrivateRoute && !session) {
+    return null;
+  }
+
   return (
     <NavigationMenuItem>
       <Link href={to} legacyBehavior passHref>

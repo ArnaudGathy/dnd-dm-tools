@@ -70,19 +70,18 @@ const Home = () => {
   const [displayBy, setDisplayBy] = useState(sortBy ?? SORT_BY.NAME);
 
   const party = getParty();
-  if (!party) {
-    return null;
-  }
 
-  const getList = (): { [key: string]: Creature[] } => {
-    if (displayBy === SORT_BY.PLAYER) {
+  const getList = (): { [key: string]: Creature[] } | null => {
+    if (displayBy === SORT_BY.PLAYER && party) {
       return getCreatureByPlayer(party, playerName);
     }
     if (displayBy === SORT_BY.NAME) {
       return creaturesGroupedByFirstLetter;
     }
-    throw new Error("Invalid displayBy");
+    return null;
   };
+
+  const creatures = getList();
 
   return (
     <div>
@@ -112,50 +111,59 @@ const Home = () => {
           >
             Par nom
           </TabsTrigger>
-          <TabsTrigger
-            value={SORT_BY.PLAYER}
-            onClick={() => setDisplayBy(SORT_BY.PLAYER)}
-          >
-            Par joueur
-          </TabsTrigger>
+          {party && (
+            <TabsTrigger
+              value={SORT_BY.PLAYER}
+              onClick={() => setDisplayBy(SORT_BY.PLAYER)}
+            >
+              Par joueur
+            </TabsTrigger>
+          )}
         </TabsList>
       </Tabs>
 
-      <div className="grid grid-cols-5 grid-rows-6 gap-4">
-        {entries(getList()).map(([name, creatures]) => (
-          <Card key={name}>
-            <CardHeader>
-              <CardTitle
-                className={clsx({
-                  "cursor-pointer": displayBy === SORT_BY.PLAYER,
-                })}
-                onClick={() => {
-                  if (displayBy === SORT_BY.PLAYER) {
-                    const params = new URLSearchParams(searchParams);
-                    params.set(SORT_BY.PLAYER, name);
-                    router.replace(`${pathName}?${params.toString()}`);
-                  }
-                }}
-              >
-                {capitalize(name)}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul>
-                {creatures.map((creature) => {
-                  return (
-                    <li key={creature.id}>
-                      <Link href={`/creatures/${creature.id}`}>
-                        {creature.name}
-                      </Link>
-                    </li>
-                  );
-                })}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {!!creatures && !!entries(creatures).length ? (
+        <div className="grid grid-cols-5 grid-rows-6 gap-4">
+          {entries(creatures).map(([name, creatures]) => (
+            <Card key={name}>
+              <CardHeader>
+                <CardTitle
+                  className={clsx({
+                    "cursor-pointer": displayBy === SORT_BY.PLAYER,
+                  })}
+                  onClick={() => {
+                    if (displayBy === SORT_BY.PLAYER) {
+                      const params = new URLSearchParams(searchParams);
+                      params.set(SORT_BY.PLAYER, name);
+                      router.replace(`${pathName}?${params.toString()}`);
+                    }
+                  }}
+                >
+                  {capitalize(name)}
+                </CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul>
+                  {creatures.map((creature) => {
+                    return (
+                      <li key={creature.id}>
+                        <Link href={`/creatures/${creature.id}`}>
+                          {creature.name}
+                        </Link>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-8 text-muted-foreground">
+          Aucune créature à afficher. Vérifier que vous avez bien sélectionné un
+          groupe en haut à droite de l&#39;application.
+        </div>
+      )}
     </div>
   );
 };

@@ -12,13 +12,9 @@ export const getPartyLevel = () => {
 
 export const getParty = () => {
   if (typeof window === "undefined") {
-    return null;
+    return undefined;
   }
 
   const partyId = parseInt(localStorage.getItem("party") || "1", 10);
-  const party = typedParties.find((party) => party.id === partyId);
-  if (!party) {
-    throw new Error("party not found");
-  }
-  return party;
+  return typedParties.find((party) => party.id === partyId);
 };

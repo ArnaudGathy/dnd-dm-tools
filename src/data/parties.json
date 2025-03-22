@@ -7,42 +7,42 @@
         "id": 1,
         "name": "Arim",
         "player": "Arcady",
-        "gameClass": "",
-        "spells": []
+        "gameClass": "Paladin",
+        "spells": ["shield-of-faith"]
       },
       {
         "id": 2,
-        "name": "",
+        "name": "Baalian",
         "player": "Logan",
-        "gameClass": "",
-        "spells": []
+        "gameClass": "Warlock",
+        "spells": ["eldritch-blast"]
       },
       {
         "id": 3,
-        "name": "",
+        "name": "Cirbul",
         "player": "Anthony",
-        "gameClass": "",
-        "spells": []
+        "gameClass": "Bard",
+        "spells": ["detect-magic"]
       },
       {
         "id": 4,
-        "name": "",
+        "name": "Erevan",
         "player": "Loïc",
-        "gameClass": "",
-        "spells": []
+        "gameClass": "Clerc",
+        "spells": ["healing-word"]
       },
       {
         "id": 5,
-        "name": "",
+        "name": "Pepnac",
         "player": "Mathias",
-        "gameClass": "",
-        "spells": []
+        "gameClass": "Roublard",
+        "spells": ["minor-illusion"]
       }
     ]
   },
   {
     "id": 2,
-    "name": "Phandelver",
+    "name": "Phancreux",
     "characters": [
       {
         "id": 10,

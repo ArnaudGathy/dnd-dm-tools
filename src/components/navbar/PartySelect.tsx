@@ -23,6 +23,7 @@ const PartySelect = () => {
         <SelectValue placeholder="Party" />
       </SelectTrigger>
       <SelectContent>
+        <SelectItem value={"0"}>Tout</SelectItem>
         {typedParties.map((party) => {
           const partyId = party.id.toString();
 

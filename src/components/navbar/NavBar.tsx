@@ -8,8 +8,12 @@ import { NavBarItem } from "@/components/navbar/NavBarItem";
 import Link from "next/link";
 import PartyLevelSelect from "@/components/navbar/PartyLevelSelect";
 import PartySelect from "@/components/navbar/PartySelect";
+import SignInButton from "@/components/navbar/SignInButton";
+import { auth } from "@/../auth";
 
-export const NavBar = () => {
+export const NavBar = async () => {
+  const isLoggedIn = !!(await auth());
+
   return (
     <header className="py-2">
       <div className="mx-auto flex max-w-[1485px] items-center justify-between px-8">
@@ -33,7 +37,8 @@ export const NavBar = () => {
         </div>
         <div className="flex gap-2">
           <PartySelect />
-          <PartyLevelSelect />
+          {isLoggedIn && <PartyLevelSelect />}
+          <SignInButton />
         </div>
       </div>
     </header>

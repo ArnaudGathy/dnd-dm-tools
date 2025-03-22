@@ -61,16 +61,26 @@ const getSpellsByPlayer = (party: Party, playerName?: string) =>
     }, {}),
   );
 
-const getSpellsByLevel = (party: Party, playerName?: string) => {
-  const partySpells = pipe(
-    party.characters,
-    filter(
-      (character) => !playerName || character.name.toLowerCase() === playerName,
-    ),
-    values(),
-    flatMap((character) => character.spells),
-    unique(),
-  );
+const getSpellsByLevel = ({
+  party,
+  playerName,
+}: {
+  party?: Party;
+  playerName?: string;
+}) => {
+  const partySpells = party
+    ? pipe(
+        party.characters,
+        filter(
+          (character) =>
+            !playerName || character.name.toLowerCase() === playerName,
+        ),
+        values(),
+        flatMap((character) => character.spells),
+        unique(),
+      )
+    : typedSummarySpells.map((spell) => spell.id);
+
   return pipe(
     typedSummarySpells,
     filter((spell) => partySpells.includes(spell.id)),
@@ -88,24 +98,19 @@ const Spells = () => {
 
   const party = getParty();
 
-  const [displayBy, setDisplayBy] = useState(sortBy ?? SORT_BY.PLAYER);
+  const [displayBy, setDisplayBy] = useState(sortBy ?? SORT_BY.LEVEL);
 
-  if (!party) {
-    return null;
-  }
-
-  const spellsByPlayer = getSpellsByPlayer(party, player);
-  const spellsByLevel = getSpellsByLevel(party, player);
-
-  const getList = (): { [key: string]: Spell[] } => {
+  const getList = (): { [key: string]: Spell[] } | null => {
     if (displayBy === SORT_BY.LEVEL) {
-      return spellsByLevel;
+      return getSpellsByLevel({ party, playerName: player });
     }
-    if (displayBy === SORT_BY.PLAYER) {
-      return spellsByPlayer;
+    if (displayBy === SORT_BY.PLAYER && !!party) {
+      return getSpellsByPlayer(party, player);
     }
-    throw new Error("Invalid displayBy");
+    return null;
   };
+
+  const listOfSpells = getList();
 
   const getPrefix = () => {
     if (displayBy === SORT_BY.LEVEL) {
@@ -136,12 +141,14 @@ const Spells = () => {
 
       <Tabs defaultValue={displayBy} className="mb-4 w-[400px]">
         <TabsList>
-          <TabsTrigger
-            value={SORT_BY.PLAYER}
-            onClick={() => setDisplayBy(SORT_BY.PLAYER)}
-          >
-            Par joueur
-          </TabsTrigger>
+          {!!party && (
+            <TabsTrigger
+              value={SORT_BY.PLAYER}
+              onClick={() => setDisplayBy(SORT_BY.PLAYER)}
+            >
+              Par joueur
+            </TabsTrigger>
+          )}
           <TabsTrigger
             value={SORT_BY.LEVEL}
             onClick={() => setDisplayBy(SORT_BY.LEVEL)}
@@ -151,40 +158,47 @@ const Spells = () => {
         </TabsList>
       </Tabs>
 
-      <div className="grid grid-cols-4 grid-rows-3 gap-4">
-        {entries(getList()).map(([name, spells]) => (
-          <Card key={name}>
-            <CardHeader>
-              <CardTitle
-                className={clsx({
-                  "cursor-pointer": displayBy === SORT_BY.PLAYER,
-                })}
-                onClick={() => {
-                  if (displayBy === SORT_BY.PLAYER) {
-                    const params = new URLSearchParams(searchParams);
-                    params.set(SORT_BY.PLAYER, name);
-                    router.replace(`${pathName}?${params.toString()}`);
-                  }
-                }}
-              >{`${getPrefix()} ${capitalize(name)}`}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul>
-                {spells.map((spell) => (
-                  <li key={spell.id} className="flex items-center gap-2">
-                    <div className="w-4">
-                      {spell.isRitual && (
-                        <SparklesIcon className="size-4 text-emerald-500" />
-                      )}
-                    </div>
-                    <Link href={`/spells/${spell.id}`}>{spell.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+      {!!listOfSpells && !!entries(listOfSpells).length ? (
+        <div className="grid grid-cols-4 grid-rows-3 gap-4">
+          {entries(listOfSpells).map(([name, spells]) => (
+            <Card key={name}>
+              <CardHeader>
+                <CardTitle
+                  className={clsx({
+                    "cursor-pointer": displayBy === SORT_BY.PLAYER,
+                  })}
+                  onClick={() => {
+                    if (displayBy === SORT_BY.PLAYER) {
+                      const params = new URLSearchParams(searchParams);
+                      params.set(SORT_BY.PLAYER, name);
+                      router.replace(`${pathName}?${params.toString()}`);
+                    }
+                  }}
+                >{`${getPrefix()} ${capitalize(name)}`}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ul>
+                  {spells.map((spell) => (
+                    <li key={spell.id} className="flex items-center gap-2">
+                      <div className="w-4">
+                        {spell.isRitual && (
+                          <SparklesIcon className="size-4 text-emerald-500" />
+                        )}
+                      </div>
+                      <Link href={`/spells/${spell.id}`}>{spell.name}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+      ) : (
+        <div className="mt-8 text-muted-foreground">
+          Aucun sort à afficher. Vérifier que vous avez bien sélectionné un
+          groupe en haut à droite de l&#39;application.
+        </div>
+      )}
     </div>
   );
 };
