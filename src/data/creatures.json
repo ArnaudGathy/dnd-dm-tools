@@ -179,11 +179,11 @@
       "#bd3333",
       "#0b1e4f",
       "#055f93",
-      "#7c919d",
+      "#db81f1",
       "#bd3333",
       "#0b1e4f",
       "#055f93",
-      "#7c919d"
+      "#db81f1"
     ]
   },
   {
@@ -330,7 +330,7 @@
         "modifier": "+4",
         "reach": "1.5 m",
         "target": "1 cible",
-        "hit": "7 (2d4 + 2) dégâts tranchants. Si la cible est une créature autre qu’un Mort-vivant, elle doit réussir un jet de sauvegarde de Constitution DD 10 sous peine d’être paralysée pendant 1 minute. La cible peut refaire le jet de sauvegarde à la fin de chacun de ses tours."
+        "hit": "7 (2d4 + 2) dégâts tranchants. Si != mort vivant ou elfe, JdS CON 10 (n/a) ou paralysé"
       },
       {
         "name": "Morsure",
@@ -341,7 +341,7 @@
         "hit": "9 (2d6 + 2) dégâts perforants"
       }
     ],
-    "colors": ["#1f6391"]
+    "colors": ["#1fa483", "#8dd549"]
   },
   {
     "name": "Harpie",
@@ -3230,5 +3230,50 @@
       }
     ],
     "colors": ["#fa6800"]
+  },
+  {
+    "name": "Ogre",
+    "id": 62,
+    "type": "Géant",
+    "size": "G",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 11,
+    "hitPoints": "91 (59 - 7d10 + 21)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 19,
+      "dexterity": 8,
+      "constitution": 16,
+      "intelligence": 5,
+      "wisdom": 7,
+      "charisma": 7
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 8
+    },
+    "languages": ["Commun", "Géant"],
+    "challengeRating": 2,
+    "actions": [
+      {
+        "name": "Massue",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "13 (2d8 + 4) dégâts contondants"
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+6",
+        "reach": "1.5 m ou portée 9/36 m",
+        "target": "1 cible",
+        "hit": "11 (2d6 + 4) dégâts perforants"
+      }
+    ],
+    "colors": ["#d3a78b"]
   }
 ]

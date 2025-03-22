@@ -819,5 +819,190 @@
     },
     "environmentTurnInitiative": "20",
     "youtubeId": "XZtL7PsJAoc"
+  },
+  {
+    "name": "Rencontre - Stirges",
+    "id": 41,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S1"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": 4,
+          "variant": "1",
+          "color": "#bd3333"
+        },
+        {
+          "id": 4,
+          "variant": "1",
+          "color": "#0b1e4f"
+        },
+        {
+          "id": 4,
+          "variant": "1",
+          "color": "#055f93"
+        },
+        {
+          "id": 4,
+          "variant": "1",
+          "color": "#db81f1"
+        },
+        {
+          "id": 4,
+          "variant": "2",
+          "color": "#bd3333"
+        },
+        {
+          "id": 4,
+          "variant": "2",
+          "color": "#0b1e4f"
+        }
+      ]
+    },
+    "youtubeId": "w54512C_A2k"
+  },
+  {
+    "name": "Rencontre - Zombies/Goule",
+    "id": 42,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S2"
+    },
+    "ennemies": {
+      "1": [2, 2, 2, 7, 7]
+    },
+    "youtubeId": "zp8ZlBUGdgs"
+  },
+  {
+    "name": "Rencontre - Ogre",
+    "id": 43,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S3"
+    },
+    "ennemies": {
+      "1": [62]
+    },
+    "loots": [
+      "Pagne trop grand et puant, +1 en intimidation",
+      "Un papier ou il est griffonné '1 corbeau + 2 rats = bon ragoût'"
+    ],
+    "youtubeId": "_YpKEpF0oxo"
+  },
+  {
+    "name": "Rencontre - Gobelins Rocagueule",
+    "id": 44,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S4"
+    },
+    "ennemies": {
+      "1": [
+        19,
+        {
+          "id": 17,
+          "color": "#ff0000"
+        },
+        {
+          "id": 17,
+          "color": "#463636"
+        },
+        {
+          "id": 17,
+          "color": "#7a00ff"
+        },
+        {
+          "id": 17,
+          "color": "#296c0b"
+        },
+        {
+          "id": 18,
+          "color": "#ff0000"
+        },
+        {
+          "id": 18,
+          "color": "#463636"
+        },
+        {
+          "id": 18,
+          "color": "#7a00ff"
+        },
+        {
+          "id": 18,
+          "color": "#296c0b"
+        }
+      ]
+    },
+    "informations": ["Savent ou est le chateau"],
+    "loots": ["1d10 pc et 1d10 poa"],
+    "youtubeId": "sd1Otp7s1Fk"
+  },
+  {
+    "name": "Rencontre - Gobelours du Roc",
+    "id": 45,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S5"
+    },
+    "ennemies": {
+      "1": [22, 22]
+    },
+    "informations": [
+      "L'homme retient les joueurs alors que la femme informe le Roc",
+      "Supprimer 2 gobelours de la rencontre au roc"
+    ],
+    "loots": [
+      "Dessin à la main avis de recherche",
+      "Beau gros baton (+1 en dressage)"
+    ],
+    "youtubeId": "8Q7cioftmKs"
+  },
+  {
+    "name": "Rencontre - Loups",
+    "id": 46,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S6"
+    },
+    "ennemies": {
+      "1": [
+        { "id": 20, "color": "#283538", "variant": "1" },
+        { "id": 20, "color": "#e3f3f5", "variant": "1" },
+        { "id": 20, "color": "#748b8c", "variant": "1" },
+        { "id": 20, "color": "#283538", "variant": "2" },
+        { "id": 20, "color": "#e3f3f5", "variant": "2" },
+        { "id": 20, "color": "#748b8c", "variant": "2" }
+      ]
+    },
+    "youtubeId": "fq8OSrIUST4"
+  },
+  {
+    "name": "Rencontre - Hibours",
+    "id": 47,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S7"
+    },
+    "ennemies": {
+      "1": [9]
+    },
+    "loots": [
+      "Jet de survie pour récolter les loots",
+      "2-5: Plumes de hibours (25po)",
+      "6-10: Griffe et crocs (50po)",
+      "11-15: Fourrure de hibours (75po)",
+      "15-19: Viande de hibours (+20 rations)",
+      "20: Oeil de hibours (200po)"
+    ],
+    "youtubeId": "Yx-QqEc2Feg"
   }
 ]
