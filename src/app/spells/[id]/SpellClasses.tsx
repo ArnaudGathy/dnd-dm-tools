@@ -3,6 +3,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { SpellSubClass } from "@/app/spells/[id]/SpellSubClass";
 
 export const SpellClasses = ({ spell }: { spell: APISpell }) => {
+  if (!spell.classes?.length && !spell.subclasses?.length) {
+    return null;
+  }
+
   return (
     <Card>
       <CardHeader>

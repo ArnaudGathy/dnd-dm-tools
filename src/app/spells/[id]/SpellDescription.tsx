@@ -13,10 +13,10 @@ import {
   translateShortenedAbilityName,
   typedSummarySpells,
 } from "@/utils/utils";
-import { APISpell } from "@/types/schemas";
+import { APISpell, SpellSource } from "@/types/schemas";
 import { entries } from "remeda";
-import Link from "next/link";
 import { LinkIcon } from "@heroicons/react/16/solid";
+import { Link } from "@/components/ui/Link";
 
 export const SpellDescription = ({ spell }: { spell: APISpell }) => {
   const spellFromApp = typedSummarySpells.find(
@@ -86,7 +86,7 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
               {spell.duration && (
                 <StatCell
                   name="Durée"
-                  stat={`${spell.duration}${spell.concentration ? " (concentration)" : ""}`}
+                  stat={`${spell.duration}${spell.concentration ? " (c)" : ""}`}
                   isInline
                   highlightClassName={
                     spell.concentration ? "text-yellow-500" : undefined
@@ -121,45 +121,38 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
             )}
 
             <div className="flex flex-col gap-2 border-t-2 pt-4">
-              <div className="flex gap-8">
-                {spell.dc && (
-                  <>
-                    {spell.dc.dc_type && (
-                      <StatCell
-                        name="Type de sort"
-                        stat={`JdS de ${spell.dc.dc_type?.index ? translateShortenedAbilityName(spell.dc.dc_type?.index) : ""}`}
-                        isHighlighted
-                        isInline
-                      />
-                    )}
-                    {spell.dc.dc_success && (
-                      <StatCell
-                        name="Réussite JdS"
-                        stat={spell.dc.dc_success}
-                        isInline
-                      />
-                    )}
-                  </>
-                )}
+              {(!!spell.dc || !!spell.attack_type) && (
+                <div className="flex gap-8">
+                  {spell.dc && (
+                    <>
+                      {spell.dc.dc_type && (
+                        <StatCell
+                          name="Type de sort"
+                          stat={`JdS de ${spell.dc.dc_type?.index ? translateShortenedAbilityName(spell.dc.dc_type?.index) : ""}`}
+                          isHighlighted
+                          isInline
+                        />
+                      )}
+                      {spell.dc.dc_success && (
+                        <StatCell
+                          name="Réussite JdS"
+                          stat={spell.dc.dc_success}
+                          isInline
+                        />
+                      )}
+                    </>
+                  )}
 
-                {spell.attack_type && (
-                  <StatCell
-                    name="Type de sort"
-                    stat={`Attaque : ${spell.attack_type}`}
-                    isHighlighted
-                    isInline
-                  />
-                )}
-
-                {!spell.dc && !spell.attack_type && (
-                  <StatCell
-                    name="Type de sort"
-                    stat="Status"
-                    isHighlighted
-                    isInline
-                  />
-                )}
-              </div>
+                  {spell.attack_type && (
+                    <StatCell
+                      name="Type de sort"
+                      stat={`Attaque : ${spell.attack_type}`}
+                      isHighlighted
+                      isInline
+                    />
+                  )}
+                </div>
+              )}
 
               <div className="flex gap-8">
                 {spell.damage?.damage_type && (
@@ -245,6 +238,29 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
                   </div>
                 </div>
               )}
+
+              <span className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+                <span>Source :</span>
+                {spell.source === SpellSource.API && (
+                  <Link
+                    href="https://www.dnd5eapi.co/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    D&D 5e API
+                  </Link>
+                )}
+                {spell.source === SpellSource.AIDE_DD && (
+                  <Link
+                    href="https://www.aidedd.org/dnd-filters/sorts.php"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    AideDD (incomplet)
+                  </Link>
+                )}
+                {spell.source === SpellSource.LOCAL && "Fichier local"}
+              </span>
             </div>
           </div>
         </CardContent>

@@ -1,11 +1,12 @@
 import NextLink from "next/link";
-import { ReactNode } from "react";
+import { AnchorHTMLAttributes, ReactNode } from "react";
 import { LinkProps } from "next/dist/client/link";
 
 export const Link = ({
   children,
   ...props
-}: LinkProps & { children: ReactNode }) => {
+}: LinkProps &
+  AnchorHTMLAttributes<HTMLAnchorElement> & { children: ReactNode }) => {
   return (
     <NextLink
       {...props}

@@ -1,5 +1,11 @@
 import { z } from "zod";
 
+export enum SpellSource {
+  AIDE_DD = "Aide DD",
+  API = "API",
+  LOCAL = "fichier local",
+}
+
 export const externalRessourceSchema = z
   .object({
     index: z.string(),
@@ -50,6 +56,7 @@ export const apiSpellSchema = z
     school: externalRessourceSchema,
     classes: z.array(externalRessourceSchema),
     subclasses: z.array(externalRessourceSchema),
+    source: z.nativeEnum(SpellSource),
   })
   .partial()
   .strict();

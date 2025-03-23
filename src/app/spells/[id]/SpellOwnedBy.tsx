@@ -12,6 +12,9 @@ export const SpellOwnedBy = ({ spell }: { spell: APISpell }) => {
       (character) => !!spell.index && character.spells.includes(spell.index),
     ),
   );
+  if (!playersWithSpell.length) {
+    return null;
+  }
 
   return (
     <Card>
