@@ -386,5 +386,73 @@
     "id": "invisibility",
     "name": "Invisibilité",
     "level": 2
+  },
+  {
+    "id": "enhance-ability",
+    "name": "Amélioration de caractéristique",
+    "level": 2
+  },
+  {
+    "id": "gust-of-wind",
+    "name": "Rafale de vent",
+    "level": 2
+  },
+  {
+    "id": "spike-growth",
+    "name": "Croissance d'épines",
+    "level": 2
+  },
+  {
+    "id": "flame-blade",
+    "name": "Lame de feu",
+    "level": 2
+  },
+  {
+    "id": "locate-animals-or-plants",
+    "name": "Localisation d’animaux ou de plantes",
+    "level": 2,
+    "isRitual": true
+  },
+  {
+    "id": "animal-messenger",
+    "name": "Messager animal",
+    "level": 2,
+    "isRitual": true
+  },
+  {
+    "id": "heat-metal",
+    "name": "Échauffement du métal",
+    "level": 2
+  },
+  {
+    "id": "pass-without-trace",
+    "name": "Passage sans trace",
+    "level": 2
+  },
+  {
+    "id": "barkskin",
+    "name": "Peau d’écorce",
+    "level": 2
+  },
+  {
+    "id": "protection-from-poison",
+    "name": "Protection contre le poison",
+    "level": 2
+  },
+  {
+    "id": "moonbeam",
+    "name": "Rayon de lune",
+    "level": 2
+  },
+  {
+    "id": "beast-sense",
+    "name": "Sens animal",
+    "level": 2,
+    "isRitual": true
+  },
+  {
+    "id": "darkvision",
+    "name": "Vision dans le noir",
+    "level": 2
   }
 ]

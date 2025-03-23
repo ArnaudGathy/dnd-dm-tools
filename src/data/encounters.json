@@ -570,21 +570,12 @@
     },
     "informations": [
       "Caché au plafond au dessus d'un pont",
-      "Cible tout le monde (JsS SAG14) et trouve qui porte un objet magique.",
+      "Cible tout le monde (JsS SAG 14) et trouve qui porte un objet magique.",
       "Perception DD16 pour le repérer, désavantage sans vision dans le noir.",
       "Négocie avec le porteur d'un objet magique pour le récupérer en échange de leur vie. Trahi les fers-rouge si nécessaire.",
       "Peut escalader les murs et se re-cacher"
     ],
-    "loots": [
-      "Dans le coffre au fond de la crevasse :",
-      "160pa",
-      "120po",
-      "5 malachite de 12po chacune",
-      "1 potion de soins",
-      "1 potion d’escalade",
-      "1 potion d’agrandrissement",
-      "1 épée longue +1"
-    ],
+    "loots": ["Coffre au fond de la crevasse (voir notes)"],
     "youtubeId": "8Q7cioftmKs"
   },
   {

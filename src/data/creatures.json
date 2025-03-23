@@ -1476,13 +1476,13 @@
     "colors": ["#f50000", "#1323f6"]
   },
   {
-    "name": "Nothic",
+    "name": "Nothic (fer-rouge)",
     "id": 32,
     "type": "Aberration",
     "size": "M",
     "alignment": "Neutre Mauvais",
     "armorClass": 15,
-    "hitPoints": "45 (6d8 + 18)",
+    "hitPoints": "66 (6d8 + 18)",
     "speed": {
       "walk": "9 m",
       "climb": "9 m"
@@ -1531,8 +1531,8 @@
         "hit": "6 (1d6 + 3) dégâts tranchants."
       },
       {
-        "name": "Regard de putréfaction (recharge 4-6)",
-        "description": "Le nothic prend pour cible une créature qu'il peut voir dans un rayon de 9 mètres autour de lui. La cible doit réussir un jet de sauvegarde de Constitution DD 12 contre cette magie ou prendre 10 (3d6) dégâts nécrotiques."
+        "name": "Regard de putréfaction (4-6)",
+        "description": "Cible une créature qu'il peut voir das un rayon de 6 cases. JdS CON 12 (n/a) ou 3d6 dégâts nécrotiques."
       },
       {
         "name": "Intuition mystérieuse",

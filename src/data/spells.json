@@ -75,5 +75,33 @@
         "name": "Druid"
       }
     ]
+  },
+  {
+    "index": "beast-sense",
+    "name": "Beast Sense",
+    "range": "Touch",
+    "components": ["S"],
+    "ritual": true,
+    "duration": "Up to 1 hour",
+    "concentration": true,
+    "casting_time": "1 action",
+    "level": 2,
+    "desc": [
+      "You touch a willing beast. For the duration, you can use your action to see through the beast's eyes and hear what it hears, and continue to do so until you use your action to return to your normal senses."
+    ],
+    "school": {
+      "index": "divination",
+      "name": "Divination"
+    },
+    "classes": [
+      {
+        "index": "druid",
+        "name": "Druid"
+      },
+      {
+        "index": "ranger",
+        "name": "Ranger"
+      }
+    ]
   }
 ]
