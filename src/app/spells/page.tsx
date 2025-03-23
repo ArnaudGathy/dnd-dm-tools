@@ -28,13 +28,23 @@ import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { typedSummarySpells } from "@/utils/utils";
+import { Input } from "@/components/ui/input";
+import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 
 enum SORT_BY {
   PLAYER = "player",
   LEVEL = "level",
 }
 
-const getSpellsByPlayer = (party: Party, playerName?: string) =>
+const getSpellsByPlayer = ({
+  party,
+  playerName,
+  search,
+}: {
+  party: Party;
+  playerName?: string;
+  search: string;
+}) =>
   pipe(
     party.characters,
     filter(
@@ -45,8 +55,15 @@ const getSpellsByPlayer = (party: Party, playerName?: string) =>
       if (!spellsByPlayer[player.name]) {
         const spellList = pipe(
           player.spells,
-          map((id) => find(typedSummarySpells, (spell) => spell.id === id)),
-          filter(isDefined),
+          map((id) =>
+            find(
+              typedSummarySpells,
+              (spell) =>
+                spell.id === id &&
+                spell.name.toLowerCase().includes(search.toLowerCase()),
+            ),
+          ),
+          filter((spell) => isDefined(spell)),
           sortBy(prop("name")),
         );
 
@@ -64,9 +81,11 @@ const getSpellsByPlayer = (party: Party, playerName?: string) =>
 const getSpellsByLevel = ({
   party,
   playerName,
+  search,
 }: {
   party?: Party;
   playerName?: string;
+  search: string;
 }) => {
   const partySpells = party
     ? pipe(
@@ -83,7 +102,11 @@ const getSpellsByLevel = ({
 
   return pipe(
     typedSummarySpells,
-    filter((spell) => partySpells.includes(spell.id)),
+    filter(
+      (spell) =>
+        partySpells.includes(spell.id) &&
+        spell.name.toLowerCase().includes(search.toLowerCase()),
+    ),
     sortBy(prop("name")),
     groupBy(prop("level")),
   );
@@ -99,13 +122,14 @@ const Spells = () => {
   const party = getParty();
 
   const [displayBy, setDisplayBy] = useState(sortBy ?? SORT_BY.LEVEL);
+  const [search, setSearch] = useState("");
 
   const getList = (): { [key: string]: Spell[] } | null => {
     if (displayBy === SORT_BY.LEVEL) {
-      return getSpellsByLevel({ party, playerName: player });
+      return getSpellsByLevel({ party, playerName: player, search });
     }
     if (displayBy === SORT_BY.PLAYER && !!party) {
-      return getSpellsByPlayer(party, player);
+      return getSpellsByPlayer({ party, playerName: player, search });
     }
     return null;
   };
@@ -121,8 +145,8 @@ const Spells = () => {
 
   return (
     <div>
-      <div className="flex gap-4">
-        <h1 className={"mb-4 scroll-m-20 text-2xl font-bold tracking-tight"}>
+      <div className="mb-4 flex items-center gap-4">
+        <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
           Liste des sorts {player ? `de ${capitalize(player)}` : ""}
         </h1>
         {player && (
@@ -137,6 +161,14 @@ const Spells = () => {
             <XMarkIcon className="size-4" />
           </Button>
         )}
+        <div className="relative ml-4">
+          <MagnifyingGlassIcon className="absolute right-2 top-2.5 size-5 text-muted-foreground" />
+          <Input
+            placeholder="Recherche"
+            className="w-[200px]"
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
       </div>
 
       <Tabs defaultValue={displayBy} className="mb-4 w-[400px]">
