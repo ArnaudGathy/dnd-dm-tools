@@ -1,1 +1,1 @@
-export const privateRoutes = ["/encounters", "/creatures"];
+export const privateRoutes = ["/encounters"];

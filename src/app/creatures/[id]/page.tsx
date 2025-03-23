@@ -19,8 +19,10 @@ import {
 import { Link } from "@/components/ui/Link";
 import { notFound } from "next/navigation";
 import { StatBlock } from "@/app/creatures/StatBlock";
+import { auth } from "@/../auth";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
+  const session = await auth();
   const creatureId = (await params).id;
   const creature = getCreatureFromId(parseInt(creatureId));
 
@@ -56,8 +58,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
         <StatBlock creature={creature} isCollapsible={false} />
       </div>
 
-      <div className="grid grid-cols-1 grid-rows-2 gap-4">
-        {!!Object.keys(encounteredIn).length && (
+      <div className="flex flex-col gap-4">
+        {!!session && !!Object.keys(encounteredIn).length && (
           <Card>
             <CardHeader>
               <CardTitle>Rencontré dans :</CardTitle>

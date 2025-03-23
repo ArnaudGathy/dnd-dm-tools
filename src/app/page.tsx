@@ -51,46 +51,50 @@ export default async function Home() {
         <CardContent className="mt-4 flex flex-col gap-4">
           Parcourir la liste des sorts par niveau ou par personnage selon le
           groupe.
-          <Link href="/spells" className="w-full">
-            <Button className="w-full" size="sm">
-              Tous les sorts
-            </Button>
-          </Link>
-          <Link href="/spells?sortBy=player" className="w-full">
-            <Button className="w-full" variant="secondary" size="sm">
-              Sorts par personnage
-            </Button>
-          </Link>
+          {isAuthorized ? (
+            <Link href="/spells" className="w-full">
+              <Button className="w-full" size="sm">
+                Tous les sorts
+              </Button>
+            </Link>
+          ) : (
+            <Link href="/spells?sortBy=player" className="w-full">
+              <Button className="w-full" size="sm">
+                Sorts par personnage
+              </Button>
+            </Link>
+          )}
         </CardContent>
       </Card>
 
-      {isAuthorized && (
-        <Card className="max-w-[30%] flex-1 border-primary/25">
-          <CardHeader className="border-muted-background border-b">
-            <CardTitle className="flex items-center gap-2">
-              <BugAntIcon className="size-6 text-primary" />
-              Créatures
-            </CardTitle>
-            <CardDescription>
-              Liste des créatures encodés dans l&apos;application
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="mt-4 flex flex-col gap-4">
-            Parcourir la liste des créatures par nom ou par personnage selon le
-            groupe.
+      <Card className="max-w-[30%] flex-1 border-primary/25">
+        <CardHeader className="border-muted-background border-b">
+          <CardTitle className="flex items-center gap-2">
+            <BugAntIcon className="size-6 text-primary" />
+            Créatures
+          </CardTitle>
+          <CardDescription>
+            Liste des créatures encodés dans l&apos;application
+          </CardDescription>
+        </CardHeader>
+        <CardContent className="mt-4 flex flex-col gap-4">
+          Parcourir la liste des créatures par nom ou par personnage selon le
+          groupe.
+          {isAuthorized ? (
             <Link href="/creatures" className="w-full">
               <Button className="w-full" size="sm">
                 Toutes les créatures
               </Button>
             </Link>
+          ) : (
             <Link href="/creatures?sortBy=player" className="w-full">
-              <Button className="w-full" variant="secondary" size="sm">
+              <Button className="w-full" size="sm">
                 Créatures par personnage
               </Button>
             </Link>
-          </CardContent>
-        </Card>
-      )}
+          )}
+        </CardContent>
+      </Card>
     </div>
   );
 }

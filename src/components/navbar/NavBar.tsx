@@ -25,6 +25,7 @@ export const NavBar = async () => {
               alt="Dungeon Master Tools Logo"
               width="64"
               crossOrigin="anonymous"
+              priority
             />
           </Link>
           <NavigationMenu>

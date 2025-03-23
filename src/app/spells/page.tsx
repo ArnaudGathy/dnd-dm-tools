@@ -159,7 +159,7 @@ const Spells = () => {
       </Tabs>
 
       {!!listOfSpells && !!entries(listOfSpells).length ? (
-        <div className="grid grid-cols-4 grid-rows-3 gap-4">
+        <div className="grid grid-cols-4 grid-rows-[auto] gap-4">
           {entries(listOfSpells).map(([name, spells]) => (
             <Card key={name}>
               <CardHeader>
