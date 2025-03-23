@@ -596,7 +596,12 @@
       "mapMarker": "R9"
     },
     "ennemies": {
-      "1": [22, 22, 22, 22]
+      "1": [
+        { "id": 22, "variant": "Homme", "color": "#6b4a04" },
+        { "id": 22, "variant": "Homme", "color": "#1c5fd0" },
+        { "id": 22, "variant": "Femme", "color": "#6b4a04" },
+        { "id": 22, "variant": "Femme", "color": "#1c5fd0" }
+      ]
     },
     "loots": [
       "Le chef port une sacoche contenant :",
@@ -1004,5 +1009,30 @@
       "20: Oeil de hibours (200po)"
     ],
     "youtubeId": "Yx-QqEc2Feg"
+  },
+  {
+    "name": "Roc de la vouivre",
+    "id": 48,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Piste des troisangliers",
+      "mapMarker": "S8"
+    },
+    "ennemies": {
+      "1": [
+        63,
+        62,
+        { "id": 22, "variant": "Homme", "color": "#6b4a04" },
+        { "id": 22, "variant": "Homme", "color": "#1c5fd0" },
+        { "id": 22, "variant": "Femme", "color": "#6b4a04" },
+        { "id": 22, "variant": "Femme", "color": "#1c5fd0" }
+      ]
+    },
+    "informations": [
+      "Enlever 2 gobelours si vaincus en rencontre aléatoire",
+      "1er gobelours a éliminer silencieusement ou prévient les autres",
+      "Gobelours fuient le combat si Brughor est vaincu (ogre continue)"
+    ],
+    "youtubeId": "GMXiYs-wi3A"
   }
 ]

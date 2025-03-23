@@ -3275,5 +3275,59 @@
       }
     ],
     "colors": ["#d3a78b"]
+  },
+  {
+    "name": "Brughor (orc)",
+    "id": 63,
+    "type": "Humanoïde (Orc)",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 14,
+    "hitPoints": "30",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 12,
+      "constitution": 16,
+      "intelligence": 7,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "skills": {
+      "intimidation": "+2"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Orc"],
+    "challengeRating": 0.5,
+    "traits": [
+      {
+        "name": "Aggressif",
+        "description": "Action bonus pour se déplacer 1x sa vitesse vers une cible qu'il peut voir"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Hache à deux mains",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+        "target": "1 cible",
+        "hit": "9 (1d12 + 3) dégâts tranchants"
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+5",
+        "reach": "1.5 m ou portée 9/36 m",
+        "target": "1 cible",
+        "hit": "6 (1d6 + 3) dégâts perforants"
+      }
+    ],
+    "colors": ["#00bb01"]
   }
 ]
