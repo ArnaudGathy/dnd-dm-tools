@@ -1,4 +1,4 @@
-import { CampaignId, Classes, PartyId } from "@prisma/client";
+import { CampaignId, CharacterStatus, Classes, PartyId } from "@prisma/client";
 
 export const CLASS_MAP = {
   [Classes.ARTIFICER]: "Artificier",
@@ -25,4 +25,10 @@ export const CAMPAIGN_MAP = {
 export const PARTY_MAP = {
   [PartyId.MIFA]: "La mifa",
   [PartyId.PAINTERS]: "Les peintres",
+};
+
+export const CHARACTER_STATUS_MAP = {
+  [CharacterStatus.DEAD]: "Mort",
+  [CharacterStatus.ACTIVE]: "Actif",
+  [CharacterStatus.RETIRED]: "Retraité",
 };

@@ -6,36 +6,36 @@
       {
         "id": 1,
         "name": "Arim",
-        "player": "Arcady",
-        "gameClass": "Paladin",
+        "gameClass": "PALADIN",
+        "owner": "arcady.picardi@gmail.com",
         "spells": ["shield-of-faith"]
       },
       {
         "id": 2,
         "name": "Baalian",
-        "player": "Logan",
-        "gameClass": "Warlock",
+        "owner": "logan.bourez@gmail.com",
+        "gameClass": "WARLOCK",
         "spells": ["eldritch-blast"]
       },
       {
         "id": 3,
         "name": "Cirbul",
-        "player": "Anthony",
-        "gameClass": "Bard",
+        "owner": "antcoe1993@gmail.com",
+        "gameClass": "BARD",
         "spells": ["detect-magic"]
       },
       {
         "id": 4,
         "name": "Erevan",
-        "player": "Loïc",
-        "gameClass": "Clerc",
+        "owner": "lo.desmet91@gmail.com",
+        "gameClass": "CLERIC",
         "spells": ["healing-word"]
       },
       {
         "id": 5,
         "name": "Pepnac",
-        "player": "Mathias",
-        "gameClass": "Roublard",
+        "owner": "mathias.merdjan@gmail.com",
+        "gameClass": "ROGUE",
         "spells": ["minor-illusion"]
       }
     ]
@@ -47,22 +47,22 @@
       {
         "id": 10,
         "name": "Baern",
-        "player": "Logan",
-        "gameClass": "Guerrier",
+        "gameClass": "FIGHTER",
+        "owner": "logan.bourez@gmail.com",
         "spells": []
       },
       {
         "id": 11,
         "name": "Barback",
-        "player": "Alfred",
-        "gameClass": "Barbare",
+        "gameClass": "BARBARIAN",
+        "owner": "kraft.alfred4@gmail.com",
         "spells": []
       },
       {
         "id": 12,
         "name": "Lucifier",
-        "player": "Max",
-        "gameClass": "Barde",
+        "gameClass": "BARD",
+        "owner": "maximevanvelsen@gmail.com",
         "spells": [
           "vicious-mockery",
           "thaumaturgy",
@@ -77,8 +77,8 @@
       {
         "id": 13,
         "name": "Eleni",
-        "player": "Lara",
-        "gameClass": "Druidesse",
+        "gameClass": "DRUID",
+        "owner": "lara.bluekami@gmail.com",
         "spells": [
           "primal-savagery",
           "produce-flame",

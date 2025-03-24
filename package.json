@@ -5,14 +5,14 @@
   "scripts": {
     "predev": "open http://localhost:3000",
     "dev": "next dev --turbopack",
-		"prebuild": "prisma generate",
+    "prebuild": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src/**/*.{ts,tsx} --fix --max-warnings 0",
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "pre-commit": "lint-staged",
-		"seed": "node prisma/seed.js"
+    "seed": "prisma db push && node prisma/seed.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -40,6 +40,7 @@
     "remeda": "^2.18.0",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "use-debounce": "^10.0.4",
     "uuid": "^11.0.3",
     "zod": "^3.24.1"
   },

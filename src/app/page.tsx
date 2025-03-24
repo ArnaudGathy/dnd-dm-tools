@@ -17,8 +17,7 @@ import {
 
 export default async function Home() {
   const { isAdmin, isLoggedIn } = await getSessionData();
-  const cardClassName =
-    "w-full flex-1 border-primary/25 md:min-w-[31%] md:max-w-[31%]";
+  const cardClassName = "w-full flex-1 md:min-w-[31%] md:max-w-[31%]";
 
   return (
     <div className="flex flex-col flex-wrap justify-center gap-4 md:flex-row md:gap-8">
@@ -79,21 +78,13 @@ export default async function Home() {
           <CardDescription>Liste des sorts</CardDescription>
         </CardHeader>
         <CardContent className="mt-4 flex flex-col gap-4">
-          Parcourir la liste des sorts par niveau ou par personnage selon le
-          groupe.
-          {isAdmin ? (
-            <Link href="/spells" className="w-full">
-              <Button className="w-full" size="sm">
-                Tous les sorts
-              </Button>
-            </Link>
-          ) : (
-            <Link href="/spells?sortBy=player" className="w-full">
-              <Button className="w-full" size="sm">
-                Sorts par personnage
-              </Button>
-            </Link>
-          )}
+          Parcourir et rechercher dans la liste des sorts encodés dans
+          l&apos;app.
+          <Link href="/spells" className="w-full">
+            <Button className="w-full" size="sm">
+              Tous les sorts
+            </Button>
+          </Link>
         </CardContent>
       </Card>
 

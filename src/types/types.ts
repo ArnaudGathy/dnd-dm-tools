@@ -23,10 +23,10 @@ export type Participant = ParticipantToAdd & {
 export type Character = {
   id: number;
   name: string;
-  player: string;
   spells: string[];
   creatures?: number[];
   gameClass: string;
+  owner: string;
 };
 
 export type Party = {

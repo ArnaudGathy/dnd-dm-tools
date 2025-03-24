@@ -578,6 +578,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       <div className="flex items-center gap-4">
                         {playersWithSpells.includes(participant.name) && (
                           <Link
+                            // TODO update this to the character's spell list
                             href={`/spells?player=${participant.name}&sortBy=level`}
                             target="_blank"
                             rel="noopener noreferrer"

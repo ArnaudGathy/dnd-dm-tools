@@ -10,70 +10,99 @@ import {
 import { CAMPAIGN_MAP, CLASS_MAP, PARTY_MAP } from "@/constants/maps";
 import { StatCell } from "@/app/creatures/StatCell";
 import { CharacterStatus } from "@prisma/client";
-import { Check, Skull, TreePalm } from "lucide-react";
+import {
+  BookOpenIcon,
+  FileSpreadsheet,
+  Heart,
+  MapPin,
+  Skull,
+  TreePalm,
+  Users,
+} from "lucide-react";
 import { TooltipComponent } from "@/components/ui/tooltip";
 import { classColors } from "@/constants/colors";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
+import Breadcrumbs from "@/components/Breadcrumbs";
+
+const breadCrumbs = [
+  { name: "Accueil", href: "/" },
+  { name: "Personnages", href: "/characters" },
+];
+
 export default async function Characters() {
-  const { userName, isAdmin, userMail } = await getSessionData();
+  const { isAdmin, userMail } = await getSessionData();
   const characters = await getCharactersByOwner(isAdmin ? undefined : userMail);
 
   return (
-    <div className="flex flex-col gap-4">
-      <h1 className="scroll-m-20 text-2xl font-bold tracking-tight">
-        Liste des personnages {isAdmin ? "" : ` de ${userName}`}
-      </h1>
-
-      <div className="flex flex-col gap-4">
+    <Breadcrumbs crumbs={breadCrumbs}>
+      <div className="flex flex-col gap-4 md:flex-row md:flex-wrap">
         {characters.map((character) => (
-          <Card key={character.id} className="w-full md:w-[50%]">
+          <Card key={character.id} className="w-full md:w-auto">
             <CardHeader>
               <CardTitle className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
+                <span>{character.name}</span>
+                <div>
                   {character.status === CharacterStatus.DEAD && (
                     <TooltipComponent definition="Personnage mort">
-                      <Skull className="text-primary" />
+                      <Skull />
                     </TooltipComponent>
                   )}
                   {character.status === CharacterStatus.RETIRED && (
                     <TooltipComponent definition="Personnage retraité">
-                      <TreePalm className="text-primary" />
+                      <TreePalm />
                     </TooltipComponent>
                   )}
                   {character.status === CharacterStatus.ACTIVE && (
                     <TooltipComponent definition="Personnage actif">
-                      <Check className="text-green-500" />
+                      <Heart />
                     </TooltipComponent>
                   )}
-                  <span>{character.name}</span>
                 </div>
-                <span>
-                  <span
-                    className="text-base"
-                    style={{
-                      color: classColors[character.className].background,
-                    }}
-                  >
-                    {CLASS_MAP[character.className]}
-                  </span>
-                </span>
               </CardTitle>
-              <CardDescription></CardDescription>
+              <CardDescription className="flex gap-1">
+                <span
+                  style={{
+                    color: classColors[character.className].background,
+                  }}
+                >
+                  {CLASS_MAP[character.className]}
+                </span>
+                <span>humain</span>
+                <span>niveau 4</span>
+              </CardDescription>
             </CardHeader>
-            <CardContent className="flex gap-8">
-              <StatCell
-                name="Groupe"
-                stat={PARTY_MAP[character.campaign.party.name]}
-                isInline
-              />
-              <StatCell
-                name="Campagne"
-                stat={CAMPAIGN_MAP[character.campaign.name]}
-                isInline
-              />
+            <CardContent className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4">
+                <StatCell
+                  name={<Users />}
+                  stat={PARTY_MAP[character.campaign.party.name]}
+                  isInline
+                />
+                <StatCell
+                  name={<MapPin />}
+                  stat={CAMPAIGN_MAP[character.campaign.name]}
+                  isInline
+                />
+              </div>
+              <div className="flex gap-4">
+                <Link href={`/characters/${character.id}/sheet`}>
+                  <Button variant="default" size="sm">
+                    <FileSpreadsheet />
+                    Fiche de personnage
+                  </Button>
+                </Link>
+                <Link href={`/characters/${character.id}/spells`}>
+                  <Button variant="secondary" size="sm">
+                    <BookOpenIcon />
+                    Liste des sorts
+                  </Button>
+                </Link>
+              </div>
             </CardContent>
           </Card>
         ))}
       </div>
-    </div>
+    </Breadcrumbs>
   );
 }
