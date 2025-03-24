@@ -12,14 +12,15 @@ import Link from "next/link";
 import PartyLevelSelect from "@/components/navbar/PartyLevelSelect";
 import PartySelect from "@/components/navbar/PartySelect";
 import SignInButton from "@/components/navbar/SignInButton";
-import { auth } from "@/../auth";
 import { Bars3Icon } from "@heroicons/react/24/outline";
+import { getSessionData } from "@/lib/utils";
 
 const menuItems = [
-  { label: "Mes personnages", to: "/characters" },
+  { label: "Personnages", to: "/characters", shouldBeLoggedIn: true },
   {
     label: "Rencontres",
     to: "/encounters",
+    isPrivate: true,
   },
   {
     label: "Créatures",
@@ -32,13 +33,14 @@ const menuItems = [
 ];
 
 export const NavBar = async () => {
-  const isLoggedIn = !!(await auth());
+  const { isLoggedIn } = await getSessionData();
 
   const getEndMenu = () => {
     return (
       <>
         <PartySelect />
         {isLoggedIn && <PartyLevelSelect />}
+        <SignInButton />
       </>
     );
   };
@@ -46,7 +48,7 @@ export const NavBar = async () => {
   return (
     <header className="py-2">
       <div className="mx-auto flex max-w-[1450px] items-center justify-between px-4 md:px-8">
-        <div className="flex gap-4">
+        <div className="flex w-full justify-between gap-4 md:justify-start">
           <Link href="/" className="w-16">
             <Image
               className="mr-4"
@@ -65,9 +67,17 @@ export const NavBar = async () => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4">
-                    {menuItems.map(({ to, label }) => (
-                      <NavBarItem key={to} to={to} label={label} />
-                    ))}
+                    {menuItems.map(
+                      ({ to, label, shouldBeLoggedIn, isPrivate }) => (
+                        <NavBarItem
+                          key={to}
+                          to={to}
+                          label={label}
+                          shouldBeLoggedIn={shouldBeLoggedIn}
+                          isPrivate={isPrivate}
+                        />
+                      ),
+                    )}
                     <hr className="border-muted-foreground" />
                     {getEndMenu()}
                   </ul>
@@ -76,17 +86,20 @@ export const NavBar = async () => {
             </NavigationMenuList>
 
             <NavigationMenuList className="hidden md:flex">
-              {menuItems.map(({ to, label }) => (
-                <NavBarItem key={to} to={to} label={label} />
+              {menuItems.map(({ to, label, shouldBeLoggedIn, isPrivate }) => (
+                <NavBarItem
+                  key={to}
+                  to={to}
+                  label={label}
+                  shouldBeLoggedIn={shouldBeLoggedIn}
+                  isPrivate={isPrivate}
+                />
               ))}
             </NavigationMenuList>
           </NavigationMenu>
         </div>
 
-        <div className="flex gap-2">
-          <div className="hidden gap-2 md:flex"> {getEndMenu()}</div>
-          <SignInButton />
-        </div>
+        <div className="hidden items-center gap-4 md:flex"> {getEndMenu()}</div>
       </div>
     </header>
   );

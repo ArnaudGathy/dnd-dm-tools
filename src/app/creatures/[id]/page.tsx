@@ -19,10 +19,10 @@ import {
 import { Link } from "@/components/ui/Link";
 import { notFound } from "next/navigation";
 import { StatBlock } from "@/app/creatures/StatBlock";
-import { auth } from "@/../auth";
+import { getSessionData } from "@/lib/utils";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
-  const session = await auth();
+  const { isAdmin } = await getSessionData();
   const creatureId = (await params).id;
   const creature = getCreatureFromId(parseInt(creatureId));
 
@@ -59,7 +59,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
       </div>
 
       <div className="hidden flex-col gap-4 md:flex">
-        {!!session && !!Object.keys(encounteredIn).length && (
+        {isAdmin && !!Object.keys(encounteredIn).length && (
           <Card>
             <CardHeader>
               <CardTitle>Rencontré dans :</CardTitle>

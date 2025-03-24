@@ -4,20 +4,22 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { auth } from "@/../auth";
-import { privateRoutes } from "@/constants/privateRoutes";
+import { getSessionData } from "@/lib/utils";
 
 export const NavBarItem = async ({
   to,
   label,
+  shouldBeLoggedIn,
+  isPrivate,
 }: {
   to: string;
   label: string;
+  shouldBeLoggedIn?: boolean;
+  isPrivate?: boolean;
 }) => {
-  const session = await auth();
-  const isPrivateRoute = privateRoutes.includes(to);
+  const { isAdmin, isLoggedIn } = await getSessionData();
 
-  if (isPrivateRoute && !session) {
+  if ((isPrivate && !isAdmin) || (shouldBeLoggedIn && !isLoggedIn)) {
     return null;
   }
 

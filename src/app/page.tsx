@@ -6,28 +6,30 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookOpenIcon, BugAntIcon, HomeIcon } from "@heroicons/react/24/solid";
+import {
+  BookOpenIcon,
+  BugAntIcon,
+  HomeIcon,
+  UsersIcon,
+} from "@heroicons/react/24/solid";
 import Link from "next/link";
-import { auth } from "@/../auth";
+import { getSessionData } from "@/lib/utils";
 
 export default async function Home() {
-  const session = await auth();
-  const isAuthorized = !!session;
-
-  const cardClassName = "w-full flex-1 border-primary/25 md:max-w-[30%]";
+  const { isAdmin, isLoggedIn } = await getSessionData();
+  const cardClassName =
+    "w-full flex-1 border-primary/25 md:min-w-[31%] md:max-w-[31%]";
 
   return (
-    <div className="flex flex-col justify-center gap-4 md:flex-row md:gap-8">
-      {isAuthorized && (
+    <div className="flex flex-col flex-wrap justify-center gap-4 md:flex-row md:gap-8">
+      {isAdmin && (
         <Card className={cardClassName}>
           <CardHeader className="border-muted-background border-b">
             <CardTitle className="flex items-center gap-2">
               <HomeIcon className="size-6 text-primary" />
               Rencontres
             </CardTitle>
-            <CardDescription>
-              Liste des rencontres encodés dans l&apos;application
-            </CardDescription>
+            <CardDescription>Liste des rencontres</CardDescription>
           </CardHeader>
           <CardContent className="mt-4 flex flex-col gap-4">
             Parcourir la liste des rencontres classés par campagnes.
@@ -40,20 +42,46 @@ export default async function Home() {
         </Card>
       )}
 
+      {isLoggedIn && (
+        <Card className={cardClassName}>
+          <CardHeader className="border-muted-background border-b">
+            <CardTitle className="flex items-center gap-2">
+              <UsersIcon className="size-6 text-primary" />
+              Personnages
+            </CardTitle>
+            <CardDescription>Liste des personnages</CardDescription>
+          </CardHeader>
+          <CardContent className="mt-4 flex flex-col gap-4">
+            Parcourir la liste des personnages et visualiser les stats et sorts.
+            {isAdmin ? (
+              <Link href="/characters" className="w-full">
+                <Button className="w-full" size="sm">
+                  Tous les personnages
+                </Button>
+              </Link>
+            ) : (
+              <Link href="/characters" className="w-full">
+                <Button className="w-full" size="sm">
+                  Mes personnages
+                </Button>
+              </Link>
+            )}
+          </CardContent>
+        </Card>
+      )}
+
       <Card className={cardClassName}>
         <CardHeader className="border-muted-background border-b">
           <CardTitle className="flex items-center gap-2">
             <BookOpenIcon className="size-6 text-primary" />
             Sorts
           </CardTitle>
-          <CardDescription>
-            Liste des sorts encodés dans l&apos;application
-          </CardDescription>
+          <CardDescription>Liste des sorts</CardDescription>
         </CardHeader>
         <CardContent className="mt-4 flex flex-col gap-4">
           Parcourir la liste des sorts par niveau ou par personnage selon le
           groupe.
-          {isAuthorized ? (
+          {isAdmin ? (
             <Link href="/spells" className="w-full">
               <Button className="w-full" size="sm">
                 Tous les sorts
@@ -75,14 +103,12 @@ export default async function Home() {
             <BugAntIcon className="size-6 text-primary" />
             Créatures
           </CardTitle>
-          <CardDescription>
-            Liste des créatures encodés dans l&apos;application
-          </CardDescription>
+          <CardDescription>Liste des créatures</CardDescription>
         </CardHeader>
         <CardContent className="mt-4 flex flex-col gap-4">
           Parcourir la liste des créatures par nom ou par personnage selon le
           groupe.
-          {isAuthorized ? (
+          {isAdmin ? (
             <Link href="/creatures" className="w-full">
               <Button className="w-full" size="sm">
                 Toutes les créatures

@@ -1,12 +1,12 @@
 import CreatureList from "@/app/creatures/CreatureList";
-import { auth } from "@/../auth";
+import { getSessionData } from "@/lib/utils";
 
 export default async function Home() {
-  const session = await auth();
+  const { isAdmin } = await getSessionData();
 
   return (
     <div>
-      <CreatureList isAuthorized={!!session} />
+      <CreatureList isAuthorized={isAdmin} />
     </div>
   );
 }
