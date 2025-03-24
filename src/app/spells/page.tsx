@@ -28,8 +28,7 @@ import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { SparklesIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { typedSummarySpells } from "@/utils/utils";
-import { Input } from "@/components/ui/input";
-import { MagnifyingGlassIcon } from "@heroicons/react/20/solid";
+import { SearchField } from "@/components/SearchField";
 
 enum SORT_BY {
   PLAYER = "player",
@@ -144,8 +143,8 @@ const Spells = () => {
   };
 
   return (
-    <div>
-      <div className="mb-4 flex items-center gap-4">
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-wrap items-center gap-4">
         <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
           Liste des sorts {player ? `de ${capitalize(player)}` : ""}
         </h1>
@@ -161,39 +160,35 @@ const Spells = () => {
             <XMarkIcon className="size-4" />
           </Button>
         )}
-        <div className="relative ml-4">
-          <MagnifyingGlassIcon className="absolute right-2 top-2.5 size-5 text-muted-foreground" />
-          <Input
-            placeholder="Recherche"
-            className="w-[200px]"
-            onChange={(e) => setSearch(e.target.value)}
-          />
-        </div>
       </div>
 
-      <Tabs defaultValue={displayBy} className="mb-4 w-[400px]">
-        <TabsList>
-          {!!party && (
+      <div className="flex gap-4">
+        <Tabs defaultValue={displayBy}>
+          <TabsList>
+            {!!party && (
+              <TabsTrigger
+                value={SORT_BY.PLAYER}
+                onClick={() => setDisplayBy(SORT_BY.PLAYER)}
+              >
+                Par joueur
+              </TabsTrigger>
+            )}
             <TabsTrigger
-              value={SORT_BY.PLAYER}
-              onClick={() => setDisplayBy(SORT_BY.PLAYER)}
+              value={SORT_BY.LEVEL}
+              onClick={() => setDisplayBy(SORT_BY.LEVEL)}
             >
-              Par joueur
+              Par niveau
             </TabsTrigger>
-          )}
-          <TabsTrigger
-            value={SORT_BY.LEVEL}
-            onClick={() => setDisplayBy(SORT_BY.LEVEL)}
-          >
-            Par niveau
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+          </TabsList>
+        </Tabs>
+
+        <SearchField search={search} setSearch={setSearch} />
+      </div>
 
       {!!listOfSpells && !!entries(listOfSpells).length ? (
-        <div className="grid grid-cols-4 grid-rows-[auto] gap-4">
+        <div className="flex flex-wrap gap-4">
           {entries(listOfSpells).map(([name, spells]) => (
-            <Card key={name}>
+            <Card key={name} className="min-w-full md:min-w-[24%]">
               <CardHeader>
                 <CardTitle
                   className={clsx({

@@ -31,7 +31,7 @@ import { StatCell } from "@/app/creatures/StatCell";
 import { ActionBlock } from "@/app/creatures/ActionBlock";
 
 const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
-  return <h5 className="mb-2 text-neutral-300 underline">{children}</h5>;
+  return <h5 className="text-neutral-300 underline md:mb-2">{children}</h5>;
 };
 
 export const StatBlock = ({
@@ -46,6 +46,8 @@ export const StatBlock = ({
   const creatureSpells = (creature.spells ?? []).map((creatureSpellIndex) =>
     typedSummarySpells.find((spell) => spell?.id === creatureSpellIndex),
   );
+
+  const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
 
   return (
     <Card id={creature.id.toString()}>
@@ -86,68 +88,77 @@ export const StatBlock = ({
       </CardHeader>
       {!isCollapsed && (
         <CardContent>
-          <div className="space-y-4">
-            <div className="flex gap-8">
-              <StatCell
-                name="CA"
-                stat={creature.armorClass}
-                isHighlighted
-                isInline
-              />
-              <StatCell
-                name="Vit."
-                stat={getDistanceInSquares(creature.speed.walk)}
-                isHighlighted
-                isInline
-              />
+          <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-8">
+                <StatCell name="PV" stat={getHPAsString(creature)} isInline />
+                <StatCell
+                  name="CA"
+                  stat={creature.armorClass}
+                  isHighlighted
+                  isInline
+                />
+                <StatCell
+                  name="FP"
+                  stat={getChallengeRatingAsFraction(creature.challengeRating)}
+                  isInline
+                />
+              </div>
 
-              {creature.speed.swim && (
+              <div className="flex gap-8">
                 <StatCell
-                  name="Nage"
-                  stat={getDistanceInSquares(creature.speed.swim)}
+                  name="Marche"
+                  stat={getDistanceInSquares(creature.speed.walk)}
+                  isHighlighted
                   isInline
                 />
-              )}
-              {creature.speed.fly && (
-                <StatCell
-                  name="Vol"
-                  stat={getDistanceInSquares(creature.speed.fly)}
-                  isInline
-                />
-              )}
-              {creature.speed.climb && (
-                <StatCell
-                  name="Escal."
-                  stat={getDistanceInSquares(creature.speed.climb)}
-                  isInline
-                />
-              )}
-              <StatCell name="PV" stat={getHPAsString(creature)} isInline />
-              <StatCell
-                name="FP"
-                stat={getChallengeRatingAsFraction(creature.challengeRating)}
-                isInline
-              />
+
+                {creature.speed.swim && (
+                  <StatCell
+                    name="Nage"
+                    stat={getDistanceInSquares(creature.speed.swim)}
+                    isInline
+                  />
+                )}
+                {creature.speed.fly && (
+                  <StatCell
+                    name="Vol"
+                    stat={getDistanceInSquares(creature.speed.fly)}
+                    isInline
+                  />
+                )}
+                {creature.speed.climb && (
+                  <StatCell
+                    name="Escalade"
+                    stat={getDistanceInSquares(creature.speed.climb)}
+                    isInline
+                  />
+                )}
+              </div>
             </div>
-            <div className="flex gap-8 border-t-2 pt-4">
+
+            <div className="flex flex-wrap justify-between border-t-2 pt-4 md:justify-start md:gap-4">
               {entries(creature.abilities).map(([name, value]) => {
                 const modifier = getModifier(value);
                 return (
-                  <StatCell
+                  <div
                     key={name}
-                    name={shortenAbilityName(name)}
-                    stat={
-                      <span>
-                        <span className="text-muted-foreground">{value}</span>{" "}
+                    className="flex flex-col items-center rounded-lg bg-muted p-2 md:px-4 md:py-2"
+                  >
+                    <div className="text-muted-foreground">
+                      {shortenAbilityName(name)}
+                    </div>
+                    <div className="flex items-center gap-1 text-sm md:gap-2 md:text-base">
+                      <span>{value}</span>
+                      <span className="text-indigo-400">
                         {Math.sign(modifier) === 1 ? `+${modifier}` : modifier}
                       </span>
-                    }
-                    isInline
-                  />
+                    </div>
+                  </div>
                 );
               })}
             </div>
-            <div className="flex flex-col border-t-2 pt-4">
+            <div className={blockClassName}>
               <CategoryTitle>Général</CategoryTitle>
               {creature.skills && (
                 <StatCell
@@ -212,7 +223,7 @@ export const StatBlock = ({
             </div>
 
             {creature.traits && (
-              <div className="flex flex-col border-t-2 pt-4">
+              <div className={blockClassName}>
                 <CategoryTitle>Traits</CategoryTitle>
                 {creature.traits.map((trait) => (
                   <StatCell
@@ -223,7 +234,7 @@ export const StatBlock = ({
                 ))}
               </div>
             )}
-            <div className="flex flex-col border-t-2 pt-4">
+            <div className={blockClassName}>
               <CategoryTitle>Actions</CategoryTitle>
               {creature.actions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
@@ -231,7 +242,7 @@ export const StatBlock = ({
             </div>
 
             {creature.legendaryActions && (
-              <div className="flex flex-col border-t-2 pt-4">
+              <div className={blockClassName}>
                 <CategoryTitle>
                   Actions légendaires (
                   {`${creature.legendaryActionsSlots} par tour`})
@@ -243,7 +254,7 @@ export const StatBlock = ({
             )}
 
             {creature.lairActions && (
-              <div className="flex flex-col border-t-2 pt-4">
+              <div className={blockClassName}>
                 <CategoryTitle>
                   Actions de repaire ({`1x par tour`})
                 </CategoryTitle>
@@ -254,7 +265,7 @@ export const StatBlock = ({
             )}
 
             {creature.bonusActions && (
-              <div className="flex flex-col border-t-2 pt-4">
+              <div className={blockClassName}>
                 <CategoryTitle>Actions bonus</CategoryTitle>
                 {creature.bonusActions.map((action) => (
                   <ActionBlock key={action.name} action={action} />
@@ -263,7 +274,7 @@ export const StatBlock = ({
             )}
 
             {creature.reactions && (
-              <div className="flex flex-col border-t-2 pt-4">
+              <div className={blockClassName}>
                 <CategoryTitle>Réactions</CategoryTitle>
                 {creature.reactions.map((action) => (
                   <ActionBlock key={action.name} action={action} />
@@ -272,7 +283,7 @@ export const StatBlock = ({
             )}
 
             {creature.spellStats && (
-              <div className="flex flex-col border-t-2 pt-4">
+              <div className={blockClassName}>
                 <CategoryTitle>Sorts</CategoryTitle>
                 <div className="mb-2 flex gap-8">
                   <StatCell

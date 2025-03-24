@@ -24,18 +24,33 @@ import { Creature, Party } from "@/types/types";
 import { clsx } from "clsx";
 import { Button } from "@/components/ui/button";
 import { XMarkIcon } from "@heroicons/react/16/solid";
+import { SearchField } from "@/components/SearchField";
 
 enum SORT_BY {
   PLAYER = "player",
   NAME = "name",
 }
 
-const creaturesGroupedByFirstLetter = groupBy(
-  sortBy(typedCreatures, prop("name")),
-  (creature) => creature.name[0],
-);
+const getCreaturesGroupedByFirstLetter = ({ search }: { search: string }) =>
+  groupBy(
+    sortBy(
+      filter(typedCreatures, (creature) =>
+        creature.name.toLowerCase().includes(search.toLowerCase()),
+      ),
+      prop("name"),
+    ),
+    (creature) => creature.name[0],
+  );
 
-const getCreatureByPlayer = (party: Party, playerName?: string) => {
+const getCreatureByPlayer = ({
+  party,
+  playerName,
+  search,
+}: {
+  party: Party;
+  playerName?: string;
+  search: string;
+}) => {
   return pipe(
     party.characters,
     filter(
@@ -48,7 +63,11 @@ const getCreatureByPlayer = (party: Party, playerName?: string) => {
           [next.name]: pipe(
             next.creatures,
             map((creatureId) =>
-              typedCreatures.find((creature) => creature.id === creatureId),
+              typedCreatures.find(
+                (creature) =>
+                  creature.id === creatureId &&
+                  creature.name.toLowerCase().includes(search.toLowerCase()),
+              ),
             ),
             filter(isDefined),
             sortBy(prop("name")),
@@ -66,6 +85,8 @@ const CreatureList = ({ isAuthorized }: { isAuthorized: boolean }) => {
   const pathName = usePathname();
   const playerName = searchParams.get("player")?.toLowerCase();
   const sortBy = searchParams.get("sortBy");
+
+  const [search, setSearch] = useState("");
 
   const getDefaultSort = () => {
     if (!isAuthorized) {
@@ -85,10 +106,10 @@ const CreatureList = ({ isAuthorized }: { isAuthorized: boolean }) => {
 
   const getList = (): { [key: string]: Creature[] } | null => {
     if (displayBy === SORT_BY.PLAYER && party) {
-      return getCreatureByPlayer(party, playerName);
+      return getCreatureByPlayer({ party, playerName, search });
     }
     if (displayBy === SORT_BY.NAME && isAuthorized) {
-      return creaturesGroupedByFirstLetter;
+      return getCreaturesGroupedByFirstLetter({ search });
     }
     return null;
   };
@@ -96,9 +117,9 @@ const CreatureList = ({ isAuthorized }: { isAuthorized: boolean }) => {
   const creatures = getList();
 
   return (
-    <div>
+    <div className="flex flex-col gap-4">
       <div className="flex gap-4">
-        <h1 className={"mb-4 scroll-m-20 text-2xl font-bold tracking-tight"}>
+        <h1 className="scroll-m-20 text-2xl font-bold tracking-tight">
           Liste des créatures {playerName ? `de ${capitalize(playerName)}` : ""}
         </h1>
         {playerName && (
@@ -115,33 +136,37 @@ const CreatureList = ({ isAuthorized }: { isAuthorized: boolean }) => {
         )}
       </div>
 
-      {(isAuthorized || party) && (
-        <Tabs defaultValue={displayBy} className="mb-4 w-[400px]">
-          <TabsList>
-            {isAuthorized && (
-              <TabsTrigger
-                value={SORT_BY.NAME}
-                onClick={() => setDisplayBy(SORT_BY.NAME)}
-              >
-                Par nom
-              </TabsTrigger>
-            )}
-            {party && (
-              <TabsTrigger
-                value={SORT_BY.PLAYER}
-                onClick={() => setDisplayBy(SORT_BY.PLAYER)}
-              >
-                Par joueur
-              </TabsTrigger>
-            )}
-          </TabsList>
-        </Tabs>
-      )}
+      <div className="flex gap-4">
+        {(isAuthorized || party) && (
+          <Tabs defaultValue={displayBy}>
+            <TabsList>
+              {party && (
+                <TabsTrigger
+                  value={SORT_BY.PLAYER}
+                  onClick={() => setDisplayBy(SORT_BY.PLAYER)}
+                >
+                  Par joueur
+                </TabsTrigger>
+              )}
+              {isAuthorized && (
+                <TabsTrigger
+                  value={SORT_BY.NAME}
+                  onClick={() => setDisplayBy(SORT_BY.NAME)}
+                >
+                  Alphabétique
+                </TabsTrigger>
+              )}
+            </TabsList>
+          </Tabs>
+        )}
+
+        <SearchField search={search} setSearch={setSearch} />
+      </div>
 
       {!!creatures && !!entries(creatures).length ? (
-        <div className="grid grid-cols-5 grid-rows-[auto] gap-4">
+        <div className="flex flex-wrap gap-4">
           {entries(creatures).map(([name, creatures]) => (
-            <Card key={name}>
+            <Card key={name} className="min-w-full md:min-w-[19%]">
               <CardHeader>
                 <CardTitle
                   className={clsx({

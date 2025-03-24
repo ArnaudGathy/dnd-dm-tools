@@ -53,12 +53,12 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   );
 
   return (
-    <div className="grid grid-cols-3 gap-4">
+    <div className="flex gap-4 md:grid md:grid-cols-3">
       <div className="col-span-2">
         <StatBlock creature={creature} isCollapsible={false} />
       </div>
 
-      <div className="flex flex-col gap-4">
+      <div className="hidden flex-col gap-4 md:flex">
         {!!session && !!Object.keys(encounteredIn).length && (
           <Card>
             <CardHeader>

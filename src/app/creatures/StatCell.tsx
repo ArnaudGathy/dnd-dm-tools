@@ -1,5 +1,6 @@
 import { ReactNode } from "react";
 import { clsx } from "clsx";
+import { cn } from "@/lib/utils";
 
 export const StatCell = ({
   name,
@@ -15,7 +16,7 @@ export const StatCell = ({
   isInline?: boolean;
 }) => {
   return (
-    <div className="flex">
+    <div className={cn("flex md:flex-row", { "flex-col": !isInline })}>
       <span
         className={clsx("mr-2 text-muted-foreground", {
           "min-w-[150px]": !isInline,

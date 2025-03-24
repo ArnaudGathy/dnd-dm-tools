@@ -14,14 +14,24 @@ import {
   typedSummarySpells,
 } from "@/utils/utils";
 import { APISpell, SpellSource } from "@/types/schemas";
-import { entries } from "remeda";
-import { LinkIcon } from "@heroicons/react/16/solid";
 import { Link } from "@/components/ui/Link";
+import { DamageBlock } from "@/app/spells/[id]/DamageBlock";
 
 export const SpellDescription = ({ spell }: { spell: APISpell }) => {
   const spellFromApp = typedSummarySpells.find(
     (typedSpell) => typedSpell.id === spell.index,
   );
+
+  const responsiveRows =
+    "flex flex-col gap-2 md:flex-row md:flex-wrap md:gap-x-8 md:gap-y-4";
+  const shouldShowSpellTypes = !!spell.dc || !!spell.attack_type;
+  const shouldShowSpellEffects =
+    !!spell.damage?.damage_type || !!spell.area_of_effect;
+  const shouldShowSpellDetails =
+    shouldShowSpellTypes ||
+    shouldShowSpellEffects ||
+    spell.damage ||
+    spell.heal_at_slot_level;
 
   return (
     <div className="col-span-3">
@@ -33,21 +43,7 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
                 <SparklesIcon className="size-6 text-emerald-500" />
               )}
               {spellFromApp?.name ? (
-                <div className="flex items-center gap-2">
-                  {spellFromApp?.name}
-                  {spell.name && (
-                    <span className="ml-2 text-sm text-muted-foreground">
-                      <Link
-                        href={`https://www.aidedd.org/dnd/sorts.php?vo=${spell.index}`}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="flex items-center gap-1"
-                      >
-                        ({spell.name} <LinkIcon className="size-4" />)
-                      </Link>
-                    </span>
-                  )}
-                </div>
+                <div>{spellFromApp?.name}</div>
               ) : (
                 <div>{spell.name ?? spell.index}</div>
               )}
@@ -61,7 +57,7 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
         </CardHeader>
         <CardContent>
           <div className="space-y-4">
-            <div className="flex gap-8">
+            <div className={responsiveRows}>
               {spell.casting_time && (
                 <StatCell
                   name="Incantation"
@@ -93,13 +89,12 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
                   }
                 />
               )}
-            </div>
 
-            <div className="flex gap-8">
               {spell.components && (
                 <StatCell
                   name="Composants"
                   stat={`${spell.components.join(", ")}${spell.material ? ` + ${spell.material}` : ""}`}
+                  highlightClassName="truncate"
                   isInline
                 />
               )}
@@ -120,126 +115,85 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
               </div>
             )}
 
-            <div className="flex flex-col gap-2 border-t-2 pt-4">
-              {(!!spell.dc || !!spell.attack_type) && (
-                <div className="flex gap-8">
-                  {spell.dc && (
-                    <>
-                      {spell.dc.dc_type && (
-                        <StatCell
-                          name="Type de sort"
-                          stat={`JdS de ${spell.dc.dc_type?.index ? translateShortenedAbilityName(spell.dc.dc_type?.index) : ""}`}
-                          isHighlighted
-                          isInline
-                        />
-                      )}
-                      {spell.dc.dc_success && (
-                        <StatCell
-                          name="Réussite JdS"
-                          stat={spell.dc.dc_success}
-                          isInline
-                        />
-                      )}
-                    </>
-                  )}
-
-                  {spell.attack_type && (
-                    <StatCell
-                      name="Type de sort"
-                      stat={`Attaque : ${spell.attack_type}`}
-                      isHighlighted
-                      isInline
-                    />
-                  )}
-                </div>
-              )}
-
-              <div className="flex gap-8">
-                {spell.damage?.damage_type && (
-                  <StatCell
-                    name="Type de dégats"
-                    stat={spell.damage.damage_type.name}
-                    isInline
-                  />
-                )}
-                {spell.area_of_effect?.type && (
-                  <StatCell
-                    name="Zone"
-                    stat={spell.area_of_effect.type}
-                    isInline
-                  />
-                )}
-                {spell.area_of_effect?.size && (
-                  <StatCell
-                    name="Taille"
-                    stat={convertFeetDistanceIntoSquares(
-                      spell.area_of_effect.size,
+            {shouldShowSpellDetails && (
+              <div className="flex flex-col gap-2 border-t-2 pt-4">
+                {shouldShowSpellTypes && (
+                  <div className={responsiveRows}>
+                    {spell.dc && (
+                      <>
+                        {spell.dc.dc_type && (
+                          <StatCell
+                            name="Type de sort"
+                            stat={`JdS de ${spell.dc.dc_type?.index ? translateShortenedAbilityName(spell.dc.dc_type?.index) : ""}`}
+                            isHighlighted
+                            isInline
+                          />
+                        )}
+                        {spell.dc.dc_success && (
+                          <StatCell
+                            name="Réussite JdS"
+                            stat={spell.dc.dc_success}
+                            isInline
+                          />
+                        )}
+                      </>
                     )}
-                    isInline
-                  />
+
+                    {spell.attack_type && (
+                      <StatCell
+                        name="Type de sort"
+                        stat={`Attaque : ${spell.attack_type}`}
+                        isHighlighted
+                        isInline
+                      />
+                    )}
+                  </div>
                 )}
+
+                {shouldShowSpellEffects && (
+                  <div className={responsiveRows}>
+                    {spell.damage?.damage_type && (
+                      <StatCell
+                        name="Type de dégats"
+                        stat={spell.damage.damage_type.name}
+                        isInline
+                      />
+                    )}
+                    {spell.area_of_effect?.type && (
+                      <StatCell
+                        name="Zone"
+                        stat={spell.area_of_effect.type}
+                        isInline
+                      />
+                    )}
+                    {spell.area_of_effect?.size && (
+                      <StatCell
+                        name="Taille"
+                        stat={convertFeetDistanceIntoSquares(
+                          spell.area_of_effect.size,
+                        )}
+                        isInline
+                      />
+                    )}
+                  </div>
+                )}
+
+                <DamageBlock
+                  damages={spell.damage?.damage_at_character_level}
+                  label="Dégâts par niveau de personnage"
+                />
+                <DamageBlock
+                  damages={spell.damage?.damage_at_slot_level}
+                  label="Dégâts par niveau d'emplacement de sort"
+                />
+                <DamageBlock
+                  damages={spell.heal_at_slot_level}
+                  label="Soins par niveau d'emplacement de sort"
+                />
               </div>
-
-              {spell.damage?.damage_at_character_level && (
-                <div className="flex flex-col gap-2">
-                  <div>
-                    <span className="text-muted-foreground">
-                      {"Dégâts par niveau de personnage"}
-                    </span>
-                  </div>
-                  <div className="flex gap-8">
-                    {entries(spell.damage.damage_at_character_level).map(
-                      ([level, damage]) => (
-                        <StatCell
-                          key={level}
-                          name={level}
-                          stat={damage}
-                          isInline
-                        />
-                      ),
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {spell.damage?.damage_at_slot_level && (
-                <div className="flex flex-col gap-1">
-                  <div>
-                    <span className="text-muted-foreground">
-                      {"Dégâts par niveau d'emplacement de sort"}
-                    </span>
-                  </div>
-                  <div className="flex gap-8">
-                    {entries(spell.damage.damage_at_slot_level).map(
-                      ([level, damage]) => (
-                        <StatCell
-                          key={level}
-                          name={level}
-                          stat={damage}
-                          isInline
-                        />
-                      ),
-                    )}
-                  </div>
-                </div>
-              )}
-
-              {spell.heal_at_slot_level && (
-                <div className="flex flex-col gap-1">
-                  <div>
-                    <span className="text-muted-foreground">
-                      {"Soins par niveau d'emplacement de sort"}
-                    </span>
-                  </div>
-                  <div className="flex gap-8">
-                    {entries(spell.heal_at_slot_level).map(([level, heal]) => (
-                      <StatCell key={level} name={level} stat={heal} isInline />
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              <span className="mt-4 flex items-center gap-2 text-xs text-muted-foreground">
+            )}
+            <div className="flex flex-col gap-2 border-t-2 pt-4">
+              <span className="flex items-center gap-2 text-xs text-muted-foreground">
                 <span>Source :</span>
                 {spell.source === SpellSource.API && (
                   <Link
@@ -256,11 +210,25 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    AideDD (incomplet)
+                    AideDD (pas de détails)
                   </Link>
                 )}
                 {spell.source === SpellSource.LOCAL && "Fichier local"}
               </span>
+
+              {spell.name && spell.source !== SpellSource.AIDE_DD && (
+                <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                  Lien AideDD :
+                  <Link
+                    href={`https://www.aidedd.org/dnd/sorts.php?vo=${spell.index}`}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="flex items-center gap-1"
+                  >
+                    {spell.name}
+                  </Link>
+                </span>
+              )}
             </div>
           </div>
         </CardContent>

@@ -29,7 +29,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased`}
       >
         <NavBar />
-        <main className="mx-auto max-w-[1450px] p-4">{children}</main>
+        <main className="mx-auto max-w-[1450px] p-4 md:p-8">{children}</main>
       </body>
     </html>
   );

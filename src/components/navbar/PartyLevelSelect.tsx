@@ -18,7 +18,7 @@ const PartyLevelSelect = () => {
 
   return (
     <Select
-      defaultValue={localStorage.getItem("partyLevel") || undefined}
+      defaultValue={localStorage.getItem("partyLevel") ?? "1"}
       onValueChange={(value) => {
         localStorage.setItem("partyLevel", value);
         window.location.reload();

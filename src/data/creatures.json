@@ -691,7 +691,6 @@
     "hitPoints": "80 (8d8 + 16)",
     "speed": {
       "walk": "9 m",
-      "burrow": "4.5 m",
       "fly": "18 m"
     },
     "abilities": {

@@ -14,10 +14,12 @@ export default async function Home() {
   const session = await auth();
   const isAuthorized = !!session;
 
+  const cardClassName = "w-full flex-1 border-primary/25 md:max-w-[30%]";
+
   return (
-    <div className="flex justify-center gap-8">
+    <div className="flex flex-wrap justify-center gap-4 md:gap-8">
       {isAuthorized && (
-        <Card className="max-w-[30%] flex-1 border-primary/25">
+        <Card className={cardClassName}>
           <CardHeader className="border-muted-background border-b">
             <CardTitle className="flex items-center gap-2">
               <HomeIcon className="size-6 text-primary" />
@@ -38,7 +40,7 @@ export default async function Home() {
         </Card>
       )}
 
-      <Card className="max-w-[30%] flex-1 border-primary/25">
+      <Card className={cardClassName}>
         <CardHeader className="border-muted-background border-b">
           <CardTitle className="flex items-center gap-2">
             <BookOpenIcon className="size-6 text-primary" />
@@ -67,7 +69,7 @@ export default async function Home() {
         </CardContent>
       </Card>
 
-      <Card className="max-w-[30%] flex-1 border-primary/25">
+      <Card className={cardClassName}>
         <CardHeader className="border-muted-background border-b">
           <CardTitle className="flex items-center gap-2">
             <BugAntIcon className="size-6 text-primary" />
