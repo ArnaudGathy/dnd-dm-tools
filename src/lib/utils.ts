@@ -9,8 +9,8 @@ export function cn(...inputs: ClassValue[]) {
 export async function getSessionData() {
   const session = await auth();
   return {
-    userName: session?.user?.name,
-    userMail: session?.user?.email,
+    userName: session?.user?.name?.split(" ")[0],
+    userMail: session?.user?.email || undefined,
     isLoggedIn: !!session,
     isAdmin:
       !!session?.user?.email && session.user.email === "arno.firefox@gmail.com",

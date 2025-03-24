@@ -1,5 +1,15 @@
 import prisma from "@/lib/prisma";
 
-export const getCharacters = async () => {
-  return prisma.character.findMany();
+export const getCharactersByOwner = async (ownerEmail?: string) => {
+  return prisma.character.findMany({
+    where: { owner: ownerEmail },
+    include: {
+      campaign: {
+        include: {
+          party: true,
+        },
+      },
+    },
+    orderBy: { name: "asc" },
+  });
 };

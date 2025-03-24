@@ -11,7 +11,8 @@
     "lint": "eslint ./src/**/*.{ts,tsx} --fix --max-warnings 0",
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
-    "pre-commit": "lint-staged"
+    "pre-commit": "lint-staged",
+		"seed": "node prisma/seed.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

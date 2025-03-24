@@ -10,6 +10,9 @@ const compat = new FlatCompat({
 });
 
 const eslintConfig = [
+  {
+    ignores: ["prisma/**"],
+  },
   ...compat.config({
     extends: ["next/core-web-vitals", "next/typescript", "prettier"],
     rules: {
@@ -20,7 +23,7 @@ const eslintConfig = [
       "@typescript-eslint/ban-ts-comment": "error",
       "@typescript-eslint/no-unsafe-assignment": "off",
       "@typescript-eslint/no-explicit-any": "error",
-    }
+    },
   }),
 ];
 

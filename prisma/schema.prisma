@@ -7,11 +7,69 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum CampaignId {
+  PHANDELVER
+  DRAGONS
+  TOMB
+}
+
+enum CampaignStatus {
+  ACTIVE
+  ABANDONED
+  FINISHED
+}
+
+model Campaign {
+  id        Int            @id @default(autoincrement())
+  name      CampaignId
+  status    CampaignStatus @default(ACTIVE)
+  character Character[]
+  party     Party          @relation(fields: [partyId], references: [id])
+  partyId   Int
+}
+
+enum PartyId {
+  MIFA
+  PAINTERS
+}
+
+model Party {
+  id        Int        @id @default(autoincrement())
+  name      PartyId
+  campaigns Campaign[]
+}
+
+enum Classes {
+  ARTIFICER
+  BARBARIAN
+  BARD
+  CLERIC
+  DRUID
+  FIGHTER
+  MONK
+  PALADIN
+  RANGER
+  ROGUE
+  SORCERER
+  WARLOCK
+  WIZARD
+}
+
+enum CharacterStatus {
+  ACTIVE
+  DEAD
+  RETIRED
+}
+
 model Character {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  name      String   @db.VarChar(255)
-  owner     String
-  spells    String[]
+  id         Int              @id @default(autoincrement())
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+  status     CharacterStatus? @default(ACTIVE)
+  name       String           @db.VarChar(255)
+  className  Classes
+  owner      String
+  spells     String[]
+  campaign   Campaign         @relation(fields: [campaignId], references: [id])
+  campaignId Int
 }

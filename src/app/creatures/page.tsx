@@ -4,9 +4,5 @@ import { getSessionData } from "@/lib/utils";
 export default async function Home() {
   const { isAdmin } = await getSessionData();
 
-  return (
-    <div>
-      <CreatureList isAuthorized={isAdmin} />
-    </div>
-  );
+  return <CreatureList isAuthorized={isAdmin} />;
 }
