@@ -26,11 +26,7 @@ import { Input } from "@/components/ui/input";
 import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import {
-  UserPlusIcon,
-  BookOpenIcon,
-  BugAntIcon,
-} from "@heroicons/react/24/solid";
+import { UserPlusIcon } from "@heroicons/react/24/solid";
 import { getPartyLevel, getParty } from "@/utils/localStorageUtils";
 import {
   Popover,
@@ -47,7 +43,7 @@ import {
 import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
 import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { FastForwardIcon } from "lucide-react";
+import { BookOpenIcon, FastForwardIcon, PawPrintIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
@@ -595,7 +591,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                             target="_blank"
                             rel="noopener noreferrer"
                           >
-                            <BugAntIcon className="size-6" />
+                            <PawPrintIcon className="size-6" />
                           </Link>
                         )}
                       </div>

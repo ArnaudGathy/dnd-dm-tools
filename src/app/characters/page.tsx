@@ -12,6 +12,7 @@ import { StatCell } from "@/app/creatures/StatCell";
 import { CharacterStatus } from "@prisma/client";
 import { Check, Skull, TreePalm } from "lucide-react";
 import { TooltipComponent } from "@/components/ui/tooltip";
+import { classColors } from "@/constants/colors";
 export default async function Characters() {
   const { userName, isAdmin, userMail } = await getSessionData();
   const characters = await getCharactersByOwner(isAdmin ? undefined : userMail);
@@ -30,12 +31,12 @@ export default async function Characters() {
                 <div className="flex items-center gap-2">
                   {character.status === CharacterStatus.DEAD && (
                     <TooltipComponent definition="Personnage mort">
-                      <Skull className="text-red-600" />
+                      <Skull className="text-primary" />
                     </TooltipComponent>
                   )}
                   {character.status === CharacterStatus.RETIRED && (
                     <TooltipComponent definition="Personnage retraité">
-                      <TreePalm className="text-amber-700" />
+                      <TreePalm className="text-primary" />
                     </TooltipComponent>
                   )}
                   {character.status === CharacterStatus.ACTIVE && (
@@ -45,8 +46,15 @@ export default async function Characters() {
                   )}
                   <span>{character.name}</span>
                 </div>
-                <span className="text-base text-muted-foreground">
-                  {CLASS_MAP[character.className]}
+                <span>
+                  <span
+                    className="text-base"
+                    style={{
+                      color: classColors[character.className].background,
+                    }}
+                  >
+                    {CLASS_MAP[character.className]}
+                  </span>
                 </span>
               </CardTitle>
               <CardDescription></CardDescription>

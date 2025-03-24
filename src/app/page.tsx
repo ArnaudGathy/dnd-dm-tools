@@ -6,14 +6,14 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  BookOpenIcon,
-  BugAntIcon,
-  HomeIcon,
-  UsersIcon,
-} from "@heroicons/react/24/solid";
 import Link from "next/link";
 import { getSessionData } from "@/lib/utils";
+import {
+  BookOpenIcon,
+  PawPrintIcon,
+  SquareUserIcon,
+  SwordsIcon,
+} from "lucide-react";
 
 export default async function Home() {
   const { isAdmin, isLoggedIn } = await getSessionData();
@@ -26,7 +26,7 @@ export default async function Home() {
         <Card className={cardClassName}>
           <CardHeader className="border-muted-background border-b">
             <CardTitle className="flex items-center gap-2">
-              <HomeIcon className="size-6 text-primary" />
+              <SwordsIcon className="size-6 text-primary" />
               Rencontres
             </CardTitle>
             <CardDescription>Liste des rencontres</CardDescription>
@@ -46,7 +46,7 @@ export default async function Home() {
         <Card className={cardClassName}>
           <CardHeader className="border-muted-background border-b">
             <CardTitle className="flex items-center gap-2">
-              <UsersIcon className="size-6 text-primary" />
+              <SquareUserIcon className="size-6 text-primary" />
               Personnages
             </CardTitle>
             <CardDescription>Liste des personnages</CardDescription>
@@ -100,7 +100,7 @@ export default async function Home() {
       <Card className={cardClassName}>
         <CardHeader className="border-muted-background border-b">
           <CardTitle className="flex items-center gap-2">
-            <BugAntIcon className="size-6 text-primary" />
+            <PawPrintIcon className="size-6 text-primary" />
             Créatures
           </CardTitle>
           <CardDescription>Liste des créatures</CardDescription>

@@ -10,6 +10,6 @@ export const getCharactersByOwner = async (ownerEmail?: string) => {
         },
       },
     },
-    orderBy: { name: "asc" },
+    orderBy: [{ status: "asc" }, { name: "asc" }],
   });
 };
