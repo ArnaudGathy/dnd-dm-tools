@@ -17,7 +17,7 @@ export default async function Home() {
   const cardClassName = "w-full flex-1 border-primary/25 md:max-w-[30%]";
 
   return (
-    <div className="flex flex-wrap justify-center gap-4 md:gap-8">
+    <div className="flex flex-col justify-center gap-4 md:flex-row md:gap-8">
       {isAuthorized && (
         <Card className={cardClassName}>
           <CardHeader className="border-muted-background border-b">

@@ -7,10 +7,10 @@ import {
   subClassSchema,
 } from "@/types/schemas";
 import { typedLocalSpells } from "@/utils/utils";
-import { parseSpellFromAideDD } from "@/lib/aideDDParseSpellPageContent";
+import { parseSpellFromAideDD } from "@/lib/external-apis/aideDDParseSpellPageContent";
 
 const baseURL = "https://www.dnd5eapi.co/api/2014";
-const API = axios.create({ baseURL });
+const ExternalAPIs = axios.create({ baseURL });
 
 export const getSpellFromAideDD = async (spellName: string) => {
   const response = await axios.get(
@@ -21,7 +21,7 @@ export const getSpellFromAideDD = async (spellName: string) => {
 
 export const getSpell = async (spellName: string) => {
   try {
-    const response = await API.get<APISpell>(`/spells/${spellName}`);
+    const response = await ExternalAPIs.get<APISpell>(`/spells/${spellName}`);
     const { data } = response;
 
     /* eslint-disable-next-line no-console */
@@ -46,7 +46,9 @@ export const getSpell = async (spellName: string) => {
 
 export const getSubClass = async (subclassIndex: string) => {
   try {
-    const response = await API.get<SubClass>(`/subclasses/${subclassIndex}`);
+    const response = await ExternalAPIs.get<SubClass>(
+      `/subclasses/${subclassIndex}`,
+    );
     const { data } = response;
 
     subClassSchema.parse(data);

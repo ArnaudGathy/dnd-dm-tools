@@ -5,6 +5,7 @@
   "scripts": {
     "predev": "open http://localhost:3000",
     "dev": "next dev --turbopack",
+		"prebuild": "prisma generate",
     "build": "next build",
     "start": "next start",
     "lint": "eslint ./src/**/*.{ts,tsx} --fix --max-warnings 0",
@@ -14,6 +15,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@prisma/client": "6.5.0",
     "@radix-ui/react-alert-dialog": "^1.1.6",
     "@radix-ui/react-label": "^2.1.1",
     "@radix-ui/react-navigation-menu": "^1.2.2",
@@ -30,6 +32,7 @@
     "lucide-react": "^0.468.0",
     "next": "15.1.0",
     "next-auth": "5.0.0-beta.25",
+    "prisma": "^6.5.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-use": "^17.6.0",

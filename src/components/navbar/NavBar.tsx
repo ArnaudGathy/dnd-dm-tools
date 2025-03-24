@@ -13,8 +13,10 @@ import PartyLevelSelect from "@/components/navbar/PartyLevelSelect";
 import PartySelect from "@/components/navbar/PartySelect";
 import SignInButton from "@/components/navbar/SignInButton";
 import { auth } from "@/../auth";
+import { Bars3Icon } from "@heroicons/react/24/outline";
 
 const menuItems = [
+  { label: "Mes personnages", to: "/characters" },
   {
     label: "Rencontres",
     to: "/encounters",
@@ -58,7 +60,9 @@ export const NavBar = async () => {
           <NavigationMenu>
             <NavigationMenuList className="flex md:hidden">
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Menu</NavigationMenuTrigger>
+                <NavigationMenuTrigger>
+                  <Bars3Icon className="size-6" />
+                </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4">
                     {menuItems.map(({ to, label }) => (

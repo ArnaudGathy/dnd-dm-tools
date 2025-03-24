@@ -1,4 +1,4 @@
-import { getSubClass } from "@/lib/api";
+import { getSubClass } from "@/lib/external-apis/externalAPIs";
 
 export const SpellSubClass = async ({
   subclassIndex,

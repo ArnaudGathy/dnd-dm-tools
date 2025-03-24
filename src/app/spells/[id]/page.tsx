@@ -1,4 +1,4 @@
-import { getSpell } from "@/lib/api";
+import { getSpell } from "@/lib/external-apis/externalAPIs";
 import { notFound } from "next/navigation";
 import { SpellDescription } from "@/app/spells/[id]/SpellDescription";
 import { SpellOwnedBy } from "@/app/spells/[id]/SpellOwnedBy";
