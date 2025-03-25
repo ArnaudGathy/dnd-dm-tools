@@ -11,16 +11,22 @@ import {
   convertFeetDistanceIntoSquares,
   convertFromFeetToSquares,
   translateShortenedAbilityName,
-  typedSummarySpells,
 } from "@/utils/utils";
 import { APISpell, SpellSource } from "@/types/schemas";
 import { Link } from "@/components/ui/Link";
 import { DamageBlock } from "@/app/spells/[id]/DamageBlock";
+import { getSpellById } from "@/lib/api/spells";
 
-export const SpellDescription = ({ spell }: { spell: APISpell }) => {
-  const spellFromApp = typedSummarySpells.find(
-    (typedSpell) => typedSpell.id === spell.index,
-  );
+export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
+  if (!spell.index) {
+    return null;
+  }
+
+  const spellFromApp = await getSpellById(spell.index);
+
+  if (!spellFromApp) {
+    return null;
+  }
 
   const responsiveRows =
     "flex flex-col gap-2 md:flex-row md:flex-wrap md:gap-x-8 md:gap-y-4";
@@ -37,13 +43,13 @@ export const SpellDescription = ({ spell }: { spell: APISpell }) => {
     <div className="col-span-3">
       <Card>
         <CardHeader>
-          {(spellFromApp?.name || spell.name) && (
+          {(spellFromApp.name || spell.name) && (
             <CardTitle className="flex gap-2">
-              {(spellFromApp?.isRitual ?? spell.ritual) && (
+              {(spellFromApp.isRitual ?? spell.ritual) && (
                 <SparklesIcon className="size-6 text-emerald-500" />
               )}
-              {spellFromApp?.name ? (
-                <div>{spellFromApp?.name}</div>
+              {spellFromApp.name ? (
+                <div>{spellFromApp.name}</div>
               ) : (
                 <div>{spell.name ?? spell.index}</div>
               )}

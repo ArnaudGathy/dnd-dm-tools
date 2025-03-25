@@ -18,30 +18,7 @@ export type Participant = ParticipantToAdd & {
   uuid: string;
   conditions?: Condition[];
   notes?: string[];
-};
-
-export type Character = {
-  id: number;
-  name: string;
-  spells: string[];
-  creatures?: number[];
-  gameClass: string;
-  race: string;
-  level: number;
-  owner: string;
-};
-
-export type Party = {
-  name: string;
-  id: number;
-  characters: Character[];
-};
-
-export type Spell = {
-  id: string;
-  name: string;
-  level: number;
-  isRitual?: boolean;
+  isNPC: boolean;
 };
 
 type EnemyObject = {

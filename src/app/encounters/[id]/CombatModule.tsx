@@ -27,7 +27,6 @@ import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { getPartyLevel } from "@/utils/localStorageUtils";
 import {
   Popover,
   PopoverContent,
@@ -105,7 +104,6 @@ const getHPBarColor = (hpPercent: number) => {
 export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const router = useRouter();
   const pathName = usePathname();
-  const partyLevel = getPartyLevel();
 
   const [turnsCounter, setTurnsCounter] = useState(1);
   const [currentTurnIndex, setCurrentTurnIndex] = useState<number | null>(null);
@@ -118,11 +116,12 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       [
         ...getParticipantFromEncounter({
           encounter,
-          partyLevel,
+          partyLevel: "1",
         }),
         encounter.environmentTurnInitiative
           ? {
               uuid: uuidv4(),
+              isNPC: true,
               id: -99,
               name: "Environement",
               hp: "",
@@ -163,6 +162,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
           {
             ...participant,
             uuid: uuidv4(),
+            isNPC: true,
             id: -1,
             currentHp: participant.hp,
             init: participant.init || roll(20).toString(),
@@ -418,18 +418,12 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                   )}
                 >
                   <div className="w-2">
-                    {!!participant.id && (
+                    {participant.isNPC && (
                       <div
                         style={{
-                          backgroundColor: participant.id
-                            ? participant.color
-                            : "transparent",
-                          borderColor: participant.color,
+                          backgroundColor: participant.color,
                         }}
-                        className={clsx("rounded-full", {
-                          "h-5 w-5 border-2": !participant.id,
-                          "h-5 w-5": participant.id,
-                        })}
+                        className={clsx("h-5 w-5 rounded-full")}
                       />
                     )}
                   </div>
@@ -444,7 +438,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                   </div>
                   <div className={clsx("w-[200px] truncate px-4 text-center")}>
                     <TooltipComponent definition={participant.name}>
-                      {participant.id ? (
+                      {participant.isNPC ? (
                         <Link href={`#${participant.id}`}>
                           {participant.name}
                         </Link>
@@ -594,8 +588,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                       <div className="flex items-center gap-4">
                         {playersWithSpells.includes(participant.name) && (
                           <Link
-                            // TODO update this to the character's spell list
-                            href={`/spells?player=${participant.name}&sortBy=level`}
+                            href={`/characters/${participant.id}/spells`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >
@@ -604,7 +597,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                         )}
                         {playersWithCreatures.includes(participant.name) && (
                           <Link
-                            href={`/creatures?player=${participant.name}&sortBy=player`}
+                            href={`/characters/${participant.id}/creatures`}
                             target="_blank"
                             rel="noopener noreferrer"
                           >

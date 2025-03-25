@@ -39,7 +39,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   return (
     <div className="flex gap-4 md:grid md:grid-cols-3">
       <div className="col-span-2">
-        <StatBlock creature={creature} isCollapsible={false} />
+        <StatBlock creature={creature} />
       </div>
 
       <div className="hidden flex-col gap-4 md:flex">

@@ -9,7 +9,6 @@ import logo from "@/../public/DMT_logo.webp";
 import Image from "next/image";
 import { NavBarItem } from "@/components/navbar/NavBarItem";
 import Link from "next/link";
-import PartyLevelSelect from "@/components/navbar/PartyLevelSelect";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
@@ -54,7 +53,6 @@ export const NavBar = async () => {
     return (
       <>
         {isAdmin && <CampaignSelect />}
-        {isAdmin && <PartyLevelSelect />}
         <SignInButton />
       </>
     );

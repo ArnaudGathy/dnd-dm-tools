@@ -7,11 +7,9 @@ import {
   isEnemyObject,
   Participant,
   Skills,
-  Spell,
 } from "@/types/types";
 import creatures from "@/data/creatures.json";
 import encounters from "@/data/encounters.json";
-import spellList from "@/data/spellList.json";
 import spells from "@/data/spells.json";
 import { v4 as uuidv4 } from "uuid";
 import { entries, groupBy, isPlainObject, prop, reduce } from "remeda";
@@ -22,7 +20,6 @@ import { Group } from "@/hooks/useGroupFromCampaign";
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedConditions: Condition[] = conditions;
-export const typedSummarySpells: Spell[] = spellList;
 export const typedLocalSpells: APISpell[] = spells;
 
 export const commonCreatureColors = [
@@ -184,12 +181,14 @@ export const getInitiative = (creature: Creature) => {
 };
 
 export const getParticipantFromCharacters = (group: Group) => {
-  return group.map(({ name }) => ({
+  return group.map(({ name, id }) => ({
+    id,
     name,
     init: "",
     hp: "",
     currentHp: "",
     uuid: uuidv4(),
+    isNPC: false,
   }));
 };
 
@@ -303,6 +302,7 @@ export const getParticipantFromEncounter = ({
               ? enemy.color
               : getCreatureColor(creature, index, currentColorIndex),
           uuid: uuidv4(),
+          isNPC: true,
         },
       ];
     }

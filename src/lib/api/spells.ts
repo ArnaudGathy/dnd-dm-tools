@@ -43,6 +43,24 @@ const getGroupedSpells = (
   return groupByRemeda(spells, (spell) => spell.name[0]);
 };
 
+export const getSpellById = (spellId: string) => {
+  return prisma.spell.findUnique({
+    where: {
+      id: spellId,
+    },
+  });
+};
+
+export const getSpellByIds = (spellIds: string[]) => {
+  return prisma.spell.findMany({
+    where: {
+      id: {
+        in: spellIds,
+      },
+    },
+  });
+};
+
 export const getCharacterSpellsByLevel = async ({
   characterId,
   search,
