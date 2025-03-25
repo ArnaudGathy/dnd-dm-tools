@@ -97,6 +97,7 @@ model Character {
   race               Races
   level              Int                  @default(1)
   spellsOnCharacters SpellsOnCharacters[]
+  creatures          Int[]                @default([])
 }
 
 model SpellsOnCharacters {

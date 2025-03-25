@@ -8,5 +8,5 @@ export default auth((req) => {
 
 // Don't forget to update src/constants/privateRoutes to hide the menu items
 export const config = {
-  matcher: ["/encounters/:path*", "/characters/:path*"],
+  matcher: ["/encounters/:path*", "/characters/:path*", "/creatures/:path*"],
 };

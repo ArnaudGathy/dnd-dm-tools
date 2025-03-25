@@ -41,6 +41,27 @@ export default async function Home() {
         </Card>
       )}
 
+      {isAdmin && (
+        <Card className={cardClassName}>
+          <CardHeader className="border-muted-background border-b">
+            <CardTitle className="flex items-center gap-2">
+              <PawPrintIcon className="size-6 text-primary" />
+              Créatures
+            </CardTitle>
+            <CardDescription>Liste des créatures</CardDescription>
+          </CardHeader>
+          <CardContent className="mt-4 flex flex-col gap-4">
+            Parcourir la liste des créatures par nom ou par personnage selon le
+            groupe.
+            <Link href="/creatures" className="w-full">
+              <Button className="w-full" size="sm">
+                Toutes les créatures
+              </Button>
+            </Link>
+          </CardContent>
+        </Card>
+      )}
+
       {isLoggedIn && (
         <Card className={cardClassName}>
           <CardHeader className="border-muted-background border-b">
@@ -85,33 +106,6 @@ export default async function Home() {
               Tous les sorts
             </Button>
           </Link>
-        </CardContent>
-      </Card>
-
-      <Card className={cardClassName}>
-        <CardHeader className="border-muted-background border-b">
-          <CardTitle className="flex items-center gap-2">
-            <PawPrintIcon className="size-6 text-primary" />
-            Créatures
-          </CardTitle>
-          <CardDescription>Liste des créatures</CardDescription>
-        </CardHeader>
-        <CardContent className="mt-4 flex flex-col gap-4">
-          Parcourir la liste des créatures par nom ou par personnage selon le
-          groupe.
-          {isAdmin ? (
-            <Link href="/creatures" className="w-full">
-              <Button className="w-full" size="sm">
-                Toutes les créatures
-              </Button>
-            </Link>
-          ) : (
-            <Link href="/creatures?sortBy=player" className="w-full">
-              <Button className="w-full" size="sm">
-                Créatures par personnage
-              </Button>
-            </Link>
-          )}
         </CardContent>
       </Card>
     </div>

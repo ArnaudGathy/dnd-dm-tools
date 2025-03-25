@@ -18,6 +18,7 @@ import {
   FileSpreadsheet,
   Heart,
   MapPin,
+  PawPrintIcon,
   Skull,
   TreePalm,
   Users,
@@ -121,17 +122,25 @@ export default async function Characters({
                   </div>
                 )}
                 <div className="flex gap-4">
-                  <Link href={`/characters/${character.id}/sheet`}>
+                  <Link href={`/characters/${character.id}`}>
                     <Button variant="default" size="sm">
                       <FileSpreadsheet />
-                      Fiche de personnage
+                      Fiche
                     </Button>
                   </Link>
                   {character._count.spellsOnCharacters > 0 && (
                     <Link href={`/characters/${character.id}/spells`}>
                       <Button variant="secondary" size="sm">
                         <BookOpenIcon />
-                        Liste des sorts
+                        Sorts
+                      </Button>
+                    </Link>
+                  )}
+                  {character.creatures.length > 0 && (
+                    <Link href={`/characters/${character.id}/creatures`}>
+                      <Button variant="secondary" size="sm">
+                        <PawPrintIcon />
+                        Créatures
                       </Button>
                     </Link>
                   )}

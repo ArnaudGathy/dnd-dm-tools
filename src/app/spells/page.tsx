@@ -8,7 +8,7 @@ export default async function Spells({
   searchParams: Promise<{ groupBy?: SPELLS_GROUP_BY; search?: string }>;
 }) {
   const { search, groupBy } = await searchParams;
-  const spellsByLevel = await getCharacterSpellsByLevel({
+  const { spells } = await getCharacterSpellsByLevel({
     search,
     groupBy: groupBy ?? SPELLS_GROUP_BY.ALPHABETICAL,
   });
@@ -28,7 +28,7 @@ export default async function Spells({
         </h1>
       </div>
       <SpellsFilters />
-      <SpellList spellsGroupedBy={spellsByLevel} label={getLabel()} />
+      <SpellList spellsGroupedBy={spells} label={getLabel()} />
     </div>
   );
 }

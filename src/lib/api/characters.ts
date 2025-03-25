@@ -58,3 +58,27 @@ export const getFilteredCharactersByOwner = async ({
     orderBy: [{ status: "asc" }, { name: "asc" }],
   });
 };
+
+export const getCharacterById = async ({
+  characterId,
+}: {
+  characterId: number;
+}) => {
+  return prisma.character.findUnique({
+    where: {
+      id: characterId,
+    },
+    include: {
+      campaign: {
+        include: {
+          party: true,
+        },
+      },
+      spellsOnCharacters: {
+        include: {
+          spell: true,
+        },
+      },
+    },
+  });
+};

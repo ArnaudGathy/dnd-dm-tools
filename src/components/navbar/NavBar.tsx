@@ -23,12 +23,6 @@ import {
 
 const menuItems = [
   {
-    label: "Personnages",
-    to: "/characters",
-    icon: SwordsIcon,
-    shouldBeLoggedIn: true,
-  },
-  {
     label: "Rencontres",
     to: "/encounters",
     icon: SquareUserIcon,
@@ -38,6 +32,13 @@ const menuItems = [
     label: "Créatures",
     to: "/creatures",
     icon: PawPrintIcon,
+    isPrivate: true,
+  },
+  {
+    label: "Personnages",
+    to: "/characters",
+    icon: SwordsIcon,
+    shouldBeLoggedIn: true,
   },
   {
     label: "Sorts",

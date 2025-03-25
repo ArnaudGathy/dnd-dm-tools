@@ -56,6 +56,7 @@ async function main() {
               level: character.level,
               owner: character.owner,
               campaignId: campaign.id,
+              creatures: character.creatures,
               status:
                 character.name === "Pepnac"
                   ? CharacterStatus.DEAD
