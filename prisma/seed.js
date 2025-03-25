@@ -5,8 +5,8 @@ const {
   CampaignStatus,
   CharacterStatus,
 } = require("@prisma/client");
-const spellList = require("../src/data/spellList.json");
-const partiesJson = require("../src/data/parties.json");
+const spellList = require("./spellList.json");
+const partiesJson = require("./parties.json");
 
 const prisma = new PrismaClient();
 

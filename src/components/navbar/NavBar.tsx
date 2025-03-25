@@ -24,7 +24,7 @@ const menuItems = [
   {
     label: "Rencontres",
     to: "/encounters",
-    icon: SquareUserIcon,
+    icon: SwordsIcon,
     isPrivate: true,
   },
   {
@@ -36,7 +36,7 @@ const menuItems = [
   {
     label: "Personnages",
     to: "/characters",
-    icon: SwordsIcon,
+    icon: SquareUserIcon,
     shouldBeLoggedIn: true,
   },
   {
