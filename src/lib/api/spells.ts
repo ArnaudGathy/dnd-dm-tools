@@ -15,6 +15,11 @@ export enum SPELLS_GROUP_BY {
   ALPHABETICAL = "alphabetical",
 }
 
+export enum SPELLS_VIEW {
+  LIST = "list",
+  CARDS = "cards",
+}
+
 const getGroupedSpells = (
   response: Array<{ spell: Spell; character: Character }>,
   groupBy?: SPELLS_GROUP_BY,
@@ -61,7 +66,7 @@ export const getSpellByIds = (spellIds: string[]) => {
   });
 };
 
-export const getCharacterSpellsByLevel = async ({
+export const getGroupedCharacterSpells = async ({
   characterId,
   search,
   groupBy,
@@ -106,4 +111,30 @@ export const getCharactersBySpellId = async (spellId: string) => {
   });
 
   return charactersWithSpell.map((entry) => entry.character);
+};
+
+export const getCharacterSpells = async ({
+  search,
+  characterId,
+}: {
+  search?: string;
+  characterId?: number;
+}) => {
+  return prisma.spellsOnCharacters.findMany({
+    where: {
+      characterId: characterId,
+      spell: {
+        name: {
+          contains: search,
+          mode: "insensitive",
+        },
+      },
+    },
+    include: {
+      spell: true,
+    },
+    orderBy: {
+      spell: { name: "asc" },
+    },
+  });
 };

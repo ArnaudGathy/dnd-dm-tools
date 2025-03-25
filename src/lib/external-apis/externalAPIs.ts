@@ -19,7 +19,7 @@ export const getSpellFromAideDD = async (spellName: string) => {
   return parseSpellFromAideDD(response.data);
 };
 
-export const getSpell = async (spellName: string) => {
+export const getSpell = async (spellName: string): Promise<APISpell | null> => {
   try {
     const response = await ExternalAPIs.get<APISpell>(`/spells/${spellName}`);
     const { data } = response;
@@ -27,7 +27,6 @@ export const getSpell = async (spellName: string) => {
     /* eslint-disable-next-line no-console */
     console.info("Spell before parsing :", data);
     apiSpellSchema.parse(data);
-
     return { ...data, source: SpellSource.API };
   } catch (e) {
     if (isAxiosError(e) && e.response?.status === 404) {

@@ -6,10 +6,10 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { entries } from "remeda";
 import { useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, StickyNote } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Toggle } from "@/components/ui/toggle";
-import { SPELLS_GROUP_BY } from "@/lib/api/spells";
+import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
 
 const tabs = {
   [SPELLS_GROUP_BY.ALPHABETICAL]: "Alphabétique",
@@ -20,14 +20,17 @@ const tabs = {
 export default function SpellsFilters({
   defaultSearch = SPELLS_GROUP_BY.ALPHABETICAL,
   disablePlayer = false,
+  disableCards = false,
 }: {
   defaultSearch?: SPELLS_GROUP_BY;
   disablePlayer?: boolean;
+  disableCards?: boolean;
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
   const params = new URLSearchParams(searchParams);
+  const isCardView = params.get("view") === SPELLS_VIEW.CARDS;
 
   const [isCollapsed, setIsCollapsed] = useState(false);
 
@@ -41,7 +44,6 @@ export default function SpellsFilters({
     } else {
       params.delete("search");
     }
-
     updateParams();
   }, 300);
 
@@ -51,7 +53,15 @@ export default function SpellsFilters({
     } else {
       params.delete("groupBy");
     }
+    updateParams();
+  };
 
+  const handleView = (view: SPELLS_VIEW) => {
+    if (view) {
+      params.set("view", view);
+    } else {
+      params.delete("view");
+    }
     updateParams();
   };
 
@@ -78,28 +88,42 @@ export default function SpellsFilters({
         />
       </div>
 
-      <Tabs
-        defaultValue={params.get("groupBy") ?? defaultSearch}
-        className={cn({ hidden: isCollapsed })}
-      >
-        <TabsList>
-          {entries(tabs).map(([key, value]) => {
-            if (disablePlayer && key === SPELLS_GROUP_BY.CHARACTER) {
-              return null;
-            }
+      <div className={cn("flex items-center gap-4", { hidden: isCollapsed })}>
+        {!disableCards && (
+          <div>
+            <Toggle
+              variant="outline"
+              pressed={params.get("view") === SPELLS_VIEW.CARDS}
+              onPressedChange={(isEnabled) =>
+                handleView(isEnabled ? SPELLS_VIEW.CARDS : SPELLS_VIEW.LIST)
+              }
+            >
+              <StickyNote />
+              Cartes
+            </Toggle>
+          </div>
+        )}
+        <Tabs defaultValue={params.get("groupBy") ?? defaultSearch}>
+          <TabsList>
+            {entries(tabs).map(([key, value]) => {
+              if (disablePlayer && key === SPELLS_GROUP_BY.CHARACTER) {
+                return null;
+              }
 
-            return (
-              <TabsTrigger
-                key={key}
-                value={key}
-                onClick={() => handleGroupBy(key as SPELLS_GROUP_BY)}
-              >
-                {value}
-              </TabsTrigger>
-            );
-          })}
-        </TabsList>
-      </Tabs>
+              return (
+                <TabsTrigger
+                  key={key}
+                  value={key}
+                  onClick={() => handleGroupBy(key as SPELLS_GROUP_BY)}
+                  disabled={isCardView}
+                >
+                  {value}
+                </TabsTrigger>
+              );
+            })}
+          </TabsList>
+        </Tabs>
+      </div>
     </div>
   );
 }
