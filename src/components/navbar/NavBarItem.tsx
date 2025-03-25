@@ -4,18 +4,21 @@ import {
   NavigationMenuLink,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { getSessionData } from "@/lib/utils";
+import { cn, getSessionData } from "@/lib/utils";
+import { ElementType } from "react";
 
 export const NavBarItem = async ({
   to,
   label,
   shouldBeLoggedIn,
   isPrivate,
+  icon: Icon,
 }: {
   to: string;
   label: string;
   shouldBeLoggedIn?: boolean;
   isPrivate?: boolean;
+  icon: ElementType;
 }) => {
   const { isAdmin, isLoggedIn } = await getSessionData();
 
@@ -26,7 +29,13 @@ export const NavBarItem = async ({
   return (
     <NavigationMenuItem>
       <Link href={to} legacyBehavior passHref>
-        <NavigationMenuLink className={navigationMenuTriggerStyle()}>
+        <NavigationMenuLink
+          className={cn(
+            navigationMenuTriggerStyle(),
+            "flex items-center gap-2",
+          )}
+        >
+          <Icon className="size-5 text-primary" />
           {label}
         </NavigationMenuLink>
       </Link>

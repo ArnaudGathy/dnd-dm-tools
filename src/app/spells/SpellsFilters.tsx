@@ -5,25 +5,31 @@ import { SearchField } from "@/components/SearchField";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { entries } from "remeda";
-import { GROUP_BY } from "@/lib/api/characters";
+import { useState } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Toggle } from "@/components/ui/toggle";
+import { SPELLS_GROUP_BY } from "@/lib/api/spells";
 
 const tabs = {
-  [GROUP_BY.ALPHABETICAL]: "Alphabétique",
-  [GROUP_BY.LEVEL]: "Niveau",
-  [GROUP_BY.CHARACTER]: "Personnage",
+  [SPELLS_GROUP_BY.ALPHABETICAL]: "Alphabétique",
+  [SPELLS_GROUP_BY.LEVEL]: "Niveau",
+  [SPELLS_GROUP_BY.CHARACTER]: "Personnage",
 };
 
 export default function SpellsFilters({
-  defaultSearch = GROUP_BY.ALPHABETICAL,
+  defaultSearch = SPELLS_GROUP_BY.ALPHABETICAL,
   disablePlayer = false,
 }: {
-  defaultSearch?: GROUP_BY;
+  defaultSearch?: SPELLS_GROUP_BY;
   disablePlayer?: boolean;
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
   const params = new URLSearchParams(searchParams);
+
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const updateParams = () => {
     router.replace(`${pathName}?${params.toString()}`);
@@ -39,7 +45,7 @@ export default function SpellsFilters({
     updateParams();
   }, 300);
 
-  const handleGroupBy = (groupBy: GROUP_BY) => {
+  const handleGroupBy = (groupBy: SPELLS_GROUP_BY) => {
     if (!!groupBy) {
       params.set("groupBy", groupBy);
     } else {
@@ -50,11 +56,35 @@ export default function SpellsFilters({
   };
 
   return (
-    <div className="flex gap-4">
-      <Tabs defaultValue={params.get("groupBy") ?? defaultSearch}>
+    <div className="flex flex-col gap-4 md:flex-row">
+      <div className="flex gap-2">
+        <Toggle
+          className="md:hidden"
+          variant="outline"
+          defaultPressed={!isCollapsed}
+          onClick={() => setIsCollapsed((current) => !current)}
+        >
+          Filtres
+          {isCollapsed ? (
+            <ChevronDown className="size-4" />
+          ) : (
+            <ChevronUp className="size-4" />
+          )}
+        </Toggle>
+        <SearchField
+          search={params.get("search") ?? ""}
+          setSearch={handleSearchParams}
+          isDefault
+        />
+      </div>
+
+      <Tabs
+        defaultValue={params.get("groupBy") ?? defaultSearch}
+        className={cn({ hidden: isCollapsed })}
+      >
         <TabsList>
           {entries(tabs).map(([key, value]) => {
-            if (disablePlayer && key === GROUP_BY.CHARACTER) {
+            if (disablePlayer && key === SPELLS_GROUP_BY.CHARACTER) {
               return null;
             }
 
@@ -62,7 +92,7 @@ export default function SpellsFilters({
               <TabsTrigger
                 key={key}
                 value={key}
-                onClick={() => handleGroupBy(key as GROUP_BY)}
+                onClick={() => handleGroupBy(key as SPELLS_GROUP_BY)}
               >
                 {value}
               </TabsTrigger>
@@ -70,12 +100,6 @@ export default function SpellsFilters({
           })}
         </TabsList>
       </Tabs>
-
-      <SearchField
-        search={params.get("search") ?? ""}
-        setSearch={handleSearchParams}
-        isDefault
-      />
     </div>
   );
 }

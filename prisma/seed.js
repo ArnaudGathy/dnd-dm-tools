@@ -52,6 +52,8 @@ async function main() {
             data: {
               name: character.name,
               className: character.gameClass,
+              race: character.race,
+              level: character.level,
               owner: character.owner,
               campaignId: campaign.id,
               status:

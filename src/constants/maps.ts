@@ -1,4 +1,10 @@
-import { CampaignId, CharacterStatus, Classes, PartyId } from "@prisma/client";
+import {
+  CampaignId,
+  CharacterStatus,
+  Classes,
+  PartyId,
+  Races,
+} from "@prisma/client";
 
 export const CLASS_MAP = {
   [Classes.ARTIFICER]: "Artificier",
@@ -14,6 +20,21 @@ export const CLASS_MAP = {
   [Classes.SORCERER]: "Ensorceleur",
   [Classes.WARLOCK]: "Sorcier",
   [Classes.WIZARD]: "Mage",
+};
+
+export const RACE_MAP = {
+  [Races.AASIMAR]: "Aasimar",
+  [Races.DRAGONBORN]: "Sangdragon",
+  [Races.DWARF]: "Nain",
+  [Races.ELF]: "Elfe",
+  [Races.GNOME]: "Gnome",
+  [Races.GOLIATH]: "Goliath",
+  [Races.HALFLING]: "Halfelin",
+  [Races.HALF_ELF]: "Semi-elfe",
+  [Races.HALF_ORC]: "Semi-orc",
+  [Races.HUMAN]: "Humain",
+  [Races.ORC]: "Orc",
+  [Races.TIEFLING]: "Tiefelin",
 };
 
 export const CAMPAIGN_MAP = {

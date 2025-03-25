@@ -1,20 +1,20 @@
 import { SpellList } from "@/app/spells/SpellList";
-import { getCharacterSpellsByLevel, GROUP_BY } from "@/lib/api/characters";
 import SpellsFilters from "@/app/spells/SpellsFilters";
+import { getCharacterSpellsByLevel, SPELLS_GROUP_BY } from "@/lib/api/spells";
 
 export default async function Spells({
   searchParams,
 }: {
-  searchParams: Promise<{ groupBy?: GROUP_BY; search?: string }>;
+  searchParams: Promise<{ groupBy?: SPELLS_GROUP_BY; search?: string }>;
 }) {
   const { search, groupBy } = await searchParams;
   const spellsByLevel = await getCharacterSpellsByLevel({
     search,
-    groupBy: groupBy ?? GROUP_BY.ALPHABETICAL,
+    groupBy: groupBy ?? SPELLS_GROUP_BY.ALPHABETICAL,
   });
 
   const getLabel = () => {
-    if (groupBy === GROUP_BY.LEVEL) {
+    if (groupBy === SPELLS_GROUP_BY.LEVEL) {
       return "Niveau";
     }
     return "";

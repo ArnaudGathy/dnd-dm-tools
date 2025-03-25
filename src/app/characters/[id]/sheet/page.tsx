@@ -9,7 +9,7 @@ export default async function Sheet({
   const breadCrumbs = [
     { name: "Accueil", href: "/" },
     { name: "Personnages", href: "/characters" },
-    { name: "Feuille", href: `/characters/${id}/sheet` },
+    { name: "Feuille de personnage", href: `/characters/${id}/sheet` },
   ];
 
   return <Breadcrumbs crumbs={breadCrumbs}>Sheet</Breadcrumbs>;

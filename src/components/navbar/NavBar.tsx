@@ -14,21 +14,35 @@ import PartySelect from "@/components/navbar/PartySelect";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
+import {
+  BookOpenIcon,
+  PawPrintIcon,
+  SquareUserIcon,
+  SwordsIcon,
+} from "lucide-react";
 
 const menuItems = [
-  { label: "Personnages", to: "/characters", shouldBeLoggedIn: true },
+  {
+    label: "Personnages",
+    to: "/characters",
+    icon: SwordsIcon,
+    shouldBeLoggedIn: true,
+  },
   {
     label: "Rencontres",
     to: "/encounters",
+    icon: SquareUserIcon,
     isPrivate: true,
   },
   {
     label: "Créatures",
     to: "/creatures",
+    icon: PawPrintIcon,
   },
   {
     label: "Sorts",
     to: "/spells",
+    icon: BookOpenIcon,
   },
 ];
 
@@ -43,6 +57,10 @@ export const NavBar = async () => {
         <SignInButton />
       </>
     );
+  };
+
+  const getMenuItems = () => {
+    return menuItems.map((props) => <NavBarItem key={props.to} {...props} />);
   };
 
   return (
@@ -67,17 +85,7 @@ export const NavBar = async () => {
                 </NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4">
-                    {menuItems.map(
-                      ({ to, label, shouldBeLoggedIn, isPrivate }) => (
-                        <NavBarItem
-                          key={to}
-                          to={to}
-                          label={label}
-                          shouldBeLoggedIn={shouldBeLoggedIn}
-                          isPrivate={isPrivate}
-                        />
-                      ),
-                    )}
+                    {getMenuItems()}
                     <hr className="border-muted-foreground" />
                     {getEndMenu()}
                   </ul>
@@ -86,15 +94,7 @@ export const NavBar = async () => {
             </NavigationMenuList>
 
             <NavigationMenuList className="hidden md:flex">
-              {menuItems.map(({ to, label, shouldBeLoggedIn, isPrivate }) => (
-                <NavBarItem
-                  key={to}
-                  to={to}
-                  label={label}
-                  shouldBeLoggedIn={shouldBeLoggedIn}
-                  isPrivate={isPrivate}
-                />
-              ))}
+              {getMenuItems()}
             </NavigationMenuList>
           </NavigationMenu>
         </div>

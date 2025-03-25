@@ -8,14 +8,14 @@ datasource db {
 }
 
 enum CampaignId {
-  PHANDELVER
   DRAGONS
+  PHANDELVER
   TOMB
 }
 
 enum CampaignStatus {
-  ACTIVE
   ABANDONED
+  ACTIVE
   FINISHED
 }
 
@@ -44,8 +44,7 @@ model Spell {
   name               String
   level              Int
   isRitual           Boolean              @default(false)
-  characters         Character[]
-  SpellsOnCharacters SpellsOnCharacters[]
+  spellsOnCharacters SpellsOnCharacters[]
 }
 
 enum Classes {
@@ -64,6 +63,21 @@ enum Classes {
   WIZARD
 }
 
+enum Races {
+  AASIMAR
+  DRAGONBORN
+  DWARF
+  ELF
+  GNOME
+  GOLIATH
+  HALFLING
+  HALF_ELF
+  HALF_ORC
+  HUMAN
+  ORC
+  TIEFLING
+}
+
 enum CharacterStatus {
   ACTIVE
   DEAD
@@ -75,13 +89,14 @@ model Character {
   createdAt          DateTime             @default(now())
   updatedAt          DateTime             @updatedAt
   status             CharacterStatus      @default(ACTIVE)
-  name               String               @db.VarChar(255)
-  className          Classes
   owner              String
   campaign           Campaign             @relation(fields: [campaignId], references: [id])
   campaignId         Int
-  spells             Spell[]
-  SpellsOnCharacters SpellsOnCharacters[]
+  name               String               @db.VarChar(255)
+  className          Classes
+  race               Races
+  level              Int                  @default(1)
+  spellsOnCharacters SpellsOnCharacters[]
 }
 
 model SpellsOnCharacters {

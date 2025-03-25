@@ -8,35 +8,45 @@
         "name": "Arim",
         "gameClass": "PALADIN",
         "owner": "arcady.picardi@gmail.com",
-        "spells": ["shield-of-faith"]
+        "spells": ["shield-of-faith"],
+        "race": "HALFLING",
+        "level": 5
       },
       {
         "id": 2,
         "name": "Baalian",
         "owner": "logan.bourez@gmail.com",
         "gameClass": "WARLOCK",
-        "spells": ["eldritch-blast"]
+        "spells": ["eldritch-blast"],
+        "race": "TIEFLING",
+        "level": 5
       },
       {
         "id": 3,
         "name": "Cirbul",
         "owner": "antcoe1993@gmail.com",
         "gameClass": "BARD",
-        "spells": ["detect-magic"]
+        "spells": ["detect-magic"],
+        "race": "HALFLING",
+        "level": 5
       },
       {
         "id": 4,
         "name": "Erevan",
         "owner": "lo.desmet91@gmail.com",
         "gameClass": "CLERIC",
-        "spells": ["healing-word"]
+        "spells": ["healing-word"],
+        "race": "ELF",
+        "level": 5
       },
       {
         "id": 5,
         "name": "Pepnac",
         "owner": "mathias.merdjan@gmail.com",
         "gameClass": "ROGUE",
-        "spells": ["minor-illusion"]
+        "spells": ["minor-illusion"],
+        "race": "GNOME",
+        "level": 4
       }
     ]
   },
@@ -45,24 +55,39 @@
     "name": "Phancreux",
     "characters": [
       {
+        "id": 14,
+        "name": "Alfredo Pinus",
+        "gameClass": "PALADIN",
+        "owner": "arnaud.gathy@gmail.com",
+        "spells": [],
+        "race": "HUMAN",
+        "level": 20
+      },
+      {
         "id": 10,
         "name": "Baern",
         "gameClass": "FIGHTER",
         "owner": "logan.bourez@gmail.com",
-        "spells": []
+        "spells": [],
+        "race": "DWARF",
+        "level": 2
       },
       {
         "id": 11,
         "name": "Barback",
         "gameClass": "BARBARIAN",
         "owner": "kraft.alfred4@gmail.com",
-        "spells": []
+        "spells": [],
+        "race": "HUMAN",
+        "level": 2
       },
       {
         "id": 12,
         "name": "Lucifier",
         "gameClass": "BARD",
         "owner": "maximevanvelsen@gmail.com",
+        "race": "TIEFLING",
+        "level": 2,
         "spells": [
           "vicious-mockery",
           "thaumaturgy",
@@ -79,6 +104,8 @@
         "name": "Eleni",
         "gameClass": "DRUID",
         "owner": "lara.bluekami@gmail.com",
+        "race": "ELF",
+        "level": 2,
         "spells": [
           "primal-savagery",
           "produce-flame",
