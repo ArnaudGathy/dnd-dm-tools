@@ -10,7 +10,6 @@ import Image from "next/image";
 import { NavBarItem } from "@/components/navbar/NavBarItem";
 import Link from "next/link";
 import PartyLevelSelect from "@/components/navbar/PartyLevelSelect";
-import PartySelect from "@/components/navbar/PartySelect";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
@@ -20,6 +19,7 @@ import {
   SquareUserIcon,
   SwordsIcon,
 } from "lucide-react";
+import { CampaignSelect } from "@/components/navbar/CampaignSelect";
 
 const menuItems = [
   {
@@ -48,13 +48,13 @@ const menuItems = [
 ];
 
 export const NavBar = async () => {
-  const { isLoggedIn } = await getSessionData();
+  const { isAdmin } = await getSessionData();
 
   const getEndMenu = () => {
     return (
       <>
-        <PartySelect />
-        {isLoggedIn && <PartyLevelSelect />}
+        {isAdmin && <CampaignSelect />}
+        {isAdmin && <PartyLevelSelect />}
         <SignInButton />
       </>
     );

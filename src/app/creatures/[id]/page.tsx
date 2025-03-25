@@ -3,23 +3,14 @@ import {
   getIdFromEnemy,
   groupEncounters,
   typedEncounters,
-  typedParties,
 } from "@/utils/utils";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import {
-  entries,
-  filter,
-  flat,
-  flatMap,
-  map,
-  pipe,
-  unique,
-  values,
-} from "remeda";
+import { entries, filter, flat, map, unique, values } from "remeda";
 import { Link } from "@/components/ui/Link";
 import { notFound } from "next/navigation";
 import { StatBlock } from "@/app/creatures/StatBlock";
 import { getSessionData } from "@/lib/utils";
+import { getCharactersByCreatureId } from "@/lib/api/characters";
 
 const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { isAdmin } = await getSessionData();
@@ -43,14 +34,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
     ),
   );
 
-  const inPlayerList = pipe(
-    typedParties,
-    flatMap((party) => party.characters),
-    filter(
-      (character) =>
-        !!character.creatures && character.creatures.includes(creature.id),
-    ),
-  );
+  const charactersWithCreatures = await getCharactersByCreatureId(creature.id);
 
   return (
     <div className="flex gap-4 md:grid md:grid-cols-3">
@@ -92,7 +76,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
           </Card>
         )}
 
-        {!!Object.keys(inPlayerList).length && (
+        {charactersWithCreatures.length > 0 && (
           <Card>
             <CardHeader>
               <CardTitle>Dans la liste de créatures de :</CardTitle>
@@ -100,8 +84,8 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             <CardContent>
               {
                 <ul>
-                  {inPlayerList.map((player) => (
-                    <li key={player.name}> {player.name}</li>
+                  {charactersWithCreatures.map(({ name, id }) => (
+                    <li key={id}> {name}</li>
                   ))}
                 </ul>
               }

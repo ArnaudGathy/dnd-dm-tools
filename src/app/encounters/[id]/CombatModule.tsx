@@ -27,7 +27,7 @@ import { Progress } from "@/components/ui/progress";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { getPartyLevel, getParty } from "@/utils/localStorageUtils";
+import { getPartyLevel } from "@/utils/localStorageUtils";
 import {
   Popover,
   PopoverContent,
@@ -45,6 +45,7 @@ import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { BookOpenIcon, FastForwardIcon, PawPrintIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
+import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 
@@ -105,7 +106,7 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const router = useRouter();
   const pathName = usePathname();
   const partyLevel = getPartyLevel();
-  const party = getParty();
+
   const [turnsCounter, setTurnsCounter] = useState(1);
   const [currentTurnIndex, setCurrentTurnIndex] = useState<number | null>(null);
   const hasCombatStarted = currentTurnIndex !== null;
@@ -115,7 +116,6 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(
     filter(
       [
-        ...(party ? getParticipantFromCharacters(party) : []),
         ...getParticipantFromEncounter({
           encounter,
           partyLevel,
@@ -134,6 +134,23 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       isDefined,
     ).toSorted(sortParticipant),
   );
+
+  const group = useGroupFromCampaign({
+    addGroupMembersToListAction: (group: Group) => {
+      const participants = getParticipantFromCharacters(group);
+      setListOfParticipants((current) => {
+        if (
+          participants.every((participant) =>
+            current.some((p) => p.name === participant.name),
+          )
+        ) {
+          return current;
+        }
+        return [...participants, ...current].toSorted(sortParticipant);
+      });
+    },
+  });
+
   const [participant, setParticipant] =
     useState<ParticipantToAdd>(DEFAULT_STATE);
   const [hpChangeMode, setHpChangeMode] = useState<"add" | "sub">("sub");
@@ -199,26 +216,25 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
 
   const playersWithSpells = useMemo(
     () =>
-      party
-        ? pipe(
-            party.characters,
-            filter((character) => character.spells.length > 0),
-            map(prop("name")),
-          )
-        : [],
-    [party],
+      pipe(
+        group,
+        filter((character) => character.spellsOnCharacters.length > 0),
+        map(prop("name")),
+      ),
+    [group],
   );
 
   const playersWithCreatures = useMemo(
     () =>
-      party
-        ? pipe(
-            party.characters,
-            filter((character) => !!character.creatures),
-            map(prop("name")),
-          )
-        : [],
-    [party],
+      pipe(
+        group,
+        filter(
+          (character) =>
+            !!character.creatures && character.creatures.length > 0,
+        ),
+        map(prop("name")),
+      ),
+    [group],
   );
 
   const handleUpdateCurrentHP =

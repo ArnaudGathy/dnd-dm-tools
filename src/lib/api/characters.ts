@@ -82,3 +82,24 @@ export const getCharacterById = async ({
     },
   });
 };
+
+export const getCharactersByCreatureId = (creatureId: number) => {
+  return prisma.character.findMany({
+    where: {
+      creatures: {
+        has: creatureId,
+      },
+    },
+  });
+};
+
+export const getCharactersFromCampaignId = (campaignId: number) => {
+  return prisma.character.findMany({
+    where: {
+      campaignId: campaignId,
+    },
+    include: {
+      spellsOnCharacters: true,
+    },
+  });
+};

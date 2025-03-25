@@ -1,5 +1,4 @@
 import {
-  Character,
   Characteristics,
   Condition,
   Creature,
@@ -7,12 +6,10 @@ import {
   EncounterEnemy,
   isEnemyObject,
   Participant,
-  Party,
   Skills,
   Spell,
 } from "@/types/types";
 import creatures from "@/data/creatures.json";
-import parties from "@/data/parties.json";
 import encounters from "@/data/encounters.json";
 import spellList from "@/data/spellList.json";
 import spells from "@/data/spells.json";
@@ -20,10 +17,10 @@ import { v4 as uuidv4 } from "uuid";
 import { entries, groupBy, isPlainObject, prop, reduce } from "remeda";
 import conditions from "@/data/conditions.json";
 import { APISpell } from "@/types/schemas";
+import { Group } from "@/hooks/useGroupFromCampaign";
 
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
-export const typedParties: Party[] = parties;
 export const typedConditions: Condition[] = conditions;
 export const typedSummarySpells: Spell[] = spellList;
 export const typedLocalSpells: APISpell[] = spells;
@@ -186,12 +183,8 @@ export const getInitiative = (creature: Creature) => {
   return (roll(20) + getModifierFromCreature(creature, "dexterity")).toString();
 };
 
-export const getParticipantFromCharacters = (party: Party | null) => {
-  if (!party) {
-    throw new Error("Party not found");
-  }
-
-  return party.characters.map(({ name }: Character) => ({
+export const getParticipantFromCharacters = (group: Group) => {
+  return group.map(({ name }) => ({
     name,
     init: "",
     hp: "",

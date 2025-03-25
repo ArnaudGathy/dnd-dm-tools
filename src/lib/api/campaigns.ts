@@ -15,3 +15,15 @@ export const getOwnersCampaigns = async ({
     },
   });
 };
+
+export const getCampaigns = async () => {
+  return prisma.campaign.findMany({
+    orderBy: { name: "asc" },
+    include: { party: true },
+    where: {
+      status: {
+        not: "FINISHED",
+      },
+    },
+  });
+};

@@ -7,29 +7,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { typedParties } from "@/utils/utils";
 import dynamic from "next/dynamic";
+import { Campaign, Party } from "@prisma/client";
+import { PARTY_MAP } from "@/constants/maps";
 
-const PartySelect = () => {
+const CampaignsList = ({
+  campaigns,
+}: {
+  campaigns: Array<Campaign & { party: Party }>;
+}) => {
   return (
     <Select
-      defaultValue={localStorage.getItem("party") ?? "0"}
+      defaultValue={localStorage.getItem("campaignId") ?? "0"}
       onValueChange={(value) => {
-        localStorage.setItem("party", value);
+        localStorage.setItem("campaignId", value);
         window.location.reload();
       }}
     >
       <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Party" />
+        <SelectValue placeholder="Campaign" />
       </SelectTrigger>
       <SelectContent>
         <SelectItem value={"0"}>Tout</SelectItem>
-        {typedParties.map((party) => {
-          const partyId = party.id.toString();
+        {campaigns.map(({ id, party }) => {
+          const partyId = id.toString();
 
           return (
             <SelectItem key={partyId} value={partyId}>
-              {party.name}
+              {PARTY_MAP[party.name]}
             </SelectItem>
           );
         })}
@@ -38,4 +43,4 @@ const PartySelect = () => {
   );
 };
 
-export default dynamic(() => Promise.resolve(PartySelect), { ssr: false });
+export default dynamic(() => Promise.resolve(CampaignsList), { ssr: false });

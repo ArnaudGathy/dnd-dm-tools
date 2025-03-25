@@ -76,3 +76,16 @@ export const getCharacterSpellsByLevel = async ({
     name: response[0]?.character?.name,
   };
 };
+
+export const getCharactersBySpellId = async (spellId: string) => {
+  const charactersWithSpell = await prisma.spellsOnCharacters.findMany({
+    where: {
+      spellId,
+    },
+    include: {
+      character: true,
+    },
+  });
+
+  return charactersWithSpell.map((entry) => entry.character);
+};
