@@ -1,9 +1,8 @@
 import Breadcrumbs from "@/components/Breadcrumbs";
-import { getCharacterById } from "@/lib/api/characters";
-import NotFound from "next/dist/client/components/not-found-error";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { BookOpenIcon, PawPrintIcon } from "lucide-react";
+import { getValidCharacter } from "@/lib/utils";
 
 export default async function Character({
   params,
@@ -11,13 +10,7 @@ export default async function Character({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const character = await getCharacterById({
-    characterId: parseInt(id, 10),
-  });
-
-  if (!character) {
-    return <NotFound />;
-  }
+  const character = await getValidCharacter(id);
 
   const breadCrumbs = [
     { name: "Accueil", href: "/" },

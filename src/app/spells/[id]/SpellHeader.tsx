@@ -30,7 +30,7 @@ export default async function SpellHeader({
     <CardHeader>
       {(spellFromApp.name || spellFromAPI.name) && (
         <CardTitle className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 truncate">
             {tiny && isFavorite !== undefined && characterId ? (
               <FavoriteButton
                 onIcon={
@@ -57,11 +57,13 @@ export default async function SpellHeader({
               )
             )}
 
-            {tiny ? (
-              <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link>
-            ) : (
-              spellName
-            )}
+            <span className="truncate">
+              {tiny ? (
+                <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link>
+              ) : (
+                spellName
+              )}
+            </span>
           </div>
         </CardTitle>
       )}

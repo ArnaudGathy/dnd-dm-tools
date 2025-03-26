@@ -69,7 +69,9 @@ export const SpellList = ({
                         )
                       )}
                     </div>
-                    <Link href={`/spells/${spell.id}`}>{spell.name}</Link>
+                    <Link href={`/spells/${spell.id}`} className="truncate">
+                      {spell.name}
+                    </Link>
                   </li>
                 ))}
               </ul>

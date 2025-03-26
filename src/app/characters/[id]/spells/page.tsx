@@ -1,10 +1,9 @@
 import SpellsFilters, { SpellsSearchParams } from "@/app/spells/SpellsFilters";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
-import NotFound from "next/dist/client/components/not-found-error";
 import SpellCardsList from "@/app/spells/SpellCardsList";
 import SpellsGrouped from "@/app/spells/[id]/SpellsGrouped";
-import { getCharacterById } from "@/lib/api/characters";
+import { getValidCharacter } from "@/lib/utils";
 
 const defaultFilter = SPELLS_GROUP_BY.LEVEL;
 
@@ -17,15 +16,10 @@ export default async function Spells({
 }) {
   const { id } = await params;
   const awaitedSearchParams = await searchParams;
-  const intCharacterId = parseInt(id, 10);
-  const character = await getCharacterById({
-    characterId: intCharacterId,
-  });
   const isCardView = awaitedSearchParams.view === SPELLS_VIEW.CARDS;
 
-  if (!character) {
-    return <NotFound />;
-  }
+  const character = await getValidCharacter(id);
+  const intCharacterId = parseInt(id, 10);
 
   const breadCrumbs = [
     { name: "Accueil", href: "/" },

@@ -1,11 +1,10 @@
 import CreatureList from "@/app/creatures/CreatureList";
 import CreatureFilters from "@/app/creatures/CreatureFilters";
-import { getCharacterById } from "@/lib/api/characters";
 import { typedCreatures } from "@/utils/utils";
 import { filter, groupBy, isDefined, map, pipe, sort } from "remeda";
 import { Creature } from "@/types/types";
-import NotFound from "next/dist/client/components/not-found-error";
 import Breadcrumbs from "@/components/Breadcrumbs";
+import { getValidCharacter } from "@/lib/utils";
 
 const getCreatures = ({
   creatureIdList = [],
@@ -41,13 +40,7 @@ export default async function Creatures({
   const { id } = await params;
   const { search } = await searchParams;
 
-  const character = await getCharacterById({
-    characterId: parseInt(id, 10),
-  });
-
-  if (!character) {
-    return <NotFound />;
-  }
+  const character = await getValidCharacter(id);
 
   const breadCrumbs = [
     { name: "Accueil", href: "/" },
