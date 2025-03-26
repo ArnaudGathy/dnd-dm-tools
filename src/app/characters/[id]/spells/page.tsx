@@ -1,4 +1,4 @@
-import SpellsFilters from "@/app/spells/SpellsFilters";
+import SpellsFilters, { SpellsSearchParams } from "@/app/spells/SpellsFilters";
 import Breadcrumbs from "@/components/Breadcrumbs";
 import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
 import NotFound from "next/dist/client/components/not-found-error";
@@ -7,12 +7,6 @@ import SpellsGrouped from "@/app/spells/[id]/SpellsGrouped";
 import { getCharacterById } from "@/lib/api/characters";
 
 const defaultFilter = SPELLS_GROUP_BY.LEVEL;
-
-export type SpellsSearchParams = {
-  groupBy?: SPELLS_GROUP_BY;
-  search?: string;
-  view?: SPELLS_VIEW;
-};
 
 export default async function Spells({
   params,
@@ -48,7 +42,10 @@ export default async function Spells({
             {`Liste des sorts de ${character.name}`}
           </h1>
         </div>
-        <SpellsFilters defaultSearch={defaultFilter} disablePlayer />
+        <SpellsFilters
+          defaultSearch={defaultFilter}
+          features={["search", "cards", "level", "alphabetical", "favorites"]}
+        />
         {isCardView ? (
           <SpellCardsList
             characterId={intCharacterId}

@@ -105,6 +105,7 @@ model SpellsOnCharacters {
   characterId Int
   spell       Spell     @relation(fields: [spellId], references: [id])
   spellId     String
+  isFavorite  Boolean   @default(false)
 
   @@id([spellId, characterId])
 }

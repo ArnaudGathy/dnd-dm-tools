@@ -1,6 +1,6 @@
 import { getGroupedCharacterSpells, SPELLS_GROUP_BY } from "@/lib/api/spells";
 import { SpellList } from "@/app/spells/SpellList";
-import { SpellsSearchParams } from "@/app/characters/[id]/spells/page";
+import { SpellsSearchParams } from "@/app/spells/SpellsFilters";
 
 export default async function SpellsGrouped({
   searchParams,
@@ -11,10 +11,11 @@ export default async function SpellsGrouped({
   characterId: number;
   defaultFilter: SPELLS_GROUP_BY;
 }) {
-  const { search, groupBy } = searchParams;
+  const { search, groupBy, filterBy } = searchParams;
   const { spells } = await getGroupedCharacterSpells({
     search,
     groupBy: groupBy ?? defaultFilter,
+    filterBy,
     characterId: characterId,
   });
 
@@ -25,5 +26,12 @@ export default async function SpellsGrouped({
     return "";
   };
 
-  return <SpellList spellsGroupedBy={spells} label={getLabel()} />;
+  return (
+    <SpellList
+      spellsGroupedBy={spells}
+      label={getLabel()}
+      characterId={characterId}
+      showFavorites
+    />
+  );
 }

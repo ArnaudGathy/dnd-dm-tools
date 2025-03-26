@@ -49,10 +49,10 @@ export default function SpellCasting({
         />
       )}
 
-      {spell.components && (
+      {!tiny && spell.components && (
         <StatCell
           name="Composants"
-          stat={`${spell.components.join(", ")}${spell.material && !tiny ? ` + ${spell.material}` : ""}`}
+          stat={`${spell.components.join(", ")}${spell.material ? ` + ${spell.material}` : ""}`}
           highlightClassName="truncate"
           isInline
         />

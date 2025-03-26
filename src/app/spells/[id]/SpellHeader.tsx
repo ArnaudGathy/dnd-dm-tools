@@ -1,43 +1,68 @@
 import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SparklesIcon } from "@heroicons/react/24/solid";
+import { HeartIcon, SparklesIcon } from "@heroicons/react/24/solid";
 import { Spell } from "@prisma/client";
 import { APISpell } from "@/types/schemas";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-import { Link } from "@/components/ui/Link";
+import Link from "next/link";
+import { FavoriteButton } from "@/app/spells/[id]/FavoriteButton";
+import {
+  HeartIcon as HeartIconOutline,
+  SparklesIcon as SparklesIconOutline,
+} from "@heroicons/react/24/outline";
 
-export default function SpellHeader({
+export default async function SpellHeader({
   spellFromAPI,
   spellFromApp,
+  isFavorite,
+  characterId,
   tiny,
 }: {
   spellFromApp: Spell;
   spellFromAPI: APISpell;
+  isFavorite?: boolean;
+  characterId?: number;
   tiny?: boolean;
 }) {
+  const spellName = spellFromApp.name
+    ? spellFromApp.name
+    : (spellFromAPI.name ?? spellFromAPI.index);
+
   return (
     <CardHeader>
       {(spellFromApp.name || spellFromAPI.name) && (
         <CardTitle className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            {(spellFromApp.isRitual ?? spellFromAPI.ritual) && (
-              <SparklesIcon className="size-6 text-emerald-500" />
-            )}
-            {spellFromApp.name ? (
-              <div>{spellFromApp.name}</div>
+            {tiny && isFavorite !== undefined && characterId ? (
+              <FavoriteButton
+                onIcon={
+                  spellFromApp.isRitual ? (
+                    <SparklesIcon className="size-6 text-primary" />
+                  ) : (
+                    <HeartIcon className="size-6 text-primary" />
+                  )
+                }
+                offIcon={
+                  spellFromApp.isRitual ? (
+                    <SparklesIconOutline className="size-6 text-emerald-500" />
+                  ) : (
+                    <HeartIconOutline className="size-6" />
+                  )
+                }
+                isFavorite={isFavorite}
+                spellId={spellFromApp.id}
+                characterId={characterId}
+              />
             ) : (
-              <div>{spellFromAPI.name ?? spellFromAPI.index}</div>
+              spellFromApp.isRitual && (
+                <SparklesIcon className="size-6 text-emerald-500" />
+              )
+            )}
+
+            {tiny ? (
+              <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link>
+            ) : (
+              spellName
             )}
           </div>
-          {tiny && (
-            <div>
-              <Link href={`/spells/${spellFromAPI.index}`}>
-                <Button size="xs" variant="secondary">
-                  <ExternalLink />
-                </Button>
-              </Link>
-            </div>
-          )}
         </CardTitle>
       )}
 

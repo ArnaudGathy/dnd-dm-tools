@@ -1,11 +1,11 @@
 import { SpellList } from "@/app/spells/SpellList";
-import SpellsFilters from "@/app/spells/SpellsFilters";
+import SpellsFilters, { SpellsSearchParams } from "@/app/spells/SpellsFilters";
 import { getGroupedCharacterSpells, SPELLS_GROUP_BY } from "@/lib/api/spells";
 
 export default async function Spells({
   searchParams,
 }: {
-  searchParams: Promise<{ groupBy?: SPELLS_GROUP_BY; search?: string }>;
+  searchParams: Promise<SpellsSearchParams>;
 }) {
   const { search, groupBy } = await searchParams;
   const { spells } = await getGroupedCharacterSpells({
@@ -27,7 +27,9 @@ export default async function Spells({
           Liste des sorts
         </h1>
       </div>
-      <SpellsFilters disableCards />
+      <SpellsFilters
+        features={["search", "character", "level", "alphabetical"]}
+      />
       <SpellList spellsGroupedBy={spells} label={getLabel()} />
     </div>
   );

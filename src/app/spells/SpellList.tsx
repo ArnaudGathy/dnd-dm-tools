@@ -1,15 +1,24 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SparklesIcon } from "@heroicons/react/16/solid";
+import { SparklesIcon, HeartIcon } from "@heroicons/react/16/solid";
+import {
+  SparklesIcon as SparklesIconOutline,
+  HeartIcon as HeartIconOutline,
+} from "@heroicons/react/24/outline";
 import { Link } from "@/components/ui/Link";
-import { Spell } from "@prisma/client";
 import { capitalize, entries } from "remeda";
+import { SpellWithFavorite } from "@/lib/api/spells";
+import { FavoriteButton } from "@/app/spells/[id]/FavoriteButton";
 
 export const SpellList = ({
   spellsGroupedBy,
   label,
+  showFavorites = false,
+  characterId,
 }: {
-  spellsGroupedBy: Record<string, Spell[]>;
+  characterId?: number;
+  spellsGroupedBy: Record<string, SpellWithFavorite[]>;
   label: string;
+  showFavorites?: boolean;
 }) => {
   const spellEntries = entries(spellsGroupedBy);
   if (spellEntries.length === 0) {
@@ -22,7 +31,10 @@ export const SpellList = ({
     <div className="flex flex-col gap-4">
       <div className="flex flex-wrap gap-4">
         {spellEntries.map(([property, spells]) => (
-          <Card key={property} className="min-w-full md:min-w-[24%]">
+          <Card
+            key={property}
+            className="min-w-full md:min-w-[24%] md:max-w-[24%]"
+          >
             <CardHeader>
               <CardTitle>{`${label} ${capitalize(property)}`}</CardTitle>
             </CardHeader>
@@ -30,9 +42,31 @@ export const SpellList = ({
               <ul>
                 {spells.map((spell) => (
                   <li key={spell.id} className="flex items-center gap-2">
-                    <div className="w-4">
-                      {spell.isRitual && (
-                        <SparklesIcon className="size-4 text-emerald-500" />
+                    <div className="flex min-w-4">
+                      {showFavorites && characterId ? (
+                        <FavoriteButton
+                          onIcon={
+                            spell.isRitual ? (
+                              <SparklesIcon className="size-4 text-primary" />
+                            ) : (
+                              <HeartIcon className="size-4 text-primary" />
+                            )
+                          }
+                          offIcon={
+                            spell.isRitual ? (
+                              <SparklesIconOutline className="size-4 text-emerald-500" />
+                            ) : (
+                              <HeartIconOutline className="size-4" />
+                            )
+                          }
+                          isFavorite={spell.isFavorite}
+                          spellId={spell.id}
+                          characterId={characterId}
+                        />
+                      ) : (
+                        spell.isRitual && (
+                          <SparklesIcon className="size-4 text-emerald-500" />
+                        )
                       )}
                     </div>
                     <Link href={`/spells/${spell.id}`}>{spell.name}</Link>

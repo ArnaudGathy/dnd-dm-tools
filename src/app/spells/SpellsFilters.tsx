@@ -6,10 +6,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { entries } from "remeda";
 import { useState } from "react";
-import { ChevronDown, ChevronUp, StickyNote } from "lucide-react";
+import { ChevronDown, ChevronUp, Heart, StickyNote } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Toggle } from "@/components/ui/toggle";
-import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
+import {
+  SPELLS_FILTER_BY,
+  SPELLS_GROUP_BY,
+  SPELLS_VIEW,
+} from "@/lib/api/spells";
 
 const tabs = {
   [SPELLS_GROUP_BY.ALPHABETICAL]: "Alphabétique",
@@ -17,14 +21,26 @@ const tabs = {
   [SPELLS_GROUP_BY.CHARACTER]: "Personnage",
 };
 
+export type SpellsSearchParams = {
+  groupBy?: SPELLS_GROUP_BY;
+  search?: string;
+  view?: SPELLS_VIEW;
+  filterBy?: SPELLS_FILTER_BY;
+};
+
 export default function SpellsFilters({
   defaultSearch = SPELLS_GROUP_BY.ALPHABETICAL,
-  disablePlayer = false,
-  disableCards = false,
+  features,
 }: {
   defaultSearch?: SPELLS_GROUP_BY;
-  disablePlayer?: boolean;
-  disableCards?: boolean;
+  features: (
+    | "search"
+    | "cards"
+    | "level"
+    | "alphabetical"
+    | "character"
+    | "favorites"
+  )[];
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -33,6 +49,7 @@ export default function SpellsFilters({
   const isCardView = params.get("view") === SPELLS_VIEW.CARDS;
 
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const filteredTabs = entries(tabs).filter(([key]) => features.includes(key));
 
   const updateParams = () => {
     router.replace(`${pathName}?${params.toString()}`);
@@ -65,8 +82,17 @@ export default function SpellsFilters({
     updateParams();
   };
 
+  const handleFilterBy = (filterBy?: SPELLS_FILTER_BY) => {
+    if (filterBy) {
+      params.set("filterBy", filterBy);
+    } else {
+      params.delete("filterBy");
+    }
+    updateParams();
+  };
+
   return (
-    <div className="flex flex-col gap-4 md:flex-row">
+    <div className="flex flex-col gap-2 md:flex-row">
       <div className="flex gap-2">
         <Toggle
           className="md:hidden"
@@ -81,16 +107,18 @@ export default function SpellsFilters({
             <ChevronUp className="size-4" />
           )}
         </Toggle>
-        <SearchField
-          search={params.get("search") ?? ""}
-          setSearch={handleSearchParams}
-          isDefault
-        />
+        {features.includes("search") && (
+          <SearchField
+            search={params.get("search") ?? ""}
+            setSearch={handleSearchParams}
+            isDefault
+          />
+        )}
       </div>
 
-      <div className={cn("flex items-center gap-4", { hidden: isCollapsed })}>
-        {!disableCards && (
-          <div>
+      <div className={cn("flex items-center gap-2", { hidden: isCollapsed })}>
+        <div className="flex items-center gap-2">
+          {features.includes("cards") && (
             <Toggle
               variant="outline"
               pressed={params.get("view") === SPELLS_VIEW.CARDS}
@@ -99,17 +127,26 @@ export default function SpellsFilters({
               }
             >
               <StickyNote />
-              Cartes
             </Toggle>
-          </div>
-        )}
+          )}
+
+          {features.includes("favorites") && (
+            <Toggle
+              variant="outline"
+              pressed={params.get("filterBy") === SPELLS_FILTER_BY.FAVORITES}
+              onPressedChange={(isEnabled) =>
+                isEnabled
+                  ? handleFilterBy(SPELLS_FILTER_BY.FAVORITES)
+                  : handleFilterBy(undefined)
+              }
+            >
+              <Heart />
+            </Toggle>
+          )}
+        </div>
         <Tabs defaultValue={params.get("groupBy") ?? defaultSearch}>
           <TabsList>
-            {entries(tabs).map(([key, value]) => {
-              if (disablePlayer && key === SPELLS_GROUP_BY.CHARACTER) {
-                return null;
-              }
-
+            {filteredTabs.map(([key, value]) => {
               return (
                 <TabsTrigger
                   key={key}

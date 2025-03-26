@@ -1,10 +1,10 @@
 import { getCharacterSpells } from "@/lib/api/spells";
-import { SpellsSearchParams } from "@/app/characters/[id]/spells/page";
 import { getSpell } from "@/lib/external-apis/externalAPIs";
 import { Card, CardContent } from "@/components/ui/card";
 import SpellHeader from "@/app/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/spells/[id]/SpellDetails";
+import { SpellsSearchParams } from "@/app/spells/SpellsFilters";
 
 export default async function SpellCardsList({
   searchParams,
@@ -13,8 +13,10 @@ export default async function SpellCardsList({
   searchParams: SpellsSearchParams;
   characterId: number;
 }) {
+  const { search, filterBy } = searchParams;
   const spellList = await getCharacterSpells({
-    search: searchParams.search,
+    search,
+    filterBy,
     characterId: characterId,
   });
 
@@ -24,13 +26,14 @@ export default async function SpellCardsList({
       return {
         spellFromApp: spell.spell,
         spellFromAPI: spellFromApi,
+        isFavorite: spell.isFavorite,
       };
     }),
   );
 
   return (
     <div className="flex w-full flex-col gap-4 md:grid md:grid-cols-3">
-      {spellDetails.map(({ spellFromApp, spellFromAPI }) => {
+      {spellDetails.map(({ spellFromApp, spellFromAPI, isFavorite }) => {
         if (!spellFromAPI?.index) {
           return null;
         }
@@ -40,6 +43,8 @@ export default async function SpellCardsList({
             <SpellHeader
               spellFromApp={spellFromApp}
               spellFromAPI={spellFromAPI}
+              isFavorite={isFavorite}
+              characterId={characterId}
               tiny
             />
             <CardContent>

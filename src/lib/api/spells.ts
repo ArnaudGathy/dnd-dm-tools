@@ -7,7 +7,7 @@ import {
   reduce,
   uniqueBy,
 } from "remeda";
-import { Spell, Character } from "@prisma/client";
+import { Spell, Character, SpellsOnCharacters } from "@prisma/client";
 
 export enum SPELLS_GROUP_BY {
   CHARACTER = "character",
@@ -15,19 +15,31 @@ export enum SPELLS_GROUP_BY {
   ALPHABETICAL = "alphabetical",
 }
 
+export enum SPELLS_FILTER_BY {
+  FAVORITES = "favorites",
+}
+
 export enum SPELLS_VIEW {
   LIST = "list",
   CARDS = "cards",
 }
 
+export type SpellWithFavorite = Spell & {
+  isFavorite: SpellsOnCharacters["isFavorite"];
+};
+
 const getGroupedSpells = (
-  response: Array<{ spell: Spell; character: Character }>,
+  response: Array<{ spell: Spell; character: Character } & SpellsOnCharacters>,
   groupBy?: SPELLS_GROUP_BY,
 ) => {
+  const transformedResponse = response.map((r) => ({
+    ...r,
+    spell: { ...r.spell, isFavorite: r.isFavorite },
+  }));
   if (groupBy === SPELLS_GROUP_BY.CHARACTER) {
     return reduce(
-      response,
-      (acc: { [key: string]: Spell[] }, next) => {
+      transformedResponse,
+      (acc: { [key: string]: SpellWithFavorite[] }, next) => {
         if (!acc[next.character.name]) {
           acc[next.character.name] = [next.spell];
         } else {
@@ -39,7 +51,11 @@ const getGroupedSpells = (
     );
   }
 
-  const spells = pipe(response, map(prop("spell")), uniqueBy(prop("id")));
+  const spells = pipe(
+    transformedResponse,
+    map(prop("spell")),
+    uniqueBy(prop("id")),
+  );
 
   if (groupBy === SPELLS_GROUP_BY.LEVEL) {
     return groupByRemeda(spells, prop("level"));
@@ -48,7 +64,7 @@ const getGroupedSpells = (
   return groupByRemeda(spells, (spell) => spell.name[0]);
 };
 
-export const getSpellById = (spellId: string) => {
+export const getSpellById = async (spellId: string) => {
   return prisma.spell.findUnique({
     where: {
       id: spellId,
@@ -56,7 +72,7 @@ export const getSpellById = (spellId: string) => {
   });
 };
 
-export const getSpellByIds = (spellIds: string[]) => {
+export const getSpellByIds = async (spellIds: string[]) => {
   return prisma.spell.findMany({
     where: {
       id: {
@@ -70,14 +86,19 @@ export const getGroupedCharacterSpells = async ({
   characterId,
   search,
   groupBy,
+  filterBy,
 }: {
   characterId?: number;
   search?: string;
   groupBy?: SPELLS_GROUP_BY;
+  filterBy?: SPELLS_FILTER_BY;
 }) => {
   const response = await prisma.spellsOnCharacters.findMany({
     where: {
       characterId: characterId,
+      isFavorite: filterBy
+        ? filterBy === SPELLS_FILTER_BY.FAVORITES
+        : undefined,
       spell: {
         name: {
           contains: search,
@@ -116,12 +137,17 @@ export const getCharactersBySpellId = async (spellId: string) => {
 export const getCharacterSpells = async ({
   search,
   characterId,
+  filterBy,
 }: {
   search?: string;
   characterId?: number;
+  filterBy?: SPELLS_FILTER_BY;
 }) => {
   return prisma.spellsOnCharacters.findMany({
     where: {
+      isFavorite: filterBy
+        ? filterBy === SPELLS_FILTER_BY.FAVORITES
+        : undefined,
       characterId: characterId,
       spell: {
         name: {
