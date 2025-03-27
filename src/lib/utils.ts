@@ -20,7 +20,7 @@ export async function getSessionData() {
 }
 
 export async function getValidCharacter(characterId: string) {
-  const { userMail } = await getSessionData();
+  const { userMail, isAdmin } = await getSessionData();
   const character = await getCharacterById({
     characterId: parseInt(characterId, 10),
   });
@@ -29,9 +29,9 @@ export async function getValidCharacter(characterId: string) {
     notFound();
   }
 
-  if (userMail !== character.owner) {
-    return redirect("/");
+  if (userMail === character.owner || isAdmin) {
+    return character;
   }
 
-  return character;
+  return redirect("/");
 }

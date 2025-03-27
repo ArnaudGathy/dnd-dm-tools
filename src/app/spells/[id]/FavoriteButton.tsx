@@ -1,7 +1,7 @@
-import { updateSpellFavoriteAction } from "@/lib/api/actions/spells";
+import { updateSpellFavoriteAction } from "@/lib/actions/spells";
 import { ReactNode } from "react";
 
-export const FavoriteButton = async ({
+export const FavoriteButton = ({
   onIcon,
   offIcon,
   isFavorite,
