@@ -3,6 +3,20 @@ import { twMerge } from "tailwind-merge";
 import { auth } from "@/../auth";
 import { notFound, redirect } from "next/navigation";
 import { getCharacterById } from "@/lib/api/characters";
+import {
+  Armor,
+  Campaign,
+  Capacity,
+  Character,
+  InventoryItem,
+  Money,
+  Party,
+  SavingThrow,
+  Skill,
+  Spell,
+  SpellsOnCharacters,
+  Weapon,
+} from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
@@ -18,6 +32,18 @@ export async function getSessionData() {
       !!session?.user?.email && session.user.email === "arno.firefox@gmail.com",
   };
 }
+
+export type CharacterById = Character & {
+  campaign: Campaign & { party: Party };
+  spellsOnCharacters: (SpellsOnCharacters & { spell: Spell })[];
+  skills: Skill[];
+  capacities: Capacity[];
+  savingThrows: SavingThrow[];
+  armors: Armor[];
+  weapons: Weapon[];
+  inventory: InventoryItem[];
+  wealth: Money[];
+};
 
 export async function getValidCharacter(characterId: string) {
   const { userMail, isAdmin } = await getSessionData();

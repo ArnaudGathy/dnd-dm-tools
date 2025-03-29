@@ -7,6 +7,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum ArmorType {
+  LIGHT
+  MEDIUM
+  HEAVY
+  SHIELD
+}
+
+model Armor {
+  id                  Int       @id @default(autoincrement())
+  character           Character @relation(fields: [characterId], references: [id])
+  characterId         Int
+  name                String
+  type                ArmorType
+  isProficient        Boolean   @default(true)
+  AC                  Int
+  extraEffects        String[]
+  strengthRequirement Int?
+  stealthDisadvantage Boolean   @default(false)
+}
+
 enum CampaignId {
   DRAGONS
   PHANDELVER
@@ -28,23 +48,12 @@ model Campaign {
   partyId   Int
 }
 
-enum PartyId {
-  MIFA
-  PAINTERS
-}
-
-model Party {
-  id        Int        @id @default(autoincrement())
-  name      PartyId
-  campaigns Campaign[]
-}
-
-model Spell {
-  id                 String               @id
-  name               String
-  level              Int
-  isRitual           Boolean              @default(false)
-  spellsOnCharacters SpellsOnCharacters[]
+model Capacity {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  name        String
+  description String?
 }
 
 enum Classes {
@@ -63,6 +72,87 @@ enum Classes {
   WIZARD
 }
 
+enum Subclasses {
+  // Artificer
+  ALCHEMIST
+  ARMORER
+  ARTILLERIST
+  BATTLE_SMITH
+  // Barbarian
+  PATH_OF_THE_BERSERKER
+  PATH_OF_THE_WILD_HEART // renamed Totem Warrior
+  PATH_OF_THE_STORM_HERALD
+  PATH_OF_THE_ZEALOT
+  // Bard
+  COLLEGE_OF_VALOR
+  COLLEGE_OF_LORE
+  COLLEGE_OF_SWORDS
+  COLLEGE_OF_WHISPERS
+  // Cleric
+  LIFE_DOMAIN
+  LIGHT_DOMAIN
+  WAR_DOMAIN
+  TRICKERY_DOMAIN
+  KNOWLEDGE_DOMAIN
+  NATURE_DOMAIN
+  TEMPEST_DOMAIN
+  DEATH_DOMAIN
+  // Druid
+  CIRCLE_OF_THE_LAND
+  CIRCLE_OF_THE_MOON
+  CIRCLE_OF_SPORES
+  CIRCLE_OF_WILD_FIRE
+  // Fighter
+  CHAMPION
+  BATTLE_MASTER
+  ELDRITCH_KNIGHT
+  ARCANE_ARCHER
+  CAVALIER
+  SAMURAI
+  // Monk
+  WAY_OF_THE_OPEN_HAND
+  WAY_OF_SHADOW
+  WAY_OF_THE_ELEMENTS // renamed Four Elements
+  WAY_OF_MERCY
+  // Paladin
+  OATH_OF_DEVOTION
+  OATH_OF_THE_ANCESTORS
+  OATH_OF_VENGEANCE
+  OATH_OF_GLORY
+  OATH_OF_THE_CROWN
+  // Ranger
+  HUNTER
+  BEAST_MASTER
+  GLOOM_STALKER
+  SWARMKEEPER
+  // Rogue
+  THIEF
+  ASSASSIN
+  ARCANE_TRICKSTER
+  SOULKNIFE
+  INQUISITIVE
+  // Sorcerer
+  DRACONIC_BLOODLINE
+  WILD_MAGIC
+  STORM_SORCERY
+  DIVINE_SOUL
+  // Warlock
+  THE_ARCHFEY
+  THE_FIEND
+  THE_GREAT_OLD_ONE
+  THE_GENIE
+  THE_HEXBLADE
+  // Wizard
+  SCHOOL_OF_EVOCATION
+  SCHOOL_OF_ABJURATION
+  SCHOOL_OF_ILLUSION
+  SCHOOL_OF_DIVINATION
+  SCHOOL_OF_NECROMANCY
+  SCHOOL_OF_TRANSMUTATION
+  SCHOOL_OF_CONJURATION
+  SCHOOL_OF_ENCHANTMENT
+}
+
 enum Races {
   AASIMAR
   DRAGONBORN
@@ -78,10 +168,41 @@ enum Races {
   TIEFLING
 }
 
+enum Backgrounds {
+  ACOLYTE
+  ARTISAN
+  CHARLATAN
+  CRIMINAL
+  ENTERTAINER
+  FARMER
+  GUARD
+  GUIDE
+  HERMIT
+  MERCHANT
+  NOBLE
+  SAGE
+  SAILOR
+  SCRIBE
+  SOLDIER
+  WAYFARER
+}
+
 enum CharacterStatus {
   ACTIVE
   DEAD
   RETIRED
+}
+
+enum Alignment {
+  LAWFUL_GOOD
+  NEUTRAL_GOOD
+  CHAOTIC_GOOD
+  LAWFUL_NEUTRAL
+  NEUTRAL
+  CHAOTIC_NEUTRAL
+  LAWFUL_EVIL
+  NEUTRAL_EVIL
+  CHAOTIC_EVIL
 }
 
 model Character {
@@ -92,12 +213,158 @@ model Character {
   owner              String
   campaign           Campaign             @relation(fields: [campaignId], references: [id])
   campaignId         Int
-  name               String               @db.VarChar(255)
-  className          Classes
-  race               Races
-  level              Int                  @default(1)
   spellsOnCharacters SpellsOnCharacters[]
   creatures          Int[]                @default([])
+
+  name         String      @db.VarChar(255)
+  level        Int         @default(1)
+  className    Classes
+  subclassName Subclasses?
+  race         Races
+  background   Backgrounds
+  inspiration  Int         @default(0)
+  maximumHP    Int
+  currentHP    Int
+
+  strength     Int
+  dexterity    Int
+  constitution Int
+  intelligence Int
+  wisdom       Int
+  charisma     Int
+
+  savingThrows  SavingThrow[]
+  skills        Skill[]
+  proficiencies String[]      @db.VarChar(255)
+  capacities    Capacity[]
+
+  initiativeBonus    Int
+  ACBonus            Int
+  magicAttackBonus   Int
+  magicDCBonus       Int
+  movementSpeedBonus Int
+
+  weapons Weapon[]
+  armors  Armor[]
+
+  inventory InventoryItem[]
+  wealth    Money[]
+
+  age            Int
+  weight         Int
+  height         Int
+  eyeColor       String
+  hair           String
+  skin           String
+  physicalTraits String[]
+
+  alignment         Alignment
+  personalityTraits String[]
+  ideals            String[]
+  bonds             String[]
+  flaws             String[]
+
+  lore   String[]
+  allies String[]
+  notes  String[]
+}
+
+model InventoryItem {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  name        String
+  description String?
+  quantity    Int       @default(1)
+  value       String?
+}
+
+enum MoneyType {
+  GOLD
+  SILVER
+  COPPER
+}
+
+model Money {
+  id          Int       @id @default(autoincrement())
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  type        MoneyType
+  quantity    Int
+
+  @@unique([characterId, type])
+}
+
+enum PartyId {
+  MIFA
+  PAINTERS
+}
+
+model Party {
+  id        Int        @id @default(autoincrement())
+  name      PartyId
+  campaigns Campaign[]
+}
+
+enum Abilities {
+  STRENGTH
+  DEXTERITY
+  CONSTITUTION
+  INTELLIGENCE
+  WISDOM
+  CHARISMA
+}
+
+model SavingThrow {
+  id           Int       @id @default(autoincrement())
+  ability      Abilities
+  character    Character @relation(fields: [characterId], references: [id])
+  characterId  Int
+  isProficient Boolean   @default(false)
+  modifier     Int       @default(0)
+
+  @@unique([characterId, ability])
+}
+
+enum Skills {
+  ATHLETICS
+  ACROBATICS
+  SLEIGHT_OF_HAND
+  STEALTH
+  ARCANA
+  HISTORY
+  INVESTIGATION
+  NATURE
+  RELIGION
+  ANIMAL_HANDLING
+  INSIGHT
+  MEDICINE
+  PERCEPTION
+  SURVIVAL
+  DECEPTION
+  INTIMIDATION
+  PERFORMANCE
+  PERSUASION
+}
+
+model Skill {
+  id           Int       @id @default(autoincrement())
+  skill        Skills
+  character    Character @relation(fields: [characterId], references: [id])
+  characterId  Int
+  isProficient Boolean   @default(false)
+  isExpert     Boolean   @default(false)
+  modifier     Int       @default(0)
+
+  @@unique([characterId, skill])
+}
+
+model Spell {
+  id                 String               @id
+  name               String
+  level              Int
+  isRitual           Boolean              @default(false)
+  spellsOnCharacters SpellsOnCharacters[]
 }
 
 model SpellsOnCharacters {
@@ -108,4 +375,70 @@ model SpellsOnCharacters {
   isFavorite  Boolean   @default(false)
 
   @@id([spellId, characterId])
+}
+
+enum WeaponDamageType {
+  BLUDGEONING
+  SLASHING
+  PIERCING
+  ACID
+  COLD
+  FIRE
+  FORCE
+  LIGHTNING
+  NECROTIC
+  POISON
+  PSYCHIC
+  RADIANT
+  THUNDER
+  FLAT
+}
+
+enum WeaponDamageDices {
+  D4
+  D6
+  D8
+  D10
+  D12
+}
+
+enum WeaponType {
+  RANGED
+  MELEE
+  THROWN
+}
+
+enum AmunitionType {
+  BOLT
+  ARROW
+  FIREARM_BULLET
+  SLING_BULLET
+  NEEDLES
+}
+
+model WeaponDamage {
+  id         Int                @id @default(autoincrement())
+  weapon     Weapon             @relation(fields: [weaponId], references: [id])
+  weaponId   Int
+  dice       WeaponDamageDices?
+  flatBonus  Int?
+  damageType WeaponDamageType
+}
+
+model Weapon {
+  id              Int            @id @default(autoincrement())
+  character       Character      @relation(fields: [characterId], references: [id])
+  characterId     Int
+  name            String
+  type            WeaponType
+  isProficient    Boolean        @default(true)
+  abilityModifier Abilities
+  attackBonus     Int?
+  damages         WeaponDamage[]
+  reach           Int            @default(5)
+  range           Int?
+  longRange       Int?
+  amunitionType   AmunitionType?
+  amunitionCount  Int?
+  extraEffects    String[]
 }

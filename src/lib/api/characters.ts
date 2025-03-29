@@ -79,6 +79,13 @@ export const getCharacterById = async ({
           spell: true,
         },
       },
+      skills: true,
+      capacities: true,
+      savingThrows: true,
+      armors: true,
+      weapons: true,
+      inventory: true,
+      wealth: true,
     },
   });
 };

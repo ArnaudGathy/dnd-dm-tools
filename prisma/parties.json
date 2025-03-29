@@ -55,15 +55,6 @@
     "name": "Phancreux",
     "characters": [
       {
-        "id": 14,
-        "name": "Alfredo Pinus",
-        "gameClass": "PALADIN",
-        "owner": "arnaud.gathy@gmail.com",
-        "spells": [],
-        "race": "HUMAN",
-        "level": 20
-      },
-      {
         "id": 10,
         "name": "Baern",
         "gameClass": "FIGHTER",

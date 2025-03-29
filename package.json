@@ -12,7 +12,8 @@
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "pre-commit": "lint-staged",
-    "seed": "prisma db push && node prisma/seed.js"
+		"seed": "prisma db push && node prisma/seed.js",
+    "seedOld": "prisma db push && node prisma/seedOld.js"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

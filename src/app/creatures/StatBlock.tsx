@@ -8,7 +8,6 @@ import {
 } from "@/components/ui/card";
 import { clsx } from "clsx";
 import {
-  getModifier,
   getDistanceInSquares,
   shortenAbilityName,
   translatedSenses,
@@ -21,6 +20,7 @@ import Link from "next/link";
 import { StatCell } from "@/app/creatures/StatCell";
 import { ActionBlock } from "@/app/creatures/ActionBlock";
 import { getSpellByIds } from "@/lib/api/spells";
+import Abilities from "@/app/creatures/Abilities";
 
 const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
   return <h5 className="text-neutral-300 underline md:mb-2">{children}</h5>;
@@ -98,26 +98,9 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           </div>
 
           <div className="flex flex-wrap justify-between border-t-2 pt-4 md:justify-start md:gap-4">
-            {entries(creature.abilities).map(([name, value]) => {
-              const modifier = getModifier(value);
-              return (
-                <div
-                  key={name}
-                  className="flex flex-col items-center rounded-lg bg-muted p-2 md:px-4 md:py-2"
-                >
-                  <div className="text-muted-foreground">
-                    {shortenAbilityName(name)}
-                  </div>
-                  <div className="flex items-center gap-1 text-sm md:gap-2 md:text-base">
-                    <span>{value}</span>
-                    <span className="text-indigo-400">
-                      {Math.sign(modifier) === 1 ? `+${modifier}` : modifier}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
+            <Abilities abilities={creature.abilities} />
           </div>
+
           <div className={blockClassName}>
             <CategoryTitle>Général</CategoryTitle>
             {creature.skills && (

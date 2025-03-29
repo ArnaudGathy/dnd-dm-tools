@@ -1,0 +1,111 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum CampaignId {
+  DRAGONS
+  PHANDELVER
+  TOMB
+}
+
+enum CampaignStatus {
+  ABANDONED
+  ACTIVE
+  FINISHED
+}
+
+model Campaign {
+  id        Int            @id @default(autoincrement())
+  name      CampaignId
+  status    CampaignStatus @default(ACTIVE)
+  character Character[]
+  party     Party          @relation(fields: [partyId], references: [id])
+  partyId   Int
+}
+
+enum PartyId {
+  MIFA
+  PAINTERS
+}
+
+model Party {
+  id        Int        @id @default(autoincrement())
+  name      PartyId
+  campaigns Campaign[]
+}
+
+model Spell {
+  id                 String               @id
+  name               String
+  level              Int
+  isRitual           Boolean              @default(false)
+  spellsOnCharacters SpellsOnCharacters[]
+}
+
+enum Classes {
+  ARTIFICER
+  BARBARIAN
+  BARD
+  CLERIC
+  DRUID
+  FIGHTER
+  MONK
+  PALADIN
+  RANGER
+  ROGUE
+  SORCERER
+  WARLOCK
+  WIZARD
+}
+
+enum Races {
+  AASIMAR
+  DRAGONBORN
+  DWARF
+  ELF
+  GNOME
+  GOLIATH
+  HALFLING
+  HALF_ELF
+  HALF_ORC
+  HUMAN
+  ORC
+  TIEFLING
+}
+
+enum CharacterStatus {
+  ACTIVE
+  DEAD
+  RETIRED
+}
+
+model Character {
+  id                 Int                  @id @default(autoincrement())
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  status             CharacterStatus      @default(ACTIVE)
+  owner              String
+  campaign           Campaign             @relation(fields: [campaignId], references: [id])
+  campaignId         Int
+  name               String               @db.VarChar(255)
+  className          Classes
+  race               Races
+  level              Int                  @default(1)
+  spellsOnCharacters SpellsOnCharacters[]
+  creatures          Int[]                @default([])
+}
+
+model SpellsOnCharacters {
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  spell       Spell     @relation(fields: [spellId], references: [id])
+  spellId     String
+  isFavorite  Boolean   @default(false)
+
+  @@id([spellId, characterId])
+}
