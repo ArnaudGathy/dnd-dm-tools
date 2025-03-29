@@ -8,17 +8,20 @@ import { Link } from "@/components/ui/Link";
 import { capitalize, entries } from "remeda";
 import { SpellWithFavorite } from "@/lib/api/spells";
 import { FavoriteButton } from "@/app/spells/[id]/FavoriteButton";
+import DeleteSpellButton from "@/app/characters/[id]/spells/DeleteSpellButton";
 
 export const SpellList = ({
   spellsGroupedBy,
   label,
   showFavorites = false,
   characterId,
+  isEditMode = false,
 }: {
   characterId?: number;
   spellsGroupedBy: Record<string, SpellWithFavorite[]>;
   label: string;
   showFavorites?: boolean;
+  isEditMode?: boolean;
 }) => {
   const spellEntries = entries(spellsGroupedBy);
   if (spellEntries.length === 0) {
@@ -43,7 +46,12 @@ export const SpellList = ({
                 {spells.map((spell) => (
                   <li key={spell.id} className="flex items-center gap-2">
                     <div className="flex min-w-4">
-                      {showFavorites && characterId ? (
+                      {isEditMode && characterId ? (
+                        <DeleteSpellButton
+                          spellId={spell.id}
+                          characterId={characterId}
+                        />
+                      ) : showFavorites && characterId ? (
                         <FavoriteButton
                           onIcon={
                             spell.isRitual ? (

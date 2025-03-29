@@ -7,17 +7,10 @@ import {
   subClassSchema,
 } from "@/types/schemas";
 import { typedLocalSpells } from "@/utils/utils";
-import { parseSpellFromAideDD } from "@/lib/external-apis/aideDDParseSpellPageContent";
+import { getEnSpellPageFromAideDD } from "@/lib/external-apis/aidedd";
 
 const baseURL = "https://www.dnd5eapi.co/api/2014";
 const ExternalAPIs = axios.create({ baseURL });
-
-export const getSpellFromAideDD = async (spellName: string) => {
-  const response = await axios.get(
-    `https://www.aidedd.org/dnd/sorts.php?vo=${spellName}`,
-  );
-  return parseSpellFromAideDD(response.data);
-};
 
 export const getSpell = async (spellName: string): Promise<APISpell | null> => {
   try {
@@ -35,7 +28,7 @@ export const getSpell = async (spellName: string): Promise<APISpell | null> => {
       if (!!spell) {
         return { ...spell, source: SpellSource.LOCAL };
       } else {
-        return getSpellFromAideDD(spellName);
+        return getEnSpellPageFromAideDD(spellName);
       }
     }
     console.error(e);

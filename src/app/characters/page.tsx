@@ -27,15 +27,9 @@ import { TooltipComponent } from "@/components/ui/tooltip";
 import { classColors } from "@/constants/colors";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import CharacterFilters from "@/app/characters/CharacterFilters";
 import { getOwnersCampaigns } from "@/lib/api/campaigns";
 import { getOwnersParties } from "@/lib/api/parties";
-
-const breadCrumbs = [
-  { name: "Accueil", href: "/" },
-  { name: "Personnages", href: "/characters" },
-];
 
 export default async function Characters({
   searchParams,
@@ -60,7 +54,7 @@ export default async function Characters({
   const parties = await getOwnersParties({ ownerEmail });
 
   return (
-    <Breadcrumbs crumbs={breadCrumbs}>
+    <div className="space-y-4">
       <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
         Liste des personnages
       </h1>
@@ -152,6 +146,6 @@ export default async function Characters({
           <div className="text-muted-foreground">Aucun personnage trouvé.</div>
         )}
       </div>
-    </Breadcrumbs>
+    </div>
   );
 }

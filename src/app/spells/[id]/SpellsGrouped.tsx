@@ -6,10 +6,12 @@ export default async function SpellsGrouped({
   searchParams,
   characterId,
   defaultFilter,
+  isEditMode = false,
 }: {
   searchParams: SpellsSearchParams;
   characterId: number;
   defaultFilter: SPELLS_GROUP_BY;
+  isEditMode?: boolean;
 }) {
   const { search, groupBy, filterBy } = searchParams;
   const { spells } = await getGroupedCharacterSpells({
@@ -32,6 +34,7 @@ export default async function SpellsGrouped({
       label={getLabel()}
       characterId={characterId}
       showFavorites
+      isEditMode={isEditMode}
     />
   );
 }

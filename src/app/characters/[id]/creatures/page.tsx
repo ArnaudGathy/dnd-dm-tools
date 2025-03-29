@@ -3,7 +3,6 @@ import CreatureFilters from "@/app/creatures/CreatureFilters";
 import { typedCreatures } from "@/utils/utils";
 import { filter, groupBy, isDefined, map, pipe, sort } from "remeda";
 import { Creature } from "@/types/types";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import { getValidCharacter } from "@/lib/utils";
 
 const getCreatures = ({
@@ -42,29 +41,20 @@ export default async function Creatures({
 
   const character = await getValidCharacter(id);
 
-  const breadCrumbs = [
-    { name: "Accueil", href: "/" },
-    { name: "Personnages", href: "/characters" },
-    { name: character.name, href: `/characters/${id}` },
-    { name: "Créatures", href: `/characters/${id}/creatures` },
-  ];
-
   const creatures = getCreatures({
     creatureIdList: character.creatures,
     search: search ?? "",
   });
 
   return (
-    <Breadcrumbs crumbs={breadCrumbs}>
-      <div className="flex flex-col gap-4">
-        <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
-          {`Liste des créatures de ${character.name}`}
-        </h1>
-        <CreatureFilters />
-        <CreatureList
-          creaturesGroupedBy={groupCreatureByFirstLetter(creatures)}
-        />
-      </div>
-    </Breadcrumbs>
+    <div className="flex flex-col gap-4">
+      <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
+        {`Liste des créatures de ${character.name}`}
+      </h1>
+      <CreatureFilters />
+      <CreatureList
+        creaturesGroupedBy={groupCreatureByFirstLetter(creatures)}
+      />
+    </div>
   );
 }

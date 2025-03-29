@@ -16,45 +16,48 @@ export default async function SpellHeader({
   characterId,
   tiny,
 }: {
-  spellFromApp: Spell;
+  spellFromApp: Spell | null;
   spellFromAPI: APISpell;
   isFavorite?: boolean;
   characterId?: number;
   tiny?: boolean;
 }) {
-  const spellName = spellFromApp.name
+  if (!spellFromAPI.index) {
+    throw new Error("Missing spell index");
+  }
+
+  const spellName = spellFromApp?.name
     ? spellFromApp.name
     : (spellFromAPI.name ?? spellFromAPI.index);
+  const isRitual = spellFromApp?.isRitual ?? spellFromAPI.ritual;
 
   return (
     <CardHeader>
-      {(spellFromApp.name || spellFromAPI.name) && (
+      {(spellFromApp?.name || spellFromAPI.name) && (
         <CardTitle className="flex items-center justify-between gap-2">
           <div className="flex items-center gap-2 truncate">
             {tiny && isFavorite !== undefined && characterId ? (
               <FavoriteButton
                 onIcon={
-                  spellFromApp.isRitual ? (
+                  isRitual ? (
                     <SparklesIcon className="size-6 text-primary" />
                   ) : (
                     <HeartIcon className="size-6 text-primary" />
                   )
                 }
                 offIcon={
-                  spellFromApp.isRitual ? (
+                  isRitual ? (
                     <SparklesIconOutline className="size-6 text-emerald-500" />
                   ) : (
                     <HeartIconOutline className="size-6" />
                   )
                 }
                 isFavorite={isFavorite}
-                spellId={spellFromApp.id}
+                spellId={spellFromApp?.id ?? spellFromAPI.index}
                 characterId={characterId}
               />
             ) : (
-              spellFromApp.isRitual && (
-                <SparklesIcon className="size-6 text-emerald-500" />
-              )
+              isRitual && <SparklesIcon className="size-6 text-emerald-500" />
             )}
 
             <span className="truncate">

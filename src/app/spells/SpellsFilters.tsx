@@ -26,6 +26,7 @@ export type SpellsSearchParams = {
   search?: string;
   view?: SPELLS_VIEW;
   filterBy?: SPELLS_FILTER_BY;
+  editMode?: "true" | "false";
 };
 
 export default function SpellsFilters({
@@ -125,6 +126,7 @@ export default function SpellsFilters({
               onPressedChange={(isEnabled) =>
                 handleView(isEnabled ? SPELLS_VIEW.CARDS : SPELLS_VIEW.LIST)
               }
+              disabled={params.get("editMode") === "true"}
             >
               <StickyNote />
             </Toggle>

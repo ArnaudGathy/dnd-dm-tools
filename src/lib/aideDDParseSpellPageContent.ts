@@ -2,14 +2,43 @@ import { APISpell, SpellSource } from "@/types/schemas";
 import * as cheerio from "cheerio";
 import { capitalize } from "remeda";
 
-export const parseSpellFromAideDD = (html: string) => {
+export const getBaseSpellData = (html: string) => {
   const $ = cheerio.load(html);
   const mainDataBlock = $(".col1");
 
+  const linkHref = mainDataBlock.find(".trad > a").attr("href");
+  const id = linkHref?.split("=")[1];
+
   const name = mainDataBlock.find("h1").text().trim();
 
+  const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
+  const level = levelAndSchoolBlock.split("-")[0].trim().match(/\d+/)?.[0];
+  const isRitual = levelAndSchoolBlock.includes("(rituel");
+
+  if (!id || !level) {
+    return null;
+  }
+
+  return {
+    id: id,
+    name,
+    level: parseInt(level, 10),
+    isRitual,
+  };
+};
+
+export const parseSpellFromAideDD = ({
+  html,
+  spellName,
+}: {
+  html: string;
+  spellName: string;
+}) => {
+  const $ = cheerio.load(html);
+  const mainDataBlock = $(".col1");
+  const baseSpellData = getBaseSpellData(html);
+
   const levelAndSchoolBlock = mainDataBlock.find(".ecole").text().split("-");
-  const level = levelAndSchoolBlock[0].trim().match(/\d+/)?.[0];
   const school = levelAndSchoolBlock[1].trim();
 
   const castingTime = mainDataBlock.find(".t").text().split(":")[1].trim();
@@ -58,18 +87,20 @@ export const parseSpellFromAideDD = (html: string) => {
     });
 
   return {
-    name,
+    name: baseSpellData?.name,
+    index: spellName,
     casting_time: castingTime,
     duration: duration,
     concentration: isConcentration,
     components,
+    ritual: baseSpellData?.isRitual,
     material,
     range,
     desc: [desc],
     higher_level: atHigherLevel
       ? [atHigherLevel.substring(2, atHigherLevel.length - 1)]
       : undefined,
-    level: level ? parseInt(level, 10) : -1,
+    level: baseSpellData?.level,
     classes: classRole?.map((c) => ({
       name: capitalize(c ?? ""),
       index: c ?? "",

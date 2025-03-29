@@ -20,7 +20,7 @@ export const ConfirmDialog = ({
   children: ReactNode;
   title?: string;
   description?: string;
-  onConfirm: () => void;
+  onConfirm?: () => void;
 }) => {
   return (
     <AlertDialog>
@@ -34,7 +34,9 @@ export const ConfirmDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Annuler</AlertDialogCancel>
-          <AlertDialogAction onClick={onConfirm}>Confirmer</AlertDialogAction>
+          <AlertDialogAction type="submit" onClick={onConfirm}>
+            Confirmer
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

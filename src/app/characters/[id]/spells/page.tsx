@@ -1,9 +1,11 @@
 import SpellsFilters, { SpellsSearchParams } from "@/app/spells/SpellsFilters";
-import Breadcrumbs from "@/components/Breadcrumbs";
 import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
 import SpellCardsList from "@/app/spells/SpellCardsList";
 import SpellsGrouped from "@/app/spells/[id]/SpellsGrouped";
 import { getValidCharacter } from "@/lib/utils";
+import AddSpellForm from "@/app/characters/[id]/spells/AddSpellForm";
+import { Separator } from "@/components/ui/separator";
+import EditModeButton from "@/app/characters/[id]/spells/EditModeButton";
 
 const defaultFilter = SPELLS_GROUP_BY.LEVEL;
 
@@ -17,42 +19,43 @@ export default async function Spells({
   const { id } = await params;
   const awaitedSearchParams = await searchParams;
   const isCardView = awaitedSearchParams.view === SPELLS_VIEW.CARDS;
+  const isEditMode = awaitedSearchParams?.editMode === "true";
 
   const character = await getValidCharacter(id);
   const intCharacterId = parseInt(id, 10);
 
-  const breadCrumbs = [
-    { name: "Accueil", href: "/" },
-    { name: "Personnages", href: "/characters" },
-    { name: character.name, href: `/characters/${id}` },
-    { name: "Sorts", href: `/characters/${id}/spells` },
-  ];
-
   return (
-    <Breadcrumbs crumbs={breadCrumbs}>
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap items-center gap-4">
+    <div className="space-y-4">
+      <div className="w-fit space-y-4">
+        <div className="flex items-center justify-between">
           <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
-            {`Liste des sorts de ${character.name}`}
+            {`Sorts de ${character.name}`}
           </h1>
+
+          <EditModeButton />
         </div>
+        {isEditMode && <AddSpellForm characterId={id} />}
         <SpellsFilters
           defaultSearch={defaultFilter}
           features={["search", "cards", "level", "alphabetical", "favorites"]}
         />
-        {isCardView ? (
-          <SpellCardsList
-            characterId={intCharacterId}
-            searchParams={awaitedSearchParams}
-          />
-        ) : (
-          <SpellsGrouped
-            characterId={intCharacterId}
-            searchParams={awaitedSearchParams}
-            defaultFilter={defaultFilter}
-          />
-        )}
       </div>
-    </Breadcrumbs>
+
+      <Separator />
+
+      {isCardView ? (
+        <SpellCardsList
+          characterId={intCharacterId}
+          searchParams={awaitedSearchParams}
+        />
+      ) : (
+        <SpellsGrouped
+          characterId={intCharacterId}
+          searchParams={awaitedSearchParams}
+          defaultFilter={defaultFilter}
+          isEditMode={isEditMode}
+        />
+      )}
+    </div>
   );
 }

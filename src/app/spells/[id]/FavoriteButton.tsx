@@ -24,6 +24,7 @@ export const FavoriteButton = ({
           currentIsFavoriteState: isFavorite,
         });
       }}
+      className="flex items-center"
     >
       <button type="submit">{isFavorite ? onIcon : offIcon}</button>
     </form>

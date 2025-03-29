@@ -8,14 +8,10 @@ import SpellDetails from "@/app/spells/[id]/SpellDetails";
 
 export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
   if (!spell.index) {
-    return null;
+    throw new Error("Missing spell index");
   }
 
   const spellFromApp = await getSpellById(spell.index);
-
-  if (!spellFromApp) {
-    return null;
-  }
 
   return (
     <div className="col-span-3">
