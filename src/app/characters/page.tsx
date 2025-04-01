@@ -23,13 +23,13 @@ import {
   TreePalm,
   Users,
 } from "lucide-react";
-import { TooltipComponent } from "@/components/ui/tooltip";
 import { classColors } from "@/constants/colors";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import CharacterFilters from "@/app/characters/CharacterFilters";
 import { getOwnersCampaigns } from "@/lib/api/campaigns";
 import { getOwnersParties } from "@/lib/api/parties";
+import PopoverComponent from "@/components/ui/PopoverComponent";
 
 export default async function Characters({
   searchParams,
@@ -72,19 +72,19 @@ export default async function Characters({
                   <span>{character.name}</span>
                   <div>
                     {character.status === CharacterStatus.DEAD && (
-                      <TooltipComponent definition="Personnage mort">
+                      <PopoverComponent definition="Personnage mort">
                         <Skull />
-                      </TooltipComponent>
+                      </PopoverComponent>
                     )}
                     {character.status === CharacterStatus.RETIRED && (
-                      <TooltipComponent definition="Personnage retraité">
+                      <PopoverComponent definition="Personnage retraité">
                         <TreePalm />
-                      </TooltipComponent>
+                      </PopoverComponent>
                     )}
                     {character.status === CharacterStatus.ACTIVE && (
-                      <TooltipComponent definition="Personnage actif">
+                      <PopoverComponent definition="Personnage actif">
                         <Heart />
-                      </TooltipComponent>
+                      </PopoverComponent>
                     )}
                   </div>
                 </CardTitle>

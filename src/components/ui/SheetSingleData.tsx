@@ -8,7 +8,7 @@ export default function SheetSingleData({
   value,
 }: {
   className?: string;
-  label: string;
+  label: ReactNode;
   value: ReactNode;
 }) {
   return (

@@ -65,7 +65,18 @@ async function main() {
       lore: ["Knows ancient elven songs"],
       notes: ["Test character for seeding"],
 
-      proficiencies: ["Lute", "Arcana", "Elfic", "Alchemy tools"],
+      proficiencies: [
+        "Lute",
+        "Perfume",
+        "Language",
+        "Gnomish",
+        "Elven",
+        "Dwarven",
+        "Draconic",
+        "2h bows",
+        "2h weapons",
+        "Martial weapons",
+      ],
     },
   });
 
@@ -99,7 +110,7 @@ async function main() {
       {
         characterId: character.id,
         skill: "ARCANA",
-        isProficient: true,
+        isExpert: true,
         modifier: 0,
       },
     ],
@@ -120,56 +131,283 @@ async function main() {
   await prisma.armor.create({
     data: {
       characterId: character.id,
+      name: "Cloth armor",
+      type: "LIGHT",
+      isProficient: true,
+      AC: 11,
+      extraEffects: [],
+      stealthDisadvantage: true,
+    },
+  });
+
+  await prisma.armor.create({
+    data: {
+      characterId: character.id,
+      name: "Mail armor",
+      type: "MEDIUM",
+      isProficient: true,
+      AC: 14,
+      extraEffects: [],
+    },
+  });
+
+  await prisma.armor.create({
+    data: {
+      characterId: character.id,
       name: "Plate armor",
       type: "HEAVY",
       AC: 18,
-      extraEffects: [],
+      extraEffects: ["Aura de lumière"],
       strengthRequirement: 15,
       stealthDisadvantage: true,
     },
   });
 
-  // Add Weapon with damage
-  const weapon = await prisma.weapon.create({
+  await prisma.armor.create({
     data: {
       characterId: character.id,
-      name: "Rapier",
+      name: "Bouclier",
+      type: "SHIELD",
+      AC: 2,
+      extraEffects: [],
+    },
+  });
+
+  // Add Weapon with damage
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Club",
       type: "MELEE",
       isProficient: true,
-      abilityModifier: "DEXTERITY",
-      attackBonus: 1,
+      abilityModifier: "STRENGTH",
       reach: 5,
       extraEffects: [],
       damages: {
         create: [
           {
-            damageType: "PIERCING",
-            dice: "D8",
-            flatBonus: 0,
-          },
-          {
-            damageType: "FIRE",
+            type: "BLUDGEONING",
             dice: "D4",
-            flatBonus: 0,
+            numberOfDices: 2,
           },
           {
-            damageType: "FLAT",
-            flatBonus: 1,
+            type: "LIGHTNING",
+            dice: "D4",
+            numberOfDices: 2,
+            flatBonus: 3,
           },
         ],
       },
     },
   });
 
-  // Add Inventory
-  await prisma.inventoryItem.create({
+  await prisma.weapon.create({
     data: {
       characterId: character.id,
-      name: "Potion of Healing",
-      description: "Restores 2d4+2 HP",
-      quantity: 2,
-      value: "50 gp",
+      name: "Necro weapon",
+      type: "MELEE",
+      isProficient: true,
+      abilityModifier: "STRENGTH",
+      reach: 5,
+      extraEffects: [],
+      damages: {
+        create: [
+          {
+            type: "POISON",
+            dice: "D4",
+          },
+          {
+            type: "NECROTIC",
+            dice: "D4",
+          },
+        ],
+      },
     },
+  });
+
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Psychic weapon",
+      type: "MELEE",
+      isProficient: true,
+      abilityModifier: "STRENGTH",
+      reach: 5,
+      extraEffects: [],
+      damages: {
+        create: [
+          {
+            type: "PSYCHIC",
+            dice: "D8",
+          },
+          {
+            type: "RADIANT",
+            dice: "D12",
+          },
+        ],
+      },
+    },
+  });
+
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Fouet de feu de Tzkal Zuk",
+      type: "MELEE",
+      isProficient: true,
+      abilityModifier: "DEXTERITY",
+      attackBonus: 1,
+      reach: 10,
+      extraEffects: ["Peut attirer la cible"],
+      damages: {
+        create: [
+          {
+            type: "FORCE",
+            dice: "D6",
+            flatBonus: 1,
+          },
+          {
+            type: "FIRE",
+            dice: "D4",
+          },
+        ],
+      },
+    },
+  });
+
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Shortbow",
+      type: "RANGED",
+      isProficient: true,
+      abilityModifier: "DEXTERITY",
+      damages: {
+        create: [
+          {
+            type: "PIERCING",
+            dice: "D6",
+          },
+          {
+            type: "ACID",
+            dice: "D12",
+          },
+        ],
+      },
+      range: 80,
+      longRange: 320,
+      ammunitionType: "ARROW",
+      ammunitionCount: 20,
+    },
+  });
+
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Dagger",
+      type: "THROWN",
+      reach: 5,
+      isProficient: false,
+      abilityModifier: "DEXTERITY",
+      damages: {
+        create: [
+          {
+            type: "SLASHING",
+            dice: "D4",
+          },
+          {
+            type: "COLD",
+            dice: "D10",
+          },
+        ],
+      },
+      range: 20,
+      longRange: 60,
+    },
+  });
+
+  // Add Inventory
+  await prisma.inventoryItem.createMany({
+    data: [
+      {
+        characterId: character.id,
+        name: "Potion of Healing",
+        description: "Restores 2d4+2 HP",
+        quantity: 2,
+        value: "50 po",
+      },
+      {
+        characterId: character.id,
+        name: "Rope, Hemp (50 feet)",
+        description: "A strong hempen rope, useful for climbing or tying.",
+        quantity: 3,
+        value: "1 po",
+      },
+      {
+        characterId: character.id,
+        name: "Thieves' Tools",
+        description: "A small pouch with lockpicks, files, and hooks.",
+        quantity: 11,
+        value: "25 po",
+      },
+      {
+        characterId: character.id,
+        name: "Rations (1 day)",
+        description: "Dried meat, hardtack, and nuts for one day of travel.",
+        quantity: 5,
+        value: "500 po",
+      },
+      {
+        characterId: character.id,
+        name: "Waterskin",
+        description: "Leather pouch to carry water.",
+        quantity: 1,
+        value: "2 pa",
+      },
+      {
+        characterId: character.id,
+        name: "Torch",
+        description: "Provides bright light in a 20-foot radius for 1 hour.",
+        quantity: 3,
+        value: "3 pc",
+      },
+      {
+        characterId: character.id,
+        name: "Bag of Sand",
+        description:
+          "Useful for testing pressure plates or throwing into the air.",
+        quantity: 1,
+        value: "1 po",
+      },
+      {
+        characterId: character.id,
+        name: "Silver Ring",
+        description: "A plain silver band with a small crest.",
+        quantity: 1,
+        value: "5 pa",
+      },
+      {
+        characterId: character.id,
+        name: "Scroll of Identify",
+        description: "Allows casting of the Identify spell once.",
+        quantity: 1,
+        value: "100 po",
+      },
+      {
+        characterId: character.id,
+        name: "Whetstone",
+        description: "Used to sharpen blades.",
+        quantity: 1,
+        value: "1 pc",
+      },
+      {
+        characterId: character.id,
+        name: "Explorer’s Pack",
+        description: "Includes backpack, bedroll, mess kit, and more.",
+        quantity: 1,
+        value: "10 po",
+      },
+    ],
   });
 
   // Add Money

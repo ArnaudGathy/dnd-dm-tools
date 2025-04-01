@@ -1,5 +1,5 @@
 import {
-  Characteristics,
+  AbilityNameType,
   Condition,
   Creature,
   Encounter,
@@ -167,7 +167,7 @@ export const getModifier = (ability: number) => {
 };
 export const getModifierFromCreature = (
   creature: Creature,
-  characteristic: Characteristics,
+  characteristic: AbilityNameType,
 ) => {
   return getModifier(creature.abilities[characteristic]);
 };

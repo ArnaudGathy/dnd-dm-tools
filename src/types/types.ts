@@ -50,7 +50,7 @@ export const isEnemyObject = (enemy: unknown): enemy is EnemyObject => {
   return (enemy as EnemyObject)?.id !== undefined;
 };
 
-export type Characteristics =
+export type AbilityNameType =
   | "strength"
   | "dexterity"
   | "constitution"
@@ -102,12 +102,12 @@ export type Creature = {
     fly?: string;
     climb?: string;
   };
-  abilities: Record<Characteristics, number>;
+  abilities: Record<AbilityNameType, number>;
   skills?: Partial<Record<Skills, string>>;
   immunities?: string[];
   vulnerabilities?: string[];
   resistances?: string[];
-  savingThrows?: Partial<Record<Characteristics, string>>;
+  savingThrows?: Partial<Record<AbilityNameType, string>>;
   senses: {
     blindSight?: string;
     darkvision?: string;

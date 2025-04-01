@@ -1,22 +1,21 @@
 import {
+  Abilities,
   Alignment,
+  AmmunitionType,
+  ArmorType,
   Backgrounds,
   CampaignId,
   CharacterStatus,
   Classes,
+  MoneyType,
   PartyId,
   Races,
   Skills,
   Subclasses,
+  WeaponDamageDices,
+  WeaponDamageType,
 } from "@prisma/client";
-
-type Abilities =
-  | "intelligence"
-  | "charisma"
-  | "wisdom"
-  | "strength"
-  | "constitution"
-  | "dexterity";
+import { AbilityNameType } from "@/types/types";
 
 export const CLASS_MAP = {
   [Classes.ARTIFICER]: "Artificier",
@@ -51,7 +50,7 @@ export const HIT_DICE_MAP = {
 };
 
 export const SPELLCASTING_MODIFIER_MAP: {
-  [key in Classes]: Abilities | null;
+  [key in Classes]: AbilityNameType | null;
 } = {
   [Classes.ARTIFICER]: "intelligence",
   [Classes.BARD]: "charisma",
@@ -263,7 +262,25 @@ export const ABILITIES_MAP = {
   charisma: "Charisme",
 };
 
-export const SKILL_ABILITY_MAP: { [key in Skills]: Abilities } = {
+export const ABILITY_NAME_MAP: { [key in AbilityNameType]: Abilities } = {
+  strength: Abilities.STRENGTH,
+  dexterity: Abilities.DEXTERITY,
+  constitution: Abilities.CONSTITUTION,
+  intelligence: Abilities.INTELLIGENCE,
+  wisdom: Abilities.WISDOM,
+  charisma: Abilities.CHARISMA,
+};
+
+export const ABILITY_NAME_MAP_TO_FR: { [key in Abilities]: string } = {
+  [Abilities.STRENGTH]: "FOR",
+  [Abilities.DEXTERITY]: "DEX",
+  [Abilities.CONSTITUTION]: "CON",
+  [Abilities.INTELLIGENCE]: "INT",
+  [Abilities.WISDOM]: "SAG",
+  [Abilities.CHARISMA]: "CHA",
+};
+
+export const SKILL_ABILITY_MAP: { [key in Skills]: AbilityNameType } = {
   [Skills.ATHLETICS]: "strength",
 
   [Skills.ACROBATICS]: "dexterity",
@@ -288,6 +305,27 @@ export const SKILL_ABILITY_MAP: { [key in Skills]: Abilities } = {
   [Skills.PERSUASION]: "charisma",
 };
 
+export const SKILL_NAME_MAP: { [key in Skills]: string } = {
+  [Skills.ACROBATICS]: "Acrobatie",
+  [Skills.ARCANA]: "Arcanes",
+  [Skills.ATHLETICS]: "Athlétisme",
+  [Skills.ANIMAL_HANDLING]: "Dressage",
+  [Skills.STEALTH]: "Discrétion",
+  [Skills.SLEIGHT_OF_HAND]: "Escamotage",
+  [Skills.HISTORY]: "Histoire",
+  [Skills.INTIMIDATION]: "Intimidation",
+  [Skills.INVESTIGATION]: "Investigation",
+  [Skills.MEDICINE]: "Médecine",
+  [Skills.NATURE]: "Nature",
+  [Skills.PERCEPTION]: "Perception",
+  [Skills.PERFORMANCE]: "Représentation",
+  [Skills.INSIGHT]: "Perspicacité",
+  [Skills.PERSUASION]: "Persuasion",
+  [Skills.RELIGION]: "Religion",
+  [Skills.SURVIVAL]: "Survie",
+  [Skills.DECEPTION]: "Tromperie",
+};
+
 export const PROFICIENCY_BONUS_BY_LEVEL: Record<number, number> = {
   1: 2,
   2: 2,
@@ -309,4 +347,63 @@ export const PROFICIENCY_BONUS_BY_LEVEL: Record<number, number> = {
   18: 6,
   19: 6,
   20: 6,
+};
+
+export const WEAPON_DICE_MAP = {
+  [WeaponDamageDices.D4]: "d4",
+  [WeaponDamageDices.D6]: "d6",
+  [WeaponDamageDices.D8]: "d8",
+  [WeaponDamageDices.D10]: "d10",
+  [WeaponDamageDices.D12]: "d12",
+};
+
+export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
+  [WeaponDamageType.BLUDGEONING]: "contondants",
+  [WeaponDamageType.SLASHING]: "tranchants",
+  [WeaponDamageType.PIERCING]: "perforants",
+  [WeaponDamageType.ACID]: "d'acide",
+  [WeaponDamageType.COLD]: "de froid",
+  [WeaponDamageType.FIRE]: "de feu",
+  [WeaponDamageType.FORCE]: "de force",
+  [WeaponDamageType.LIGHTNING]: "de foudre",
+  [WeaponDamageType.NECROTIC]: "nécrotiques",
+  [WeaponDamageType.POISON]: "de poison",
+  [WeaponDamageType.PSYCHIC]: "psychiques",
+  [WeaponDamageType.RADIANT]: "radiants",
+};
+
+export const DAMAGE_TYPE_COLORS: Record<WeaponDamageType, string> = {
+  [WeaponDamageType.BLUDGEONING]: "gray-400",
+  [WeaponDamageType.SLASHING]: "gray-400",
+  [WeaponDamageType.PIERCING]: "gray-400",
+  [WeaponDamageType.ACID]: "lime-200",
+  [WeaponDamageType.COLD]: "cyan-400",
+  [WeaponDamageType.FIRE]: "orange-500",
+  [WeaponDamageType.FORCE]: "red-500",
+  [WeaponDamageType.LIGHTNING]: "blue-700",
+  [WeaponDamageType.NECROTIC]: "emerald-300",
+  [WeaponDamageType.POISON]: "lime-600",
+  [WeaponDamageType.PSYCHIC]: "fuchsia-400",
+  [WeaponDamageType.RADIANT]: "amber-300",
+};
+
+export const AMMUNITION_TYPE_MAP: Record<AmmunitionType, string> = {
+  [AmmunitionType.BOLT]: "Carreaux",
+  [AmmunitionType.ARROW]: "Flèches",
+  [AmmunitionType.FIREARM_BULLET]: "Balles",
+  [AmmunitionType.SLING_BULLET]: "Billes",
+  [AmmunitionType.NEEDLES]: "Fléchèttes",
+};
+
+export const MONEY_TYPE_MAP: { [key in MoneyType]: string } = {
+  [MoneyType.GOLD]: "Or",
+  [MoneyType.SILVER]: "Argent",
+  [MoneyType.COPPER]: "Cuivre",
+};
+
+export const ARMOR_TYPE_MAP: { [key in ArmorType]: string } = {
+  [ArmorType.LIGHT]: "Légère",
+  [ArmorType.MEDIUM]: "Intermédiaire",
+  [ArmorType.HEAVY]: "Lourde",
+  [ArmorType.SHIELD]: "Bouclier",
 };

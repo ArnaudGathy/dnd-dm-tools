@@ -16,6 +16,7 @@ import {
   Spell,
   SpellsOnCharacters,
   Weapon,
+  WeaponDamage,
 } from "@prisma/client";
 
 export function cn(...inputs: ClassValue[]) {
@@ -40,7 +41,7 @@ export type CharacterById = Character & {
   capacities: Capacity[];
   savingThrows: SavingThrow[];
   armors: Armor[];
-  weapons: Weapon[];
+  weapons: (Weapon & { damages: WeaponDamage[] })[];
   inventory: InventoryItem[];
   wealth: Money[];
 };

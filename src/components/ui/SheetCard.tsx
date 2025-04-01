@@ -8,8 +8,6 @@ export default function SheetCard({
   className?: string;
 }) {
   return (
-    <div className={cn("rounded-lg bg-muted p-2 md:p-4", className)}>
-      {children}
-    </div>
+    <div className={cn("rounded-lg bg-muted p-4", className)}>{children}</div>
   );
 }

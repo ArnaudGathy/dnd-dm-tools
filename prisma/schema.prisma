@@ -244,9 +244,8 @@ model Character {
   magicDCBonus       Int
   movementSpeedBonus Int
 
-  weapons Weapon[]
-  armors  Armor[]
-
+  weapons   Weapon[]
+  armors    Armor[]
   inventory InventoryItem[]
   wealth    Money[]
 
@@ -327,24 +326,24 @@ model SavingThrow {
 }
 
 enum Skills {
-  ATHLETICS
   ACROBATICS
-  SLEIGHT_OF_HAND
-  STEALTH
-  ARCANA
-  HISTORY
-  INVESTIGATION
-  NATURE
-  RELIGION
   ANIMAL_HANDLING
-  INSIGHT
-  MEDICINE
-  PERCEPTION
-  SURVIVAL
+  ARCANA
+  ATHLETICS
   DECEPTION
+  HISTORY
+  INSIGHT
   INTIMIDATION
+  INVESTIGATION
+  MEDICINE
+  NATURE
+  PERCEPTION
   PERFORMANCE
   PERSUASION
+  RELIGION
+  SLEIGHT_OF_HAND
+  STEALTH
+  SURVIVAL
 }
 
 model Skill {
@@ -390,8 +389,6 @@ enum WeaponDamageType {
   POISON
   PSYCHIC
   RADIANT
-  THUNDER
-  FLAT
 }
 
 enum WeaponDamageDices {
@@ -408,7 +405,7 @@ enum WeaponType {
   THROWN
 }
 
-enum AmunitionType {
+enum AmmunitionType {
   BOLT
   ARROW
   FIREARM_BULLET
@@ -417,28 +414,29 @@ enum AmunitionType {
 }
 
 model WeaponDamage {
-  id         Int                @id @default(autoincrement())
-  weapon     Weapon             @relation(fields: [weaponId], references: [id])
-  weaponId   Int
-  dice       WeaponDamageDices?
-  flatBonus  Int?
-  damageType WeaponDamageType
+  id            Int               @id @default(autoincrement())
+  weapon        Weapon            @relation(fields: [weaponId], references: [id])
+  weaponId      Int
+  dice          WeaponDamageDices
+  numberOfDices Int               @default(1)
+  flatBonus     Int?
+  type          WeaponDamageType
 }
 
 model Weapon {
-  id              Int            @id @default(autoincrement())
-  character       Character      @relation(fields: [characterId], references: [id])
+  id              Int             @id @default(autoincrement())
+  character       Character       @relation(fields: [characterId], references: [id])
   characterId     Int
   name            String
   type            WeaponType
-  isProficient    Boolean        @default(true)
+  isProficient    Boolean         @default(true)
   abilityModifier Abilities
   attackBonus     Int?
   damages         WeaponDamage[]
-  reach           Int            @default(5)
+  reach           Int?
   range           Int?
   longRange       Int?
-  amunitionType   AmunitionType?
-  amunitionCount  Int?
+  ammunitionType  AmmunitionType?
+  ammunitionCount Int?
   extraEffects    String[]
 }

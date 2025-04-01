@@ -3,40 +3,32 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { entries } from "remeda";
 import { Card } from "@/components/ui/card";
 import Summary from "@/app/characters/[id]/(sheet)/Summary";
+import Combat from "@/app/characters/[id]/(sheet)/Combat";
+import Skills from "@/app/characters/[id]/(sheet)/Skills";
+import Inventory from "@/app/characters/[id]/(sheet)/Inventory";
+import Bio from "@/app/characters/[id]/(sheet)/Bio";
+import {
+  Backpack,
+  ChartNoAxesColumn,
+  FileText,
+  Swords,
+  User,
+} from "lucide-react";
 
 enum SHEETS_TABS {
   SUMMARY = "summary",
   COMBAT = "combat",
   SKILLS = "skills",
-  CAPACITIES = "capacities",
-  EQUIPMENT = "equipment",
-  APPEARANCE = "appearance",
   INVENTORY = "inventory",
-  PERSONALITY = "personality",
-  BACKGROUND = "background",
-  SPELLS = "spells",
+  BIO = "bio",
 }
 
 const tabs = {
-  [SHEETS_TABS.SUMMARY]: "Résumé",
-  // Combat => Saves, Movement, Initiative, AC, HP total / actuel, Sort attaque, sorts DD, armes attaques
-  [SHEETS_TABS.COMBAT]: "Combat",
-  // Sorts => Mod des sorts, attaque sorts, DD sorts, A préparer, emplacements, liste
-  [SHEETS_TABS.SPELLS]: "Sorts",
-  // Compétences => compétences, maitrises
-  [SHEETS_TABS.SKILLS]: "Compétences",
-  // Capacités => capacities
-  [SHEETS_TABS.CAPACITIES]: "Capacités",
-  // Equipment => armes & armures
-  [SHEETS_TABS.EQUIPMENT]: "Équipement",
-  // Inventaire => Inventaire & argent
-  [SHEETS_TABS.INVENTORY]: "Inventaire",
-  // Apparence => Apparence
-  [SHEETS_TABS.APPEARANCE]: "Apparence",
-  // Personnalité => Alignement, comportement
-  [SHEETS_TABS.PERSONALITY]: "Personnalité",
-  // Background => Lore, alliés et notes
-  [SHEETS_TABS.BACKGROUND]: "Background",
+  [SHEETS_TABS.SUMMARY]: { label: "Résumé", icon: FileText },
+  [SHEETS_TABS.SKILLS]: { label: "Compétences", icon: ChartNoAxesColumn },
+  [SHEETS_TABS.COMBAT]: { label: "Combat", icon: Swords },
+  [SHEETS_TABS.INVENTORY]: { label: "Inventaire", icon: Backpack },
+  [SHEETS_TABS.BIO]: { label: "Bio", icon: User },
 };
 
 export default async function Character({
@@ -47,19 +39,48 @@ export default async function Character({
   const { id } = await params;
   const character = await getValidCharacter(id);
 
+  const tabContentClassName = "mt-0 flex justify-center";
+
   return (
-    <Tabs defaultValue={SHEETS_TABS.SUMMARY}>
-      <TabsList className="h-auto w-full grid-cols-10 flex-wrap md:grid">
-        {entries(tabs).map(([key, label]) => (
+    <Tabs defaultValue={SHEETS_TABS.INVENTORY}>
+      <TabsList className="h-auto w-full flex-wrap">
+        {entries(tabs).map(([key, { label, icon: Icon }]) => (
           <TabsTrigger key={key} value={key}>
-            {label}
+            <div className="flex items-center gap-1">
+              <Icon className="size-5" />
+              <span className="hidden md:block">{label}</span>
+            </div>
           </TabsTrigger>
         ))}
       </TabsList>
 
-      <Card className="m-[-16px] mt-4 md:mb-0 md:ml-0 md:mr-0">
-        <TabsContent value={SHEETS_TABS.SUMMARY} className="mt-0">
+      <Card
+        className={`mt-4 border-background bg-background md:mb-0 md:ml-0 md:mr-0 md:border-border md:bg-card`}
+      >
+        <TabsContent
+          value={SHEETS_TABS.SUMMARY}
+          className={tabContentClassName}
+        >
           <Summary character={character} />
+        </TabsContent>
+
+        <TabsContent value={SHEETS_TABS.SKILLS} className={tabContentClassName}>
+          <Skills character={character} />
+        </TabsContent>
+
+        <TabsContent value={SHEETS_TABS.COMBAT} className={tabContentClassName}>
+          <Combat character={character} />
+        </TabsContent>
+
+        <TabsContent
+          value={SHEETS_TABS.INVENTORY}
+          className={tabContentClassName}
+        >
+          <Inventory character={character} />
+        </TabsContent>
+
+        <TabsContent value={SHEETS_TABS.BIO} className={tabContentClassName}>
+          <Bio character={character} />
         </TabsContent>
       </Card>
     </Tabs>

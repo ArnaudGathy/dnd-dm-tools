@@ -83,7 +83,11 @@ export const getCharacterById = async ({
       capacities: true,
       savingThrows: true,
       armors: true,
-      weapons: true,
+      weapons: {
+        include: {
+          damages: true,
+        },
+      },
       inventory: true,
       wealth: true,
     },

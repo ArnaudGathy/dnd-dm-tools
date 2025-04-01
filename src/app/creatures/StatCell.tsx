@@ -8,18 +8,25 @@ export const StatCell = ({
   isHighlighted = false,
   highlightClassName,
   isInline = false,
+  spacing = "150px",
 }: {
   name: ReactNode;
   stat: ReactNode;
   isHighlighted?: boolean;
   highlightClassName?: string;
   isInline?: boolean;
+  spacing?: string;
 }) => {
+  const width = `min-w-[${spacing}]`;
   return (
-    <div className={cn("flex md:flex-row", { "flex-col": !isInline })}>
+    <div
+      className={cn("flex md:flex-row", {
+        "flex-col": !isInline,
+      })}
+    >
       <span
         className={clsx("mr-2 text-muted-foreground", {
-          "min-w-[150px]": !isInline,
+          [width]: !isInline,
         })}
       >
         {name}
