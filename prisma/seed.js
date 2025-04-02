@@ -47,23 +47,39 @@ async function main() {
       magicDCBonus: 1,
       movementSpeedBonus: 0,
 
-      age: 120,
-      weight: 70,
-      height: 175,
-      eyeColor: "Green",
-      hair: "Silver",
-      skin: "Fair",
-      physicalTraits: ["Tall", "Graceful"],
+      age: 35,
+      weight: 90,
+      height: 185,
+      eyeColor: "bruns",
+      hair: "bruns",
+      skin: "blanche",
+      physicalTraits: ["gigachad", "gracieux", "élégant"],
 
       alignment: "CHAOTIC_GOOD",
-      personalityTraits: ["Curious", "Quick-witted"],
-      ideals: ["Knowledge is power"],
-      bonds: ["Protect the college of lore"],
-      flaws: ["Overconfident"],
+      personalityTraits: [
+        "Je suis poussé par une soif de voyage qui m'entraîne.",
+        "Je sais apprécier une bonne insulte, même quand j'en suis la cible.",
+      ],
+      ideals: [
+        "Nature. Le monde naturel est bien plus important que les constructions de la civilisation.",
+        "Mon instrument représente mon bien le plus précieux et me rappelle quelqu'un que j'ai aimé.",
+      ],
+      bonds: [
+        "Je suis le dernier de ma tribu et il me revient de veiller.",
+        "Mon instrument représente mon bien le plus précieux.",
+      ],
+      flaws: [
+        "Je réponds à presque tous les défis par la violence.",
+        "J'ai un faible pour les jolis minois",
+      ],
 
-      allies: ["Neverwinter gards"],
-      lore: ["Knows ancient elven songs"],
-      notes: ["Test character for seeding"],
+      allies: [
+        "Garde de neverwinter - aide de la garde en cas de besoin. Ami avec le commandant et les autres membres de la garde.",
+      ],
+      lore: [
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci assumenda atque consequuntur cum dolore, eligendi, enim esse impedit ipsa maxime nam numquam praesentium quaerat quidem quisquam, ratione rem reprehenderit ullam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem cumque, dignissimos dolorem eum, expedita facere illo, illum ipsum laboriosam libero minus natus pariatur placeat quam quis sequi tempora vero.",
+      ],
+      notes: ["Test character for seeding", "second test entry"],
 
       proficiencies: [
         "Lute",
@@ -77,6 +93,7 @@ async function main() {
         "2h weapons",
         "Martial weapons",
       ],
+      imageUrl: "alfredo.png",
     },
   });
 

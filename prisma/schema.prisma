@@ -256,6 +256,7 @@ model Character {
   hair           String
   skin           String
   physicalTraits String[]
+  imageUrl       String?
 
   alignment         Alignment
   personalityTraits String[]
