@@ -4,8 +4,8 @@ import { StatCell } from "@/app/creatures/StatCell";
 import { ALIGNMENT_MAP, BACKGROUND_MAP } from "@/constants/maps";
 
 export default function Bio({ character }: { character: CharacterById }) {
-  const hasLore = character.lore.length > 0;
-  const hasAllies = character.allies.length > 0;
+  const hasLore = !!character.lore;
+  const hasAllies = !!character.allies;
   const hasLoreOrAllies = hasLore || hasAllies;
 
   return (
@@ -46,22 +46,14 @@ export default function Bio({ character }: { character: CharacterById }) {
             <StatCell name="Cheveux" stat={character.eyeColor} isInline />
           </div>
 
-          {character.physicalTraits.length > 0 && (
-            <StatCell
-              name="Traits"
-              stat={character.physicalTraits.join(", ")}
-              isInline
-            />
+          {!!character.physicalTraits && (
+            <StatCell name="Traits" stat={character.physicalTraits} isInline />
           )}
         </SheetCard>
-        {character.notes.length > 0 && (
+        {!!character.notes && (
           <SheetCard className="flex flex-col">
             <span className="mb-2 self-center text-2xl font-bold">Notes</span>
-            <div className="mt-2 flex flex-col gap-1">
-              {character.notes.map((note) => (
-                <div key={note}>{note}</div>
-              ))}
-            </div>
+            <div className="mt-2 flex flex-col gap-1">{character.notes}</div>
           </SheetCard>
         )}
       </div>
@@ -72,37 +64,23 @@ export default function Bio({ character }: { character: CharacterById }) {
             Traits de personnalité
           </span>
           <div className="flex flex-col gap-1">
-            {character.personalityTraits.map((personality) => (
-              <div key={personality}>{personality}</div>
-            ))}
+            {character.personalityTraits}
           </div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Idéaux</span>
-          <div className="flex flex-col gap-1">
-            {character.ideals.map((ideal) => (
-              <div key={ideal}>{ideal}</div>
-            ))}
-          </div>
+          <div className="flex flex-col gap-1">{character.ideals}</div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Liens</span>
-          <div className="flex flex-col gap-1">
-            {character.bonds.map((bond) => (
-              <div key={bond}>{bond}</div>
-            ))}
-          </div>
+          <div className="flex flex-col gap-1">{character.bonds}</div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Défauts</span>
-          <div className="flex flex-col gap-1">
-            {character.flaws.map((flaw) => (
-              <div key={flaw}>{flaw}</div>
-            ))}
-          </div>
+          <div className="flex flex-col gap-1">{character.flaws}</div>
         </SheetCard>
       </div>
 
@@ -125,11 +103,7 @@ export default function Bio({ character }: { character: CharacterById }) {
                   isInline
                 />
               </div>
-              <div className="mt-2 flex flex-col gap-1">
-                {character.lore.map((lore) => (
-                  <div key={lore}>{lore}</div>
-                ))}
-              </div>
+              <div className="mt-2 flex flex-col gap-1">{character.lore}</div>
             </SheetCard>
           )}
           {hasAllies && (
@@ -137,9 +111,7 @@ export default function Bio({ character }: { character: CharacterById }) {
               <span className="mb-2 self-center text-2xl font-bold">
                 Alliés et organisations
               </span>
-              {character.allies.map((ally) => (
-                <div key={ally}>{ally}</div>
-              ))}
+              <span>{character.allies}</span>
             </SheetCard>
           )}
         </div>

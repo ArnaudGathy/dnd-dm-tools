@@ -42,7 +42,7 @@ export default async function Character({
   const tabContentClassName = "mt-0 flex justify-center";
 
   return (
-    <Tabs defaultValue={SHEETS_TABS.BIO}>
+    <Tabs defaultValue={SHEETS_TABS.SUMMARY}>
       <TabsList className="h-auto w-full flex-wrap">
         {entries(tabs).map(([key, { label, icon: Icon }]) => (
           <TabsTrigger key={key} value={key}>

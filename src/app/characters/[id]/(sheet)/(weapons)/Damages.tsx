@@ -1,14 +1,20 @@
-import { WEAPON_DAMAGE_TYPE_MAP, WEAPON_DICE_MAP } from "@/constants/maps";
+import {
+  ABILITY_NAME_MAP_TO_FR,
+  WEAPON_DAMAGE_TYPE_MAP,
+} from "@/constants/maps";
 import { Fragment } from "react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import { cn } from "@/lib/utils";
 import InfoCell from "@/app/characters/[id]/(sheet)/(weapons)/InfoCell";
-import { Weapon, WeaponDamage } from "@prisma/client";
-import { getDamageTypeIconAndColor } from "@/app/characters/[id]/(sheet)/(weapons)/utils";
+import { Character, Weapon, WeaponDamage } from "@prisma/client";
+import { getDamageTypeIconAndColor } from "@/utils/weapons";
+import { getWeaponDamage } from "@/utils/skills";
 
 export default function Damages({
   weapon,
+  character,
 }: {
+  character: Character;
   weapon: Weapon & { damages: WeaponDamage[] };
 }) {
   return (
@@ -21,18 +27,59 @@ export default function Damages({
             const { icon: Icon, color } = getDamageTypeIconAndColor(
               damage.type,
             );
+            const weaponDamageDetails = getWeaponDamage(
+              character,
+              damage,
+              weapon,
+            );
+            const hasBonusDamage =
+              weaponDamageDetails.modifierName !== null ||
+              weaponDamageDetails.proficiencyBonus > 0 ||
+              weaponDamageDetails.flatBonus > 0;
 
             return (
               <Fragment key={damage.id}>
                 <PopoverComponent
-                  definition={`Dégats ${WEAPON_DAMAGE_TYPE_MAP[damage.type]}`}
+                  definition={
+                    <div>
+                      {hasBonusDamage && (
+                        <span className="font-bold">Bonus de dégâts :</span>
+                      )}
+                      {weaponDamageDetails.modifierName && (
+                        <div>
+                          <span>{`${ABILITY_NAME_MAP_TO_FR[weaponDamageDetails.modifierName]} : `}</span>
+                          <span>{weaponDamageDetails.abilityModifier}</span>
+                        </div>
+                      )}
+                      {weaponDamageDetails.proficiencyBonus > 0 && (
+                        <div>
+                          <span>Maîtrise : </span>
+
+                          <span>
+                            {weaponDamageDetails.proficiencyBonus > 0
+                              ? weaponDamageDetails.proficiencyBonus
+                              : "non"}
+                          </span>
+                        </div>
+                      )}
+                      {weaponDamageDetails.flatBonus > 0 && (
+                        <div>
+                          <span>Bonus : </span>
+                          <span>{weaponDamageDetails.flatBonus}</span>
+                        </div>
+                      )}
+                      <div
+                        style={{ color }}
+                      >{`Dégats ${WEAPON_DAMAGE_TYPE_MAP[damage.type]}`}</div>
+                    </div>
+                  }
                 >
                   <div
                     className="flex h-6 items-center gap-0.5 border-b-2"
                     style={{ borderBottomColor: color }}
                   >
                     <div className={cn("w-full text-center")}>
-                      {`${damage.numberOfDices}${WEAPON_DICE_MAP[damage.dice]}${damage.flatBonus ? `+${damage.flatBonus}` : ""}`}
+                      {weaponDamageDetails.totalString}
                     </div>
                     <div className={`flex items-center`} style={{ color }}>
                       <Icon className="size-4 stroke-[2.5]" />

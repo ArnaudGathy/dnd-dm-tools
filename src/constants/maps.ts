@@ -271,6 +271,15 @@ export const ABILITY_NAME_MAP: { [key in AbilityNameType]: Abilities } = {
   charisma: Abilities.CHARISMA,
 };
 
+export const ABILITIES_MAP_TO_NAME: { [key in Abilities]: AbilityNameType } = {
+  [Abilities.STRENGTH]: "strength",
+  [Abilities.DEXTERITY]: "dexterity",
+  [Abilities.CONSTITUTION]: "constitution",
+  [Abilities.INTELLIGENCE]: "intelligence",
+  [Abilities.WISDOM]: "wisdom",
+  [Abilities.CHARISMA]: "charisma",
+};
+
 export const ABILITY_NAME_MAP_TO_FR: { [key in Abilities]: string } = {
   [Abilities.STRENGTH]: "FOR",
   [Abilities.DEXTERITY]: "DEX",
@@ -406,4 +415,92 @@ export const ARMOR_TYPE_MAP: { [key in ArmorType]: string } = {
   [ArmorType.MEDIUM]: "Intermédiaire",
   [ArmorType.HEAVY]: "Lourde",
   [ArmorType.SHIELD]: "Bouclier",
+};
+
+export const PACT_MAGIC_PROGRESSION: Array<Record<number, number>> = [
+  { 1: 1 }, // index 0 = Level 1
+  { 1: 2 },
+  { 2: 2 },
+  { 2: 2 },
+  { 3: 2 },
+  { 3: 2 },
+  { 4: 2 },
+  { 4: 2 },
+  { 5: 2 },
+  { 5: 2 },
+  { 5: 3 },
+  { 5: 3 },
+  { 5: 3 },
+  { 5: 3 },
+  { 5: 3 },
+  { 5: 3 },
+  { 5: 4 },
+  { 5: 4 },
+  { 5: 4 },
+  { 5: 4 },
+];
+
+export const HALF_CASTER_PROGRESSION: Array<Record<number, number>> = [
+  { 1: 2 }, // index 0 = level 1
+  { 1: 2 },
+  { 1: 3 },
+  { 1: 3 },
+  { 1: 4, 2: 2 },
+  { 1: 4, 2: 2 },
+  { 1: 4, 2: 3 },
+  { 1: 4, 2: 3 },
+  { 1: 4, 2: 3, 3: 2 },
+  { 1: 4, 2: 3, 3: 2 },
+  { 1: 4, 2: 3, 3: 3 },
+  { 1: 4, 2: 3, 3: 3 },
+  { 1: 4, 2: 3, 3: 3, 4: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 2 },
+  { 1: 4, 2: 3, 3: 3, 4: 2 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 },
+];
+
+export const FULL_CASTER_PROGRESSION: Array<Record<number, number>> = [
+  { 1: 2 }, // index 0 = Level 1
+  { 1: 3 },
+  { 1: 4, 2: 2 },
+  { 1: 4, 2: 3 },
+  { 1: 4, 2: 3, 3: 2 },
+  { 1: 4, 2: 3, 3: 3 },
+  { 1: 4, 2: 3, 3: 3, 4: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 2 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 2, 6: 1, 7: 1, 8: 1, 9: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 1, 7: 1, 8: 1, 9: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 1, 8: 1, 9: 1 },
+  { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 2, 8: 1, 9: 1 },
+];
+
+export const CLASS_SPELL_PROGRESSION_MAP: Record<
+  Classes,
+  Array<Record<number, number>>
+> = {
+  [Classes.BARD]: FULL_CASTER_PROGRESSION,
+  [Classes.CLERIC]: FULL_CASTER_PROGRESSION,
+  [Classes.DRUID]: FULL_CASTER_PROGRESSION,
+  [Classes.SORCERER]: FULL_CASTER_PROGRESSION,
+  [Classes.WIZARD]: FULL_CASTER_PROGRESSION,
+  [Classes.PALADIN]: HALF_CASTER_PROGRESSION,
+  [Classes.RANGER]: HALF_CASTER_PROGRESSION,
+  [Classes.ARTIFICER]: HALF_CASTER_PROGRESSION,
+  [Classes.WARLOCK]: PACT_MAGIC_PROGRESSION,
+  [Classes.BARBARIAN]: [],
+  [Classes.FIGHTER]: [],
+  [Classes.MONK]: [],
+  [Classes.ROGUE]: [],
 };

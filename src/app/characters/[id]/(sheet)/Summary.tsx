@@ -13,12 +13,18 @@ import {
 } from "@/constants/maps";
 import { classColors } from "@/constants/colors";
 import { StatCell } from "@/app/creatures/StatCell";
-import { X } from "lucide-react";
+import { BookOpenIcon, PawPrintIcon, X } from "lucide-react";
 import { entries } from "remeda";
-import { convertFeetDistanceIntoSquares, getModifier } from "@/utils/utils";
+import {
+  addSignToNumber,
+  convertFeetDistanceIntoSquares,
+  getModifier,
+} from "@/utils/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import AbilitySquare from "@/app/characters/[id]/(sheet)/AbilitySquare";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export default function Summary({ character }: { character: CharacterById }) {
   const abilities = {
@@ -31,14 +37,34 @@ export default function Summary({ character }: { character: CharacterById }) {
   };
 
   const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
+  const conModifier = getModifier(character.constitution);
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 p-0 md:w-[70%] md:grid-cols-6 md:grid-rows-[auto] md:p-4">
-      <SheetCard className="col-span-2 flex flex-col items-center md:col-span-6">
+      <SheetCard className="relative col-span-2 flex flex-col items-center md:col-span-6">
         <span className="bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-3xl font-bold text-transparent">
           {character.name}
         </span>
         <span className="text-base font-bold">{`Niveau ${character.level}`}</span>
+
+        <div className="absolute right-4 top-4">
+          {character.spellsOnCharacters.length > 0 && (
+            <Link href={`/characters/${character.id}/spells`}>
+              <Button variant="outline" size="sm">
+                <BookOpenIcon />
+                Sorts
+              </Button>
+            </Link>
+          )}
+          {character.creatures.length > 0 && (
+            <Link href={`/characters/${character.id}/creatures`}>
+              <Button variant="outline" size="sm">
+                <PawPrintIcon />
+                Créatures
+              </Button>
+            </Link>
+          )}
+        </div>
       </SheetCard>
 
       <div className="col-span-2 grid grid-cols-1 gap-4 md:col-span-5 md:row-span-2 md:grid-cols-2">
@@ -74,7 +100,9 @@ export default function Summary({ character }: { character: CharacterById }) {
                   <X className="size-4" />
                   <div>
                     <span>{`1${HIT_DICE_MAP[character.className]}`}</span>
-                    <span>{`+${getModifier(character.constitution)}`}</span>
+                    {conModifier !== 0 && (
+                      <span>{addSignToNumber(conModifier)}</span>
+                    )}
                   </div>
                 </div>
               }

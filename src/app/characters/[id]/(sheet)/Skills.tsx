@@ -1,17 +1,14 @@
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
-import {
-  ABILITY_NAME_MAP,
-  PROFICIENCY_BONUS_BY_LEVEL,
-  SKILL_NAME_MAP,
-} from "@/constants/maps";
-import { getSavingThrowModifier, getSkillModifier } from "@/utils/skills";
+import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_NAME_MAP } from "@/constants/maps";
+import { getSkillModifier } from "@/utils/skills";
 import SheetCard from "@/components/ui/SheetCard";
 import { Asterisk, Crown } from "lucide-react";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { Skills as SkillList } from "@prisma/client";
-import { getModifier } from "@/utils/utils";
+import { addSignToNumber, getModifier } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
+import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
 
 export default function Skills({ character }: { character: CharacterById }) {
   const abilities = {
@@ -21,15 +18,6 @@ export default function Skills({ character }: { character: CharacterById }) {
     Force: character.strength,
     Intelligence: character.intelligence,
     Sagesse: character.wisdom,
-  };
-
-  const savingThrows = {
-    charisma: "Charisme",
-    constitution: "Constitution",
-    dexterity: "Dextérité",
-    strength: "Force",
-    intelligence: "Intelligence",
-    wisdom: "Sagesse",
   };
 
   return (
@@ -64,7 +52,7 @@ export default function Skills({ character }: { character: CharacterById }) {
                   "text-primary": selectedSkill?.isExpert,
                 })}
               >
-                {getSkillModifier(character, skill)}
+                {addSignToNumber(getSkillModifier(character, skill))}
               </span>
             </div>
           );
@@ -82,42 +70,14 @@ export default function Skills({ character }: { character: CharacterById }) {
               <span className="text-muted-foreground">{name}</span>
               <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
               <span className="w-4 text-right text-lg font-bold">
-                {modifier}
+                {addSignToNumber(modifier)}
               </span>
             </div>
           );
         })}
       </SheetCard>
 
-      <SheetCard className="row-span-2 flex flex-col">
-        <span className="mb-2 self-center text-2xl font-bold">Sauvegardes</span>
-        {entries(savingThrows).map(([ability, displayName]) => {
-          const selectedSavingThrow = character.savingThrows.find(
-            ({ ability: abilityName }) =>
-              abilityName === ABILITY_NAME_MAP[ability],
-          );
-          return (
-            <div key={ability} className="flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <span className="text-muted-foreground">{displayName}</span>
-                {selectedSavingThrow?.isProficient && (
-                  <PopoverComponent definition="Sauvegarde maîtrisée : bonus de maitrise appliqué">
-                    <Asterisk className="size-4 text-indigo-500" />
-                  </PopoverComponent>
-                )}
-              </div>
-              <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
-              <span
-                className={cn("w-4 text-right text-lg font-bold", {
-                  "text-indigo-500": selectedSavingThrow?.isProficient,
-                })}
-              >
-                {getSavingThrowModifier(character, ability)}
-              </span>
-            </div>
-          );
-        })}
-      </SheetCard>
+      <SavingThrows character={character} className="row-span-2" />
 
       <SheetCard className="row-span-4 flex flex-col">
         <span className="mb-2 self-center text-2xl font-bold">Maîtrises</span>

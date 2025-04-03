@@ -165,6 +165,14 @@ export const replaceMetersWithSquares = (input: string) => {
 export const getModifier = (ability: number) => {
   return Math.floor((ability - 10) / 2);
 };
+
+export const addSignToNumber = (number: number) => {
+  if (number > 0) {
+    return `+${number}`;
+  }
+  return number;
+};
+
 export const getModifierFromCreature = (
   creature: Creature,
   characteristic: AbilityNameType,

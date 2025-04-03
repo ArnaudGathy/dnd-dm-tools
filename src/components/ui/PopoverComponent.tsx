@@ -9,14 +9,12 @@ export default function PopoverComponent({
   definition,
 }: {
   children: React.ReactNode;
-  definition: string;
+  definition: React.ReactNode;
 }) {
   return (
     <Popover>
       <PopoverTrigger>{children}</PopoverTrigger>
-      <PopoverContent className="w-fit max-w-[250px]">
-        {definition}
-      </PopoverContent>
+      <PopoverContent className="w-fit">{definition}</PopoverContent>
     </Popover>
   );
 }

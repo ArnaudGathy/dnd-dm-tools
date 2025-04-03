@@ -25,14 +25,14 @@ async function main() {
       owner: "arnaud.gathy@gmail.com",
       campaignId: campaign.id,
       name: "Alfredo Pinus",
-      className: "BARD",
-      subclassName: "COLLEGE_OF_LORE",
+      className: "PALADIN",
+      subclassName: "OATH_OF_DEVOTION",
       race: "ELF",
       background: "SAGE",
       level: 5,
       inspiration: 1,
       maximumHP: 38,
-      currentHP: 35,
+      currentHP: 38,
 
       strength: 8,
       dexterity: 12,
@@ -53,33 +53,22 @@ async function main() {
       eyeColor: "bruns",
       hair: "bruns",
       skin: "blanche",
-      physicalTraits: ["gigachad", "gracieux", "élégant"],
+      physicalTraits: "gigachad, gracieux, élégant",
 
       alignment: "CHAOTIC_GOOD",
-      personalityTraits: [
-        "Je suis poussé par une soif de voyage qui m'entraîne.",
-        "Je sais apprécier une bonne insulte, même quand j'en suis la cible.",
-      ],
-      ideals: [
+      personalityTraits:
+        "Je suis poussé par une soif de voyage qui m'entraîne. Je sais apprécier une bonne insulte, même quand j'en suis la cible.",
+      ideals:
         "Nature. Le monde naturel est bien plus important que les constructions de la civilisation.",
-        "Mon instrument représente mon bien le plus précieux et me rappelle quelqu'un que j'ai aimé.",
-      ],
-      bonds: [
-        "Je suis le dernier de ma tribu et il me revient de veiller.",
-        "Mon instrument représente mon bien le plus précieux.",
-      ],
-      flaws: [
-        "Je réponds à presque tous les défis par la violence.",
-        "J'ai un faible pour les jolis minois",
-      ],
-
-      allies: [
+      bonds:
+        "Je suis le dernier de ma tribu et il me revient de veiller. Mon instrument représente mon bien le plus précieux.",
+      flaws:
+        "Je réponds à presque tous les défis par la violence. J'ai un faible pour les jolis minois",
+      allies:
         "Garde de neverwinter - aide de la garde en cas de besoin. Ami avec le commandant et les autres membres de la garde.",
-      ],
-      lore: [
-        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci assumenda atque consequuntur cum dolore, eligendi, enim esse impedit ipsa maxime nam numquam praesentium quaerat quidem quisquam, ratione rem reprehenderit ullam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem cumque, dignissimos dolorem eum, expedita facere illo, illum ipsum laboriosam libero minus natus pariatur placeat quam quis sequi tempora vero.",
-      ],
-      notes: ["Test character for seeding", "second test entry"],
+      lore: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci assumenda atque consequuntur cum dolore, eligendi, enim esse impedit ipsa maxime nam numquam praesentium quaerat quidem quisquam, ratione rem reprehenderit ullam? Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda autem cumque, dignissimos dolorem eum, expedita facere illo, illum ipsum laboriosam libero minus natus pariatur placeat quam quis sequi tempora vero.",
+      notes:
+        "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci assumenda atque consequuntur cum dolore, eligendi, enim esse impedit ipsa maxime nam numquam praesentium quaerat quidem quisquam, ratione rem reprehenderit ullam?",
 
       proficiencies: [
         "Lute",
@@ -141,6 +130,113 @@ async function main() {
         name: "Bardic Inspiration",
         description: "Bonus dice for allies",
       },
+      {
+        characterId: character.id,
+        name: "Jack of All Trades",
+        description:
+          "Add half proficiency bonus to ability checks not already including it.",
+      },
+      {
+        characterId: character.id,
+        name: "Song of Rest",
+        description: "Grants extra healing to allies during a short rest.",
+      },
+      {
+        characterId: character.id,
+        name: "Cutting Words",
+        description: "Use Bardic Inspiration to subtract from an enemy's roll.",
+      },
+      {
+        characterId: character.id,
+        name: "Fey Ancestry",
+        description:
+          "Advantage on saving throws against being charmed, and magic can’t put you to sleep.",
+      },
+      {
+        characterId: character.id,
+        name: "Darkvision",
+        description: "See in darkness up to 60 feet as if it were dim light.",
+      },
+      {
+        characterId: character.id,
+        name: "Magical Secrets",
+        description:
+          "Learn spells from any class, ignoring usual restrictions.",
+      },
+      {
+        characterId: character.id,
+        name: "Elven Accuracy",
+        description:
+          "Reroll one die when you have advantage on a DEX, INT, WIS, or CHA attack.",
+      },
+      {
+        characterId: character.id,
+        name: "Inspiring Leader",
+        description:
+          "Give temporary hit points to allies after a motivating speech.",
+      },
+      {
+        characterId: character.id,
+        name: "Arcane Recovery",
+        description: "Regain expended spell slots during a short rest.",
+      },
+      {
+        characterId: character.id,
+        name: "Unarmored Defense",
+        description: "When not wearing armor, AC equals 10 + DEX + CHA.",
+      },
+      {
+        characterId: character.id,
+        name: "Evasion",
+        description:
+          "Take no damage on a successful DEX save, half on a failed one.",
+      },
+      {
+        characterId: character.id,
+        name: "Lucky",
+        description:
+          "Reroll an attack roll, ability check, or saving throw 3 times per long rest.",
+      },
+      {
+        characterId: character.id,
+        name: "Dwarven Resilience",
+        description:
+          "Advantage on saving throws against poison and resistance to poison damage.",
+      },
+      {
+        characterId: character.id,
+        name: "Sneak Attack",
+        description:
+          "Deal extra damage when you have advantage or an ally is nearby.",
+      },
+      {
+        characterId: character.id,
+        name: "Rage",
+        description:
+          "Enter a berserker state to deal more melee damage and resist physical harm.",
+      },
+      {
+        characterId: character.id,
+        name: "Divine Smite",
+        description:
+          "Spend a spell slot to deal radiant damage on a melee hit.",
+      },
+      {
+        characterId: character.id,
+        name: "Second Wind",
+        description: "Regain 1d10 + fighter level HP as a bonus action.",
+      },
+      {
+        characterId: character.id,
+        name: "Great Weapon Master",
+        description: "Make a heavy weapon attack at -5 to hit, +10 to damage.",
+      },
+      {
+        characterId: character.id,
+        name: "Alert",
+        description:
+          "You can’t be surprised while conscious. +5 to initiative.",
+      },
     ],
   });
 
@@ -165,6 +261,7 @@ async function main() {
       isProficient: true,
       AC: 14,
       extraEffects: [],
+      isEquipped: true,
     },
   });
 
@@ -187,134 +284,7 @@ async function main() {
       type: "SHIELD",
       AC: 2,
       extraEffects: [],
-    },
-  });
-
-  // Add Weapon with damage
-  await prisma.weapon.create({
-    data: {
-      characterId: character.id,
-      name: "Club",
-      type: "MELEE",
-      isProficient: true,
-      abilityModifier: "STRENGTH",
-      reach: 5,
-      extraEffects: [],
-      damages: {
-        create: [
-          {
-            type: "BLUDGEONING",
-            dice: "D4",
-            numberOfDices: 2,
-          },
-          {
-            type: "LIGHTNING",
-            dice: "D4",
-            numberOfDices: 2,
-            flatBonus: 3,
-          },
-        ],
-      },
-    },
-  });
-
-  await prisma.weapon.create({
-    data: {
-      characterId: character.id,
-      name: "Necro weapon",
-      type: "MELEE",
-      isProficient: true,
-      abilityModifier: "STRENGTH",
-      reach: 5,
-      extraEffects: [],
-      damages: {
-        create: [
-          {
-            type: "POISON",
-            dice: "D4",
-          },
-          {
-            type: "NECROTIC",
-            dice: "D4",
-          },
-        ],
-      },
-    },
-  });
-
-  await prisma.weapon.create({
-    data: {
-      characterId: character.id,
-      name: "Psychic weapon",
-      type: "MELEE",
-      isProficient: true,
-      abilityModifier: "STRENGTH",
-      reach: 5,
-      extraEffects: [],
-      damages: {
-        create: [
-          {
-            type: "PSYCHIC",
-            dice: "D8",
-          },
-          {
-            type: "RADIANT",
-            dice: "D12",
-          },
-        ],
-      },
-    },
-  });
-
-  await prisma.weapon.create({
-    data: {
-      characterId: character.id,
-      name: "Fouet de feu de Tzkal Zuk",
-      type: "MELEE",
-      isProficient: true,
-      abilityModifier: "DEXTERITY",
-      attackBonus: 1,
-      reach: 10,
-      extraEffects: ["Peut attirer la cible"],
-      damages: {
-        create: [
-          {
-            type: "FORCE",
-            dice: "D6",
-            flatBonus: 1,
-          },
-          {
-            type: "FIRE",
-            dice: "D4",
-          },
-        ],
-      },
-    },
-  });
-
-  await prisma.weapon.create({
-    data: {
-      characterId: character.id,
-      name: "Shortbow",
-      type: "RANGED",
-      isProficient: true,
-      abilityModifier: "DEXTERITY",
-      damages: {
-        create: [
-          {
-            type: "PIERCING",
-            dice: "D6",
-          },
-          {
-            type: "ACID",
-            dice: "D12",
-          },
-        ],
-      },
-      range: 80,
-      longRange: 320,
-      ammunitionType: "ARROW",
-      ammunitionCount: 20,
+      isEquipped: true,
     },
   });
 
@@ -324,11 +294,12 @@ async function main() {
       name: "Dagger",
       type: "THROWN",
       reach: 5,
-      isProficient: false,
+      isProficient: true,
       abilityModifier: "DEXTERITY",
       damages: {
         create: [
           {
+            isBaseDamage: true,
             type: "SLASHING",
             dice: "D4",
           },
@@ -340,6 +311,29 @@ async function main() {
       },
       range: 20,
       longRange: 60,
+    },
+  });
+
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Shortbow",
+      type: "RANGED",
+      isProficient: false,
+      abilityModifier: "DEXTERITY",
+      damages: {
+        create: [
+          {
+            type: "PIERCING",
+            dice: "D6",
+            isBaseDamage: true,
+          },
+        ],
+      },
+      range: 80,
+      longRange: 320,
+      ammunitionType: "ARROW",
+      ammunitionCount: 20,
     },
   });
 
