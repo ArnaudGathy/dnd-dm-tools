@@ -13,7 +13,9 @@ import {
   FileText,
   Swords,
   User,
+  Wrench,
 } from "lucide-react";
+import Settings from "@/app/characters/[id]/(sheet)/Settings";
 
 enum SHEETS_TABS {
   SUMMARY = "summary",
@@ -21,6 +23,7 @@ enum SHEETS_TABS {
   SKILLS = "skills",
   INVENTORY = "inventory",
   BIO = "bio",
+  SETTINGS = "settings",
 }
 
 const tabs = {
@@ -29,6 +32,7 @@ const tabs = {
   [SHEETS_TABS.COMBAT]: { label: "Combat", icon: Swords },
   [SHEETS_TABS.INVENTORY]: { label: "Inventaire", icon: Backpack },
   [SHEETS_TABS.BIO]: { label: "Bio", icon: User },
+  [SHEETS_TABS.SETTINGS]: { label: "Config", icon: Wrench },
 };
 
 export default async function Character({
@@ -81,6 +85,13 @@ export default async function Character({
 
         <TabsContent value={SHEETS_TABS.BIO} className={tabContentClassName}>
           <Bio character={character} />
+        </TabsContent>
+
+        <TabsContent
+          value={SHEETS_TABS.SETTINGS}
+          className={tabContentClassName}
+        >
+          <Settings character={character} />
         </TabsContent>
       </Card>
     </Tabs>

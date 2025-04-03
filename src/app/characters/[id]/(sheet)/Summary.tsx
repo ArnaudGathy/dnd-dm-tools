@@ -47,20 +47,26 @@ export default function Summary({ character }: { character: CharacterById }) {
         </span>
         <span className="text-base font-bold">{`Niveau ${character.level}`}</span>
 
-        <div className="absolute right-4 top-4">
+        <div className="absolute right-2 top-2 flex flex-col gap-1 md:right-4 md:top-4 md:flex-row md:gap-4">
           {character.spellsOnCharacters.length > 0 && (
             <Link href={`/characters/${character.id}/spells`}>
-              <Button variant="outline" size="sm">
-                <BookOpenIcon />
-                Sorts
+              <Button
+                variant="outline"
+                className="bg-gradient-to-tr from-blue-500 to-pink-500"
+                size="sm"
+              >
+                <BookOpenIcon className="stroke-[2.5px]" />
               </Button>
             </Link>
           )}
           {character.creatures.length > 0 && (
             <Link href={`/characters/${character.id}/creatures`}>
-              <Button variant="outline" size="sm">
-                <PawPrintIcon />
-                Créatures
+              <Button
+                variant="outline"
+                className="bg-gradient-to-tr from-blue-500 to-pink-500"
+                size="sm"
+              >
+                <PawPrintIcon className="stroke-[2.5px]" />
               </Button>
             </Link>
           )}
