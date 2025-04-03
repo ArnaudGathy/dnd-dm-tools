@@ -337,6 +337,31 @@ async function main() {
     },
   });
 
+  await prisma.weapon.create({
+    data: {
+      characterId: character.id,
+      name: "Rapière de feu",
+      type: "MELEE",
+      reach: 5,
+      isProficient: true,
+      abilityModifier: "DEXTERITY",
+      damages: {
+        create: [
+          {
+            type: "PIERCING",
+            dice: "D6",
+            isBaseDamage: true,
+          },
+          {
+            type: "FIRE",
+            dice: "D4",
+            flatBonus: 2,
+          },
+        ],
+      },
+    },
+  });
+
   // Add Inventory
   await prisma.inventoryItem.createMany({
     data: [

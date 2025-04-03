@@ -8,7 +8,6 @@ import {
   Heart,
   Shield,
   ShieldOff,
-  Swords,
   WandSparkles,
 } from "lucide-react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
@@ -291,37 +290,43 @@ export default function Combat({ character }: { character: CharacterById }) {
                   <div key={weapon.id}>
                     <div className="flex flex-col gap-2">
                       <Name weapon={weapon} />
-                      <StatCard
-                        icon={Swords}
-                        value={weaponAttackBonusDetails.total}
-                        definition={
-                          <div>
-                            <span className="font-bold">
-                              Bonus d&apos;attaque :{" "}
-                            </span>
-                            <div>
-                              <span>{`${ABILITY_NAME_MAP_TO_FR[weaponAttackBonusDetails.modifierName]} : `}</span>
-                              <span>
-                                {weaponAttackBonusDetails.abilityModifier}
-                              </span>
-                            </div>
-                            <div>
-                              <span>Maitrise : </span>
-                              <span>
-                                {weaponAttackBonusDetails.proficiencyBonus > 0
-                                  ? weaponAttackBonusDetails.proficiencyBonus
-                                  : "non"}
-                              </span>
-                              {weaponAttackBonusDetails.attackBonus > 0 && (
+                      <InfoCell
+                        name="Attaque"
+                        value={
+                          <PopoverComponent
+                            definition={
+                              <div>
+                                <span className="font-bold">
+                                  Bonus d&apos;attaque :{" "}
+                                </span>
                                 <div>
-                                  <span>Bonus : </span>
+                                  <span>{`${ABILITY_NAME_MAP_TO_FR[weaponAttackBonusDetails.modifierName]} : `}</span>
                                   <span>
-                                    {weaponAttackBonusDetails.attackBonus}
+                                    {weaponAttackBonusDetails.abilityModifier}
                                   </span>
                                 </div>
-                              )}
-                            </div>
-                          </div>
+                                <div>
+                                  <span>Maitrise : </span>
+                                  <span>
+                                    {weaponAttackBonusDetails.proficiencyBonus >
+                                    0
+                                      ? weaponAttackBonusDetails.proficiencyBonus
+                                      : "non"}
+                                  </span>
+                                  {weaponAttackBonusDetails.attackBonus > 0 && (
+                                    <div>
+                                      <span>Bonus : </span>
+                                      <span>
+                                        {weaponAttackBonusDetails.attackBonus}
+                                      </span>
+                                    </div>
+                                  )}
+                                </div>
+                              </div>
+                            }
+                          >
+                            {weaponAttackBonusDetails.total}
+                          </PopoverComponent>
                         }
                       />
                       <Damages weapon={weapon} character={character} />
