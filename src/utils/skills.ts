@@ -37,7 +37,9 @@ export const getSkillModifier = (
     ? proficiencyBonus * 2
     : selectedSkill?.isProficient
       ? proficiencyBonus
-      : 0;
+      : character.className === Classes.BARD && character.level >= 2
+        ? Math.floor(proficiencyBonus / 2)
+        : 0;
   const bonusModifier = selectedSkill?.modifier ?? 0;
   const abilityModifier = getModifier(character[SKILL_ABILITY_MAP[skillName]]);
 
@@ -207,10 +209,6 @@ export const getWeaponDamage = (
   weapon: Weapon,
 ) => {
   const dices = `${damage.numberOfDices}${WEAPON_DICE_MAP[damage.dice]}`;
-  const proficiencyBonus =
-    weapon.isProficient && damage.isBaseDamage
-      ? PROFICIENCY_BONUS_BY_LEVEL[character.level]
-      : 0;
   const {
     modifierName: baseModifierName,
     abilityModifier: baseAbilityModifier,
@@ -218,13 +216,12 @@ export const getWeaponDamage = (
   const modifierName = damage.isBaseDamage ? baseModifierName : null;
   const abilityModifier = damage.isBaseDamage ? baseAbilityModifier : 0;
   const flatBonus = damage.flatBonus ?? 0;
-  const damageBonus = flatBonus + abilityModifier + proficiencyBonus;
+  const damageBonus = flatBonus + abilityModifier;
 
   return {
     flatBonus,
     modifierName,
     abilityModifier,
-    proficiencyBonus,
     totalString: `${dices}${damageBonus >= 1 ? `+${damageBonus}` : damageBonus < 0 ? damageBonus : ""}`,
   };
 };

@@ -85,6 +85,7 @@ export const SUBCLASS_MAP = {
   [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_SWORDS]: "Collège des Épées",
   [Subclasses.COLLEGE_OF_WHISPERS]: "Collège des Murmures",
+  [Subclasses.COLLEGE_OF_GLAMOUR]: "Collège de la séduction",
 
   // Clerc
   [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
@@ -379,21 +380,6 @@ export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
   [WeaponDamageType.POISON]: "de poison",
   [WeaponDamageType.PSYCHIC]: "psychiques",
   [WeaponDamageType.RADIANT]: "radiants",
-};
-
-export const DAMAGE_TYPE_COLORS: Record<WeaponDamageType, string> = {
-  [WeaponDamageType.BLUDGEONING]: "gray-400",
-  [WeaponDamageType.SLASHING]: "gray-400",
-  [WeaponDamageType.PIERCING]: "gray-400",
-  [WeaponDamageType.ACID]: "lime-200",
-  [WeaponDamageType.COLD]: "cyan-400",
-  [WeaponDamageType.FIRE]: "orange-500",
-  [WeaponDamageType.FORCE]: "red-500",
-  [WeaponDamageType.LIGHTNING]: "blue-700",
-  [WeaponDamageType.NECROTIC]: "emerald-300",
-  [WeaponDamageType.POISON]: "lime-600",
-  [WeaponDamageType.PSYCHIC]: "fuchsia-400",
-  [WeaponDamageType.RADIANT]: "amber-300",
 };
 
 export const AMMUNITION_TYPE_MAP: Record<AmmunitionType, string> = {

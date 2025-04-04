@@ -95,7 +95,7 @@ export default function Skills({ character }: { character: CharacterById }) {
 
       <SheetSingleData
         label="Perception passive"
-        value={10 + getSkillModifier(character, SkillList.PERCEPTION)}
+        value={8 + getSkillModifier(character, SkillList.PERCEPTION)}
       />
 
       <SheetSingleData label="Inspiration" value={character.inspiration} />

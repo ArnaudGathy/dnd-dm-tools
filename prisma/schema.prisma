@@ -47,6 +47,8 @@ model Campaign {
   character Character[]
   party     Party          @relation(fields: [partyId], references: [id])
   partyId   Int
+
+  @@unique([name, partyId])
 }
 
 model Capacity {
@@ -89,6 +91,7 @@ enum Subclasses {
   COLLEGE_OF_LORE
   COLLEGE_OF_SWORDS
   COLLEGE_OF_WHISPERS
+  COLLEGE_OF_GLAMOUR
   // Cleric
   LIFE_DOMAIN
   LIGHT_DOMAIN
