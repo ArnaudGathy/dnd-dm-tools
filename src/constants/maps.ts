@@ -85,6 +85,7 @@ export const SUBCLASS_MAP = {
   [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_SWORDS]: "Collège des Épées",
   [Subclasses.COLLEGE_OF_WHISPERS]: "Collège des Murmures",
+  [Subclasses.COLLEGE_OF_GLAMOUR]: "Collège de la séduction",
 
   // Clerc
   [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
