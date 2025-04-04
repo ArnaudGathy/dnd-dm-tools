@@ -1,0 +1,720 @@
+[
+	{
+		"owner": "logan.bourez@gmail.com",
+		"campaign": "PHANDELVER",
+		"party": "PAINTERS",
+		"name": "Baern",
+		"className": "FIGHTER",
+		"subclassName": "BATTLE_MASTER",
+		"race": "DWARF",
+		"level": 3,
+		"background": "SOLDIER",
+		"maximumHP": 32,
+		"currentHP": 32,
+		"strength": 17,
+		"dexterity": 8,
+		"constitution": 16,
+		"intelligence": 10,
+		"wisdom": 13,
+		"charisma": 12,
+		"initiativeBonus": 0,
+		"ACBonus": 0,
+		"magicAttackBonus": 0,
+		"magicDCBonus": 0,
+		"movementSpeedBonus": 0,
+		"age": 80,
+		"weight": 75,
+		"height": 140,
+		"eyeColor": "Bruns",
+		"hair": "Roux",
+		"skin": "Blanche",
+		"alignment": "LAWFUL_NEUTRAL",
+		"personalityTraits": "J'affronte les problèmes bille en tête. Une solution simple et directe, voilà le meilleur chemin vers la victoire. ",
+		"ideals": "Responsabilité. Je fais ce que je dois et j'obéis à une juste autorité.",
+		"bonds": "Quelqu'un m'a sauvé la vie sur le champ de bataille. Même aujourd'hui, je n'abandonnerai pas un ami.",
+		"flaws": "Je préfèrerais manger mon armure plutôt que d'admettre que j'ai tort.",
+		"lore": "Capitaine Porte-étendard de Neverwinter",
+		"allies": "Garde de Neverwinter",
+		"imageUrl":"baern.png",
+		"notes": "Dés de supériorité : 4d8, DD manoeuvre : 13",
+		"proficiencies": ["Langue : commun", "Langue : Nain", "Toutes les armures et bouclier", "Armes courantes", "Armes de guerre", "Outil de forgeron", "Outil de maçon", "Véhicules (terrestre)", "Jeux de dés"],
+		"savingThrows": [
+			{ "ability": "STRENGTH", "isProficient": true },
+			{ "ability": "CONSTITUTION", "isProficient": true }
+		],
+		"skills": [
+			{ "skill": "ATHLETICS", "isProficient": true, "isExpert": false },
+			{ "skill": "HISTORY", "isProficient": true, "isExpert": false },
+			{ "skill": "INTIMIDATION", "isProficient": true, "isExpert": false },
+			{ "skill": "PERCEPTION", "isProficient": true, "isExpert": false }
+		],
+		"capacities": [
+			{ "name": "Vision dans le noir" },
+			{ "name": "Résistance naine", "description": "Avantage et résistance poison" },
+			{ "name": "Connaissance de la pierre", "description": "maitrise d'histoire avec double maitrise pour connaitre la BONNE PIERRE" },
+			{ "name": "Style de combat", "description": "Duel" },
+			{ "name": "Second souffle", "description": "Heal 1d10 + level - 1x/repos court" },
+			{ "name": "Sursaut d'activité", "description": "+1 action 1x/repos court" },
+			{ "name": "Manoeuvre : croche-pieds", "description": "+ degat. DD force (Max G) -> prone" },
+			{ "name": "Manoeuvre : provocation", "description": "+ degat. DD sagesse -> desavantage vs other" },
+			{ "name": "Manoeuvre : frappe du commandant", "description": "- 1 attaque. Allié attaque + degat" }
+		],
+		"armors": [
+			{
+				"name": "Clibanion",
+				"type": "HEAVY",
+				"isProficient": true,
+				"AC": 17,
+				"extraEffects": [],
+				"strengthRequirement": 15,
+				"stealthDisadvantage": true,
+				"isEquipped": true
+			},
+			{
+				"name": "Bouclier",
+				"type": "SHIELD",
+				"isProficient": true,
+				"AC": 2,
+				"extraEffects": [],
+				"isEquipped": true
+			}
+		],
+		"weapons": [
+			{
+				"name": "Pic de Guerre",
+				"type": "MELEE",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"attackBonus": 0,
+				"reach": 5,
+				"extraEffects": [],
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "PIERCING",
+						"dice": "D8",
+						"numberOfDices": 1
+					}
+				]
+			},
+			{
+				"name": "Épée longue +1",
+				"type": "MELEE",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"attackBonus": 1,
+				"reach": 5,
+				"extraEffects": [],
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "SLASHING",
+						"dice": "D8",
+						"numberOfDices": 1,
+						"flatBonus": 1
+					}
+				]
+			},
+			{
+				"name": "Hachettes x2",
+				"type": "THROWN",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"reach": 5,
+				"extraEffects": [],
+				"range": 20,
+				"longRange": 60,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "SLASHING",
+						"dice": "D6",
+						"numberOfDices": 1
+					}
+				]
+			}
+		],
+		"inventory": [
+			{
+				"name": "Trophée ennemi",
+				"description": "banniére"
+			},
+			{
+				"name": "Un set de dés en os"
+			},
+			{
+				"name": "Sac a dos"
+			},
+			{
+				"name": "Sac de couchage"
+			},
+			{
+				"name": "Gamelle"
+			},
+			{
+				"name": "Boite à amadou"
+			},
+			{
+				"name": "Torche",
+				"quantity": 10
+			},
+			{
+				"name": "Ration",
+				"quantity": 10
+			},
+			{
+				"name": "Outre"
+			},
+			{
+				"name": "Corde",
+				"description": "15 mètres"
+			},
+			{
+				"name": "Trompette Héraldique"
+			},
+			{
+				"name": "Potion de soins",
+				"description": "2d4+2",
+				"quantity": 5
+			},
+			{
+				"name": "Huile d'arme",
+				"description": "+1 aux attaques et dégâts pendant 1 heure"
+			}
+		],
+		"wealth": [
+			{ "type": "GOLD", "quantity": 120 },
+			{ "type": "SILVER", "quantity": 0 },
+			{ "type": "COPPER", "quantity": 0 }
+		],
+		"spells": []
+	},
+	{
+		"owner": "kraft.alfred4@gmail.com",
+		"campaign": "PHANDELVER",
+		"party": "PAINTERS",
+		"name": "Barback",
+		"className": "BARBARIAN",
+		"subclassName": "PATH_OF_THE_ZEALOT",
+		"race": "HUMAN",
+		"level": 3,
+		"background": "GUIDE",
+		"maximumHP": 26,
+		"currentHP": 26,
+		"strength": 16,
+		"dexterity": 14,
+		"constitution": 14,
+		"intelligence": 8,
+		"wisdom": 10,
+		"charisma": 12,
+		"initiativeBonus": 0,
+		"ACBonus": 0,
+		"magicAttackBonus": 0,
+		"magicDCBonus": 0,
+		"movementSpeedBonus": 0,
+		"age": 29,
+		"weight": 95,
+		"height": 180,
+		"eyeColor": "verts",
+		"hair": "chauve",
+		"skin": "claire",
+		"alignment": "CHAOTIC_NEUTRAL",
+		"personalityTraits": "Pas le temps de niaiser - ADHD",
+		"ideals": "Puissance - Reconnaissance par l'action et la force",
+		"bonds": "Icône des barbares - ressembler à Bul Katos",
+		"flaws": "Ne vous attendez pas à ce que je sauve ceux qui sont incapables de se sauver eux-mêmes . Les forts survivent et les faibles périssent, telle est la loi de la nature. Concentration limitée",
+		"lore": "Barback était un barbare, mais pas comme les autres. Bien qu'il ait la carrure d'un guerrier redoutable, son cerveau n'était pas exactement son point fort.\nIl avait un grand coeur et une force impressionnante, mais sa capacité à comprendre les subtilités de la vie laissait souvent à désirer. Cela ne l'empêchait pas d'être optimiste, et cherchait avant tout des défis non pas pour la gloire, mais pour son amour du combat.\n",
+		"allies": "Tempus, Dieu de la guerre (épée enflammée à la verticale)",
+		"notes": "",
+		"proficiencies": ["Langue : Commun", "Langue : Orc", "Armures légères et intermédiaires", "Boucliers", "Armes courantes", "Armes de guerre"],
+		"creatures": [],
+		"savingThrows": [
+			{ "ability": "STRENGTH", "isProficient": true },
+			{ "ability": "CONSTITUTION", "isProficient": true },
+			{ "ability": "DEXTERITY", "isProficient": true }
+		],
+		"skills": [
+			{ "skill": "ACROBATICS", "isProficient": true, "isExpert": false },
+			{ "skill": "ATHLETICS", "isProficient": true, "isExpert": false },
+			{ "skill": "INTIMIDATION", "isProficient": true, "isExpert": false },
+			{ "skill": "PERCEPTION", "isProficient": true, "isExpert": false },
+			{ "skill": "SURVIVAL", "isProficient": true, "isExpert": false }
+		],
+		"capacities": [
+			{ "name": "Enragé",
+				"description": "3 par long repos. Avantage test de Force + Jets de sauvegarde (Force). Résistant dmg physiques (dmg/2)"
+			},
+			{ "name": "Grand maître d'armes", "description": "Crit ou 0 pv -> Attaque CaC bonus. Avant une Attaque lourde -> -5 au jet et si touche, +10 dmg" },
+			{ "name": "Témérité", "description": "Décidé 1ère attaque - avantage sur tous les jets d'attaque CaC (Force). Avantage sur les attaques subies (1tour)" },
+			{ "name": "Sens du danger", "description": "Avantages sur les jets de sauvegarde (Dex) (équivalent maitrise)" },
+			{ "name": "Fureur divine", "description": " 1d6 + 1/2 niveaux à la première attaque enragée de chaque tour (touchée) + Guerrier des dieux (pas de composants pour relever les morts)" }
+		],
+		"armors": [
+			{
+				"name": "Demi-plate",
+				"type": "MEDIUM",
+				"isProficient": true,
+				"AC": 15,
+				"extraEffects": [],
+				"stealthDisadvantage": true,
+				"isEquipped": true
+			}
+		],
+		"weapons": [
+			{
+				"name": "Hache à deux mains",
+				"type": "MELEE",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"attackBonus": 0,
+				"reach": 5,
+				"extraEffects": [],
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "SLASHING",
+						"dice": "D12",
+						"numberOfDices": 1
+					}
+				]
+			},
+			{
+				"name": "Morgenstern",
+				"type": "MELEE",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"attackBonus": 0,
+				"reach": 5,
+				"extraEffects": [],
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "PIERCING",
+						"dice": "D8",
+						"numberOfDices": 1
+					}
+				]
+			},
+			{
+				"name": "Hachettes x2",
+				"type": "THROWN",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"reach": 5,
+				"extraEffects": [],
+				"range": 20,
+				"longRange": 60,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "SLASHING",
+						"dice": "D6",
+						"numberOfDices": 1
+					}
+				]
+			},
+			{
+				"name": "Javelines (x4)",
+				"type": "THROWN",
+				"isProficient": true,
+				"abilityModifier": "STRENGTH",
+				"reach": 5,
+				"extraEffects": [],
+				"range": 30,
+				"longRange": 120,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "PIERCING",
+						"dice": "D6",
+						"numberOfDices": 1
+					}
+				]
+			}
+		],
+		"inventory": [
+			{
+				"name": "Bâton",
+				"value": "2pa"
+			},
+			{
+				"name": "Piège à machoire"
+			},
+			{
+				"name": "Patte de lapin"
+			},
+			{
+				"name": "Tenue de voyageur"
+			},
+			{
+				"name": "Potion de soins",
+				"description": "2d4+2"
+			},
+			{
+				"name": "Filet"
+			},
+			{
+				"name": "Viande fumée"
+			},
+			{
+				"name": "Cape rouge"
+			},
+			{
+				"name": "Sac de farine"
+			},
+			{
+				"name": "Rations et viande"
+			}
+		],
+		"wealth": [
+			{ "type": "GOLD", "quantity": 235 },
+			{ "type": "SILVER", "quantity": 180 },
+			{ "type": "COPPER", "quantity": 0 }
+		],
+		"spells": []
+	},
+	{
+		"owner": "maximevanvelsen@gmail.com",
+		"campaign": "PHANDELVER",
+		"party": "PAINTERS",
+		"name": "Lucifier",
+		"className": "BARD",
+		"subclassName": "COLLEGE_OF_GLAMOUR",
+		"race": "TIEFLING",
+		"level": 3,
+		"background": "ENTERTAINER",
+		"maximumHP": 25,
+		"currentHP": 25,
+		"strength": 10,
+		"dexterity": 12,
+		"constitution": 13,
+		"intelligence": 15,
+		"wisdom": 8,
+		"charisma": 17,
+		"initiativeBonus": 0,
+		"ACBonus": 0,
+		"magicAttackBonus": 0,
+		"magicDCBonus": 0,
+		"movementSpeedBonus": 0,
+		"age": 37,
+		"weight": 100,
+		"height": 190,
+		"eyeColor": "rouge",
+		"hair": "non",
+		"skin": "violette",
+		"alignment": "CHAOTIC_NEUTRAL",
+		"personalityTraits": "Je suis romantique et toujours en quête de ce quelqu'un de spécial",
+		"ideals": "Créativité. Le monde a besoin de nouvelles idées et d'actions audacieuses.",
+		"bonds": "Mon instrument c'est la beauté de mon chant.",
+		"flaws": "J'ai un faible pour les jolis minois et les jolis minous.",
+		"lore": "Lucifier fils de Satan, lors de ma naissance ma mère humaine a voulu me proteger de mon père et m'a donc donné a un nain afin de me proteger. Le temps d'effile et j'apprend a vivre dans l'ombre. La supercherie et l'escamotage deviennent ma force. a l'age de 17 ans Flitz mon père adoptif m'offra un luth volé a un Barde trop bourré à l'auberge de la folie brute. Pendant 1 an j'ai appris a jouer au luth et a parfaire mon art. A mes 18 ans Satan fit une apparition et me demanda de chanter pour lui a son mariage. J'ai accepter car il m'offrait beaucoup de pièce d'or. Mais ce n'était qu'une vaste blague ma mère me reconnu instantanement. Et supplia de partir. Une fois la vériter eclater, Je fit une mélodie que les enfers toute entiere ont entendu. Et j'ai fait Mourir de rire Satan. c'est la que j'ai découvert mon pouvoir",
+		"allies": "",
+		"notes": "",
+		"proficiencies": ["Langue : Commun", "Langue : Infernal", "Armures légères", "Armes courantes", "Arbalète de poing", "Épée courte et longue", "Rapière", "Luth, lyre, flute de pan", "Accessoires de déguisement"],
+		"creatures": [],
+		"savingThrows": [
+			{ "ability": "CHARISMA", "isProficient": true },
+			{ "ability": "DEXTERITY", "isProficient": true }
+		],
+		"skills": [
+			{ "skill": "SLEIGHT_OF_HAND", "isProficient": true, "isExpert": false },
+			{ "skill": "DECEPTION", "isProficient": false, "isExpert": true },
+			{ "skill": "PERSUASION", "isProficient": false, "isExpert": true }
+
+		],
+		"capacities": [
+			{ "name": "Vision dans le noir" },
+			{ "name": "Resistance aux dégats au feu", "description": "1/2 dégâts subit du feu" },
+			{ "name": "Inspiration bardique", "description": "+1d6 sur un jet, 3 fois par long repos" },
+			{ "name": "A la demande du public", "description": "Là tu te produits, tu es logé et nourri gratuitement tant que vous donnez une représentation chaque soir. Des étrangers vous reconnaissent et sont plus enclins à vous aider." },
+			{ "name": "Chant reposant", "description": "+1d6 soins à tout le monde lors d'un court repos." },
+			{"name":  "Apparence inspirante"},
+			{"name":  "Représentation envoûtante"}
+		],
+		"armors": [
+			{
+				"name": "Armure de cuir +1",
+				"type": "LIGHT",
+				"isProficient": true,
+				"AC": 12,
+				"extraEffects": [],
+				"isEquipped": true
+			}
+		],
+		"weapons": [
+			{
+				"name": "Arbalète de poing",
+				"type": "RANGED",
+				"isProficient": true,
+				"abilityModifier": "DEXTERITY",
+				"attackBonus": 0,
+				"extraEffects": [],
+				"range": 30,
+				"longRange": 120,
+				"ammunitionType": "BOLT",
+				"ammunitionCount": 20,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "PIERCING",
+						"dice": "D6",
+						"numberOfDices": 1
+					}
+				]
+			}
+		],
+		"inventory": [
+			{
+				"name": "Sac a dos"
+			},
+			{
+				"name": "Sac de couchage"
+			},
+			{
+				"name": "Luth"
+			},
+			{
+				"name": "costumes",
+				"quantity": 2
+			},
+			{
+				"name": "bougies",
+				"quantity": 5
+			},
+			{
+				"name": "rations",
+				"quantity": 5
+			},
+			{
+				"name": "outre"
+			},
+			{
+				"name": "Accessoires de déguisement"
+			},
+			{
+				"name": "Un costume"
+			},
+			{
+				"name": "Un collier d'amour"
+			}
+		],
+		"wealth": [
+			{ "type": "GOLD", "quantity": 135 },
+			{ "type": "SILVER", "quantity": 0 },
+			{ "type": "COPPER", "quantity": 0 }
+		],
+		"spells": [
+			"vicious-mockery",
+			"thaumaturgy",
+			"minor-illusion",
+			"tasha-s-hideous-laughter",
+			"healing-word",
+			"thunderwave",
+			"sleep",
+			"charm-person"
+		]
+	},
+	{
+		"owner": "lara.bluekami@gmail.com",
+		"campaign": "PHANDELVER",
+		"party": "PAINTERS",
+		"name": "Eleni",
+		"className": "DRUID",
+		"subclassName": "CIRCLE_OF_THE_MOON",
+		"race": "ELF",
+		"level": 3,
+		"background": "GUIDE",
+		"maximumHP": 22,
+		"currentHP": 22,
+		"strength": 8,
+		"dexterity": 15,
+		"constitution": 12,
+		"intelligence": 10,
+		"wisdom": 16,
+		"charisma": 14,
+		"initiativeBonus": 0,
+		"ACBonus": 0,
+		"magicAttackBonus": 0,
+		"magicDCBonus": 0,
+		"movementSpeedBonus": 0,
+		"age": 128,
+		"weight": 60,
+		"height": 165,
+		"eyeColor": "Rouges",
+		"hair": "Noirs",
+		"skin": "Blanche",
+		"alignment": "LAWFUL_NEUTRAL",
+		"personalityTraits": "Je suis poussé par une soif de voyage qui m'entraîne.",
+		"ideals": "Nature. Le monde naturel est bien plus important que les constructions de la civilisation.",
+		"bonds": "Je suis la dernière de ma tribu et il me revient de veiller.",
+		"flaws": "Je réponds à presque tous les défis par la violence.",
+		"lore": "Sous une belle nuit étoilée, Eleni vit le jour dans la tribu des Sombrenuit. Elle fut bercée par les chants du vent dans les branches et les murmures des esprits de la nature. Très tôt, elle développa un lien profond avec la terre, apprenant à vivre en parfaite harmonie avec la faune et la flore.\nPourtant, Eleni ne partageait pas l’attachement viscéral de son peuple à l’immobilité et aux traditions. Une soif de découverte brûlait en elle, un besoin d’arpenter le monde bien au-delà des frontières de la forêt. Son respect pour la nature était absolu, mais elle voyait dans l’ordre des sociétés une nécessité – du moins tant que cet ordre ne devenait pas une prison.\n\nLe destin lui arracha ses racines bien avant qu’elle ne puisse faire un choix. Un conflit entre sa tribu et une faction humaine avide de ressources se solda par un massacre. Lorsqu’elle revint d’une expédition en solitaire, elle ne trouva que des cendres et des corps sans vie. Seule survivante, elle enterra les siens et quitta sa terre natale avec une seule certitude : elle ne laisserait pas leur nom disparaître dans l’oubli.\n\nDésormais, elle voyage à travers le monde, s’adaptant aux règles des différentes sociétés qu’elle croise, mais n’hésitant pas à les briser si elles se dressent entre elle et ce qu’elle estime juste. Bien qu’elle se méfie des grandes villes et de leurs intrigues, elle sait reconnaître la valeur d’un allié et ne méprise pas les mortels qui cherchent à s’élever. Si elle juge quelqu’un digne de confiance, elle sera une protectrice féroce, prête à tout pour défendre ceux qu’elle considère comme sa nouvelle famille.\n\nMais Eleni est aussi prompte à la colère. Son sang brûle face à l’injustice, et elle répond souvent aux défis par la force plutôt que par les mots. Chaque bataille, chaque voyage, chaque rencontre est une occasion d’écrire son nom dans l’histoire… et de prouver que les Sombrenuit ne seront jamais oubliés.",
+		"allies": "",
+		"notes": "",
+		"proficiencies": ["Langues : Commun, elfique, druidique, sylvain", "Armures légères et intermédiaires", "Boucliers", "Épées longues et courtes", "Arcs longs et courts", "Cimeterre, serpe, fronde, lance, javeline, massue, baton, gourdin, dague, fléchette", "Matériel d'herboriste", "Instrument de musique"],
+		"savingThrows": [
+			{ "ability": "INTELLIGENCE", "isProficient": true },
+			{ "ability": "WISDOM", "isProficient": true }
+		],
+		"skills": [
+			{ "skill": "ATHLETICS", "isProficient": true, "isExpert": false },
+			{ "skill": "NATURE", "isProficient": true, "isExpert": false },
+			{ "skill": "PERCEPTION", "isProficient": true, "isExpert": false },
+			{ "skill": "INSIGHT", "isProficient": true, "isExpert": false },
+			{ "skill": "SURVIVAL", "isProficient": true, "isExpert": false }
+
+		],
+		"capacities": [
+			{ "name": "Vision dans le noir" },
+			{ "name": "héritage elfique", "description": "Avantage contre charme, et insensible au sommeil magique" },
+			{ "name": "Transe", "description": "long repos après 4h au lieu de 6h" },
+			{ "name": "Cachette naturelle", "description": "Se cacher dans environement légèrement obstrué" },
+			{ "name": "Forme sauvage", "description": "Se transformer en bête de FP1 pour 1 action bonus. Sort actif : action bonus utilisable pour récupérer 1d8 de PV par niveau d'emplacement de sort dépensé" }
+		],
+		"armors": [
+			{
+				"name": "Armure de cuir",
+				"type": "LIGHT",
+				"isProficient": true,
+				"AC": 1,
+				"extraEffects": [],
+				"isEquipped": true
+			}
+		],
+		"weapons": [
+			{
+				"name": "Dague",
+				"type": "THROWN",
+				"isProficient": true,
+				"abilityModifier": "DEXTERITY",
+				"attackBonus": 0,
+				"extraEffects": [],
+				"reach": 5,
+				"range": 20,
+				"longRange": 60,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "PIERCING",
+						"dice": "D4",
+						"numberOfDices": 1
+					}
+				]
+			},
+			{
+				"name": "Cimeterre",
+				"type": "MELEE",
+				"isProficient": true,
+				"abilityModifier": "DEXTERITY",
+				"attackBonus": 0,
+				"extraEffects": [],
+				"reach": 5,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "SLASHING",
+						"dice": "D6",
+						"numberOfDices": 1
+					}
+				]
+			},
+			{
+				"name": "Arc long",
+				"type": "RANGED",
+				"isProficient": true,
+				"abilityModifier": "DEXTERITY",
+				"attackBonus": 0,
+				"extraEffects": [],
+				"range": 150,
+				"longRange": 600,
+				"ammunitionType": "ARROW",
+				"ammunitionCount": 20,
+				"damages": [
+					{
+						"isBaseDamage": true,
+						"type": "PIERCING",
+						"dice": "D8",
+						"numberOfDices": 1
+					}
+				]
+			}
+		],
+		"inventory": [
+			{
+				"name": "Focaliseur druidique"
+			},
+			{
+				"name": "Sac à dos"
+			},
+			{
+				"name": "sac de couchage"
+			},
+			{
+				"name": "Gamelle"
+			},
+			{
+				"name":  "Outre"
+			},
+			{
+				"name": "Boîte à amadou"
+			},
+			{
+				"name": "Piège à mâchoire"
+			},
+			{
+				"name": "Corde",
+				"description": "15 mètres"
+			},
+			{
+				"name": "Rations",
+				"quantity": 40
+			},
+			{
+				"name": "Une tenue de voyage"
+			},
+			{
+				"name": "Anneau de communication avec les animaux",
+				"description": "Peut magiquement communiquer avec les animaux tant qu'il est équipé"
+			}
+		],
+		"wealth": [
+			{ "type": "GOLD", "quantity": 231 },
+			{ "type": "SILVER", "quantity": 85 },
+			{ "type": "COPPER", "quantity": 95 }
+		],
+		"creatures": [20, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51],
+		"spells": [
+			"primal-savagery",
+			"produce-flame",
+			"charm-person",
+			"detect-magic",
+			"detect-poison-and-disease",
+			"healing-word",
+			"purify-food-and-drink",
+			"jump",
+			"cure-wounds",
+			"thunderwave",
+			"animal-friendship",
+			"goodberry",
+			"speak-with-animals",
+			"create-or-destroy-water",
+			"entangle",
+			"longstrider",
+			"faerie-fire",
+			"fog-cloud",
+			"enhance-ability",
+			"gust-of-wind",
+			"spike-growth",
+			"flame-blade",
+			"locate-animals-or-plants",
+			"animal-messenger",
+			"heat-metal",
+			"pass-without-trace",
+			"barkskin",
+			"protection-from-poison",
+			"moonbeam",
+			"beast-sense",
+			"darkvision"
+		]
+	}
+]

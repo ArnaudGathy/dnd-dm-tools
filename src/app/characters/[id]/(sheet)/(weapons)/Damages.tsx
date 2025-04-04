@@ -34,7 +34,6 @@ export default function Damages({
             );
             const hasBonusDamage =
               weaponDamageDetails.modifierName !== null ||
-              weaponDamageDetails.proficiencyBonus > 0 ||
               weaponDamageDetails.flatBonus > 0;
 
             return (
@@ -49,17 +48,6 @@ export default function Damages({
                         <div>
                           <span>{`${ABILITY_NAME_MAP_TO_FR[weaponDamageDetails.modifierName]} : `}</span>
                           <span>{weaponDamageDetails.abilityModifier}</span>
-                        </div>
-                      )}
-                      {weaponDamageDetails.proficiencyBonus > 0 && (
-                        <div>
-                          <span>Maîtrise : </span>
-
-                          <span>
-                            {weaponDamageDetails.proficiencyBonus > 0
-                              ? weaponDamageDetails.proficiencyBonus
-                              : "non"}
-                          </span>
                         </div>
                       )}
                       {weaponDamageDetails.flatBonus > 0 && (

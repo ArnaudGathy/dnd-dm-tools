@@ -47,6 +47,8 @@ model Campaign {
   character Character[]
   party     Party          @relation(fields: [partyId], references: [id])
   partyId   Int
+
+  @@unique([name, partyId])
 }
 
 model Capacity {
