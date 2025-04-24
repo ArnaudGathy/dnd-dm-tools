@@ -21,6 +21,7 @@ import {
   PawPrintIcon,
   Skull,
   TreePalm,
+  UserPlus,
   Users,
 } from "lucide-react";
 import { classColors } from "@/constants/colors";
@@ -55,9 +56,17 @@ export default async function Characters({
 
   return (
     <div className="space-y-4">
-      <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
-        Liste des personnages
-      </h1>
+      <div className="flex justify-between">
+        <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
+          Liste des personnages
+        </h1>
+        <Link href={`/characters/add`}>
+          <Button variant="secondary">
+            <UserPlus />
+            Créer un personnage
+          </Button>
+        </Link>
+      </div>
       <CharacterFilters
         parties={parties}
         campaigns={campaigns}
