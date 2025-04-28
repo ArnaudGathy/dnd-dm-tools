@@ -188,7 +188,7 @@ export default function CharacterFilters({
           )}
 
           <Button onClick={clearParams} variant="secondary">
-            Reset filters
+            Réinitialiser les filtres
           </Button>
         </>
       )}
