@@ -150,7 +150,6 @@ export const SUBCLASS_MAP = {
   // Roublard
   [Subclasses.ARCANE_TRICKSTER]: "Arnaqueur arcanique",
   [Subclasses.ASSASSIN]: "Assassin",
-  [Subclasses.INQUISITIVE]: "Inquisiteur",
   [Subclasses.SOULKNIFE]: "Lame psychique",
   [Subclasses.THIEF]: "Voleur",
 
@@ -246,7 +245,6 @@ export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
     Subclasses.ASSASSIN,
     Subclasses.ARCANE_TRICKSTER,
     Subclasses.SOULKNIFE,
-    Subclasses.INQUISITIVE,
   ],
   [Classes.SORCERER]: [
     Subclasses.DRACONIC_BLOODLINE,

@@ -17,10 +17,10 @@ export default function FormInventory({
         <CardTitle>Inventaire</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-8">
-        <WeaponsArray form={form} />
-        <ArmorsArray form={form} />
         <WealthArray form={form} />
         <InventoryArray form={form} />
+        <WeaponsArray form={form} />
+        <ArmorsArray form={form} />
       </CardContent>
     </Card>
   );

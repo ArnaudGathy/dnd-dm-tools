@@ -72,6 +72,7 @@ export default function FormFieldInput<
                   {...field}
                   required={rest.required}
                   value={field.value?.toString() ?? ""}
+                  className="h-[100px]"
                 />
               ) : (
                 <Input

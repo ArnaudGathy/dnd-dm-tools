@@ -71,13 +71,14 @@ export default function FormBio({
           />
         </div>
 
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="physicalTraits"
-          label="Traits physiques"
-          description="Pour décrire plus en détail le personnage"
-          textarea
-        />
+        <div className="w-[76%]">
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="physicalTraits"
+            label="Traits physiques"
+            description="Pour décrire plus en détail le personnage"
+          />
+        </div>
       </CardContent>
     </Card>
   );

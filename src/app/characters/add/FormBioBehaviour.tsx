@@ -14,52 +14,57 @@ export default function FormBioBehaviour({
         <CardTitle>Comportement</CardTitle>
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="personalityTraits"
-          label="Traits de personalité"
-          textarea
-          required
-        />
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="ideals"
-          label="Idéaux"
-          textarea
-          required
-        />
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="bonds"
-          label="Liens"
-          textarea
-          required
-        />
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="flaws"
-          label="Défauts"
-          textarea
-          required
-        />
+        <div className="grid grid-cols-4 gap-4">
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="personalityTraits"
+            label="Traits de personalité"
+            textarea
+            required
+          />
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="ideals"
+            label="Idéaux"
+            textarea
+            required
+          />
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="bonds"
+            label="Liens"
+            textarea
+            required
+          />
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="flaws"
+            label="Défauts"
+            textarea
+            required
+          />
+        </div>
+
+        <div className="grid grid-cols-2 gap-4">
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="allies"
+            label="Alliés et organisations"
+            textarea
+          />
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="notes"
+            label="Notes"
+            textarea
+          />
+        </div>
+
         <FormFieldInput
           formInstance={form}
           formFieldName="lore"
           label="Lore"
           textarea
-        />
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="allies"
-          label="Alliés et organisations"
-          textarea
-        />
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="notes"
-          label="Notes"
-          textarea
-          description="Notes de tous genres à stocker dans la fiche de personnage"
         />
       </CardContent>
     </Card>
