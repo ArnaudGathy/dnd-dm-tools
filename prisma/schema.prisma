@@ -22,7 +22,7 @@ model Armor {
   type                ArmorType
   isProficient        Boolean   @default(true)
   AC                  Int
-  extraEffects        String[]
+  extraEffects        String?
   strengthRequirement Int?
   stealthDisadvantage Boolean   @default(false)
   isEquipped          Boolean   @default(false)
@@ -169,11 +169,14 @@ enum Races {
   HALF_ORC
   HUMAN
   ORC
+  TABAXI
   TIEFLING
 }
 
 enum Backgrounds {
   ACOLYTE
+  ANTHROPOLOGIST
+  ARCHEOLOGIST
   ARTISAN
   CHARLATAN
   CRIMINAL
@@ -444,5 +447,5 @@ model Weapon {
   longRange       Int?
   ammunitionType  AmmunitionType?
   ammunitionCount Int?
-  extraEffects    String[]
+  extraEffects    String?
 }

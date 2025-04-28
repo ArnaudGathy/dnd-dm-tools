@@ -14,6 +14,7 @@ import {
   Subclasses,
   WeaponDamageDices,
   WeaponDamageType,
+  WeaponType,
 } from "@prisma/client";
 import { AbilityNameType } from "@/types/types";
 
@@ -23,14 +24,14 @@ export const CLASS_MAP = {
   [Classes.BARD]: "Barde",
   [Classes.CLERIC]: "Clerc",
   [Classes.DRUID]: "Druide",
+  [Classes.SORCERER]: "Ensorceleur",
   [Classes.FIGHTER]: "Guerrier",
+  [Classes.WIZARD]: "Magicien",
   [Classes.MONK]: "Moine",
   [Classes.PALADIN]: "Paladin",
   [Classes.RANGER]: "Rôdeur",
   [Classes.ROGUE]: "Roublard",
-  [Classes.SORCERER]: "Ensorceleur",
   [Classes.WARLOCK]: "Sorcier",
-  [Classes.WIZARD]: "Mage",
 };
 
 export const HIT_DICE_MAP = {
@@ -47,6 +48,22 @@ export const HIT_DICE_MAP = {
   [Classes.SORCERER]: "d6",
   [Classes.WARLOCK]: "d8",
   [Classes.WIZARD]: "d6",
+};
+
+export const BASE_HP_PER_CLASS_MAP = {
+  [Classes.ARTIFICER]: 8,
+  [Classes.BARBARIAN]: 12,
+  [Classes.BARD]: 8,
+  [Classes.CLERIC]: 8,
+  [Classes.DRUID]: 8,
+  [Classes.FIGHTER]: 10,
+  [Classes.MONK]: 8,
+  [Classes.PALADIN]: 10,
+  [Classes.RANGER]: 10,
+  [Classes.ROGUE]: 8,
+  [Classes.SORCERER]: 6,
+  [Classes.WARLOCK]: 8,
+  [Classes.WIZARD]: 6,
 };
 
 export const SPELLCASTING_MODIFIER_MAP: {
@@ -70,9 +87,9 @@ export const SPELLCASTING_MODIFIER_MAP: {
 export const SUBCLASS_MAP = {
   // Artificier
   [Subclasses.ALCHEMIST]: "Alchimiste",
-  [Subclasses.ARMORER]: "Porteguerre",
   [Subclasses.ARTILLERIST]: "Artilleur",
   [Subclasses.BATTLE_SMITH]: "Forgeron de bataille",
+  [Subclasses.ARMORER]: "Porteguerre",
 
   // Barbare
   [Subclasses.PATH_OF_THE_BERSERKER]: "Voie du Berserker",
@@ -81,98 +98,194 @@ export const SUBCLASS_MAP = {
   [Subclasses.PATH_OF_THE_ZEALOT]: "Voie du Zélote",
 
   // Barde
-  [Subclasses.COLLEGE_OF_VALOR]: "Collège de la Vaillance",
-  [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_SWORDS]: "Collège des Épées",
   [Subclasses.COLLEGE_OF_WHISPERS]: "Collège des Murmures",
+  [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_GLAMOUR]: "Collège de la séduction",
+  [Subclasses.COLLEGE_OF_VALOR]: "Collège de la Vaillance",
 
   // Clerc
-  [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
-  [Subclasses.LIGHT_DOMAIN]: "Domaine de la Lumière",
-  [Subclasses.WAR_DOMAIN]: "Domaine de la Guerre",
-  [Subclasses.TRICKERY_DOMAIN]: "Domaine de la Fourberie",
   [Subclasses.KNOWLEDGE_DOMAIN]: "Domaine de la Connaissance",
+  [Subclasses.TRICKERY_DOMAIN]: "Domaine de la Fourberie",
+  [Subclasses.WAR_DOMAIN]: "Domaine de la Guerre",
+  [Subclasses.LIGHT_DOMAIN]: "Domaine de la Lumière",
+  [Subclasses.DEATH_DOMAIN]: "Domaine de la Mort",
   [Subclasses.NATURE_DOMAIN]: "Domaine de la Nature",
   [Subclasses.TEMPEST_DOMAIN]: "Domaine de la Tempête",
-  [Subclasses.DEATH_DOMAIN]: "Domaine de la Mort",
+  [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
 
   // Druide
-  [Subclasses.CIRCLE_OF_THE_LAND]: "Cercle de la Terre",
   [Subclasses.CIRCLE_OF_THE_MOON]: "Cercle de la Lune",
-  [Subclasses.CIRCLE_OF_SPORES]: "Cercle des Spores",
   [Subclasses.CIRCLE_OF_WILD_FIRE]: "Cercle des Feux Sauvages",
+  [Subclasses.CIRCLE_OF_SPORES]: "Cercle des Spores",
+  [Subclasses.CIRCLE_OF_THE_LAND]: "Cercle de la Terre",
 
   // Guerrier
-  [Subclasses.CHAMPION]: "Champion",
-  [Subclasses.BATTLE_MASTER]: "Maître de guerre",
-  [Subclasses.ELDRITCH_KNIGHT]: "Chevalier occulte",
   [Subclasses.ARCANE_ARCHER]: "Archer arcanique",
   [Subclasses.CAVALIER]: "Cavalier",
+  [Subclasses.CHAMPION]: "Champion",
+  [Subclasses.ELDRITCH_KNIGHT]: "Chevalier occulte",
+  [Subclasses.BATTLE_MASTER]: "Maître de guerre",
   [Subclasses.SAMURAI]: "Samouraï",
 
   // Moine
   [Subclasses.WAY_OF_THE_OPEN_HAND]: "Voie de la Main Ouverte",
+  [Subclasses.WAY_OF_MERCY]: "Voie de la Miséricorde",
   [Subclasses.WAY_OF_SHADOW]: "Voie de l’Ombre",
   [Subclasses.WAY_OF_THE_ELEMENTS]: "Voie des Quatre Éléments",
-  [Subclasses.WAY_OF_MERCY]: "Voie de la Miséricorde",
 
   // Paladin
-  [Subclasses.OATH_OF_DEVOTION]: "Serment de Dévotion",
   [Subclasses.OATH_OF_THE_ANCESTORS]: "Serment des Ancêtres",
-  [Subclasses.OATH_OF_VENGEANCE]: "Serment de Vengeance",
-  [Subclasses.OATH_OF_GLORY]: "Serment de Gloire",
   [Subclasses.OATH_OF_THE_CROWN]: "Serment de la Couronne",
+  [Subclasses.OATH_OF_DEVOTION]: "Serment de Dévotion",
+  [Subclasses.OATH_OF_GLORY]: "Serment de Gloire",
+  [Subclasses.OATH_OF_VENGEANCE]: "Serment de Vengeance",
 
   // Rôdeur
-  [Subclasses.HUNTER]: "Chasseur",
   [Subclasses.BEAST_MASTER]: "Maître des bêtes",
-  [Subclasses.GLOOM_STALKER]: "Traqueur des Ténèbres",
+  [Subclasses.HUNTER]: "Chasseur",
   [Subclasses.SWARMKEEPER]: "Gardien de Nuée",
+  [Subclasses.GLOOM_STALKER]: "Traqueur des Ténèbres",
 
   // Roublard
-  [Subclasses.THIEF]: "Voleur",
-  [Subclasses.ASSASSIN]: "Assassin",
   [Subclasses.ARCANE_TRICKSTER]: "Arnaqueur arcanique",
-  [Subclasses.SOULKNIFE]: "Lame psychique",
+  [Subclasses.ASSASSIN]: "Assassin",
   [Subclasses.INQUISITIVE]: "Inquisiteur",
+  [Subclasses.SOULKNIFE]: "Lame psychique",
+  [Subclasses.THIEF]: "Voleur",
 
   // Ensorceleur
-  [Subclasses.DRACONIC_BLOODLINE]: "Lignée draconique",
-  [Subclasses.WILD_MAGIC]: "Magie sauvage",
-  [Subclasses.STORM_SORCERY]: "Magie des tempêtes",
   [Subclasses.DIVINE_SOUL]: "Âme divine",
+  [Subclasses.DRACONIC_BLOODLINE]: "Lignée draconique",
+  [Subclasses.STORM_SORCERY]: "Magie des tempêtes",
+  [Subclasses.WILD_MAGIC]: "Magie sauvage",
 
   // Sorcier
   [Subclasses.THE_ARCHFEY]: "L'Archifée",
-  [Subclasses.THE_FIEND]: "Le Fiélon",
-  [Subclasses.THE_GREAT_OLD_ONE]: "Le Grand Ancien",
   [Subclasses.THE_GENIE]: "Le Génie",
+  [Subclasses.THE_GREAT_OLD_ONE]: "Le Grand Ancien",
+  [Subclasses.THE_FIEND]: "Le Fiélon",
   [Subclasses.THE_HEXBLADE]: "La Lame maudite",
 
   // Mage
-  [Subclasses.SCHOOL_OF_EVOCATION]: "École d'évocation",
   [Subclasses.SCHOOL_OF_ABJURATION]: "École d'abjuration",
-  [Subclasses.SCHOOL_OF_ILLUSION]: "École d'illusion",
+  [Subclasses.SCHOOL_OF_CONJURATION]: "École de conjuration",
   [Subclasses.SCHOOL_OF_DIVINATION]: "École de divination",
+  [Subclasses.SCHOOL_OF_ENCHANTMENT]: "École d'enchantement",
+  [Subclasses.SCHOOL_OF_EVOCATION]: "École d'évocation",
+  [Subclasses.SCHOOL_OF_ILLUSION]: "École d'illusion",
   [Subclasses.SCHOOL_OF_NECROMANCY]: "École de nécromancie",
   [Subclasses.SCHOOL_OF_TRANSMUTATION]: "École de transmutation",
-  [Subclasses.SCHOOL_OF_CONJURATION]: "École de conjuration",
-  [Subclasses.SCHOOL_OF_ENCHANTMENT]: "École d'enchantement",
+};
+
+export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
+  [Classes.ARTIFICER]: [
+    Subclasses.ALCHEMIST,
+    Subclasses.ARMORER,
+    Subclasses.ARTILLERIST,
+    Subclasses.BATTLE_SMITH,
+  ],
+  [Classes.BARBARIAN]: [
+    Subclasses.PATH_OF_THE_BERSERKER,
+    Subclasses.PATH_OF_THE_WILD_HEART,
+    Subclasses.PATH_OF_THE_STORM_HERALD,
+    Subclasses.PATH_OF_THE_ZEALOT,
+  ],
+  [Classes.BARD]: [
+    Subclasses.COLLEGE_OF_VALOR,
+    Subclasses.COLLEGE_OF_LORE,
+    Subclasses.COLLEGE_OF_SWORDS,
+    Subclasses.COLLEGE_OF_WHISPERS,
+    Subclasses.COLLEGE_OF_GLAMOUR,
+  ],
+  [Classes.CLERIC]: [
+    Subclasses.LIFE_DOMAIN,
+    Subclasses.LIGHT_DOMAIN,
+    Subclasses.WAR_DOMAIN,
+    Subclasses.TRICKERY_DOMAIN,
+    Subclasses.KNOWLEDGE_DOMAIN,
+    Subclasses.NATURE_DOMAIN,
+    Subclasses.TEMPEST_DOMAIN,
+    Subclasses.DEATH_DOMAIN,
+  ],
+  [Classes.DRUID]: [
+    Subclasses.CIRCLE_OF_THE_LAND,
+    Subclasses.CIRCLE_OF_THE_MOON,
+    Subclasses.CIRCLE_OF_SPORES,
+    Subclasses.CIRCLE_OF_WILD_FIRE,
+  ],
+  [Classes.FIGHTER]: [
+    Subclasses.CHAMPION,
+    Subclasses.BATTLE_MASTER,
+    Subclasses.ELDRITCH_KNIGHT,
+    Subclasses.ARCANE_ARCHER,
+    Subclasses.CAVALIER,
+    Subclasses.SAMURAI,
+  ],
+  [Classes.MONK]: [
+    Subclasses.WAY_OF_THE_OPEN_HAND,
+    Subclasses.WAY_OF_SHADOW,
+    Subclasses.WAY_OF_THE_ELEMENTS,
+    Subclasses.WAY_OF_MERCY,
+  ],
+  [Classes.PALADIN]: [
+    Subclasses.OATH_OF_DEVOTION,
+    Subclasses.OATH_OF_THE_ANCESTORS,
+    Subclasses.OATH_OF_VENGEANCE,
+    Subclasses.OATH_OF_GLORY,
+    Subclasses.OATH_OF_THE_CROWN,
+  ],
+  [Classes.RANGER]: [
+    Subclasses.HUNTER,
+    Subclasses.BEAST_MASTER,
+    Subclasses.GLOOM_STALKER,
+    Subclasses.SWARMKEEPER,
+  ],
+  [Classes.ROGUE]: [
+    Subclasses.THIEF,
+    Subclasses.ASSASSIN,
+    Subclasses.ARCANE_TRICKSTER,
+    Subclasses.SOULKNIFE,
+    Subclasses.INQUISITIVE,
+  ],
+  [Classes.SORCERER]: [
+    Subclasses.DRACONIC_BLOODLINE,
+    Subclasses.WILD_MAGIC,
+    Subclasses.STORM_SORCERY,
+    Subclasses.DIVINE_SOUL,
+  ],
+  [Classes.WARLOCK]: [
+    Subclasses.THE_ARCHFEY,
+    Subclasses.THE_FIEND,
+    Subclasses.THE_GREAT_OLD_ONE,
+    Subclasses.THE_GENIE,
+    Subclasses.THE_HEXBLADE,
+  ],
+  [Classes.WIZARD]: [
+    Subclasses.SCHOOL_OF_EVOCATION,
+    Subclasses.SCHOOL_OF_ABJURATION,
+    Subclasses.SCHOOL_OF_ILLUSION,
+    Subclasses.SCHOOL_OF_DIVINATION,
+    Subclasses.SCHOOL_OF_NECROMANCY,
+    Subclasses.SCHOOL_OF_TRANSMUTATION,
+    Subclasses.SCHOOL_OF_CONJURATION,
+    Subclasses.SCHOOL_OF_ENCHANTMENT,
+  ],
 };
 
 export const RACE_MAP = {
   [Races.AASIMAR]: "Aasimar",
-  [Races.DRAGONBORN]: "Sangdragon",
-  [Races.DWARF]: "Nain",
   [Races.ELF]: "Elfe",
   [Races.GNOME]: "Gnome",
   [Races.GOLIATH]: "Goliath",
   [Races.HALFLING]: "Halfelin",
+  [Races.HUMAN]: "Humain",
+  [Races.DWARF]: "Nain",
+  [Races.ORC]: "Orc",
+  [Races.DRAGONBORN]: "Sangdragon",
   [Races.HALF_ELF]: "Semi-elfe",
   [Races.HALF_ORC]: "Semi-orc",
-  [Races.HUMAN]: "Humain",
-  [Races.ORC]: "Orc",
+  [Races.TABAXI]: "Tabaxi",
   [Races.TIEFLING]: "Tiefelin",
 };
 
@@ -189,6 +302,7 @@ export const SPEED_BY_RACE_MAP = {
   [Races.HUMAN]: 30,
   [Races.ORC]: 30,
   [Races.TIEFLING]: 30,
+  [Races.TABAXI]: 30,
 };
 
 export const SIZE_BY_RACE_MAP = {
@@ -204,25 +318,28 @@ export const SIZE_BY_RACE_MAP = {
   [Races.HUMAN]: "M", // Moyen
   [Races.ORC]: "M", // Moyen
   [Races.TIEFLING]: "M", // Moyen
+  [Races.TABAXI]: "M", // Moyen
 };
 
 export const BACKGROUND_MAP = {
   [Backgrounds.ACOLYTE]: "Acolyte",
+  [Backgrounds.ANTHROPOLOGIST]: "Anthropologue",
+  [Backgrounds.ARCHEOLOGIST]: "Archéologue",
   [Backgrounds.ARTISAN]: "Artisan",
+  [Backgrounds.ENTERTAINER]: "Artiste",
   [Backgrounds.CHARLATAN]: "Charlatan",
   [Backgrounds.CRIMINAL]: "Criminel",
-  [Backgrounds.ENTERTAINER]: "Artiste",
+  [Backgrounds.WAYFARER]: "Enfant des rues",
+  [Backgrounds.HERMIT]: "Ermite",
   [Backgrounds.FARMER]: "Fermier",
   [Backgrounds.GUARD]: "Garde",
   [Backgrounds.GUIDE]: "Sauvageon",
-  [Backgrounds.HERMIT]: "Ermite",
   [Backgrounds.MERCHANT]: "Marchand",
+  [Backgrounds.SAILOR]: "Marin",
   [Backgrounds.NOBLE]: "Noble",
   [Backgrounds.SAGE]: "Sage",
-  [Backgrounds.SAILOR]: "Marin",
   [Backgrounds.SCRIBE]: "Scribe",
   [Backgrounds.SOLDIER]: "Soldat",
-  [Backgrounds.WAYFARER]: "Enfant des rues",
 };
 
 export const ALIGNMENT_MAP = {
@@ -255,7 +372,7 @@ export const CHARACTER_STATUS_MAP = {
 };
 
 export const ABILITIES_MAP = {
-  dexterity: "Dexterité",
+  dexterity: "Dextérité",
   constitution: "Constitution",
   strength: "Force",
   intelligence: "Intelligence",
@@ -367,7 +484,9 @@ export const WEAPON_DICE_MAP = {
   [WeaponDamageDices.D12]: "d12",
 };
 
-export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
+export const WEAPON_DAMAGE_TYPE_MAP_SENTENCE: {
+  [key in WeaponDamageType]: string;
+} = {
   [WeaponDamageType.BLUDGEONING]: "contondants",
   [WeaponDamageType.SLASHING]: "tranchants",
   [WeaponDamageType.PIERCING]: "perforants",
@@ -382,11 +501,26 @@ export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
   [WeaponDamageType.RADIANT]: "radiants",
 };
 
+export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
+  [WeaponDamageType.ACID]: "Acide",
+  [WeaponDamageType.BLUDGEONING]: "Contondants",
+  [WeaponDamageType.FIRE]: "Feu",
+  [WeaponDamageType.FORCE]: "Force",
+  [WeaponDamageType.LIGHTNING]: "Foudre",
+  [WeaponDamageType.COLD]: "Froid",
+  [WeaponDamageType.NECROTIC]: "Nécrotiques",
+  [WeaponDamageType.PIERCING]: "Perforants",
+  [WeaponDamageType.POISON]: "Poison",
+  [WeaponDamageType.PSYCHIC]: "Psychiques",
+  [WeaponDamageType.RADIANT]: "Radiants",
+  [WeaponDamageType.SLASHING]: "Tranchants",
+};
+
 export const AMMUNITION_TYPE_MAP: Record<AmmunitionType, string> = {
-  [AmmunitionType.BOLT]: "Carreaux",
-  [AmmunitionType.ARROW]: "Flèches",
   [AmmunitionType.FIREARM_BULLET]: "Balles",
   [AmmunitionType.SLING_BULLET]: "Billes",
+  [AmmunitionType.BOLT]: "Carreaux",
+  [AmmunitionType.ARROW]: "Flèches",
   [AmmunitionType.NEEDLES]: "Fléchèttes",
 };
 
@@ -401,6 +535,12 @@ export const ARMOR_TYPE_MAP: { [key in ArmorType]: string } = {
   [ArmorType.MEDIUM]: "Intermédiaire",
   [ArmorType.HEAVY]: "Lourde",
   [ArmorType.SHIELD]: "Bouclier",
+};
+
+export const WEAPON_TYPE_MAP: { [key in WeaponType]: string } = {
+  [WeaponType.RANGED]: "Distance",
+  [WeaponType.THROWN]: "Lancer",
+  [WeaponType.MELEE]: "Melee",
 };
 
 export const PACT_MAGIC_PROGRESSION: Array<Record<number, number>> = [

@@ -153,11 +153,8 @@ export default function Inventory({ character }: { character: CharacterById }) {
                     </div>
                   </div>
 
-                  {armor.extraEffects.length > 0 && (
-                    <InfoCell
-                      name="Effets"
-                      value={armor.extraEffects.join(", ")}
-                    />
+                  {!!armor.extraEffects && (
+                    <InfoCell name="Effets" value={armor.extraEffects} />
                   )}
 
                   <div className="flex gap-4">

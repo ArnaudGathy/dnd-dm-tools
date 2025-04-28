@@ -239,7 +239,9 @@ export const getSpellsToPreparePerDay = (character: Character) => {
     }
 
     if (
-      character.className in [Classes.WIZARD, Classes.DRUID, Classes.CLERIC]
+      character.className === Classes.CLERIC ||
+      character.className === Classes.WIZARD ||
+      character.className === Classes.DRUID
     ) {
       return spellCastingAbilityModifier + Math.floor(character.level);
     }

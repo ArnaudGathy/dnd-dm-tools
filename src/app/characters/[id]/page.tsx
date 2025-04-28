@@ -18,7 +18,7 @@ import {
 import Settings from "@/app/characters/[id]/(sheet)/Settings";
 
 enum SHEETS_TABS {
-  SUMMARY = "summary",
+  GENERAL = "general",
   COMBAT = "combat",
   SKILLS = "skills",
   INVENTORY = "inventory",
@@ -27,7 +27,7 @@ enum SHEETS_TABS {
 }
 
 const tabs = {
-  [SHEETS_TABS.SUMMARY]: { label: "Résumé", icon: FileText },
+  [SHEETS_TABS.GENERAL]: { label: "Général", icon: FileText },
   [SHEETS_TABS.SKILLS]: { label: "Compétences", icon: ChartNoAxesColumn },
   [SHEETS_TABS.COMBAT]: { label: "Combat", icon: Swords },
   [SHEETS_TABS.INVENTORY]: { label: "Inventaire", icon: Backpack },
@@ -46,7 +46,7 @@ export default async function Character({
   const tabContentClassName = "mt-0 flex justify-center";
 
   return (
-    <Tabs defaultValue={SHEETS_TABS.SUMMARY}>
+    <Tabs defaultValue={SHEETS_TABS.GENERAL}>
       <TabsList className="h-auto w-full flex-wrap">
         {entries(tabs).map(([key, { label, icon: Icon }]) => (
           <TabsTrigger key={key} value={key}>
@@ -62,7 +62,7 @@ export default async function Character({
         className={`mt-4 border-background bg-background md:mb-0 md:ml-0 md:mr-0 md:border-border md:bg-card`}
       >
         <TabsContent
-          value={SHEETS_TABS.SUMMARY}
+          value={SHEETS_TABS.GENERAL}
           className={tabContentClassName}
         >
           <Summary character={character} />

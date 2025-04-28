@@ -1,6 +1,6 @@
 import {
   ABILITY_NAME_MAP_TO_FR,
-  WEAPON_DAMAGE_TYPE_MAP,
+  WEAPON_DAMAGE_TYPE_MAP_SENTENCE,
 } from "@/constants/maps";
 import { Fragment } from "react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
@@ -58,7 +58,7 @@ export default function Damages({
                       )}
                       <div
                         style={{ color }}
-                      >{`Dégats ${WEAPON_DAMAGE_TYPE_MAP[damage.type]}`}</div>
+                      >{`Dégats ${WEAPON_DAMAGE_TYPE_MAP_SENTENCE[damage.type]}`}</div>
                     </div>
                   }
                 >

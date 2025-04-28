@@ -65,7 +65,6 @@
 				"type": "HEAVY",
 				"isProficient": true,
 				"AC": 17,
-				"extraEffects": [],
 				"strengthRequirement": 15,
 				"stealthDisadvantage": true,
 				"isEquipped": true
@@ -75,7 +74,6 @@
 				"type": "SHIELD",
 				"isProficient": true,
 				"AC": 2,
-				"extraEffects": [],
 				"isEquipped": true
 			}
 		],
@@ -87,7 +85,6 @@
 				"abilityModifier": "STRENGTH",
 				"attackBonus": 0,
 				"reach": 5,
-				"extraEffects": [],
 				"damages": [
 					{
 						"isBaseDamage": true,
@@ -104,7 +101,6 @@
 				"abilityModifier": "STRENGTH",
 				"attackBonus": 1,
 				"reach": 5,
-				"extraEffects": [],
 				"damages": [
 					{
 						"isBaseDamage": true,
@@ -121,7 +117,6 @@
 				"isProficient": true,
 				"abilityModifier": "STRENGTH",
 				"reach": 5,
-				"extraEffects": [],
 				"range": 20,
 				"longRange": 60,
 				"damages": [
@@ -255,7 +250,6 @@
 				"type": "MEDIUM",
 				"isProficient": true,
 				"AC": 15,
-				"extraEffects": [],
 				"stealthDisadvantage": true,
 				"isEquipped": true
 			}
@@ -268,7 +262,6 @@
 				"abilityModifier": "STRENGTH",
 				"attackBonus": 0,
 				"reach": 5,
-				"extraEffects": [],
 				"damages": [
 					{
 						"isBaseDamage": true,
@@ -285,7 +278,6 @@
 				"abilityModifier": "STRENGTH",
 				"attackBonus": 0,
 				"reach": 5,
-				"extraEffects": [],
 				"damages": [
 					{
 						"isBaseDamage": true,
@@ -301,7 +293,6 @@
 				"isProficient": true,
 				"abilityModifier": "STRENGTH",
 				"reach": 5,
-				"extraEffects": [],
 				"range": 20,
 				"longRange": 60,
 				"damages": [
@@ -319,7 +310,6 @@
 				"isProficient": true,
 				"abilityModifier": "STRENGTH",
 				"reach": 5,
-				"extraEffects": [],
 				"range": 30,
 				"longRange": 120,
 				"damages": [
@@ -437,7 +427,6 @@
 				"type": "LIGHT",
 				"isProficient": true,
 				"AC": 12,
-				"extraEffects": [],
 				"isEquipped": true
 			}
 		],
@@ -448,7 +437,6 @@
 				"isProficient": true,
 				"abilityModifier": "DEXTERITY",
 				"attackBonus": 0,
-				"extraEffects": [],
 				"range": 30,
 				"longRange": 120,
 				"ammunitionType": "BOLT",
@@ -521,9 +509,9 @@
 		"name": "Eleni",
 		"className": "DRUID",
 		"subclassName": "CIRCLE_OF_THE_MOON",
+		"background": "GUIDE",
 		"race": "ELF",
 		"level": 3,
-		"background": "GUIDE",
 		"maximumHP": 22,
 		"currentHP": 22,
 		"strength": 8,
@@ -577,7 +565,6 @@
 				"type": "LIGHT",
 				"isProficient": true,
 				"AC": 1,
-				"extraEffects": [],
 				"isEquipped": true
 			}
 		],
@@ -588,7 +575,6 @@
 				"isProficient": true,
 				"abilityModifier": "DEXTERITY",
 				"attackBonus": 0,
-				"extraEffects": [],
 				"reach": 5,
 				"range": 20,
 				"longRange": 60,
@@ -607,7 +593,6 @@
 				"isProficient": true,
 				"abilityModifier": "DEXTERITY",
 				"attackBonus": 0,
-				"extraEffects": [],
 				"reach": 5,
 				"damages": [
 					{
@@ -624,7 +609,6 @@
 				"isProficient": true,
 				"abilityModifier": "DEXTERITY",
 				"attackBonus": 0,
-				"extraEffects": [],
 				"range": 150,
 				"longRange": 600,
 				"ammunitionType": "ARROW",
