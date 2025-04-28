@@ -48,7 +48,7 @@ export default function SkillsArray({
     <FormItem>
       <div className="flex gap-1">
         <FormLabel>Maîtrise des compétences</FormLabel>
-        <span className="leading-3 text-primary">*</span>
+        <span className="text-primary">*</span>
       </div>
 
       <div className="flex flex-col gap-1">

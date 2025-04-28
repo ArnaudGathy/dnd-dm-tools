@@ -46,7 +46,7 @@ export default function SavingThrowsArray({
     <FormItem>
       <div className="flex gap-1">
         <FormLabel>Maîtrises des jets de sauvegardes</FormLabel>
-        <span className="leading-3 text-primary">*</span>
+        <span className="text-primary">*</span>
       </div>
 
       <div className="flex flex-wrap gap-x-8 gap-y-4">

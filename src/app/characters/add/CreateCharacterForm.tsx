@@ -49,7 +49,7 @@ export default function AddCharacter({ owner }: { owner: string }) {
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <div className="grid grid-cols-[60%_40%] gap-8">
+          <div className="grid grid-cols-[60%_1fr] gap-8">
             <div className="flex flex-col gap-8">
               <FormApp form={form} />
               <FormGeneral form={form} />
@@ -76,11 +76,9 @@ export default function AddCharacter({ owner }: { owner: string }) {
             </Alert>
           )}
 
-          <div>
-            <Button type="submit" disabled={isLoading}>
-              Créer le personnage {isLoading && <span>...</span>}
-            </Button>
-          </div>
+          <Button type="submit" size="lg" disabled={isLoading}>
+            Créer le personnage {isLoading && <span>...</span>}
+          </Button>
         </form>
       </Form>
     </div>

@@ -1,5 +1,5 @@
 import { FieldPath, FieldValues, UseFormReturn } from "react-hook-form";
-import { InputHTMLAttributes, ReactNode } from "react";
+import { InputHTMLAttributes } from "react";
 import {
   FormControl,
   FormDescription,
@@ -27,7 +27,6 @@ type FormFieldSelectProps<
   label?: string;
   description?: string;
   className?: string;
-  relativeElement?: ReactNode;
   items: Record<string, string>;
 };
 
@@ -56,9 +55,7 @@ export default function FormFieldSelect<
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
                   <FormLabel>{label}</FormLabel>
-                  {required && (
-                    <span className="leading-3 text-primary">*</span>
-                  )}
+                  {required && <span className="text-primary">*</span>}
                 </div>
                 <div>
                   {description && (

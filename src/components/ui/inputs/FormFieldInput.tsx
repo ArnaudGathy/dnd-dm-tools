@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn, FieldValues, FieldPath } from "react-hook-form";
-import { InputHTMLAttributes, ReactNode } from "react";
+import { InputHTMLAttributes } from "react";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -21,7 +21,6 @@ type FormFieldInputProps<
   label: string;
   description?: string;
   className?: string;
-  relativeElement?: ReactNode;
   textarea?: boolean;
 };
 
@@ -31,7 +30,6 @@ export default function FormFieldInput<
 >({
   formInstance,
   formFieldName,
-  relativeElement,
   label,
   description,
   className,
@@ -47,14 +45,9 @@ export default function FormFieldInput<
           <FormItem className={className}>
             {label && (
               <div className="flex items-center justify-between">
-                <div
-                  className={cn("flex gap-1", { relative: !!relativeElement })}
-                >
+                <div className={cn("flex gap-1")}>
                   <FormLabel disabled={rest.disabled}>{label}</FormLabel>
-                  {rest.required && (
-                    <span className="leading-3 text-primary">*</span>
-                  )}
-                  {relativeElement}
+                  {rest.required && <span className="text-primary">*</span>}
                 </div>
                 {description && (
                   <FormDescription

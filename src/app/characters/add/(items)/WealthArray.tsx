@@ -26,7 +26,7 @@ export default function WealthArray({
     <FormItem className="w-1/2">
       <div className="flex gap-1">
         <FormLabel>Monnaies</FormLabel>
-        <span className="leading-3 text-primary">*</span>
+        <span className="text-primary">*</span>
       </div>
 
       <div className="grid grid-cols-3 gap-4">

@@ -27,7 +27,7 @@ export default function CapacitiesArray({
     <FormItem>
       <div className="flex gap-1">
         <FormLabel>Capacités</FormLabel>
-        <span className="leading-3 text-primary">*</span>
+        <span className="text-primary">*</span>
       </div>
 
       <div className="flex flex-col gap-4">

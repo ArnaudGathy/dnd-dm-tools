@@ -48,7 +48,7 @@ export default function WeaponDamagesArray({
     <FormItem>
       <div className="flex gap-1">
         <FormLabel>Dégâts</FormLabel>
-        <span className="leading-3 text-primary">*</span>
+        <span className="text-primary">*</span>
       </div>
 
       {fields.length > 0 && (
