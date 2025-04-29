@@ -230,3 +230,23 @@ export const updateInspiration = async (
     console.error(validation.error);
   }
 };
+
+export const updateNotes = async (characterId: number, formData: FormData) => {
+  const validation = z
+    .object({
+      notes: z.string(),
+    })
+    .safeParse({
+      notes: formData.get("notes"),
+    });
+
+  if (validation.success) {
+    await prisma.character.update({
+      where: { id: characterId },
+      data: { notes: validation.data.notes },
+    });
+    revalidatePath("/characters");
+  } else {
+    console.error(validation.error);
+  }
+};
