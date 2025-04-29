@@ -34,6 +34,8 @@ export default function AddCharacter({ owner }: { owner: string }) {
   const onSubmit = async (data: CharacterCreationForm) => {
     setIsLoading(true);
     try {
+      // eslint-disable-next-line no-console
+      console.log("creation data", data);
       await createCharacter(data, owner);
     } catch (e) {
       if (!isNextRouterError(e)) {
