@@ -86,7 +86,7 @@ export const createCharacter = async (
         flaws: validation.data.flaws,
         lore: validation.data.lore,
         allies: validation.data.allies,
-        notes: validation.data.notes,
+        notes: validation.data.notes || "Notes",
         proficiencies: validation.data.proficiencies,
       },
     });

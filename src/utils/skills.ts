@@ -2,6 +2,7 @@ import {
   Abilities,
   Armor,
   ArmorType,
+  Capacity,
   Character,
   Classes,
   SavingThrow,
@@ -174,13 +175,24 @@ export const getSpellSaveDC = (character: Character) => {
   };
 };
 
-export const getInitiativeModifier = (character: Character) => {
+export const getInitiativeModifier = (
+  character: Character & { capacities: Capacity[] },
+) => {
   const initiativeBonus = character.initiativeBonus;
   const dexterityModifier = getModifier(character.dexterity);
+
+  const hasAlertFeat = !!character.capacities.find(
+    ({ name }) => name === "Vigilant",
+  );
+  const alertModifier = hasAlertFeat
+    ? PROFICIENCY_BONUS_BY_LEVEL[character.level]
+    : 0;
+
   return {
     initiativeBonus,
     dexterityModifier,
-    total: addSignToNumber(initiativeBonus + dexterityModifier),
+    alertModifier,
+    total: addSignToNumber(initiativeBonus + dexterityModifier + alertModifier),
   };
 };
 

@@ -1,7 +1,6 @@
 import { CharacterById, cn } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import {
-  BookOpenIcon,
   ChevronsUp,
   CopyCheck,
   Footprints,
@@ -33,8 +32,6 @@ import Name from "@/app/characters/[id]/(sheet)/(weapons)/Name";
 import Damages from "@/app/characters/[id]/(sheet)/(weapons)/Damages";
 import InfoCell from "@/app/characters/[id]/(sheet)/(weapons)/InfoCell";
 import ExtraEffects from "@/app/characters/[id]/(sheet)/(weapons)/ExtraEffects";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import SpellSlots from "@/app/characters/[id]/(sheet)/(spells)/SpellSlots";
 import { Separator } from "@/components/ui/separator";
 import HPForm from "@/app/characters/[id]/(sheet)/(forms)/HPForm";
@@ -174,6 +171,12 @@ export default function Combat({ character }: { character: CharacterById }) {
                   <span>DEX : </span>
                   <span>{initiativeDetails.dexterityModifier}</span>
                 </div>
+                {initiativeDetails.alertModifier > 0 && (
+                  <div>
+                    <span>{"Don Vigilant (bonus de maîtrise) : "}</span>
+                    <span>{initiativeDetails.alertModifier}</span>
+                  </div>
+                )}
                 {initiativeDetails.initiativeBonus > 0 && (
                   <div>
                     <span>Bonus : </span>
@@ -222,7 +225,7 @@ export default function Combat({ character }: { character: CharacterById }) {
           <>
             <SheetCard className="flex flex-col">
               <span className="mb-2 self-center text-2xl font-bold">Sorts</span>
-              <div className="flex justify-between">
+              <div className="flex justify-center gap-4">
                 <StatCard
                   icon={WandSparkles}
                   iconColor="text-sky-500"
@@ -293,27 +296,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                 )}
               </div>
 
-              <span className="self-center text-lg font-bold">
-                Emplacements
-              </span>
-              <div>
-                <SpellSlots character={character} />
-              </div>
-
-              <div className="flex justify-center">
-                <Link
-                  href={`/characters/${character.id}/spells`}
-                  className="w-full"
-                >
-                  <Button
-                    variant="secondary"
-                    className="w-full border-2 border-sky-500 bg-sky-950 font-bold hover:bg-sky-900"
-                  >
-                    <BookOpenIcon className="text-sky-500" />
-                    Liste des sorts
-                  </Button>
-                </Link>
-              </div>
+              <SpellSlots character={character} />
             </SheetCard>
           </>
         )}
