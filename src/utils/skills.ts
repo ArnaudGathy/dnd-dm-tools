@@ -269,8 +269,8 @@ const getMartialClassDCModifier = (character: Character) => {
   }
 
   if (character.className === Classes.MONK) {
-    const modifier = getModifier(character.dexterity);
-    const name = ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY];
+    const modifier = getModifier(character.wisdom);
+    const name = ABILITY_NAME_MAP_TO_FR[Abilities.WISDOM];
     return { modifier, name };
   }
   throw new Error("Invalid class to compute martial DC");
