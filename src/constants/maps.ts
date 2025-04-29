@@ -536,9 +536,9 @@ export const ARMOR_TYPE_MAP: { [key in ArmorType]: string } = {
 };
 
 export const WEAPON_TYPE_MAP: { [key in WeaponType]: string } = {
-  [WeaponType.RANGED]: "Distance",
-  [WeaponType.THROWN]: "Lancer",
   [WeaponType.MELEE]: "Melee",
+  [WeaponType.THROWN]: "Melee + lancer",
+  [WeaponType.RANGED]: "Distance",
 };
 
 export const PACT_MAGIC_PROGRESSION: Array<Record<number, number>> = [

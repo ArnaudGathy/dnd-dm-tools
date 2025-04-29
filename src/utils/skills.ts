@@ -63,10 +63,15 @@ export const getSavingThrowModifier = (
 };
 
 const getAcModifierByArmor = (character: Character, armor?: Armor) => {
-  if (!armor && character.className === Classes.BARBARIAN) {
-    return (
-      getModifier(character.constitution) + getModifier(character.dexterity)
-    );
+  if (!armor) {
+    if (character.className === Classes.BARBARIAN) {
+      return (
+        getModifier(character.constitution) + getModifier(character.dexterity)
+      );
+    }
+    if (character.className === Classes.MONK) {
+      return getModifier(character.wisdom) + getModifier(character.dexterity);
+    }
   }
 
   if (!armor || armor.type === ArmorType.LIGHT) {
@@ -91,7 +96,7 @@ export const getTotalAC = (character: Character & { armors: Armor[] }) => {
   const equippedBodyArmor = equippedArmors.find(
     ({ type }) => type !== ArmorType.SHIELD,
   );
-  const armorAC = !!equippedBodyArmor ? equippedBodyArmor.AC : 0;
+  const armorAC = !!equippedBodyArmor ? equippedBodyArmor.AC : 10;
   const abilityACModifier = getAcModifierByArmor(character, equippedBodyArmor);
   const equippedShield = equippedArmors.find(
     ({ type }) => type === ArmorType.SHIELD,

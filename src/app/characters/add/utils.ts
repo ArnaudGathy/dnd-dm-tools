@@ -18,8 +18,9 @@ import {
 } from "@prisma/client";
 
 const requiredString = z.string().min(1, "Requis");
+const optionalNumberString = z.string().regex(/^\d+$/, "Chiffre").optional();
 export function minMax(min: number, max?: number) {
-  return requiredString.refine(
+  return requiredString.regex(/^\d+$/, "Chiffre").refine(
     (val) => {
       const numberVal = parseInt(val, 10);
       return numberVal >= min && (!max || numberVal <= max);
@@ -89,7 +90,7 @@ export const signUpFormSchema = z.object({
     z.object({
       name: requiredString,
       description: z.string().optional(),
-      quantity: z.string().optional(),
+      quantity: optionalNumberString,
       value: z.string().optional(),
     }),
   ),
@@ -106,7 +107,7 @@ export const signUpFormSchema = z.object({
         name: requiredString,
         AC: minMax(2, 20),
         extraEffects: z.string().optional(),
-        strengthRequirement: z.string().optional(),
+        strengthRequirement: optionalNumberString,
         isEquipped: z.boolean(),
         isProficient: z.boolean(),
         stealthDisadvantage: z.boolean(),
@@ -124,12 +125,12 @@ export const signUpFormSchema = z.object({
         type: z.nativeEnum(WeaponType),
         isProficient: z.boolean(),
         abilityModifier: z.nativeEnum(Abilities),
-        attackBonus: z.string().optional(),
-        reach: z.string().optional(),
-        range: z.string().optional(),
-        longRange: z.string().optional(),
+        attackBonus: optionalNumberString,
+        reach: optionalNumberString,
+        range: optionalNumberString,
+        longRange: optionalNumberString,
         ammunitionType: z.nativeEnum(AmmunitionType).optional(),
-        ammunitionCount: z.string().optional(),
+        ammunitionCount: optionalNumberString,
         extraEffects: z.string().optional(),
         damages: z
           .array(
@@ -138,7 +139,7 @@ export const signUpFormSchema = z.object({
               type: z.nativeEnum(WeaponDamageType),
               dice: z.nativeEnum(WeaponDamageDices),
               numberOfDices: minMax(1),
-              flatBonus: z.string().optional(),
+              flatBonus: optionalNumberString,
             }),
           )
           .nonempty(),

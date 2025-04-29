@@ -19,6 +19,7 @@ import { createCharacter } from "@/lib/actions/characters";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
+import { isNextRouterError } from "next/dist/client/components/is-next-router-error";
 
 export type CharacterCreationForm = z.infer<typeof signUpFormSchema>;
 
@@ -35,8 +36,10 @@ export default function AddCharacter({ owner }: { owner: string }) {
     try {
       await createCharacter(data, owner);
     } catch (e) {
-      const error = e as Error;
-      setError(error.message);
+      if (!isNextRouterError(e)) {
+        const error = e as Error;
+        setError(error.message);
+      }
     } finally {
       setIsLoading(false);
     }
@@ -68,8 +71,8 @@ export default function AddCharacter({ owner }: { owner: string }) {
               <AlertTitle className="text-primary">
                 Erreur lors de la création du personnage
               </AlertTitle>
-              Transmettre ce message à Arnaud, ou essayer de corriger
-              l&apos;erreur d&apos;encodage dans le formulaire
+              Essayer de corriger l&apos;erreur d&apos;encodage dans le
+              formulaire ou sinon transmettre ce message à Arnaud
               <AlertDescription className="mt-4">
                 <pre>{error}</pre>
               </AlertDescription>

@@ -363,5 +363,7 @@ export const createCharacter = async (
     }
 
     redirect(`/characters/${character.id}`);
+  } else {
+    throw new Error("Un personnage avec ce nom existe déjà.");
   }
 };

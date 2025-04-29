@@ -174,7 +174,7 @@ export default function WeaponsArray({
                   )}
                 </div>
 
-                <div className="grid grid-cols-[20%_20%_20%_25%] items-center gap-1">
+                <div className="grid grid-cols-[20%_20%_25%_25%] items-center gap-1">
                   {hasRange && (
                     <FormField
                       control={form.control}
