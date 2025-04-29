@@ -102,9 +102,9 @@ export default function Summary({ character }: { character: CharacterById }) {
               name="Dés de vie"
               stat={
                 <div className="flex items-center gap-2">
-                  <span>{character.level}</span>
+                  <span className="text-primary">{character.level}</span>
                   <X className="size-4" />
-                  <div>
+                  <div className="text-primary">
                     <span>{`1${HIT_DICE_MAP[character.className]}`}</span>
                     {conModifier !== 0 && (
                       <span>{addSignToNumber(conModifier)}</span>

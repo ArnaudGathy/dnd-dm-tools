@@ -68,28 +68,37 @@ export const getSavingThrowModifier = (
 const getAcModifierByArmor = (character: Character, armor?: Armor) => {
   if (!armor) {
     if (character.className === Classes.BARBARIAN) {
-      return (
-        getModifier(character.constitution) + getModifier(character.dexterity)
-      );
+      return {
+        abilityACModifier:
+          getModifier(character.constitution) +
+          getModifier(character.dexterity),
+        modifierName: `${ABILITY_NAME_MAP_TO_FR[Abilities.CONSTITUTION]} & ${ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY]}`,
+      };
     }
     if (character.className === Classes.MONK) {
-      return getModifier(character.wisdom) + getModifier(character.dexterity);
+      return {
+        abilityACModifier:
+          getModifier(character.wisdom) + getModifier(character.dexterity),
+        modifierName: `${ABILITY_NAME_MAP_TO_FR[Abilities.WISDOM]} & ${ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY]}`,
+      };
     }
   }
 
   if (!armor || armor.type === ArmorType.LIGHT) {
-    return getModifier(character.dexterity);
+    return {
+      abilityACModifier: getModifier(character.dexterity),
+      modifierName: ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY],
+    };
   }
 
   if (armor.type === ArmorType.MEDIUM) {
-    return Math.min(2, getModifier(character.dexterity));
+    return {
+      abilityACModifier: Math.min(2, getModifier(character.dexterity)),
+      modifierName: ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY],
+    };
   }
 
-  if (armor.type === ArmorType.HEAVY) {
-    return 0;
-  }
-
-  return 0;
+  return { abilityACModifier: 0, modifierName: "Aucun" };
 };
 
 export const getTotalAC = (character: Character & { armors: Armor[] }) => {
@@ -100,7 +109,11 @@ export const getTotalAC = (character: Character & { armors: Armor[] }) => {
     ({ type }) => type !== ArmorType.SHIELD,
   );
   const armorAC = !!equippedBodyArmor ? equippedBodyArmor.AC : 10;
-  const abilityACModifier = getAcModifierByArmor(character, equippedBodyArmor);
+  const armorName = !!equippedBodyArmor ? equippedBodyArmor.name : "Base";
+  const { abilityACModifier, modifierName } = getAcModifierByArmor(
+    character,
+    equippedBodyArmor,
+  );
   const equippedShield = equippedArmors.find(
     ({ type }) => type === ArmorType.SHIELD,
   );
@@ -108,7 +121,9 @@ export const getTotalAC = (character: Character & { armors: Armor[] }) => {
 
   return {
     armorAC,
+    armorName,
     abilityACModifier,
+    modifierName,
     shieldAc,
     ACBonus: character.ACBonus,
     total: armorAC + abilityACModifier + shieldAc + character.ACBonus,

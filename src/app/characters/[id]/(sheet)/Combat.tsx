@@ -107,7 +107,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                 <span className="font-bold">Classe d&#39;armure (CA)</span>
                 {ACDetails.armorAC > 0 && (
                   <div>
-                    <span>Armure / base : </span>
+                    <span>{`${ACDetails.armorName} : `}</span>
                     <span>{ACDetails.armorAC}</span>
                   </div>
                 )}
@@ -119,7 +119,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                 )}
                 {ACDetails.abilityACModifier > 0 && (
                   <div>
-                    <span>Modificateurs : </span>
+                    <span>{`Modificateurs (${ACDetails.modifierName}) : `}</span>
                     <span>{ACDetails.abilityACModifier}</span>
                   </div>
                 )}
