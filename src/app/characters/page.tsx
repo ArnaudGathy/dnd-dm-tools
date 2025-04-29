@@ -19,6 +19,7 @@ import {
   Heart,
   MapPin,
   PawPrintIcon,
+  RotateCcw,
   Skull,
   TreePalm,
   UserPlus,
@@ -93,6 +94,11 @@ export default async function Characters({
                     {character.status === CharacterStatus.ACTIVE && (
                       <PopoverComponent definition="Personnage actif">
                         <Heart />
+                      </PopoverComponent>
+                    )}
+                    {character.status === CharacterStatus.BACKUP && (
+                      <PopoverComponent definition="Personnage de secours">
+                        <RotateCcw />
                       </PopoverComponent>
                     )}
                   </div>

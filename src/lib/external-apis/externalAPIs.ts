@@ -17,8 +17,6 @@ export const getSpell = async (spellName: string): Promise<APISpell | null> => {
     const response = await ExternalAPIs.get<APISpell>(`/spells/${spellName}`);
     const { data } = response;
 
-    /* eslint-disable-next-line no-console */
-    console.info("Spell before parsing :", data);
     apiSpellSchema.parse(data);
     return { ...data, source: SpellSource.API };
   } catch (e) {

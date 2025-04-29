@@ -5,6 +5,7 @@ import {
   ChevronsUp,
   CopyCheck,
   Footprints,
+  Hand,
   Heart,
   Shield,
   ShieldOff,
@@ -25,6 +26,7 @@ import {
   getTotalAC,
   getWeaponAttackBonus,
   getSpellsToPreparePerDay,
+  getMartialClassDC,
 } from "@/utils/skills";
 import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
 import Name from "@/app/characters/[id]/(sheet)/(weapons)/Name";
@@ -66,6 +68,7 @@ export default function Combat({ character }: { character: CharacterById }) {
   const initiativeDetails = getInitiativeModifier(character);
   const movementSpeedDetails = getMovementSpeed(character);
   const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
+  const martialClassDC = getMartialClassDC(character);
   const hasSpells = character.spellsOnCharacters.length > 0;
 
   return (
@@ -97,7 +100,7 @@ export default function Combat({ character }: { character: CharacterById }) {
 
           <StatCard
             icon={Shield}
-            iconColor="text-slate-400"
+            iconColor="text-stone-400"
             value={ACDetails.total}
             definition={
               <div>
@@ -178,6 +181,36 @@ export default function Combat({ character }: { character: CharacterById }) {
       </div>
 
       <div className="flex flex-col gap-4">
+        {martialClassDC && (
+          <StatCard
+            icon={Hand}
+            iconColor="text-[#90a1b9]"
+            value={martialClassDC.total}
+            definition={
+              <div>
+                <span className="font-bold">Modificateur martial</span>
+                <div>
+                  <span>Base : </span>
+                  <span>{martialClassDC.base}</span>
+                </div>
+                {martialClassDC.modifier > 0 && (
+                  <div>
+                    <span>
+                      {`Modificateur (${martialClassDC.modifierName}) :`}{" "}
+                    </span>
+                    <span>{martialClassDC.modifier}</span>
+                  </div>
+                )}
+                {martialClassDC.proficiencyBonus > 0 && (
+                  <div>
+                    <span>Maîtrise : </span>
+                    <span>{martialClassDC.proficiencyBonus}</span>
+                  </div>
+                )}
+              </div>
+            }
+          />
+        )}
         {hasSpells && (
           <>
             <SheetCard className="flex flex-col">

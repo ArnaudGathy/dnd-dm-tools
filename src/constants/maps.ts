@@ -367,6 +367,7 @@ export const CHARACTER_STATUS_MAP = {
   [CharacterStatus.DEAD]: "Mort",
   [CharacterStatus.ACTIVE]: "Actif",
   [CharacterStatus.RETIRED]: "Retraité",
+  [CharacterStatus.BACKUP]: "Backup",
 };
 
 export const ABILITIES_MAP = {

@@ -194,6 +194,7 @@ enum Backgrounds {
 }
 
 enum CharacterStatus {
+  BACKUP
   ACTIVE
   DEAD
   RETIRED

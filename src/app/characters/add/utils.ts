@@ -6,6 +6,7 @@ import {
   ArmorType,
   Backgrounds,
   CampaignId,
+  CharacterStatus,
   Classes,
   MoneyType,
   PartyId,
@@ -34,6 +35,7 @@ export function minMax(min: number, max?: number) {
 export const signUpFormSchema = z.object({
   campaign: z.nativeEnum(CampaignId),
   party: z.nativeEnum(PartyId),
+  status: z.nativeEnum(CharacterStatus),
   name: requiredString,
   className: z.nativeEnum(Classes),
   subclassName: z.nativeEnum(Subclasses).nullable(),
@@ -192,6 +194,7 @@ export const signUpFormSchema = z.object({
 });
 
 export const signupFormDefaultValues = {
+  status: CharacterStatus.ACTIVE,
   name: "",
   campaign: CampaignId.TOMB,
   party: PartyId.MIFA,

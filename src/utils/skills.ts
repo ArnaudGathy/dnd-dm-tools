@@ -1,4 +1,5 @@
 import {
+  Abilities,
   Armor,
   ArmorType,
   Character,
@@ -6,12 +7,14 @@ import {
   SavingThrow,
   Skill,
   Skills,
+  Subclasses,
   Weapon,
   WeaponDamage,
 } from "@prisma/client";
 import {
   ABILITIES_MAP_TO_NAME,
   ABILITY_NAME_MAP,
+  ABILITY_NAME_MAP_TO_FR,
   PROFICIENCY_BONUS_BY_LEVEL,
   SKILL_ABILITY_MAP,
   SPEED_BY_RACE_MAP,
@@ -252,5 +255,43 @@ export const getSpellsToPreparePerDay = (character: Character) => {
     }
   }
 
+  return null;
+};
+
+const getMartialClassDCModifier = (character: Character) => {
+  if (
+    character.className === Classes.FIGHTER &&
+    character.subclassName === Subclasses.BATTLE_MASTER
+  ) {
+    const modifier = getModifier(character.strength);
+    const name = ABILITY_NAME_MAP_TO_FR[Abilities.STRENGTH];
+    return { modifier, name };
+  }
+
+  if (character.className === Classes.MONK) {
+    const modifier = getModifier(character.dexterity);
+    const name = ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY];
+    return { modifier, name };
+  }
+  throw new Error("Invalid class to compute martial DC");
+};
+
+export const getMartialClassDC = (character: Character) => {
+  if (
+    character.className === Classes.FIGHTER ||
+    character.className === Classes.MONK
+  ) {
+    const base = 8;
+    const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
+    const { name, modifier } = getMartialClassDCModifier(character);
+
+    return {
+      base,
+      proficiencyBonus,
+      modifier,
+      modifierName: name,
+      total: base + proficiencyBonus + modifier,
+    };
+  }
   return null;
 };
