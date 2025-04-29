@@ -17,7 +17,7 @@ import {
   convertFeetDistanceIntoSquares,
   shortenAbilityName,
 } from "@/utils/utils";
-import { ABILITY_NAME_MAP_TO_FR, AMMUNITION_TYPE_MAP } from "@/constants/maps";
+import { ABILITY_NAME_MAP_TO_FR } from "@/constants/maps";
 import {
   getInitiativeModifier,
   getMovementSpeed,
@@ -37,6 +37,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import SpellSlots from "@/app/characters/[id]/(sheet)/(spells)/SpellSlots";
 import { Separator } from "@/components/ui/separator";
+import HPForm from "@/app/characters/[id]/(sheet)/(forms)/HPForm";
+import AmmunitionForm from "@/app/characters/[id]/(sheet)/(forms)/AmmunitionForm";
 
 const StatCard = ({
   value,
@@ -95,7 +97,12 @@ export default function Combat({ character }: { character: CharacterById }) {
                 <span>{character.maximumHP}</span>
               </>
             }
-            definition="Points de vie (PV)"
+            definition={
+              <div className="flex flex-col items-center gap-4">
+                <div>Points de vie (PV)</div>
+                <HPForm character={character} />
+              </div>
+            }
           />
 
           <StatCard
@@ -383,13 +390,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                           }
                         />
                       )}
-                      {weapon.ammunitionType &&
-                        weapon.ammunitionCount !== null && (
-                          <InfoCell
-                            name="Munitions"
-                            value={`${weapon.ammunitionCount} ${AMMUNITION_TYPE_MAP[weapon.ammunitionType]}`}
-                          />
-                        )}
+                      <AmmunitionForm weapon={weapon} />
                       <ExtraEffects weapon={weapon} />
                     </div>
                     {index < character.weapons.length - 1 && (

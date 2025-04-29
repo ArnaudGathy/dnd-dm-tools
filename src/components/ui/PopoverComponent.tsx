@@ -7,13 +7,19 @@ import {
 export default function PopoverComponent({
   children,
   definition,
+  className,
+  asChild = false,
 }: {
+  asChild?: boolean;
   children: React.ReactNode;
   definition: React.ReactNode;
+  className?: string;
 }) {
   return (
     <Popover>
-      <PopoverTrigger>{children}</PopoverTrigger>
+      <PopoverTrigger className={className} asChild={asChild}>
+        {children}
+      </PopoverTrigger>
       <PopoverContent className="w-fit">{definition}</PopoverContent>
     </Popover>
   );

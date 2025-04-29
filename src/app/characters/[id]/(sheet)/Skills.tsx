@@ -9,6 +9,7 @@ import { Skills as SkillList } from "@prisma/client";
 import { addSignToNumber, getModifier } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
+import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
 
 export default function Skills({ character }: { character: CharacterById }) {
   const abilities = {
@@ -98,7 +99,7 @@ export default function Skills({ character }: { character: CharacterById }) {
         value={8 + getSkillModifier(character, SkillList.PERCEPTION)}
       />
 
-      <SheetSingleData label="Inspiration" value={character.inspiration} />
+      <InspirationForm character={character} />
     </div>
   );
 }

@@ -1,12 +1,6 @@
 import { CharacterById, cn } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
-import SheetSingleData from "@/components/ui/SheetSingleData";
-import {
-  AMMUNITION_TYPE_MAP,
-  ARMOR_TYPE_MAP,
-  MONEY_TYPE_MAP,
-} from "@/constants/maps";
-import { MoneyType } from "@prisma/client";
+import { ARMOR_TYPE_MAP } from "@/constants/maps";
 import Name from "@/app/characters/[id]/(sheet)/(weapons)/Name";
 import Damages from "@/app/characters/[id]/(sheet)/(weapons)/Damages";
 import InfoCell from "@/app/characters/[id]/(sheet)/(weapons)/InfoCell";
@@ -15,59 +9,20 @@ import ExtraEffects from "@/app/characters/[id]/(sheet)/(weapons)/ExtraEffects";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import { Asterisk, CircleAlert, EyeOff, Shield } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
+import AmmunitionForm from "@/app/characters/[id]/(sheet)/(forms)/AmmunitionForm";
+import MoneyForm from "@/app/characters/[id]/(sheet)/(forms)/MoneyForm";
+import InventoryItems from "@/app/characters/[id]/(sheet)/(forms)/InventoryItems";
 
 export default function Inventory({ character }: { character: CharacterById }) {
   return (
-    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-[80%] md:grid-cols-3 md:p-4">
+    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-[1fr_30%_30%] md:p-4">
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-3 gap-4">
-          {character.wealth.map((money) => {
-            const labelColor =
-              money.type === MoneyType.SILVER
-                ? "text-slate-400"
-                : money.type === MoneyType.COPPER
-                  ? "text-orange-400"
-                  : "text-amber-400";
-            return (
-              <SheetSingleData
-                key={money.id}
-                label={
-                  <span className={labelColor}>
-                    {MONEY_TYPE_MAP[money.type]}
-                  </span>
-                }
-                value={money.quantity}
-              />
-            );
-          })}
+          {character.wealth.map((money) => (
+            <MoneyForm key={money.id} money={money} />
+          ))}
         </div>
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">
-            Inventaire
-          </span>
-          <ul className="flex flex-col gap-2">
-            {character.inventory.map((inventoryItem) => (
-              <li key={inventoryItem.id} className="flex leading-none">
-                <div>
-                  <span className="mt-0.5 inline-block min-w-7">{`${inventoryItem.quantity ?? 1}`}</span>
-                </div>
-                <div className="space-x-2">
-                  <span>{`${inventoryItem.name}`}</span>
-                  {inventoryItem.value && (
-                    <span className="text-sm text-slate-400">
-                      ({inventoryItem.value})
-                    </span>
-                  )}
-                  {inventoryItem.description && (
-                    <span className="text-sm leading-4 text-muted-foreground">
-                      {inventoryItem.description}
-                    </span>
-                  )}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </SheetCard>
+        <InventoryItems character={character} />
       </div>
 
       {character.weapons.length > 0 && (
@@ -100,13 +55,7 @@ export default function Inventory({ character }: { character: CharacterById }) {
                         }
                       />
                     )}
-                    {weapon.ammunitionType &&
-                      weapon.ammunitionCount !== null && (
-                        <InfoCell
-                          name="Munitions"
-                          value={`${weapon.ammunitionCount} ${AMMUNITION_TYPE_MAP[weapon.ammunitionType]}`}
-                        />
-                      )}
+                    <AmmunitionForm weapon={weapon} />
                     <ExtraEffects weapon={weapon} />
                   </div>
                   {index < character.weapons.length - 1 && (

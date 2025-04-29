@@ -21,10 +21,10 @@ import {
   getModifier,
 } from "@/utils/utils";
 import SheetCard from "@/components/ui/SheetCard";
-import SheetSingleData from "@/components/ui/SheetSingleData";
 import AbilitySquare from "@/app/characters/[id]/(sheet)/AbilitySquare";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
 
 export default function Summary({ character }: { character: CharacterById }) {
   const abilities = {
@@ -143,9 +143,8 @@ export default function Summary({ character }: { character: CharacterById }) {
         </SheetCard>
       </div>
 
-      <SheetSingleData
-        label="Inspiration"
-        value={character.inspiration}
+      <InspirationForm
+        character={character}
         className="col-span-2 md:col-span-1 md:row-span-2"
       />
 

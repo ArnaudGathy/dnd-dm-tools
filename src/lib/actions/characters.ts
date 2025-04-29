@@ -3,205 +3,19 @@ import "server-only";
 
 import prisma from "../prisma";
 import { z } from "zod";
-import {
-  Abilities,
-  Alignment,
-  AmmunitionType,
-  ArmorType,
-  Backgrounds,
-  CampaignId,
-  CharacterStatus,
-  Classes,
-  MoneyType,
-  PartyId,
-  Races,
-  Skills,
-  Subclasses,
-  WeaponDamageDices,
-  WeaponDamageType,
-  WeaponType,
-} from "@prisma/client";
+import { ArmorType, WeaponType } from "@prisma/client";
 import { BASE_HP_PER_CLASS_MAP } from "@/constants/maps";
 import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
 import { getModifier } from "@/utils/utils";
 import { redirect } from "next/navigation";
-
-const requiredString = z.string().min(1);
-const stringToNumber = z.coerce.number();
-
-const characterSchema = z.object({
-  owner: requiredString,
-  campaign: z.nativeEnum(CampaignId),
-  party: z.nativeEnum(PartyId),
-  status: z.nativeEnum(CharacterStatus),
-  name: requiredString,
-  className: z.nativeEnum(Classes),
-  subclassName: z.nativeEnum(Subclasses).nullable(),
-  race: z.nativeEnum(Races),
-  background: z.nativeEnum(Backgrounds),
-  strength: stringToNumber.min(8).max(17),
-  dexterity: stringToNumber.min(8).max(17),
-  constitution: stringToNumber.min(8).max(17),
-  intelligence: stringToNumber.min(8).max(17),
-  wisdom: stringToNumber.min(8).max(17),
-  charisma: stringToNumber.min(8).max(17),
-  age: stringToNumber.min(1),
-  height: stringToNumber.min(1),
-  weight: stringToNumber.min(1),
-  eyeColor: requiredString,
-  hair: requiredString,
-  skin: requiredString,
-  alignment: z.nativeEnum(Alignment),
-  personalityTraits: requiredString,
-  physicalTraits: z.string().optional(),
-  ideals: requiredString,
-  bonds: requiredString,
-  flaws: requiredString,
-  lore: z.string().optional(),
-  allies: z.string().optional(),
-  notes: z.string().optional(),
-  proficiencies: z
-    .array(z.object({ name: requiredString }))
-    .nonempty()
-    .transform((val) => val.map((v) => v.name)),
-  capacities: z
-    .array(
-      z.object({
-        name: requiredString,
-        description: z.string().optional(),
-      }),
-    )
-    .nonempty(),
-  savingThrows: z
-    .array(
-      z.object({ ability: z.nativeEnum(Abilities), isProficient: z.boolean() }),
-    )
-    .nonempty(),
-  skills: z
-    .array(
-      z.object({
-        skill: z.nativeEnum(Skills),
-        isProficient: z.boolean(),
-        isExpert: z.boolean(),
-      }),
-    )
-    .nonempty(),
-  inventory: z.array(
-    z.object({
-      name: requiredString,
-      description: z.string().optional(),
-      quantity: stringToNumber.optional(),
-      value: z.string().optional(),
-    }),
-  ),
-  wealth: z.array(
-    z.object({
-      type: z.nativeEnum(MoneyType),
-      quantity: stringToNumber.min(0),
-    }),
-  ),
-  armors: z.array(
-    z
-      .object({
-        type: z.nativeEnum(ArmorType),
-        name: requiredString,
-        AC: stringToNumber.min(2).max(20),
-        extraEffects: z.string().optional(),
-        strengthRequirement: stringToNumber.optional(),
-        isEquipped: z.boolean(),
-        isProficient: z.boolean(),
-        stealthDisadvantage: z.boolean(),
-      })
-      .refine(
-        (armor) =>
-          armor.type !== ArmorType.HEAVY || !!armor.strengthRequirement,
-        { message: "Requis", path: ["strengthRequirement"] },
-      ),
-  ),
-  weapons: z.array(
-    z
-      .object({
-        name: requiredString,
-        type: z.nativeEnum(WeaponType),
-        isProficient: z.boolean(),
-        abilityModifier: z.nativeEnum(Abilities),
-        attackBonus: stringToNumber.optional(),
-        reach: stringToNumber
-          .optional()
-          .transform((reach) => (reach ? reach * 5 : undefined)),
-        range: stringToNumber
-          .optional()
-          .transform((range) => (range ? range * 5 : undefined)),
-        longRange: stringToNumber
-          .optional()
-          .transform((longRange) => (longRange ? longRange * 5 : undefined)),
-        ammunitionType: z.nativeEnum(AmmunitionType).optional(),
-        ammunitionCount: stringToNumber.optional(),
-        extraEffects: z.string().optional(),
-        damages: z
-          .array(
-            z.object({
-              isBaseDamage: z.boolean(),
-              type: z.nativeEnum(WeaponDamageType),
-              dice: z.nativeEnum(WeaponDamageDices),
-              numberOfDices: stringToNumber.min(1),
-              flatBonus: stringToNumber.optional(),
-            }),
-          )
-          .nonempty(),
-      })
-      .refine(
-        (weapon) =>
-          (weapon.type !== WeaponType.MELEE &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.reach,
-        {
-          message: "Requis",
-          path: ["reach"],
-        },
-      )
-      .refine(
-        (weapon) =>
-          (weapon.type !== WeaponType.RANGED &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.range,
-        {
-          message: "Requis",
-          path: ["range"],
-        },
-      )
-      .refine(
-        (weapon) =>
-          (weapon.type !== WeaponType.RANGED &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.longRange,
-        {
-          message: "Requis",
-          path: ["longRange"],
-        },
-      )
-      .refine(
-        (weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionType,
-        {
-          message: "Requis",
-          path: ["ammunitionType"],
-        },
-      )
-      .refine(
-        (weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionCount,
-        {
-          message: "Requis",
-          path: ["ammunitionCount"],
-        },
-      ),
-  ),
-});
+import { revalidatePath } from "next/cache";
+import { backendCharacterSchema } from "@/app/characters/add/utils";
 
 export const createCharacter = async (
   data: CharacterCreationForm,
   owner: string,
 ) => {
-  const validation = characterSchema.safeParse({
+  const validation = backendCharacterSchema.safeParse({
     ...data,
     owner,
   });
@@ -367,5 +181,52 @@ export const createCharacter = async (
     redirect(`/characters/${character.id}`);
   } else {
     throw new Error("Un personnage avec ce nom existe déjà.");
+  }
+};
+
+export const updateHP = async (
+  characterId: number,
+  maxHp: number,
+  formData: FormData,
+) => {
+  const validation = z
+    .object({
+      HP: z.coerce.number().min(0).max(maxHp),
+    })
+    .safeParse({
+      HP: formData.get("HP"),
+    });
+
+  if (validation.success) {
+    await prisma.character.update({
+      where: { id: characterId },
+      data: { currentHP: validation.data.HP },
+    });
+    revalidatePath("/characters");
+  } else {
+    console.error(validation.error);
+  }
+};
+
+export const updateInspiration = async (
+  characterId: number,
+  formData: FormData,
+) => {
+  const validation = z
+    .object({
+      inspiration: z.coerce.number().min(0),
+    })
+    .safeParse({
+      inspiration: formData.get("inspiration"),
+    });
+
+  if (validation.success) {
+    await prisma.character.update({
+      where: { id: characterId },
+      data: { inspiration: validation.data.inspiration },
+    });
+    revalidatePath("/characters");
+  } else {
+    console.error(validation.error);
   }
 };
