@@ -188,7 +188,7 @@ export default function Combat({ character }: { character: CharacterById }) {
             value={martialClassDC.total}
             definition={
               <div>
-                <span className="font-bold">Modificateur martial</span>
+                <span className="font-bold">DD martial</span>
                 <div>
                   <span>Base : </span>
                   <span>{martialClassDC.base}</span>

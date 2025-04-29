@@ -25,7 +25,7 @@ export default function Bio({ character }: { character: CharacterById }) {
           <div className="mb-4 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-pink-500 p-0.5">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src={`/characters/${character.imageUrl ?? "avatar_warrior.png"}`}
+              src={`/characters/${character.imageUrl ?? `${character.name.toLowerCase()}.png` ?? "avatar_warrior.png"}`}
               alt="Avatar"
               className="rounded-xl"
             />
