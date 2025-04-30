@@ -26,8 +26,9 @@ export default function AmmunitionForm({
             definition={
               <form
                 action={action}
-                className="flex w-[60px] flex-col items-center gap-4"
+                className="flex w-[100px] flex-col items-center gap-4"
               >
+                <span>De 0 à 20</span>
                 <Input
                   defaultValue={weapon.ammunitionCount}
                   name="ammunitionCount"
