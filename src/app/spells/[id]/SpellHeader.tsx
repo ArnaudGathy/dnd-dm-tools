@@ -63,7 +63,11 @@ export default async function SpellHeader({
 
             <span className="truncate">
               {tiny ? (
-                <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link>
+                <Link
+                  href={`/spells/${spellFromAPI.index}?v=${spellFromAPI.version}`}
+                >
+                  {spellName}
+                </Link>
               ) : (
                 spellName
               )}

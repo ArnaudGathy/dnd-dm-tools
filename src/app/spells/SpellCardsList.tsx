@@ -1,5 +1,5 @@
 import { getCharacterSpells } from "@/lib/api/spells";
-import { get2014Spell } from "@/lib/external-apis/externalAPIs";
+import { getSpell } from "@/lib/external-apis/externalAPIs";
 import { Card, CardContent } from "@/components/ui/card";
 import SpellHeader from "@/app/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/spells/[id]/SpellCasting";
@@ -22,7 +22,7 @@ export default async function SpellCardsList({
 
   const spellDetails = await Promise.all(
     spellList.map(async (spell) => {
-      const spellFromApi = await get2014Spell(spell.spellId);
+      const spellFromApi = await getSpell(spell.spellId, spell.spellVersion);
       return {
         spellFromApp: spell.spell,
         spellFromAPI: spellFromApi,

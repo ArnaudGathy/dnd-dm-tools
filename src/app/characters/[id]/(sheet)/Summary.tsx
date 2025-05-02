@@ -52,7 +52,7 @@ export default function Summary({ character }: { character: CharacterById }) {
             <Link href={`/characters/${character.id}/spells`}>
               <Button
                 variant="outline"
-                className="bg-gradient-to-tr from-blue-500 to-pink-500"
+                className="bg-gradient-to-tr from-blue-500 to-pink-500 hover:bg-gradient-to-tr hover:from-blue-600 hover:to-pink-600"
                 size="sm"
               >
                 <BookOpenIcon className="stroke-[2.5px]" />

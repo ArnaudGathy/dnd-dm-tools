@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 import {
   getSpellDataFromENName,
+  getSpellDataFromENName2024,
   getSpellDataFromFRName,
 } from "@/lib/external-apis/aidedd";
 import { z } from "zod";
@@ -72,7 +73,7 @@ export const tryToAddSpell = async (
 
   let spellData: Spell | null;
   if (validation.data.spellVersion === SpellVersion.V2024) {
-    spellData = null;
+    spellData = await getSpellDataFromENName2024(kebabCasedSpellName);
   } else {
     spellData = await getSpellDataFromFRName(kebabCasedSpellName);
     if (!spellData) {
@@ -121,6 +122,7 @@ export const tryToAddSpell = async (
       spellId,
       characterId,
       isFavorite: false,
+      spellVersion: spellData.version,
     },
   });
 

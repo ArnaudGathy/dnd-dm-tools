@@ -28,7 +28,7 @@ export default function AddSpellForm({
         <Label htmlFor="spellName">Nom du sort à ajouter</Label>
         <span className="flex gap-2 text-sm text-muted-foreground">
           {spellVersion === SpellVersion.V2024
-            ? "Anglais uniquement (ed. 2024)"
+            ? "Anglais uniquement (2024)"
             : "Français ou anglais"}
           <a
             className="underline"

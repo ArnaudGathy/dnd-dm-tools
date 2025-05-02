@@ -9,6 +9,7 @@ import { capitalize, entries } from "remeda";
 import { SpellWithFavorite } from "@/lib/api/spells";
 import { FavoriteButton } from "@/app/spells/[id]/FavoriteButton";
 import DeleteSpellButton from "@/app/characters/[id]/spells/DeleteSpellButton";
+import { SpellVersion } from "@prisma/client";
 
 export const SpellList = ({
   spellsGroupedBy,
@@ -78,8 +79,12 @@ export const SpellList = ({
                         )
                       )}
                     </div>
-                    <Link href={`/spells/${spell.id}`} className="truncate">
+                    <Link
+                      href={`/spells/${spell.id}?v=${spell.version}`}
+                      className="truncate"
+                    >
                       {spell.name}
+                      {spell.version === SpellVersion.V2024 && " (2024)"}
                     </Link>
                   </li>
                 ))}

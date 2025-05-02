@@ -5,6 +5,7 @@ import { getSpellById } from "@/lib/api/spells";
 import SpellHeader from "@/app/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/spells/[id]/SpellDetails";
+import { SpellVersion } from "@prisma/client";
 
 export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
   if (!spell.index || !spell.version) {
@@ -59,6 +60,15 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                     AideDD (2014)
                   </Link>
                 )}
+                {spell.source === SpellSource.AIDE_DD_2024 && (
+                  <Link
+                    href="https://www.aidedd.org/public/spell"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    AideDD (2024)
+                  </Link>
+                )}
                 {spell.source === SpellSource.MIXED && (
                   <div className="flex gap-1">
                     <Link
@@ -85,7 +95,11 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                 <span className="flex items-center gap-2 text-xs text-muted-foreground">
                   Lien AideDD :
                   <Link
-                    href={`https://www.aidedd.org/dnd/sorts.php?vo=${spell.index}`}
+                    href={
+                      spell.version === SpellVersion.V2024
+                        ? `https://www.aidedd.org/spell/${spell.index}`
+                        : `https://www.aidedd.org/dnd/sorts.php?vo=${spell.index}`
+                    }
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-1"
