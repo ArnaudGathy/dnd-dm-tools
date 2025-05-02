@@ -1,4 +1,5 @@
 import { APISpell, SpellSource } from "@/types/schemas";
+import { SpellVersion } from "@prisma/client";
 import * as cheerio from "cheerio";
 import { capitalize } from "remeda";
 
@@ -24,6 +25,7 @@ export const getBaseSpellData = (html: string) => {
     name,
     level: parseInt(level, 10),
     isRitual,
+    version: SpellVersion.V2014,
   };
 };
 
@@ -73,7 +75,7 @@ export const parseSpellFromAideDD = ({
     }, []);
   const [desc, atHigherLevel] = descriptionArray
     .join("")
-    .split("At Higher Levels");
+    .split("Aux niveaux supérieurs");
 
   const classRole = mainDataBlock
     .find(".classe")
@@ -110,5 +112,6 @@ export const parseSpellFromAideDD = ({
       name: capitalize(school),
     },
     source: SpellSource.AIDE_DD,
+    version: SpellVersion.V2014,
   } satisfies APISpell;
 };

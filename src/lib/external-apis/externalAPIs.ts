@@ -1,37 +1,45 @@
-import axios, { isAxiosError } from "axios";
+import axios, { AxiosResponse, isAxiosError } from "axios";
 import {
   APISpell,
-  apiSpellSchema,
   SpellSource,
   SubClass,
   subClassSchema,
 } from "@/types/schemas";
-import { typedLocalSpells } from "@/utils/utils";
-import { getEnSpellPageFromAideDD } from "@/lib/external-apis/aidedd";
+import { getFrSpellPageFromAideDD } from "@/lib/external-apis/aidedd";
+import { SpellVersion } from "@prisma/client";
 
 const baseURL = "https://www.dnd5eapi.co/api/2014";
 const ExternalAPIs = axios.create({ baseURL });
 
-export const getSpell = async (spellName: string): Promise<APISpell | null> => {
+export const get2014Spell = async (
+  spellName: string,
+): Promise<APISpell | null> => {
+  let enSpellData: AxiosResponse<APISpell> | null = null;
   try {
-    const response = await ExternalAPIs.get<APISpell>(`/spells/${spellName}`);
-    const { data } = response;
-
-    apiSpellSchema.parse(data);
-    return { ...data, source: SpellSource.API };
+    enSpellData = await ExternalAPIs.get<APISpell>(`/spells/${spellName}`);
   } catch (e) {
-    if (isAxiosError(e) && e.response?.status === 404) {
-      // Find spell in local spell list
-      const spell = typedLocalSpells.find((spell) => spell.index === spellName);
-      if (!!spell) {
-        return { ...spell, source: SpellSource.LOCAL };
-      } else {
-        return getEnSpellPageFromAideDD(spellName);
-      }
+    if (isAxiosError(e) && e.response?.status !== 404) {
+      throw e;
     }
-    console.error(e);
-    return null;
   }
+
+  const frSpellData = await getFrSpellPageFromAideDD(spellName);
+
+  // const spell = typedLocalSpells.find((spell) => spell.index === spellName);
+  // if (!!spell) {
+  //   return {
+  //     ...spell,
+  //     source: SpellSource.LOCAL,
+  //     version: SpellVersion.V2014,
+  //   };
+  // }
+
+  return {
+    ...(enSpellData?.data ?? {}),
+    ...frSpellData,
+    source: enSpellData?.data ? SpellSource.MIXED : SpellSource.AIDE_DD,
+    version: SpellVersion.V2014,
+  };
 };
 
 export const getSubClass = async (subclassIndex: string) => {

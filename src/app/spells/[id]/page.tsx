@@ -1,8 +1,8 @@
-import { getSpell } from "@/lib/external-apis/externalAPIs";
 import { notFound } from "next/navigation";
 import { SpellDescription } from "@/app/spells/[id]/SpellDescription";
 import { SpellOwnedBy } from "@/app/spells/[id]/SpellOwnedBy";
 import { SpellClasses } from "@/app/spells/[id]/SpellClasses";
+import { get2014Spell } from "@/lib/external-apis/externalAPIs";
 
 const SpellDetails = async ({
   params,
@@ -10,7 +10,7 @@ const SpellDetails = async ({
   params: Promise<{ id: string }>;
 }) => {
   const spellId = (await params).id.toLowerCase();
-  const spell = await getSpell(spellId);
+  const spell = await get2014Spell(spellId);
 
   if (!spell) {
     return notFound();

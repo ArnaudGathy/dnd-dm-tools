@@ -1,4 +1,5 @@
 import { updateSpellFavoriteAction } from "@/lib/actions/spells";
+import { SpellVersion } from "@prisma/client";
 import { ReactNode } from "react";
 
 export const FavoriteButton = ({
@@ -6,12 +7,14 @@ export const FavoriteButton = ({
   offIcon,
   isFavorite,
   spellId,
+  spellVersion,
   characterId,
 }: {
   offIcon: ReactNode;
   onIcon: ReactNode;
   isFavorite: boolean;
   spellId: string;
+  spellVersion: SpellVersion;
   characterId: number;
 }) => {
   return (
@@ -21,6 +24,7 @@ export const FavoriteButton = ({
         await updateSpellFavoriteAction({
           characterId: characterId,
           spellId: spellId,
+          spellVersion: spellVersion,
           currentIsFavoriteState: isFavorite,
         });
       }}

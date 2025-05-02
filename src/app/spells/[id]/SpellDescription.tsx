@@ -7,11 +7,11 @@ import SpellCasting from "@/app/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/spells/[id]/SpellDetails";
 
 export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
-  if (!spell.index) {
-    throw new Error("Missing spell index");
+  if (!spell.index || !spell.version) {
+    throw new Error("Missing spell index or version");
   }
 
-  const spellFromApp = await getSpellById(spell.index);
+  const spellFromApp = await getSpellById(spell.index, spell.version);
 
   return (
     <div className="col-span-3">
@@ -56,13 +56,32 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    AideDD (pas de détails)
+                    AideDD (2014)
                   </Link>
+                )}
+                {spell.source === SpellSource.MIXED && (
+                  <div className="flex gap-1">
+                    <Link
+                      href="https://www.aidedd.org/dnd-filters/sorts.php"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      AideDD (2014)
+                    </Link>
+                    &
+                    <Link
+                      href="https://www.dnd5eapi.co/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      D&D 5e API
+                    </Link>
+                  </div>
                 )}
                 {spell.source === SpellSource.LOCAL && "Fichier local"}
               </span>
 
-              {spell.name && spell.source !== SpellSource.AIDE_DD && (
+              {spell.name && (
                 <span className="flex items-center gap-2 text-xs text-muted-foreground">
                   Lien AideDD :
                   <Link

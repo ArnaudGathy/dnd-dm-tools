@@ -49,7 +49,7 @@ export default function SpellCasting({
         />
       )}
 
-      {!tiny && spell.components && (
+      {!tiny && !!spell.components?.length && (
         <StatCell
           name="Composants"
           stat={`${spell.components.join(", ")}${spell.material ? ` + ${spell.material}` : ""}`}

@@ -10,17 +10,18 @@ import {
 } from "@/types/types";
 import creatures from "@/data/creatures.json";
 import encounters from "@/data/encounters.json";
-import spells from "@/data/spells.json";
 import { v4 as uuidv4 } from "uuid";
 import { entries, groupBy, isPlainObject, prop, reduce } from "remeda";
 import conditions from "@/data/conditions.json";
-import { APISpell } from "@/types/schemas";
 import { Group } from "@/hooks/useGroupFromCampaign";
 
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedConditions: Condition[] = conditions;
-export const typedLocalSpells: APISpell[] = spells;
+// export const typedLocalSpells: APISpell[] = spells.map((spell) => ({
+//   ...spell,
+//   version: spell.version === "V2024" ? SpellVersion.V2024 : SpellVersion.V2014,
+// }));
 
 export const commonCreatureColors = [
   "#ffffff",

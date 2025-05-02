@@ -3,12 +3,13 @@
 import { X } from "lucide-react";
 import { deleteSpellAction } from "@/lib/actions/spells";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
+import { Spell } from "@prisma/client";
 
 export default function DeleteSpellButton({
-  spellId,
+  spell,
   characterId,
 }: {
-  spellId: string;
+  spell: Spell;
   characterId: number;
 }) {
   return (
@@ -18,7 +19,8 @@ export default function DeleteSpellButton({
       onConfirm={() =>
         deleteSpellAction({
           characterId: characterId,
-          spellId: spellId,
+          spellId: spell.id,
+          spellVersion: spell.version,
         })
       }
     >

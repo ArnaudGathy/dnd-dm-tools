@@ -48,7 +48,7 @@ export const SpellList = ({
                     <div className="flex min-w-4">
                       {isEditMode && characterId ? (
                         <DeleteSpellButton
-                          spellId={spell.id}
+                          spell={spell}
                           characterId={characterId}
                         />
                       ) : showFavorites && characterId ? (
@@ -69,6 +69,7 @@ export const SpellList = ({
                           }
                           isFavorite={spell.isFavorite}
                           spellId={spell.id}
+                          spellVersion={spell.version}
                           characterId={characterId}
                         />
                       ) : (
