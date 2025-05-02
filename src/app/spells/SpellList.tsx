@@ -24,6 +24,7 @@ export const SpellList = ({
   showFavorites?: boolean;
   isEditMode?: boolean;
 }) => {
+  const isCharacterList = !!characterId;
   const spellEntries = entries(spellsGroupedBy);
   if (spellEntries.length === 0) {
     return (
@@ -84,7 +85,9 @@ export const SpellList = ({
                       className="truncate"
                     >
                       {spell.name}
-                      {spell.version === SpellVersion.V2024 && " (2024)"}
+                      {spell.version === SpellVersion.V2024 &&
+                        !isCharacterList &&
+                        " (2024)"}
                     </Link>
                   </li>
                 ))}
