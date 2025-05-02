@@ -10,7 +10,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { CAMPAIGN_MAP, CLASS_MAP, PARTY_MAP, RACE_MAP } from "@/constants/maps";
+import {
+  CAMPAIGN_MAP,
+  CLASS_MAP,
+  PARTY_MAP,
+  RACE_MAP,
+  SPELLCASTING_MODIFIER_MAP,
+} from "@/constants/maps";
 import { StatCell } from "@/app/creatures/StatCell";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
 import {
@@ -75,88 +81,93 @@ export default async function Characters({
       />
       <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
         {characters.length > 0 ? (
-          characters.map((character) => (
-            <Card key={character.id}>
-              <CardHeader>
-                <CardTitle className="flex items-center justify-between">
-                  <span>{character.name}</span>
-                  <div>
-                    {character.status === CharacterStatus.DEAD && (
-                      <PopoverComponent definition="Personnage mort">
-                        <Skull />
-                      </PopoverComponent>
-                    )}
-                    {character.status === CharacterStatus.RETIRED && (
-                      <PopoverComponent definition="Personnage retraité">
-                        <TreePalm />
-                      </PopoverComponent>
-                    )}
-                    {character.status === CharacterStatus.ACTIVE && (
-                      <PopoverComponent definition="Personnage actif">
-                        <Heart />
-                      </PopoverComponent>
-                    )}
-                    {character.status === CharacterStatus.BACKUP && (
-                      <PopoverComponent definition="Personnage de secours">
-                        <RotateCcw />
-                      </PopoverComponent>
-                    )}
-                  </div>
-                </CardTitle>
-                <CardDescription className="flex gap-1">
-                  <span
-                    style={{
-                      color: classColors[character.className].background,
-                    }}
-                  >
-                    {CLASS_MAP[character.className]}
-                  </span>
-                  <span>{RACE_MAP[character.race]}</span>
-                  <span>{`niveau ${character.level}`}</span>
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-4">
-                {totalCharacters > 1 && (
-                  <div className="flex flex-col gap-4">
-                    <StatCell
-                      name={<Users />}
-                      stat={PARTY_MAP[character.campaign.party.name]}
-                      isInline
-                    />
-                    <StatCell
-                      name={<MapPin />}
-                      stat={CAMPAIGN_MAP[character.campaign.name]}
-                      isInline
-                    />
-                  </div>
-                )}
-                <div className="flex gap-4">
-                  <Link href={`/characters/${character.id}`}>
-                    <Button variant="default" size="sm">
-                      <FileSpreadsheet />
-                      Fiche
-                    </Button>
-                  </Link>
-                  {character._count.spellsOnCharacters > 0 && (
-                    <Link href={`/characters/${character.id}/spells`}>
-                      <Button variant="secondary" size="sm">
-                        <BookOpenIcon />
-                        Sorts
+          characters.map((character) => {
+            const spellCastingModifier =
+              SPELLCASTING_MODIFIER_MAP[character.className];
+
+            return (
+              <Card key={character.id}>
+                <CardHeader>
+                  <CardTitle className="flex items-center justify-between">
+                    <span>{character.name}</span>
+                    <div>
+                      {character.status === CharacterStatus.DEAD && (
+                        <PopoverComponent definition="Personnage mort">
+                          <Skull />
+                        </PopoverComponent>
+                      )}
+                      {character.status === CharacterStatus.RETIRED && (
+                        <PopoverComponent definition="Personnage retraité">
+                          <TreePalm />
+                        </PopoverComponent>
+                      )}
+                      {character.status === CharacterStatus.ACTIVE && (
+                        <PopoverComponent definition="Personnage actif">
+                          <Heart />
+                        </PopoverComponent>
+                      )}
+                      {character.status === CharacterStatus.BACKUP && (
+                        <PopoverComponent definition="Personnage de secours">
+                          <RotateCcw />
+                        </PopoverComponent>
+                      )}
+                    </div>
+                  </CardTitle>
+                  <CardDescription className="flex gap-1">
+                    <span
+                      style={{
+                        color: classColors[character.className].background,
+                      }}
+                    >
+                      {CLASS_MAP[character.className]}
+                    </span>
+                    <span>{RACE_MAP[character.race]}</span>
+                    <span>{`niveau ${character.level}`}</span>
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="flex flex-col gap-4">
+                  {totalCharacters > 1 && (
+                    <div className="flex flex-col gap-4">
+                      <StatCell
+                        name={<Users />}
+                        stat={PARTY_MAP[character.campaign.party.name]}
+                        isInline
+                      />
+                      <StatCell
+                        name={<MapPin />}
+                        stat={CAMPAIGN_MAP[character.campaign.name]}
+                        isInline
+                      />
+                    </div>
+                  )}
+                  <div className="flex gap-4">
+                    <Link href={`/characters/${character.id}`}>
+                      <Button variant="default" size="sm">
+                        <FileSpreadsheet />
+                        Fiche
                       </Button>
                     </Link>
-                  )}
-                  {character.creatures.length > 0 && (
-                    <Link href={`/characters/${character.id}/creatures`}>
-                      <Button variant="secondary" size="sm">
-                        <PawPrintIcon />
-                        Créatures
-                      </Button>
-                    </Link>
-                  )}
-                </div>
-              </CardContent>
-            </Card>
-          ))
+                    {!!spellCastingModifier && (
+                      <Link href={`/characters/${character.id}/spells`}>
+                        <Button variant="secondary" size="sm">
+                          <BookOpenIcon />
+                          Sorts
+                        </Button>
+                      </Link>
+                    )}
+                    {character.creatures.length > 0 && (
+                      <Link href={`/characters/${character.id}/creatures`}>
+                        <Button variant="secondary" size="sm">
+                          <PawPrintIcon />
+                          Créatures
+                        </Button>
+                      </Link>
+                    )}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })
         ) : (
           <div className="text-muted-foreground">Aucun personnage trouvé.</div>
         )}

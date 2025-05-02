@@ -71,14 +71,14 @@ export default async function SpellHeader({
         </CardTitle>
       )}
 
-      {!tiny && (
-        <CardDescription className="flex gap-2">
-          {spellFromAPI.level !== undefined && (
-            <span>Niveau {spellFromAPI.level}</span>
-          )}
-          {spellFromAPI.school && <span>{spellFromAPI.school.name}</span>}
-        </CardDescription>
-      )}
+      <CardDescription className="flex gap-2">
+        {spellFromAPI.level !== undefined && (
+          <span>Niveau {spellFromAPI.level}</span>
+        )}
+        {!tiny && spellFromAPI.school && (
+          <span>{spellFromAPI.school.name}</span>
+        )}
+      </CardDescription>
     </CardHeader>
   );
 }

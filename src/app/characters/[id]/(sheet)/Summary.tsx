@@ -48,7 +48,7 @@ export default function Summary({ character }: { character: CharacterById }) {
         <span className="text-base font-bold">{`Niveau ${character.level}`}</span>
 
         <div className="absolute right-2 top-2 flex flex-col gap-1 md:right-4 md:top-4 md:flex-row md:gap-4">
-          {character.spellsOnCharacters.length > 0 && (
+          {!!spellCastingModifier && (
             <Link href={`/characters/${character.id}/spells`}>
               <Button
                 variant="outline"
