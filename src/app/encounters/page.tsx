@@ -1,7 +1,13 @@
 import { entries } from "remeda";
 import { groupEncounters, typedEncounters } from "@/utils/utils";
 import Scenario from "@/app/encounters/Scenario";
+
 const groupedEncounters = groupEncounters(typedEncounters);
+
+const inactiveCampaigns = ["Les dragons de l'île aux tempêtes"];
+for (const campaign of inactiveCampaigns) {
+  delete groupedEncounters[campaign];
+}
 
 const Encounters = () => {
   return (

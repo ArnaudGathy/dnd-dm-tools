@@ -349,7 +349,7 @@
     "id": 17,
     "scenario": "Les tréfonds de Phancreux",
     "location": {
-      "name": "Le repaire des Rocagueules",
+      "name": "Repaire des Rocagueules",
       "mapMarker": "H2"
     },
     "ennemies": {
@@ -366,7 +366,7 @@
     "id": 18,
     "scenario": "Les tréfonds de Phancreux",
     "location": {
-      "name": "Le repaire des Rocagueules",
+      "name": "Repaire des Rocagueules",
       "mapMarker": "H3"
     },
     "ennemies": {
@@ -380,7 +380,7 @@
     "id": 19,
     "scenario": "Les tréfonds de Phancreux",
     "location": {
-      "name": "Le repaire des Rocagueules",
+      "name": "Repaire des Rocagueules",
       "mapMarker": "H4"
     },
     "ennemies": {
@@ -398,7 +398,7 @@
     "id": 20,
     "scenario": "Les tréfonds de Phancreux",
     "location": {
-      "name": "Le repaire des Rocagueules",
+      "name": "Repaire des Rocagueules",
       "mapMarker": "H6"
     },
     "ennemies": {
@@ -418,7 +418,7 @@
     "id": 21,
     "scenario": "Les tréfonds de Phancreux",
     "location": {
-      "name": "Le repaire des Rocagueules",
+      "name": "Repaire des Rocagueules",
       "mapMarker": "H7"
     },
     "ennemies": {
@@ -437,7 +437,7 @@
     "id": 22,
     "scenario": "Les tréfonds de Phancreux",
     "location": {
-      "name": "Le repaire des Rocagueules",
+      "name": "Repaire des Rocagueules",
       "mapMarker": "H8"
     },
     "ennemies": {
@@ -1025,5 +1025,279 @@
       "Gobelours fuient le combat si Brughor est vaincu (ogre continue)"
     ],
     "youtubeId": "GMXiYs-wi3A"
+  },
+  {
+    "name": "Entrée du château",
+    "id": 49,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C1"
+    },
+    "extraZonesEnnemies": ["C3", "C4", "C6", "C7", "C8", "C9"],
+    "informations": ["Ennemis uniquement si repérés"],
+    "youtubeId": "jFGq3nwApvA"
+  },
+  {
+    "name": "Salle piégée",
+    "id": 50,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C2"
+    },
+    "extraZonesEnnemies": ["C3", "C4", "C6", "C7", "C8", "C9"],
+    "informations": ["Ennemis uniquement si piège déclenché"],
+    "youtubeId": "jFGq3nwApvA"
+  },
+  {
+    "name": "Poste de tir",
+    "id": 51,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C3"
+    },
+    "ennemies": {
+      "1": [
+        { "id": 19, "variant": "Arc", "color": "#aab011" },
+        { "id": 19, "variant": "Epee", "color": "#0e6e08" }
+      ]
+    },
+    "informations": ["Pas d'ennemis si repérés en C1 en déjà éliminés"],
+    "youtubeId": "GMXiYs-wi3A"
+  },
+  {
+    "name": "Baraquement en ruines",
+    "id": 52,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C4"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": 17,
+          "color": "#ff0000"
+        },
+        {
+          "id": 17,
+          "color": "#463636"
+        },
+        {
+          "id": 18,
+          "color": "#7a00ff"
+        }
+      ]
+    },
+    "extraZonesEnnemies": ["C7"],
+    "informations": [
+      "En cas de bruit dans la zone, une patrouille arrive de C7"
+    ],
+    "youtubeId": "GMXiYs-wi3A"
+  },
+  {
+    "name": "Baraquement des Hobgobelins",
+    "id": 53,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C6"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": 64,
+          "variant": "Epee 1",
+          "color": "#ff0000"
+        },
+        {
+          "id": 64,
+          "variant": "Epee 2",
+          "color": "#ff0000"
+        },
+        {
+          "id": 64,
+          "variant": "Arc 1",
+          "color": "#ff0000"
+        },
+        {
+          "id": 64,
+          "variant": "Arc 2",
+          "color": "#ff0000"
+        }
+      ]
+    },
+    "informations": [
+      "Disponible si pas repérés avant",
+      "Veulent devenir les chefs"
+    ],
+    "youtubeId": "2nmn1AkRsbE"
+  },
+  {
+    "name": "Salle de banquet",
+    "id": 54,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C7"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": 17,
+          "color": "#7a00ff"
+        },
+        {
+          "id": 17,
+          "color": "#296c0b"
+        },
+        {
+          "id": 18,
+          "color": "#ff0000"
+        },
+        {
+          "id": 18,
+          "color": "#463636"
+        },
+        {
+          "id": 18,
+          "color": "#296c0b"
+        },
+        {
+          "id": 67,
+          "color": "#7a00ff"
+        },
+        {
+          "id": 19,
+          "variant": "Siège"
+        }
+      ]
+    },
+    "informations": [
+      "Peut être vide sur repérés en C6",
+      "Si le chef meurt, les gobelins fuient en évitant C2 à cause du piège."
+    ],
+    "youtubeId": "0_k5o3PS3wE"
+  },
+  {
+    "name": "Hall entenebré",
+    "id": 55,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C8"
+    },
+    "ennemies": {
+      "1": [65]
+    },
+    "informations": ["Perception DD14 ou surprise"],
+    "youtubeId": "n9KsWzdxi4Y"
+  },
+  {
+    "name": "Sanctuaire gobelin",
+    "id": 56,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C9"
+    },
+    "ennemies": {
+      "1": [
+        { "id": 19, "variant": "Epee", "color": "#aab011" },
+        {
+          "id": 67,
+          "color": "#296c0b"
+        },
+        {
+          "id": 67,
+          "color": "#ff0000"
+        }
+      ]
+    },
+    "informations": [
+      "Peuvent être alertés par le combat en C8 et prendre par surprise"
+    ],
+    "youtubeId": "fqW--C1hxl8"
+  },
+  {
+    "name": "Poterne",
+    "id": 57,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C10"
+    },
+    "extraZonesEnnemies": ["C7", "C8", "C9", "C12", "C13"],
+    "informations": [
+      "Zones alentours alertées par la porte enfoncée",
+      "C7 attaque depuis les meurtrières",
+      "Les autres arrivent dans la zone autours de la porte"
+    ],
+    "youtubeId": "jFGq3nwApvA"
+  },
+  {
+    "name": "Baraquement",
+    "id": 58,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C12"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": 64,
+          "variant": "Epee 1",
+          "color": "#ff0000"
+        },
+        {
+          "id": 64,
+          "variant": "Epee 2",
+          "color": "#ff0000"
+        },
+        {
+          "id": 64,
+          "variant": "Arc 1",
+          "color": "#ff0000"
+        },
+        {
+          "id": 64,
+          "variant": "Arc 2",
+          "color": "#ff0000"
+        }
+      ]
+    },
+    "informations": [
+      "Un part avertir le roi Grol et revient 2 rounds plus tard"
+    ],
+    "youtubeId": "2nmn1AkRsbE"
+  },
+  {
+    "name": "Tour hantée",
+    "id": 59,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C13"
+    },
+    "ennemies": {
+      "1": [69]
+    },
+    "youtubeId": "WahaiTaVw2k"
+  },
+  {
+    "name": "Appartements du roi Grol",
+    "id": 60,
+    "scenario": "Les tréfonds de Phancreux",
+    "location": {
+      "name": "Château Rocagueule",
+      "mapMarker": "C14"
+    },
+    "ennemies": {
+      "1": [22, 44, 68]
+    },
+    "youtubeId": "qkeiRuaGM28"
   }
 ]

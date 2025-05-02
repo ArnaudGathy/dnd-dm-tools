@@ -8,6 +8,7 @@ import {
   ParticipantToAdd,
 } from "@/types/types";
 import {
+  getEncounterFromLocation,
   getParticipantFromCharacters,
   getParticipantFromEncounter,
   roll,
@@ -105,6 +106,9 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
   const router = useRouter();
   const pathName = usePathname();
 
+  const [anotherEncountersAdded, setAnotherEncountersAdded] = useState<
+    Array<string>
+  >([]);
   const [turnsCounter, setTurnsCounter] = useState(1);
   const [currentTurnIndex, setCurrentTurnIndex] = useState<number | null>(null);
   const hasCombatStarted = currentTurnIndex !== null;
@@ -149,6 +153,26 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       });
     },
   });
+
+  const handleAddAnotherEncounterParticipants = (mapMarker: string) => {
+    const anotherEncounter = getEncounterFromLocation({
+      mapMarker,
+      name: encounter?.location.name,
+    });
+
+    if (!!anotherEncounter) {
+      setAnotherEncountersAdded((current) => [...current, mapMarker]);
+      setListOfParticipants((current) => {
+        return [
+          ...getParticipantFromEncounter({
+            encounter: anotherEncounter,
+            partyLevel: "1",
+          }),
+          ...current,
+        ].toSorted(sortParticipant);
+      });
+    }
+  };
 
   const [participant, setParticipant] =
     useState<ParticipantToAdd>(DEFAULT_STATE);
@@ -336,6 +360,25 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
                   )}
                 </Button>
               </div>
+            </div>
+            <div className="flex items-center gap-2">
+              {!!encounter?.extraZonesEnnemies?.length &&
+                encounter.extraZonesEnnemies.map((zone) => (
+                  <Button
+                    key={zone}
+                    size="sm"
+                    variant={
+                      anotherEncountersAdded.includes(zone)
+                        ? "secondary"
+                        : "outline"
+                    }
+                    onClick={() => {
+                      handleAddAnotherEncounterParticipants(zone);
+                    }}
+                  >
+                    {zone}
+                  </Button>
+                ))}
             </div>
           </CardTitle>
         </CardHeader>

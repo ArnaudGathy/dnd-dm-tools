@@ -6,20 +6,16 @@ import {
 } from "@/utils/utils";
 import { map, unique } from "remeda";
 import { StatBlock } from "@/app/creatures/StatBlock";
-import { notFound } from "next/navigation";
 
 const StatBlocksModule = ({ encounter }: { encounter: Encounter }) => {
-  const creatures = getCreaturesFromIds(
-    unique(
-      map(getEnnemiesFromEncounter({ encounter, partyLevel: "1" }), (enemy) =>
-        getIdFromEnemy(enemy),
+  const creatures =
+    getCreaturesFromIds(
+      unique(
+        map(getEnnemiesFromEncounter({ encounter, partyLevel: "1" }), (enemy) =>
+          getIdFromEnemy(enemy),
+        ),
       ),
-    ),
-  );
-
-  if (!creatures) {
-    return notFound();
-  }
+    ) ?? [];
 
   return (
     <div className="flex flex-col gap-4">

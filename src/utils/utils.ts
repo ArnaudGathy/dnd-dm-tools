@@ -211,6 +211,19 @@ export const getEncounterFromId = (encounterId: string) => {
   return encounter;
 };
 
+export const getEncounterFromLocation = (location: Encounter["location"]) => {
+  const encounter = typedEncounters.find(
+    ({ location: { name, mapMarker } }) =>
+      name === location.name && mapMarker === location.mapMarker,
+  );
+
+  if (!encounter) {
+    return null;
+  }
+
+  return encounter;
+};
+
 export const getCreatureFromId = (creatureId: number) => {
   return typedCreatures.find((creature) => creature.id === creatureId);
 };
@@ -234,7 +247,7 @@ export const getEnnemiesFromEncounter = ({
   encounter: Encounter;
   partyLevel: string;
 }) => {
-  const ennemiesList = encounter.ennemies;
+  const ennemiesList = encounter.ennemies ?? [];
   const closestIndex = findClosestIndex(Object.keys(ennemiesList), partyLevel);
   return Object.values(ennemiesList)[closestIndex] ?? [];
 };

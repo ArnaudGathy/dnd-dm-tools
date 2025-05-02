@@ -38,9 +38,10 @@ export type Encounter = {
     mapMarker: string;
   };
   youtubeId?: string;
-  ennemies: Partial<{
+  ennemies?: Partial<{
     [key: string]: Array<EncounterEnemy>;
   }>;
+  extraZonesEnnemies?: string[];
   informations?: string[];
   loots?: string[];
   environmentTurnInitiative?: string;

@@ -24,7 +24,7 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const encounteredIn = groupEncounters(
     filter(typedEncounters, (encounter) =>
       unique(
-        map(flat(values(encounter.ennemies)), (enemy) => {
+        map(flat(values(encounter.ennemies ?? [])), (enemy) => {
           if (enemy) {
             return getIdFromEnemy(enemy);
           }
