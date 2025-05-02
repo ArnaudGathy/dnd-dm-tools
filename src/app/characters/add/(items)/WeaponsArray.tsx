@@ -7,7 +7,11 @@ import {
 } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
-import { AMMUNITION_TYPE_MAP, WEAPON_TYPE_MAP } from "@/constants/maps";
+import {
+  ABILITY_NAME_MAP_TO_FR,
+  AMMUNITION_TYPE_MAP,
+  WEAPON_TYPE_MAP,
+} from "@/constants/maps";
 import {
   Abilities,
   WeaponDamageDices,
@@ -42,11 +46,6 @@ export default function WeaponsArray({
   });
 
   const weapons = form.watch("weapons");
-
-  const abilityModifiers = {
-    [Abilities.STRENGTH]: "FOR",
-    [Abilities.DEXTERITY]: "DEX",
-  };
 
   return (
     <FormItem>
@@ -139,7 +138,7 @@ export default function WeaponsArray({
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {entries(abilityModifiers).map(
+                                {entries(ABILITY_NAME_MAP_TO_FR).map(
                                   ([value, label]) => (
                                     <SelectItem key={value} value={value}>
                                       {label}

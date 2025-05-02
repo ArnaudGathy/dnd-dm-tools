@@ -183,9 +183,13 @@ export const parseSpellFromAideDD2024 = ({
 
       return acc;
     }, []);
-  const [desc, atHigherLevel] = descriptionArray
-    .join("")
-    .split("Aux niveaux supérieurs");
+  const description = descriptionArray.join("");
+
+  const [desc, atHigherLevel] = description.includes(
+    "Using a Higher-Level Spell Slot",
+  )
+    ? description.split("Using a Higher-Level Spell Slot")
+    : description.split("Cantrip Upgrade");
 
   const classRole = mainDataBlock
     .find(".classe")
