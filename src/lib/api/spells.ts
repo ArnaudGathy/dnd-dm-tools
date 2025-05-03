@@ -83,12 +83,19 @@ export const getSpellById = async (
   });
 };
 
-export const getSpellByIds = async (spellIds: string[]) => {
+export const getSpellByIds = async (
+  spellIds: string[],
+  version = SpellVersion.V2014,
+) => {
   return prisma.spell.findMany({
     where: {
       id: {
         in: spellIds,
       },
+      version,
+    },
+    orderBy: {
+      level: "asc",
     },
   });
 };

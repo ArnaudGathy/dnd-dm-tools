@@ -22,9 +22,10 @@ export default function SpellCasting({
           name="Incantation"
           stat={spell.casting_time}
           highlightClassName={
-            spell.casting_time.includes("bonus action")
+            spell.casting_time.includes("bonus")
               ? "text-orange-400"
-              : spell.casting_time.includes("reaction")
+              : spell.casting_time.includes("reaction") ||
+                  spell.casting_time.includes("réaction")
                 ? "text-purple-400"
                 : undefined
           }

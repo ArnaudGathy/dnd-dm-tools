@@ -1296,8 +1296,15 @@
       "mapMarker": "C14"
     },
     "ennemies": {
-      "1": [22, 44, 68]
+      "1": [22, 44, 68, 34, 33]
     },
+    "informations": [
+      "Iarno tente de prendre la fuite dès que la combat tourne mal."
+    ],
+    "loots": [
+      "Iarno : Parchemin d'immobilisation des personnes, parchemin de boule de feu, baton de verre",
+      "Grol : tout le monde roll 1d100 dans la table de loots"
+    ],
     "youtubeId": "qkeiRuaGM28"
   }
 ]

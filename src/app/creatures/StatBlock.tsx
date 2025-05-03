@@ -21,13 +21,20 @@ import { StatCell } from "@/app/creatures/StatCell";
 import { ActionBlock } from "@/app/creatures/ActionBlock";
 import { getSpellByIds } from "@/lib/api/spells";
 import Abilities from "@/app/creatures/Abilities";
+import { cn } from "@/lib/utils";
 
 const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
   return <h5 className="text-neutral-300 underline md:mb-2">{children}</h5>;
 };
 
 export const StatBlock = async ({ creature }: { creature: Creature }) => {
-  const creatureSpells = await getSpellByIds(creature.spells ?? []);
+  const creatureSpellsFromDb = await getSpellByIds(
+    (creature.spells ?? []).map((s) => s.id),
+  );
+  const creatureSpells = creatureSpellsFromDb.map((s, index) => ({
+    ...s,
+    ...(creature.spells?.[index] ?? {}),
+  }));
 
   const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
 
@@ -117,28 +124,28 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                 stat={entries(creature.savingThrows)
                   .map((t) => `${shortenAbilityName(t[0])} ${t[1]}`)
                   .join(", ")}
-                highlightClassName="text-purple-400"
+                highlightClassName="text-pink-400"
               />
             )}
             {creature.vulnerabilities && (
               <StatCell
                 name="Vulnérabilités (x2)"
                 stat={creature.vulnerabilities.join(", ")}
-                highlightClassName="text-orange-400"
+                highlightClassName="text-emerald-400"
               />
             )}
             {creature.resistances && (
               <StatCell
                 name="Résistances (x0,5)"
                 stat={creature.resistances.join(", ")}
-                highlightClassName="text-orange-400"
+                highlightClassName="text-emerald-400"
               />
             )}
             {creature.immunities && (
               <StatCell
                 name="Immunités (x0)"
                 stat={creature.immunities.join(", ")}
-                highlightClassName="text-orange-400"
+                highlightClassName="text-emerald-400"
               />
             )}
 
@@ -208,7 +215,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           )}
 
           {creature.bonusActions && (
-            <div className={blockClassName}>
+            <div className={cn(blockClassName, "text-orange-400")}>
               <CategoryTitle>Actions bonus</CategoryTitle>
               {creature.bonusActions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
@@ -217,7 +224,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           )}
 
           {creature.reactions && (
-            <div className={blockClassName}>
+            <div className={cn(blockClassName, "text-purple-400")}>
               <CategoryTitle>Réactions</CategoryTitle>
               {creature.reactions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
@@ -259,15 +266,15 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
 
                   return (
                     <div key={spell.id} className="flex items-center gap-2">
-                      <div>{`Niveau ${spell.level}`}</div>
-                      <div className="min-w-[150px] text-muted-foreground underline">
-                        <Link
-                          href={`/spells/${spell.id}?v=${spell.version}`}
-                          target="_blank"
-                        >
-                          {spell.name}
-                        </Link>
-                      </div>
+                      <div className="text-sky-500">{`${spell.level}`}</div>
+                      <Link
+                        href={`/spells/${spell.id}?v=${spell.version}`}
+                        target="_blank"
+                        className="w-[175px] overflow-hidden truncate text-muted-foreground underline"
+                      >
+                        {spell.name}
+                      </Link>
+                      {spell.summary && <span>{spell.summary}</span>}
                     </div>
                   );
                 })}

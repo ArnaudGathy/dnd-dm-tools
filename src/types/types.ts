@@ -95,7 +95,7 @@ export type Creature = {
   type: string;
   size: string;
   alignment: string;
-  armorClass: number;
+  armorClass: number | string;
   hitPoints: string;
   speed: {
     walk: string;
@@ -128,7 +128,7 @@ export type Creature = {
     spellDC: number;
     slots?: Partial<Record<string, number>>;
   };
-  spells?: string[];
+  spells?: Array<{ id: string; summary?: string; version?: string }>;
   traits?: Array<{
     name: string;
     description: string;

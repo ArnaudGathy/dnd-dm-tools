@@ -1665,7 +1665,7 @@
     "type": "Humanoïde (Humain, Magicien)",
     "size": "M",
     "alignment": "Loyal Mauvais",
-    "armorClass": 13,
+    "armorClass": "13 (react 18) (mage 16) (total 21)",
     "hitPoints": "22 (5d8)",
     "speed": {
       "walk": "9 m"
@@ -1700,7 +1700,7 @@
     "actions": [
       {
         "name": "Lancer un sort",
-        "description": "Lancer un sort et dépenser un emplacement"
+        "description": "Lancer un sort et dépenser l'emplacement correspondant"
       },
       {
         "name": "Attaques multiples",
@@ -1710,7 +1710,7 @@
         "name": "Décharge électrique",
         "type": "Melee ou Distance",
         "modifier": "+5",
-        "reach": "1.5 m ou portée 36 m",
+        "reach": "36 m",
         "target": "1 cible",
         "hit": "6 (1d6 + 3) dégâts de foudre."
       }
@@ -1724,12 +1724,18 @@
       }
     },
     "spells": [
-      "mage-hand",
-      "light",
-      "mage-armor",
-      "charm-person",
-      "magic-missile",
-      "hold-person"
+      {
+        "id": "mage-armor",
+        "summary": "Monte le CA à 16"
+      },
+      {
+        "id": "magic-missile",
+        "summary": "3x 1d4+1 force. (lvl2 : 4x)"
+      },
+      {
+        "id": "hold-person",
+        "summary": "JdS SAG ou paralysée 1min (concentration)"
+      }
     ],
     "reactions": [
       {
@@ -2809,12 +2815,12 @@
       }
     },
     "spells": [
-      "mage-hand",
-      "shield",
-      "magic-missile",
-      "blur",
-      "flaming-sphere",
-      "scorching-ray"
+      { "id": "mage-hand" },
+      { "id": "shield" },
+      { "id": "magic-missile" },
+      { "id": "blur" },
+      { "id": "flaming-sphere" },
+      { "id": "scorching-ray" }
     ],
     "colors": ["#f84200"]
   },
@@ -3016,7 +3022,7 @@
         "2": 2
       }
     },
-    "spells": ["burning-hands", "scorching-ray"],
+    "spells": [{ "id": "burning-hands" }, { "id": "scorching-ray" }],
     "actions": [
       {
         "name": "Masse d'armes",
@@ -3148,7 +3154,11 @@
         "3": 1
       }
     },
-    "spells": ["burning-hands", "scorching-ray", "fireball"],
+    "spells": [
+      { "id": "burning-hands" },
+      { "id": "scorching-ray" },
+      { "id": "fireball" }
+    ],
     "actions": [
       {
         "name": "Attaque multiples",
