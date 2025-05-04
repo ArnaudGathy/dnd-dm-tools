@@ -1190,21 +1190,8 @@
       "mapMarker": "C8"
     },
     "ennemies": {
-      "1": [65]
-    },
-    "informations": ["Perception DD14 ou surprise"],
-    "youtubeId": "n9KsWzdxi4Y"
-  },
-  {
-    "name": "Sanctuaire gobelin",
-    "id": 56,
-    "scenario": "Les tréfonds de Phancreux",
-    "location": {
-      "name": "Château Rocagueule",
-      "mapMarker": "C9"
-    },
-    "ennemies": {
       "1": [
+        65,
         { "id": 19, "variant": "Epee", "color": "#aab011" },
         {
           "id": 67,
@@ -1216,10 +1203,8 @@
         }
       ]
     },
-    "informations": [
-      "Peuvent être alertés par le combat en C8 et prendre par surprise"
-    ],
-    "youtubeId": "fqW--C1hxl8"
+    "informations": ["Perception DD14 ou surprise"],
+    "youtubeId": "n9KsWzdxi4Y"
   },
   {
     "name": "Poterne",
@@ -1299,7 +1284,8 @@
       "1": [22, 44, 68, 34, 33]
     },
     "informations": [
-      "Iarno tente de prendre la fuite dès que la combat tourne mal."
+      "Iarno tente de prendre la fuite dès le début du combat. Il se téléporte à travers une meurtrière.",
+      "Le doppel feint de fuir vers la tour, et se transforme en nain pour surprendre les aventuriers."
     ],
     "loots": [
       "Iarno : Parchemin d'immobilisation des personnes, parchemin de boule de feu, baton de verre",

@@ -66,7 +66,9 @@ export default function Bio({ character }: { character: CharacterById }) {
                 <Edit />
               </Button>
             </PopoverComponent>
-            <div className="mt-2 flex flex-col gap-1">{character.notes}</div>
+            <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
+              {character.notes}
+            </div>
           </SheetCard>
         )}
       </div>
