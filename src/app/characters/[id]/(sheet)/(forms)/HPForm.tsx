@@ -12,7 +12,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
 
   return (
     <form action={action} className="flex w-[60px] flex-col items-center gap-4">
-      <Input defaultValue={character.currentHP} name="HP" />
+      <Input type="number" defaultValue={character.currentHP} name="HP" />
       <div className="flex gap-2">
         <PopoverClose asChild>
           <Button type="submit" className="w-full">
