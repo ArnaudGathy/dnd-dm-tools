@@ -27,7 +27,11 @@ export default function MoneyForm({ money }: { money: Money }) {
               action={action}
               className="flex w-[60px] flex-col items-center gap-4"
             >
-              <Input defaultValue={money.quantity} name="quantity" />
+              <Input
+                type="number"
+                defaultValue={money.quantity}
+                name="quantity"
+              />
               <PopoverClose asChild>
                 <Button size="lg" type="submit" className="w-full">
                   <Check />

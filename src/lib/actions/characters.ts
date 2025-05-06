@@ -208,6 +208,14 @@ export const updateHP = async (
   }
 };
 
+export const resetHp = async (characterId: number, maxHp: number) => {
+  await prisma.character.update({
+    where: { id: characterId },
+    data: { currentHP: maxHp },
+  });
+  revalidatePath("/characters");
+};
+
 export const updateInspiration = async (
   characterId: number,
   formData: FormData,

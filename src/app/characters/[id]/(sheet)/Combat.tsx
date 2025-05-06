@@ -86,6 +86,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                       character.currentHP <= character.maximumHP * 0.5,
                     "text-red-500":
                       character.currentHP <= character.maximumHP * 0.2,
+                    "text-stone-500": character.currentHP <= 0,
                   })}
                 >
                   {character.currentHP}

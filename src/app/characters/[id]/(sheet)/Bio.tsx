@@ -54,23 +54,21 @@ export default function Bio({ character }: { character: CharacterById }) {
             <StatCell name="Traits" stat={character.physicalTraits} isInline />
           )}
         </SheetCard>
-        {!!character.notes && (
-          <SheetCard className="relative flex flex-col">
-            <span className="mb-2 self-center text-2xl font-bold">Notes</span>
-            <PopoverComponent
-              definition={<NotesForm character={character} />}
-              className="absolute right-4 top-4"
-              asChild
-            >
-              <Button variant="outline">
-                <Edit />
-              </Button>
-            </PopoverComponent>
-            <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
-              {character.notes}
-            </div>
-          </SheetCard>
-        )}
+        <SheetCard className="relative flex flex-col">
+          <span className="mb-2 self-center text-2xl font-bold">Notes</span>
+          <PopoverComponent
+            definition={<NotesForm character={character} />}
+            className="absolute right-4 top-4"
+            asChild
+          >
+            <Button variant="outline">
+              <Edit />
+            </Button>
+          </PopoverComponent>
+          <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
+            {character.notes || "Aucune notes"}
+          </div>
+        </SheetCard>
       </div>
 
       <div className="flex flex-col gap-4">
