@@ -17,11 +17,15 @@ import {
   WeaponDamageType,
   WeaponType,
 } from "@prisma/client";
+import { CharacterById } from "@/lib/utils";
+import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
 
 export const formRequiredString = z.string().min(1, "Requis");
 export const optionalNumberString = z
   .string()
-  .regex(/^\d+$/, "Chiffre")
+  .refine((val) => val === "" || /^\d+$/.test(val), {
+    message: "Chiffre",
+  })
   .optional();
 export function minMax(min: number, max?: number) {
   return formRequiredString.regex(/^\d+$/, "Chiffre").refine(
@@ -439,3 +443,111 @@ export const backendCharacterSchema = z.object({
       ),
   ),
 });
+
+export function dataToForm(character: CharacterById): CharacterCreationForm {
+  const proficiencies = character.proficiencies.map((p) => ({ name: p })) as [
+    { name: string },
+    ...{ name: string }[],
+  ];
+  const capacities = character.capacities.map((capacity) => ({
+    name: capacity.name,
+    description: capacity.description ?? undefined,
+  })) as [
+    { name: string; description?: string },
+    ...{ name: string; description?: string }[],
+  ];
+  const savingThrows = character.savingThrows.map((savingThrow) => ({
+    ability: savingThrow.ability,
+    isProficient: savingThrow.isProficient,
+  })) as [
+    { ability: Abilities; isProficient: boolean },
+    ...{ ability: Abilities; isProficient: boolean }[],
+  ];
+  const skills = character.skills.map((skill) => ({
+    skill: skill.skill,
+    isProficient: skill.isProficient,
+    isExpert: skill.isExpert,
+  })) as [
+    { skill: Skills; isProficient: boolean; isExpert: boolean },
+    ...{ skill: Skills; isProficient: boolean; isExpert: boolean }[],
+  ];
+  const weapons = character.weapons.map((weapon) => ({
+    name: weapon.name,
+    type: weapon.type,
+    isProficient: weapon.isProficient,
+    abilityModifier: weapon.abilityModifier,
+    attackBonus: weapon.attackBonus?.toString() ?? undefined,
+    reach: weapon.reach ? (weapon.reach / 5).toString() : undefined,
+    range: weapon.range ? (weapon.range / 5).toString() : undefined,
+    longRange: weapon.longRange ? (weapon.longRange / 5).toString() : undefined,
+    ammunitionType: weapon.ammunitionType ?? undefined,
+    ammunitionCount: weapon.ammunitionCount?.toString() ?? undefined,
+    extraEffects: weapon.extraEffects ?? undefined,
+    damages: weapon.damages.map((weaponDamage) => ({
+      isBaseDamage: weaponDamage.isBaseDamage,
+      type: weaponDamage.type,
+      dice: weaponDamage.dice,
+      numberOfDices: String(weaponDamage.numberOfDices),
+      flatBonus: weaponDamage.flatBonus?.toString() ?? undefined,
+    })) as [
+      {
+        isBaseDamage: boolean;
+        type: WeaponDamageType;
+        dice: WeaponDamageDices;
+        numberOfDices: string;
+        flatBonus: string | "";
+      },
+      ...{
+        isBaseDamage: boolean;
+        type: WeaponDamageType;
+        dice: WeaponDamageDices;
+        numberOfDices: string;
+        flatBonus: string | "";
+      }[],
+    ],
+  }));
+
+  return {
+    ...character,
+    campaign: character.campaign.name,
+    party: character.campaign.party.name,
+    strength: String(character.strength),
+    dexterity: String(character.dexterity),
+    constitution: String(character.constitution),
+    intelligence: String(character.intelligence),
+    wisdom: String(character.wisdom),
+    charisma: String(character.charisma),
+    age: String(character.age),
+    height: String(character.height),
+    weight: String(character.weight),
+    physicalTraits: character.physicalTraits ?? undefined,
+    lore: character.lore ?? undefined,
+    allies: character.allies ?? undefined,
+    notes: character.notes ?? undefined,
+    proficiencies,
+    capacities,
+    savingThrows,
+    skills,
+    weapons,
+    inventory: character.inventory.map((item) => ({
+      name: item.name,
+      description: item.description ?? undefined,
+      quantity: item.quantity?.toString() ?? "1",
+      value: item.value ?? undefined,
+    })),
+    wealth: character.wealth.map((w) => ({
+      type: w.type,
+      quantity: String(w.quantity),
+    })),
+    armors: character.armors.map((a) => ({
+      type: a.type,
+      name: a.name,
+      AC: String(a.AC),
+      extraEffects: a.extraEffects ?? undefined,
+      strengthRequirement: a.strengthRequirement?.toString() ?? undefined,
+      isEquipped: a.isEquipped,
+      isProficient: a.isProficient,
+      stealthDisadvantage: a.stealthDisadvantage,
+    })),
+  };
+}

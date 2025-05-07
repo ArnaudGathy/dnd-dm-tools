@@ -21,6 +21,7 @@ import { StatCell } from "@/app/creatures/StatCell";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
 import {
   BookOpenIcon,
+  Edit,
   FileSpreadsheet,
   Heart,
   MapPin,
@@ -163,6 +164,12 @@ export default async function Characters({
                         </Button>
                       </Link>
                     )}
+                    <Link href={`/characters/${character.id}/update`}>
+                      <Button variant="secondary" size="sm">
+                        <Edit />
+                        Éditer
+                      </Button>
+                    </Link>
                   </div>
                 </CardContent>
               </Card>

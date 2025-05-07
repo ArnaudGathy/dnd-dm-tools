@@ -7,6 +7,9 @@ import {
   PARTY_MAP,
 } from "@/constants/maps";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Edit } from "lucide-react";
 
 const formatDate = (date: Date) =>
   Intl.DateTimeFormat("fr-FR", {
@@ -32,6 +35,11 @@ export default function Settings({ character }: { character: CharacterById }) {
         <StatCell name="Propriétaire" stat={character.owner} />
         <StatCell name="Modification" stat={formatDate(character.updatedAt)} />
         <StatCell name="Création" stat={formatDate(character.createdAt)} />
+        <Link href={`/characters/${character.id}/update`} className="mt-4">
+          <Button className="w-full">
+            <Edit /> Modifier le personnage
+          </Button>
+        </Link>
       </SheetCard>
     </div>
   );

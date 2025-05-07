@@ -12,23 +12,32 @@ import FormProficiencies from "@/app/characters/add/FormProficiencies";
 import { Button } from "@/components/ui/button";
 import FormInventory from "@/app/characters/add/FormInventory";
 import {
+  dataToForm,
   signupFormDefaultValues,
   signUpFormSchema,
 } from "@/app/characters/add/utils";
-import { createCharacter } from "@/lib/actions/characters";
+import { createCharacter, updateCharacter } from "@/lib/actions/characters";
 import { useState } from "react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle } from "lucide-react";
 import { isNextRouterError } from "next/dist/client/components/is-next-router-error";
+import { CharacterById } from "@/lib/utils";
 
 export type CharacterCreationForm = z.infer<typeof signUpFormSchema>;
 
-export default function AddCharacter({ owner }: { owner: string }) {
+export default function AddCharacter({
+  owner,
+  character,
+}: {
+  owner?: string;
+  character?: CharacterById;
+}) {
+  const isEditMode = !!character;
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const form = useForm<CharacterCreationForm>({
     resolver: zodResolver(signUpFormSchema),
-    defaultValues: signupFormDefaultValues,
+    defaultValues: isEditMode ? dataToForm(character) : signupFormDefaultValues,
   });
 
   const onSubmit = async (data: CharacterCreationForm) => {
@@ -36,7 +45,12 @@ export default function AddCharacter({ owner }: { owner: string }) {
     try {
       // eslint-disable-next-line no-console
       console.log("creation data", data);
-      await createCharacter(data, owner);
+
+      if (!isEditMode && !!owner) {
+        await createCharacter(data, owner);
+      } else if (!!character) {
+        await updateCharacter(data, character);
+      }
     } catch (e) {
       if (!isNextRouterError(e)) {
         const error = e as Error;
@@ -56,9 +70,13 @@ export default function AddCharacter({ owner }: { owner: string }) {
         >
           <div className="grid grid-cols-[60%_1fr] gap-8">
             <div className="flex flex-col gap-8">
-              <FormApp form={form} />
-              <FormGeneral form={form} />
-              <FormBio form={form} />
+              <FormApp form={form} isEditMode={isEditMode} />
+              <FormGeneral
+                form={form}
+                isEditMode={isEditMode}
+                hasSubclass={!!character?.subclassName}
+              />
+              <FormBio form={form} isEditMode={isEditMode} />
               <FormBioBehaviour form={form} />
             </div>
             <div className="flex flex-col gap-8">
@@ -82,7 +100,8 @@ export default function AddCharacter({ owner }: { owner: string }) {
           )}
 
           <Button type="submit" size="lg" disabled={isLoading}>
-            Créer le personnage {isLoading && <span>...</span>}
+            {isEditMode ? "Modifier le personnage" : "Créer le personnage"}
+            {isLoading && <span>...</span>}
           </Button>
         </form>
       </Form>

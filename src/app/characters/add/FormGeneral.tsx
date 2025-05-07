@@ -16,8 +16,12 @@ import { shortenAbilityName } from "@/utils/utils";
 
 export default function FormGeneral({
   form,
+  isEditMode,
+  hasSubclass,
 }: {
   form: UseFormReturn<CharacterCreationForm>;
+  isEditMode: boolean;
+  hasSubclass: boolean;
 }) {
   const className = form.watch("className");
 
@@ -35,12 +39,15 @@ export default function FormGeneral({
               label="Classe"
               items={CLASS_MAP}
               required
+              disabled={isEditMode}
             />
             <FormFieldSelect
               formInstance={form}
               formFieldName="subclassName"
               label="Sous-classe"
-              description="Peut-être choisi plus tard"
+              description={
+                isEditMode ? undefined : "Peut-être choisi plus tard"
+              }
               items={
                 className
                   ? SUBCLASSES_BY_CLASS[className].reduce((acc, next) => {
@@ -48,7 +55,7 @@ export default function FormGeneral({
                     }, {})
                   : []
               }
-              disabled={!className}
+              disabled={!className || (isEditMode && hasSubclass)}
             />
           </div>
 
@@ -59,6 +66,7 @@ export default function FormGeneral({
               label="Race"
               items={RACE_MAP}
               required
+              disabled={isEditMode}
             />
             <FormFieldSelect
               formInstance={form}
@@ -66,6 +74,7 @@ export default function FormGeneral({
               label="Historique"
               items={BACKGROUND_MAP}
               required
+              disabled={isEditMode}
             />
           </div>
 

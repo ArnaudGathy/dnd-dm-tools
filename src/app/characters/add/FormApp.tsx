@@ -11,9 +11,31 @@ import { CharacterStatus } from "@prisma/client";
 
 export default function FormApp({
   form,
+  isEditMode,
 }: {
   form: UseFormReturn<CharacterCreationForm>;
+  isEditMode?: boolean;
 }) {
+  const statusOptions:
+    | {
+        ACTIVE: string;
+        RETIRED: string;
+        DEAD: string;
+      }
+    | {
+        ACTIVE: string;
+        BACKUP: string;
+      } = isEditMode
+    ? {
+        [CharacterStatus.ACTIVE]: CHARACTER_STATUS_MAP[CharacterStatus.ACTIVE],
+        [CharacterStatus.RETIRED]:
+          CHARACTER_STATUS_MAP[CharacterStatus.RETIRED],
+        [CharacterStatus.DEAD]: CHARACTER_STATUS_MAP[CharacterStatus.DEAD],
+      }
+    : {
+        [CharacterStatus.ACTIVE]: CHARACTER_STATUS_MAP[CharacterStatus.ACTIVE],
+        [CharacterStatus.BACKUP]: CHARACTER_STATUS_MAP[CharacterStatus.BACKUP],
+      };
   return (
     <Card>
       <CardHeader>
@@ -26,6 +48,7 @@ export default function FormApp({
           label="Groupe"
           items={PARTY_MAP}
           required
+          disabled={isEditMode}
         />
         <FormFieldSelect
           formInstance={form}
@@ -33,17 +56,13 @@ export default function FormApp({
           label="Campagne"
           items={CAMPAIGN_MAP}
           required
+          disabled={isEditMode}
         />
         <FormFieldSelect
           formInstance={form}
           formFieldName="status"
           label="Status"
-          items={{
-            [CharacterStatus.ACTIVE]:
-              CHARACTER_STATUS_MAP[CharacterStatus.ACTIVE],
-            [CharacterStatus.BACKUP]:
-              CHARACTER_STATUS_MAP[CharacterStatus.BACKUP],
-          }}
+          items={statusOptions}
           required
         />
       </CardContent>

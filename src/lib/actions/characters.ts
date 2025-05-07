@@ -10,6 +10,7 @@ import { getModifier } from "@/utils/utils";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { backendCharacterSchema } from "@/app/characters/add/utils";
+import { CharacterById } from "@/lib/utils";
 
 export const createCharacter = async (
   data: CharacterCreationForm,
@@ -58,6 +59,7 @@ export const createCharacter = async (
     const character = await prisma.character.create({
       data: {
         owner: validation.data.owner,
+        status: validation.data.status,
         maximumHP: HP,
         currentHP: HP,
         campaignId: campaign.id,
@@ -86,33 +88,29 @@ export const createCharacter = async (
         flaws: validation.data.flaws,
         lore: validation.data.lore,
         allies: validation.data.allies,
-        notes: validation.data.notes || "Notes",
+        notes: validation.data.notes,
         proficiencies: validation.data.proficiencies,
       },
     });
 
-    // Saving Throws
-    for (const st of validation.data.savingThrows || []) {
+    for (const savingThrow of validation.data.savingThrows || []) {
       await prisma.savingThrow.create({
-        data: { ...st, characterId: character.id },
+        data: { ...savingThrow, characterId: character.id },
       });
     }
 
-    // Skills
     for (const skill of validation.data.skills || []) {
       await prisma.skill.create({
         data: { ...skill, characterId: character.id },
       });
     }
 
-    // Capacities
-    for (const cap of validation.data.capacities || []) {
+    for (const capacity of validation.data.capacities || []) {
       await prisma.capacity.create({
-        data: { ...cap, characterId: character.id },
+        data: { ...capacity, characterId: character.id },
       });
     }
 
-    // Armors
     for (const armor of validation.data.armors || []) {
       await prisma.armor.create({
         data: {
@@ -121,12 +119,15 @@ export const createCharacter = async (
             armor.type === ArmorType.HEAVY
               ? armor.strengthRequirement
               : undefined,
+          stealthDisadvantage:
+            armor.type !== ArmorType.SHIELD
+              ? armor.stealthDisadvantage
+              : undefined,
           characterId: character.id,
         },
       });
     }
 
-    // Weapons and damages
     for (const weapon of validation.data.weapons || []) {
       const { damages, ...weaponData } = weapon;
       const createdWeapon = await prisma.weapon.create({
@@ -164,17 +165,15 @@ export const createCharacter = async (
       }
     }
 
-    // Inventory
     for (const item of validation.data.inventory || []) {
       await prisma.inventoryItem.create({
         data: { ...item, characterId: character.id },
       });
     }
 
-    // Wealth
-    for (const coin of validation.data.wealth || []) {
+    for (const money of validation.data.wealth || []) {
       await prisma.money.create({
-        data: { ...coin, characterId: character.id },
+        data: { ...money, characterId: character.id },
       });
     }
 
@@ -182,6 +181,273 @@ export const createCharacter = async (
   } else {
     throw new Error("Un personnage avec ce nom existe déjà.");
   }
+};
+
+async function syncSimpleTable<Existing extends { id: number }, Incoming>(
+  existing: Existing[],
+  incoming: Incoming[],
+  crud: {
+    create: (data: Incoming) => Promise<unknown>;
+    update: (id: number, data: Incoming) => Promise<unknown>;
+    deleteMany: (ids: number[]) => Promise<unknown>;
+  },
+): Promise<void> {
+  const tasks: Promise<unknown>[] = [];
+
+  const minLen = Math.min(existing.length, incoming.length);
+
+  for (let i = 0; i < minLen; i++) {
+    tasks.push(crud.update(existing[i].id, incoming[i]));
+  }
+
+  for (let i = minLen; i < incoming.length; i++) {
+    tasks.push(crud.create(incoming[i]));
+  }
+
+  if (existing.length > incoming.length) {
+    const toDelete = existing.slice(incoming.length).map((e) => e.id);
+    tasks.push(crud.deleteMany(toDelete));
+  }
+
+  await Promise.all(tasks);
+}
+
+export const updateCharacter = async (
+  data: CharacterCreationForm,
+  character: CharacterById,
+) => {
+  const validation = backendCharacterSchema.safeParse({
+    ...data,
+    owner: character.owner, // keep original owner
+  });
+
+  if (!validation.success) {
+    console.error(validation.error);
+    throw new Error(JSON.stringify(validation.error, null, 2));
+  }
+
+  const party = await prisma.party.upsert({
+    where: { id: character.campaign.party.id },
+    update: {},
+    create: { name: validation.data.party },
+  });
+
+  const campaign = await prisma.campaign.upsert({
+    where: {
+      name_partyId: { name: validation.data.campaign, partyId: party.id },
+    },
+    update: {},
+    create: {
+      name: validation.data.campaign,
+      status: "ACTIVE",
+      partyId: party.id,
+    },
+  });
+
+  await prisma.character.update({
+    where: { id: character.id },
+    data: {
+      status: validation.data.status,
+      campaignId: campaign.id,
+      name: validation.data.name,
+      className: validation.data.className,
+      subclassName: validation.data.subclassName,
+      race: validation.data.race,
+      background: validation.data.background,
+      strength: validation.data.strength,
+      dexterity: validation.data.dexterity,
+      constitution: validation.data.constitution,
+      intelligence: validation.data.intelligence,
+      wisdom: validation.data.wisdom,
+      charisma: validation.data.charisma,
+      age: validation.data.age,
+      weight: validation.data.weight,
+      height: validation.data.height,
+      eyeColor: validation.data.eyeColor,
+      hair: validation.data.hair,
+      skin: validation.data.skin,
+      physicalTraits: validation.data.physicalTraits,
+      alignment: validation.data.alignment,
+      personalityTraits: validation.data.personalityTraits,
+      ideals: validation.data.ideals,
+      bonds: validation.data.bonds,
+      flaws: validation.data.flaws,
+      lore: validation.data.lore,
+      allies: validation.data.allies,
+      notes: validation.data.notes,
+      proficiencies: validation.data.proficiencies,
+    },
+  });
+
+  await syncSimpleTable(character.savingThrows, validation.data.savingThrows, {
+    create: (st) =>
+      prisma.savingThrow.create({
+        data: { ...st, characterId: character.id },
+      }),
+    update: (id, st) => prisma.savingThrow.update({ where: { id }, data: st }),
+    deleteMany: (ids) =>
+      prisma.savingThrow.deleteMany({ where: { id: { in: ids } } }),
+  });
+
+  await syncSimpleTable(character.skills, validation.data.skills, {
+    create: (sk) =>
+      prisma.skill.create({ data: { ...sk, characterId: character.id } }),
+    update: (id, sk) => prisma.skill.update({ where: { id }, data: sk }),
+    deleteMany: (ids) =>
+      prisma.skill.deleteMany({ where: { id: { in: ids } } }),
+  });
+
+  await syncSimpleTable(character.capacities, validation.data.capacities, {
+    create: (c) =>
+      prisma.capacity.create({ data: { ...c, characterId: character.id } }),
+    update: (id, c) => prisma.capacity.update({ where: { id }, data: c }),
+    deleteMany: (ids) =>
+      prisma.capacity.deleteMany({ where: { id: { in: ids } } }),
+  });
+
+  await syncSimpleTable(
+    character.armors,
+    validation.data.armors.map((armor) => ({
+      ...armor,
+      strengthRequirement:
+        armor.type === ArmorType.HEAVY ? armor.strengthRequirement : null,
+      stealthDisadvantage:
+        armor.type !== ArmorType.SHIELD ? armor.stealthDisadvantage : false,
+    })),
+    {
+      create: (a) =>
+        prisma.armor.create({ data: { ...a, characterId: character.id } }),
+      update: (id, a) => prisma.armor.update({ where: { id }, data: a }),
+      deleteMany: (ids) =>
+        prisma.armor.deleteMany({ where: { id: { in: ids } } }),
+    },
+  );
+
+  const weaponOps = [];
+
+  const maxWeapons = Math.max(
+    character.weapons.length,
+    validation.data.weapons.length,
+  );
+  for (let i = 0; i < maxWeapons; i++) {
+    const existingWeapon = character.weapons[i];
+    const incoming = validation.data.weapons[i];
+    if (existingWeapon && incoming) {
+      // update weapon row
+      const { damages, ...weaponData } = incoming;
+      weaponOps.push(
+        prisma.weapon.update({
+          where: { id: existingWeapon.id },
+          data: {
+            ...weaponData,
+            reach:
+              weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
+            range:
+              weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
+            longRange:
+              weaponData.type !== WeaponType.MELEE
+                ? weaponData.longRange
+                : null,
+            ammunitionCount:
+              weaponData.type === WeaponType.RANGED
+                ? weaponData.ammunitionCount
+                : null,
+            ammunitionType:
+              weaponData.type === WeaponType.RANGED
+                ? weaponData.ammunitionType
+                : null,
+          },
+        }),
+      );
+
+      const maxDamages = Math.max(
+        existingWeapon.damages.length,
+        damages.length,
+      );
+      for (let j = 0; j < maxDamages; j++) {
+        const existingDmg = existingWeapon.damages[j];
+        const incDmg = damages[j];
+        if (existingDmg && incDmg) {
+          weaponOps.push(
+            prisma.weaponDamage.update({
+              where: { id: existingDmg.id },
+              data: incDmg,
+            }),
+          );
+        } else if (!existingDmg && incDmg) {
+          weaponOps.push(
+            prisma.weaponDamage.create({
+              data: { ...incDmg, weaponId: existingWeapon.id },
+            }),
+          );
+        } else if (existingDmg && !incDmg) {
+          weaponOps.push(
+            prisma.weaponDamage.delete({ where: { id: existingDmg.id } }),
+          );
+        }
+      }
+    } else if (!existingWeapon && incoming) {
+      const { damages, ...weaponData } = incoming;
+      const newWeapon = await prisma.weapon.create({
+        data: {
+          ...weaponData,
+          reach:
+            weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
+          range: weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
+          longRange:
+            weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
+          ammunitionCount:
+            weaponData.type === WeaponType.RANGED
+              ? weaponData.ammunitionCount
+              : null,
+          ammunitionType:
+            weaponData.type === WeaponType.RANGED
+              ? weaponData.ammunitionType
+              : null,
+          characterId: character.id,
+        },
+      });
+      for (const dmg of damages) {
+        weaponOps.push(
+          prisma.weaponDamage.create({
+            data: { ...dmg, weaponId: newWeapon.id },
+          }),
+        );
+      }
+    } else if (existingWeapon && !incoming) {
+      weaponOps.push(
+        prisma.weaponDamage.deleteMany({
+          where: { weaponId: existingWeapon.id },
+        }),
+      );
+      weaponOps.push(
+        prisma.weapon.delete({ where: { id: existingWeapon.id } }),
+      );
+    }
+  }
+
+  await Promise.all(weaponOps);
+
+  await syncSimpleTable(character.inventory, validation.data.inventory, {
+    create: (inv) =>
+      prisma.inventoryItem.create({
+        data: { ...inv, characterId: character.id },
+      }),
+    update: (id, inv) =>
+      prisma.inventoryItem.update({ where: { id }, data: inv }),
+    deleteMany: (ids) =>
+      prisma.inventoryItem.deleteMany({ where: { id: { in: ids } } }),
+  });
+
+  await syncSimpleTable(character.wealth, validation.data.wealth, {
+    create: (coin) =>
+      prisma.money.create({ data: { ...coin, characterId: character.id } }),
+    update: (id, coin) => prisma.money.update({ where: { id }, data: coin }),
+    deleteMany: (ids) =>
+      prisma.money.deleteMany({ where: { id: { in: ids } } }),
+  });
+
+  redirect(`/characters/${character.id}`);
 };
 
 export const updateHP = async (

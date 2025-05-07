@@ -7,8 +7,10 @@ import FormFieldSelect from "@/components/ui/inputs/FormFieldSelect";
 
 export default function FormBio({
   form,
+  isEditMode,
 }: {
   form: UseFormReturn<CharacterCreationForm>;
+  isEditMode: boolean;
 }) {
   return (
     <Card>
@@ -22,6 +24,7 @@ export default function FormBio({
             formFieldName="name"
             label="Nom du personnage"
             required
+            disabled={isEditMode}
           />
           <FormFieldSelect
             formInstance={form}
@@ -29,6 +32,7 @@ export default function FormBio({
             label="Alignement"
             items={ALIGNMENT_MAP}
             required
+            disabled={isEditMode}
           />
         </div>
 
@@ -50,6 +54,7 @@ export default function FormBio({
             formFieldName="height"
             label="Taille"
             required
+            disabled={isEditMode}
           />
           <FormFieldInput
             formInstance={form}

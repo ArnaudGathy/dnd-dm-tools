@@ -230,7 +230,6 @@ export default function ArmorsArray({
             type: ArmorType.LIGHT,
             isProficient: true,
             AC: "",
-            strengthRequirement: "",
             stealthDisadvantage: false,
             isEquipped: fields.length === 0,
           })
