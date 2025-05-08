@@ -28,10 +28,10 @@ export const CLASS_MAP = {
   [Classes.FIGHTER]: "Guerrier",
   [Classes.WIZARD]: "Magicien",
   [Classes.MONK]: "Moine",
+  [Classes.WARLOCK]: "Occultiste",
   [Classes.PALADIN]: "Paladin",
   [Classes.RANGER]: "Rôdeur",
   [Classes.ROGUE]: "Roublard",
-  [Classes.WARLOCK]: "Sorcier",
 };
 
 export const HIT_DICE_MAP = {
@@ -93,88 +93,75 @@ export const SUBCLASS_MAP = {
 
   // Barbare
   [Subclasses.PATH_OF_THE_BERSERKER]: "Voie du Berserker",
-  [Subclasses.PATH_OF_THE_WILD_HEART]: "Voie du Coeur Sauvage",
-  [Subclasses.PATH_OF_THE_STORM_HERALD]: "Voie du Héraut des Tempêtes",
-  [Subclasses.PATH_OF_THE_ZEALOT]: "Voie du Zélote",
+  [Subclasses.PATH_OF_THE_WILD_HEART]: "Voie du Coeur sauvage",
+  [Subclasses.PATH_OF_THE_WORLD_TREE]: "Voie de l'Arbre-Monde",
+  [Subclasses.PATH_OF_THE_ZEALOT]: "Voie du Zélateur",
 
   // Barde
-  [Subclasses.COLLEGE_OF_SWORDS]: "Collège des Épées",
-  [Subclasses.COLLEGE_OF_WHISPERS]: "Collège des Murmures",
+  [Subclasses.COLLEGE_OF_DANCE]: "Collège de la danse",
   [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_GLAMOUR]: "Collège de la séduction",
   [Subclasses.COLLEGE_OF_VALOR]: "Collège de la Vaillance",
 
   // Clerc
-  [Subclasses.KNOWLEDGE_DOMAIN]: "Domaine de la Connaissance",
-  [Subclasses.TRICKERY_DOMAIN]: "Domaine de la Fourberie",
-  [Subclasses.WAR_DOMAIN]: "Domaine de la Guerre",
-  [Subclasses.LIGHT_DOMAIN]: "Domaine de la Lumière",
-  [Subclasses.DEATH_DOMAIN]: "Domaine de la Mort",
-  [Subclasses.NATURE_DOMAIN]: "Domaine de la Nature",
-  [Subclasses.TEMPEST_DOMAIN]: "Domaine de la Tempête",
   [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
+  [Subclasses.LIGHT_DOMAIN]: "Domaine de la Lumière",
+  [Subclasses.TRICKERY_DOMAIN]: "Domaine de la Ruse",
+  [Subclasses.WAR_DOMAIN]: "Domaine de la Guerre",
 
   // Druide
-  [Subclasses.CIRCLE_OF_THE_MOON]: "Cercle de la Lune",
-  [Subclasses.CIRCLE_OF_WILD_FIRE]: "Cercle des Feux Sauvages",
-  [Subclasses.CIRCLE_OF_SPORES]: "Cercle des Spores",
   [Subclasses.CIRCLE_OF_THE_LAND]: "Cercle de la Terre",
+  [Subclasses.CIRCLE_OF_THE_MOON]: "Cercle de la Lune",
+  [Subclasses.CIRCLE_OF_THE_SEA]: "Cercle des Mers",
+  [Subclasses.CIRCLE_OF_THE_STARS]: "Cercle des Astres",
 
   // Guerrier
-  [Subclasses.ARCANE_ARCHER]: "Archer arcanique",
-  [Subclasses.CAVALIER]: "Cavalier",
   [Subclasses.CHAMPION]: "Champion",
   [Subclasses.ELDRITCH_KNIGHT]: "Chevalier occulte",
   [Subclasses.BATTLE_MASTER]: "Maître de guerre",
-  [Subclasses.SAMURAI]: "Samouraï",
+  [Subclasses.PSI_WARRIOR]: "Soldat Psi",
 
   // Moine
-  [Subclasses.WAY_OF_THE_OPEN_HAND]: "Voie de la Main Ouverte",
-  [Subclasses.WAY_OF_MERCY]: "Voie de la Miséricorde",
-  [Subclasses.WAY_OF_SHADOW]: "Voie de l’Ombre",
-  [Subclasses.WAY_OF_THE_ELEMENTS]: "Voie des Quatre Éléments",
+  [Subclasses.WAY_OF_THE_OPEN_HAND]: "Credo de la Paume",
+  [Subclasses.WAY_OF_MERCY]: "Credo de la Miséricorde",
+  [Subclasses.WAY_OF_SHADOW]: "Credo de l’Ombre",
+  [Subclasses.WAY_OF_THE_ELEMENTS]: "Credo des éléments",
 
   // Paladin
-  [Subclasses.OATH_OF_THE_ANCESTORS]: "Serment des Ancêtres",
-  [Subclasses.OATH_OF_THE_CROWN]: "Serment de la Couronne",
+  [Subclasses.OATH_OF_THE_ANCIENTS]: "Serment des Anciens",
   [Subclasses.OATH_OF_DEVOTION]: "Serment de Dévotion",
   [Subclasses.OATH_OF_GLORY]: "Serment de Gloire",
   [Subclasses.OATH_OF_VENGEANCE]: "Serment de Vengeance",
 
   // Rôdeur
-  [Subclasses.BEAST_MASTER]: "Maître des bêtes",
+  [Subclasses.BEAST_MASTER]: "Belluaire",
   [Subclasses.HUNTER]: "Chasseur",
-  [Subclasses.SWARMKEEPER]: "Gardien de Nuée",
+  [Subclasses.FEY_WANDERER]: "Vagabond féerique",
   [Subclasses.GLOOM_STALKER]: "Traqueur des Ténèbres",
 
   // Roublard
   [Subclasses.ARCANE_TRICKSTER]: "Arnaqueur arcanique",
   [Subclasses.ASSASSIN]: "Assassin",
-  [Subclasses.SOULKNIFE]: "Lame psychique",
+  [Subclasses.SOULKNIFE]: "Âme acéré",
   [Subclasses.THIEF]: "Voleur",
 
   // Ensorceleur
-  [Subclasses.DIVINE_SOUL]: "Âme divine",
-  [Subclasses.DRACONIC_BLOODLINE]: "Lignée draconique",
-  [Subclasses.STORM_SORCERY]: "Magie des tempêtes",
-  [Subclasses.WILD_MAGIC]: "Magie sauvage",
+  [Subclasses.CLOCKWORK]: "Sorcellerie mécanique",
+  [Subclasses.DRACONIC]: "Sorcellerie draconique",
+  [Subclasses.ABERRANT]: "Sorcellerie aberrante",
+  [Subclasses.WILD_MAGIC]: "Sorcellerie sauvage",
 
-  // Sorcier
-  [Subclasses.THE_ARCHFEY]: "L'Archifée",
-  [Subclasses.THE_GENIE]: "Le Génie",
-  [Subclasses.THE_GREAT_OLD_ONE]: "Le Grand Ancien",
-  [Subclasses.THE_FIEND]: "Le Fiélon",
-  [Subclasses.THE_HEXBLADE]: "La Lame maudite",
+  // Ocultiste
+  [Subclasses.THE_ARCHFEY]: "Protecteur Archifée",
+  [Subclasses.THE_GREAT_OLD_ONE]: "Protecteur Grand Ancien",
+  [Subclasses.THE_FIEND]: "Protecteur Fiélon",
+  [Subclasses.THE_CELESTIAL]: "Protecteur Céleste",
 
   // Mage
-  [Subclasses.SCHOOL_OF_ABJURATION]: "École d'abjuration",
-  [Subclasses.SCHOOL_OF_CONJURATION]: "École de conjuration",
-  [Subclasses.SCHOOL_OF_DIVINATION]: "École de divination",
-  [Subclasses.SCHOOL_OF_ENCHANTMENT]: "École d'enchantement",
-  [Subclasses.SCHOOL_OF_EVOCATION]: "École d'évocation",
-  [Subclasses.SCHOOL_OF_ILLUSION]: "École d'illusion",
-  [Subclasses.SCHOOL_OF_NECROMANCY]: "École de nécromancie",
-  [Subclasses.SCHOOL_OF_TRANSMUTATION]: "École de transmutation",
+  [Subclasses.SCHOOL_OF_ABJURATION]: "Abjurateur",
+  [Subclasses.SCHOOL_OF_DIVINATION]: "Devin",
+  [Subclasses.SCHOOL_OF_EVOCATION]: "Évocateur",
+  [Subclasses.SCHOOL_OF_ILLUSION]: "Illustioniste",
 };
 
 export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
@@ -187,39 +174,32 @@ export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
   [Classes.BARBARIAN]: [
     Subclasses.PATH_OF_THE_BERSERKER,
     Subclasses.PATH_OF_THE_WILD_HEART,
-    Subclasses.PATH_OF_THE_STORM_HERALD,
     Subclasses.PATH_OF_THE_ZEALOT,
+    Subclasses.PATH_OF_THE_WORLD_TREE,
   ],
   [Classes.BARD]: [
     Subclasses.COLLEGE_OF_VALOR,
     Subclasses.COLLEGE_OF_LORE,
-    Subclasses.COLLEGE_OF_SWORDS,
-    Subclasses.COLLEGE_OF_WHISPERS,
     Subclasses.COLLEGE_OF_GLAMOUR,
+    Subclasses.COLLEGE_OF_DANCE,
   ],
   [Classes.CLERIC]: [
     Subclasses.LIFE_DOMAIN,
     Subclasses.LIGHT_DOMAIN,
     Subclasses.WAR_DOMAIN,
     Subclasses.TRICKERY_DOMAIN,
-    Subclasses.KNOWLEDGE_DOMAIN,
-    Subclasses.NATURE_DOMAIN,
-    Subclasses.TEMPEST_DOMAIN,
-    Subclasses.DEATH_DOMAIN,
   ],
   [Classes.DRUID]: [
     Subclasses.CIRCLE_OF_THE_LAND,
     Subclasses.CIRCLE_OF_THE_MOON,
-    Subclasses.CIRCLE_OF_SPORES,
-    Subclasses.CIRCLE_OF_WILD_FIRE,
+    Subclasses.CIRCLE_OF_THE_SEA,
+    Subclasses.CIRCLE_OF_THE_STARS,
   ],
   [Classes.FIGHTER]: [
     Subclasses.CHAMPION,
     Subclasses.BATTLE_MASTER,
     Subclasses.ELDRITCH_KNIGHT,
-    Subclasses.ARCANE_ARCHER,
-    Subclasses.CAVALIER,
-    Subclasses.SAMURAI,
+    Subclasses.PSI_WARRIOR,
   ],
   [Classes.MONK]: [
     Subclasses.WAY_OF_THE_OPEN_HAND,
@@ -229,16 +209,15 @@ export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
   ],
   [Classes.PALADIN]: [
     Subclasses.OATH_OF_DEVOTION,
-    Subclasses.OATH_OF_THE_ANCESTORS,
+    Subclasses.OATH_OF_THE_ANCIENTS,
     Subclasses.OATH_OF_VENGEANCE,
     Subclasses.OATH_OF_GLORY,
-    Subclasses.OATH_OF_THE_CROWN,
   ],
   [Classes.RANGER]: [
     Subclasses.HUNTER,
     Subclasses.BEAST_MASTER,
     Subclasses.GLOOM_STALKER,
-    Subclasses.SWARMKEEPER,
+    Subclasses.FEY_WANDERER,
   ],
   [Classes.ROGUE]: [
     Subclasses.THIEF,
@@ -247,27 +226,22 @@ export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
     Subclasses.SOULKNIFE,
   ],
   [Classes.SORCERER]: [
-    Subclasses.DRACONIC_BLOODLINE,
+    Subclasses.DRACONIC,
     Subclasses.WILD_MAGIC,
-    Subclasses.STORM_SORCERY,
-    Subclasses.DIVINE_SOUL,
+    Subclasses.CLOCKWORK,
+    Subclasses.ABERRANT,
   ],
   [Classes.WARLOCK]: [
     Subclasses.THE_ARCHFEY,
     Subclasses.THE_FIEND,
     Subclasses.THE_GREAT_OLD_ONE,
-    Subclasses.THE_GENIE,
-    Subclasses.THE_HEXBLADE,
+    Subclasses.THE_CELESTIAL,
   ],
   [Classes.WIZARD]: [
     Subclasses.SCHOOL_OF_EVOCATION,
     Subclasses.SCHOOL_OF_ABJURATION,
     Subclasses.SCHOOL_OF_ILLUSION,
     Subclasses.SCHOOL_OF_DIVINATION,
-    Subclasses.SCHOOL_OF_NECROMANCY,
-    Subclasses.SCHOOL_OF_TRANSMUTATION,
-    Subclasses.SCHOOL_OF_CONJURATION,
-    Subclasses.SCHOOL_OF_ENCHANTMENT,
   ],
 };
 
@@ -327,17 +301,17 @@ export const BACKGROUND_MAP = {
   [Backgrounds.ENTERTAINER]: "Artiste",
   [Backgrounds.CHARLATAN]: "Charlatan",
   [Backgrounds.CRIMINAL]: "Criminel",
-  [Backgrounds.WAYFARER]: "Enfant des rues",
   [Backgrounds.HERMIT]: "Ermite",
   [Backgrounds.FARMER]: "Fermier",
   [Backgrounds.GUARD]: "Garde",
-  [Backgrounds.GUIDE]: "Sauvageon",
+  [Backgrounds.GUIDE]: "Guide",
   [Backgrounds.MERCHANT]: "Marchand",
   [Backgrounds.SAILOR]: "Marin",
   [Backgrounds.NOBLE]: "Noble",
   [Backgrounds.SAGE]: "Sage",
   [Backgrounds.SCRIBE]: "Scribe",
   [Backgrounds.SOLDIER]: "Soldat",
+  [Backgrounds.WAYFARER]: "Voyageur",
 };
 
 export const ALIGNMENT_MAP = {
