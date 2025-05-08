@@ -254,9 +254,7 @@ export const RACE_MAP = {
   [Races.HUMAN]: "Humain",
   [Races.DWARF]: "Nain",
   [Races.ORC]: "Orc",
-  [Races.DRAGONBORN]: "Sangdragon",
-  [Races.HALF_ELF]: "Semi-elfe",
-  [Races.HALF_ORC]: "Semi-orc",
+  [Races.DRAGONBORN]: "Drakéide",
   [Races.TABAXI]: "Tabaxi",
   [Races.TIEFLING]: "Tiefelin",
 };
@@ -269,8 +267,6 @@ export const SPEED_BY_RACE_MAP = {
   [Races.GNOME]: 25,
   [Races.GOLIATH]: 30,
   [Races.HALFLING]: 25,
-  [Races.HALF_ELF]: 30,
-  [Races.HALF_ORC]: 30,
   [Races.HUMAN]: 30,
   [Races.ORC]: 30,
   [Races.TIEFLING]: 30,
@@ -285,8 +281,6 @@ export const SIZE_BY_RACE_MAP = {
   [Races.GNOME]: "P", // Petit
   [Races.GOLIATH]: "M", // Moyen (grand gabarit mais reste "M")
   [Races.HALFLING]: "P", // Petit
-  [Races.HALF_ELF]: "M", // Moyen
-  [Races.HALF_ORC]: "M", // Moyen
   [Races.HUMAN]: "M", // Moyen
   [Races.ORC]: "M", // Moyen
   [Races.TIEFLING]: "M", // Moyen

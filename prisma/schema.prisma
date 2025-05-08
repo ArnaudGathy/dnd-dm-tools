@@ -151,8 +151,6 @@ enum Races {
   GNOME
   GOLIATH
   HALFLING
-  HALF_ELF
-  HALF_ORC
   HUMAN
   ORC
   TABAXI
