@@ -16,7 +16,10 @@ import {
   convertFeetDistanceIntoSquares,
   shortenAbilityName,
 } from "@/utils/utils";
-import { ABILITY_NAME_MAP_TO_FR } from "@/constants/maps";
+import {
+  ABILITY_NAME_MAP_TO_FR,
+  SPELLCASTING_MODIFIER_MAP,
+} from "@/constants/maps";
 import {
   getInitiativeModifier,
   getMovementSpeed,
@@ -68,7 +71,7 @@ export default function Combat({ character }: { character: CharacterById }) {
   const movementSpeedDetails = getMovementSpeed(character);
   const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
   const martialClassDC = getMartialClassDC(character);
-  const hasSpells = character.spellsOnCharacters.length > 0;
+  const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
 
   return (
     <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4">
