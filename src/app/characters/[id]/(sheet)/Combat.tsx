@@ -401,7 +401,7 @@ export default function Combat({ character }: { character: CharacterById }) {
               <li key={capacity.id} className="leading-none">
                 <span className="mr-2 text-base">{capacity.name}</span>
                 {capacity.description && (
-                  <span className="text-sm leading-4 text-muted-foreground">
+                  <span className="whitespace-pre-line text-sm leading-4 text-muted-foreground">
                     {capacity.description}
                   </span>
                 )}
