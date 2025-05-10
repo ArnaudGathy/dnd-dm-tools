@@ -26,7 +26,7 @@ export const optionalNumberString = z
   .refine((val) => val === "" || /^\d+$/.test(val), {
     message: "Chiffre",
   })
-  .refine((val) => parseInt(val, 10) > 0, {
+  .refine((val) => val === "" || parseInt(val, 10) > 0, {
     message: "Doit être > 0",
   })
   .optional();
