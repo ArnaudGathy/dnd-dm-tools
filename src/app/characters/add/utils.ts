@@ -26,6 +26,9 @@ export const optionalNumberString = z
   .refine((val) => val === "" || /^\d+$/.test(val), {
     message: "Chiffre",
   })
+  .refine((val) => parseInt(val, 10) > 0, {
+    message: "Doit être > 0",
+  })
   .optional();
 export function minMax(min: number, max?: number) {
   return formRequiredString.regex(/^\d+$/, "Chiffre").refine(
