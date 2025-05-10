@@ -140,7 +140,12 @@ export const signUpFormSchema = z.object({
         type: z.nativeEnum(WeaponType),
         isProficient: z.boolean(),
         abilityModifier: z.nativeEnum(Abilities),
-        attackBonus: optionalNumberString,
+        attackBonus: z
+          .string()
+          .refine((val) => val === "" || /^\d+$/.test(val), {
+            message: "Chiffre",
+          })
+          .optional(),
         reach: optionalNumberString,
         range: optionalNumberString,
         longRange: optionalNumberString,

@@ -182,7 +182,9 @@ export const getInitiativeModifier = (
   const dexterityModifier = getModifier(character.dexterity);
 
   const hasAlertFeat = !!character.capacities.find(
-    ({ name }) => name === "Vigilant",
+    ({ name }) =>
+      name.toLowerCase().includes("vigilant") ||
+      name.toLowerCase().includes("alert"),
   );
   const alertModifier = hasAlertFeat
     ? PROFICIENCY_BONUS_BY_LEVEL[character.level]
