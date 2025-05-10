@@ -20,7 +20,7 @@ export const StatCell = ({
   const width = `min-w-[${spacing}]`;
   return (
     <div
-      className={cn("flex md:flex-row", {
+      className={cn("flex items-center md:flex-row md:items-start", {
         "flex-col": !isInline,
       })}
     >

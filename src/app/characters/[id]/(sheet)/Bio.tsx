@@ -61,7 +61,7 @@ export default function Bio({ character }: { character: CharacterById }) {
             className="absolute right-4 top-4"
             asChild
           >
-            <Button variant="outline">
+            <Button>
               <Edit />
             </Button>
           </PopoverComponent>

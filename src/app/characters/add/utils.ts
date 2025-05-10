@@ -21,7 +21,7 @@ import { CharacterById } from "@/lib/utils";
 import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
 
 export const formRequiredString = z.string().min(1, "Requis");
-export const optionalNumberString = z
+export const optionalNumberStringNotZero = z
   .string()
   .refine((val) => val === "" || /^\d+$/.test(val), {
     message: "Chiffre",
@@ -122,7 +122,7 @@ export const signUpFormSchema = z.object({
         name: formRequiredString,
         AC: minMax(2, 20),
         extraEffects: z.string().optional(),
-        strengthRequirement: optionalNumberString,
+        strengthRequirement: optionalNumberStringNotZero,
         isEquipped: z.boolean(),
         isProficient: z.boolean(),
         stealthDisadvantage: z.boolean(),
@@ -146,11 +146,11 @@ export const signUpFormSchema = z.object({
             message: "Chiffre",
           })
           .optional(),
-        reach: optionalNumberString,
-        range: optionalNumberString,
-        longRange: optionalNumberString,
+        reach: optionalNumberStringNotZero,
+        range: optionalNumberStringNotZero,
+        longRange: optionalNumberStringNotZero,
         ammunitionType: z.nativeEnum(AmmunitionType).optional(),
-        ammunitionCount: optionalNumberString,
+        ammunitionCount: optionalNumberStringNotZero,
         extraEffects: z.string().optional(),
         damages: z
           .array(
@@ -159,7 +159,7 @@ export const signUpFormSchema = z.object({
               type: z.nativeEnum(WeaponDamageType),
               dice: z.nativeEnum(WeaponDamageDices),
               numberOfDices: minMax(1),
-              flatBonus: optionalNumberString,
+              flatBonus: optionalNumberStringNotZero,
             }),
           )
           .nonempty(),
