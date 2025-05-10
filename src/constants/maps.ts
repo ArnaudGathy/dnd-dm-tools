@@ -142,7 +142,7 @@ export const SUBCLASS_MAP = {
   // Roublard
   [Subclasses.ARCANE_TRICKSTER]: "Arnaqueur arcanique",
   [Subclasses.ASSASSIN]: "Assassin",
-  [Subclasses.SOULKNIFE]: "Âme acéré",
+  [Subclasses.SOULKNIFE]: "Âme acérée",
   [Subclasses.THIEF]: "Voleur",
 
   // Ensorceleur
