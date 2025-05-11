@@ -39,12 +39,16 @@ export default function AddCharacter({
     resolver: zodResolver(signUpFormSchema),
     defaultValues: isEditMode ? dataToForm(character) : signupFormDefaultValues,
   });
+  const hasFormErrors = Object.keys(form.formState.errors).length > 0;
 
   const onSubmit = async (data: CharacterCreationForm) => {
     setIsLoading(true);
     try {
       // eslint-disable-next-line no-console
-      console.log("creation data", data);
+      console.log(
+        "Données de création à copier (clique droit : \"copier l'objet",
+        data,
+      );
 
       if (!isEditMode && !!owner) {
         await createCharacter(data, owner);
@@ -85,19 +89,45 @@ export default function AddCharacter({
             </div>
           </div>
 
-          {error && (
-            <Alert>
-              <AlertCircle className="h-6 w-6 stroke-primary" />
-              <AlertTitle className="text-primary">
-                Erreur lors de la création du personnage
-              </AlertTitle>
-              Essayer de corriger l&apos;erreur d&apos;encodage dans le
-              formulaire ou sinon transmettre ce message à Arnaud
-              <AlertDescription className="mt-4">
-                <pre>{error}</pre>
-              </AlertDescription>
-            </Alert>
-          )}
+          {error ||
+            (Object.keys(form.formState.errors).length > 0 && (
+              <Alert>
+                <AlertCircle className="h-6 w-6 stroke-primary" />
+                <AlertTitle className="text-primary">
+                  {error
+                    ? "Erreur backend"
+                    : "Erreur de validation du formulaire"}
+                </AlertTitle>
+                {hasFormErrors && (
+                  <AlertDescription>
+                    <p>
+                      Il y a une erreur de validation du formulaire, il faut la
+                      corriger.
+                    </p>
+                    <p>Chercher un champ marqué en rouge</p>
+                  </AlertDescription>
+                )}
+                {error && (
+                  <AlertDescription>
+                    <p>, il faut contacter Arnaud 🙈</p>
+                    <p>
+                      Ne quittes pas encore la page, envoie moi aussi les
+                      informations de création de personnage pour ne pas les
+                      perdre.
+                    </p>
+                    <ul className="list-inside list-disc pl-4">
+                      <li>{'Clique droit sur la page, option "Inspecter"'}</li>
+                      <li>{'Onglet "Console"'}</li>
+                      <li>
+                        {
+                          'Sur la ligne "données de création à copier", faire clique droit "copier l\'objet"'
+                        }
+                      </li>
+                    </ul>
+                  </AlertDescription>
+                )}
+              </Alert>
+            ))}
 
           <Button type="submit" size="lg" disabled={isLoading}>
             {isEditMode ? "Modifier le personnage" : "Créer le personnage"}
