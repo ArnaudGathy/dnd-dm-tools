@@ -418,7 +418,7 @@ enum AmmunitionType {
 
 model WeaponDamage {
   id            Int               @id @default(autoincrement())
-  weapon        Weapon            @relation(fields: [weaponId], references: [id])
+  weapon        Weapon            @relation(fields: [weaponId], references: [id], onDelete: Cascade)
   weaponId      Int
   isBaseDamage  Boolean           @default(false)
   dice          WeaponDamageDices

@@ -329,11 +329,11 @@ export const updateCharacter = async (
     character.weapons.length,
     validation.data.weapons.length,
   );
+
   for (let i = 0; i < maxWeapons; i++) {
     const existingWeapon = character.weapons[i];
     const incoming = validation.data.weapons[i];
     if (existingWeapon && incoming) {
-      // update weapon row
       const { damages, ...weaponData } = incoming;
       weaponOps.push(
         prisma.weapon.update({
@@ -366,21 +366,21 @@ export const updateCharacter = async (
       );
       for (let j = 0; j < maxDamages; j++) {
         const existingDmg = existingWeapon.damages[j];
-        const incDmg = damages[j];
-        if (existingDmg && incDmg) {
+        const incomingDamages = damages[j];
+        if (existingDmg && incomingDamages) {
           weaponOps.push(
             prisma.weaponDamage.update({
               where: { id: existingDmg.id },
-              data: incDmg,
+              data: incomingDamages,
             }),
           );
-        } else if (!existingDmg && incDmg) {
+        } else if (!existingDmg && incomingDamages) {
           weaponOps.push(
             prisma.weaponDamage.create({
-              data: { ...incDmg, weaponId: existingWeapon.id },
+              data: { ...incomingDamages, weaponId: existingWeapon.id },
             }),
           );
-        } else if (existingDmg && !incDmg) {
+        } else if (existingDmg && !incomingDamages) {
           weaponOps.push(
             prisma.weaponDamage.delete({ where: { id: existingDmg.id } }),
           );
@@ -415,11 +415,6 @@ export const updateCharacter = async (
         );
       }
     } else if (existingWeapon && !incoming) {
-      weaponOps.push(
-        prisma.weaponDamage.deleteMany({
-          where: { weaponId: existingWeapon.id },
-        }),
-      );
       weaponOps.push(
         prisma.weapon.delete({ where: { id: existingWeapon.id } }),
       );

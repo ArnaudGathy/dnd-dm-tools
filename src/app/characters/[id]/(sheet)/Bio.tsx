@@ -76,24 +76,30 @@ export default function Bio({ character }: { character: CharacterById }) {
           <span className="mb-2 self-center text-2xl font-bold">
             Traits de personnalité
           </span>
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-1 whitespace-pre-line">
             {character.personalityTraits}
           </div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Idéaux</span>
-          <div className="flex flex-col gap-1">{character.ideals}</div>
+          <div className="flex flex-col gap-1 whitespace-pre-line">
+            {character.ideals}
+          </div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Liens</span>
-          <div className="flex flex-col gap-1">{character.bonds}</div>
+          <div className="flex flex-col gap-1 whitespace-pre-line">
+            {character.bonds}
+          </div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Défauts</span>
-          <div className="flex flex-col gap-1">{character.flaws}</div>
+          <div className="flex flex-col gap-1 whitespace-pre-line">
+            {character.flaws}
+          </div>
         </SheetCard>
       </div>
 
@@ -116,7 +122,9 @@ export default function Bio({ character }: { character: CharacterById }) {
                   isInline
                 />
               </div>
-              <div className="mt-2 flex flex-col gap-1">{character.lore}</div>
+              <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
+                {character.lore}
+              </div>
             </SheetCard>
           )}
           {hasAllies && (
@@ -124,7 +132,7 @@ export default function Bio({ character }: { character: CharacterById }) {
               <span className="mb-2 self-center text-2xl font-bold">
                 Alliés et organisations
               </span>
-              <span>{character.allies}</span>
+              <span className="whitespace-pre-line">{character.allies}</span>
             </SheetCard>
           )}
         </div>
