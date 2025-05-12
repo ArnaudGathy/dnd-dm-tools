@@ -10,7 +10,7 @@ import { parse2024CreaturesFromAideDD } from "@/lib/aideDDParse2024Creature";
 
 const getEnSpellURL = "https://www.aidedd.org/dnd/sorts.php?vo=";
 const getFrSpellURL = "https://www.aidedd.org/dnd/sorts.php?vf=";
-const getEn2024SpellURL = "https://www.aidedd.org/spell";
+const getEn2024SpellURL = "https://www.aidedd.org/public/spell";
 const get2024CreatureURL = "https://www.aidedd.org/public/monster";
 
 const getFrSpellIdFromEnName = async (spellName: string) => {
@@ -38,7 +38,7 @@ export const getSpellDataFromFRName = async (spellName: string) => {
 };
 
 export const getSpellDataFromENName2024 = async (spellName: string) => {
-  const response = await axios.get(`${getEn2024SpellURL}${spellName}`);
+  const response = await axios.get(`${getEn2024SpellURL}/${spellName}`);
   return getBaseSpellData2024(response.data, spellName);
 };
 

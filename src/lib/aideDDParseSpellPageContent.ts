@@ -11,7 +11,7 @@ export const getBaseSpellData2024 = (html: string, spellName: string) => {
 
   const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
   const level = levelAndSchoolBlock.split("-")[0].trim().match(/\d+/)?.[0];
-  const isRitual = levelAndSchoolBlock.includes("(rituel");
+  const isRitual = levelAndSchoolBlock.includes("(ritual");
 
   if (!level) {
     return null;
