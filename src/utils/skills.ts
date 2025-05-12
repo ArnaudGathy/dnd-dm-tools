@@ -302,13 +302,20 @@ const getMartialClassDCModifier = (character: Character) => {
     const name = ABILITY_NAME_MAP_TO_FR[Abilities.WISDOM];
     return { modifier, name };
   }
+
+  if (character.className === Classes.ROGUE) {
+    const modifier = getModifier(character.dexterity);
+    const name = ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY];
+    return { modifier, name };
+  }
   throw new Error("Invalid class to compute martial DC");
 };
 
 export const getMartialClassDC = (character: Character) => {
   if (
     character.className === Classes.FIGHTER ||
-    character.className === Classes.MONK
+    character.className === Classes.MONK ||
+    character.className === Classes.ROGUE
   ) {
     const base = 8;
     const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];

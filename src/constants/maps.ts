@@ -265,7 +265,7 @@ export const SPEED_BY_RACE_MAP = {
   [Races.DWARF]: 25,
   [Races.ELF]: 30,
   [Races.GNOME]: 25,
-  [Races.GOLIATH]: 30,
+  [Races.GOLIATH]: 35,
   [Races.HALFLING]: 25,
   [Races.HUMAN]: 30,
   [Races.ORC]: 30,

@@ -54,7 +54,6 @@ export default function FormBio({
             formFieldName="height"
             label="Taille"
             required
-            disabled={isEditMode}
           />
           <FormFieldInput
             formInstance={form}

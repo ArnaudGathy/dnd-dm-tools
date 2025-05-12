@@ -159,7 +159,12 @@ export const signUpFormSchema = z.object({
               type: z.nativeEnum(WeaponDamageType),
               dice: z.nativeEnum(WeaponDamageDices),
               numberOfDices: minMax(1),
-              flatBonus: optionalNumberStringNotZero,
+              flatBonus: z
+                .string()
+                .refine((val) => val === "" || /^\d+$/.test(val), {
+                  message: "Chiffre",
+                })
+                .optional(),
             }),
           )
           .nonempty(),
