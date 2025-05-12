@@ -22,12 +22,12 @@ export type Participant = ParticipantToAdd & {
 };
 
 type EnemyObject = {
-  id: number;
+  id: number | string;
   color?: string;
   variant?: string;
   shouldHideInInitiativeTracker?: boolean;
 };
-export type EncounterEnemy = number | EnemyObject;
+export type EncounterEnemy = number | string | EnemyObject;
 
 export type Encounter = {
   id: number;
@@ -85,7 +85,6 @@ export type Action = {
   type?: string;
   modifier?: string;
   reach?: string;
-  target?: string;
   hit?: string;
 };
 
@@ -94,6 +93,7 @@ export type Creature = {
   id: number;
   type: string;
   size: string;
+  challengeRating: number;
   alignment: string;
   armorClass: number | string;
   hitPoints: string;
@@ -104,34 +104,33 @@ export type Creature = {
     climb?: string;
   };
   abilities: Record<AbilityNameType, number>;
+  savingThrows?: Partial<Record<AbilityNameType, string>>;
   skills?: Partial<Record<Skills, string>>;
   immunities?: string[];
   vulnerabilities?: string[];
   resistances?: string[];
-  savingThrows?: Partial<Record<AbilityNameType, string>>;
+  languages?: string[];
   senses: {
     blindSight?: string;
     darkvision?: string;
     passivePerception: number;
     trueSight?: string;
   };
-  languages?: string[];
-  challengeRating: number;
+  traits?: Array<{
+    name: string;
+    description: string;
+  }>;
   actions: Array<Action>;
+  reactions?: Array<Action>;
   legendaryActions?: Array<Action>;
-  legendaryActionsSlots?: number;
+  legendaryActionsSlots?: string;
   lairActions?: Array<Action>;
   bonusActions?: Array<Action>;
-  reactions?: Array<Action>;
   spellStats?: {
     attackMod: number;
     spellDC: number;
     slots?: Partial<Record<string, number>>;
   };
   spells?: Array<{ id: string; summary?: string; version?: string }>;
-  traits?: Array<{
-    name: string;
-    description: string;
-  }>;
   colors?: Array<string>;
 };

@@ -15,7 +15,7 @@ import {
   getChallengeRatingAsFraction,
   translateSkill,
 } from "@/utils/utils";
-import { entries } from "remeda";
+import { entries, isDefined } from "remeda";
 import Link from "next/link";
 import { StatCell } from "@/app/creatures/StatCell";
 import { ActionBlock } from "@/app/creatures/ActionBlock";
@@ -46,7 +46,14 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           {creature.type} de taille{" "}
           <span
             className={clsx("text-base", {
-              "text-primary": !["TP", "P", "M"].includes(creature.size),
+              "text-primary": ![
+                "TP",
+                "P",
+                "M",
+                "Medium",
+                "Small",
+                "Tiny",
+              ].includes(creature.size),
             })}
           >
             {creature.size}
@@ -122,7 +129,10 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               <StatCell
                 name="Jets de sauvegarde"
                 stat={entries(creature.savingThrows)
-                  .map((t) => `${shortenAbilityName(t[0])} ${t[1]}`)
+                  .map((t) =>
+                    t[1] ? `${shortenAbilityName(t[0])} ${t[1]}` : undefined,
+                  )
+                  .filter(isDefined)
                   .join(", ")}
                 highlightClassName="text-pink-400"
               />

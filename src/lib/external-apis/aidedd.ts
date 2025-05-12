@@ -6,13 +6,15 @@ import {
   parseSpellFromAideDD2024,
 } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
+import { parse2024CreaturesFromAideDD } from "@/lib/aideDDParse2024Creature";
 
-const getEnSpell = "https://www.aidedd.org/dnd/sorts.php?vo=";
-const getFrSpell = "https://www.aidedd.org/dnd/sorts.php?vf=";
-const getEn2024Spell = "https://www.aidedd.org/spell/";
+const getEnSpellURL = "https://www.aidedd.org/dnd/sorts.php?vo=";
+const getFrSpellURL = "https://www.aidedd.org/dnd/sorts.php?vf=";
+const getEn2024SpellURL = "https://www.aidedd.org/spell";
+const get2024CreatureURL = "https://www.aidedd.org/public/monster";
 
 const getFrSpellIdFromEnName = async (spellName: string) => {
-  const response = await axios.get(`${getEnSpell}${spellName}`);
+  const response = await axios.get(`${getEnSpellURL}${spellName}`);
   const $ = cheerio.load(response.data);
   const mainDataBlock = $(".col1");
   const linkHref = mainDataBlock.find(".trad > a").attr("href");
@@ -21,7 +23,7 @@ const getFrSpellIdFromEnName = async (spellName: string) => {
 
 export const getFrSpellPageFromAideDD = async (spellNameEn: string) => {
   const frenchSpellId = await getFrSpellIdFromEnName(spellNameEn);
-  const frSpell = await axios.get(`${getFrSpell}${frenchSpellId}`);
+  const frSpell = await axios.get(`${getFrSpellURL}${frenchSpellId}`);
   return parseSpellFromAideDD({ html: frSpell.data, spellName: spellNameEn });
 };
 
@@ -31,16 +33,21 @@ export const getSpellDataFromENName = async (spellName: string) => {
 };
 
 export const getSpellDataFromFRName = async (spellName: string) => {
-  const response = await axios.get(`${getFrSpell}${spellName}`);
+  const response = await axios.get(`${getFrSpellURL}${spellName}`);
   return getBaseSpellData(response.data);
 };
 
 export const getSpellDataFromENName2024 = async (spellName: string) => {
-  const response = await axios.get(`${getEn2024Spell}${spellName}`);
+  const response = await axios.get(`${getEn2024SpellURL}${spellName}`);
   return getBaseSpellData2024(response.data, spellName);
 };
 
 export const getSpellPageFromAideDD2024 = async (spellName: string) => {
-  const response = await axios.get(`${getEn2024Spell}${spellName}`);
+  const response = await axios.get(`${getEn2024SpellURL}/${spellName}`);
   return parseSpellFromAideDD2024({ html: response.data, spellName });
+};
+
+export const get2024Creature = async (creatureName: string) => {
+  const response = await axios.get(`${get2024CreatureURL}/${creatureName}`);
+  return parse2024CreaturesFromAideDD(response.data);
 };

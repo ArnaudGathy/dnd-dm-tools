@@ -16,8 +16,6 @@ export const ActionBlock = ({ action }: { action: Action }) => {
 
   const isUnCommonReach =
     action.reach && getDistanceInSquares(action.reach) > 1;
-  const isUncommonTarget =
-    action.target && parseInt(action.target.match(/\d/)?.[0] ?? "", 10) > 1;
   const hitDice =
     action.hit && (action.hit.match(/(?<=\().*?(?=\))/)?.[0] ?? "");
   const hitType =
@@ -32,11 +30,6 @@ export const ActionBlock = ({ action }: { action: Action }) => {
       {action.reach && (
         <span className={clsx({ "text-primary": isUnCommonReach })}>
           {replaceMetersWithSquares(action.reach)}
-        </span>
-      )}
-      {action.target && (
-        <span className={clsx({ "text-primary": isUncommonTarget })}>
-          {action.target}
         </span>
       )}
       {action.hit && (

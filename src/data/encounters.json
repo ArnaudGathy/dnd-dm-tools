@@ -1179,7 +1179,7 @@
       "Peut être vide sur repérés en C6",
       "Si le chef meurt, les gobelins fuient en évitant C2 à cause du piège."
     ],
-    "youtubeId": "0_k5o3PS3wE"
+    "youtubeId": "NYtPB459e6Y"
   },
   {
     "name": "Hall entenebré",
@@ -1292,5 +1292,22 @@
       "Grol : tout le monde roll 1d100 dans la table de loots"
     ],
     "youtubeId": "qkeiRuaGM28"
+  },
+  {
+    "name": "Quartier des entrepôts - Ankylo",
+    "id": 61,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Port Nyanzaru",
+      "mapMarker": "P1"
+    },
+    "ennemies": {
+      "1": ["ankylosaurus"]
+    },
+    "informations": [
+      "Ajouter Rokah au combat.",
+      "Rokah endort la créature avec sa sarbacane quand ça tourne au vinaigre"
+    ],
+    "youtubeId": "fqW--C1hxl8"
   }
 ]
