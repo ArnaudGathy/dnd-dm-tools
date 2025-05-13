@@ -3,6 +3,7 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
 import {
   Condition,
+  Creature,
   Encounter,
   Participant,
   ParticipantToAdd,
@@ -102,7 +103,15 @@ const getHPBarColor = (hpPercent: number) => {
   return "bg-green-700";
 };
 
-export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
+export const CombatModule = ({
+  encounter,
+  creatures,
+  otherZonesCreatures,
+}: {
+  encounter: Encounter;
+  creatures: Creature[];
+  otherZonesCreatures: Record<string, Creature[]>;
+}) => {
   const router = useRouter();
   const pathName = usePathname();
 
@@ -119,8 +128,8 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
     filter(
       [
         ...getParticipantFromEncounter({
+          creatures,
           encounter,
-          partyLevel: "1",
         }),
         encounter.environmentTurnInitiative
           ? {
@@ -159,14 +168,15 @@ export const CombatModule = ({ encounter }: { encounter: Encounter }) => {
       mapMarker,
       name: encounter?.location.name,
     });
+    const anotherEncounterCreatures = otherZonesCreatures[mapMarker];
 
-    if (!!anotherEncounter) {
+    if (!!anotherEncounterCreatures && !!anotherEncounter) {
       setAnotherEncountersAdded((current) => [...current, mapMarker]);
       setListOfParticipants((current) => {
         return [
           ...getParticipantFromEncounter({
+            creatures: anotherEncounterCreatures,
             encounter: anotherEncounter,
-            partyLevel: "1",
           }),
           ...current,
         ].toSorted(sortParticipant);

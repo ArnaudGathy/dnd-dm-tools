@@ -7,6 +7,7 @@ import {
 } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
 import { parse2024CreaturesFromAideDD } from "@/lib/aideDDParse2024Creature";
+import { Creature } from "@/types/types";
 
 const getEnSpellURL = "https://www.aidedd.org/dnd/sorts.php?vo=";
 const getFrSpellURL = "https://www.aidedd.org/dnd/sorts.php?vf=";
@@ -47,7 +48,9 @@ export const getSpellPageFromAideDD2024 = async (spellName: string) => {
   return parseSpellFromAideDD2024({ html: response.data, spellName });
 };
 
-export const get2024Creature = async (creatureName: string) => {
+export const get2024Creature = async (
+  creatureName: string,
+): Promise<Creature> => {
   const response = await axios.get(`${get2024CreatureURL}/${creatureName}`);
   return parse2024CreaturesFromAideDD(response.data);
 };

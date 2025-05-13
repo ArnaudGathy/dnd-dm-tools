@@ -1302,12 +1302,43 @@
       "mapMarker": "P1"
     },
     "ennemies": {
-      "1": ["ankylosaurus"]
+      "1": [
+        {
+          "id": "ankylosaurus",
+          "color": "orange"
+        }
+      ]
     },
     "informations": [
       "Ajouter Rokah au combat.",
       "Rokah endort la créature avec sa sarbacane quand ça tourne au vinaigre"
     ],
     "youtubeId": "fqW--C1hxl8"
+  },
+  {
+    "name": "Cave - Gorge de Malar",
+    "id": 62,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Port Nyanzaru",
+      "mapMarker": "P2"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "zombie",
+          "color": "#aad09a"
+        },
+        {
+          "id": "zombie",
+          "color": "#57abbb"
+        },
+        {
+          "id": "zombie",
+          "color": "#d3bf69"
+        }
+      ]
+    },
+    "youtubeId": "2GX9lVHfnxs"
   }
 ]

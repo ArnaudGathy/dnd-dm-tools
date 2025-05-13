@@ -11,9 +11,19 @@ import {
 import creatures from "@/data/creatures.json";
 import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
-import { entries, groupBy, isPlainObject, prop, reduce } from "remeda";
+import {
+  entries,
+  groupBy,
+  isNumber,
+  isPlainObject,
+  isString,
+  map,
+  prop,
+  reduce,
+} from "remeda";
 import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
+import { get2024Creature } from "@/lib/external-apis/aidedd";
 
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
@@ -289,21 +299,37 @@ const getCreatureColor = (
     : commonCreatureColors[index];
 };
 
-export const getParticipantFromEncounter = ({
-  encounter,
-  partyLevel,
-}: {
-  encounter: Encounter;
-  partyLevel: string;
-}) => {
-  const ennemiesIds = getEnnemiesFromEncounter({ encounter, partyLevel });
+export const getCreatures = async (encounter: Encounter) => {
+  const enemiesIds = map(
+    getEnnemiesFromEncounter({ encounter, partyLevel: "1" }),
+    (enemy) => getIdFromEnemy(enemy),
+  );
 
+  // 2014 ennemies have number ids
+  if (enemiesIds.every(isNumber)) {
+    return getCreaturesFromIds(enemiesIds) ?? [];
+  }
+
+  // 2024 ennemies have string ids (creature name)
+  if (enemiesIds.every(isString)) {
+    return Promise.all(enemiesIds.map((name) => get2024Creature(name)));
+  }
+
+  return [];
+};
+
+export const getParticipantFromEncounter = ({
+  creatures,
+  encounter,
+}: {
+  creatures: Creature[];
+  encounter: Encounter;
+}) => {
   const currentColorIndex: { [key: number]: number } = {};
-  return ennemiesIds.reduce((acc: Participant[], enemy, index) => {
-    const enemyId = getIdFromEnemy(enemy);
-    const creature = typedCreatures.find((creature) => creature.id === enemyId);
+  return creatures.reduce((acc: Participant[], creature, index) => {
+    const enemyData = encounter?.ennemies?.["1"]?.[index];
     const shouldSkip =
-      isEnemyObject(enemy) && enemy.shouldHideInInitiativeTracker;
+      isEnemyObject(enemyData) && enemyData.shouldHideInInitiativeTracker;
 
     if (creature && !shouldSkip) {
       const hp = getHPAsString(creature);
@@ -313,15 +339,15 @@ export const getParticipantFromEncounter = ({
         {
           id: creature.id,
           name:
-            isEnemyObject(enemy) && enemy.variant
-              ? `${creature.name} (${enemy.variant})`
+            isEnemyObject(enemyData) && enemyData.variant
+              ? `${creature.name} (${enemyData.variant})`
               : creature.name,
           init: getInitiative(creature),
           hp,
           currentHp: hp,
           color:
-            isEnemyObject(enemy) && enemy.color
-              ? enemy.color
+            isEnemyObject(enemyData) && enemyData.color
+              ? enemyData.color
               : getCreatureColor(creature, index, currentColorIndex),
           uuid: uuidv4(),
           isNPC: true,
