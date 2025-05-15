@@ -6,6 +6,7 @@ import { getValidCharacter } from "@/lib/utils";
 import AddSpellForm from "@/app/characters/[id]/spells/AddSpellForm";
 import { Separator } from "@/components/ui/separator";
 import EditModeButton from "@/app/characters/[id]/spells/EditModeButton";
+import { getSpellsToPreparePerDay } from "@/utils/skills";
 
 const defaultFilter = SPELLS_GROUP_BY.LEVEL;
 
@@ -23,6 +24,8 @@ export default async function Spells({
 
   const character = await getValidCharacter(id);
   const intCharacterId = parseInt(id, 10);
+
+  const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
 
   return (
     <div className="space-y-4">
@@ -44,6 +47,22 @@ export default async function Spells({
           defaultSearch={defaultFilter}
           features={["search", "cards", "level", "alphabetical", "favorites"]}
         />
+        {!!spellsToPreparePerDay && (
+          <div className="flex flex-col">
+            <span>
+              Total de sorts à préparer :{" "}
+              <span className="font-bold text-sky-500">
+                {spellsToPreparePerDay.total}
+              </span>
+            </span>
+            <span>
+              Sorts à préparer chaque jour :{" "}
+              <span className="font-bold text-sky-500">
+                {spellsToPreparePerDay.dailyAmount}
+              </span>
+            </span>
+          </div>
+        )}
       </div>
 
       <Separator />

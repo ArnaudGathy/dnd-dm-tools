@@ -627,7 +627,7 @@ export const CLASS_SPELLS_PREPARED_PROGRESSION_MAP: Record<Classes, number[]> =
 
 const SPELL_PREPARATION = {
   when: "Long repos",
-  dailyAmount: "Autant que nécessaire",
+  dailyAmount: "∞",
 };
 const SPELL_PREPARATION_PALADIN_RANGER = {
   when: "Long repos",
