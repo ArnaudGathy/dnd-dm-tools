@@ -16,6 +16,8 @@ import {
   ABILITIES_MAP_TO_NAME,
   ABILITY_NAME_MAP,
   ABILITY_NAME_MAP_TO_FR,
+  CLASS_SPELLS_PREPARED_PROGRESSION_MAP,
+  CLASS_SPELLS_WHEN_TO_PREPARE_MAP,
   PROFICIENCY_BONUS_BY_LEVEL,
   SKILL_ABILITY_MAP,
   SPEED_BY_RACE_MAP,
@@ -264,27 +266,15 @@ export const getWeaponDamage = (
 };
 
 export const getSpellsToPreparePerDay = (character: Character) => {
-  const spellCastingStat = SPELLCASTING_MODIFIER_MAP[character.className];
+  const spellsByLevel =
+    CLASS_SPELLS_PREPARED_PROGRESSION_MAP[character.className];
+  const preparationInfo = CLASS_SPELLS_WHEN_TO_PREPARE_MAP[character.className];
 
-  if (!!spellCastingStat) {
-    const spellCastingAbilityModifier = getModifier(
-      character[spellCastingStat],
-    );
-
-    if (character.className === Classes.PALADIN && spellCastingStat) {
-      return spellCastingAbilityModifier + character.level;
-    }
-
-    if (
-      character.className === Classes.CLERIC ||
-      character.className === Classes.WIZARD ||
-      character.className === Classes.DRUID
-    ) {
-      return spellCastingAbilityModifier + Math.floor(character.level);
-    }
+  if (spellsByLevel.length === 0 || preparationInfo === null) {
+    return null;
   }
 
-  return null;
+  return { total: spellsByLevel[character.level - 1], ...preparationInfo };
 };
 
 const getMartialClassDCModifier = (character: Character) => {

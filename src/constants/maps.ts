@@ -597,3 +597,57 @@ export const CLASS_SPELL_PROGRESSION_MAP: Record<
   [Classes.MONK]: [],
   [Classes.ROGUE]: [],
 };
+
+export const PREPARED_SPELLS_PROGRESSION_WIZARD: number[] = [
+  4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 16, 17, 18, 19, 21, 22, 23, 24, 25,
+];
+export const PREPARED_SPELLS_PROGRESSION: number[] = [
+  4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 16, 17, 17, 18, 18, 19, 20, 21, 22,
+];
+export const PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER: number[] = [
+  2, 3, 4, 5, 6, 6, 7, 7, 9, 9, 10, 10, 11, 11, 12, 12, 14, 14, 15, 15,
+];
+
+export const CLASS_SPELLS_PREPARED_PROGRESSION_MAP: Record<Classes, number[]> =
+  {
+    [Classes.BARD]: [], // Known spells
+    [Classes.SORCERER]: [], // Known spells
+    [Classes.WARLOCK]: [], // Known spells
+    [Classes.CLERIC]: PREPARED_SPELLS_PROGRESSION,
+    [Classes.DRUID]: PREPARED_SPELLS_PROGRESSION,
+    [Classes.WIZARD]: PREPARED_SPELLS_PROGRESSION_WIZARD,
+    [Classes.ARTIFICER]: PREPARED_SPELLS_PROGRESSION,
+    [Classes.PALADIN]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
+    [Classes.RANGER]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
+    [Classes.FIGHTER]: [], // No spells
+    [Classes.ROGUE]: [], // No spells
+    [Classes.BARBARIAN]: [], // No spells
+    [Classes.MONK]: [], // No spells
+  };
+
+const SPELL_PREPARATION = {
+  when: "Long repos",
+  dailyAmount: "Autant que nécessaire",
+};
+const SPELL_PREPARATION_PALADIN_RANGER = {
+  when: "Long repos",
+  dailyAmount: "1 seul",
+};
+export const CLASS_SPELLS_WHEN_TO_PREPARE_MAP: Record<
+  Classes,
+  { when: string; dailyAmount: string } | null
+> = {
+  [Classes.BARD]: null,
+  [Classes.SORCERER]: null,
+  [Classes.WARLOCK]: null,
+  [Classes.CLERIC]: SPELL_PREPARATION,
+  [Classes.DRUID]: SPELL_PREPARATION,
+  [Classes.WIZARD]: SPELL_PREPARATION,
+  [Classes.ARTIFICER]: SPELL_PREPARATION,
+  [Classes.PALADIN]: SPELL_PREPARATION_PALADIN_RANGER,
+  [Classes.RANGER]: SPELL_PREPARATION_PALADIN_RANGER,
+  [Classes.FIGHTER]: null,
+  [Classes.ROGUE]: null,
+  [Classes.BARBARIAN]: null,
+  [Classes.MONK]: null,
+};

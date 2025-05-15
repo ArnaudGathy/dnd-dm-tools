@@ -290,12 +290,28 @@ export default function Combat({ character }: { character: CharacterById }) {
                     </div>
                   }
                 />
-                {spellsToPreparePerDay && (
+                {!!spellsToPreparePerDay && (
                   <StatCard
                     icon={CopyCheck}
                     iconColor="text-sky-500"
-                    value={spellsToPreparePerDay}
-                    definition="Sorts à préparer par jour"
+                    value={spellsToPreparePerDay.total}
+                    definition={
+                      <div>
+                        <span className="font-bold">
+                          Sorts à préparer par jour
+                        </span>
+                        <div>
+                          <span>Quand : </span>
+                          <span>{spellsToPreparePerDay.when}</span>
+                        </div>
+                        <div>
+                          <span>Combien : </span>
+                          <span>
+                            {`${spellsToPreparePerDay.dailyAmount} par jour.`}
+                          </span>
+                        </div>
+                      </div>
+                    }
                   />
                 )}
               </div>
