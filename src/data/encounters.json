@@ -1340,5 +1340,35 @@
       ]
     },
     "youtubeId": "2GX9lVHfnxs"
+  },
+  {
+    "name": "Taverne - Bandits",
+    "id": 63,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Port Nyanzaru",
+      "mapMarker": "P3"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "bandit",
+          "color": "#f10000"
+        },
+        {
+          "id": "bandit",
+          "color": "#1c8811"
+        },
+        {
+          "id": "bandit",
+          "color": "#1383c5"
+        },
+        {
+          "id": "bandit",
+          "color": "#fd7400"
+        }
+      ]
+    },
+    "youtubeId": "NYtPB459e6Y"
   }
 ]
