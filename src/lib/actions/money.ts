@@ -4,13 +4,13 @@ import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
 
-export const updateMoney = async (moneyId: number, formData: FormData) => {
+export const updateMoney = async (moneyId: number, moneyValue: number) => {
   const validation = z
     .object({
-      quantity: z.coerce.number().min(0),
+      quantity: z.number().min(0),
     })
     .safeParse({
-      quantity: formData.get("quantity"),
+      quantity: moneyValue,
     });
 
   if (validation.success) {

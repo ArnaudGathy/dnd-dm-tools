@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check, Trash } from "lucide-react";
+import { Check, LoaderCircle, Trash } from "lucide-react";
 import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -30,6 +30,7 @@ export default function AddInventoryItemForm({
   title: string;
 }) {
   const isEditMode = !!item;
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
 
   const form = useForm<InventoryFormSchema>({
@@ -42,10 +43,19 @@ export default function AddInventoryItemForm({
   });
 
   const onSubmit = async (data: InventoryFormSchema) => {
+    setIsLoading(true);
     const response = await addInventoryItem(data, character.id, item?.id);
     if (!!response) {
       setError(response);
     }
+    setIsLoading(false);
+    closeAction();
+  };
+
+  const handleDelete = async (itemId: number) => {
+    setIsLoading(true);
+    await deleteInventoryItem(itemId);
+    setIsLoading(false);
     closeAction();
   };
 
@@ -82,8 +92,14 @@ export default function AddInventoryItemForm({
           textarea
         />
 
-        <Button type="submit" className="w-full">
-          <Check /> {isEditMode ? "Modifier" : "Ajouter"}
+        <Button type="submit" className="w-full" disabled={isLoading}>
+          {isLoading ? (
+            <LoaderCircle className="size-6 animate-spin" />
+          ) : (
+            <>
+              <Check /> {isEditMode ? "Modifier" : "Ajouter"}
+            </>
+          )}
         </Button>
       </form>
 
@@ -91,9 +107,16 @@ export default function AddInventoryItemForm({
         <Button
           variant="secondary"
           className="mt-4 w-full"
-          onClick={() => deleteInventoryItem(item.id)}
+          onClick={() => handleDelete(item.id)}
+          disabled={isLoading}
         >
-          <Trash /> Supprimer
+          {isLoading ? (
+            <LoaderCircle className="size-6 animate-spin" />
+          ) : (
+            <>
+              <Trash /> Supprimer
+            </>
+          )}
         </Button>
       )}
     </Form>

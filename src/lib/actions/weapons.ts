@@ -7,14 +7,14 @@ import { revalidatePath } from "next/cache";
 
 export const updateWeaponAmmunitionCount = async (
   weaponId: number,
-  formData: FormData,
+  ammunitionCount?: number,
 ) => {
   const validation = z
     .object({
-      ammunitionCount: z.coerce.number().min(0).max(20),
+      ammunitionCount: z.number().min(0).max(20),
     })
     .safeParse({
-      ammunitionCount: formData.get("ammunitionCount"),
+      ammunitionCount,
     });
 
   if (validation.success) {

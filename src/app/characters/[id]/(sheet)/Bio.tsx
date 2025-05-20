@@ -2,9 +2,6 @@ import { CharacterById, cn } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import { StatCell } from "@/app/creatures/StatCell";
 import { ALIGNMENT_MAP, BACKGROUND_MAP } from "@/constants/maps";
-import PopoverComponent from "@/components/ui/PopoverComponent";
-import { Edit } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import NotesForm from "@/app/characters/[id]/(sheet)/(forms)/NotesForm";
 
 export default function Bio({ character }: { character: CharacterById }) {
@@ -49,15 +46,7 @@ export default function Bio({ character }: { character: CharacterById }) {
         </SheetCard>
         <SheetCard className="relative flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Notes</span>
-          <PopoverComponent
-            definition={<NotesForm character={character} />}
-            className="absolute right-4 top-4"
-            asChild
-          >
-            <Button>
-              <Edit />
-            </Button>
-          </PopoverComponent>
+          <NotesForm character={character} />
           <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
             {character.notes || "Aucune notes"}
           </div>

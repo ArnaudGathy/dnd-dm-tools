@@ -480,14 +480,14 @@ export const resetHp = async (characterId: number, maxHp: number) => {
 
 export const updateInspiration = async (
   characterId: number,
-  formData: FormData,
+  inspiration: number,
 ) => {
   const validation = z
     .object({
-      inspiration: z.coerce.number().min(0),
+      inspiration: z.number().min(0),
     })
     .safeParse({
-      inspiration: formData.get("inspiration"),
+      inspiration,
     });
 
   if (validation.success) {
@@ -501,13 +501,13 @@ export const updateInspiration = async (
   }
 };
 
-export const updateNotes = async (characterId: number, formData: FormData) => {
+export const updateNotes = async (characterId: number, notes: string) => {
   const validation = z
     .object({
       notes: z.string(),
     })
     .safeParse({
-      notes: formData.get("notes"),
+      notes,
     });
 
   if (validation.success) {
