@@ -29,6 +29,7 @@ import {
   getWeaponAttackBonus,
   getSpellsToPreparePerDay,
   getMartialClassDC,
+  getTotalHP,
 } from "@/utils/skills";
 import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
 import Name from "@/app/characters/[id]/(sheet)/(weapons)/Name";
@@ -72,6 +73,7 @@ export default function Combat({ character }: { character: CharacterById }) {
   const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
   const martialClassDC = getMartialClassDC(character);
   const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
+  const hpDetails = getTotalHP(character);
 
   return (
     <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4">
@@ -84,18 +86,18 @@ export default function Combat({ character }: { character: CharacterById }) {
               <>
                 <span
                   className={cn({
-                    "text-green-500": character.currentHP < character.maximumHP,
+                    "text-green-500": character.currentHP < hpDetails.total,
                     "text-orange-500":
-                      character.currentHP <= character.maximumHP * 0.5,
+                      character.currentHP <= hpDetails.total * 0.5,
                     "text-red-500":
-                      character.currentHP <= character.maximumHP * 0.2,
+                      character.currentHP <= hpDetails.total * 0.2,
                     "text-stone-500": character.currentHP <= 0,
                   })}
                 >
                   {character.currentHP}
                 </span>
                 <span>/</span>
-                <span>{character.maximumHP}</span>
+                <span>{hpDetails.total}</span>
               </>
             }
             definition={

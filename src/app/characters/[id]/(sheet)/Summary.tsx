@@ -25,6 +25,7 @@ import AbilitySquare from "@/app/characters/[id]/(sheet)/AbilitySquare";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
+import { getTotalHP } from "@/utils/skills";
 
 export default function Summary({ character }: { character: CharacterById }) {
   const abilities = {
@@ -38,6 +39,7 @@ export default function Summary({ character }: { character: CharacterById }) {
 
   const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
   const conModifier = getModifier(character.constitution);
+  const hpDetails = getTotalHP(character);
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 p-0 md:w-[70%] md:grid-cols-6 md:grid-rows-[auto] md:p-4">
@@ -112,7 +114,10 @@ export default function Summary({ character }: { character: CharacterById }) {
                 </div>
               }
             />
-            <StatCell name="Points de vie" stat={character.maximumHP} />
+            <StatCell
+              name="Points de vie"
+              stat={`${character.maximumHP} + ${hpDetails.bonus}`}
+            />
           </div>
         </SheetCard>
         <SheetCard className="flex justify-center">

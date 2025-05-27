@@ -303,7 +303,8 @@ const getMartialClassDCModifier = (character: Character) => {
 
 export const getMartialClassDC = (character: Character) => {
   if (
-    character.className === Classes.FIGHTER ||
+    (character.className === Classes.FIGHTER &&
+      character.subclassName === Subclasses.BATTLE_MASTER) ||
     character.className === Classes.MONK ||
     character.className === Classes.ROGUE
   ) {
@@ -320,4 +321,28 @@ export const getMartialClassDC = (character: Character) => {
     };
   }
   return null;
+};
+
+const getBonusHP = (character: Character & { capacities: Capacity[] }) => {
+  if (
+    character.capacities.find(
+      ({ name }) =>
+        name.toLowerCase().includes("tough") ||
+        name.toLowerCase().includes("robuste"),
+    )
+  ) {
+    return character.level * 2;
+  }
+};
+
+export const getTotalHP = (
+  character: Character & { capacities: Capacity[] },
+) => {
+  const hitPoints = character.maximumHP;
+  const bonusHp = getBonusHP(character);
+  return {
+    baseHp: hitPoints,
+    bonus: bonusHp,
+    total: hitPoints + (bonusHp ?? 0),
+  };
 };

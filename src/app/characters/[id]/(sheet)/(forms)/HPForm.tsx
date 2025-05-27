@@ -6,9 +6,11 @@ import { Button } from "@/components/ui/button";
 import { resetHp, updateHP } from "@/lib/actions/characters";
 import { CharacterById } from "@/lib/utils";
 import { PopoverClose } from "@/components/ui/popover";
+import { getTotalHP } from "@/utils/skills";
 
 export default function HPForm({ character }: { character: CharacterById }) {
-  const action = updateHP.bind(null, character.id, character.maximumHP);
+  const { total } = getTotalHP(character);
+  const action = updateHP.bind(null, character.id, total);
 
   return (
     <form action={action} className="flex w-[60px] flex-col items-center gap-4">
@@ -23,7 +25,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
           <Button
             variant="outline"
             className="w-full"
-            onClick={() => resetHp(character.id, character.maximumHP)}
+            onClick={() => resetHp(character.id, total)}
           >
             <RotateCcw />
           </Button>
