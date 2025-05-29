@@ -9,10 +9,10 @@ export type Group = Array<
 >;
 
 export const useGroupFromCampaign = ({
-  addGroupMembersToListAction,
+  groupAction,
 }: {
-  addGroupMembersToListAction: (group: Group) => void;
-}) => {
+  groupAction?: (group: Group) => void;
+} = {}) => {
   const [group, setGroup] = useState<Group>([]);
   const campaignId = parseInt(localStorage.getItem("campaignId") || "0", 10);
 
@@ -20,7 +20,7 @@ export const useGroupFromCampaign = ({
     const fetchParties = async () => {
       const res = await axios.get(`/api/characters/${campaignId}`);
       setGroup(res.data);
-      addGroupMembersToListAction(res.data);
+      groupAction?.(res.data);
     };
     fetchParties();
     // eslint-disable-next-line react-hooks/exhaustive-deps

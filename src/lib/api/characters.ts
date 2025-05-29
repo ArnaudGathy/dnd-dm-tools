@@ -115,6 +115,7 @@ export const getCharactersFromCampaignId = (campaignId: number) => {
   return prisma.character.findMany({
     where: {
       campaignId: campaignId,
+      status: CharacterStatus.ACTIVE,
     },
     include: {
       spellsOnCharacters: true,

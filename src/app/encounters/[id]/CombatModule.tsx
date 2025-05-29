@@ -148,7 +148,7 @@ export const CombatModule = ({
   );
 
   const group = useGroupFromCampaign({
-    addGroupMembersToListAction: (group: Group) => {
+    groupAction: (group: Group) => {
       const participants = getParticipantFromCharacters(group);
       setListOfParticipants((current) => {
         if (
