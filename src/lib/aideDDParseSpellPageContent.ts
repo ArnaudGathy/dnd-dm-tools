@@ -150,8 +150,12 @@ export const parseSpellFromAideDD2024 = ({
   const mainDataBlock = $(".col1");
   const baseSpellData = getBaseSpellData2024(html, spellName);
 
-  const levelAndSchoolBlock = mainDataBlock.find(".ecole").text().split("-");
-  const school = levelAndSchoolBlock[1].trim();
+  const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
+  const school = levelAndSchoolBlock.match(/^Level \d+ ([^(]+)/)?.[1].trim();
+
+  if (!school) {
+    throw new Error("No school found");
+  }
 
   const castingTime = mainDataBlock.find(".t").text().split(":")[1].trim();
   const range = mainDataBlock.find(".r").text().split(":")[1].trim();
@@ -222,7 +226,7 @@ export const parseSpellFromAideDD2024 = ({
       index: c ?? "",
     })),
     school: {
-      index: school,
+      index: school.toLowerCase(),
       name: capitalize(school),
     },
     source: SpellSource.AIDE_DD,
