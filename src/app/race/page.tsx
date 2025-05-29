@@ -19,6 +19,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import dynamic from "next/dynamic";
 
 const rounds = [
   {
@@ -150,7 +151,7 @@ const NPCRacers = [
   },
 ] satisfies Participant[];
 
-export default function Race() {
+function Race() {
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
   const currentRound = rounds[currentRoundIndex];
   const [hasPlayedDistance, setHasPlayedDistance] = useState(false);
@@ -339,7 +340,6 @@ export default function Race() {
                   index,
                 ) => {
                   const currentNPCTurn = turns?.[currentRoundIndex];
-                  // Array of participant names who are within 50 of currentDistance to the current participant
                   const targetsList = participants
                     .filter(
                       (participant) =>
@@ -388,7 +388,9 @@ export default function Race() {
                           />
                         )}
                       </TableCell>
-                      <TableCell>{targetsList.join(", ")}</TableCell>
+                      <TableCell className="flex gap-2">
+                        {targetsList.join(", ")}
+                      </TableCell>
                       <TableCell className="w-[100px]">
                         {currentNPCTurn &&
                           `${currentNPCTurn.attack} - ${currentNPCTurn.damages}`}
@@ -439,3 +441,5 @@ export default function Race() {
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(Race), { ssr: false });
