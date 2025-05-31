@@ -116,7 +116,7 @@ export default function Summary({ character }: { character: CharacterById }) {
             />
             <StatCell
               name="Points de vie"
-              stat={`${character.maximumHP} + ${hpDetails.bonus}`}
+              stat={`${character.maximumHP}${hpDetails.bonus ? ` + ${hpDetails.bonus}` : ""}`}
             />
           </div>
         </SheetCard>
