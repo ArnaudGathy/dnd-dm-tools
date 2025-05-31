@@ -3606,7 +3606,7 @@
         "type": "Melee",
         "modifier": "+4",
         "reach": "3 m",
-        "hit": "7 (1d10 + 2) dégâts perforants, et la cible doit réussir un jet de sauvegarde de Constitution DD 11 ou être empoisonnée pendant 1 minute. La cible empoisonnée est paralysée, et peut retenter un jet de sauvegarde à la fin de chacun de ses tours, mettant fin à l'effet en cas de réussite. La cible de taille TG ou inférieure est également entravée tant qu’elle est paralysée de cette manière. Le grell a un avantage aux jets d’attaque effectués contre cette cible, mais ne peut pas utiliser l’attaque avec ses tentacules contre d’autres cibles. Lorsque le grell se déplace, il emporte avec lui toute créature de taille M ou inférieure qu’il a agrippée."
+        "hit": "7 (1d10 + 2) dégâts perforants, JdS CON 11 ou être empoisonnée + paralysé pendant 1 minute, retenter un JdS à chaque fin de tour. Automatiquement aggripée (FOR DD 15 se libérer) avec avantage jet d'attaque sur cible agrippée mais ne peut pas utiliser l’attaque avec ses tentacules contre d’autres cibles. Il emporte la cible agrippée dans ses déplacements."
       },
       {
         "name": "Bec",
