@@ -1214,7 +1214,7 @@
       "name": "Château Rocagueule",
       "mapMarker": "C10"
     },
-    "extraZonesEnnemies": ["C7", "C8", "C9", "C12", "C13"],
+    "extraZonesEnnemies": ["C7", "C8", "C12", "C13"],
     "informations": [
       "Zones alentours alertées par la porte enfoncée",
       "C7 attaque depuis les meurtrières",
