@@ -482,7 +482,7 @@ export const CombatModule = ({
                   </div>
                   <div className="w-10 text-center text-sm">
                     <Input
-                      className="w-10"
+                      className="w-12"
                       id="init"
                       defaultValue={participant.init}
                       onBlur={handleUpdateInit(participant)}

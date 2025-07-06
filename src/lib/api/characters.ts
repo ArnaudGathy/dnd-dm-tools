@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
+import { isNumber } from "remeda";
 
 export const getNumberOfCharactersByOwner = async ({
   ownerEmail,
@@ -101,14 +102,17 @@ export const getCharacterById = async ({
   });
 };
 
-export const getCharactersByCreatureId = (creatureId: number) => {
-  return prisma.character.findMany({
-    where: {
-      creatures: {
-        has: creatureId,
+export const getCharactersByCreatureId = (creatureId: number | string) => {
+  if (isNumber(creatureId)) {
+    return prisma.character.findMany({
+      where: {
+        creatures: {
+          has: creatureId,
+        },
       },
-    },
-  });
+    });
+  }
+  return [];
 };
 
 export const getCharactersFromCampaignId = (campaignId: number) => {

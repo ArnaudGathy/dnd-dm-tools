@@ -284,7 +284,7 @@ const getCreatureColor = (
   index: number,
   currentColorIndex: { [key: number]: number },
 ) => {
-  if (creature.colors) {
+  if (creature.colors && isNumber(creature.id)) {
     const newColorIndex =
       currentColorIndex[creature.id] !== undefined
         ? currentColorIndex[creature.id] + 1

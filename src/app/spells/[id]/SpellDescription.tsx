@@ -97,7 +97,7 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                   <Link
                     href={
                       spell.version === SpellVersion.V2024
-                        ? `https://www.aidedd.org/spell/${spell.index}`
+                        ? `https://www.aidedd.org/public/spell/${spell.index}`
                         : `https://www.aidedd.org/dnd/sorts.php?vo=${spell.index}`
                     }
                     target="_blank"

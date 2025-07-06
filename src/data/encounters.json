@@ -1370,5 +1370,80 @@
       ]
     },
     "youtubeId": "NYtPB459e6Y"
+  },
+  {
+    "name": "Plage - sorcière des mers",
+    "id": 64,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Fort Beluarian",
+      "mapMarker": "FB1"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "sea-hag",
+          "color": "#f10000"
+        },
+        {
+          "id": "sea-hag",
+          "color": "#1c8811"
+        },
+        {
+          "id": "sea-hag",
+          "color": "#1383c5"
+        }
+      ]
+    },
+    "informations": ["TODO (raccourcir description sorts)"],
+    "loots": ["TODO"],
+    "youtubeId": "8Q7cioftmKs"
+  },
+  {
+    "name": "Plage - pirates",
+    "id": 65,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Fort Beluarian",
+      "mapMarker": "FB2"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": 30,
+          "color": "#f10000"
+        },
+        {
+          "id": 30,
+          "color": "#1c8811"
+        },
+        {
+          "id": 30,
+          "color": "#1383c5"
+        },
+        {
+          "id": 30,
+          "color": "#fd7400"
+        },
+        {
+          "id": 30,
+          "color": "#fd7400"
+        },
+        {
+          "id": 30,
+          "color": "#fd7400"
+        }
+      ]
+    },
+    "informations": [
+      "Lorsque plus que 2 en vie, prennent la fuite vers le bateau."
+    ],
+    "loots": [
+      "Carte (physique a donner)",
+      "7po 15pa",
+      "plume de ptéranodon (décorative)",
+      "une caisse de poudre noire de 30kg"
+    ],
+    "youtubeId": "2GX9lVHfnxs"
   }
 ]

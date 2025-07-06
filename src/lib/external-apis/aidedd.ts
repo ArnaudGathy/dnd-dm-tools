@@ -52,5 +52,5 @@ export const get2024Creature = async (
   creatureName: string,
 ): Promise<Creature> => {
   const response = await axios.get(`${get2024CreatureURL}/${creatureName}`);
-  return parse2024CreaturesFromAideDD(response.data);
+  return parse2024CreaturesFromAideDD(response.data, creatureName);
 };

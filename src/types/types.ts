@@ -13,7 +13,7 @@ export type ParticipantToAdd = {
 };
 
 export type Participant = ParticipantToAdd & {
-  id?: number;
+  id?: number | string;
   currentHp: string;
   uuid: string;
   conditions?: Condition[];
@@ -90,7 +90,7 @@ export type Action = {
 
 export type Creature = {
   name: string;
-  id: number;
+  id: number | string;
   type: string;
   size: string;
   challengeRating: number;

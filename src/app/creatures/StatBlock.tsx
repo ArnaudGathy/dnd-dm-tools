@@ -15,7 +15,7 @@ import {
   getChallengeRatingAsFraction,
   translateSkill,
 } from "@/utils/utils";
-import { entries, isDefined } from "remeda";
+import { entries, isDefined, isNumber } from "remeda";
 import Link from "next/link";
 import { StatCell } from "@/app/creatures/StatCell";
 import { ActionBlock } from "@/app/creatures/ActionBlock";
@@ -37,11 +37,26 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
   }));
 
   const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
+  const linkToAideDD = isNumber(creature.id)
+    ? undefined
+    : `https://www.aidedd.org/public/monster/${creature.id}`;
 
   return (
     <Card id={creature.id.toString()}>
       <CardHeader>
-        <CardTitle className="flex justify-between">{creature.name}</CardTitle>
+        <CardTitle className="flex justify-between">
+          <span>{creature.name}</span>
+          {linkToAideDD && (
+            <Link
+              href={linkToAideDD}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 text-xs text-muted-foreground underline"
+            >
+              AideDD
+            </Link>
+          )}
+        </CardTitle>
         <CardDescription>
           {creature.type} de taille{" "}
           <span

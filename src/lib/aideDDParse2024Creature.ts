@@ -258,11 +258,14 @@ function extractLegendaryActionUses(html: string): string | undefined {
   return match ? match[1].trim() : undefined;
 }
 
-export const parse2024CreaturesFromAideDD = (html: string) => {
+export const parse2024CreaturesFromAideDD = (
+  html: string,
+  creatureName: string,
+) => {
   const $ = cheerio.load(html);
   const statBlockSelector = $(".jaune");
 
-  const creatureName = statBlockSelector.find("h1").text().trim();
+  const readableName = statBlockSelector.find("h1").text().trim();
 
   const typeBlock = statBlockSelector.find(".type").text().trim();
   const type = typeBlock.match(/^\S+\s+([^,]+)/)?.[1];
@@ -329,8 +332,8 @@ export const parse2024CreaturesFromAideDD = (html: string) => {
   const legendaryActionsSlots = extractLegendaryActionUses(html);
 
   return {
-    name: creatureName,
-    id: 0,
+    name: readableName,
+    id: creatureName,
     type,
     size,
     alignment,

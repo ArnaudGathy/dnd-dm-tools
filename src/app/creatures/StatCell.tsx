@@ -17,7 +17,6 @@ export const StatCell = ({
   isInline?: boolean;
   spacing?: string;
 }) => {
-  const width = `min-w-[${spacing}]`;
   return (
     <div
       className={cn("flex items-center md:flex-row md:items-start", {
@@ -25,9 +24,8 @@ export const StatCell = ({
       })}
     >
       <span
-        className={clsx("mr-2 text-muted-foreground", {
-          [width]: !isInline,
-        })}
+        style={{ minWidth: isInline ? undefined : spacing }}
+        className="mr-2 text-muted-foreground"
       >
         {name}
       </span>
