@@ -3,7 +3,7 @@ import "server-only";
 
 import prisma from "../prisma";
 import { z } from "zod";
-import { ArmorType, SpellVersion, WeaponType } from "@prisma/client";
+import { ArmorType, WeaponType } from "@prisma/client";
 import { BASE_HP_PER_CLASS_MAP } from "@/constants/maps";
 import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
 import { getModifier } from "@/utils/utils";
@@ -276,7 +276,6 @@ export const updateCharacter = async (
       allies: validation.data.allies,
       notes: validation.data.notes,
       proficiencies: validation.data.proficiencies,
-      spellVersion: SpellVersion.V2024,
     },
   });
 

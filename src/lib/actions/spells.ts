@@ -3,31 +3,23 @@ import "server-only";
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import {
-  getSpellDataFromENName,
-  getSpellDataFromENName2024,
-  getSpellDataFromFRName,
-} from "@/lib/external-apis/aidedd";
+import { getSpellDataFromENName2024 } from "@/lib/external-apis/aidedd";
 import { z } from "zod";
-import { Spell, SpellVersion } from "@prisma/client";
 
 export const updateSpellFavoriteAction = async ({
   spellId,
-  spellVersion,
   characterId,
   currentIsFavoriteState,
 }: {
   spellId: string;
-  spellVersion: SpellVersion;
   characterId: number;
   currentIsFavoriteState: boolean;
 }) => {
   await prisma.spellsOnCharacters.update({
     where: {
-      spellId_spellVersion_characterId: {
+      spellId_characterId: {
         characterId,
         spellId,
-        spellVersion,
       },
     },
     data: {
@@ -56,12 +48,10 @@ export const tryToAddSpell = async (
     .object({
       spellName: z.string(),
       characterId: z.coerce.number(),
-      spellVersion: z.nativeEnum(SpellVersion),
     })
     .safeParse({
       spellName: formData.get("spellName"),
       characterId: formData.get("characterId"),
-      spellVersion: formData.get("spellVersion"),
     });
 
   if (!validation.success) {
@@ -71,15 +61,7 @@ export const tryToAddSpell = async (
 
   const kebabCasedSpellName = kebabCaseify(validation.data.spellName);
 
-  let spellData: Spell | null;
-  if (validation.data.spellVersion === SpellVersion.V2024) {
-    spellData = await getSpellDataFromENName2024(kebabCasedSpellName);
-  } else {
-    spellData = await getSpellDataFromFRName(kebabCasedSpellName);
-    if (!spellData) {
-      spellData = await getSpellDataFromENName(kebabCasedSpellName);
-    }
-  }
+  const spellData = await getSpellDataFromENName2024(kebabCasedSpellName);
 
   if (!spellData) {
     return { error: `Aucun sort trouvé avec ce nom : ${kebabCasedSpellName}` };
@@ -87,10 +69,7 @@ export const tryToAddSpell = async (
 
   const existingSpell = await prisma.spell.findUnique({
     where: {
-      id_version: {
-        id: spellData.id,
-        version: spellData.version,
-      },
+      id: spellData.id,
     },
   });
 
@@ -98,10 +77,9 @@ export const tryToAddSpell = async (
   const characterId = validation.data.characterId;
   const existingSpellForCharacter = await prisma.spellsOnCharacters.findUnique({
     where: {
-      spellId_spellVersion_characterId: {
+      spellId_characterId: {
         characterId,
         spellId: spellData.id,
-        spellVersion: spellData.version,
       },
     },
   });
@@ -122,7 +100,6 @@ export const tryToAddSpell = async (
       spellId,
       characterId,
       isFavorite: false,
-      spellVersion: spellData.version,
     },
   });
 
@@ -133,18 +110,15 @@ export const tryToAddSpell = async (
 export const deleteSpellAction = async ({
   spellId,
   characterId,
-  spellVersion,
 }: {
   spellId: string;
   characterId: number;
-  spellVersion: SpellVersion;
 }) => {
   await prisma.spellsOnCharacters.delete({
     where: {
-      spellId_spellVersion_characterId: {
+      spellId_characterId: {
         characterId,
         spellId,
-        spellVersion,
       },
     },
   });

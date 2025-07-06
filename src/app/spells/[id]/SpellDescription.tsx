@@ -5,14 +5,13 @@ import { getSpellById } from "@/lib/api/spells";
 import SpellHeader from "@/app/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/spells/[id]/SpellDetails";
-import { SpellVersion } from "@prisma/client";
 
 export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
-  if (!spell.index || !spell.version) {
-    throw new Error("Missing spell index or version");
+  if (!spell.index) {
+    throw new Error("Missing spell index");
   }
 
-  const spellFromApp = await getSpellById(spell.index, spell.version);
+  const spellFromApp = await getSpellById(spell.index);
 
   return (
     <div className="col-span-3">
@@ -95,11 +94,7 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                 <span className="flex items-center gap-2 text-xs text-muted-foreground">
                   Lien AideDD :
                   <Link
-                    href={
-                      spell.version === SpellVersion.V2024
-                        ? `https://www.aidedd.org/public/spell/${spell.index}`
-                        : `https://www.aidedd.org/dnd/sorts.php?vo=${spell.index}`
-                    }
+                    href={`https://www.aidedd.org/public/spell/${spell.index}`}
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-1"

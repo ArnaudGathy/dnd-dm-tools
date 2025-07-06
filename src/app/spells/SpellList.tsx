@@ -9,7 +9,6 @@ import { capitalize, entries } from "remeda";
 import { SpellWithFavorite } from "@/lib/api/spells";
 import { FavoriteButton } from "@/app/spells/[id]/FavoriteButton";
 import DeleteSpellButton from "@/app/characters/[id]/spells/DeleteSpellButton";
-import { SpellVersion } from "@prisma/client";
 
 export const SpellList = ({
   spellsGroupedBy,
@@ -24,7 +23,6 @@ export const SpellList = ({
   showFavorites?: boolean;
   isEditMode?: boolean;
 }) => {
-  const isCharacterList = !!characterId;
   const spellEntries = entries(spellsGroupedBy);
   if (spellEntries.length === 0) {
     return (
@@ -71,7 +69,6 @@ export const SpellList = ({
                           }
                           isFavorite={spell.isFavorite}
                           spellId={spell.id}
-                          spellVersion={spell.version}
                           characterId={characterId}
                         />
                       ) : (
@@ -80,14 +77,8 @@ export const SpellList = ({
                         )
                       )}
                     </div>
-                    <Link
-                      href={`/spells/${spell.id}?v=${spell.version}`}
-                      className="truncate"
-                    >
+                    <Link href={`/spells/${spell.id}`} className="truncate">
                       {spell.name}
-                      {spell.version === SpellVersion.V2024 &&
-                        !isCharacterList &&
-                        " (2024)"}
                     </Link>
                   </li>
                 ))}

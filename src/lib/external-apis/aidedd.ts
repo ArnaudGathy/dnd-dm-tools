@@ -2,12 +2,12 @@ import axios from "axios";
 import {
   getBaseSpellData,
   getBaseSpellData2024,
-  parseSpellFromAideDD,
   parseSpellFromAideDD2024,
 } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
 import { parse2024CreaturesFromAideDD } from "@/lib/aideDDParse2024Creature";
 import { Creature } from "@/types/types";
+import { APISpell } from "@/types/schemas";
 
 const getEnSpellURL = "https://www.aidedd.org/dnd/sorts.php?vo=";
 const getFrSpellURL = "https://www.aidedd.org/dnd/sorts.php?vf=";
@@ -20,12 +20,6 @@ const getFrSpellIdFromEnName = async (spellName: string) => {
   const mainDataBlock = $(".col1");
   const linkHref = mainDataBlock.find(".trad > a").attr("href");
   return linkHref?.split("=")[1] ?? "";
-};
-
-export const getFrSpellPageFromAideDD = async (spellNameEn: string) => {
-  const frenchSpellId = await getFrSpellIdFromEnName(spellNameEn);
-  const frSpell = await axios.get(`${getFrSpellURL}${frenchSpellId}`);
-  return parseSpellFromAideDD({ html: frSpell.data, spellName: spellNameEn });
 };
 
 export const getSpellDataFromENName = async (spellName: string) => {
@@ -43,7 +37,9 @@ export const getSpellDataFromENName2024 = async (spellName: string) => {
   return getBaseSpellData2024(response.data, spellName);
 };
 
-export const getSpellPageFromAideDD2024 = async (spellName: string) => {
+export const getSpellPageFromAideDD2024 = async (
+  spellName: string,
+): Promise<APISpell> => {
   const response = await axios.get(`${getEn2024SpellURL}/${spellName}`);
   return parseSpellFromAideDD2024({ html: response.data, spellName });
 };

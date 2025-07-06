@@ -7,38 +7,24 @@ import { useActionState } from "react";
 import { tryToAddSpell } from "@/lib/actions/spells";
 import { Plus } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { SpellVersion } from "@prisma/client";
 
 export const initialState: { message?: string; error?: string } = {};
 
-export default function AddSpellForm({
-  characterId,
-  spellVersion,
-}: {
-  characterId: string;
-  spellVersion: SpellVersion;
-}) {
+export default function AddSpellForm({ characterId }: { characterId: string }) {
   const [state, formAction] = useActionState(tryToAddSpell, initialState);
 
   return (
     <form action={formAction} className="flex flex-col gap-2 pt-4">
       <input type="hidden" name="characterId" value={characterId} />
-      <input type="hidden" name="spellVersion" value={spellVersion} />
       <div className="flex w-fit flex-col gap-2">
         <Label htmlFor="spellName">Nom du sort à ajouter</Label>
         <span className="flex gap-2 text-sm text-muted-foreground">
-          {spellVersion === SpellVersion.V2024
-            ? "Anglais uniquement (2024)"
-            : "Français ou anglais"}
+          {"Anglais uniquement (2024)"}
           <a
             className="underline"
             target="_blank"
             rel="noreferrer"
-            href={
-              spellVersion === SpellVersion.V2024
-                ? "https://www.aidedd.org/spell/"
-                : "https://www.aidedd.org/dnd-filters/sorts.php"
-            }
+            href="https://www.aidedd.org/spell/"
           >
             Site de référence
           </a>

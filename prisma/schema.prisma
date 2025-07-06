@@ -206,7 +206,6 @@ model Character {
   campaign           Campaign             @relation(fields: [campaignId], references: [id])
   campaignId         Int
   spellsOnCharacters SpellsOnCharacters[]
-  spellVersion       SpellVersion         @default(V2014)
   creatures          Int[]                @default([])
 
   name         String      @db.VarChar(255)
@@ -352,31 +351,22 @@ model Skill {
   @@unique([characterId, skill])
 }
 
-enum SpellVersion {
-  V2014
-  V2024
-}
-
 model Spell {
-  id                 String
-  version            SpellVersion         @default(V2014)
+  id                 String               @id
   name               String
   level              Int
   isRitual           Boolean              @default(false)
   spellsOnCharacters SpellsOnCharacters[]
-
-  @@id([id, version])
 }
 
 model SpellsOnCharacters {
-  character    Character    @relation(fields: [characterId], references: [id])
-  characterId  Int
-  spell        Spell        @relation(fields: [spellId, spellVersion], references: [id, version])
-  spellId      String
-  spellVersion SpellVersion @default(V2014)
-  isFavorite   Boolean      @default(false)
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  spell       Spell     @relation(fields: [spellId], references: [id])
+  spellId     String
+  isFavorite  Boolean   @default(false)
 
-  @@id([spellId, spellVersion, characterId])
+  @@id([spellId, characterId])
 }
 
 enum WeaponDamageType {

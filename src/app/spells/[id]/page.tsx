@@ -2,20 +2,15 @@ import { notFound } from "next/navigation";
 import { SpellDescription } from "@/app/spells/[id]/SpellDescription";
 import { SpellOwnedBy } from "@/app/spells/[id]/SpellOwnedBy";
 import { SpellClasses } from "@/app/spells/[id]/SpellClasses";
-import { getSpell } from "@/lib/external-apis/externalAPIs";
-import { SpellVersion } from "@prisma/client";
+import { getSpellPageFromAideDD2024 } from "@/lib/external-apis/aidedd";
 
 const SpellDetails = async ({
   params,
-  searchParams,
 }: {
   params: Promise<{ id: string }>;
-  searchParams: Promise<{ v?: string }>;
 }) => {
-  const spellVersion = ((await searchParams).v ??
-    SpellVersion.V2014) as SpellVersion;
   const spellId = (await params).id.toLowerCase();
-  const spell = await getSpell(spellId, spellVersion);
+  const spell = await getSpellPageFromAideDD2024(spellId);
 
   if (!spell) {
     return notFound();

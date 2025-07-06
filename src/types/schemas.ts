@@ -1,5 +1,4 @@
 import { z } from "zod";
-import { SpellVersion } from "@prisma/client";
 
 export enum SpellSource {
   MIXED = "Mixte",
@@ -60,7 +59,6 @@ export const apiSpellSchema = z
     classes: z.array(externalRessourceSchema),
     subclasses: z.array(externalRessourceSchema),
     source: z.nativeEnum(SpellSource),
-    version: z.nativeEnum(SpellVersion),
   })
   .partial()
   .strict();

@@ -28,10 +28,6 @@ import { get2024Creature } from "@/lib/external-apis/aidedd";
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedConditions: Condition[] = conditions;
-// export const typedLocalSpells: APISpell[] = spells.map((spell) => ({
-//   ...spell,
-//   version: spell.version === "V2024" ? SpellVersion.V2024 : SpellVersion.V2014,
-// }));
 
 export const commonCreatureColors = [
   "#ffffff",

@@ -20,7 +20,6 @@ export default function DeleteSpellButton({
         deleteSpellAction({
           characterId: characterId,
           spellId: spell.id,
-          spellVersion: spell.version,
         })
       }
     >

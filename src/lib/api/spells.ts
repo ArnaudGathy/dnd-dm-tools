@@ -7,12 +7,7 @@ import {
   reduce,
   uniqueBy,
 } from "remeda";
-import {
-  Spell,
-  Character,
-  SpellsOnCharacters,
-  SpellVersion,
-} from "@prisma/client";
+import { Spell, Character, SpellsOnCharacters } from "@prisma/client";
 
 export enum SPELLS_GROUP_BY {
   CHARACTER = "character",
@@ -69,30 +64,20 @@ const getGroupedSpells = (
   return groupByRemeda(spells, (spell) => spell.name[0]);
 };
 
-export const getSpellById = async (
-  spellId: string,
-  spellVersion: SpellVersion,
-) => {
+export const getSpellById = async (spellId: string) => {
   return prisma.spell.findUnique({
     where: {
-      id_version: {
-        id: spellId,
-        version: spellVersion,
-      },
+      id: spellId,
     },
   });
 };
 
-export const getSpellByIds = async (
-  spellIds: string[],
-  version = SpellVersion.V2014,
-) => {
+export const getSpellByIds = async (spellIds: string[]) => {
   return prisma.spell.findMany({
     where: {
       id: {
         in: spellIds,
       },
-      version,
     },
     orderBy: {
       level: "asc",

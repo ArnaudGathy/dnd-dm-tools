@@ -22,8 +22,8 @@ export default async function SpellHeader({
   characterId?: number;
   tiny?: boolean;
 }) {
-  if (!spellFromAPI.index || !spellFromAPI.version) {
-    throw new Error("Missing spell index or version");
+  if (!spellFromAPI.index) {
+    throw new Error("Missing spell index");
   }
 
   const spellName = spellFromApp?.name
@@ -54,7 +54,6 @@ export default async function SpellHeader({
                 }
                 isFavorite={isFavorite}
                 spellId={spellFromApp?.id ?? spellFromAPI.index}
-                spellVersion={spellFromApp?.version ?? spellFromAPI.version}
                 characterId={characterId}
               />
             ) : (
@@ -63,11 +62,7 @@ export default async function SpellHeader({
 
             <span className="truncate">
               {tiny ? (
-                <Link
-                  href={`/spells/${spellFromAPI.index}?v=${spellFromAPI.version}`}
-                >
-                  {spellName}
-                </Link>
+                <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link>
               ) : (
                 spellName
               )}

@@ -1,10 +1,10 @@
 import { getCharacterSpells } from "@/lib/api/spells";
-import { getSpell } from "@/lib/external-apis/externalAPIs";
 import { Card, CardContent } from "@/components/ui/card";
 import SpellHeader from "@/app/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/spells/[id]/SpellDetails";
 import { SpellsSearchParams } from "@/app/spells/SpellsFilters";
+import { getSpellPageFromAideDD2024 } from "@/lib/external-apis/aidedd";
 
 export default async function SpellCardsList({
   searchParams,
@@ -22,7 +22,7 @@ export default async function SpellCardsList({
 
   const spellDetails = await Promise.all(
     spellList.map(async (spell) => {
-      const spellFromApi = await getSpell(spell.spellId, spell.spellVersion);
+      const spellFromApi = await getSpellPageFromAideDD2024(spell.spellId);
       return {
         spellFromApp: spell.spell,
         spellFromAPI: spellFromApi,

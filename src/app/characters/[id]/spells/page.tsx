@@ -37,12 +37,7 @@ export default async function Spells({
 
           <EditModeButton />
         </div>
-        {isEditMode && (
-          <AddSpellForm
-            characterId={id}
-            spellVersion={character.spellVersion}
-          />
-        )}
+        {isEditMode && <AddSpellForm characterId={id} />}
         <SpellsFilters
           defaultSearch={defaultFilter}
           features={["search", "cards", "level", "alphabetical", "favorites"]}
