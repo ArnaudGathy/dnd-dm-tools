@@ -293,7 +293,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                     <div key={spell.id} className="flex items-center gap-2">
                       <div className="text-sky-500">{`${spell.level}`}</div>
                       <Link
-                        href={`/spells/${spell.id}?v=${spell.version}`}
+                        href={`/spells/${spell.id}`}
                         target="_blank"
                         className="w-[175px] overflow-hidden truncate text-muted-foreground underline"
                       >

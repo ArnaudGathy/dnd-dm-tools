@@ -131,6 +131,6 @@ export type Creature = {
     spellDC: number;
     slots?: Partial<Record<string, number>>;
   };
-  spells?: Array<{ id: string; summary?: string; version?: string }>;
+  spells?: Array<{ id: string; summary?: string }>;
   colors?: Array<string>;
 };
