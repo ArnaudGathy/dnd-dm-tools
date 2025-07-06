@@ -1,6 +1,6 @@
 import { CharacterById, cn } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import { ALIGNMENT_MAP, BACKGROUND_MAP } from "@/constants/maps";
 import NotesForm from "@/app/characters/[id]/(sheet)/(forms)/NotesForm";
 

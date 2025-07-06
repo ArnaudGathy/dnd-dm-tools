@@ -1,4 +1,4 @@
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import { getDistanceInSquares, replaceMetersWithSquares } from "@/utils/utils";
 import { clsx } from "clsx";
 import { Action } from "@/types/types";

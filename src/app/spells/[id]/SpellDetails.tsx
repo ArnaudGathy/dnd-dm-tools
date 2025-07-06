@@ -1,4 +1,4 @@
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import {
   convertFeetDistanceIntoSquares,
   translateShortenedAbilityName,

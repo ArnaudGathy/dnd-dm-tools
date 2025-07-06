@@ -44,7 +44,7 @@ import {
 import { ConditionImage } from "@/app/encounters/[id]/ConditionImage";
 import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { BookOpenIcon, FastForwardIcon, PawPrintIcon } from "lucide-react";
+import { BookOpenIcon, FastForwardIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
 
@@ -253,19 +253,6 @@ export const CombatModule = ({
       pipe(
         group,
         filter((character) => character.spellsOnCharacters.length > 0),
-        map(prop("name")),
-      ),
-    [group],
-  );
-
-  const playersWithCreatures = useMemo(
-    () =>
-      pipe(
-        group,
-        filter(
-          (character) =>
-            !!character.creatures && character.creatures.length > 0,
-        ),
         map(prop("name")),
       ),
     [group],
@@ -646,15 +633,6 @@ export const CombatModule = ({
                             rel="noopener noreferrer"
                           >
                             <BookOpenIcon className="size-6" />
-                          </Link>
-                        )}
-                        {playersWithCreatures.includes(participant.name) && (
-                          <Link
-                            href={`/characters/${participant.id}/creatures`}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                          >
-                            <PawPrintIcon className="size-6" />
                           </Link>
                         )}
                       </div>

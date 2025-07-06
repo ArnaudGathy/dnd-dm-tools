@@ -12,8 +12,8 @@ import {
   SUBCLASS_MAP,
 } from "@/constants/maps";
 import { classColors } from "@/constants/colors";
-import { StatCell } from "@/app/creatures/StatCell";
-import { BookOpenIcon, PawPrintIcon, X } from "lucide-react";
+import { StatCell } from "@/components/statblocks/StatCell";
+import { BookOpenIcon, X } from "lucide-react";
 import { entries } from "remeda";
 import {
   addSignToNumber,
@@ -57,17 +57,6 @@ export default function Summary({ character }: { character: CharacterById }) {
                 size="sm"
               >
                 <BookOpenIcon className="stroke-[2.5px]" />
-              </Button>
-            </Link>
-          )}
-          {character.creatures.length > 0 && (
-            <Link href={`/characters/${character.id}/creatures`}>
-              <Button
-                variant="outline"
-                className="bg-gradient-to-tr from-blue-500 to-pink-500"
-                size="sm"
-              >
-                <PawPrintIcon className="stroke-[2.5px]" />
               </Button>
             </Link>
           )}

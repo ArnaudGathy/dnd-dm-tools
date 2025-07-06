@@ -22,12 +22,12 @@ export type Participant = ParticipantToAdd & {
 };
 
 type EnemyObject = {
-  id: number | string;
+  id: string;
   color?: string;
   variant?: string;
   shouldHideInInitiativeTracker?: boolean;
 };
-export type EncounterEnemy = number | string | EnemyObject;
+export type EncounterEnemy = string | EnemyObject;
 
 export type Encounter = {
   id: number;

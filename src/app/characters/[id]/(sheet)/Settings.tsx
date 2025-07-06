@@ -1,6 +1,6 @@
 import { CharacterById } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import {
   CAMPAIGN_MAP,
   CHARACTER_STATUS_MAP,

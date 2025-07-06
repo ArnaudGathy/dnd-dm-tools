@@ -17,10 +17,10 @@ import {
 } from "@/utils/utils";
 import { entries, isDefined, isNumber } from "remeda";
 import Link from "next/link";
-import { StatCell } from "@/app/creatures/StatCell";
-import { ActionBlock } from "@/app/creatures/ActionBlock";
+import { StatCell } from "@/components/statblocks/StatCell";
+import { ActionBlock } from "@/components/statblocks/ActionBlock";
 import { getSpellByIds } from "@/lib/api/spells";
-import Abilities from "@/app/creatures/Abilities";
+import Abilities from "@/components/statblocks/Abilities";
 import { cn } from "@/lib/utils";
 
 const CategoryTitle = ({ children }: { children: React.ReactNode }) => {

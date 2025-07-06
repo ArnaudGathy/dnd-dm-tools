@@ -1,5 +1,5 @@
 import { entries } from "remeda";
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import { cn } from "@/lib/utils";
 
 export const DamageBlock = ({

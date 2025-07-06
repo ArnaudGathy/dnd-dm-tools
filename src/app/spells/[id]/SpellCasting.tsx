@@ -1,4 +1,4 @@
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import { convertFromFeetToSquares } from "@/utils/utils";
 import { APISpell } from "@/types/schemas";
 import { cn } from "@/lib/utils";

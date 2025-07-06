@@ -12,12 +12,7 @@ import Link from "next/link";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
-import {
-  BookOpenIcon,
-  PawPrintIcon,
-  SquareUserIcon,
-  SwordsIcon,
-} from "lucide-react";
+import { BookOpenIcon, SquareUserIcon, SwordsIcon } from "lucide-react";
 import { CampaignSelect } from "@/components/navbar/CampaignSelect";
 
 const menuItems = [
@@ -25,12 +20,6 @@ const menuItems = [
     label: "Rencontres",
     to: "/encounters",
     icon: SwordsIcon,
-    isPrivate: true,
-  },
-  {
-    label: "Créatures",
-    to: "/creatures",
-    icon: PawPrintIcon,
     isPrivate: true,
   },
   {

@@ -1,5 +1,5 @@
 import { Creature } from "@/types/types";
-import { StatBlock } from "@/app/creatures/StatBlock";
+import { StatBlock } from "@/components/statblocks/StatBlock";
 import { prop, uniqueBy } from "remeda";
 
 const StatBlocksModule = async ({ creatures }: { creatures: Creature[] }) => {

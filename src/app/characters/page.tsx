@@ -17,7 +17,7 @@ import {
   RACE_MAP,
   SPELLCASTING_MODIFIER_MAP,
 } from "@/constants/maps";
-import { StatCell } from "@/app/creatures/StatCell";
+import { StatCell } from "@/components/statblocks/StatCell";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
 import {
   BookOpenIcon,
@@ -25,7 +25,6 @@ import {
   FileSpreadsheet,
   Heart,
   MapPin,
-  PawPrintIcon,
   RotateCcw,
   Skull,
   TreePalm,
@@ -153,14 +152,6 @@ export default async function Characters({
                         <Button variant="secondary" size="sm">
                           <BookOpenIcon />
                           Sorts
-                        </Button>
-                      </Link>
-                    )}
-                    {character.creatures.length > 0 && (
-                      <Link href={`/characters/${character.id}/creatures`}>
-                        <Button variant="secondary" size="sm">
-                          <PawPrintIcon />
-                          Créatures
                         </Button>
                       </Link>
                     )}

@@ -8,7 +8,6 @@ import {
   Participant,
   Skills,
 } from "@/types/types";
-import creatures from "@/data/creatures.json";
 import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
 import {
@@ -16,7 +15,6 @@ import {
   groupBy,
   isNumber,
   isPlainObject,
-  isString,
   map,
   prop,
   reduce,
@@ -25,7 +23,6 @@ import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
 import { getCreature } from "@/lib/external-apis/aidedd";
 
-export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
 export const typedConditions: Condition[] = conditions;
 
@@ -231,10 +228,6 @@ export const getEncounterFromLocation = (location: Encounter["location"]) => {
   return encounter;
 };
 
-export const getCreatureFromId = (creatureId: number) => {
-  return typedCreatures.find((creature) => creature.id === creatureId);
-};
-
 const findClosestIndex = (partyLevels: string[], partylevel: string) => {
   const target = parseFloat(partylevel);
   return partyLevels.reduce((closestIndex, level, index) => {
@@ -257,22 +250,6 @@ export const getEnnemiesFromEncounter = ({
   const ennemiesList = encounter.ennemies ?? [];
   const closestIndex = findClosestIndex(Object.keys(ennemiesList), partyLevel);
   return Object.values(ennemiesList)[closestIndex] ?? [];
-};
-
-export const getCreaturesFromIds = (creatureIds: number[]) => {
-  const creaturesList = creatureIds.reduce((acc: Creature[], id) => {
-    const creature = typedCreatures.find((creature) => creature.id === id);
-    if (creature) {
-      return [...acc, creature];
-    }
-    return acc;
-  }, []);
-
-  if (creaturesList.length === 0) {
-    return null;
-  }
-
-  return creaturesList;
 };
 
 const getCreatureColor = (
@@ -301,17 +278,7 @@ export const getCreatures = async (encounter: Encounter) => {
     (enemy) => getIdFromEnemy(enemy),
   );
 
-  // local ennemies have number ids
-  if (enemiesIds.every(isNumber)) {
-    return getCreaturesFromIds(enemiesIds) ?? [];
-  }
-
-  // 2024 ennemies have string ids (creature name)
-  if (enemiesIds.every(isString)) {
-    return Promise.all(enemiesIds.map((name) => getCreature(name)));
-  }
-
-  return [];
+  return Promise.all(enemiesIds.map((name) => getCreature(name)));
 };
 
 export const getParticipantFromEncounter = ({
