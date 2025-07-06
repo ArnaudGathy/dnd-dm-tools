@@ -90,7 +90,7 @@ export type Action = {
 
 export type Creature = {
   name: string;
-  id: number | string;
+  id: string;
   type: string;
   size: string;
   challengeRating: number;
