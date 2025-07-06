@@ -3,8 +3,13 @@ import "server-only";
 
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { getSpellDataFromENName2024 } from "@/lib/external-apis/aidedd";
+import {
+  getEnSpellIdFromFrName,
+  getSpellDataFromFrName,
+  getSummarySpellFromFR,
+} from "@/lib/external-apis/aidedd";
 import { z } from "zod";
+import { SummaryAPISpell } from "@/types/schemas";
 
 export const updateSpellFavoriteAction = async ({
   spellId,
@@ -61,7 +66,22 @@ export const tryToAddSpell = async (
 
   const kebabCasedSpellName = kebabCaseify(validation.data.spellName);
 
-  const spellData = await getSpellDataFromENName2024(kebabCasedSpellName);
+  let spellData: SummaryAPISpell | null;
+
+  const frSummary = await getSummarySpellFromFR(kebabCasedSpellName);
+
+  if (frSummary) {
+    const enSpellId = await getEnSpellIdFromFrName(kebabCasedSpellName);
+    spellData = { ...frSummary, id: enSpellId };
+  } else {
+    const { frId, enId } = await getSpellDataFromFrName(kebabCasedSpellName);
+    const frSummary = await getSummarySpellFromFR(frId);
+    if (enId && frSummary) {
+      spellData = { ...frSummary, id: enId };
+    } else {
+      spellData = null;
+    }
+  }
 
   if (!spellData) {
     return { error: `Aucun sort trouvé avec ce nom : ${kebabCasedSpellName}` };
@@ -104,7 +124,10 @@ export const tryToAddSpell = async (
   });
 
   revalidatePath("/characters");
-  return { message: "Sort ajouté avec succès !", error: "" };
+  return {
+    message: `Sort "${spellData.name}" ajouté avec succès !`,
+    error: "",
+  };
 };
 
 export const deleteSpellAction = async ({

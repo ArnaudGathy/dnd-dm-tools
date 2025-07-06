@@ -19,16 +19,16 @@ export default function AddSpellForm({ characterId }: { characterId: string }) {
       <div className="flex w-fit flex-col gap-2">
         <Label htmlFor="spellName">Nom du sort à ajouter</Label>
         <span className="flex gap-2 text-sm text-muted-foreground">
-          {"Anglais uniquement (2024)"}
-          <a
-            className="underline"
-            target="_blank"
-            rel="noreferrer"
-            href="https://www.aidedd.org/spell/"
-          >
-            Site de référence
-          </a>
+          {"Anglais ou français (2024 uniquement)"}
         </span>
+        <a
+          className="text-sm text-muted-foreground underline"
+          target="_blank"
+          rel="noreferrer"
+          href="https://www.aidedd.org/spell/fr/"
+        >
+          Site de référence
+        </a>
         <Input type="text" id="spellName" name="spellName" />
         <ButtonWithFormStatusLoader hasTextDuringLoad={false}>
           <Plus className="size-6" /> Ajouter

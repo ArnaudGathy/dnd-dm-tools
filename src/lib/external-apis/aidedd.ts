@@ -1,52 +1,56 @@
 import axios from "axios";
 import {
   getBaseSpellData,
-  getBaseSpellData2024,
-  parseSpellFromAideDD2024,
+  parseSpellFromAideDD,
 } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
-import { parse2024CreaturesFromAideDD } from "@/lib/aideDDParse2024Creature";
+import { parseCreaturesFromAideDD } from "@/lib/aideDDParseCreature";
 import { Creature } from "@/types/types";
 import { APISpell } from "@/types/schemas";
 
-const getEnSpellURL = "https://www.aidedd.org/dnd/sorts.php?vo=";
-const getFrSpellURL = "https://www.aidedd.org/dnd/sorts.php?vf=";
-const getEn2024SpellURL = "https://www.aidedd.org/public/spell";
-const get2024CreatureURL = "https://www.aidedd.org/public/monster";
+const getFrSpellURL = "https://www.aidedd.org/public/spell/fr";
+const getEnSpellURL = "https://www.aidedd.org/public/spell";
+const getCreatureURL = "https://www.aidedd.org/public/monster";
 
-const getFrSpellIdFromEnName = async (spellName: string) => {
-  const response = await axios.get(`${getEnSpellURL}${spellName}`);
+export const getSpellDataFromFrName = async (enSpellName: string) => {
+  const response = await axios.get(`${getEnSpellURL}/${enSpellName}`);
   const $ = cheerio.load(response.data);
   const mainDataBlock = $(".col1");
   const linkHref = mainDataBlock.find(".trad > a").attr("href");
-  return linkHref?.split("=")[1] ?? "";
+  const frId = linkHref?.split("fr/")[1] ?? "";
+  const spellData = getBaseSpellData(response.data, enSpellName);
+  return { enId: spellData?.id, frId };
 };
 
-export const getSpellDataFromENName = async (spellName: string) => {
-  const frenchSpellId = await getFrSpellIdFromEnName(spellName);
-  return getSpellDataFromFRName(frenchSpellId);
+export const getEnSpellIdFromFrName = async (frSpellName: string) => {
+  const response = await axios.get(`${getFrSpellURL}/${frSpellName}`);
+  const $ = cheerio.load(response.data);
+  const mainDataBlock = $(".col1");
+  const linkHref = mainDataBlock.find(".trad > a").attr("href");
+  return linkHref?.split("/")[1] ?? "";
 };
 
-export const getSpellDataFromFRName = async (spellName: string) => {
-  const response = await axios.get(`${getFrSpellURL}${spellName}`);
-  return getBaseSpellData(response.data);
+const getSpellDataFromFRName = async (
+  frSpellName: string,
+  enSpellName: string,
+) => {
+  const response = await axios.get(`${getFrSpellURL}/${frSpellName}`);
+  return parseSpellFromAideDD({ html: response.data, spellName: enSpellName });
 };
 
-export const getSpellDataFromENName2024 = async (spellName: string) => {
-  const response = await axios.get(`${getEn2024SpellURL}/${spellName}`);
-  return getBaseSpellData2024(response.data, spellName);
+export const getSummarySpellFromFR = async (spellName: string) => {
+  const response = await axios.get(`${getFrSpellURL}/${spellName}`);
+  return getBaseSpellData(response.data, spellName);
 };
 
-export const getSpellPageFromAideDD2024 = async (
-  spellName: string,
+export const getSpellDetails = async (
+  enSpellName: string,
 ): Promise<APISpell> => {
-  const response = await axios.get(`${getEn2024SpellURL}/${spellName}`);
-  return parseSpellFromAideDD2024({ html: response.data, spellName });
+  const { frId } = await getSpellDataFromFrName(enSpellName);
+  return getSpellDataFromFRName(frId, enSpellName);
 };
 
-export const get2024Creature = async (
-  creatureName: string,
-): Promise<Creature> => {
-  const response = await axios.get(`${get2024CreatureURL}/${creatureName}`);
-  return parse2024CreaturesFromAideDD(response.data, creatureName);
+export const getCreature = async (creatureName: string): Promise<Creature> => {
+  const response = await axios.get(`${getCreatureURL}/${creatureName}`);
+  return parseCreaturesFromAideDD(response.data, creatureName);
 };

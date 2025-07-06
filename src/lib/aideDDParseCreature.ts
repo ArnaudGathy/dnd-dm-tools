@@ -258,7 +258,7 @@ function extractLegendaryActionUses(html: string): string | undefined {
   return match ? match[1].trim() : undefined;
 }
 
-export const parse2024CreaturesFromAideDD = (
+export const parseCreaturesFromAideDD = (
   html: string,
   creatureName: string,
 ) => {

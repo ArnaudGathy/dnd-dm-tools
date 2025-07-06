@@ -23,7 +23,7 @@ import {
 } from "remeda";
 import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
-import { get2024Creature } from "@/lib/external-apis/aidedd";
+import { getCreature } from "@/lib/external-apis/aidedd";
 
 export const typedCreatures: Creature[] = creatures;
 export const typedEncounters: Encounter[] = encounters;
@@ -301,14 +301,14 @@ export const getCreatures = async (encounter: Encounter) => {
     (enemy) => getIdFromEnemy(enemy),
   );
 
-  // 2014 ennemies have number ids
+  // local ennemies have number ids
   if (enemiesIds.every(isNumber)) {
     return getCreaturesFromIds(enemiesIds) ?? [];
   }
 
   // 2024 ennemies have string ids (creature name)
   if (enemiesIds.every(isString)) {
-    return Promise.all(enemiesIds.map((name) => get2024Creature(name)));
+    return Promise.all(enemiesIds.map((name) => getCreature(name)));
   }
 
   return [];

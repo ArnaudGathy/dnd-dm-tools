@@ -14,7 +14,6 @@ import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
 import {
   BookOpenIcon,
-  Car,
   PawPrintIcon,
   SquareUserIcon,
   SwordsIcon,
@@ -44,12 +43,6 @@ const menuItems = [
     label: "Sorts",
     to: "/spells",
     icon: BookOpenIcon,
-  },
-  {
-    label: "Course",
-    to: "/race",
-    icon: Car,
-    isPrivate: true,
   },
 ];
 

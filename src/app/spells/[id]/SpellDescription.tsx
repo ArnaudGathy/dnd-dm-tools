@@ -39,60 +39,9 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
             <SpellDetails spell={spell} />
 
             <div className="flex flex-col gap-2 border-t-2 pt-4">
-              <span className="flex items-center gap-2 text-xs text-muted-foreground">
-                <span>Source :</span>
-                {spell.source === SpellSource.API && (
-                  <Link
-                    href="https://www.dnd5eapi.co/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    D&D 5e API
-                  </Link>
-                )}
-                {spell.source === SpellSource.AIDE_DD && (
-                  <Link
-                    href="https://www.aidedd.org/dnd-filters/sorts.php"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    AideDD (2014)
-                  </Link>
-                )}
-                {spell.source === SpellSource.AIDE_DD_2024 && (
-                  <Link
-                    href="https://www.aidedd.org/public/spell"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    AideDD (2024)
-                  </Link>
-                )}
-                {spell.source === SpellSource.MIXED && (
-                  <div className="flex gap-1">
-                    <Link
-                      href="https://www.aidedd.org/dnd-filters/sorts.php"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      AideDD (2014)
-                    </Link>
-                    &
-                    <Link
-                      href="https://www.dnd5eapi.co/"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      D&D 5e API
-                    </Link>
-                  </div>
-                )}
-                {spell.source === SpellSource.LOCAL && "Fichier local"}
-              </span>
-
               {spell.name && (
                 <span className="flex items-center gap-2 text-xs text-muted-foreground">
-                  Lien AideDD :
+                  Reférence originale :
                   <Link
                     href={`https://www.aidedd.org/public/spell/${spell.index}`}
                     target="_blank"
@@ -103,6 +52,20 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                   </Link>
                 </span>
               )}
+
+              <span className="flex items-center gap-2 text-xs text-muted-foreground">
+                <span>Source de données :</span>
+                {spell.source === SpellSource.AIDE_DD_2024 && (
+                  <Link
+                    href="https://www.aidedd.org/public/spell"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    AideDD (2024)
+                  </Link>
+                )}
+                {spell.source === SpellSource.LOCAL && "Fichier local"}
+              </span>
             </div>
           </div>
         </CardContent>

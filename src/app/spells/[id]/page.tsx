@@ -1,8 +1,7 @@
 import { notFound } from "next/navigation";
 import { SpellDescription } from "@/app/spells/[id]/SpellDescription";
 import { SpellOwnedBy } from "@/app/spells/[id]/SpellOwnedBy";
-import { SpellClasses } from "@/app/spells/[id]/SpellClasses";
-import { getSpellPageFromAideDD2024 } from "@/lib/external-apis/aidedd";
+import { getSpellDetails } from "@/lib/external-apis/aidedd";
 
 const SpellDetails = async ({
   params,
@@ -10,7 +9,7 @@ const SpellDetails = async ({
   params: Promise<{ id: string }>;
 }) => {
   const spellId = (await params).id.toLowerCase();
-  const spell = await getSpellPageFromAideDD2024(spellId);
+  const spell = await getSpellDetails(spellId);
 
   if (!spell) {
     return notFound();
@@ -21,7 +20,6 @@ const SpellDetails = async ({
       <SpellDescription spell={spell} />
       <div className="hidden flex-col gap-4 md:flex">
         <SpellOwnedBy spell={spell} />
-        <SpellClasses spell={spell} />
       </div>
     </div>
   );

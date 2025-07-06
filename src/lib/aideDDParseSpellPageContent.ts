@@ -1,8 +1,8 @@
-import { APISpell, SpellSource } from "@/types/schemas";
+import { APISpell, SpellSource, SummaryAPISpell } from "@/types/schemas";
 import * as cheerio from "cheerio";
 import { capitalize } from "remeda";
 
-export const getBaseSpellData2024 = (html: string, spellName: string) => {
+export const getBaseSpellData = (html: string, spellName: string) => {
   const $ = cheerio.load(html);
   const mainDataBlock = $(".col1");
 
@@ -21,35 +21,10 @@ export const getBaseSpellData2024 = (html: string, spellName: string) => {
     name,
     level: parseInt(level, 10),
     isRitual,
-  };
+  } satisfies SummaryAPISpell;
 };
 
-export const getBaseSpellData = (html: string) => {
-  const $ = cheerio.load(html);
-  const mainDataBlock = $(".col1");
-
-  const linkHref = mainDataBlock.find(".trad > a").attr("href");
-  const id = linkHref?.split("=")[1];
-
-  const name = mainDataBlock.find("h1").text().trim();
-
-  const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
-  const level = levelAndSchoolBlock.split("-")[0].trim().match(/\d+/)?.[0];
-  const isRitual = levelAndSchoolBlock.includes("(rituel");
-
-  if (!id || !level) {
-    return null;
-  }
-
-  return {
-    id: id,
-    name,
-    level: parseInt(level, 10),
-    isRitual,
-  };
-};
-
-export const parseSpellFromAideDD2024 = ({
+export const parseSpellFromAideDD = ({
   html,
   spellName,
 }: {
@@ -58,10 +33,10 @@ export const parseSpellFromAideDD2024 = ({
 }) => {
   const $ = cheerio.load(html);
   const mainDataBlock = $(".col1");
-  const baseSpellData = getBaseSpellData2024(html, spellName);
+  const baseSpellData = getBaseSpellData(html, spellName);
 
   const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
-  const school = levelAndSchoolBlock.match(/^Level \d+ ([^(]+)/)?.[1].trim();
+  const school = levelAndSchoolBlock.match(/^(.*?)\s+de niveau\b/)?.[1].trim();
 
   if (!school) {
     throw new Error("No school found");
@@ -100,10 +75,10 @@ export const parseSpellFromAideDD2024 = ({
   const description = descriptionArray.join("");
 
   const [desc, atHigherLevel] = description.includes(
-    "Using a Higher-Level Spell Slot",
+    "Emplacement de niveau supérieur",
   )
-    ? description.split("Using a Higher-Level Spell Slot")
-    : description.split("Cantrip Upgrade");
+    ? description.split("Emplacement de niveau supérieur")
+    : description.split("Amélioration de sort mineur");
 
   const classRole = mainDataBlock
     .find(".classe")

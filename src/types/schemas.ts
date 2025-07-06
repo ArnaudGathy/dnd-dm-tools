@@ -1,10 +1,7 @@
 import { z } from "zod";
 
 export enum SpellSource {
-  MIXED = "Mixte",
-  AIDE_DD = "Aide DD",
   AIDE_DD_2024 = "Aide DD 2024",
-  API = "API",
   LOCAL = "fichier local",
 }
 
@@ -64,6 +61,12 @@ export const apiSpellSchema = z
   .strict();
 
 export type APISpell = z.infer<typeof apiSpellSchema>;
+export type SummaryAPISpell = {
+  id: string;
+  name: string;
+  level: number;
+  isRitual: boolean;
+};
 
 export const subClassSchema = z
   .object({

@@ -4,7 +4,7 @@ import SpellHeader from "@/app/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/spells/[id]/SpellDetails";
 import { SpellsSearchParams } from "@/app/spells/SpellsFilters";
-import { getSpellPageFromAideDD2024 } from "@/lib/external-apis/aidedd";
+import { getSpellDetails } from "@/lib/external-apis/aidedd";
 
 export default async function SpellCardsList({
   searchParams,
@@ -22,7 +22,7 @@ export default async function SpellCardsList({
 
   const spellDetails = await Promise.all(
     spellList.map(async (spell) => {
-      const spellFromApi = await getSpellPageFromAideDD2024(spell.spellId);
+      const spellFromApi = await getSpellDetails(spell.spellId);
       return {
         spellFromApp: spell.spell,
         spellFromAPI: spellFromApi,
