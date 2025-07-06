@@ -1,6 +1,24 @@
 import { Creature } from "@/types/types";
 
 export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
+  bandit: {
+    actions: [
+      {
+        hit: "4 (1d6 + 1) dégâts tranchant.",
+        modifier: "+3",
+        name: "Cimeterre",
+        reach: "1.5 m",
+        type: "Melee",
+      },
+      {
+        hit: "4 (1d8 + 1) dégâts perçants.",
+        modifier: "+3",
+        name: "Pistolet à silex",
+        reach: "24/96 m",
+        type: "Distance",
+      },
+    ],
+  },
   "sea-hag": {
     name: "Guenaude marine",
     traits: [

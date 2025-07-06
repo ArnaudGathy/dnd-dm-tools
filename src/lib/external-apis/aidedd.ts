@@ -55,6 +55,8 @@ export const getSpellDetails = async (
 export const getCreature = async (creatureName: string): Promise<Creature> => {
   const response = await axios.get(`${getCreatureURL}/${creatureName}`);
   const APICreature = parseCreaturesFromAideDD(response.data, creatureName);
+  // eslint-disable-next-line no-console
+  console.info("Creature", APICreature);
 
   const localCreature = creatureOverrides[creatureName];
   if (localCreature) {

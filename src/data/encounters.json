@@ -89,20 +89,27 @@
       "1": [
         {
           "id": "sea-hag",
-          "color": "#f10000"
+          "color": "#817D98"
         },
         {
           "id": "sea-hag",
-          "color": "#1c8811"
+          "color": "#788892"
         },
         {
           "id": "sea-hag",
-          "color": "#1383c5"
+          "color": "#96766D"
         }
       ]
     },
-    "informations": ["TODO (raccourcir description sorts)"],
-    "loots": ["TODO"],
+    "informations": ["Déguisement DD13. Baihu OK"],
+    "loots": [
+      "Fiole de Venin de serpent (JdS CON 11 (moitié) ou 3d6 dmg)",
+      "Un étrange masque en bois peint, serti de 9 gemmes (10po chacune)",
+      "Une carte indiquant Mbala (pointer sur la carte des joueurs.",
+      "Elle est annotée avec les textes suivants :",
+      "La vieille ne dort jamais",
+      "Ce qui pourrit en haut nourrit ce qui rampe en bas"
+    ],
     "youtubeId": "8Q7cioftmKs"
   },
   {
@@ -117,27 +124,33 @@
       "1": [
         {
           "id": "bandit",
-          "color": "#f10000"
+          "variant": "cimeterre",
+          "color": "#CA9F63"
         },
         {
           "id": "bandit",
-          "color": "#1c8811"
+          "variant": "cimeterre",
+          "color": "#6F8451"
         },
         {
           "id": "bandit",
-          "color": "#1383c5"
+          "variant": "cimeterre",
+          "color": "#49535F"
         },
         {
           "id": "bandit",
-          "color": "#fd7400"
+          "variant": "pistolet",
+          "color": "#CA9F63"
         },
         {
           "id": "bandit",
-          "color": "#fd7400"
+          "variant": "pistolet",
+          "color": "#6F8451"
         },
         {
           "id": "bandit",
-          "color": "#fd7400"
+          "variant": "pistolet",
+          "color": "#49535F"
         }
       ]
     },
