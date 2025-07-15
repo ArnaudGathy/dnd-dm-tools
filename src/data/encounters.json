@@ -164,5 +164,54 @@
       "une caisse de poudre noire de 30kg"
     ],
     "youtubeId": "2GX9lVHfnxs"
+  },
+  {
+    "name": "Goules & zombies",
+    "id": 66,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Fort Beluarian",
+      "mapMarker": "FB3"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "zombie",
+          "color": "#aad09a"
+        },
+        {
+          "id": "zombie",
+          "color": "#57abbb"
+        },
+        {
+          "id": "zombie",
+          "color": "#d3bf69"
+        },
+        {
+          "id": "ghoul",
+          "variant": "homme",
+          "color": "#1fa483"
+        },
+        {
+          "id": "ghoul",
+          "variant": "femme",
+          "color": "#8dd549"
+        },
+        {
+          "id": "ghoul",
+          "variant": "homme",
+          "color": "#A0A667"
+        }
+      ]
+    },
+    "informations": [
+      "Ils portent tous des triangle vert tatoués sur le front."
+    ],
+    "loots": [
+      "20 po par tête de goule",
+      "10 po par tête de zombie",
+      "roll 1d100 dans la table de loots"
+    ],
+    "youtubeId": "w54512C_A2k"
   }
 ]
