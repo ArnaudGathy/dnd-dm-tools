@@ -33,6 +33,12 @@ export default function FormGeneral({
       <CardContent className="flex flex-col gap-4">
         <div className="grid grid-cols-[35%_25%_25%] gap-4">
           <div className="flex flex-col gap-4">
+            <FormFieldInput
+              formFieldName="level"
+              formInstance={form}
+              label="Niveau"
+              disabled={!isEditMode}
+            />
             <FormFieldSelect
               formInstance={form}
               formFieldName="className"
@@ -59,7 +65,7 @@ export default function FormGeneral({
             />
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col justify-end gap-4">
             <FormFieldSelect
               formInstance={form}
               formFieldName="race"
@@ -78,18 +84,20 @@ export default function FormGeneral({
             />
           </div>
 
-          <div className="grid grid-cols-3 gap-4">
-            {keys(ABILITIES_MAP).map((stat) => {
-              return (
-                <FormFieldInput
-                  key={stat}
-                  formInstance={form}
-                  formFieldName={stat}
-                  label={shortenAbilityName(stat)}
-                  required
-                />
-              );
-            })}
+          <div className="flex flex-col justify-end gap-4">
+            <div className="grid grid-cols-3 gap-4">
+              {keys(ABILITIES_MAP).map((stat) => {
+                return (
+                  <FormFieldInput
+                    key={stat}
+                    formInstance={form}
+                    formFieldName={stat}
+                    label={shortenAbilityName(stat)}
+                    required
+                  />
+                );
+              })}
+            </div>
           </div>
         </div>
       </CardContent>

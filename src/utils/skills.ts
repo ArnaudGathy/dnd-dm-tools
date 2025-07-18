@@ -323,26 +323,17 @@ export const getMartialClassDC = (character: Character) => {
   return null;
 };
 
-const getBonusHP = (character: Character & { capacities: Capacity[] }) => {
+export const getBonusHP = (
+  capacities: { name: Capacity["name"] }[],
+  level: number,
+) => {
   if (
-    character.capacities.find(
+    capacities.find(
       ({ name }) =>
         name.toLowerCase().includes("tough") ||
         name.toLowerCase().includes("robuste"),
     )
   ) {
-    return character.level * 2;
+    return level * 2;
   }
-};
-
-export const getTotalHP = (
-  character: Character & { capacities: Capacity[] },
-) => {
-  const hitPoints = character.maximumHP;
-  const bonusHp = getBonusHP(character);
-  return {
-    baseHp: hitPoints,
-    bonus: bonusHp,
-    total: hitPoints + (bonusHp ?? 0),
-  };
 };

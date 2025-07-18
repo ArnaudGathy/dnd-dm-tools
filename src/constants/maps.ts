@@ -50,6 +50,22 @@ export const HIT_DICE_MAP = {
   [Classes.WIZARD]: "d6",
 };
 
+export const LEVEL_UP_HP_MAP = {
+  [Classes.SORCERER]: 4,
+  [Classes.WIZARD]: 4,
+  [Classes.ARTIFICER]: 5,
+  [Classes.BARD]: 5,
+  [Classes.CLERIC]: 5,
+  [Classes.DRUID]: 5,
+  [Classes.MONK]: 5,
+  [Classes.ROGUE]: 5,
+  [Classes.WARLOCK]: 5,
+  [Classes.FIGHTER]: 6,
+  [Classes.PALADIN]: 6,
+  [Classes.RANGER]: 6,
+  [Classes.BARBARIAN]: 7,
+};
+
 export const BASE_HP_PER_CLASS_MAP = {
   [Classes.ARTIFICER]: 8,
   [Classes.BARBARIAN]: 12,

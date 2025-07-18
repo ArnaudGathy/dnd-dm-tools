@@ -56,6 +56,7 @@ export const signUpFormSchema = z.object({
   campaign: z.nativeEnum(CampaignId),
   party: z.nativeEnum(PartyId),
   status: z.nativeEnum(CharacterStatus),
+  level: minMax(1, 20),
   name: formRequiredString,
   className: z.nativeEnum(Classes),
   subclassName: z.nativeEnum(Subclasses).nullable(),
@@ -218,6 +219,7 @@ export const signUpFormSchema = z.object({
 
 export const signupFormDefaultValues = {
   status: CharacterStatus.ACTIVE,
+  level: "1",
   name: "",
   campaign: CampaignId.TOMB,
   party: PartyId.MIFA,
@@ -301,6 +303,7 @@ export const backendCharacterSchema = z.object({
   campaign: z.nativeEnum(CampaignId),
   party: z.nativeEnum(PartyId),
   status: z.nativeEnum(CharacterStatus),
+  level: backendStringToNumber.min(1).max(20),
   name: backendRequiredString,
   className: z.nativeEnum(Classes),
   subclassName: z.nativeEnum(Subclasses).nullable(),
@@ -522,6 +525,7 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
 
   return {
     ...character,
+    level: String(character.level),
     campaign: character.campaign.name,
     party: character.campaign.party.name,
     strength: String(character.strength),

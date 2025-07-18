@@ -3,14 +3,34 @@ import "server-only";
 
 import prisma from "../prisma";
 import { z } from "zod";
-import { ArmorType, WeaponType } from "@prisma/client";
-import { BASE_HP_PER_CLASS_MAP } from "@/constants/maps";
+import { ArmorType, Classes, WeaponType } from "@prisma/client";
+import { BASE_HP_PER_CLASS_MAP, LEVEL_UP_HP_MAP } from "@/constants/maps";
 import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
 import { getModifier } from "@/utils/utils";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { backendCharacterSchema } from "@/app/characters/add/utils";
 import { CharacterById } from "@/lib/utils";
+import { getBonusHP } from "@/utils/skills";
+
+const getBaseHP = (
+  {
+    className,
+    capacities,
+    constitution,
+  }: {
+    className: Classes;
+    capacities: { name: string }[];
+    constitution: number;
+  },
+  level = 1,
+) => {
+  return (
+    BASE_HP_PER_CLASS_MAP[className] +
+    (getBonusHP(capacities, level) ?? 0) +
+    getModifier(constitution)
+  );
+};
 
 export const createCharacter = async (
   data: CharacterCreationForm,
@@ -52,9 +72,7 @@ export const createCharacter = async (
   });
 
   if (!existingCharacter) {
-    const HP =
-      BASE_HP_PER_CLASS_MAP[validation.data.className] +
-      getModifier(validation.data.constitution);
+    const HP = getBaseHP(validation.data);
 
     const character = await prisma.character.create({
       data: {
@@ -212,6 +230,21 @@ async function syncSimpleTable<Existing extends { id: number }, Incoming>(
   await Promise.all(tasks);
 }
 
+const getNewHP = (character: CharacterById, newLevel: number) => {
+  const baseHp = getBaseHP(character, newLevel);
+
+  if (newLevel > 1) {
+    return (
+      baseHp +
+      (newLevel - 1) *
+        (LEVEL_UP_HP_MAP[character.className] +
+          getModifier(character.constitution))
+    );
+  }
+
+  return baseHp;
+};
+
 export const updateCharacter = async (
   data: CharacterCreationForm,
   character: CharacterById,
@@ -244,9 +277,14 @@ export const updateCharacter = async (
     },
   });
 
+  const newHP = getNewHP(character, validation.data.level);
+
   await prisma.character.update({
     where: { id: character.id },
     data: {
+      maximumHP: newHP,
+      currentHP: newHP,
+      level: validation.data.level,
       status: validation.data.status,
       campaignId: campaign.id,
       name: validation.data.name,

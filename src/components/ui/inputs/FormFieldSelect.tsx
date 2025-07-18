@@ -54,7 +54,7 @@ export default function FormFieldSelect<
             {label && (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
-                  <FormLabel>{label}</FormLabel>
+                  <FormLabel disabled={rest.disabled}>{label}</FormLabel>
                   {required && <span className="text-primary">*</span>}
                 </div>
                 <div>
