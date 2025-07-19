@@ -32,7 +32,6 @@ export default function FormBio({
             label="Alignement"
             items={ALIGNMENT_MAP}
             required
-            disabled={isEditMode}
           />
         </div>
 

@@ -14,8 +14,12 @@ import {
   Swords,
   User,
   Wrench,
+  FileQuestionMark,
+  LoaderCircle,
 } from "lucide-react";
 import Settings from "@/app/characters/[id]/(sheet)/Settings";
+import Quests from "@/app/characters/[id]/(sheet)/Quests";
+import { Suspense } from "react";
 
 enum SHEETS_TABS {
   GENERAL = "general",
@@ -23,6 +27,7 @@ enum SHEETS_TABS {
   SKILLS = "skills",
   INVENTORY = "inventory",
   BIO = "bio",
+  QUESTS = "quests",
   SETTINGS = "settings",
 }
 
@@ -32,6 +37,7 @@ const tabs = {
   [SHEETS_TABS.COMBAT]: { label: "Combat", icon: Swords },
   [SHEETS_TABS.INVENTORY]: { label: "Inventaire", icon: Backpack },
   [SHEETS_TABS.BIO]: { label: "Bio", icon: User },
+  [SHEETS_TABS.QUESTS]: { label: "Quêtes", icon: FileQuestionMark },
   [SHEETS_TABS.SETTINGS]: { label: "Config", icon: Wrench },
 };
 
@@ -85,6 +91,18 @@ export default async function Character({
 
         <TabsContent value={SHEETS_TABS.BIO} className={tabContentClassName}>
           <Bio character={character} />
+        </TabsContent>
+
+        <TabsContent value={SHEETS_TABS.QUESTS} className={tabContentClassName}>
+          <Suspense
+            fallback={
+              <div className="flex min-h-[500px] items-center justify-center">
+                <LoaderCircle className="size-6 animate-spin" />
+              </div>
+            }
+          >
+            <Quests character={character} />
+          </Suspense>
         </TabsContent>
 
         <TabsContent

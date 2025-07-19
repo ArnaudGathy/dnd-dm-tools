@@ -25,13 +25,13 @@ export const StatCell = ({
     >
       <span
         style={{ minWidth: isInline ? undefined : spacing }}
-        className="mr-2 text-muted-foreground"
+        className="mr-2 text-center text-muted-foreground md:text-left"
       >
         {name}
       </span>
       <span
         className={clsx(
-          "space-x-4",
+          "space-x-4 text-center md:text-left",
           {
             "text-indigo-400": isHighlighted,
           },

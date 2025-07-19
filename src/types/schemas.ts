@@ -77,3 +77,24 @@ export const subClassSchema = z
   })
   .partial();
 export type SubClass = z.infer<typeof subClassSchema>;
+
+export enum QuestStatus {
+  NOT_GIVEN = "Pas donnée",
+  NO_INTEREST = "Pas intéressé",
+  INTERESTED = "Intéressé",
+  IN_PROGRESS = "En cours",
+  DONE = "Terminé",
+}
+
+export const questSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  giver: z.string(),
+  location: z.string(),
+  task: z.string(),
+  providedItem: z.string().optional(),
+  reward: z.string().optional(),
+  status: z.nativeEnum(QuestStatus),
+  outcome: z.string().optional(),
+});
+export type Quest = z.infer<typeof questSchema>;
