@@ -37,7 +37,6 @@ function QuestDetails({ quest }: { quest: Quest }) {
             <StatCell
               name="Résolution"
               stat={quest.outcome}
-              isHighlighted
               highlightClassName="text-green-400"
             />
           )}
