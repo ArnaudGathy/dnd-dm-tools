@@ -80,11 +80,15 @@ export const getCharacterById = async ({
           spell: true,
         },
       },
-      skills: true,
+      skills: {
+        orderBy: [{ skill: "asc" }],
+      },
       capacities: {
         orderBy: [{ name: "asc" }],
       },
-      savingThrows: true,
+      savingThrows: {
+        orderBy: [{ ability: "asc" }],
+      },
       armors: {
         orderBy: [{ name: "asc" }],
       },
@@ -97,7 +101,9 @@ export const getCharacterById = async ({
       inventory: {
         orderBy: [{ name: "asc" }],
       },
-      wealth: true,
+      wealth: {
+        orderBy: [{ id: "asc" }],
+      },
     },
   });
 };

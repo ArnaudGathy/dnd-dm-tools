@@ -58,8 +58,10 @@ export default function AddCharacter({
     } catch (e) {
       if (!isNextRouterError(e)) {
         const error = e as Error;
+        console.error(error);
         setError(error.message);
       }
+      console.error(e);
     } finally {
       setIsLoading(false);
     }

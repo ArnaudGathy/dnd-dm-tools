@@ -19,6 +19,7 @@ export default function FormApp({
   const statusOptions:
     | {
         ACTIVE: string;
+        BACKUP: string;
         RETIRED: string;
         DEAD: string;
       }
@@ -28,6 +29,7 @@ export default function FormApp({
       } = isEditMode
     ? {
         [CharacterStatus.ACTIVE]: CHARACTER_STATUS_MAP[CharacterStatus.ACTIVE],
+        [CharacterStatus.BACKUP]: CHARACTER_STATUS_MAP[CharacterStatus.BACKUP],
         [CharacterStatus.RETIRED]:
           CHARACTER_STATUS_MAP[CharacterStatus.RETIRED],
         [CharacterStatus.DEAD]: CHARACTER_STATUS_MAP[CharacterStatus.DEAD],
