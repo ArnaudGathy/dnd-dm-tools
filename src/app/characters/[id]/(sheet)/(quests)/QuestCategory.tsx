@@ -4,9 +4,10 @@ import { Quest, QuestStatus } from "@/types/schemas";
 import { ReactNode } from "react";
 import { useLocalStorage } from "react-use";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { QuestDetails } from "@/app/characters/[id]/(sheet)/(quests)/QuestDetails";
+import QuestDetails from "@/app/characters/[id]/(sheet)/(quests)/QuestDetails";
+import dynamic from "next/dynamic";
 
-export default function QuestCategory({
+function QuestCategory({
   quests,
   status,
   icon,
@@ -38,3 +39,5 @@ export default function QuestCategory({
     </div>
   );
 }
+
+export default dynamic(() => Promise.resolve(QuestCategory), { ssr: false });

@@ -8,19 +8,10 @@ import Inventory from "@/app/characters/[id]/(sheet)/Inventory";
 import Bio from "@/app/characters/[id]/(sheet)/Bio";
 import { LoaderCircle } from "lucide-react";
 import Settings from "@/app/characters/[id]/(sheet)/Settings";
-import Quests from "@/app/characters/[id]/(sheet)/Quests";
 import { Suspense } from "react";
-import SheetTabTrigger from "@/app/characters/[id]/(sheet)/SheetTabTrigger";
-
-export enum SHEETS_TABS {
-  GENERAL = "general",
-  COMBAT = "combat",
-  SKILLS = "skills",
-  INVENTORY = "inventory",
-  BIO = "bio",
-  QUESTS = "quests",
-  SETTINGS = "settings",
-}
+import Quests from "@/app/characters/[id]/(sheet)/Quests";
+import SheetTabTrigger from "./(sheet)/SheetTabTrigger";
+import { SHEETS_TABS } from "@/types/types";
 
 export default async function Character({
   params,

@@ -5,8 +5,9 @@ import SheetCard from "@/components/ui/SheetCard";
 import { StatCell } from "@/components/statblocks/StatCell";
 import { useLocalStorage } from "react-use";
 import { ChevronDown, ChevronUp } from "lucide-react";
+import dynamic from "next/dynamic";
 
-export const QuestDetails = ({ quest }: { quest: Quest }) => {
+function QuestDetails({ quest }: { quest: Quest }) {
   const [isOpen, setIsOpen] = useLocalStorage(`quest.${quest.id}`, true);
 
   return (
@@ -44,4 +45,6 @@ export const QuestDetails = ({ quest }: { quest: Quest }) => {
       )}
     </SheetCard>
   );
-};
+}
+
+export default dynamic(() => Promise.resolve(QuestDetails), { ssr: false });

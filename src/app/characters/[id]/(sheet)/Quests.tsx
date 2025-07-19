@@ -8,8 +8,8 @@ import {
   CircleFadingArrowUp,
   CircleSlash,
 } from "lucide-react";
-import QuestCategory from "@/app/characters/[id]/(sheet)/(quests)/QuestCategory";
 import SheetCard from "@/components/ui/SheetCard";
+import QuestCategoryClientWrapper from "./(quests)/QuestCategoryWrapper";
 
 export default async function Quests({
   character,
@@ -33,7 +33,7 @@ export default async function Quests({
       ) : (
         <>
           {onGoingQuests && (
-            <QuestCategory
+            <QuestCategoryClientWrapper
               quests={onGoingQuests}
               status={QuestStatus.IN_PROGRESS}
               icon={
@@ -42,21 +42,21 @@ export default async function Quests({
             />
           )}
           {interestedQuests && (
-            <QuestCategory
+            <QuestCategoryClientWrapper
               quests={interestedQuests}
               status={QuestStatus.INTERESTED}
               icon={<CircleAlert className="size-6 text-amber-500" />}
             />
           )}
           {noInterestQuests && (
-            <QuestCategory
+            <QuestCategoryClientWrapper
               quests={noInterestQuests}
               status={QuestStatus.NO_INTEREST}
               icon={<CircleSlash className="size-6 text-red-500" />}
             />
           )}
           {completedQuests && (
-            <QuestCategory
+            <QuestCategoryClientWrapper
               quests={completedQuests}
               status={QuestStatus.DONE}
               icon={<CircleCheckBig className="size-6 text-green-500" />}

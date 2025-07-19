@@ -1,7 +1,6 @@
 "use client";
 
 import { TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SHEETS_TABS } from "../page";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import {
   Backpack,
@@ -13,6 +12,7 @@ import {
   Wrench,
 } from "lucide-react";
 import { entries } from "remeda";
+import { SHEETS_TABS } from "@/types/types";
 
 const tabs = {
   [SHEETS_TABS.GENERAL]: { label: "Général", icon: FileText },

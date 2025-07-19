@@ -134,3 +134,13 @@ export type Creature = {
   spells?: Array<{ id: string; summary?: string }>;
   colors?: Array<string>;
 };
+
+export enum SHEETS_TABS {
+  GENERAL = "general",
+  COMBAT = "combat",
+  SKILLS = "skills",
+  INVENTORY = "inventory",
+  BIO = "bio",
+  QUESTS = "quests",
+  SETTINGS = "settings",
+}
