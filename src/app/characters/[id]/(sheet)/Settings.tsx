@@ -23,18 +23,20 @@ export default function Settings({ character }: { character: CharacterById }) {
       <SheetCard className="flex flex-col">
         <span className="mb-2 text-2xl font-bold">Informations</span>
         <StatCell name="État" stat={CHARACTER_STATUS_MAP[character.status]} />
-        <StatCell
-          name="Campagne"
-          stat={CAMPAIGN_MAP[character.campaign.name]}
-        />
-        <StatCell
-          name="Groupe"
-          stat={PARTY_MAP[character.campaign.party.name]}
-        />
         <Separator className="my-4 bg-muted-foreground" />
         <StatCell name="Propriétaire" stat={character.owner} />
         <StatCell name="Modification" stat={formatDate(character.updatedAt)} />
         <StatCell name="Création" stat={formatDate(character.createdAt)} />
+        <Separator className="my-4 bg-muted-foreground" />
+        <StatCell
+          name="Campagne"
+          stat={CAMPAIGN_MAP[character.campaign.name]}
+        />
+        <StatCell name="DM de la Campagne" stat={character.campaign.owner} />
+        <StatCell
+          name="Groupe"
+          stat={PARTY_MAP[character.campaign.party.name]}
+        />
         <Link href={`/characters/${character.id}/update`} className="mt-4">
           <Button className="w-full">
             <Edit /> Modifier le personnage
