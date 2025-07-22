@@ -9,7 +9,7 @@ export const getNumberOfCharactersByOwner = async ({
 }) => {
   return prisma.character.count({
     where: {
-      owner: ownerEmail,
+      OR: [{ owner: ownerEmail }, { campaign: { owner: ownerEmail } }],
     },
   });
 };
@@ -29,20 +29,28 @@ export const getFilteredCharactersByOwner = async ({
 }) => {
   return prisma.character.findMany({
     where: {
-      owner: ownerEmail,
-      name: {
-        contains: search,
-        mode: "insensitive",
-      },
-      campaign: {
-        name: campaign,
-        party: {
-          name: party,
+      OR: [{ owner: ownerEmail }, { campaign: { owner: ownerEmail } }],
+      AND: [
+        {
+          name: {
+            contains: search,
+            mode: "insensitive",
+          },
         },
-      },
-      status: {
-        equals: status,
-      },
+        {
+          campaign: {
+            name: campaign,
+            party: {
+              name: party,
+            },
+          },
+        },
+        {
+          status: {
+            equals: status,
+          },
+        },
+      ],
     },
     include: {
       campaign: {

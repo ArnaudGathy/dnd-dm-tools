@@ -46,8 +46,12 @@ export type CharacterById = Character & {
   wealth: Money[];
 };
 
+export type CharacterByOwner = Character & {
+  campaign: Campaign & { party: Party };
+};
+
 export async function getValidCharacter(characterId: string) {
-  const { userMail, isAdmin } = await getSessionData();
+  const { userMail } = await getSessionData();
   const character = await getCharacterById({
     characterId: parseInt(characterId, 10),
   });
@@ -56,7 +60,7 @@ export async function getValidCharacter(characterId: string) {
     notFound();
   }
 
-  if (userMail === character.owner || isAdmin) {
+  if (userMail === character.owner || userMail === character.campaign.owner) {
     return character;
   }
 

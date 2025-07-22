@@ -1,43 +1,16 @@
 import {
-  getNumberOfCharactersByOwner,
   getFilteredCharactersByOwner,
+  getNumberOfCharactersByOwner,
 } from "@/lib/api/characters";
-import { cn, getSessionData } from "@/lib/utils";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  CAMPAIGN_MAP,
-  CLASS_MAP,
-  PARTY_MAP,
-  RACE_MAP,
-  SPELLCASTING_MODIFIER_MAP,
-} from "@/constants/maps";
-import { StatCell } from "@/components/statblocks/StatCell";
+import { getSessionData } from "@/lib/utils";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
-import {
-  BookOpenIcon,
-  Edit,
-  FileSpreadsheet,
-  Heart,
-  MapPin,
-  RotateCcw,
-  Skull,
-  TreePalm,
-  UserPlus,
-  Users,
-} from "lucide-react";
-import { classColors } from "@/constants/colors";
+import { UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import CharacterFilters from "@/app/characters/CharacterFilters";
 import { getOwnersCampaigns } from "@/lib/api/campaigns";
 import { getOwnersParties } from "@/lib/api/parties";
-import PopoverComponent from "@/components/ui/PopoverComponent";
+import CharacterList from "@/app/characters/CharacterList";
 
 export default async function Characters({
   searchParams,
@@ -50,8 +23,8 @@ export default async function Characters({
   }>;
 }) {
   const params = await searchParams;
-  const { isAdmin, userMail } = await getSessionData();
-  const ownerEmail = isAdmin ? undefined : userMail;
+  const { userMail } = await getSessionData();
+  const ownerEmail = userMail;
 
   const characters = await getFilteredCharactersByOwner({
     ownerEmail,
@@ -60,6 +33,13 @@ export default async function Characters({
   const totalCharacters = await getNumberOfCharactersByOwner({ ownerEmail });
   const campaigns = await getOwnersCampaigns({ ownerEmail });
   const parties = await getOwnersParties({ ownerEmail });
+
+  const myCharacters = characters.filter(
+    (character) => character.owner === userMail,
+  );
+  const myCampaignCharacters = characters.filter(
+    (character) => character.owner !== userMail,
+  );
 
   return (
     <div className="space-y-4">
@@ -79,102 +59,34 @@ export default async function Characters({
         campaigns={campaigns}
         numberOfCharacters={totalCharacters}
       />
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-        {characters.length > 0 ? (
-          characters.map((character) => {
-            const spellCastingModifier =
-              SPELLCASTING_MODIFIER_MAP[character.className];
 
-            return (
-              <div
-                key={character.id}
-                className={cn(
-                  "p-[1px]",
-                  character.status === CharacterStatus.ACTIVE &&
-                    "animate-shimmer rounded-lg bg-gradient-to-r from-blue-500 via-pink-500 to-blue-500 bg-[length:200%_100%]",
-                )}
-              >
-                <Card>
-                  <CardHeader>
-                    <CardTitle className="flex items-center justify-between">
-                      <span>{character.name}</span>
-                      <div>
-                        {character.status === CharacterStatus.DEAD && (
-                          <PopoverComponent definition="Personnage mort">
-                            <Skull />
-                          </PopoverComponent>
-                        )}
-                        {character.status === CharacterStatus.RETIRED && (
-                          <PopoverComponent definition="Personnage retraité">
-                            <TreePalm />
-                          </PopoverComponent>
-                        )}
-                        {character.status === CharacterStatus.ACTIVE && (
-                          <PopoverComponent definition="Personnage actif">
-                            <Heart />
-                          </PopoverComponent>
-                        )}
-                        {character.status === CharacterStatus.BACKUP && (
-                          <PopoverComponent definition="Personnage de secours">
-                            <RotateCcw />
-                          </PopoverComponent>
-                        )}
-                      </div>
-                    </CardTitle>
-                    <CardDescription className="flex gap-1">
-                      <span
-                        style={{
-                          color: classColors[character.className].background,
-                        }}
-                      >
-                        {CLASS_MAP[character.className]}
-                      </span>
-                      <span>{RACE_MAP[character.race]}</span>
-                      <span>{`niveau ${character.level}`}</span>
-                    </CardDescription>
-                  </CardHeader>
-                  <CardContent className="flex flex-col gap-4">
-                    {totalCharacters > 1 && (
-                      <div className="flex flex-col gap-4">
-                        <StatCell
-                          name={<Users />}
-                          stat={PARTY_MAP[character.campaign.party.name]}
-                          isInline
-                        />
-                        <StatCell
-                          name={<MapPin />}
-                          stat={CAMPAIGN_MAP[character.campaign.name]}
-                          isInline
-                        />
-                      </div>
-                    )}
-                    <div className="flex gap-4">
-                      <Link href={`/characters/${character.id}`}>
-                        <Button variant="default" size="sm">
-                          <FileSpreadsheet />
-                          Fiche
-                        </Button>
-                      </Link>
-                      {!!spellCastingModifier && (
-                        <Link href={`/characters/${character.id}/spells`}>
-                          <Button variant="secondary" size="sm">
-                            <BookOpenIcon />
-                            Sorts
-                          </Button>
-                        </Link>
-                      )}
-                      <Link href={`/characters/${character.id}/update`}>
-                        <Button variant="secondary" size="sm">
-                          <Edit />
-                          Éditer
-                        </Button>
-                      </Link>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
-            );
-          })
+      <h1 className="text-2xl font-bold tracking-tight">Mes personnages</h1>
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+        {myCharacters.length > 0 ? (
+          myCharacters.map((character) => (
+            <CharacterList
+              key={character.id}
+              character={character}
+              numberOfCharacters={myCharacters.length}
+            />
+          ))
+        ) : (
+          <div className="text-muted-foreground">Aucun personnage trouvé.</div>
+        )}
+      </div>
+
+      <h1 className="pt-4 text-2xl font-bold tracking-tight">
+        Personnages de mes campagnes
+      </h1>
+      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+        {myCampaignCharacters.length > 0 ? (
+          myCampaignCharacters.map((character) => (
+            <CharacterList
+              key={character.id}
+              character={character}
+              numberOfCharacters={myCampaignCharacters.length}
+            />
+          ))
         ) : (
           <div className="text-muted-foreground">Aucun personnage trouvé.</div>
         )}

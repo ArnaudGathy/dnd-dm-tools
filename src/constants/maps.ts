@@ -340,11 +340,13 @@ export const CAMPAIGN_MAP = {
   [CampaignId.PHANDELVER]: "Les tréfonds de Phancreux",
   [CampaignId.DRAGONS]: "Les dragons de l'île aux tempêtes",
   [CampaignId.TOMB]: "La tombe de l'annihilation",
+  [CampaignId.NETHERDEEP]: "Call of the Netherdeep",
 };
 
 export const PARTY_MAP = {
   [PartyId.MIFA]: "La mifa",
   [PartyId.PAINTERS]: "Les peintres",
+  [PartyId.ANTHONY]: "Le groupe d'Anthony",
 };
 
 export const CHARACTER_STATUS_MAP = {
