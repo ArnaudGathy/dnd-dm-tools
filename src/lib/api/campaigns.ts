@@ -7,11 +7,16 @@ export const getOwnersCampaigns = async ({
 }) => {
   return prisma.campaign.findMany({
     where: {
-      character: {
-        some: {
-          owner: ownerEmail,
+      OR: [
+        {
+          character: {
+            some: {
+              owner: ownerEmail,
+            },
+          },
         },
-      },
+        { owner: ownerEmail },
+      ],
     },
   });
 };
