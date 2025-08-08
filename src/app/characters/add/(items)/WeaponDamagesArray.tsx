@@ -23,7 +23,8 @@ import ArrayAddButton from "@/app/characters/add/(items)/ArrayAddButton";
 import ArrayDeleteButton from "@/app/characters/add/(items)/ArrayDeleteButton";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
-import { getDamageTypeIconAndColor } from "@/utils/weapons";
+
+import { getDamageTypeIconAndColor } from "@/utils/stats/weapons";
 
 export default function WeaponDamagesArray({
   form,

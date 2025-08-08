@@ -289,6 +289,10 @@ export const SPEED_BY_RACE_MAP = {
   [Races.TABAXI]: 30,
 };
 
+export const MONK_SPEED_IN_SQUARE = [
+  0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6,
+];
+
 export const SIZE_BY_RACE_MAP = {
   [Races.AASIMAR]: "M", // Moyen
   [Races.DRAGONBORN]: "M", // Moyen

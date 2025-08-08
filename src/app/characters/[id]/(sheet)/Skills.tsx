@@ -1,7 +1,6 @@
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
 import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_NAME_MAP } from "@/constants/maps";
-import { getSkillModifier } from "@/utils/skills";
 import SheetCard from "@/components/ui/SheetCard";
 import { Asterisk, Crown } from "lucide-react";
 import SheetSingleData from "@/components/ui/SheetSingleData";
@@ -10,6 +9,7 @@ import { addSignToNumber, getModifier } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
 import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
+import { getSkillModifier } from "@/utils/stats/skills";
 
 export default function Skills({ character }: { character: CharacterById }) {
   const abilities = {

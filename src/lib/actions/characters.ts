@@ -11,7 +11,8 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { backendCharacterSchema } from "@/app/characters/add/utils";
 import { CharacterById } from "@/lib/utils";
-import { getBonusHP } from "@/utils/skills";
+
+import { getBonusHP } from "@/utils/stats/hp";
 
 const getBaseHP = (
   {

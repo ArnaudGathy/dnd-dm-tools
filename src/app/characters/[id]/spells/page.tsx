@@ -6,7 +6,8 @@ import { getValidCharacter } from "@/lib/utils";
 import AddSpellForm from "@/app/characters/[id]/spells/AddSpellForm";
 import { Separator } from "@/components/ui/separator";
 import EditModeButton from "@/app/characters/[id]/spells/EditModeButton";
-import { getSpellsToPreparePerDay } from "@/utils/skills";
+
+import { getSpellsToPreparePerDay } from "@/utils/stats/spells";
 
 const defaultFilter = SPELLS_GROUP_BY.LEVEL;
 

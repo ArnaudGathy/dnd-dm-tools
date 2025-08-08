@@ -7,7 +7,6 @@ import {
   HIT_DICE_MAP,
   RACE_MAP,
   SIZE_BY_RACE_MAP,
-  SPEED_BY_RACE_MAP,
   SPELLCASTING_MODIFIER_MAP,
   SUBCLASS_MAP,
 } from "@/constants/maps";
@@ -15,16 +14,14 @@ import { classColors } from "@/constants/colors";
 import { StatCell } from "@/components/statblocks/StatCell";
 import { BookOpenIcon, X } from "lucide-react";
 import { entries } from "remeda";
-import {
-  addSignToNumber,
-  convertFeetDistanceIntoSquares,
-  getModifier,
-} from "@/utils/utils";
+import { addSignToNumber, getModifier } from "@/utils/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import AbilitySquare from "@/app/characters/[id]/(sheet)/AbilitySquare";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
+
+import { getMovementSpeed } from "@/utils/stats/speed";
 
 export default function Summary({ character }: { character: CharacterById }) {
   const abilities = {
@@ -38,6 +35,7 @@ export default function Summary({ character }: { character: CharacterById }) {
 
   const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
   const conModifier = getModifier(character.constitution);
+  const movementSpeedDetails = getMovementSpeed(character);
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 p-0 md:w-[70%] md:grid-cols-6 md:grid-rows-[auto] md:p-4">
@@ -115,9 +113,7 @@ export default function Summary({ character }: { character: CharacterById }) {
             />
             <StatCell
               name="Mouvements"
-              stat={`${convertFeetDistanceIntoSquares(
-                SPEED_BY_RACE_MAP[character.race],
-              )} cases par tour`}
+              stat={`${movementSpeedDetails.total} cases par tour`}
             />
             <StatCell
               name="Historique"

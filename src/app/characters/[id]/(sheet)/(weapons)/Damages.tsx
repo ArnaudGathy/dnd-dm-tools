@@ -7,8 +7,10 @@ import PopoverComponent from "@/components/ui/PopoverComponent";
 import { cn } from "@/lib/utils";
 import InfoCell from "@/app/characters/[id]/(sheet)/(weapons)/InfoCell";
 import { Character, Weapon, WeaponDamage } from "@prisma/client";
-import { getDamageTypeIconAndColor } from "@/utils/weapons";
-import { getWeaponDamage } from "@/utils/skills";
+import {
+  getDamageTypeIconAndColor,
+  getWeaponDamage,
+} from "@/utils/stats/weapons";
 
 export default function Damages({
   weapon,

@@ -3,7 +3,7 @@ import { ABILITY_NAME_MAP } from "@/constants/maps";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import { Asterisk } from "lucide-react";
 import { CharacterById, cn } from "@/lib/utils";
-import { getSavingThrowModifier } from "@/utils/skills";
+import { getSavingThrowModifier } from "@/utils/stats/skills";
 import SheetCard from "@/components/ui/SheetCard";
 
 export default function SavingThrows({

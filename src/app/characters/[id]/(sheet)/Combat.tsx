@@ -20,16 +20,6 @@ import {
   ABILITY_NAME_MAP_TO_FR,
   SPELLCASTING_MODIFIER_MAP,
 } from "@/constants/maps";
-import {
-  getInitiativeModifier,
-  getMovementSpeed,
-  getSpellCastingModifier,
-  getSpellSaveDC,
-  getTotalAC,
-  getWeaponAttackBonus,
-  getSpellsToPreparePerDay,
-  getMartialClassDC,
-} from "@/utils/skills";
 import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
 import Name from "@/app/characters/[id]/(sheet)/(weapons)/Name";
 import Damages from "@/app/characters/[id]/(sheet)/(weapons)/Damages";
@@ -39,6 +29,17 @@ import SpellSlots from "@/app/characters/[id]/(sheet)/(spells)/SpellSlots";
 import { Separator } from "@/components/ui/separator";
 import HPForm from "@/app/characters/[id]/(sheet)/(forms)/HPForm";
 import AmmunitionForm from "@/app/characters/[id]/(sheet)/(forms)/AmmunitionForm";
+import { getMovementSpeed } from "@/utils/stats/speed";
+import { getTotalAC } from "@/utils/stats/ac";
+import {
+  getSpellCastingModifier,
+  getSpellSaveDC,
+  getSpellsToPreparePerDay,
+} from "@/utils/stats/spells";
+import { getInitiativeModifier } from "@/utils/stats/initiative";
+import { getMartialClassDC } from "@/utils/stats/classSpecific";
+
+import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 
 const StatCard = ({
   value,
@@ -67,9 +68,9 @@ export default function Combat({ character }: { character: CharacterById }) {
   const ACDetails = getTotalAC(character);
   const spellCastingDetails = getSpellCastingModifier(character);
   const spellSaveDCDetails = getSpellSaveDC(character);
+  const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
   const initiativeDetails = getInitiativeModifier(character);
   const movementSpeedDetails = getMovementSpeed(character);
-  const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
   const martialClassDC = getMartialClassDC(character);
   const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
 
@@ -153,6 +154,12 @@ export default function Combat({ character }: { character: CharacterById }) {
                   <span>Racial : </span>
                   <span>{movementSpeedDetails.raceSpeed}</span>
                 </div>
+                {movementSpeedDetails.classSpeed > 0 && (
+                  <div>
+                    <span>Classe : </span>
+                    <span>{movementSpeedDetails.classSpeed}</span>
+                  </div>
+                )}
                 {movementSpeedDetails.movementSpeedBonus > 0 && (
                   <div>
                     <span>Bonus : </span>
