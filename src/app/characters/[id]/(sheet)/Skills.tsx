@@ -8,7 +8,6 @@ import { Skills as SkillList } from "@prisma/client";
 import { addSignToNumber, getModifier } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/characters/[id]/(sheet)/(skills)/SavingThrows";
-import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
 import { getSkillModifier } from "@/utils/stats/skills";
 
 export default function Skills({ character }: { character: CharacterById }) {
@@ -98,8 +97,6 @@ export default function Skills({ character }: { character: CharacterById }) {
         label="Perception passive"
         value={8 + getSkillModifier(character, SkillList.PERCEPTION)}
       />
-
-      <InspirationForm character={character} />
     </div>
   );
 }

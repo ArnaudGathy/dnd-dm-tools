@@ -293,6 +293,18 @@ export const MONK_SPEED_IN_SQUARE = [
   0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6,
 ];
 
+export const ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL = [
+  0, 0, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8, 10, 10, 10, 10, 12, 12, 12, 12,
+];
+
+export const RANGER_HUNTERS_MARK_PER_LEVEL = [
+  2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
+];
+
+export const CLERIC_CHANNEL_DIVINITY_PER_LEVEL = [
+  0, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4,
+];
+
 export const SIZE_BY_RACE_MAP = {
   [Races.AASIMAR]: "M", // Moyen
   [Races.DRAGONBORN]: "M", // Moyen

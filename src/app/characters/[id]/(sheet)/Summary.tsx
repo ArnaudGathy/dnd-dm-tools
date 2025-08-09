@@ -19,7 +19,6 @@ import SheetCard from "@/components/ui/SheetCard";
 import AbilitySquare from "@/app/characters/[id]/(sheet)/AbilitySquare";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import InspirationForm from "@/app/characters/[id]/(sheet)/(forms)/InspirationForm";
 
 import { getMovementSpeed } from "@/utils/stats/speed";
 
@@ -59,7 +58,7 @@ export default function Summary({ character }: { character: CharacterById }) {
         </div>
       </SheetCard>
 
-      <div className="col-span-2 grid grid-cols-1 gap-4 md:col-span-5 md:row-span-2 md:grid-cols-2">
+      <div className="col-span-2 grid grid-cols-1 gap-4 md:col-span-6 md:row-span-2 md:grid-cols-2">
         <SheetCard className="flex justify-center">
           <div className="flex flex-col gap-2 md:gap-0">
             <span
@@ -126,11 +125,6 @@ export default function Summary({ character }: { character: CharacterById }) {
           </div>
         </SheetCard>
       </div>
-
-      <InspirationForm
-        character={character}
-        className="col-span-2 md:col-span-1 md:row-span-2"
-      />
 
       {entries(abilities).map(([name, value]) => (
         <AbilitySquare key={name} name={name} value={value} />

@@ -8,6 +8,7 @@ import { useLocalStorage } from "react-use";
 import { BookOpenIcon, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 const SingleSlot = ({
   isExpanded,
@@ -29,7 +30,7 @@ const SingleSlot = ({
   ></div>
 );
 
-export default function SpellSlots({ character }: { character: Character }) {
+function SpellSlots({ character }: { character: Character }) {
   const spellSlots = CLASS_SPELL_PROGRESSION_MAP[character.className];
   const allSlots = spellSlots[character.level - 1];
 
@@ -73,7 +74,6 @@ export default function SpellSlots({ character }: { character: Character }) {
           {entries(allSlots).map(([level, slots]) => {
             const numberLevel = parseInt(level, 10);
             const availableSlots = currentSlots[numberLevel];
-            // console.log("availableSlots", availableSlots);
             return (
               <div key={level} className="flex flex-col gap-1">
                 <span className="self-center text-sm text-muted-foreground">{`Niv. ${level}`}</span>
@@ -115,3 +115,5 @@ export default function SpellSlots({ character }: { character: Character }) {
     </>
   );
 }
+
+export default dynamic(() => Promise.resolve(SpellSlots), { ssr: false });
