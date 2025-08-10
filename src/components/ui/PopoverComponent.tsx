@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Popover,
   PopoverContent,
@@ -11,19 +13,29 @@ export default function PopoverComponent({
   className,
   asChild = false,
   side = "bottom",
+  noFocus = false,
 }: {
   asChild?: boolean;
   children: React.ReactNode;
   definition: React.ReactNode;
   className?: string;
   side?: PopoverContentProps["side"];
+  noFocus?: boolean;
 }) {
   return (
     <Popover>
       <PopoverTrigger className={className} asChild={asChild}>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-fit" side={side}>
+      <PopoverContent
+        className="w-fit"
+        side={side}
+        onOpenAutoFocus={(event) => {
+          if (noFocus) {
+            event.preventDefault();
+          }
+        }}
+      >
         {definition}
       </PopoverContent>
     </Popover>

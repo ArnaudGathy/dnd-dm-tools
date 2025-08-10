@@ -1,61 +1,68 @@
-import { Button } from "@/components/ui/button";
-import { Palette, Settings, Tent } from "lucide-react";
-import { FlameKindling } from "lucide-react";
-import PopoverComponent from "@/components/ui/PopoverComponent";
-import { Switch } from "@/components/ui/switch";
-import { cn } from "@/lib/utils";
-import { entries } from "remeda";
-import { Themes } from "@/app/characters/[id]/(sheet)/(spells)/useRessouceStorage";
-import { DisplayRessource } from "@/app/characters/[id]/(sheet)/(spells)/Ressources";
-import { PopoverClose } from "@/components/ui/popover";
+"use client";
 
-const themes = {
-  red: "bg-red-500",
-  orange: "bg-orange-500",
-  amber: "bg-amber-500",
-  yellow: "bg-yellow-500",
-  lime: "bg-lime-500",
-  green: "bg-green-500",
-  emerald: "bg-emerald-500",
-  teal: "bg-teal-500",
-  cyan: "bg-cyan-500",
-  sky: "bg-sky-500",
-  blue: "bg-blue-500",
-  indigo: "bg-indigo-500",
-  violet: "bg-violet-500",
-  purple: "bg-purple-500",
-  fuchsia: "bg-fuchsia-500",
-  pink: "bg-pink-500",
-  rose: "bg-rose-500",
-  neutral: "bg-neutral-500",
-  white: "bg-white",
-} satisfies Record<Themes, string>;
+import { Button } from "@/components/ui/button";
+import { FlameKindling, Settings, Tent } from "lucide-react";
+import PopoverComponent from "@/components/ui/PopoverComponent";
+import { DisplayRessource } from "@/app/characters/[id]/(sheet)/(spells)/Ressources";
+import RessourceConfigItem from "@/app/characters/[id]/(sheet)/(spells)/RessourceConfigItem";
+import { closestCenter, DndContext } from "@dnd-kit/core";
+import {
+  arrayMove,
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import type { DragEndEvent } from "@dnd-kit/core/dist/types";
+import { RessourceStorage } from "@/app/characters/[id]/(sheet)/(spells)/useRessouceStorage";
+import { mapToObj } from "remeda";
 
 export default function RessourcesConfigMenu({
   ressources,
-  shortRest,
-  longRest,
+  shortRestAction,
+  longRestAction,
+  sortRessourcesAction,
 }: {
   ressources: DisplayRessource[];
-  shortRest: () => void;
-  longRest: () => void;
+  shortRestAction: () => void;
+  longRestAction: () => void;
+  sortRessourcesAction: (ressources: RessourceStorage) => void;
 }) {
+  const handleDragEnd = (event: DragEndEvent) => {
+    const { active, over } = event;
+
+    if (active.id && over?.id && active.id !== over.id) {
+      const oldIndex = ressources.findIndex(
+        (ressource) => ressource.name === active.id,
+      );
+      const newIndex = ressources.findIndex(
+        (ressource) => ressource.name === over.id,
+      );
+
+      const newArray = arrayMove(ressources, oldIndex, newIndex);
+      const storageRessources = mapToObj(newArray, (ressource, index) => [
+        ressource.ressourceName,
+        { ...ressource.useRessource[0], order: index },
+      ]);
+      sortRessourcesAction(storageRessources);
+    }
+  };
+
   return (
     <div>
       <PopoverComponent
         asChild
         side="top"
+        noFocus
         definition={
-          <div className="flex min-w-[350px] flex-col gap-4">
+          <div className="flex min-w-[300px] flex-col gap-4">
             <div>
               <span className="mb-2 block text-lg font-bold">
                 Réinitialiser
               </span>
               <div className="flex gap-2">
-                <Button size="sm" onClick={longRest}>
+                <Button size="sm" onClick={longRestAction}>
                   <Tent /> Long repos
                 </Button>
-                <Button theme="neutral" size="sm" onClick={shortRest}>
+                <Button theme="neutral" size="sm" onClick={shortRestAction}>
                   <FlameKindling /> Court repos
                 </Button>
               </div>
@@ -66,65 +73,25 @@ export default function RessourcesConfigMenu({
                 Configuration
               </span>
               <div className="flex flex-col gap-2">
-                {ressources.map(({ name, useRessource }) => {
-                  const [ressource, setRessource] = useRessource;
-
-                  return (
-                    <div key={name} className="flex justify-between gap-2">
-                      <div
-                        className={cn("flex items-center gap-2", {
-                          ["opacity-50"]: !ressource.isEnabled,
-                        })}
-                      >
-                        <PopoverComponent
-                          asChild
-                          side="top"
-                          definition={
-                            <div className="flex max-w-[200px] flex-wrap gap-2">
-                              {entries(themes).map(([theme, color]) => (
-                                <PopoverClose key={theme}>
-                                  <div
-                                    className={cn(
-                                      "size-6 cursor-pointer rounded-2xl p-1",
-                                      color,
-                                      {
-                                        ["border-2 border-white"]:
-                                          theme === ressource.theme,
-                                      },
-                                    )}
-                                    onClick={() =>
-                                      setRessource({ ...ressource, theme })
-                                    }
-                                  />
-                                </PopoverClose>
-                              ))}
-                            </div>
-                          }
-                        >
-                          <Button
-                            size="icon"
-                            disabled={!ressource.isEnabled}
-                            theme={ressource.theme}
-                          >
-                            <Palette />
-                          </Button>
-                        </PopoverComponent>
-                        <span>{name}</span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Switch
-                          checked={ressource.isEnabled}
-                          onCheckedChange={(checked) =>
-                            setRessource({
-                              ...ressource,
-                              isEnabled: checked,
-                            })
-                          }
+                <DndContext
+                  collisionDetection={closestCenter}
+                  onDragEnd={handleDragEnd}
+                >
+                  <SortableContext
+                    items={ressources.map((ressource) => ressource.name)}
+                    strategy={verticalListSortingStrategy}
+                  >
+                    {ressources.map((ressource) => {
+                      return (
+                        <RessourceConfigItem
+                          key={ressource.name}
+                          id={ressource.name}
+                          displayRessource={ressource}
                         />
-                      </div>
-                    </div>
-                  );
-                })}
+                      );
+                    })}
+                  </SortableContext>
+                </DndContext>
               </div>
             </div>
           </div>

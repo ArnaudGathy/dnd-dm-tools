@@ -62,23 +62,23 @@ const ressourceSchema = z.object({
   order: z.number(),
   resetCount: z.number(),
 });
-type Ressource = z.infer<typeof ressourceSchema>;
+export type Ressource = z.infer<typeof ressourceSchema>;
 const ressourceStorageSchema = z.record(
   z.enum(ressourceNames),
   ressourceSchema,
 );
-type RessourceStorage = z.infer<typeof ressourceStorageSchema>;
+export type RessourceStorage = z.infer<typeof ressourceStorageSchema>;
 
-const initialRessource: Omit<Ressource, "order" | "theme"> = {
+const initialRessource: Omit<Ressource, "theme"> = {
   total: -1,
   available: -1,
   isEnabled: true,
   resetCount: 0,
+  order: 0,
 };
 const initialValues: RessourceStorage = {
   inspiration: {
     ...initialRessource,
-    order: 0,
     theme: "neutral",
     available: 0,
   },
@@ -87,97 +87,78 @@ const initialValues: RessourceStorage = {
   sorceryPoints: { ...initialRessource, order: 3, theme: "fuchsia" },
   innateSorcery: {
     ...initialRessource,
-    order: 4,
     theme: "violet",
   },
   tidesOfChaos: {
     ...initialRessource,
-    order: 5,
     theme: "blue",
   },
   tamedSurge: {
     ...initialRessource,
-    order: 6,
     theme: "indigo",
   },
   psiDices: {
     ...initialRessource,
-    order: 7,
     theme: "fuchsia",
   },
   spiritualRupture: {
     ...initialRessource,
-    order: 8,
     theme: "indigo",
   },
   luckyStrike: {
     ...initialRessource,
-    order: 9,
     theme: "green",
   },
   huntersMark: {
     ...initialRessource,
-    order: 10,
     theme: "fuchsia",
   },
   tireless: {
     ...initialRessource,
-    order: 11,
     theme: "amber",
   },
   naturesVeil: {
     ...initialRessource,
-    order: 12,
     theme: "lime",
   },
   focusPoints: {
     ...initialRessource,
-    order: 13,
     theme: "white",
   },
   uncannyMetabolism: {
     ...initialRessource,
-    order: 14,
     theme: "green",
   },
   flurryOfHealingAndHarm: {
     ...initialRessource,
-    order: 15,
     theme: "purple",
   },
   handOfUltimateMercy: {
     ...initialRessource,
-    order: 16,
     theme: "yellow",
   },
   giantAncestry: {
     ...initialRessource,
-    order: 17,
     theme: "white",
   },
   healingHands: {
     ...initialRessource,
-    order: 18,
     theme: "white",
   },
   celestialRevelation: {
     ...initialRessource,
-    order: 19,
     theme: "fuchsia",
   },
   channelDivinity: {
     ...initialRessource,
-    order: 20,
     theme: "yellow",
   },
   divineIntervention: {
     ...initialRessource,
-    order: 21,
     theme: "amber",
   },
   warPriest: {
     ...initialRessource,
-    order: 22,
     theme: "indigo",
   },
 };
@@ -189,7 +170,7 @@ export const useRessourceStorage = (characterName: string) => {
 
   const [ressources, setRessources] = useLocalStorage<RessourceStorage>(
     `${parsedCharacterName}.ressources`,
-    initialValues,
+    {},
   );
 
   const longRest = (character: CharacterById) => {
@@ -252,27 +233,35 @@ export const useRessourceStorage = (characterName: string) => {
     }
   };
 
+  const sortRessources = (ressources: RessourceStorage) => {
+    setRessources(ressources);
+  };
+
   const getSpecificRessource = ({
     ressourceName,
     total,
+    index,
   }: {
     ressourceName: RessourceName;
     total: number;
+    index: number;
   }): UseRessource => {
-    if (!ressources?.[ressourceName]) {
+    let ressource = ressources?.[ressourceName];
+    if (!ressource) {
+      const newRessource = initialValues[ressourceName];
       setRessources({
         ...ressources,
-        [ressourceName]: initialValues[ressourceName],
+        [ressourceName]: newRessource,
       });
+      ressource = newRessource;
     }
 
-    if (!ressources?.[ressourceName]) {
+    if (!ressource) {
       throw new Error(
         `Ressource ${ressourceName} not found for character ${characterName}`,
       );
     }
 
-    const specificRessource = ressources[ressourceName];
     const setSpecificRessource = (ressource: Ressource) => {
       setRessources({
         ...ressources,
@@ -281,25 +270,23 @@ export const useRessourceStorage = (characterName: string) => {
     };
 
     if (
-      specificRessource.total === -1 ||
-      specificRessource.total !== total ||
-      specificRessource.available === -1
+      ressource.total === -1 ||
+      ressource.total !== total ||
+      ressource.available === -1
     ) {
       setSpecificRessource({
-        ...specificRessource,
+        ...ressource,
         total:
-          specificRessource.total === -1 || specificRessource.total !== total
+          ressource.total === -1 || ressource.total !== total
             ? total
-            : specificRessource.total,
-        available:
-          specificRessource.available === -1
-            ? total
-            : specificRessource.available,
+            : ressource.total,
+        available: ressource.available === -1 ? total : ressource.available,
+        order: index,
       });
     }
 
-    return [specificRessource, setSpecificRessource];
+    return [ressource, setSpecificRessource];
   };
 
-  return { getSpecificRessource, longRest, shortRest };
+  return { getSpecificRessource, longRest, shortRest, sortRessources };
 };

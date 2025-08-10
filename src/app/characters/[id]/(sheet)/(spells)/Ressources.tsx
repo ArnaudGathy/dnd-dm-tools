@@ -39,15 +39,16 @@ import {
 } from "@/constants/maps";
 import RessourcesConfigMenu from "@/app/characters/[id]/(sheet)/(spells)/RessourcesConfigMenu";
 import { getModifier } from "@/utils/utils";
-import { reduce } from "remeda";
+import { filter, reduce, sortBy } from "remeda";
+import dynamic from "next/dynamic";
 
 type CommonRessource = {
   name: string;
   icon: ReactNode;
+  ressourceName: RessourceName;
 };
 
 type RessourceDefinition = CommonRessource & {
-  ressourceName: RessourceName;
   condition?: boolean;
   total: number;
 };
@@ -56,14 +57,9 @@ export type DisplayRessource = CommonRessource & {
   useRessource: UseRessource;
 };
 
-export default function Ressources({
-  character,
-}: {
-  character: CharacterById;
-}) {
-  const { getSpecificRessource, longRest, shortRest } = useRessourceStorage(
-    character.name,
-  );
+function Ressources({ character }: { character: CharacterById }) {
+  const { getSpecificRessource, longRest, shortRest, sortRessources } =
+    useRessourceStorage(character.name);
 
   const general: RessourceDefinition[] = [
     {
@@ -281,32 +277,44 @@ export default function Ressources({
       (
         characterRessources: DisplayRessource[],
         { condition, total, ressourceName, icon, name },
+        index,
       ) => {
         if (condition === undefined || condition) {
           const useRessource = getSpecificRessource({
             ressourceName,
             total,
+            index,
           });
-          if (useRessource[0].isEnabled) {
-            return [...characterRessources, { name, icon, useRessource }];
-          }
+          return [
+            ...characterRessources,
+            { name, icon, useRessource, ressourceName },
+          ];
         }
         return characterRessources;
       },
       [],
     );
   };
-  const characterRessources = buildRessourceArray([
-    ...general,
-    ...feats,
-    ...aasimar,
-    ...goliath,
-    ...sorcerer,
-    ...rogue,
-    ...ranger,
-    ...monk,
-    ...cleric,
-  ]);
+
+  const characterRessources = sortBy(
+    buildRessourceArray([
+      ...general,
+      ...feats,
+      ...aasimar,
+      ...goliath,
+      ...sorcerer,
+      ...rogue,
+      ...ranger,
+      ...monk,
+      ...cleric,
+    ]),
+    ({ useRessource }) => useRessource[0].order,
+  );
+
+  const displayedRessources = filter(
+    characterRessources,
+    ({ useRessource }) => useRessource[0].isEnabled,
+  );
 
   return (
     <SheetCard>
@@ -314,13 +322,14 @@ export default function Ressources({
         <span className="text-2xl font-bold">Ressources</span>
         <RessourcesConfigMenu
           ressources={characterRessources}
-          shortRest={() => shortRest(character)}
-          longRest={() => longRest(character)}
+          shortRestAction={() => shortRest(character)}
+          longRestAction={() => longRest(character)}
+          sortRessourcesAction={sortRessources}
         />
       </div>
-      {characterRessources.length > 0 && (
+      {displayedRessources.length > 0 && (
         <div className="mt-4 grid grid-cols-2 gap-4">
-          {characterRessources.map(({ name, icon, useRessource }) => (
+          {displayedRessources.map(({ name, icon, useRessource }) => (
             <RessourceTracker
               key={name}
               name={name}
@@ -333,3 +342,5 @@ export default function Ressources({
     </SheetCard>
   );
 }
+
+export default dynamic(() => Promise.resolve(Ressources), { ssr: false });

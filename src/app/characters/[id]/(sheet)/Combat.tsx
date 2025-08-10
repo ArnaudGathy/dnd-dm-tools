@@ -40,7 +40,7 @@ import { getInitiativeModifier } from "@/utils/stats/initiative";
 import { getMartialClassDC } from "@/utils/stats/classSpecific";
 
 import { getWeaponAttackBonus } from "@/utils/stats/weapons";
-import Ressources from "@/app/characters/[id]/(sheet)/(spells)/Ressources";
+import RessourcesWrapper from "@/app/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
 
 const StatCard = ({
   value,
@@ -200,7 +200,7 @@ export default function Combat({ character }: { character: CharacterById }) {
           />
         </div>
         <SavingThrows character={character} />
-        <Ressources character={character} />
+        <RessourcesWrapper character={character} />
       </div>
 
       <div className="flex flex-col gap-4">
