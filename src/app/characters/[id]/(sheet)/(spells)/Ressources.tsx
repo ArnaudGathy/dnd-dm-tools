@@ -259,7 +259,7 @@ function Ressources({ character }: { character: CharacterById }) {
       condition:
         character.className === Classes.CLERIC &&
         character.subclassName === Subclasses.WAR_DOMAIN &&
-        character.level >= 2,
+        character.level >= 3,
     },
     {
       name: "Inter. Divine",

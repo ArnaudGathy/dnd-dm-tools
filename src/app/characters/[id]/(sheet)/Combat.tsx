@@ -3,6 +3,7 @@ import SheetCard from "@/components/ui/SheetCard";
 import {
   ChevronsUp,
   CopyCheck,
+  Dice6,
   Footprints,
   Hand,
   Heart,
@@ -37,7 +38,11 @@ import {
   getSpellsToPreparePerDay,
 } from "@/utils/stats/spells";
 import { getInitiativeModifier } from "@/utils/stats/initiative";
-import { getMartialClassDC } from "@/utils/stats/classSpecific";
+import {
+  getClassDice,
+  getMartialClassDC,
+  getSubClassDice,
+} from "@/utils/stats/classSpecific";
 
 import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 import RessourcesWrapper from "@/app/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
@@ -73,6 +78,10 @@ export default function Combat({ character }: { character: CharacterById }) {
   const initiativeDetails = getInitiativeModifier(character);
   const movementSpeedDetails = getMovementSpeed(character);
   const martialClassDC = getMartialClassDC(character);
+  const classDice = getClassDice(character);
+  const subClassDice = getSubClassDice(character);
+  const hasMartialData =
+    martialClassDC?.total || classDice?.value || subClassDice?.value;
   const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
 
   return (
@@ -204,36 +213,59 @@ export default function Combat({ character }: { character: CharacterById }) {
       </div>
 
       <div className="flex flex-col gap-4">
-        {martialClassDC && (
-          <StatCard
-            icon={Hand}
-            iconColor="text-[#90a1b9]"
-            value={martialClassDC.total}
-            definition={
-              <div>
-                <span className="font-bold">DD martial</span>
-                <div>
-                  <span>Base : </span>
-                  <span>{martialClassDC.base}</span>
-                </div>
-                {martialClassDC.modifier > 0 && (
+        {hasMartialData && (
+          <div className="grid grid-cols-2 gap-4">
+            {classDice?.value && (
+              <StatCard
+                icon={Dice6}
+                iconColor="text-rose-500"
+                value={classDice.value}
+                definition={<span className="font-bold">{classDice.name}</span>}
+              />
+            )}
+            {subClassDice?.value && (
+              <StatCard
+                icon={Dice6}
+                iconColor="text-blue-500"
+                value={subClassDice.value}
+                definition={
+                  <span className="font-bold">{subClassDice.name}</span>
+                }
+              />
+            )}
+            {martialClassDC && (
+              <StatCard
+                icon={Hand}
+                iconColor="text-[#90a1b9]"
+                value={martialClassDC.total}
+                definition={
                   <div>
-                    <span>
-                      {`Modificateur (${martialClassDC.modifierName}) :`}{" "}
-                    </span>
-                    <span>{martialClassDC.modifier}</span>
+                    <span className="font-bold">DD martial</span>
+                    <div>
+                      <span>Base : </span>
+                      <span>{martialClassDC.base}</span>
+                    </div>
+                    {martialClassDC.modifier > 0 && (
+                      <div>
+                        <span>
+                          {`Modificateur (${martialClassDC.modifierName}) :`}{" "}
+                        </span>
+                        <span>{martialClassDC.modifier}</span>
+                      </div>
+                    )}
+                    {martialClassDC.proficiencyBonus > 0 && (
+                      <div>
+                        <span>Maîtrise : </span>
+                        <span>{martialClassDC.proficiencyBonus}</span>
+                      </div>
+                    )}
                   </div>
-                )}
-                {martialClassDC.proficiencyBonus > 0 && (
-                  <div>
-                    <span>Maîtrise : </span>
-                    <span>{martialClassDC.proficiencyBonus}</span>
-                  </div>
-                )}
-              </div>
-            }
-          />
+                }
+              />
+            )}
+          </div>
         )}
+
         {hasSpells && (
           <>
             <SheetCard className="flex flex-col">

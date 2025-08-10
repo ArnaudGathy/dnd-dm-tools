@@ -289,21 +289,169 @@ export const SPEED_BY_RACE_MAP = {
   [Races.TABAXI]: 30,
 };
 
-export const MONK_SPEED_IN_SQUARE = [
-  0, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6,
-];
+export const MONK_SPEED_IN_SQUARE: Record<number, number> = {
+  1: 0,
+  2: 2,
+  3: 2,
+  4: 2,
+  5: 2,
+  6: 3,
+  7: 3,
+  8: 3,
+  9: 3,
+  10: 4,
+  11: 4,
+  12: 4,
+  13: 4,
+  14: 5,
+  15: 5,
+  16: 5,
+  17: 5,
+  18: 6,
+  19: 6,
+  20: 6,
+};
 
-export const ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL = [
-  0, 0, 4, 4, 6, 6, 6, 6, 8, 8, 8, 8, 10, 10, 10, 10, 12, 12, 12, 12,
-];
+export const ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL: Record<number, number> = {
+  1: 0,
+  2: 0,
+  3: 4,
+  4: 4,
+  5: 6,
+  6: 6,
+  7: 6,
+  8: 6,
+  9: 8,
+  10: 8,
+  11: 8,
+  12: 8,
+  13: 10,
+  14: 10,
+  15: 10,
+  16: 10,
+  17: 12,
+  18: 12,
+  19: 12,
+  20: 12,
+};
 
-export const RANGER_HUNTERS_MARK_PER_LEVEL = [
-  2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6,
-];
+export const RANGER_HUNTERS_MARK_PER_LEVEL: Record<number, number> = {
+  1: 2,
+  2: 2,
+  3: 2,
+  4: 2,
+  5: 3,
+  6: 3,
+  7: 3,
+  8: 3,
+  9: 4,
+  10: 4,
+  11: 4,
+  12: 4,
+  13: 5,
+  14: 5,
+  15: 5,
+  16: 5,
+  17: 6,
+  18: 6,
+  19: 6,
+  20: 6,
+};
 
-export const CLERIC_CHANNEL_DIVINITY_PER_LEVEL = [
-  0, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4,
-];
+export const CLERIC_CHANNEL_DIVINITY_PER_LEVEL: Record<number, number> = {
+  1: 0,
+  2: 2,
+  3: 2,
+  4: 2,
+  5: 2,
+  6: 3,
+  7: 3,
+  8: 3,
+  9: 3,
+  10: 3,
+  11: 3,
+  12: 3,
+  13: 3,
+  14: 3,
+  15: 3,
+  16: 3,
+  17: 3,
+  18: 4,
+  19: 4,
+  20: 4,
+};
+
+export const MONK_MARTIAL_DICE_PER_LEVEL: Record<number, string> = {
+  1: "1d6",
+  2: "1d6",
+  3: "1d6",
+  4: "1d6",
+  5: "1d8",
+  6: "1d8",
+  7: "1d8",
+  8: "1d8",
+  9: "1d8",
+  10: "1d8",
+  11: "1d10",
+  12: "1d10",
+  13: "1d10",
+  14: "1d10",
+  15: "1d10",
+  16: "1d10",
+  17: "1d12",
+  18: "1d12",
+  19: "1d12",
+  20: "1d12",
+};
+
+export const ROGUE_BACKSTAB_DICE_PER_LEVEL: Record<number, string> = {
+  1: "1d6",
+  2: "1d6",
+  3: "2d6",
+  4: "2d6",
+  5: "3d6",
+  6: "3d6",
+  7: "4d6",
+  8: "4d6",
+  9: "5d6",
+  10: "5d6",
+  11: "6d6",
+  12: "6d6",
+  13: "7d6",
+  14: "7d6",
+  15: "8d6",
+  16: "8d6",
+  17: "9d6",
+  18: "9d6",
+  19: "10d6",
+  20: "10d6",
+};
+
+export const ROGUE_SOULKNIFE_DICE_PER_LEVEL: Record<
+  number,
+  string | undefined
+> = {
+  1: undefined,
+  2: undefined,
+  3: "4d6",
+  4: "4d6",
+  5: "6d8",
+  6: "6d8",
+  7: "6d8",
+  8: "6d8",
+  9: "8d8",
+  10: "8d8",
+  11: "8d10",
+  12: "8d10",
+  13: "10d10",
+  14: "10d10",
+  15: "10d10",
+  16: "10d10",
+  17: "12d12",
+  18: "12d12",
+  19: "12d12",
+  20: "12d12",
+};
 
 export const SIZE_BY_RACE_MAP = {
   [Races.AASIMAR]: "M", // Moyen

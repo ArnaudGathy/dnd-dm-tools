@@ -35,7 +35,7 @@ function SpellSlots({ character }: { character: Character }) {
   const allSlots = spellSlots[character.level - 1];
 
   const [currentSlots, setCurrentSlots] = useLocalStorage(
-    "spellSlots",
+    `${character.name.toLowerCase().replace(" ", "_")}.spellSlots`,
     allSlots,
   );
 
