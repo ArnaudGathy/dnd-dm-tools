@@ -70,7 +70,7 @@ export default function RessourceConfigItem({
         })}
       >
         <div
-          className={cn("cursor-auto rounded-md p-1 transition", {
+          className={cn("cursor-auto touch-none rounded-md p-1 transition", {
             ["cursor-grab hover:bg-neutral-700"]: ressource.isEnabled,
           })}
           {...attributes}
