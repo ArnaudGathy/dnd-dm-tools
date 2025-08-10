@@ -60,7 +60,7 @@ const ressourceSchema = z.object({
   theme: z.enum(themes),
   isEnabled: z.boolean(),
   order: z.number(),
-  resetCount: z.number(),
+  canShortRest: z.boolean(),
 });
 export type Ressource = z.infer<typeof ressourceSchema>;
 const ressourceStorageSchema = z.record(
@@ -73,8 +73,8 @@ const initialRessource: Omit<Ressource, "theme"> = {
   total: -1,
   available: -1,
   isEnabled: true,
-  resetCount: 0,
   order: 0,
+  canShortRest: false,
 };
 const initialValues: RessourceStorage = {
   inspiration: {
@@ -100,6 +100,7 @@ const initialValues: RessourceStorage = {
   psiDices: {
     ...initialRessource,
     theme: "fuchsia",
+    canShortRest: true,
   },
   spiritualRupture: {
     ...initialRessource,
@@ -124,6 +125,7 @@ const initialValues: RessourceStorage = {
   focusPoints: {
     ...initialRessource,
     theme: "white",
+    canShortRest: true,
   },
   uncannyMetabolism: {
     ...initialRessource,
@@ -152,6 +154,7 @@ const initialValues: RessourceStorage = {
   channelDivinity: {
     ...initialRessource,
     theme: "yellow",
+    canShortRest: true,
   },
   divineIntervention: {
     ...initialRessource,
@@ -160,6 +163,7 @@ const initialValues: RessourceStorage = {
   warPriest: {
     ...initialRessource,
     theme: "indigo",
+    canShortRest: true,
   },
 };
 
@@ -190,19 +194,21 @@ export const useRessourceStorage = (characterName: string) => {
         return {
           ...value,
           available: newAvailable,
-          resetCount: 0,
         };
       });
       setRessources(newRessources);
     }
   };
 
-  const shortRest = (character: CharacterById) => {
+  const shortRest = () => {
     // Only specified ressources are reset
     if (ressources) {
       const newRessources = mapValues(ressources, (value, key) => {
+        if (!value.canShortRest) {
+          return value;
+        }
+
         let available = value.available;
-        let resetCount = value.resetCount;
 
         /* All per short rest */
         if (["focusPoints", "warPriest"].includes(key)) {
@@ -214,19 +220,18 @@ export const useRessourceStorage = (characterName: string) => {
           available = Math.min(value.available + 1, value.total);
         }
 
-        /* Specific */
-        const sorceryPointsResetAmount = Math.floor(character.level / 2);
-        if (key === "sorceryPoints" && character.level >= 5 && resetCount < 1) {
-          available = Math.min(
-            sorceryPointsResetAmount + value.available,
-            value.total,
-          );
-          resetCount = 1;
-        }
+        // const sorceryPointsResetAmount = Math.floor(character.level / 2);
+        // if (key === "sorceryPoints" && character.level >= 5 && resetCount < 1) {
+        //   available = Math.min(
+        //     sorceryPointsResetAmount + value.available,
+        //     value.total,
+        //   );
+        //   resetCount = 1;
+        // }
+
         return {
           ...value,
           available,
-          resetCount,
         };
       });
       setRessources(newRessources);

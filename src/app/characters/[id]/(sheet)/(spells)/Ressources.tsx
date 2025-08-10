@@ -322,7 +322,7 @@ function Ressources({ character }: { character: CharacterById }) {
         <span className="text-2xl font-bold">Ressources</span>
         <RessourcesConfigMenu
           ressources={characterRessources}
-          shortRestAction={() => shortRest(character)}
+          shortRestAction={() => shortRest()}
           longRestAction={() => longRest(character)}
           sortRessourcesAction={sortRessources}
         />

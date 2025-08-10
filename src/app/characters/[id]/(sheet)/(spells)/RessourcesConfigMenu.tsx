@@ -46,6 +46,10 @@ export default function RessourcesConfigMenu({
     }
   };
 
+  const canShortRest = ressources.some(
+    (ressource) => ressource.useRessource[0].canShortRest,
+  );
+
   return (
     <div>
       <PopoverComponent
@@ -62,9 +66,11 @@ export default function RessourcesConfigMenu({
                 <Button size="sm" onClick={longRestAction}>
                   <Tent /> Long repos
                 </Button>
-                <Button theme="neutral" size="sm" onClick={shortRestAction}>
-                  <FlameKindling /> Court repos
-                </Button>
+                {canShortRest && (
+                  <Button theme="neutral" size="sm" onClick={shortRestAction}>
+                    <FlameKindling /> Court repos
+                  </Button>
+                )}
               </div>
             </div>
 
