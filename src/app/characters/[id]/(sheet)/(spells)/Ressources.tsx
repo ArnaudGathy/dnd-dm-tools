@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import { CharacterById } from "@/lib/utils";
 import {
+  RessourceName,
   UseRessource,
   useRessourceStorage,
 } from "@/app/characters/[id]/(sheet)/(spells)/useRessouceStorage";
@@ -38,11 +39,20 @@ import {
 } from "@/constants/maps";
 import RessourcesConfigMenu from "@/app/characters/[id]/(sheet)/(spells)/RessourcesConfigMenu";
 import { getModifier } from "@/utils/utils";
+import { reduce } from "remeda";
 
-export type DisplayRessource = {
+type CommonRessource = {
   name: string;
   icon: ReactNode;
+};
+
+type RessourceDefinition = CommonRessource & {
+  ressourceName: RessourceName;
   condition?: boolean;
+  total: number;
+};
+
+export type DisplayRessource = CommonRessource & {
   useRessource: UseRessource;
 };
 
@@ -55,61 +65,26 @@ export default function Ressources({
     character.name,
   );
 
-  const general = [
+  const general: RessourceDefinition[] = [
     {
       name: "Inspiration",
       icon: <Book />,
-      useRessource: getSpecificRessource({
-        ressourceName: "inspiration",
-        total: character.race === Races.HUMAN ? 2 : 1,
-      }),
+      ressourceName: "inspiration",
+      total: character.race === Races.HUMAN ? 2 : 1,
     },
     {
       name: "Dés de vie",
       icon: <Heart />,
-      useRessource: getSpecificRessource({
-        ressourceName: "healthDices",
-        total: character.level,
-      }),
+      ressourceName: "healthDices",
+      total: character.level,
     },
   ];
-  const races = [
-    {
-      name: "Asc. Géants",
-      icon: <Mountain />,
-      useRessource: getSpecificRessource({
-        ressourceName: "giantAncestry",
-        total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
-      }),
-      condition: character.race === Races.GOLIATH,
-    },
-    {
-      name: "Mains Guéri.",
-      icon: <HandHelping />,
-      useRessource: getSpecificRessource({
-        ressourceName: "healingHands",
-        total: 1,
-      }),
-      condition: character.race === Races.AASIMAR,
-    },
-    {
-      name: "Rév. Célest.",
-      icon: <Drama />,
-      useRessource: getSpecificRessource({
-        ressourceName: "celestialRevelation",
-        total: 1,
-      }),
-      condition: character.race === Races.AASIMAR && character.level >= 3,
-    },
-  ];
-  const feats = [
+  const feats: RessourceDefinition[] = [
     {
       name: "Chance",
       icon: <Clover />,
-      useRessource: getSpecificRessource({
-        ressourceName: "luckyFeat",
-        total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
-      }),
+      ressourceName: "luckyFeat",
+      total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
       condition: character.capacities.some(
         ({ name }) =>
           name.toLowerCase().includes("lucky") ||
@@ -117,33 +92,54 @@ export default function Ressources({
       ),
     },
   ];
-  const sorcerer = [
+
+  const aasimar: RessourceDefinition[] = [
+    {
+      name: "Mains Guéri.",
+      icon: <HandHelping />,
+      ressourceName: "healingHands",
+      total: 1,
+      condition: character.race === Races.AASIMAR,
+    },
+    {
+      name: "Rév. Célest.",
+      icon: <Drama />,
+      ressourceName: "celestialRevelation",
+      total: 1,
+      condition: character.race === Races.AASIMAR && character.level >= 3,
+    },
+  ];
+  const goliath: RessourceDefinition[] = [
+    {
+      name: "Asc. Géants",
+      icon: <Mountain />,
+      ressourceName: "giantAncestry",
+      total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
+      condition: character.race === Races.GOLIATH,
+    },
+  ];
+
+  const sorcerer: RessourceDefinition[] = [
     {
       name: "Pts de Sorc.",
       icon: <Sparkles />,
-      useRessource: getSpecificRessource({
-        ressourceName: "sorceryPoints",
-        total: character.level,
-      }),
+      ressourceName: "sorceryPoints",
+      total: character.level,
       condition:
         character.className === Classes.SORCERER && character.level >= 2,
     },
     {
       name: "Sorc. innée",
       icon: <Flame />,
-      useRessource: getSpecificRessource({
-        ressourceName: "innateSorcery",
-        total: 2,
-      }),
+      ressourceName: "innateSorcery",
+      total: 2,
       condition: character.className === Classes.SORCERER,
     },
     {
       name: "Marée",
       icon: <Waves />,
-      useRessource: getSpecificRessource({
-        ressourceName: "tidesOfChaos",
-        total: 1,
-      }),
+      ressourceName: "tidesOfChaos",
+      total: 1,
       condition:
         character.className === Classes.SORCERER &&
         character.subclassName === Subclasses.WILD_MAGIC &&
@@ -152,24 +148,20 @@ export default function Ressources({
     {
       name: "Bouffée",
       icon: <GraduationCap />,
-      useRessource: getSpecificRessource({
-        ressourceName: "tamedSurge",
-        total: 1,
-      }),
+      ressourceName: "tamedSurge",
+      total: 1,
       condition:
         character.className === Classes.SORCERER &&
         character.subclassName === Subclasses.WILD_MAGIC &&
         character.level >= 18,
     },
   ];
-  const rogue = [
+  const rogue: RessourceDefinition[] = [
     {
       name: "Dés Psi",
       icon: <Brain />,
-      useRessource: getSpecificRessource({
-        ressourceName: "psiDices",
-        total: ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL[character.level],
-      }),
+      ressourceName: "psiDices",
+      total: ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL[character.level],
       condition:
         character.className === Classes.ROGUE &&
         character.subclassName === Subclasses.SOULKNIFE &&
@@ -178,10 +170,8 @@ export default function Ressources({
     {
       name: "Rupture spi.",
       icon: <BrainCircuit />,
-      useRessource: getSpecificRessource({
-        ressourceName: "spiritualRupture",
-        total: 1,
-      }),
+      ressourceName: "spiritualRupture",
+      total: 1,
       condition:
         character.className === Classes.ROGUE &&
         character.subclassName === Subclasses.SOULKNIFE &&
@@ -190,71 +180,57 @@ export default function Ressources({
     {
       name: "Coup de chance",
       icon: <Clover />,
-      useRessource: getSpecificRessource({
-        ressourceName: "luckyStrike",
-        total: 1,
-      }),
+      ressourceName: "luckyStrike",
+      total: 1,
       condition:
         character.className === Classes.ROGUE && character.level === 20,
     },
   ];
-  const ranger = [
+  const ranger: RessourceDefinition[] = [
     {
       name: "Ennemi juré",
       icon: <Crosshair />,
-      useRessource: getSpecificRessource({
-        ressourceName: "huntersMark",
-        total: RANGER_HUNTERS_MARK_PER_LEVEL[character.level],
-      }),
+      ressourceName: "huntersMark",
+      total: RANGER_HUNTERS_MARK_PER_LEVEL[character.level],
       condition: character.className === Classes.RANGER,
     },
     {
       name: "Infatiguable",
       icon: <HeartPlus />,
-      useRessource: getSpecificRessource({
-        ressourceName: "tireless",
-        total: Math.max(1, getModifier(character.wisdom)),
-      }),
+      ressourceName: "tireless",
+      total: Math.max(1, getModifier(character.wisdom)),
       condition:
         character.className === Classes.RANGER && character.level >= 10,
     },
     {
       name: "Voile Nature",
       icon: <EyeOff />,
-      useRessource: getSpecificRessource({
-        ressourceName: "naturesVeil",
-        total: Math.max(1, getModifier(character.wisdom)),
-      }),
+      ressourceName: "naturesVeil",
+      total: Math.max(1, getModifier(character.wisdom)),
       condition:
         character.className === Classes.RANGER && character.level >= 14,
     },
   ];
-  const monk = [
+  const monk: RessourceDefinition[] = [
     {
       name: "Pts de Credo",
       icon: <HandFist />,
-      useRessource: getSpecificRessource({
-        ressourceName: "focusPoints",
-        total: character.level,
-      }),
+      ressourceName: "focusPoints",
+      total: character.level,
       condition: character.className === Classes.MONK,
     },
     {
       name: "Métabolisme",
       icon: <Sprout />,
-      useRessource: getSpecificRessource({
-        ressourceName: "uncannyMetabolism",
-        total: 1,
-      }),
+      ressourceName: "uncannyMetabolism",
+      total: 1,
       condition: character.className === Classes.MONK && character.level >= 2,
     },
     {
       name: "Déluge",
       icon: <HandHelping />,
-      useRessource: getSpecificRessource({
-        ressourceName: "flurryOfHealingAndHarm",
-        total: Math.max(1, getModifier(character.wisdom)),
-      }),
+      ressourceName: "flurryOfHealingAndHarm",
+      total: Math.max(1, getModifier(character.wisdom)),
       condition:
         character.className === Classes.MONK &&
         character.subclassName === Subclasses.WAY_OF_MERCY &&
@@ -263,33 +239,27 @@ export default function Ressources({
     {
       name: "Ult. Miséri.",
       icon: <Cross />,
-      useRessource: getSpecificRessource({
-        ressourceName: "handOfUltimateMercy",
-        total: 1,
-      }),
+      ressourceName: "handOfUltimateMercy",
+      total: 1,
       condition:
         character.className === Classes.MONK &&
         character.subclassName === Subclasses.WAY_OF_MERCY &&
         character.level >= 17,
     },
   ];
-  const cleric = [
+  const cleric: RessourceDefinition[] = [
     {
       name: "Cond. Divin",
       icon: <Cross />,
-      useRessource: getSpecificRessource({
-        ressourceName: "channelDivinity",
-        total: CLERIC_CHANNEL_DIVINITY_PER_LEVEL[character.level],
-      }),
+      ressourceName: "channelDivinity",
+      total: CLERIC_CHANNEL_DIVINITY_PER_LEVEL[character.level],
       condition: character.className === Classes.CLERIC,
     },
     {
       name: "Prêtre de guerre",
       icon: <Gavel />,
-      useRessource: getSpecificRessource({
-        ressourceName: "warPriest",
-        total: Math.max(1, getModifier(character.wisdom)),
-      }),
+      ressourceName: "warPriest",
+      total: Math.max(1, getModifier(character.wisdom)),
       condition:
         character.className === Classes.CLERIC &&
         character.subclassName === Subclasses.WAR_DOMAIN &&
@@ -298,32 +268,45 @@ export default function Ressources({
     {
       name: "Inter. Divine",
       icon: <Sparkles />,
-      useRessource: getSpecificRessource({
-        ressourceName: "divineIntervention",
-        total: 1,
-      }),
+      ressourceName: "divineIntervention",
+      total: 1,
       condition:
         character.className === Classes.CLERIC && character.level >= 10,
     },
   ];
 
-  const characterRessources = [
+  const buildRessourceArray = (ressources: RessourceDefinition[]) => {
+    return reduce(
+      ressources,
+      (
+        characterRessources: DisplayRessource[],
+        { condition, total, ressourceName, icon, name },
+      ) => {
+        if (condition === undefined || condition) {
+          const useRessource = getSpecificRessource({
+            ressourceName,
+            total,
+          });
+          if (useRessource[0].isEnabled) {
+            return [...characterRessources, { name, icon, useRessource }];
+          }
+        }
+        return characterRessources;
+      },
+      [],
+    );
+  };
+  const characterRessources = buildRessourceArray([
     ...general,
-    ...races,
     ...feats,
+    ...aasimar,
+    ...goliath,
     ...sorcerer,
     ...rogue,
     ...ranger,
     ...monk,
     ...cleric,
-  ].filter(
-    (ressource: DisplayRessource) =>
-      ressource.condition === undefined || ressource.condition,
-  );
-
-  const enabledRessources = characterRessources.filter(
-    ({ useRessource }) => useRessource[0].isEnabled,
-  );
+  ]);
 
   return (
     <SheetCard>
@@ -335,9 +318,9 @@ export default function Ressources({
           longRest={() => longRest(character)}
         />
       </div>
-      {enabledRessources.length > 0 && (
+      {characterRessources.length > 0 && (
         <div className="mt-4 grid grid-cols-2 gap-4">
-          {enabledRessources.map(({ name, icon, useRessource }) => (
+          {characterRessources.map(({ name, icon, useRessource }) => (
             <RessourceTracker
               key={name}
               name={name}
