@@ -47,6 +47,7 @@ import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { BookOpenIcon, FastForwardIcon } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
+import { useInitiativeTrackerDatabase } from "@/hooks/useInitiativeTrackerDatabase";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 
@@ -59,12 +60,19 @@ const DEFAULT_STATE = {
   color: "#DD1D47",
 };
 
-const getNextTurn = (
-  turnsCounter: number | null,
-  listOfParticipants: Participant[],
-  countTurn?: () => void,
-) => {
+const getNextTurn = ({
+  turnsCounter,
+  listOfParticipants,
+  countTurn,
+  startAction,
+}: {
+  turnsCounter: number | null;
+  listOfParticipants: Participant[];
+  countTurn?: () => void;
+  startAction?: () => void;
+}) => {
   if (turnsCounter === null) {
+    startAction?.();
     return 0;
   }
 
@@ -74,7 +82,11 @@ const getNextTurn = (
   }
 
   if (parseInt(listOfParticipants[nextTurn].currentHp, 10) <= 0) {
-    return getNextTurn(nextTurn, listOfParticipants, countTurn);
+    return getNextTurn({
+      turnsCounter: nextTurn,
+      listOfParticipants: listOfParticipants,
+      countTurn: countTurn,
+    });
   }
 
   return nextTurn;
@@ -85,7 +97,13 @@ const sortParticipant = (a: Participant, b: Participant) => {
   const bInit = a.init !== "" ? parseInt(a.init) : Infinity;
 
   if (aInit === bInit) {
-    return b.id ? -1 : 1;
+    if (!a.isNPC && !b.isNPC) {
+      return a.name.localeCompare(b.name);
+    }
+    if (!a.isNPC && b.isNPC) {
+      return -1;
+    }
+    return 1;
   }
 
   return aInit - bInit;
@@ -112,6 +130,8 @@ export const CombatModule = ({
   creatures: Creature[];
   otherZonesCreatures: Record<string, Creature[]>;
 }) => {
+  const { setDBParticipants, setDBStartCombat } =
+    useInitiativeTrackerDatabase();
   const router = useRouter();
   const pathName = usePathname();
 
@@ -146,6 +166,14 @@ export const CombatModule = ({
       isDefined,
     ).toSorted(sortParticipant),
   );
+
+  console.log("listOfParticipants", listOfParticipants);
+
+  useEffect(() => {
+    if (listOfParticipants) {
+      setDBParticipants(listOfParticipants);
+    }
+  }, [setDBParticipants, listOfParticipants]);
 
   const group = useGroupFromCampaign({
     groupAction: (group: Group) => {
@@ -214,9 +242,12 @@ export const CombatModule = ({
   };
 
   const handleNextTurn = useCallback(() => {
-    const nexTurn = getNextTurn(currentTurnIndex, listOfParticipants, () =>
-      setTurnsCounter((current) => current + 1),
-    );
+    const nexTurn = getNextTurn({
+      turnsCounter: currentTurnIndex,
+      listOfParticipants: listOfParticipants,
+      countTurn: () => setTurnsCounter((current) => current + 1),
+      startAction: () => setDBStartCombat(),
+    });
     const nextParticipantId = listOfParticipants[nexTurn].id;
     if (nextParticipantId) {
       router.replace(`${pathName}#${nextParticipantId}`);
@@ -224,8 +255,19 @@ export const CombatModule = ({
       router.replace(pathName);
     }
 
-    setCurrentTurnIndex((current) => getNextTurn(current, listOfParticipants));
-  }, [currentTurnIndex, listOfParticipants, pathName, router]);
+    setCurrentTurnIndex((current) =>
+      getNextTurn({
+        turnsCounter: current,
+        listOfParticipants: listOfParticipants,
+      }),
+    );
+  }, [
+    currentTurnIndex,
+    listOfParticipants,
+    pathName,
+    router,
+    setDBStartCombat,
+  ]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
