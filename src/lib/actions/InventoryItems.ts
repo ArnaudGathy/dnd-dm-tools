@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import {
   backendInventoryItemSchema,
   InventoryFormSchema,
-} from "@/app/characters/add/utils";
+} from "@/app/(with-nav)/characters/add/utils";
 import { revalidatePath } from "next/cache";
 
 export const addInventoryItem = async (

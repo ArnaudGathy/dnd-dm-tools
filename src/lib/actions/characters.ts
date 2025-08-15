@@ -5,11 +5,11 @@ import prisma from "../prisma";
 import { z } from "zod";
 import { ArmorType, Classes, WeaponType } from "@prisma/client";
 import { BASE_HP_PER_CLASS_MAP, LEVEL_UP_HP_MAP } from "@/constants/maps";
-import { CharacterCreationForm } from "@/app/characters/add/CreateCharacterForm";
+import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { getModifier } from "@/utils/utils";
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
-import { backendCharacterSchema } from "@/app/characters/add/utils";
+import { backendCharacterSchema } from "@/app/(with-nav)/characters/add/utils";
 import { CharacterById } from "@/lib/utils";
 
 import { getBonusHP } from "@/utils/stats/hp";

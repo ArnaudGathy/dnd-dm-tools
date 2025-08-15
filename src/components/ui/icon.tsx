@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Slot } from "@radix-ui/react-slot";
-import { Themes } from "@/app/characters/[id]/(sheet)/(spells)/useRessouceStorage";
+import { Themes } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 
 const themeText: Record<Themes, string> = {
   red: "text-red-500",

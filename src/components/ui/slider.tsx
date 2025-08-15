@@ -5,7 +5,7 @@ import * as SliderPrimitive from "@radix-ui/react-slider";
 
 import { cn } from "@/lib/utils";
 
-import { Themes } from "@/app/characters/[id]/(sheet)/(spells)/useRessouceStorage";
+import { Themes } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 
 const themeTrack: Record<Themes, string> = {
   red: "bg-red-500/15",

@@ -4,7 +4,7 @@ import * as React from "react";
 import * as SwitchPrimitives from "@radix-ui/react-switch";
 
 import { cn } from "@/lib/utils";
-import { Themes } from "@/app/characters/[id]/(sheet)/(spells)/useRessouceStorage";
+import { Themes } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 
 const themeBg: Record<Themes, string> = {
   red: "data-[state=checked]:bg-red-500 data-[state=unchecked]:bg-red-500/15",
