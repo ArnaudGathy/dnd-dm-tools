@@ -53,7 +53,7 @@ export const NavBar = async () => {
 
   return (
     <header className="py-2">
-      <div className="mx-auto flex max-w-[1450px] items-center justify-between px-4 md:px-8">
+      <div className="mx-auto flex max-w-[1497px] items-center justify-between px-4 md:px-8">
         <div className="flex w-full justify-between gap-4 md:justify-start">
           <Link href="/" className="w-16">
             <Image

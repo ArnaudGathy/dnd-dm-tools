@@ -21,7 +21,7 @@ export default function Skills({ character }: { character: CharacterById }) {
   };
 
   return (
-    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-[70%] md:grid-flow-col md:grid-cols-[1fr_1fr_1fr_auto] md:grid-rows-[auto] md:p-4">
+    <div className="flex w-full flex-col gap-4 p-0 md:grid md:grid-flow-col md:grid-cols-[1fr_1fr_1fr_auto] md:grid-rows-[auto] md:p-4 2xl:w-[70%]">
       <SheetCard className="row-span-4 flex flex-col">
         <span className="mb-2 self-center text-2xl font-bold">Compétences</span>
         {entries(SKILL_NAME_MAP).map(([skill, skillName]) => {

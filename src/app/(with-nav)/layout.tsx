@@ -21,7 +21,7 @@ export default async function WithNavLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} overflow-y-auto antialiased`}
       >
-        <main className="mx-auto max-w-[1450px] p-4 md:p-8">
+        <main className="mx-auto max-w-[1497px] p-4 md:p-8">
           <NavBar />
           {children}
         </main>

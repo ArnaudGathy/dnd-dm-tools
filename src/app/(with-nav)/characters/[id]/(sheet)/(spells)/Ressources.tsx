@@ -117,7 +117,7 @@ function Ressources({ character }: { character: CharacterById }) {
 
   const sorcerer: RessourceDefinition[] = [
     {
-      name: "Pts de Sorc.",
+      name: "Pts de Sorcell.",
       icon: <Sparkles />,
       ressourceName: "sorceryPoints",
       total: character.level,
@@ -125,7 +125,7 @@ function Ressources({ character }: { character: CharacterById }) {
         character.className === Classes.SORCERER && character.level >= 2,
     },
     {
-      name: "Sorc. innée",
+      name: "Sorcell. innée",
       icon: <Flame />,
       ressourceName: "innateSorcery",
       total: 2,
@@ -209,7 +209,7 @@ function Ressources({ character }: { character: CharacterById }) {
   ];
   const monk: RessourceDefinition[] = [
     {
-      name: "Pts de Credo",
+      name: "Points de Credo",
       icon: <HandFist />,
       ressourceName: "focusPoints",
       total: character.level,

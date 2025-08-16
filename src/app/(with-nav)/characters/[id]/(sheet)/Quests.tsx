@@ -25,7 +25,7 @@ export default async function Quests({
   const noInterestQuests = groupedQuests[QuestStatus.NO_INTEREST];
 
   return (
-    <div className={cn("flex w-full flex-col gap-4 p-0", "md:w-[50%] md:p-4")}>
+    <div className={cn("flex w-full flex-col gap-4 p-0", "md:p-4 2xl:w-[50%]")}>
       {!fetchedQuests || fetchedQuests.length === 0 ? (
         <SheetCard className="relative flex flex-col gap-2">
           {"Il n'y a aucune quête active dans ce groupe."}

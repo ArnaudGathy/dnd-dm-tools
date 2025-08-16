@@ -85,7 +85,7 @@ export default function Combat({ character }: { character: CharacterById }) {
   const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
 
   return (
-    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4">
+    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-3 md:p-4">
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
           <StatCard
@@ -449,7 +449,7 @@ export default function Combat({ character }: { character: CharacterById }) {
         </div>
       </div>
 
-      <div className="col-span-2 flex flex-col gap-4">
+      <div className="flex flex-col gap-4">
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">
             Traits & capacités

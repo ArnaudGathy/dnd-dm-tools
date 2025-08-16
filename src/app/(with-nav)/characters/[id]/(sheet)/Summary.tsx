@@ -37,7 +37,7 @@ export default function Summary({ character }: { character: CharacterById }) {
   const movementSpeedDetails = getMovementSpeed(character);
 
   return (
-    <div className="grid w-full grid-cols-2 gap-4 p-0 md:w-[70%] md:grid-cols-6 md:grid-rows-[auto] md:p-4">
+    <div className="grid w-full grid-cols-2 gap-4 p-0 md:grid-cols-6 md:grid-rows-[auto] md:p-4 2xl:w-[70%]">
       <SheetCard className="relative col-span-2 flex flex-col items-center md:col-span-6">
         <span className="bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-3xl font-bold text-transparent">
           {character.name}
