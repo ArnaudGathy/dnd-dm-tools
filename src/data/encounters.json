@@ -205,12 +205,13 @@
       ]
     },
     "informations": [
-      "Ils portent tous des triangle vert tatoués sur le front."
+      "Voir comportement sur Notion."
     ],
     "loots": [
       "20 po par tête de goule",
       "10 po par tête de zombie",
-      "roll 1d100 dans la table de loots"
+      "1 amulette mécanique",
+      "1 joueur roll 1d100 dans la table de loots"
     ],
     "youtubeId": "w54512C_A2k"
   }
