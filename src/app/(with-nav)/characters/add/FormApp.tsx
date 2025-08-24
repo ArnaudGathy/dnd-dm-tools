@@ -43,7 +43,7 @@ export default function FormApp({
       <CardHeader>
         <CardTitle>Application</CardTitle>
       </CardHeader>
-      <CardContent className="grid grid-cols-[20%_35%_15%_1fr] gap-4">
+      <CardContent className="grid grid-cols-[25%_35%_15%_1fr] gap-4">
         <FormFieldSelect
           formInstance={form}
           formFieldName="party"
