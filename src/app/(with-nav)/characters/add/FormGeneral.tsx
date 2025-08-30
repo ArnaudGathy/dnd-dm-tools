@@ -37,6 +37,7 @@ export default function FormGeneral({
               formFieldName="level"
               formInstance={form}
               label="Niveau"
+              disabled={!isEditMode}
             />
             <FormFieldSelect
               formInstance={form}
