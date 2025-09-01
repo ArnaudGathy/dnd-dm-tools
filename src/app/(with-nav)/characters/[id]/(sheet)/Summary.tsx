@@ -46,11 +46,7 @@ export default function Summary({ character }: { character: CharacterById }) {
         <div className="absolute right-2 top-2 flex flex-col gap-1 md:right-4 md:top-4 md:flex-row md:gap-4">
           {!!spellCastingModifier && (
             <Link href={`/characters/${character.id}/spells`}>
-              <Button
-                variant="outline"
-                className="bg-gradient-to-tr from-blue-500 to-pink-500 hover:bg-gradient-to-tr hover:from-blue-600 hover:to-pink-600"
-                size="sm"
-              >
+              <Button variant="outline" size="sm" theme="sky">
                 <BookOpenIcon className="stroke-[2.5px]" />
               </Button>
             </Link>

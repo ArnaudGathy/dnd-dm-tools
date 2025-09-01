@@ -112,7 +112,7 @@ export default function CharacterList({
             </Link>
             {!!spellCastingModifier && (
               <Link href={`/characters/${character.id}/spells`}>
-                <Button variant="secondary" size="sm">
+                <Button variant="secondary" size="sm" theme="sky">
                   <BookOpenIcon />
                   Sorts
                 </Button>

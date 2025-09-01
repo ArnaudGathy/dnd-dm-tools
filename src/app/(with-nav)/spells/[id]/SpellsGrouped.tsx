@@ -1,6 +1,6 @@
 import { getGroupedCharacterSpells, SPELLS_GROUP_BY } from "@/lib/api/spells";
-import { SpellList } from "@/app/(with-nav)/spells/SpellList";
-import { SpellsSearchParams } from "@/app/(with-nav)/spells/SpellsFilters";
+import { SpellList } from "@/app/(with-nav)/characters/[id]/spells/SpellList";
+import { SpellsSearchParams } from "@/app/(with-nav)/characters/[id]/spells/SpellsFilters";
 
 export default async function SpellsGrouped({
   searchParams,

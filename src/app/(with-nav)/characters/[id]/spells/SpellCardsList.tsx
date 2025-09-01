@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import SpellHeader from "@/app/(with-nav)/spells/[id]/SpellHeader";
 import SpellCasting from "@/app/(with-nav)/spells/[id]/SpellCasting";
 import SpellDetails from "@/app/(with-nav)/spells/[id]/SpellDetails";
-import { SpellsSearchParams } from "@/app/(with-nav)/spells/SpellsFilters";
+import { SpellsSearchParams } from "@/app/(with-nav)/characters/[id]/spells/SpellsFilters";
 import { getSpellDetails } from "@/lib/external-apis/aidedd";
 
 export default async function SpellCardsList({

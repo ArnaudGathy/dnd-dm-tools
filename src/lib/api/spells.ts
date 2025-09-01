@@ -124,19 +124,6 @@ export const getGroupedCharacterSpells = async ({
   };
 };
 
-export const getCharactersBySpellId = async (spellId: string) => {
-  const charactersWithSpell = await prisma.spellsOnCharacters.findMany({
-    where: {
-      spellId,
-    },
-    include: {
-      character: true,
-    },
-  });
-
-  return charactersWithSpell.map((entry) => entry.character);
-};
-
 export const getCharacterSpells = async ({
   search,
   characterId,

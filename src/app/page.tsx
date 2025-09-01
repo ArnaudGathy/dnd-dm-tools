@@ -12,5 +12,5 @@ export default async function Home() {
     redirect("/characters");
   }
 
-  redirect("/spells");
+  redirect("/landing");
 }

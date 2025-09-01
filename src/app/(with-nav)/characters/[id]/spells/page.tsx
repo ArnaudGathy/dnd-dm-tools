@@ -1,8 +1,8 @@
 import SpellsFilters, {
   SpellsSearchParams,
-} from "@/app/(with-nav)/spells/SpellsFilters";
+} from "@/app/(with-nav)/characters/[id]/spells/SpellsFilters";
 import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
-import SpellCardsList from "@/app/(with-nav)/spells/SpellCardsList";
+import SpellCardsList from "@/app/(with-nav)/characters/[id]/spells/SpellCardsList";
 import SpellsGrouped from "@/app/(with-nav)/spells/[id]/SpellsGrouped";
 import { getValidCharacter } from "@/lib/utils";
 import AddSpellForm from "@/app/(with-nav)/characters/[id]/spells/AddSpellForm";
