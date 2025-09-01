@@ -14,6 +14,7 @@ import {
 import type { DragEndEvent } from "@dnd-kit/core/dist/types";
 import { RessourceStorage } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 import { mapToObj } from "remeda";
+import { PopoverClose } from "@radix-ui/react-popover";
 
 export default function RessourcesConfigMenu({
   ressources,
@@ -62,14 +63,19 @@ export default function RessourcesConfigMenu({
               <span className="mb-2 block text-lg font-bold">
                 Réinitialiser
               </span>
+
               <div className="flex gap-2">
-                <Button size="sm" onClick={longRestAction}>
-                  <Tent /> Long repos
-                </Button>
-                {canShortRest && (
-                  <Button theme="neutral" size="sm" onClick={shortRestAction}>
-                    <FlameKindling /> Court repos
+                <PopoverClose asChild>
+                  <Button size="sm" onClick={longRestAction}>
+                    <Tent /> Long repos
                   </Button>
+                </PopoverClose>
+                {canShortRest && (
+                  <PopoverClose asChild>
+                    <Button theme="neutral" size="sm" onClick={shortRestAction}>
+                      <FlameKindling /> Court repos
+                    </Button>
+                  </PopoverClose>
                 )}
               </div>
             </div>

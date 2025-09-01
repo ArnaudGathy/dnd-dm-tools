@@ -363,11 +363,16 @@ model Spell {
 }
 
 model SpellsOnCharacters {
-  character   Character @relation(fields: [characterId], references: [id])
-  characterId Int
-  spell       Spell     @relation(fields: [spellId], references: [id])
-  spellId     String
-  isFavorite  Boolean   @default(false)
+  character              Character @relation(fields: [characterId], references: [id])
+  characterId            Int
+  spell                  Spell     @relation(fields: [spellId], references: [id])
+  spellId                String
+  isFavorite             Boolean   @default(false)
+  isPrepared             Boolean   @default(false)
+  isAlwaysPrepared       Boolean   @default(false)
+  hasLongRestCast        Boolean   @default(false)
+  canBeSwappedOnLongRest Boolean   @default(false)
+  banBeSwappedOnLevelUp  Boolean   @default(false)
 
   @@id([spellId, characterId])
 }

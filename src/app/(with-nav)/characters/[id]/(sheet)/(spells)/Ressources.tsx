@@ -41,6 +41,7 @@ import RessourcesConfigMenu from "@/app/(with-nav)/characters/[id]/(sheet)/(spel
 import { getModifier } from "@/utils/utils";
 import { filter, reduce, sortBy } from "remeda";
 import dynamic from "next/dynamic";
+import { resetHp } from "@/lib/actions/characters";
 
 type CommonRessource = {
   name: string;
@@ -323,7 +324,10 @@ function Ressources({ character }: { character: CharacterById }) {
         <RessourcesConfigMenu
           ressources={characterRessources}
           shortRestAction={() => shortRest()}
-          longRestAction={() => longRest(character)}
+          longRestAction={() => {
+            longRest(character);
+            void resetHp(character.id, character.maximumHP);
+          }}
           sortRessourcesAction={sortRessources}
         />
       </div>

@@ -10,7 +10,11 @@ export const getBaseSpellData = (html: string, spellName: string) => {
 
   const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
   const level = levelAndSchoolBlock.split("-")[0].trim().match(/\d+/)?.[0];
-  const isRitual = levelAndSchoolBlock.includes("(ritual");
+  const isRitual = mainDataBlock
+    .find(".t")
+    .text()
+    .toLowerCase()
+    .includes("rituel");
 
   if (!level) {
     return null;
