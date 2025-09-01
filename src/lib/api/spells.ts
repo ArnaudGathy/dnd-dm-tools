@@ -24,9 +24,15 @@ export enum SPELLS_VIEW {
   CARDS = "cards",
 }
 
-export type SpellWithFavorite = Spell & {
-  isFavorite: SpellsOnCharacters["isFavorite"];
-};
+export type SpellWithFavorite = Spell &
+  Pick<
+    SpellsOnCharacters,
+    | "isFavorite"
+    | "isAlwaysPrepared"
+    | "canBeSwappedOnLongRest"
+    | "hasLongRestCast"
+    | "canBeSwappedOnLevelUp"
+  >;
 
 const getGroupedSpells = (
   response: Array<{ spell: Spell; character: Character } & SpellsOnCharacters>,
@@ -34,7 +40,14 @@ const getGroupedSpells = (
 ) => {
   const transformedResponse = response.map((r) => ({
     ...r,
-    spell: { ...r.spell, isFavorite: r.isFavorite },
+    spell: {
+      ...r.spell,
+      isFavorite: r.isFavorite,
+      isAlwaysPrepared: r.isAlwaysPrepared,
+      hasLongRestCast: r.hasLongRestCast,
+      canBeSwappedOnLongRest: r.canBeSwappedOnLongRest,
+      canBeSwappedOnLevelUp: r.canBeSwappedOnLevelUp,
+    },
   }));
   if (groupBy === SPELLS_GROUP_BY.CHARACTER) {
     return reduce(

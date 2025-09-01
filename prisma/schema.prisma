@@ -372,7 +372,7 @@ model SpellsOnCharacters {
   isAlwaysPrepared       Boolean   @default(false)
   hasLongRestCast        Boolean   @default(false)
   canBeSwappedOnLongRest Boolean   @default(false)
-  banBeSwappedOnLevelUp  Boolean   @default(false)
+  canBeSwappedOnLevelUp  Boolean   @default(false)
 
   @@id([spellId, characterId])
 }

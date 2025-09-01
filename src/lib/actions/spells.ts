@@ -10,6 +10,7 @@ import {
 } from "@/lib/external-apis/aidedd";
 import { z } from "zod";
 import { SummaryAPISpell } from "@/types/schemas";
+import { Prisma } from "@prisma/client";
 
 export const updateSpellFavoriteAction = async ({
   spellId,
@@ -29,6 +30,32 @@ export const updateSpellFavoriteAction = async ({
     },
     data: {
       isFavorite: !currentIsFavoriteState,
+    },
+  });
+
+  revalidatePath("/characters");
+};
+
+export const updateSpellFlagAction = async ({
+  flagName,
+  spellId,
+  characterId,
+  newState,
+}: {
+  flagName: keyof Prisma.SpellsOnCharactersUpdateInput;
+  spellId: string;
+  characterId: number;
+  newState: boolean;
+}) => {
+  await prisma.spellsOnCharacters.update({
+    where: {
+      spellId_characterId: {
+        characterId,
+        spellId,
+      },
+    },
+    data: {
+      [flagName]: newState,
     },
   });
 

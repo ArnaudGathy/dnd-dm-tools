@@ -9,6 +9,7 @@ import { capitalize, entries } from "remeda";
 import { SpellWithFavorite } from "@/lib/api/spells";
 import { FavoriteButton } from "@/app/(with-nav)/spells/[id]/FavoriteButton";
 import DeleteSpellButton from "@/app/(with-nav)/characters/[id]/spells/DeleteSpellButton";
+import SpellsSettings from "@/app/(with-nav)/characters/[id]/spells/SpellsSettings";
 
 export const SpellList = ({
   spellsGroupedBy,
@@ -17,7 +18,7 @@ export const SpellList = ({
   characterId,
   isEditMode = false,
 }: {
-  characterId?: number;
+  characterId: number;
   spellsGroupedBy: Record<string, SpellWithFavorite[]>;
   label: string;
   showFavorites?: boolean;
@@ -46,31 +47,37 @@ export const SpellList = ({
                 {spells.map((spell) => (
                   <li key={spell.id} className="flex items-center gap-2">
                     <div className="flex min-w-4">
-                      {isEditMode && characterId ? (
-                        <DeleteSpellButton
-                          spell={spell}
+                      {isEditMode ? (
+                        <SpellsSettings
                           characterId={characterId}
-                        />
-                      ) : showFavorites && characterId ? (
-                        <FavoriteButton
-                          onIcon={
-                            spell.isRitual ? (
-                              <SparklesIcon className="size-4 text-primary" />
-                            ) : (
-                              <HeartIcon className="size-4 text-primary" />
-                            )
-                          }
-                          offIcon={
-                            spell.isRitual ? (
-                              <SparklesIconOutline className="size-4 text-emerald-500" />
-                            ) : (
-                              <HeartIconOutline className="size-4" />
-                            )
-                          }
-                          isFavorite={spell.isFavorite}
                           spellId={spell.id}
-                          characterId={characterId}
+                          isAlwaysPrepared={spell.isAlwaysPrepared}
+                          hasLongRestCast={spell.hasLongRestCast}
+                          canBeSwappedOnLongRest={spell.canBeSwappedOnLongRest}
+                          canBeSwappedOnLevelUp={spell.canBeSwappedOnLevelUp}
                         />
+                      ) : showFavorites ? (
+                        <>
+                          <FavoriteButton
+                            onIcon={
+                              spell.isRitual ? (
+                                <SparklesIcon className="size-4 text-primary" />
+                              ) : (
+                                <HeartIcon className="size-4 text-primary" />
+                              )
+                            }
+                            offIcon={
+                              spell.isRitual ? (
+                                <SparklesIconOutline className="size-4 text-emerald-500" />
+                              ) : (
+                                <HeartIconOutline className="size-4" />
+                              )
+                            }
+                            isFavorite={spell.isFavorite}
+                            spellId={spell.id}
+                            characterId={characterId}
+                          />
+                        </>
                       ) : (
                         spell.isRitual && (
                           <SparklesIcon className="size-4 text-emerald-500" />
@@ -80,6 +87,12 @@ export const SpellList = ({
                     <Link href={`/spells/${spell.id}`} className="truncate">
                       {spell.name}
                     </Link>
+                    {isEditMode && (
+                      <DeleteSpellButton
+                        spell={spell}
+                        characterId={characterId}
+                      />
+                    )}
                   </li>
                 ))}
               </ul>
