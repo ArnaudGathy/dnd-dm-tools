@@ -51,6 +51,7 @@ const ressourceNames = [
   "channelDivinity",
   "divineIntervention",
   "warPriest",
+  "magicRestoration",
 ] as const;
 export type RessourceName = (typeof ressourceNames)[number];
 
@@ -164,6 +165,10 @@ const initialValues: RessourceStorage = {
     ...initialRessource,
     theme: "indigo",
     canShortRest: true,
+  },
+  magicRestoration: {
+    ...initialRessource,
+    theme: "sky",
   },
 };
 

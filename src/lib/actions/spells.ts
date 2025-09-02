@@ -12,30 +12,6 @@ import { z } from "zod";
 import { SummaryAPISpell } from "@/types/schemas";
 import { Prisma } from "@prisma/client";
 
-export const updateSpellFavoriteAction = async ({
-  spellId,
-  characterId,
-  currentIsFavoriteState,
-}: {
-  spellId: string;
-  characterId: number;
-  currentIsFavoriteState: boolean;
-}) => {
-  await prisma.spellsOnCharacters.update({
-    where: {
-      spellId_characterId: {
-        characterId,
-        spellId,
-      },
-    },
-    data: {
-      isFavorite: !currentIsFavoriteState,
-    },
-  });
-
-  revalidatePath("/characters");
-};
-
 export const updateSpellFlagAction = async ({
   flagName,
   spellId,
