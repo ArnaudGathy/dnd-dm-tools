@@ -5,52 +5,32 @@ import { SearchField } from "@/components/SearchField";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { entries } from "remeda";
-import { useState } from "react";
-import { ChevronDown, ChevronUp, Heart, StickyNote } from "lucide-react";
+import { ChevronDown, ChevronUp, SquareCheckBig } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Toggle } from "@/components/ui/toggle";
-import {
-  SPELLS_FILTER_BY,
-  SPELLS_GROUP_BY,
-  SPELLS_VIEW,
-} from "@/lib/api/spells";
+import { SPELLS_FILTER_BY, SPELLS_GROUP_BY } from "@/lib/api/spells";
 
 const tabs = {
   [SPELLS_GROUP_BY.ALPHABETICAL]: "Alphabétique",
   [SPELLS_GROUP_BY.LEVEL]: "Niveau",
-  [SPELLS_GROUP_BY.CHARACTER]: "Personnage",
 };
 
 export type SpellsSearchParams = {
   groupBy?: SPELLS_GROUP_BY;
   search?: string;
-  view?: SPELLS_VIEW;
   filterBy?: SPELLS_FILTER_BY;
   editMode?: "true" | "false";
+  isCollapsed?: "true" | "false";
 };
 
-export default function SpellsFilters({
-  defaultSearch = SPELLS_GROUP_BY.ALPHABETICAL,
-  features,
-}: {
-  defaultSearch?: SPELLS_GROUP_BY;
-  features: (
-    | "search"
-    | "cards"
-    | "level"
-    | "alphabetical"
-    | "character"
-    | "favorites"
-  )[];
-}) {
+export default function SpellsFilters() {
+  const defaultSearch = SPELLS_GROUP_BY.LEVEL;
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
   const params = new URLSearchParams(searchParams);
-  const isCardView = params.get("view") === SPELLS_VIEW.CARDS;
 
-  const [isCollapsed, setIsCollapsed] = useState(false);
-  const filteredTabs = entries(tabs).filter(([key]) => features.includes(key));
+  const isCollapsed = params.get("isCollapsed") === "true";
 
   const updateParams = () => {
     router.replace(`${pathName}?${params.toString()}`);
@@ -74,15 +54,6 @@ export default function SpellsFilters({
     updateParams();
   };
 
-  const handleView = (view: SPELLS_VIEW) => {
-    if (view) {
-      params.set("view", view);
-    } else {
-      params.delete("view");
-    }
-    updateParams();
-  };
-
   const handleFilterBy = (filterBy?: SPELLS_FILTER_BY) => {
     if (filterBy) {
       params.set("filterBy", filterBy);
@@ -92,14 +63,22 @@ export default function SpellsFilters({
     updateParams();
   };
 
+  const handleCollapse = (isCollapsed: boolean) => {
+    if (isCollapsed) {
+      params.set("isCollapsed", "true");
+    } else {
+      params.delete("isCollapsed");
+    }
+    updateParams();
+  };
+
   return (
     <div className="flex flex-col gap-2 md:flex-row">
       <div className="flex gap-2">
         <Toggle
-          className="md:hidden"
           variant="outline"
-          defaultPressed={!isCollapsed}
-          onClick={() => setIsCollapsed((current) => !current)}
+          pressed={isCollapsed}
+          onPressedChange={handleCollapse}
         >
           Filtres
           {isCollapsed ? (
@@ -108,53 +87,26 @@ export default function SpellsFilters({
             <ChevronUp className="size-4" />
           )}
         </Toggle>
-        {features.includes("search") && (
-          <SearchField
-            search={params.get("search") ?? ""}
-            setSearch={handleSearchParams}
-            isDefault
-          />
-        )}
+        <SearchField
+          search={params.get("search") ?? ""}
+          setSearch={handleSearchParams}
+          isDefault
+        />
       </div>
 
-      <div className={cn("flex items-center gap-2", { hidden: isCollapsed })}>
-        <div className="flex items-center gap-2">
-          {features.includes("cards") && (
-            <Toggle
-              variant="outline"
-              pressed={params.get("view") === SPELLS_VIEW.CARDS}
-              onPressedChange={(isEnabled) =>
-                handleView(isEnabled ? SPELLS_VIEW.CARDS : SPELLS_VIEW.LIST)
-              }
-              disabled={params.get("editMode") === "true"}
-            >
-              <StickyNote />
-            </Toggle>
-          )}
-
-          {features.includes("favorites") && (
-            <Toggle
-              variant="outline"
-              pressed={params.get("filterBy") === SPELLS_FILTER_BY.FAVORITES}
-              onPressedChange={(isEnabled) =>
-                isEnabled
-                  ? handleFilterBy(SPELLS_FILTER_BY.FAVORITES)
-                  : handleFilterBy(undefined)
-              }
-            >
-              <Heart />
-            </Toggle>
-          )}
-        </div>
+      <div
+        className={cn("flex items-center gap-2", {
+          hidden: params.get("isCollapsed"),
+        })}
+      >
         <Tabs defaultValue={params.get("groupBy") ?? defaultSearch}>
           <TabsList>
-            {filteredTabs.map(([key, value]) => {
+            {entries(tabs).map(([key, value]) => {
               return (
                 <TabsTrigger
                   key={key}
                   value={key}
                   onClick={() => handleGroupBy(key as SPELLS_GROUP_BY)}
-                  disabled={isCardView}
                 >
                   {value}
                 </TabsTrigger>
@@ -162,6 +114,19 @@ export default function SpellsFilters({
             })}
           </TabsList>
         </Tabs>
+        <div className="flex items-center gap-2">
+          <Toggle
+            variant="outline"
+            pressed={params.get("filterBy") === SPELLS_FILTER_BY.PREPARED}
+            onPressedChange={(isEnabled) =>
+              isEnabled
+                ? handleFilterBy(SPELLS_FILTER_BY.PREPARED)
+                : handleFilterBy(undefined)
+            }
+          >
+            <SquareCheckBig /> Préparés
+          </Toggle>
+        </div>
       </div>
     </div>
   );

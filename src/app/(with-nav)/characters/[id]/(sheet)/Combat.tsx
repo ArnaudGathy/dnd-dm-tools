@@ -12,7 +12,6 @@ import {
   WandSparkles,
 } from "lucide-react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
-import { ElementType, ReactNode } from "react";
 import {
   convertFeetDistanceIntoSquares,
   shortenAbilityName,
@@ -46,29 +45,7 @@ import {
 
 import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 import RessourcesWrapper from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
-
-const StatCard = ({
-  value,
-  definition,
-  icon: Icon,
-  iconColor = "text-muted-foreground",
-}: {
-  icon: ElementType;
-  value: ReactNode;
-  definition: ReactNode;
-  iconColor?: string;
-}) => {
-  return (
-    <SheetCard className="flex items-center justify-center">
-      <PopoverComponent definition={definition}>
-        <div className="flex min-w-16 flex-col items-center gap-2">
-          <Icon className={cn("stroke-[2.5px]", iconColor)} />
-          <span className="text-2xl font-bold">{value}</span>
-        </div>
-      </PopoverComponent>
-    </SheetCard>
-  );
-};
+import StatCard from "./StatCard";
 
 export default function Combat({ character }: { character: CharacterById }) {
   const ACDetails = getTotalAC(character);

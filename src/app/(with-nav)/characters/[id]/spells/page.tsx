@@ -1,8 +1,6 @@
 import SpellsFilters, {
   SpellsSearchParams,
 } from "@/app/(with-nav)/characters/[id]/spells/SpellsFilters";
-import { SPELLS_GROUP_BY, SPELLS_VIEW } from "@/lib/api/spells";
-import SpellCardsList from "@/app/(with-nav)/characters/[id]/spells/SpellCardsList";
 import SpellsGrouped from "@/app/(with-nav)/spells/[id]/SpellsGrouped";
 import { getValidCharacter } from "@/lib/utils";
 import AddSpellForm from "@/app/(with-nav)/characters/[id]/spells/AddSpellForm";
@@ -10,8 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import EditModeButton from "@/app/(with-nav)/characters/[id]/spells/EditModeButton";
 
 import { getSpellsToPreparePerDay } from "@/utils/stats/spells";
-
-const defaultFilter = SPELLS_GROUP_BY.LEVEL;
+import { CopyCheck, RefreshCcw } from "lucide-react";
+import StatCard from "@/app/(with-nav)/characters/[id]/(sheet)/StatCard";
 
 export default async function Spells({
   params,
@@ -22,11 +20,10 @@ export default async function Spells({
 }) {
   const { id } = await params;
   const awaitedSearchParams = await searchParams;
-  const isCardView = awaitedSearchParams.view === SPELLS_VIEW.CARDS;
   const isEditMode = awaitedSearchParams?.editMode === "true";
+  const isCollapsed = awaitedSearchParams?.isCollapsed === "true";
 
   const character = await getValidCharacter(id);
-  const intCharacterId = parseInt(id, 10);
 
   const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
 
@@ -41,43 +38,36 @@ export default async function Spells({
           <EditModeButton />
         </div>
         {isEditMode && <AddSpellForm characterId={id} />}
-        <SpellsFilters
-          defaultSearch={defaultFilter}
-          features={["search", "cards", "level", "alphabetical", "favorites"]}
-        />
-        {!!spellsToPreparePerDay && (
-          <div className="flex flex-col">
-            <span>
-              Total de sorts à préparer :{" "}
-              <span className="font-bold text-sky-500">
-                {spellsToPreparePerDay.total}
-              </span>
-            </span>
-            <span>
-              Sorts à préparer chaque jour :{" "}
-              <span className="font-bold text-sky-500">
-                {spellsToPreparePerDay.dailyAmount}
-              </span>
-            </span>
-          </div>
-        )}
+
+        <SpellsFilters />
       </div>
+
+      {!!spellsToPreparePerDay && !isCollapsed && (
+        <div className="flex gap-4">
+          <StatCard
+            icon={CopyCheck}
+            iconColor="text-sky-500"
+            value={spellsToPreparePerDay.total}
+            definition={<div>Total de sorts à préparer</div>}
+          />
+          <StatCard
+            icon={RefreshCcw}
+            iconColor="text-sky-500"
+            value={spellsToPreparePerDay.dailyAmount}
+            definition={
+              <div>Combien de sorts peuvent être changés chaque jour</div>
+            }
+          />
+        </div>
+      )}
 
       <Separator />
 
-      {isCardView ? (
-        <SpellCardsList
-          characterId={intCharacterId}
-          searchParams={awaitedSearchParams}
-        />
-      ) : (
-        <SpellsGrouped
-          characterId={intCharacterId}
-          searchParams={awaitedSearchParams}
-          defaultFilter={defaultFilter}
-          isEditMode={isEditMode}
-        />
-      )}
+      <SpellsGrouped
+        character={character}
+        searchParams={awaitedSearchParams}
+        isEditMode={isEditMode}
+      />
     </div>
   );
 }

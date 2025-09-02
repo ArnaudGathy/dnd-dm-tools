@@ -1,27 +1,21 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SparklesIcon, HeartIcon } from "@heroicons/react/16/solid";
-import {
-  SparklesIcon as SparklesIconOutline,
-  HeartIcon as HeartIconOutline,
-} from "@heroicons/react/24/outline";
 import { Link } from "@/components/ui/Link";
 import { capitalize, entries } from "remeda";
-import { SpellWithFavorite } from "@/lib/api/spells";
-import { FavoriteButton } from "@/app/(with-nav)/spells/[id]/FavoriteButton";
+import { SpellWithFlags } from "@/lib/api/spells";
+import { SpellStatusButton } from "@/app/(with-nav)/spells/[id]/SpellStatusButton";
 import DeleteSpellButton from "@/app/(with-nav)/characters/[id]/spells/DeleteSpellButton";
 import SpellsSettings from "@/app/(with-nav)/characters/[id]/spells/SpellsSettings";
+import { CharacterById } from "@/lib/utils";
 
 export const SpellList = ({
   spellsGroupedBy,
   label,
-  showFavorites = false,
-  characterId,
+  character,
   isEditMode = false,
 }: {
-  characterId: number;
-  spellsGroupedBy: Record<string, SpellWithFavorite[]>;
+  character: CharacterById;
+  spellsGroupedBy: Record<string, SpellWithFlags[]>;
   label: string;
-  showFavorites?: boolean;
   isEditMode?: boolean;
 }) => {
   const spellEntries = entries(spellsGroupedBy);
@@ -46,43 +40,19 @@ export const SpellList = ({
               <ul>
                 {spells.map((spell) => (
                   <li key={spell.id} className="flex items-center gap-2">
-                    <div className="flex min-w-4">
-                      {isEditMode ? (
+                    <div className="flex min-w-4 gap-4">
+                      {isEditMode && (
                         <SpellsSettings
-                          characterId={characterId}
+                          characterId={character.id}
                           spellId={spell.id}
                           isAlwaysPrepared={spell.isAlwaysPrepared}
                           hasLongRestCast={spell.hasLongRestCast}
                           canBeSwappedOnLongRest={spell.canBeSwappedOnLongRest}
                           canBeSwappedOnLevelUp={spell.canBeSwappedOnLevelUp}
+                          isPrepared={spell.isPrepared}
                         />
-                      ) : showFavorites ? (
-                        <>
-                          <FavoriteButton
-                            onIcon={
-                              spell.isRitual ? (
-                                <SparklesIcon className="size-4 text-primary" />
-                              ) : (
-                                <HeartIcon className="size-4 text-primary" />
-                              )
-                            }
-                            offIcon={
-                              spell.isRitual ? (
-                                <SparklesIconOutline className="size-4 text-emerald-500" />
-                              ) : (
-                                <HeartIconOutline className="size-4" />
-                              )
-                            }
-                            isFavorite={spell.isFavorite}
-                            spellId={spell.id}
-                            characterId={characterId}
-                          />
-                        </>
-                      ) : (
-                        spell.isRitual && (
-                          <SparklesIcon className="size-4 text-emerald-500" />
-                        )
                       )}
+                      <SpellStatusButton spell={spell} character={character} />
                     </div>
                     <Link href={`/spells/${spell.id}`} className="truncate">
                       {spell.name}
@@ -90,7 +60,7 @@ export const SpellList = ({
                     {isEditMode && (
                       <DeleteSpellButton
                         spell={spell}
-                        characterId={characterId}
+                        characterId={character.id}
                       />
                     )}
                   </li>

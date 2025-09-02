@@ -13,6 +13,7 @@ export default function SpellsSettings({
   hasLongRestCast,
   canBeSwappedOnLongRest,
   canBeSwappedOnLevelUp,
+  isPrepared,
 }: {
   characterId: number;
   spellId: string;
@@ -20,12 +21,32 @@ export default function SpellsSettings({
   hasLongRestCast: boolean;
   canBeSwappedOnLongRest: boolean;
   canBeSwappedOnLevelUp: boolean;
+  isPrepared: boolean;
 }) {
   return (
     <PopoverComponent
       definition={
         <div className="flex min-w-[200px] flex-col gap-2">
           <h1 className="text-lg font-bold">Configuration</h1>
+          <div className="flex items-center gap-2">
+            <Switch
+              id="isPrepared"
+              theme="sky"
+              checked={isPrepared}
+              onCheckedChange={async (checked) => {
+                await updateSpellFlagAction({
+                  characterId: characterId,
+                  spellId: spellId,
+                  flagName: "isPrepared",
+                  newState: checked,
+                });
+              }}
+            />
+            <Label htmlFor="isPrepared" className="text-sm text-sky-500">
+              Préparé
+            </Label>
+          </div>
+
           <div className="flex items-center gap-2">
             <Switch
               id="isAlwaysPrepared"
@@ -51,7 +72,7 @@ export default function SpellsSettings({
           <div className="flex items-center gap-2">
             <Switch
               id="hasLongRestCast"
-              theme="emerald"
+              theme="green"
               checked={hasLongRestCast}
               onCheckedChange={async (checked) => {
                 await updateSpellFlagAction({
@@ -62,10 +83,7 @@ export default function SpellsSettings({
                 });
               }}
             />
-            <Label
-              htmlFor="hasLongRestCast"
-              className="text-sm text-emerald-500"
-            >
+            <Label htmlFor="hasLongRestCast" className="text-sm text-green-500">
               Un lancement par long repos
             </Label>
           </div>
@@ -95,7 +113,7 @@ export default function SpellsSettings({
           <div className="flex items-center gap-2">
             <Switch
               id="canBeSwappedOnLevelUp"
-              theme="indigo"
+              theme="purple"
               checked={canBeSwappedOnLevelUp}
               onCheckedChange={async (checked) => {
                 await updateSpellFlagAction({
@@ -108,7 +126,7 @@ export default function SpellsSettings({
             />
             <Label
               htmlFor="canBeSwappedOnLevelUp"
-              className="text-sm text-indigo-500"
+              className="text-sm text-purple-500"
             >
               Changement lors d&apos;un lvl up
             </Label>
@@ -116,7 +134,7 @@ export default function SpellsSettings({
         </div>
       }
     >
-      <Settings className="size-4 stroke-[1.5px]" />
+      <Settings className="size-5 stroke-[1.5px]" />
     </PopoverComponent>
   );
 }
