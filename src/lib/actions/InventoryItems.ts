@@ -39,7 +39,7 @@ export const addInventoryItem = async (
     });
   }
 
-  revalidatePath("/characters");
+  revalidatePath(`/characters/${characterId}`);
 };
 
 export const deleteInventoryItem = async (itemId: number) => {

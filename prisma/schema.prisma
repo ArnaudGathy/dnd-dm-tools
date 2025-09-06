@@ -200,15 +200,16 @@ enum Alignment {
 }
 
 model Character {
-  id                 Int                  @id @default(autoincrement())
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  status             CharacterStatus      @default(ACTIVE)
-  owner              String
-  campaign           Campaign             @relation(fields: [campaignId], references: [id])
-  campaignId         Int
-  spellsOnCharacters SpellsOnCharacters[]
-  creatures          Int[]                @default([])
+  id                    Int                     @id @default(autoincrement())
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  status                CharacterStatus         @default(ACTIVE)
+  owner                 String
+  campaign              Campaign                @relation(fields: [campaignId], references: [id])
+  campaignId            Int
+  spellsOnCharacters    SpellsOnCharacters[]
+  creaturesOnCharacters CreaturesOnCharacters[]
+  creatures             Int[]                   @default([])
 
   name         String      @db.VarChar(255)
   level        Int         @default(1)
@@ -375,6 +376,23 @@ model SpellsOnCharacters {
   canBeSwappedOnLevelUp  Boolean   @default(false)
 
   @@id([spellId, characterId])
+}
+
+model Creature {
+  id                    String                  @id
+  name                  String
+  challengeRating       Int
+  CreaturesOnCharacters CreaturesOnCharacters[]
+}
+
+model CreaturesOnCharacters {
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  creature    Creature  @relation(fields: [creatureId], references: [id])
+  creatureId  String
+  isFavorite  Boolean   @default(false)
+
+  @@id([creatureId, characterId])
 }
 
 enum WeaponDamageType {

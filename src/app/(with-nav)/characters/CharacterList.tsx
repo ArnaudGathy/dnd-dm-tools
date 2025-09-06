@@ -20,6 +20,7 @@ import {
   FileSpreadsheet,
   Heart,
   MapPin,
+  PawPrint,
   RotateCcw,
   Skull,
   TreePalm,
@@ -30,6 +31,7 @@ import { classColors } from "@/constants/colors";
 import { StatCell } from "@/components/statblocks/StatCell";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { hasCreatures } from "@/utils/utils";
 
 export default function CharacterList({
   character,
@@ -39,6 +41,7 @@ export default function CharacterList({
   numberOfCharacters: number;
 }) {
   const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
+  const hasCreatureList = hasCreatures(character.className);
 
   return (
     <div
@@ -103,7 +106,7 @@ export default function CharacterList({
               />
             </div>
           )}
-          <div className="flex gap-4">
+          <div className="flex flex-wrap gap-4">
             <Link href={`/characters/${character.id}`}>
               <Button variant="default" size="sm">
                 <FileSpreadsheet />
@@ -112,9 +115,17 @@ export default function CharacterList({
             </Link>
             {!!spellCastingModifier && (
               <Link href={`/characters/${character.id}/spells`}>
-                <Button variant="secondary" size="sm" theme="sky">
+                <Button size="sm" theme="sky">
                   <BookOpenIcon />
                   Sorts
+                </Button>
+              </Link>
+            )}
+            {hasCreatureList && (
+              <Link href={`/characters/${character.id}/creatures`}>
+                <Button size="sm" theme="green">
+                  <PawPrint />
+                  Créatures
                 </Button>
               </Link>
             )}

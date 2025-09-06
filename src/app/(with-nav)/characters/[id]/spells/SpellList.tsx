@@ -26,50 +26,48 @@ export const SpellList = ({
   }
 
   return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-wrap gap-4">
-        {spellEntries.map(([property, spells]) => (
-          <Card
-            key={property}
-            className="min-w-full md:min-w-[24%] md:max-w-[24%]"
-          >
-            <CardHeader>
-              <CardTitle>{`${label} ${capitalize(property)}`}</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <ul>
-                {spells.map((spell) => (
-                  <li key={spell.id} className="flex items-center gap-2">
-                    <div className="flex min-w-4 gap-4">
-                      {isEditMode && (
-                        <SpellsSettings
-                          characterId={character.id}
-                          spellId={spell.id}
-                          isAlwaysPrepared={spell.isAlwaysPrepared}
-                          hasLongRestCast={spell.hasLongRestCast}
-                          canBeSwappedOnLongRest={spell.canBeSwappedOnLongRest}
-                          canBeSwappedOnLevelUp={spell.canBeSwappedOnLevelUp}
-                          isPrepared={spell.isPrepared}
-                        />
-                      )}
-                      <SpellStatusButton spell={spell} character={character} />
-                    </div>
-                    <Link href={`/spells/${spell.id}`} className="truncate">
-                      {spell.name}
-                    </Link>
+    <div className="flex flex-wrap gap-4">
+      {spellEntries.map(([property, spells]) => (
+        <Card
+          key={property}
+          className="min-w-full md:min-w-[24%] md:max-w-[24%]"
+        >
+          <CardHeader>
+            <CardTitle>{`${label} ${capitalize(property)}`}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <ul>
+              {spells.map((spell) => (
+                <li key={spell.id} className="flex items-center gap-2">
+                  <div className="flex min-w-4 gap-4">
                     {isEditMode && (
-                      <DeleteSpellButton
-                        spell={spell}
+                      <SpellsSettings
                         characterId={character.id}
+                        spellId={spell.id}
+                        isAlwaysPrepared={spell.isAlwaysPrepared}
+                        hasLongRestCast={spell.hasLongRestCast}
+                        canBeSwappedOnLongRest={spell.canBeSwappedOnLongRest}
+                        canBeSwappedOnLevelUp={spell.canBeSwappedOnLevelUp}
+                        isPrepared={spell.isPrepared}
                       />
                     )}
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
-        ))}
-      </div>
+                    <SpellStatusButton spell={spell} character={character} />
+                  </div>
+                  <Link href={`/spells/${spell.id}`} className="truncate">
+                    {spell.name}
+                  </Link>
+                  {isEditMode && (
+                    <DeleteSpellButton
+                      spell={spell}
+                      characterId={character.id}
+                    />
+                  )}
+                </li>
+              ))}
+            </ul>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   );
 };
