@@ -508,6 +508,27 @@ export const updateHP = async (
   }
 };
 
+export const setHP = async (
+  characterId: number,
+  currentHp: number,
+  maxHp: number,
+  hpChange: number,
+) => {
+  let newTotal = currentHp + hpChange;
+  if (newTotal > maxHp) {
+    newTotal = maxHp;
+  }
+  if (newTotal < 0) {
+    newTotal = 0;
+  }
+
+  await prisma.character.update({
+    where: { id: characterId },
+    data: { currentHP: newTotal },
+  });
+  revalidatePath(`/characters/${characterId}`);
+};
+
 export const resetHp = async (characterId: number, maxHp: number) => {
   await prisma.character.update({
     where: { id: characterId },

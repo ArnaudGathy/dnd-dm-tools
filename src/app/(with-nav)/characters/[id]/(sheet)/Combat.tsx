@@ -6,7 +6,6 @@ import {
   Dice6,
   Footprints,
   Hand,
-  Heart,
   Shield,
   ShieldOff,
   WandSparkles,
@@ -65,34 +64,7 @@ export default function Combat({ character }: { character: CharacterById }) {
     <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-3 md:p-4">
       <div className="flex flex-col gap-4">
         <div className="grid grid-cols-2 gap-4">
-          <StatCard
-            icon={Heart}
-            iconColor="text-primary"
-            value={
-              <>
-                <span
-                  className={cn({
-                    "text-green-500": character.currentHP < character.maximumHP,
-                    "text-orange-500":
-                      character.currentHP <= character.maximumHP * 0.5,
-                    "text-red-500":
-                      character.currentHP <= character.maximumHP * 0.2,
-                    "text-stone-500": character.currentHP <= 0,
-                  })}
-                >
-                  {character.currentHP}
-                </span>
-                <span>/</span>
-                <span>{character.maximumHP}</span>
-              </>
-            }
-            definition={
-              <div className="flex flex-col items-center gap-4">
-                <div>Points de vie (PV)</div>
-                <HPForm character={character} />
-              </div>
-            }
-          />
+          <HPForm character={character} />
 
           <StatCard
             icon={Shield}
