@@ -12,6 +12,7 @@ export const CharacterBreadcrumbs = async ({ id }: { id: string }) => {
     [
       { name: "Sorts", path: `/spells` },
       { name: "Édition", path: "/update" },
+      { name: "Creatures", path: "/creatures" },
     ],
   ];
 

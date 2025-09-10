@@ -1,7 +1,29 @@
 import * as cheerio from "cheerio";
-import { Creature } from "@/types/types";
+import { Creature, SummaryCreature } from "@/types/types";
 import { load } from "cheerio";
 import { map, pipe, split } from "remeda";
+
+export const getBaseCreatureData = (html: string, creatureName: string) => {
+  const $ = cheerio.load(html);
+  const statBlockSelector = $(".jaune");
+
+  const readableName = statBlockSelector.find("h1").text().trim();
+  if (!readableName) {
+    return null;
+  }
+
+  const CR = getStrongValueByLabel(html, "CR");
+  const CRNumber = extractAndConvertCr(CR);
+  if (CRNumber === undefined) {
+    return null;
+  }
+
+  return {
+    id: creatureName,
+    name: readableName,
+    challengeRating: CRNumber,
+  } satisfies SummaryCreature;
+};
 
 function getStrongValueByLabel(html: string, label: string) {
   const $ = cheerio.load(html);
@@ -262,10 +284,10 @@ export const parseCreaturesFromAideDD = (
   html: string,
   creatureName: string,
 ) => {
+  const creatureData = getBaseCreatureData(html, creatureName);
+
   const $ = cheerio.load(html);
   const statBlockSelector = $(".jaune");
-
-  const readableName = statBlockSelector.find("h1").text().trim();
 
   const typeBlock = statBlockSelector.find(".type").text().trim();
   const type = typeBlock.match(/^\S+\s+([^,]+)/)?.[1];
@@ -276,12 +298,6 @@ export const parseCreaturesFromAideDD = (
   }
   if (size === undefined) {
     throw new Error("No creature size found");
-  }
-
-  const CR = getStrongValueByLabel(html, "CR");
-  const CRNumber = extractAndConvertCr(CR);
-  if (!CRNumber) {
-    throw new Error("No creature CR found");
   }
 
   const AC = getStrongValueByLabel(html, "AC");
@@ -332,14 +348,14 @@ export const parseCreaturesFromAideDD = (
   const legendaryActionsSlots = extractLegendaryActionUses(html);
 
   return {
-    name: readableName,
+    name: creatureData?.name ?? "",
     id: creatureName,
     type,
     size,
     alignment,
     armorClass: AC,
     hitPoints: HP,
-    challengeRating: CRNumber,
+    challengeRating: creatureData?.challengeRating ?? 0,
     speed: {
       walk: walkSpeed,
       swim: swimSpeed,

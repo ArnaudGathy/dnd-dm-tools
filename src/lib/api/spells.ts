@@ -16,17 +16,19 @@ export enum SPELLS_GROUP_BY {
 }
 
 export enum SPELLS_FILTER_BY {
-  FAVORITES = "favorites",
+  PREPARED = "prepared",
 }
 
-export enum SPELLS_VIEW {
-  LIST = "list",
-  CARDS = "cards",
-}
-
-export type SpellWithFavorite = Spell & {
-  isFavorite: SpellsOnCharacters["isFavorite"];
-};
+export type SpellWithFlags = Spell &
+  Pick<
+    SpellsOnCharacters,
+    | "isFavorite"
+    | "isPrepared"
+    | "isAlwaysPrepared"
+    | "hasLongRestCast"
+    | "canBeSwappedOnLongRest"
+    | "canBeSwappedOnLevelUp"
+  >;
 
 const getGroupedSpells = (
   response: Array<{ spell: Spell; character: Character } & SpellsOnCharacters>,
@@ -34,12 +36,20 @@ const getGroupedSpells = (
 ) => {
   const transformedResponse = response.map((r) => ({
     ...r,
-    spell: { ...r.spell, isFavorite: r.isFavorite },
+    spell: {
+      ...r.spell,
+      isFavorite: r.isFavorite,
+      isAlwaysPrepared: r.isAlwaysPrepared,
+      isPrepared: r.isPrepared,
+      hasLongRestCast: r.hasLongRestCast,
+      canBeSwappedOnLongRest: r.canBeSwappedOnLongRest,
+      canBeSwappedOnLevelUp: r.canBeSwappedOnLevelUp,
+    },
   }));
   if (groupBy === SPELLS_GROUP_BY.CHARACTER) {
     return reduce(
       transformedResponse,
-      (acc: { [key: string]: SpellWithFavorite[] }, next) => {
+      (acc: { [key: string]: SpellWithFlags[] }, next) => {
         if (!acc[next.character.name]) {
           acc[next.character.name] = [next.spell];
         } else {
@@ -90,24 +100,49 @@ export const getGroupedCharacterSpells = async ({
   search,
   groupBy,
   filterBy,
+  isWizard,
 }: {
   characterId?: number;
   search?: string;
   groupBy?: SPELLS_GROUP_BY;
   filterBy?: SPELLS_FILTER_BY;
+  isWizard?: boolean;
 }) => {
+  const filterCondition = filterBy
+    ? filterBy === SPELLS_FILTER_BY.PREPARED
+    : undefined;
+
   const response = await prisma.spellsOnCharacters.findMany({
     where: {
-      characterId: characterId,
-      isFavorite: filterBy
-        ? filterBy === SPELLS_FILTER_BY.FAVORITES
-        : undefined,
-      spell: {
-        name: {
-          contains: search,
-          mode: "insensitive",
+      AND: [
+        { characterId: characterId },
+        {
+          spell: {
+            name: {
+              contains: search,
+              mode: "insensitive",
+            },
+          },
         },
-      },
+        {
+          OR: [
+            {
+              isPrepared: filterCondition,
+            },
+            {
+              isAlwaysPrepared: filterCondition,
+            },
+            {
+              spell: {
+                isRitual:
+                  filterBy && isWizard
+                    ? filterBy === SPELLS_FILTER_BY.PREPARED
+                    : undefined,
+              },
+            },
+          ],
+        },
+      ],
     },
     include: {
       spell: true,
@@ -122,35 +157,4 @@ export const getGroupedCharacterSpells = async ({
     spells: getGroupedSpells(response, groupBy),
     name: response[0]?.character?.name,
   };
-};
-
-export const getCharacterSpells = async ({
-  search,
-  characterId,
-  filterBy,
-}: {
-  search?: string;
-  characterId?: number;
-  filterBy?: SPELLS_FILTER_BY;
-}) => {
-  return prisma.spellsOnCharacters.findMany({
-    where: {
-      isFavorite: filterBy
-        ? filterBy === SPELLS_FILTER_BY.FAVORITES
-        : undefined,
-      characterId: characterId,
-      spell: {
-        name: {
-          contains: search,
-          mode: "insensitive",
-        },
-      },
-    },
-    include: {
-      spell: true,
-    },
-    orderBy: {
-      spell: { name: "asc" },
-    },
-  });
 };

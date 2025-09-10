@@ -502,10 +502,31 @@ export const updateHP = async (
       where: { id: characterId },
       data: { currentHP: validation.data.HP },
     });
-    revalidatePath("/characters");
+    revalidatePath(`/characters/${characterId}`);
   } else {
     console.error(validation.error);
   }
+};
+
+export const setHP = async (
+  characterId: number,
+  currentHp: number,
+  maxHp: number,
+  hpChange: number,
+) => {
+  let newTotal = currentHp + hpChange;
+  if (newTotal > maxHp) {
+    newTotal = maxHp;
+  }
+  if (newTotal < 0) {
+    newTotal = 0;
+  }
+
+  await prisma.character.update({
+    where: { id: characterId },
+    data: { currentHP: newTotal },
+  });
+  revalidatePath(`/characters/${characterId}`);
 };
 
 export const resetHp = async (characterId: number, maxHp: number) => {
@@ -513,7 +534,7 @@ export const resetHp = async (characterId: number, maxHp: number) => {
     where: { id: characterId },
     data: { currentHP: maxHp },
   });
-  revalidatePath("/characters");
+  revalidatePath(`/characters/${characterId}`);
 };
 
 export const updateInspiration = async (
@@ -533,7 +554,7 @@ export const updateInspiration = async (
       where: { id: characterId },
       data: { inspiration: validation.data.inspiration },
     });
-    revalidatePath("/characters");
+    revalidatePath(`/characters/${characterId}`);
   } else {
     console.error(validation.error);
   }
@@ -553,7 +574,7 @@ export const updateNotes = async (characterId: number, notes: string) => {
       where: { id: characterId },
       data: { notes: validation.data.notes },
     });
-    revalidatePath("/characters");
+    revalidatePath(`/characters/${characterId}`);
   } else {
     console.error(validation.error);
   }

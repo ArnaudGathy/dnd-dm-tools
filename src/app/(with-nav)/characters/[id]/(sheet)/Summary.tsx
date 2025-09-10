@@ -12,14 +12,13 @@ import {
 } from "@/constants/maps";
 import { classColors } from "@/constants/colors";
 import { StatCell } from "@/components/statblocks/StatCell";
-import { BookOpenIcon, X } from "lucide-react";
+import { BookOpenIcon, PawPrint, X } from "lucide-react";
 import { entries } from "remeda";
-import { addSignToNumber, getModifier } from "@/utils/utils";
+import { addSignToNumber, getModifier, hasCreatures } from "@/utils/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import AbilitySquare from "@/app/(with-nav)/characters/[id]/(sheet)/AbilitySquare";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-
 import { getMovementSpeed } from "@/utils/stats/speed";
 
 export default function Summary({ character }: { character: CharacterById }) {
@@ -35,6 +34,7 @@ export default function Summary({ character }: { character: CharacterById }) {
   const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
   const conModifier = getModifier(character.constitution);
   const movementSpeedDetails = getMovementSpeed(character);
+  const hasCreatureList = hasCreatures(character.className);
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 p-0 md:grid-cols-6 md:grid-rows-[auto] md:p-4 2xl:w-[70%]">
@@ -46,8 +46,15 @@ export default function Summary({ character }: { character: CharacterById }) {
         <div className="absolute right-2 top-2 flex flex-col gap-1 md:right-4 md:top-4 md:flex-row md:gap-4">
           {!!spellCastingModifier && (
             <Link href={`/characters/${character.id}/spells`}>
-              <Button variant="outline" size="sm" theme="sky">
+              <Button size="sm" theme="sky">
                 <BookOpenIcon className="stroke-[2.5px]" />
+              </Button>
+            </Link>
+          )}
+          {hasCreatureList && (
+            <Link href={`/characters/${character.id}/creatures`}>
+              <Button size="sm" theme="green">
+                <PawPrint className="stroke-[2.5px]" />
               </Button>
             </Link>
           )}

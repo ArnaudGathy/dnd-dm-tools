@@ -6,6 +6,7 @@ import {
   Brain,
   BrainCircuit,
   Clover,
+  CopyCheck,
   Cross,
   Crosshair,
   Drama,
@@ -271,6 +272,15 @@ function Ressources({ character }: { character: CharacterById }) {
         character.className === Classes.CLERIC && character.level >= 10,
     },
   ];
+  const wizard: RessourceDefinition[] = [
+    {
+      name: "Restauration",
+      icon: <CopyCheck />,
+      ressourceName: "magicRestoration",
+      total: Math.ceil(character.level / 2),
+      condition: character.className === Classes.WIZARD,
+    },
+  ];
 
   const buildRessourceArray = (ressources: RessourceDefinition[]) => {
     return reduce(
@@ -308,6 +318,7 @@ function Ressources({ character }: { character: CharacterById }) {
       ...ranger,
       ...monk,
       ...cleric,
+      ...wizard,
     ]),
     ({ useRessource }) => useRessource[0].order,
   );

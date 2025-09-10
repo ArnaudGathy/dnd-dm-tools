@@ -1,24 +1,26 @@
 import { getGroupedCharacterSpells, SPELLS_GROUP_BY } from "@/lib/api/spells";
 import { SpellList } from "@/app/(with-nav)/characters/[id]/spells/SpellList";
 import { SpellsSearchParams } from "@/app/(with-nav)/characters/[id]/spells/SpellsFilters";
+import { CharacterById } from "@/lib/utils";
+import { Classes } from "@prisma/client";
 
 export default async function SpellsGrouped({
   searchParams,
-  characterId,
-  defaultFilter,
+  character,
   isEditMode = false,
 }: {
   searchParams: SpellsSearchParams;
-  characterId: number;
-  defaultFilter: SPELLS_GROUP_BY;
+  character: CharacterById;
   isEditMode?: boolean;
 }) {
+  const defaultFilter = SPELLS_GROUP_BY.LEVEL;
   const { search, groupBy, filterBy } = searchParams;
   const { spells } = await getGroupedCharacterSpells({
     search,
     groupBy: groupBy ?? defaultFilter,
     filterBy,
-    characterId: characterId,
+    characterId: character.id,
+    isWizard: character.className === Classes.WIZARD,
   });
 
   const getLabel = () => {
@@ -32,8 +34,7 @@ export default async function SpellsGrouped({
     <SpellList
       spellsGroupedBy={spells}
       label={getLabel()}
-      characterId={characterId}
-      showFavorites
+      character={character}
       isEditMode={isEditMode}
     />
   );

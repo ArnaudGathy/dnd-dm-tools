@@ -4,7 +4,10 @@ import {
   parseSpellFromAideDD,
 } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
-import { parseCreaturesFromAideDD } from "@/lib/aideDDParseCreature";
+import {
+  getBaseCreatureData,
+  parseCreaturesFromAideDD,
+} from "@/lib/aideDDParseCreature";
 import { Creature } from "@/types/types";
 import { APISpell } from "@/types/schemas";
 import { creatureOverrides } from "@/data/creatureOverrides";
@@ -12,7 +15,7 @@ import { mergeDeep } from "remeda";
 
 const getFrSpellURL = "https://www.aidedd.org/public/spell/fr";
 const getEnSpellURL = "https://www.aidedd.org/public/spell";
-const getCreatureURL = "https://www.aidedd.org/public/monster";
+const getEnCreatureURL = "https://www.aidedd.org/public/monster";
 
 export const getSpellDataFromFrName = async (enSpellName: string) => {
   const response = await axios.get(`${getEnSpellURL}/${enSpellName}`);
@@ -52,9 +55,22 @@ export const getSpellDetails = async (
   return getSpellDataFromFRName(frId, enSpellName);
 };
 
+export const getSummaryCreatureFromEN = async (creatureName: string) => {
+  const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
+  return getBaseCreatureData(response.data, creatureName);
+};
+
+// const getFRCreatureNameFromEN = async (html: string) => {
+//   const $ = cheerio.load(html);
+//   const mainDataBlock = $(".col1");
+//   const frLink = mainDataBlock.find(".trad > a").attr("href");
+//   return axios.get(`${getEnCreatureURL}/${frLink}`);
+// };
+
 export const getCreature = async (creatureName: string): Promise<Creature> => {
-  const response = await axios.get(`${getCreatureURL}/${creatureName}`);
-  const APICreature = parseCreaturesFromAideDD(response.data, creatureName);
+  const enResponse = await axios.get(`${getEnCreatureURL}/${creatureName}`);
+  // const frResponse = await getFRCreatureNameFromEN(enResponse.data);
+  const APICreature = parseCreaturesFromAideDD(enResponse.data, creatureName);
 
   const localCreature = creatureOverrides[creatureName];
   if (localCreature) {

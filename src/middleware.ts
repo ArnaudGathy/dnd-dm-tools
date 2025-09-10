@@ -10,5 +10,10 @@ export default auth((req) => {
 });
 
 export const config = {
-  matcher: ["/encounters/:path*", "/characters/:path*"],
+  matcher: [
+    "/encounters/:path*",
+    "/characters/:path*",
+    "/spells/:path*",
+    "/creatures/:path*",
+  ],
 };

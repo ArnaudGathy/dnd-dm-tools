@@ -22,6 +22,7 @@ import {
 import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
 import { getCreature } from "@/lib/external-apis/aidedd";
+import { Classes } from "@prisma/client";
 
 export const typedEncounters: Encounter[] = encounters;
 export const typedConditions: Condition[] = conditions;
@@ -355,4 +356,22 @@ export const getIdFromEnemy = (enemy: EncounterEnemy) => {
     return enemy.id;
   }
   return enemy;
+};
+
+export const hasCreatures = (className: Classes) => {
+  return (
+    className === Classes.WIZARD ||
+    className === Classes.DRUID ||
+    className === Classes.RANGER
+  );
+};
+
+export const kebabCaseify = (input: string) => {
+  return input
+    .normalize("NFD") // Normalize accented characters
+    .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
+    .replace(/[^a-zA-Z0-9]+/g, "-") // Replace non-alphanumeric characters with dashes
+    .replace(/^-+|-+$/g, "") // Trim leading/trailing dashes
+    .replace(/--+/g, "-") // Replace multiple dashes with a single one
+    .toLowerCase(); // Convert to lowercase
 };

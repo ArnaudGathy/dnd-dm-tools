@@ -135,6 +135,12 @@ export type Creature = {
   colors?: Array<string>;
 };
 
+export type SummaryCreature = {
+  id: string;
+  name: string;
+  challengeRating: number;
+};
+
 export enum SHEETS_TABS {
   GENERAL = "general",
   COMBAT = "combat",

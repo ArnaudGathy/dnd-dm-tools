@@ -10,15 +10,19 @@ import {
 } from "@/lib/external-apis/aidedd";
 import { z } from "zod";
 import { SummaryAPISpell } from "@/types/schemas";
+import { Prisma } from "@prisma/client";
+import { kebabCaseify } from "@/utils/utils";
 
-export const updateSpellFavoriteAction = async ({
+export const updateSpellFlagAction = async ({
+  flagName,
   spellId,
   characterId,
-  currentIsFavoriteState,
+  newState,
 }: {
+  flagName: keyof Prisma.SpellsOnCharactersUpdateInput;
   spellId: string;
   characterId: number;
-  currentIsFavoriteState: boolean;
+  newState: boolean;
 }) => {
   await prisma.spellsOnCharacters.update({
     where: {
@@ -28,21 +32,11 @@ export const updateSpellFavoriteAction = async ({
       },
     },
     data: {
-      isFavorite: !currentIsFavoriteState,
+      [flagName]: newState,
     },
   });
 
-  revalidatePath("/characters");
-};
-
-const kebabCaseify = (input: string) => {
-  return input
-    .normalize("NFD") // Normalize accented characters
-    .replace(/[\u0300-\u036f]/g, "") // Remove diacritics
-    .replace(/[^a-zA-Z0-9]+/g, "-") // Replace non-alphanumeric characters with dashes
-    .replace(/^-+|-+$/g, "") // Trim leading/trailing dashes
-    .replace(/--+/g, "-") // Replace multiple dashes with a single one
-    .toLowerCase(); // Convert to lowercase
+  revalidatePath(`/characters/${characterId}/spells`);
 };
 
 export const tryToAddSpell = async (
@@ -123,7 +117,7 @@ export const tryToAddSpell = async (
     },
   });
 
-  revalidatePath("/characters");
+  revalidatePath(`/characters/${characterId}/spells`);
   return {
     message: `Sort "${spellData.name}" ajouté avec succès !`,
     error: "",
@@ -145,5 +139,5 @@ export const deleteSpellAction = async ({
       },
     },
   });
-  revalidatePath("/characters");
+  revalidatePath(`/characters/${characterId}/spells`);
 };
