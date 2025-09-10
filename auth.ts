@@ -14,6 +14,8 @@ const authorizedUsers = [
   "kraft.alfred4@gmail.com",
   "lara.bluekami@gmail.com",
   "maximevanvelsen@gmail.com",
+  // Anthony
+  "fernandezgarciamagaly@gmail.com",
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
