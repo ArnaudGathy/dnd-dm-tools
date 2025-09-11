@@ -381,7 +381,7 @@ model SpellsOnCharacters {
 model Creature {
   id                    String                  @id
   name                  String
-  challengeRating       Int
+  challengeRating       Float
   CreaturesOnCharacters CreaturesOnCharacters[]
 }
 
