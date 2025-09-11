@@ -326,7 +326,7 @@ export const getChallengeRatingAsFraction = (
   number: number,
   tolerance = 1e-10,
 ) => {
-  if (Number.isInteger(number)) {
+  if (Number.isInteger(number) || number === 0) {
     return number.toString();
   }
 

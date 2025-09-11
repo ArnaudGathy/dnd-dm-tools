@@ -12,6 +12,7 @@ import EditModeButton from "@/app/(with-nav)/characters/[id]/spells/EditModeButt
 import AddCreatureForm from "@/app/(with-nav)/characters/[id]/creatures/AddCreatureForm";
 import DeleteCreatureButton from "@/app/(with-nav)/characters/[id]/creatures/DeleteCreatureButton";
 import CreaturesFilters from "./CreaturesFilters";
+import { getChallengeRatingAsFraction } from "@/utils/utils";
 
 export default async function CreatureList({
   params,
@@ -65,7 +66,7 @@ export default async function CreatureList({
                 <CardTitle>
                   {groupBy === CREATURES_GROUP_BY.ALPHABETICAL
                     ? groupingValue.toUpperCase()
-                    : `FP ${groupingValue}`}
+                    : `FP ${getChallengeRatingAsFraction(parseFloat(groupingValue))}`}
                 </CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col">

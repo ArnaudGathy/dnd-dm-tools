@@ -56,7 +56,7 @@ export const tryToAddCreature = async (
 
   if (!creatureData) {
     return {
-      error: `Aucune creéature trouvée avec ce nom : ${kebabCasedSpellName}`,
+      error: `Aucune créature trouvée avec ce nom : ${kebabCasedSpellName}`,
     };
   }
 
