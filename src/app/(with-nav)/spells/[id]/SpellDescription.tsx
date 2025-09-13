@@ -24,7 +24,9 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
             {!!spell.desc?.length && (
               <div className="flex flex-col gap-4 border-t-2 pt-4">
                 {spell.desc.map((desc, index) => (
-                  <div key={index}>{desc}</div>
+                  <div key={index} className="whitespace-pre-line">
+                    {desc}
+                  </div>
                 ))}
                 {!!spell.higher_level?.length && (
                   <div className="flex flex-col gap-2">

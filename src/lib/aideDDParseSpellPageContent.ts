@@ -76,7 +76,7 @@ export const parseSpellFromAideDD = ({
 
       return acc;
     }, []);
-  const description = descriptionArray.join("");
+  const description = descriptionArray.join(" ");
 
   const [desc, atHigherLevel] = description.includes(
     "Emplacement de niveau supérieur",
