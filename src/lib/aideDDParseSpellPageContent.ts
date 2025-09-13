@@ -56,7 +56,7 @@ export const parseSpellFromAideDD = ({
     .trim();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, componentsString, material] =
-    componentsFullString.match(/^([^()]+)\s*\(([^)]+)\)$/) || [];
+    componentsFullString.match(/^([^()]+?)(?:\s*\(([^)]*)\))?$/) || [];
   const components = componentsString?.split(",").map((c) => c.trim()) ?? [];
 
   const duration = mainDataBlock.find(".d").text().split(":")[1].trim();
