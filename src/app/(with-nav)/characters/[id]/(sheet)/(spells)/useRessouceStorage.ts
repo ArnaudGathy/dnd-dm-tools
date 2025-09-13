@@ -52,6 +52,11 @@ const ressourceNames = [
   "divineIntervention",
   "warPriest",
   "magicRestoration",
+  "wildShape",
+  "wildResurgence",
+  "natureMagician",
+  "starMap",
+  "cosmicOmen",
 ] as const;
 export type RessourceName = (typeof ressourceNames)[number];
 
@@ -83,9 +88,9 @@ const initialValues: RessourceStorage = {
     theme: "neutral",
     available: 0,
   },
-  luckyFeat: { ...initialRessource, order: 1, theme: "green" },
-  healthDices: { ...initialRessource, order: 2, theme: "red" },
-  sorceryPoints: { ...initialRessource, order: 3, theme: "fuchsia" },
+  luckyFeat: { ...initialRessource, theme: "green" },
+  healthDices: { ...initialRessource, theme: "red" },
+  sorceryPoints: { ...initialRessource, theme: "fuchsia" },
   innateSorcery: {
     ...initialRessource,
     theme: "violet",
@@ -170,6 +175,27 @@ const initialValues: RessourceStorage = {
     ...initialRessource,
     theme: "sky",
   },
+  wildShape: {
+    ...initialRessource,
+    theme: "blue",
+    canShortRest: true,
+  },
+  wildResurgence: {
+    ...initialRessource,
+    theme: "cyan",
+  },
+  natureMagician: {
+    ...initialRessource,
+    theme: "green",
+  },
+  starMap: {
+    ...initialRessource,
+    theme: "yellow",
+  },
+  cosmicOmen: {
+    ...initialRessource,
+    theme: "orange",
+  },
 };
 
 export type UseRessource = [Ressource, (ressource: Ressource) => void];
@@ -221,7 +247,7 @@ export const useRessourceStorage = (characterName: string) => {
         }
 
         /* One per short rest */
-        if (["psiDices", "channelDivinity"].includes(key)) {
+        if (["psiDices", "channelDivinity", "wildShape"].includes(key)) {
           available = Math.min(value.available + 1, value.total);
         }
 

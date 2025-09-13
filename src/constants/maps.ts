@@ -381,6 +381,29 @@ export const CLERIC_CHANNEL_DIVINITY_PER_LEVEL: Record<number, number> = {
   20: 4,
 };
 
+export const DRUID_WILD_SHAPE_PER_LEVEL: Record<number, number> = {
+  1: 0,
+  2: 2,
+  3: 2,
+  4: 2,
+  5: 2,
+  6: 3,
+  7: 3,
+  8: 3,
+  9: 3,
+  10: 3,
+  11: 3,
+  12: 3,
+  13: 3,
+  14: 3,
+  15: 3,
+  16: 3,
+  17: 4,
+  18: 4,
+  19: 4,
+  20: 4,
+};
+
 export const MONK_MARTIAL_DICE_PER_LEVEL: Record<number, string> = {
   1: "1d6",
   2: "1d6",

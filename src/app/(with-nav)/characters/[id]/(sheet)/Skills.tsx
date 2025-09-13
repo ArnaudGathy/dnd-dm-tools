@@ -1,11 +1,19 @@
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
-import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_NAME_MAP } from "@/constants/maps";
+import {
+  PROFICIENCY_BONUS_BY_LEVEL,
+  SKILL_ABILITY_MAP,
+  SKILL_NAME_MAP,
+} from "@/constants/maps";
 import SheetCard from "@/components/ui/SheetCard";
 import { Asterisk, Crown } from "lucide-react";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { Skills as SkillList } from "@prisma/client";
-import { addSignToNumber, getModifier } from "@/utils/utils";
+import {
+  addSignToNumber,
+  getModifier,
+  shortenAbilityName,
+} from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/SavingThrows";
 import { getSkillModifier } from "@/utils/stats/skills";
@@ -21,18 +29,26 @@ export default function Skills({ character }: { character: CharacterById }) {
   };
 
   return (
-    <div className="flex w-full flex-col gap-4 p-0 md:grid md:grid-flow-col md:grid-cols-[1fr_1fr_1fr_auto] md:grid-rows-[auto] md:p-4 2xl:w-[70%]">
+    <div className="flex w-full flex-col gap-4 p-0 md:grid md:grid-flow-col md:grid-cols-[1fr_1fr_1fr_auto] md:grid-rows-[auto] md:p-4 2xl:w-[75%]">
       <SheetCard className="row-span-4 flex flex-col">
         <span className="mb-2 self-center text-2xl font-bold">Compétences</span>
         {entries(SKILL_NAME_MAP).map(([skill, skillName]) => {
           const selectedSkill = character.skills.find(
             (characterSkill) => characterSkill.skill === skill,
           );
+          const skillAbilityName = shortenAbilityName(SKILL_ABILITY_MAP[skill]);
+
+          const skillDetails = getSkillModifier(character, skill);
 
           return (
             <div key={skill} className="flex items-center justify-between">
               <div className="flex items-center gap-1">
-                <span className="text-muted-foreground">{skillName}</span>
+                <div className="flex items-center gap-1 text-clip whitespace-nowrap">
+                  {skillName}
+                  <span className="text-xs text-muted-foreground">
+                    {skillAbilityName}
+                  </span>
+                </div>
                 {selectedSkill?.isProficient && !selectedSkill?.isExpert && (
                   <PopoverComponent definition="Compétence maîtrisée : bonus de maitrise appliqué">
                     <Asterisk className="size-4 text-indigo-500" />
@@ -46,14 +62,49 @@ export default function Skills({ character }: { character: CharacterById }) {
               </div>
 
               <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
-              <span
-                className={cn("text-lg font-bold", {
-                  "text-indigo-500": selectedSkill?.isProficient,
-                  "text-primary": selectedSkill?.isExpert,
-                })}
+              <PopoverComponent
+                definition={
+                  <div>
+                    <span className="font-bold">Bonus de {skillName}</span>
+                    <div>
+                      <span>Caractéristique ({skillAbilityName}) : </span>
+                      <span>{skillDetails.abilityModifier}</span>
+                    </div>
+                    {skillDetails.proficiencyModifier > 0 && (
+                      <div>
+                        <span>
+                          {skillDetails.isExpert
+                            ? "Expertise : "
+                            : "Maîtrise : "}
+                        </span>
+                        <span>{skillDetails.proficiencyModifier}</span>
+                      </div>
+                    )}
+                    {skillDetails.skillSpecial > 0 &&
+                      skillDetails.skillSpecialName && (
+                        <div>
+                          <span>{`${skillDetails.skillSpecialName} : `}</span>
+                          <span>{skillDetails.skillSpecial}</span>
+                        </div>
+                      )}
+                    {skillDetails.bonusModifier > 0 && (
+                      <div>
+                        <span>{"Bonus (autres) : "}</span>
+                        <span>{skillDetails.bonusModifier}</span>
+                      </div>
+                    )}
+                  </div>
+                }
               >
-                {addSignToNumber(getSkillModifier(character, skill))}
-              </span>
+                <span
+                  className={cn("text-lg font-bold", {
+                    "text-indigo-500": selectedSkill?.isProficient,
+                    "text-primary": selectedSkill?.isExpert,
+                  })}
+                >
+                  {addSignToNumber(skillDetails.total)}
+                </span>
+              </PopoverComponent>
             </div>
           );
         })}
@@ -67,7 +118,7 @@ export default function Skills({ character }: { character: CharacterById }) {
           const modifier = getModifier(value);
           return (
             <div key={name} className="flex items-center justify-between">
-              <span className="text-muted-foreground">{name}</span>
+              <span>{name}</span>
               <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
               <span className="w-4 text-right text-lg font-bold">
                 {addSignToNumber(modifier)}
@@ -95,7 +146,7 @@ export default function Skills({ character }: { character: CharacterById }) {
 
       <SheetSingleData
         label="Perception passive"
-        value={8 + getSkillModifier(character, SkillList.PERCEPTION)}
+        value={8 + getSkillModifier(character, SkillList.PERCEPTION).total}
       />
     </div>
   );

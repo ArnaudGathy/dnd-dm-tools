@@ -10,6 +10,7 @@ import {
   Cross,
   Crosshair,
   Drama,
+  Eye,
   EyeOff,
   Flame,
   Gavel,
@@ -19,8 +20,12 @@ import {
   Heart,
   HeartPlus,
   Mountain,
+  PawPrint,
+  RefreshCcw,
+  RefreshCcwDot,
   Sparkles,
   Sprout,
+  Star,
   Waves,
 } from "lucide-react";
 import { CharacterById } from "@/lib/utils";
@@ -34,6 +39,7 @@ import { ReactNode } from "react";
 import SheetCard from "@/components/ui/SheetCard";
 import {
   CLERIC_CHANNEL_DIVINITY_PER_LEVEL,
+  DRUID_WILD_SHAPE_PER_LEVEL,
   PROFICIENCY_BONUS_BY_LEVEL,
   RANGER_HUNTERS_MARK_PER_LEVEL,
   ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL,
@@ -100,7 +106,7 @@ function Ressources({ character }: { character: CharacterById }) {
       condition: character.race === Races.AASIMAR,
     },
     {
-      name: "Rév. Célest.",
+      name: "Révélation Cél.",
       icon: <Drama />,
       ressourceName: "celestialRevelation",
       total: 1,
@@ -281,6 +287,49 @@ function Ressources({ character }: { character: CharacterById }) {
       condition: character.className === Classes.WIZARD,
     },
   ];
+  const druid: RessourceDefinition[] = [
+    {
+      name: "Forme sauvage",
+      icon: <PawPrint />,
+      ressourceName: "wildShape",
+      total: DRUID_WILD_SHAPE_PER_LEVEL[character.level],
+      condition: character.className === Classes.DRUID && character.level >= 2,
+    },
+    {
+      name: "Regain sauvage",
+      icon: <RefreshCcw />,
+      ressourceName: "wildResurgence",
+      total: 1,
+      condition: character.className === Classes.DRUID && character.level >= 4,
+    },
+    {
+      name: "Mage de nature",
+      icon: <RefreshCcwDot />,
+      ressourceName: "natureMagician",
+      total: 1,
+      condition: character.className === Classes.DRUID && character.level >= 20,
+    },
+    {
+      name: "Carte Stellaire",
+      icon: <Star />,
+      ressourceName: "starMap",
+      total: Math.max(1, getModifier(character.wisdom)),
+      condition:
+        character.className === Classes.DRUID &&
+        character.subclassName === Subclasses.CIRCLE_OF_THE_STARS &&
+        character.level >= 3,
+    },
+    {
+      name: "Présage cosmique",
+      icon: <Eye />,
+      ressourceName: "cosmicOmen",
+      total: Math.max(1, getModifier(character.wisdom)),
+      condition:
+        character.className === Classes.DRUID &&
+        character.subclassName === Subclasses.CIRCLE_OF_THE_STARS &&
+        character.level >= 6,
+    },
+  ];
 
   const buildRessourceArray = (ressources: RessourceDefinition[]) => {
     return reduce(
@@ -319,6 +368,7 @@ function Ressources({ character }: { character: CharacterById }) {
       ...monk,
       ...cleric,
       ...wizard,
+      ...druid,
     ]),
     ({ useRessource }) => useRessource[0].order,
   );

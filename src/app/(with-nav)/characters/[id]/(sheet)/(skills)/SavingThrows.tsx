@@ -33,7 +33,7 @@ export default function SavingThrows({
         return (
           <div key={ability} className="flex items-center justify-between">
             <div className="flex items-center gap-1">
-              <span className="text-muted-foreground">{displayName}</span>
+              <span>{displayName}</span>
               {selectedSavingThrow?.isProficient && (
                 <PopoverComponent definition="Sauvegarde maîtrisée : bonus de maitrise appliqué">
                   <Asterisk className="size-4 text-indigo-500" />
