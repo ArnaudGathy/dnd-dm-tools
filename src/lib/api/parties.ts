@@ -30,3 +30,9 @@ export const getOwnersParties = async ({
     },
   });
 };
+
+export const getParties = async () => {
+  return prisma.party.findMany({
+    orderBy: { name: "asc" },
+  });
+};

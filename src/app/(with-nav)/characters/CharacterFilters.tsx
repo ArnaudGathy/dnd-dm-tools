@@ -27,16 +27,18 @@ import { entries } from "remeda";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CharacterFilters({
   campaigns,
   parties,
   numberOfCharacters,
+  isAdmin,
 }: {
   campaigns: Campaign[];
   parties: Party[];
   numberOfCharacters: number;
+  isAdmin: boolean;
 }) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -61,8 +63,8 @@ export default function CharacterFilters({
     updateParams();
   }, 300);
 
-  const handleFilterByCampaign = (campaign: CampaignId) => {
-    if (!!campaign) {
+  const handleFilterByCampaign = (campaign: CampaignId | "all") => {
+    if (campaign !== "all") {
       params.set("campaign", campaign);
     } else {
       params.delete("campaign");
@@ -70,8 +72,8 @@ export default function CharacterFilters({
     updateParams();
   };
 
-  const handleFilterByParty = (party: PartyId) => {
-    if (!!party) {
+  const handleFilterByParty = (party: PartyId | "all") => {
+    if (party !== "all") {
       params.set("party", party);
     } else {
       params.delete("party");
@@ -79,14 +81,21 @@ export default function CharacterFilters({
     updateParams();
   };
 
-  const handleFilterByStatus = (status: CharacterStatus) => {
-    if (!!status) {
+  const handleFilterByStatus = (status: CharacterStatus | "all") => {
+    if (status !== "all") {
       params.set("status", status);
     } else {
       params.delete("status");
     }
     updateParams();
   };
+
+  useEffect(() => {
+    if (isAdmin) {
+      handleFilterByStatus(CharacterStatus.ACTIVE);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const clearParams = () => {
     params.delete("search");
@@ -136,6 +145,7 @@ export default function CharacterFilters({
             </SelectTrigger>
             <SelectContent>
               <SelectGroup>
+                <SelectItem value="all">Tous</SelectItem>
                 {entries(CHARACTER_STATUS_MAP).map(([status, name]) => (
                   <SelectItem key={status} value={status}>
                     {name}
@@ -155,6 +165,7 @@ export default function CharacterFilters({
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
+                  <SelectItem value="all">Tous</SelectItem>
                   {parties.map(({ name }) => (
                     <SelectItem key={name} value={name}>
                       {PARTY_MAP[name]}
@@ -177,6 +188,7 @@ export default function CharacterFilters({
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
+                  <SelectItem value="all">Tous</SelectItem>
                   {campaigns.map(({ name }) => (
                     <SelectItem key={name} value={name}>
                       {CAMPAIGN_MAP[name]}

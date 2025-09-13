@@ -68,6 +68,49 @@ export const getFilteredCharactersByOwner = async ({
   });
 };
 
+export const getAllFilteredCharacters = async ({
+  search,
+  campaign,
+  party,
+  status,
+}: {
+  search?: string;
+  campaign?: CampaignId;
+  party?: PartyId;
+  status?: CharacterStatus;
+}) => {
+  return prisma.character.findMany({
+    where: {
+      name: {
+        contains: search,
+        mode: "insensitive",
+      },
+      campaign: {
+        name: campaign,
+        party: {
+          name: party,
+        },
+      },
+      status: {
+        equals: status,
+      },
+    },
+    include: {
+      campaign: {
+        include: {
+          party: true,
+        },
+      },
+      _count: {
+        select: {
+          spellsOnCharacters: true,
+        },
+      },
+    },
+    orderBy: [{ status: "asc" }, { name: "asc" }],
+  });
+};
+
 export const getCharacterById = async ({
   characterId,
 }: {
