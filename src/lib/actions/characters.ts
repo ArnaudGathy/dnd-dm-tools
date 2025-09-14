@@ -487,46 +487,28 @@ export const updateCharacter = async (
 export const updateHP = async (
   characterId: number,
   maxHp: number,
-  formData: FormData,
+  newHp: number,
 ) => {
-  const validation = z
-    .object({
-      HP: z.coerce.number().min(0).max(maxHp),
-    })
-    .safeParse({
-      HP: formData.get("HP"),
-    });
-
-  if (validation.success) {
-    await prisma.character.update({
-      where: { id: characterId },
-      data: { currentHP: validation.data.HP },
-    });
-    revalidatePath(`/characters/${characterId}`);
-  } else {
-    console.error(validation.error);
-  }
+  await prisma.character.update({
+    where: { id: characterId },
+    data: { currentHP: newHp },
+  });
+  revalidatePath(`/characters/${characterId}`);
 };
 
 export const setHP = async (
   characterId: number,
   currentHp: number,
-  maxHp: number,
   hpChange: number,
 ) => {
-  let newTotal = currentHp + hpChange;
-  if (newTotal > maxHp) {
-    newTotal = maxHp;
-  }
-  if (newTotal < 0) {
-    newTotal = 0;
-  }
+  const newTotal = currentHp + hpChange;
 
   await prisma.character.update({
     where: { id: characterId },
     data: { currentHP: newTotal },
   });
   revalidatePath(`/characters/${characterId}`);
+  return newTotal;
 };
 
 export const resetHp = async (characterId: number, maxHp: number) => {
