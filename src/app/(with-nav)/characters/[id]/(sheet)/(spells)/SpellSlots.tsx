@@ -1,14 +1,12 @@
 "use client";
 
-import { CLASS_SPELL_PROGRESSION_MAP } from "@/constants/maps";
-import { Character } from "@prisma/client";
 import { entries } from "remeda";
-import { cn } from "@/lib/utils";
-import { useLocalStorage } from "react-use";
+import { CharacterById, cn } from "@/lib/utils";
 import { BookOpenIcon, RotateCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import dynamic from "next/dynamic";
+import { RessourceStorage } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 
 const SingleSlot = ({
   isExpanded,
@@ -30,39 +28,26 @@ const SingleSlot = ({
   ></div>
 );
 
-function SpellSlots({ character }: { character: Character }) {
-  const spellSlots = CLASS_SPELL_PROGRESSION_MAP[character.className];
-  const allSlots = spellSlots[character.level - 1];
+type SpellsSlotsData = {
+  addSlot: (level: number) => void;
+  removeSlot: (level: number) => void;
+  allSlots: RessourceStorage["spellsSlots"];
+  baseSlots: RessourceStorage["spellsSlots"][];
+  spellSlots?: RessourceStorage["spellsSlots"];
+  resetSlots: () => void;
+};
 
-  const [currentSlots, setCurrentSlots] = useLocalStorage(
-    `${character.name.toLowerCase().replace(" ", "_")}.spellSlots`,
-    allSlots,
-  );
+function SpellSlots({
+  character,
+  spellsSlotsData,
+}: {
+  character: CharacterById;
+  spellsSlotsData: SpellsSlotsData;
+}) {
+  const { addSlot, removeSlot, allSlots, baseSlots, spellSlots, resetSlots } =
+    spellsSlotsData;
 
-  const addSlot = (spellLevel: number) => {
-    const maxSlots = allSlots[spellLevel];
-    setCurrentSlots(
-      !currentSlots
-        ? currentSlots
-        : {
-            ...currentSlots,
-            [spellLevel]: Math.min(maxSlots, currentSlots[spellLevel] + 1),
-          },
-    );
-  };
-
-  const removeSlot = (spellLevel: number) => {
-    setCurrentSlots(
-      !currentSlots
-        ? currentSlots
-        : {
-            ...currentSlots,
-            [spellLevel]: Math.max(0, currentSlots[spellLevel] - 1),
-          },
-    );
-  };
-
-  if (currentSlots === undefined || spellSlots.length === 0) {
+  if (spellSlots === undefined || baseSlots.length === 0) {
     return null;
   }
 
@@ -73,7 +58,7 @@ function SpellSlots({ character }: { character: Character }) {
         <div className="flex flex-wrap justify-center gap-x-8 gap-y-4 p-4">
           {entries(allSlots).map(([level, slots]) => {
             const numberLevel = parseInt(level, 10);
-            const availableSlots = currentSlots[numberLevel];
+            const availableSlots = spellSlots[numberLevel];
             return (
               <div key={level} className="flex flex-col gap-1">
                 <span className="self-center text-sm text-muted-foreground">{`Niv. ${level}`}</span>
@@ -106,7 +91,7 @@ function SpellSlots({ character }: { character: Character }) {
           </Button>
         </Link>
         <Button
-          onClick={() => setCurrentSlots(allSlots)}
+          onClick={resetSlots}
           className="border-2 border-sky-500 bg-sky-950 font-bold hover:bg-sky-900"
         >
           <RotateCw />

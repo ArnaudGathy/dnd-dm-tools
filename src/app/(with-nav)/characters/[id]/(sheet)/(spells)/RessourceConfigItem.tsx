@@ -6,10 +6,10 @@ import { Button } from "@/components/ui/button";
 import { GripHorizontal, Palette } from "lucide-react";
 import { Switch } from "@/components/ui/switch";
 import { Themes } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
-import { DisplayRessource } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/Ressources";
 import Icon from "@/components/ui/icon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { DisplayRessource } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
 
 const themes = {
   red: "bg-red-500",

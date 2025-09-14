@@ -1,3 +1,5 @@
+"use client";
+
 import { CharacterById, cn } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import {
@@ -45,6 +47,7 @@ import {
 import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 import RessourcesWrapper from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
 import StatCard from "./StatCard";
+import useRessourceData from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
 
 export default function Combat({ character }: { character: CharacterById }) {
   const ACDetails = getTotalAC(character);
@@ -59,6 +62,8 @@ export default function Combat({ character }: { character: CharacterById }) {
   const hasMartialData =
     martialClassDC?.total || classDice?.value || subClassDice?.value;
   const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
+
+  const { ressources, spellsSlots } = useRessourceData({ character });
 
   return (
     <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-3 md:p-4">
@@ -158,7 +163,7 @@ export default function Combat({ character }: { character: CharacterById }) {
           />
         </div>
         <SavingThrows character={character} />
-        <RessourcesWrapper character={character} />
+        <RessourcesWrapper character={character} ressources={ressources} />
       </div>
 
       <div className="flex flex-col gap-4">
@@ -306,7 +311,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                 )}
               </div>
 
-              <SpellSlots character={character} />
+              <SpellSlots character={character} spellsSlotsData={spellsSlots} />
             </SheetCard>
           </>
         )}

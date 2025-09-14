@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { FlameKindling, Settings, Tent } from "lucide-react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
-import { DisplayRessource } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/Ressources";
 import RessourceConfigItem from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourceConfigItem";
 import { closestCenter, DndContext } from "@dnd-kit/core";
 import {
@@ -15,6 +14,7 @@ import type { DragEndEvent } from "@dnd-kit/core/dist/types";
 import { RessourceStorage } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 import { mapToObj } from "remeda";
 import { PopoverClose } from "@radix-ui/react-popover";
+import { DisplayRessource } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
 
 export default function RessourcesConfigMenu({
   ressources,
@@ -25,7 +25,7 @@ export default function RessourcesConfigMenu({
   ressources: DisplayRessource[];
   shortRestAction: () => void;
   longRestAction: () => void;
-  sortRessourcesAction: (ressources: RessourceStorage) => void;
+  sortRessourcesAction: (ressources: RessourceStorage["ressources"]) => void;
 }) {
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
