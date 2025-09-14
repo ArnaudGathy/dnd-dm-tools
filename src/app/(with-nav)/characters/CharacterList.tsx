@@ -52,7 +52,7 @@ export default function CharacterList({
           "animate-shimmer rounded-lg bg-gradient-to-r from-blue-500 via-pink-500 to-blue-500 bg-[length:200%_100%]",
       )}
     >
-      <Card>
+      <Card className="h-full">
         <CardHeader>
           <CardTitle className="flex items-center justify-between">
             <span>{character.name}</span>
