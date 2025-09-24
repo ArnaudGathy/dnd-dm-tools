@@ -1,3 +1,5 @@
+"use client";
+
 import { CharacterById } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import { StatCell } from "@/components/statblocks/StatCell";
@@ -9,7 +11,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Edit } from "lucide-react";
+import { Edit, Trash } from "lucide-react";
+import { toast } from "sonner";
 
 const formatDate = (date: Date) =>
   Intl.DateTimeFormat("fr-FR", {
@@ -42,6 +45,18 @@ export default function Settings({ character }: { character: CharacterById }) {
             <Edit /> Modifier le personnage
           </Button>
         </Link>
+        <Separator className="my-4 bg-muted-foreground" />
+        <Button
+          theme="white"
+          onClick={() => {
+            localStorage.clear();
+            toast(
+              "Les ressources et les emplacements de sorts on été réinitialisés.",
+            );
+          }}
+        >
+          <Trash /> Vider le cache
+        </Button>
       </SheetCard>
     </div>
   );

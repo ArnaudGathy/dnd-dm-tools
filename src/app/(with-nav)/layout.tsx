@@ -1,5 +1,6 @@
 import { NavBar } from "@/components/navbar/NavBar";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -21,6 +22,7 @@ export default async function WithNavLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} overflow-y-auto antialiased`}
       >
+        <Toaster position="bottom-center" />
         <main className="mx-auto max-w-[1497px] p-4 md:p-8">
           <NavBar />
           {children}
