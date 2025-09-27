@@ -12,6 +12,7 @@ import { Creature } from "@/types/types";
 import { APISpell } from "@/types/schemas";
 import { creatureOverrides } from "@/data/creatureOverrides";
 import { mergeDeep } from "remeda";
+import { localCreatures } from "@/data/localCreatures";
 
 const getFrSpellURL = "https://www.aidedd.org/public/spell/fr";
 const getEnSpellURL = "https://www.aidedd.org/public/spell";
@@ -68,6 +69,11 @@ export const getSummaryCreatureFromEN = async (creatureName: string) => {
 // };
 
 export const getCreature = async (creatureName: string): Promise<Creature> => {
+  if (creatureName.substring(0, 1) === "_") {
+    const generalName = creatureName.substring(1);
+    return localCreatures[generalName];
+  }
+
   const enResponse = await axios.get(`${getEnCreatureURL}/${creatureName}`);
   // const frResponse = await getFRCreatureNameFromEN(enResponse.data);
   const APICreature = parseCreaturesFromAideDD(enResponse.data, creatureName);

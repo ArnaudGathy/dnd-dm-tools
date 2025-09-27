@@ -78,47 +78,12 @@
     "youtubeId": "NYtPB459e6Y"
   },
   {
-    "name": "Plage - guenaudes marines",
-    "id": 64,
-    "scenario": "La tombe de l'annihilation",
-    "location": {
-      "name": "Fort Beluarian",
-      "mapMarker": "FB1"
-    },
-    "ennemies": {
-      "1": [
-        {
-          "id": "sea-hag",
-          "color": "#817D98"
-        },
-        {
-          "id": "sea-hag",
-          "color": "#788892"
-        },
-        {
-          "id": "sea-hag",
-          "color": "#96766D"
-        }
-      ]
-    },
-    "informations": ["Déguisement DD13. Baihu OK"],
-    "loots": [
-      "Fiole de Venin de serpent (JdS CON 11 (moitié) ou 3d6 dmg)",
-      "Un étrange masque en bois peint, serti de 9 gemmes (10po chacune)",
-      "Une carte indiquant Mbala (pointer sur la carte des joueurs.",
-      "Elle est annotée avec les textes suivants :",
-      "La vieille ne dort jamais",
-      "Ce qui pourrit en haut nourrit ce qui rampe en bas"
-    ],
-    "youtubeId": "8Q7cioftmKs"
-  },
-  {
     "name": "Plage - pirates",
     "id": 65,
     "scenario": "La tombe de l'annihilation",
     "location": {
       "name": "Fort Beluarian",
-      "mapMarker": "FB2"
+      "mapMarker": "FB1"
     },
     "ennemies": {
       "1": [
@@ -171,7 +136,7 @@
     "scenario": "La tombe de l'annihilation",
     "location": {
       "name": "Fort Beluarian",
-      "mapMarker": "FB3"
+      "mapMarker": "FB2"
     },
     "ennemies": {
       "1": [
@@ -204,9 +169,7 @@
         }
       ]
     },
-    "informations": [
-      "Voir comportement sur Notion."
-    ],
+    "informations": ["Voir comportement sur Notion."],
     "loots": [
       "20 po par tête de goule",
       "10 po par tête de zombie",
@@ -214,5 +177,91 @@
       "1 joueur roll 1d100 dans la table de loots"
     ],
     "youtubeId": "w54512C_A2k"
+  },
+  {
+    "name": "Goules & zombies",
+    "id": 67,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Jungle du Chult",
+      "mapMarker": "JC2"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "zombie",
+          "color": "#aad09a"
+        },
+        {
+          "id": "zombie",
+          "color": "#57abbb"
+        },
+        {
+          "id": "ghoul",
+          "variant": "homme",
+          "color": "#1fa483"
+        },
+        {
+          "id": "ghoul",
+          "variant": "homme",
+          "color": "#A0A667"
+        }
+      ]
+    },
+    "youtubeId": "5iMeaTItPhE"
+  },
+  {
+    "name": "Guenaudes marines",
+    "id": 64,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Jungle du Chult",
+      "mapMarker": "JC2"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "sea-hag",
+          "color": "#817D98"
+        },
+        {
+          "id": "sea-hag",
+          "color": "#788892"
+        },
+        {
+          "id": "sea-hag",
+          "color": "#96766D"
+        }
+      ]
+    },
+    "informations": [
+      "Déguisement DD13. Baihu OK",
+      "Utilise vile apparence dès que qqun est à portée"
+    ],
+    "loots": [
+      "Fiole de Venin de serpent (JdS CON 11 (moitié) ou 3d6 dmg)",
+      "Un étrange masque en bois peint, serti de 9 gemmes (10po chacune)",
+      "Une carte indiquant Mbala (pointer sur la carte des joueurs.",
+      "Elle est annotée avec les textes suivants :",
+      "La vieille ne dort jamais",
+      "Ce qui pourrit en haut nourrit ce qui rampe en bas"
+    ],
+    "youtubeId": "8Q7cioftmKs"
+  },
+  {
+    "name": "Ptérosaurien dans la glace",
+    "id": 68,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Jungle du Chult",
+      "mapMarker": "JC3"
+    },
+    "ennemies": {
+      "1": ["_pterafolk", "_pterafolk", "_pterafolk"]
+    },
+    "informations": [
+      "Artus Cimber pop au 2eme ou 3eme tour et lance glacification sur un ptérosaurien qui se fracasse en 1000 morceaux au sol."
+    ],
+    "youtubeId": "5iMeaTItPhE"
   }
 ]

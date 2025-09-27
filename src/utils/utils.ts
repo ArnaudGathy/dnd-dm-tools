@@ -18,6 +18,7 @@ import {
   map,
   prop,
   reduce,
+  values,
 } from "remeda";
 import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
@@ -250,7 +251,7 @@ export const getEnnemiesFromEncounter = ({
 }) => {
   const ennemiesList = encounter.ennemies ?? [];
   const closestIndex = findClosestIndex(Object.keys(ennemiesList), partyLevel);
-  return Object.values(ennemiesList)[closestIndex] ?? [];
+  return values(ennemiesList)[closestIndex] ?? [];
 };
 
 const getCreatureColor = (
