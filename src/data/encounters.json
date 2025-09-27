@@ -179,44 +179,12 @@
     "youtubeId": "w54512C_A2k"
   },
   {
-    "name": "Goules & zombies",
-    "id": 67,
-    "scenario": "La tombe de l'annihilation",
-    "location": {
-      "name": "Jungle du Chult",
-      "mapMarker": "JC2"
-    },
-    "ennemies": {
-      "1": [
-        {
-          "id": "zombie",
-          "color": "#aad09a"
-        },
-        {
-          "id": "zombie",
-          "color": "#57abbb"
-        },
-        {
-          "id": "ghoul",
-          "variant": "homme",
-          "color": "#1fa483"
-        },
-        {
-          "id": "ghoul",
-          "variant": "homme",
-          "color": "#A0A667"
-        }
-      ]
-    },
-    "youtubeId": "5iMeaTItPhE"
-  },
-  {
     "name": "Guenaudes marines",
     "id": 64,
     "scenario": "La tombe de l'annihilation",
     "location": {
       "name": "Jungle du Chult",
-      "mapMarker": "JC2"
+      "mapMarker": "JC1"
     },
     "ennemies": {
       "1": [
@@ -249,6 +217,38 @@
     "youtubeId": "8Q7cioftmKs"
   },
   {
+    "name": "Goules & zombies",
+    "id": 67,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Jungle du Chult",
+      "mapMarker": "JC2"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "zombie",
+          "color": "#aad09a"
+        },
+        {
+          "id": "zombie",
+          "color": "#57abbb"
+        },
+        {
+          "id": "ghoul",
+          "variant": "homme",
+          "color": "#1fa483"
+        },
+        {
+          "id": "ghoul",
+          "variant": "homme",
+          "color": "#A0A667"
+        }
+      ]
+    },
+    "youtubeId": "5iMeaTItPhE"
+  },
+  {
     "name": "Ptérosaurien dans la glace",
     "id": 68,
     "scenario": "La tombe de l'annihilation",
@@ -263,5 +263,27 @@
       "Artus Cimber pop au 2eme ou 3eme tour et lance glacification sur un ptérosaurien qui se fracasse en 1000 morceaux au sol."
     ],
     "youtubeId": "5iMeaTItPhE"
+  },
+  {
+    "name": "Totem de guerre Batiri",
+    "id": 69,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Jungle du Chult",
+      "mapMarker": "JC4"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "_batiri-battle-stack",
+          "color": "#aad09a"
+        },
+        {
+          "id": "_batiri-battle-stack",
+          "color": "#d08403"
+        }
+      ]
+    },
+    "youtubeId": "06QeWIOvHHI"
   }
 ]

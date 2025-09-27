@@ -77,6 +77,11 @@ export const getCreature = async (creatureName: string): Promise<Creature> => {
   const enResponse = await axios.get(`${getEnCreatureURL}/${creatureName}`);
   // const frResponse = await getFRCreatureNameFromEN(enResponse.data);
   const APICreature = parseCreaturesFromAideDD(enResponse.data, creatureName);
+  if (!APICreature) {
+    throw new Error("No creature found locally nor on aidedd.");
+  }
+  // eslint-disable-next-line no-console
+  console.log("Creature:", APICreature);
 
   const localCreature = creatureOverrides[creatureName];
   if (localCreature) {

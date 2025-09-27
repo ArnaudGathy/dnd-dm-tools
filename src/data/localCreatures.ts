@@ -67,4 +67,66 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  "batiri-battle-stack": {
+    name: "Totem de guerre Batiri",
+    id: "batiri-battle-stack",
+    type: "Fey (Goblinoid)",
+    size: "Small",
+    alignment: "Chaotic Neutral",
+    armorClass: "15",
+    hitPoints: "40 (3d6)",
+    challengeRating: 0.25,
+    speed: {
+      walk: "9 m",
+    },
+    abilities: {
+      strength: 8,
+      dexterity: 15,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 8,
+      charisma: 8,
+    },
+    savingThrows: {
+      strength: "-1",
+      dexterity: "+2",
+      wisdom: "-1",
+      charisma: "-1",
+    },
+    skills: {
+      stealth: "+6",
+    },
+    languages: ["common", "goblin"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 9,
+    },
+    traits: [
+      {
+        name: "Totem Batiri",
+        description:
+          "Sous forme de totem, bénéficie de 2 attaques, l'avantage aux jets d'attaques ainsi que +1d4 dégats.",
+      },
+      {
+        name: "Mort",
+        description:
+          "Tous les 10 pv perdus, un gobelins du totelm meurt. JdS DEX 10 ou s'éffondre (tous les gobelins à terre). Une action est requise pour reformer le totem",
+      },
+    ],
+    actions: [
+      {
+        name: "Lance",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "(1d6+1d4+2) perf. Avantage + double attaque",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Nimble Escape",
+        description: "The goblin takes the Disengage or Hide action.",
+      },
+    ],
+  },
 };
