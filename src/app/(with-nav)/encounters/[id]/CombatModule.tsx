@@ -414,11 +414,11 @@ export const CombatModule = ({
                   <UserPlusIcon className="size-6" />
                   Participants
                 </Button>
-                <Button size="sm" onClick={handleNextTurn}>
+                <Button size="lg" onClick={handleNextTurn}>
                   {hasCombatStarted ? (
                     <FastForwardIcon className="size-6" />
                   ) : (
-                    <PlayIcon className="size-6" />
+                    <PlayIcon className="size-8" />
                   )}
                 </Button>
               </div>
