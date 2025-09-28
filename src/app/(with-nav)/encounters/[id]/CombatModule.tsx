@@ -568,7 +568,10 @@ export const CombatModule = ({
                               </span>
                             </div>
                           </PopoverTrigger>
-                          <PopoverContent className="flex h-[450px] w-[575px] flex-col gap-4 overflow-auto">
+                          <PopoverContent
+                            className="flex h-[450px] w-[575px] flex-col gap-4 overflow-auto"
+                            onOpenAutoFocus={(event) => event.preventDefault()}
+                          >
                             <h4 className="text-xl font-semibold tracking-tight">
                               Points de vie
                             </h4>
@@ -728,7 +731,12 @@ export const CombatModule = ({
                                   className="size-8"
                                 />
                               </PopoverTrigger>
-                              <PopoverContent className="w-full">
+                              <PopoverContent
+                                className="w-full"
+                                onOpenAutoFocus={(event) =>
+                                  event.preventDefault()
+                                }
+                              >
                                 <div className="flex gap-2">
                                   {participant.conditions
                                     ?.toSpliced(0, index)
@@ -755,7 +763,12 @@ export const CombatModule = ({
                                 />
                               </div>
                             </PopoverTrigger>
-                            <PopoverContent className="min-w-[500px]">
+                            <PopoverContent
+                              className="min-w-[500px]"
+                              onOpenAutoFocus={(event) =>
+                                event.preventDefault()
+                              }
+                            >
                               <Card>
                                 <CardHeader>
                                   <CardTitle>

@@ -86,9 +86,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
           </PopoverTrigger>
           <PopoverContent
             className="w-[300px]"
-            onOpenAutoFocus={(event) => {
-              event.preventDefault();
-            }}
+            onOpenAutoFocus={(event) => event.preventDefault()}
           >
             <div className="flex flex-col items-center gap-4">
               <div>Points de vie (PV)</div>
