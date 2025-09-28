@@ -462,7 +462,7 @@ export const CombatModule = ({
               <div className="w-20">
                 <Label htmlFor="init">Init</Label>
                 <Input
-                  type="text"
+                  type="number"
                   id="init"
                   value={participant.init}
                   onChange={(e) =>
@@ -476,7 +476,7 @@ export const CombatModule = ({
               <div className="w-28">
                 <Label htmlFor="hp">PV</Label>
                 <Input
-                  type="text"
+                  type="number"
                   id="hp"
                   value={participant.hp}
                   onChange={(e) =>
@@ -534,6 +534,7 @@ export const CombatModule = ({
                   </div>
                   <div className="w-10 text-center text-sm">
                     <Input
+                      type="number"
                       className="w-14"
                       id="init"
                       defaultValue={participant.init}
@@ -573,6 +574,7 @@ export const CombatModule = ({
                             </h4>
                             <div className="flex items-center gap-1">
                               <Input
+                                type="number"
                                 className="w-12"
                                 id="hp"
                                 value={participant.currentHp}
@@ -581,6 +583,7 @@ export const CombatModule = ({
                               />
                               <span>/</span>
                               <Input
+                                type="number"
                                 className="w-12"
                                 id="currentHp"
                                 value={participant.hp}
@@ -639,7 +642,7 @@ export const CombatModule = ({
                                 <Input
                                   className="h-8 w-11"
                                   placeholder="PV"
-                                  type="text"
+                                  type="number"
                                   onBlur={(e) =>
                                     handleChangeHp(participant, e.target.value)
                                   }
