@@ -34,4 +34,7 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
       },
     ],
   },
+  "axe-beak": {
+    name: "Bec-de-Hache",
+  },
 };

@@ -211,15 +211,16 @@ model Character {
   creaturesOnCharacters CreaturesOnCharacters[]
   creatures             Int[]                   @default([])
 
-  name         String      @db.VarChar(255)
-  level        Int         @default(1)
-  className    Classes
-  subclassName Subclasses?
-  race         Races
-  background   Backgrounds
-  inspiration  Int         @default(0)
-  maximumHP    Int
-  currentHP    Int
+  name          String      @db.VarChar(255)
+  level         Int         @default(1)
+  className     Classes
+  subclassName  Subclasses?
+  race          Races
+  background    Backgrounds
+  inspiration   Int         @default(0)
+  maximumHP     Int
+  currentHP     Int
+  currentTempHP Int         @default(0)
 
   strength     Int
   dexterity    Int

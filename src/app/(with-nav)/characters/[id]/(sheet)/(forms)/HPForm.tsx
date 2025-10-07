@@ -6,10 +6,11 @@ import {
   ChevronsRight,
   Heart,
   RotateCcw,
+  Shield,
 } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { resetHp, setHP, updateHP } from "@/lib/actions/characters";
+import { resetHp, setHp, setTempHp } from "@/lib/actions/characters";
 import { CharacterById, cn } from "@/lib/utils";
 import {
   Popover,
@@ -19,40 +20,41 @@ import {
 } from "@/components/ui/popover";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { useState } from "react";
-import ToggleConfirmDialog from "@/components/ui/ToggleConfirmDialog";
 
-const HP_OPTIONS_STEPS = 21;
+const HP_OPTIONS_STEPS = 20;
 
 export default function HPForm({ character }: { character: CharacterById }) {
   const [hpStep, setHpStep] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [mode, setMode] = useState<"plus" | "minus">("minus");
+  const [isTempHP, setIsTempHP] = useState(false);
   const [inputHP, setInputHP] = useState(character.currentHP);
   const isPlus = mode === "plus";
 
-  const handleUpdateHP = async (hpOverride?: number) => {
-    await updateHP(character.id, character.maximumHP, hpOverride ?? inputHP);
+  const handleUpdateHP = async () => {
+    await setHp(character.id, character.maximumHP, inputHP);
     setIsOpen(false);
-    if (hpOverride) {
-      setInputHP(hpOverride);
-    }
   };
 
   const handleSetHp = async (amount: number) => {
-    const newHp = await setHP(
-      character.id,
-      character.currentHP,
-      isPlus ? amount : -amount,
-    );
+    if (isTempHP) {
+      await setTempHp(
+        character.id,
+        character.currentTempHP + (isPlus ? amount : -amount),
+      );
+    } else {
+      const newHp = await setHp(
+        character.id,
+        character.maximumHP,
+        character.currentHP + (isPlus ? amount : -amount),
+      );
+      setInputHP(newHp);
+    }
+
     setIsOpen(false);
-    setInputHP(newHp);
   };
 
   const baseHP = Math.min(character.currentHP, character.maximumHP);
-  const temporaryHp =
-    character.currentHP > character.maximumHP
-      ? character.currentHP - character.maximumHP
-      : 0;
 
   return (
     <SheetSingleData
@@ -78,7 +80,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
                 {baseHP}
               </span>
               <span className="text-teal-500">
-                {temporaryHp > 0 && `+${temporaryHp}`}
+                {character.currentTempHP > 0 && `+${character.currentTempHP}`}
               </span>
               <span>/</span>
               <span>{character.maximumHP}</span>
@@ -102,34 +104,14 @@ export default function HPForm({ character }: { character: CharacterById }) {
                     }
                   }}
                 />
-                <ToggleConfirmDialog
-                  title="Ajouter des PV temporaire ?"
-                  description="Augmenter les PV au dessus du maximum ajoutera des PV temporaires. Annuler montera le PV au maximum sans ajouter de PV temporaires."
-                  onConfirm={() => {
+                <Button
+                  className="w-full"
+                  onClick={() => {
                     void handleUpdateHP();
                   }}
-                  onCancel={() => {
-                    void handleUpdateHP(character.maximumHP);
-                  }}
                 >
-                  {(setIsOpenDialog: (isOpen: boolean) => void) => (
-                    <Button
-                      className="w-full"
-                      onClick={() => {
-                        if (
-                          inputHP > character.maximumHP &&
-                          character.currentHP <= character.maximumHP
-                        ) {
-                          setIsOpenDialog(true);
-                        } else {
-                          void handleUpdateHP();
-                        }
-                      }}
-                    >
-                      <Check />
-                    </Button>
-                  )}
-                </ToggleConfirmDialog>
+                  <Check />
+                </Button>
                 <PopoverClose asChild>
                   <Button
                     className="w-full"
@@ -143,8 +125,18 @@ export default function HPForm({ character }: { character: CharacterById }) {
                   </Button>
                 </PopoverClose>
               </div>
+              {`${isPlus ? "Ajout" : "Suppression"} de ${isTempHP ? "PV temporaire" : "PV"}`}
               <div className="flex gap-2">
                 <div className="grid grid-cols-4 gap-1">
+                  <Button
+                    theme={isTempHP ? "red" : "teal"}
+                    onClick={() => {
+                      setIsTempHP((current) => !current);
+                      setMode("plus");
+                    }}
+                  >
+                    {isTempHP ? <Heart /> : <Shield />}
+                  </Button>
                   <Button
                     theme={isPlus ? "red" : "green"}
                     onClick={() =>
@@ -159,38 +151,25 @@ export default function HPForm({ character }: { character: CharacterById }) {
                     { length: HP_OPTIONS_STEPS },
                     (_, i) => i + 1 + hpStep * HP_OPTIONS_STEPS,
                   ).map((i) => (
-                    <ToggleConfirmDialog
+                    <Button
                       key={i}
-                      title="Ajouter des PV temporaire ?"
-                      description="Augmenter les PV au dessus du maximum ajoutera des PV temporaires. Annuler montera le PV au maximum sans ajouter de PV temporaires."
-                      onConfirm={() => {
+                      theme={
+                        isTempHP
+                          ? isPlus
+                            ? "teal"
+                            : "orange"
+                          : isPlus
+                            ? "green"
+                            : "red"
+                      }
+                      className="font-mono"
+                      onClick={() => {
                         void handleSetHp(i);
                       }}
-                      onCancel={() => {
-                        void handleUpdateHP(character.maximumHP);
-                      }}
                     >
-                      {(setIsOpenDialog: (isOpen: boolean) => void) => (
-                        <Button
-                          theme={isPlus ? "green" : "red"}
-                          className="font-mono"
-                          onClick={() => {
-                            if (
-                              isPlus &&
-                              character.currentHP + i > character.maximumHP &&
-                              character.currentHP <= character.maximumHP
-                            ) {
-                              setIsOpenDialog(true);
-                            } else {
-                              void handleSetHp(i);
-                            }
-                          }}
-                        >
-                          {isPlus ? "+" : "-"}
-                          {i}
-                        </Button>
-                      )}
-                    </ToggleConfirmDialog>
+                      {isPlus ? "+" : "-"}
+                      {i}
+                    </Button>
                   ))}
                   <Button
                     theme="white"
@@ -202,6 +181,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
                   <Button
                     theme="white"
                     onClick={() => setHpStep((current) => current + 1)}
+                    disabled={hpStep === 5}
                   >
                     <ChevronsRight />
                   </Button>

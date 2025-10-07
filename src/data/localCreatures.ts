@@ -129,4 +129,68 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  deinonychus: {
+    name: "Deinonychus",
+    id: "deinonychus",
+    type: "Beast",
+    size: "Medium",
+    alignment: "Unaligned",
+    challengeRating: 1,
+    armorClass: 13,
+    hitPoints: "26 (4d8 + 8)",
+    speed: {
+      walk: "12 m",
+    },
+    abilities: {
+      strength: 15,
+      dexterity: 15,
+      constitution: 14,
+      intelligence: 4,
+      wisdom: 12,
+      charisma: 6,
+    },
+    skills: {
+      perception: "+3",
+    },
+    senses: {
+      passivePerception: 13,
+    },
+    traits: [
+      {
+        name: "Pounce",
+        description:
+          "S'il se déplace au moins 4 case en ligne droite avant d'attaquer, la cible JdS FOR 12 ou tombe prone et subit une morsure action bonus.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description:
+          "The deinonychus makes three attacks: one with its bite and two with its claws.",
+      },
+      {
+        name: "Bite",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "6 (1d8 + 2) piercing damage.",
+      },
+      {
+        name: "Claw",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "6 (1d8 + 2) slashing damage.",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Bite",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "6 (1d8 + 2) piercing damage.",
+      },
+    ],
+  },
 };

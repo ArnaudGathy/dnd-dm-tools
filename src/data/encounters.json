@@ -285,5 +285,43 @@
       ]
     },
     "youtubeId": "06QeWIOvHHI"
+  },
+  {
+    "name": "Troupe de chasse Batari",
+    "id": 70,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Camp Vertu",
+      "mapMarker": "CV1"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "_deinonychus",
+          "color": "#30850e"
+        },
+        {
+          "id": "_deinonychus",
+          "color": "#d52c06"
+        },
+        {
+          "id": "goblin-warrior",
+          "color": "#a88204"
+        },
+        {
+          "id": "goblin-warrior",
+          "color": "#025e13"
+        },
+        {
+          "id": "axe-beak",
+          "color": "#09255e"
+        },
+        {
+          "id": "axe-beak",
+          "color": "#efb500"
+        }
+      ]
+    },
+    "youtubeId": "jFGq3nwApvA"
   }
 ]
