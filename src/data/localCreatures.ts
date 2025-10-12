@@ -41,7 +41,7 @@ export const localCreatures: Record<string, Creature> = {
       {
         name: "Multiattack",
         description:
-          "Soit 3 attaques, morsure + 2 griffes. Ou 2 attaques au javelin",
+          "Soit 3 attaques: morsure + 2 griffes. Soit 2 attaques au javelin (piqué)",
       },
       {
         name: "Morsure",
@@ -63,7 +63,6 @@ export const localCreatures: Record<string, Creature> = {
         modifier: "+4",
         reach: "1.5 m",
         hit: "9 (2d6 + 2) piercing damage.",
-        description: "Range 9 m / 36 m, one target.",
       },
     ],
   },
@@ -119,7 +118,7 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+4",
         reach: "1.5 m",
-        hit: "(1d6+1d4+2) perf. Avantage + double attaque",
+        hit: "(1d6+1d4+2) Avantage + double attaque",
       },
     ],
     bonusActions: [
