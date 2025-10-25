@@ -3,7 +3,7 @@ import { Creature } from "@/types/types";
 export const localCreatures: Record<string, Creature> = {
   pterafolk: {
     name: "Ptérosaurien",
-    id: "pterafolk",
+    id: "_pterafolk",
     type: "Monstrosity",
     size: "Large",
     alignment: "Neutral Evil",
@@ -68,7 +68,7 @@ export const localCreatures: Record<string, Creature> = {
   },
   "batiri-battle-stack": {
     name: "Totem de guerre Batiri",
-    id: "batiri-battle-stack",
+    id: "_batiri-battle-stack",
     type: "Fey (Goblinoid)",
     size: "Small",
     alignment: "Chaotic Neutral",
@@ -130,7 +130,7 @@ export const localCreatures: Record<string, Creature> = {
   },
   deinonychus: {
     name: "Deinonychus",
-    id: "deinonychus",
+    id: "_deinonychus",
     type: "Beast",
     size: "Medium",
     alignment: "Unaligned",
@@ -189,6 +189,48 @@ export const localCreatures: Record<string, Creature> = {
         modifier: "+4",
         reach: "1.5 m",
         hit: "6 (1d8 + 2) piercing damage.",
+      },
+    ],
+  },
+  "assassin-vine": {
+    name: "Lianes assassines",
+    id: "_assassin-vine",
+    type: "Plant",
+    size: "Large",
+    alignment: "Unaligned",
+    armorClass: 13,
+    hitPoints: "85 (10d10 + 30)",
+    speed: { walk: "1.5 m", climb: "1.5 m" },
+    challengeRating: 3,
+    abilities: {
+      strength: 18,
+      dexterity: 10,
+      constitution: 16,
+      intelligence: 1,
+      wisdom: 10,
+      charisma: 1,
+    },
+    resistances: ["Givre", "Feu"],
+    immunities: ["Aveuglée", "Assourdie", "Fatiguée", "Au sol"],
+    senses: { blindSight: "9 m", passivePerception: 10 },
+    traits: [
+      {
+        name: "Fausse apparence",
+        description: "Idétectable tant qu'elle ne bouge pas.",
+      },
+    ],
+    actions: [
+      {
+        name: "Constriction",
+        type: "Melee",
+        modifier: "+6",
+        reach: "6 m",
+        hit: "11 (2d6 + 4) bludgeoning damage, et cible saisie (DD 14) + entravée. Cible 6d6 poison au début de son tour + action pour se libérer (DD 14). 1 cible à la fois.",
+      },
+      {
+        name: "Lianes enchevêtrées",
+        description:
+          "Créer zone de terrain difficile carrée de 3 cases de côté dans une portée de 6 cases. JdS FOR 13 ou entravée lors de l'apparition. Action Athlétisme DD 13 pour se libérer. 1 zone à la fois",
       },
     ],
   },

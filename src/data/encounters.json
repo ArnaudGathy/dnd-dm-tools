@@ -323,5 +323,51 @@
       ]
     },
     "youtubeId": "jFGq3nwApvA"
+  },
+  {
+    "name": "Lianes assassines",
+    "id": 71,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Jungle du Chult",
+      "mapMarker": "JC5"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "_assassin-vine",
+          "color": "#699846"
+        },
+        {
+          "id": "_assassin-vine",
+          "color": "#5E4737"
+        },
+        {
+          "id": "swarm-of-bats",
+          "color": "#C64C38"
+        },
+        {
+          "id": "swarm-of-bats",
+          "color": "#7D9D85"
+        },
+        {
+          "id": "swarm-of-bats",
+          "color": "#3D444A"
+        },
+        {
+          "id": "swarm-of-insects",
+          "color": "#4D8E31"
+        },
+        {
+          "id": "swarm-of-insects",
+          "color": "#6B5032"
+        },
+        {
+          "id": "swarm-of-insects",
+          "color": "#40204A"
+        }
+      ]
+    },
+    "youtubeId": "mswsmaHukRI"
   }
 ]

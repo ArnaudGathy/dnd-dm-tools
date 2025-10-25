@@ -37,9 +37,10 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
   }));
 
   const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
-  const linkToAideDD = isNumber(creature.id)
-    ? undefined
-    : `https://www.aidedd.org/public/monster/${creature.id}`;
+  const linkToAideDD =
+    isNumber(creature.id) || creature.id.includes("_")
+      ? undefined
+      : `https://www.aidedd.org/public/monster/${creature.id}`;
 
   return (
     <Card id={creature.id.toString()}>
