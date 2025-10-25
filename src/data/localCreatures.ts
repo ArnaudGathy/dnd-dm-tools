@@ -234,4 +234,49 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  almiraj: {
+    name: "Almiraj",
+    id: "_almiraj",
+    type: "Bête",
+    size: "Small",
+    alignment: "Non aligné",
+    armorClass: 13,
+    hitPoints: "3 (1d6)",
+    speed: {
+      walk: "15 m",
+    },
+    challengeRating: 0,
+    abilities: {
+      strength: 2,
+      dexterity: 16,
+      constitution: 10,
+      intelligence: 2,
+      wisdom: 14,
+      charisma: 10,
+    },
+    skills: {
+      stealth: "+5",
+      perception: "+4",
+    },
+    senses: {
+      darkvision: "9 m",
+      passivePerception: 14,
+    },
+    traits: [
+      {
+        name: "Sens aiguisés",
+        description:
+          "L’almiraj est avantagé sur les tests de perception basés sur la vue ou l’ouïe.",
+      },
+    ],
+    actions: [
+      {
+        name: "Corne",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "5 (1d4 + 3) dégâts perforants.",
+      },
+    ],
+  },
 };

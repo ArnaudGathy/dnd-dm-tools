@@ -6,13 +6,7 @@ import {
   CardContent,
 } from "@/components/ui/card";
 import PopoverComponent from "@/components/ui/PopoverComponent";
-import {
-  CAMPAIGN_MAP,
-  CLASS_MAP,
-  PARTY_MAP,
-  RACE_MAP,
-  SPELLCASTING_MODIFIER_MAP,
-} from "@/constants/maps";
+import { CAMPAIGN_MAP, CLASS_MAP, PARTY_MAP, RACE_MAP } from "@/constants/maps";
 import { CharacterByOwner, cn } from "@/lib/utils";
 import {
   BookOpenIcon,
@@ -32,6 +26,7 @@ import { StatCell } from "@/components/statblocks/StatCell";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { hasCreatures } from "@/utils/utils";
+import { getHasSpells } from "@/utils/stats/spells";
 
 export default function CharacterList({
   character,
@@ -40,8 +35,8 @@ export default function CharacterList({
   character: CharacterByOwner;
   numberOfCharacters: number;
 }) {
-  const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
-  const hasCreatureList = hasCreatures(character.className);
+  const hasSpells = getHasSpells(character);
+  const hasCreatureList = hasCreatures(character);
 
   return (
     <div
@@ -113,7 +108,7 @@ export default function CharacterList({
                 Fiche
               </Button>
             </Link>
-            {!!spellCastingModifier && (
+            {hasSpells && (
               <Link href={`/characters/${character.id}/spells`}>
                 <Button size="sm" theme="sky">
                   <BookOpenIcon />

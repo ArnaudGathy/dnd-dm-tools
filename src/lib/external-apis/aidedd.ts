@@ -8,7 +8,7 @@ import {
   getBaseCreatureData,
   parseCreaturesFromAideDD,
 } from "@/lib/aideDDParseCreature";
-import { Creature } from "@/types/types";
+import { Creature, SummaryCreature } from "@/types/types";
 import { APISpell } from "@/types/schemas";
 import { creatureOverrides } from "@/data/creatureOverrides";
 import { mergeDeep } from "remeda";
@@ -57,6 +57,15 @@ export const getSpellDetails = async (
 };
 
 export const getSummaryCreatureFromEN = async (creatureName: string) => {
+  const localCreature = localCreatures[creatureName];
+  if (localCreature) {
+    return {
+      id: localCreature.id,
+      name: localCreature.name,
+      challengeRating: localCreature.challengeRating,
+    } satisfies SummaryCreature;
+  }
+
   const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
   return getBaseCreatureData(response.data, creatureName);
 };

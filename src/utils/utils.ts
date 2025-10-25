@@ -24,6 +24,7 @@ import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
 import { getCreature } from "@/lib/external-apis/aidedd";
 import { Classes } from "@prisma/client";
+import { CharacterById, SpellsCreaturesCount } from "@/lib/utils";
 
 export const typedEncounters: Encounter[] = encounters;
 export const typedConditions: Condition[] = conditions;
@@ -359,11 +360,15 @@ export const getIdFromEnemy = (enemy: EncounterEnemy) => {
   return enemy;
 };
 
-export const hasCreatures = (className: Classes) => {
+export const hasCreatures = ({
+  className,
+  _count,
+}: { className: CharacterById["className"] } & SpellsCreaturesCount) => {
   return (
     className === Classes.WIZARD ||
     className === Classes.DRUID ||
-    className === Classes.RANGER
+    className === Classes.RANGER ||
+    _count.creaturesOnCharacters > 0
   );
 };
 

@@ -20,6 +20,7 @@ import AbilitySquare from "@/app/(with-nav)/characters/[id]/(sheet)/AbilitySquar
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { getMovementSpeed } from "@/utils/stats/speed";
+import { getHasSpells } from "@/utils/stats/spells";
 
 export default function Summary({ character }: { character: CharacterById }) {
   const abilities = {
@@ -31,10 +32,11 @@ export default function Summary({ character }: { character: CharacterById }) {
     wisdom: character.wisdom,
   };
 
+  const hasSpells = getHasSpells(character);
   const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
   const conModifier = getModifier(character.constitution);
   const movementSpeedDetails = getMovementSpeed(character);
-  const hasCreatureList = hasCreatures(character.className);
+  const hasCreatureList = hasCreatures(character);
 
   return (
     <div className="grid w-full grid-cols-2 gap-4 p-0 md:grid-cols-6 md:grid-rows-[auto] md:p-4 2xl:w-[70%]">
@@ -44,7 +46,7 @@ export default function Summary({ character }: { character: CharacterById }) {
         </span>
         <span className="text-base font-bold">{`Niveau ${character.level}`}</span>
         <div className="absolute right-2 top-2 flex flex-col gap-1 md:right-4 md:top-4 md:flex-row md:gap-4">
-          {!!spellCastingModifier && (
+          {hasSpells && (
             <Link href={`/characters/${character.id}/spells`}>
               <Button size="sm" theme="sky">
                 <BookOpenIcon className="stroke-[2.5px]" />

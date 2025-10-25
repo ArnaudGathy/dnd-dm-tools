@@ -209,7 +209,6 @@ model Character {
   campaignId            Int
   spellsOnCharacters    SpellsOnCharacters[]
   creaturesOnCharacters CreaturesOnCharacters[]
-  creatures             Int[]                   @default([])
 
   name          String      @db.VarChar(255)
   level         Int         @default(1)

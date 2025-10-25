@@ -6,6 +6,7 @@ import {
   SPELLCASTING_MODIFIER_MAP,
 } from "@/constants/maps";
 import { addSignToNumber, getModifier } from "@/utils/utils";
+import { CharacterById, SpellsCreaturesCount } from "@/lib/utils";
 
 export const getSpellCastingModifier = (character: Character) => {
   const spellCastingStat = SPELLCASTING_MODIFIER_MAP[character.className];
@@ -61,4 +62,13 @@ export const getSpellsToPreparePerDay = (character: Character) => {
   }
 
   return { total: spellsByLevel[character.level - 1], ...preparationInfo };
+};
+
+export const getHasSpells = ({
+  className,
+  _count,
+}: { className: CharacterById["className"] } & SpellsCreaturesCount) => {
+  return (
+    !!SPELLCASTING_MODIFIER_MAP[className] || _count.spellsOnCharacters > 0
+  );
 };

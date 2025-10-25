@@ -40,21 +40,27 @@ export async function getSessionData() {
   };
 }
 
-export type CharacterById = Character & {
-  campaign: Campaign & { party: Party };
-  spellsOnCharacters: (SpellsOnCharacters & { spell: Spell })[];
-  skills: Skill[];
-  capacities: Capacity[];
-  savingThrows: SavingThrow[];
-  armors: Armor[];
-  weapons: (Weapon & { damages: WeaponDamage[] })[];
-  inventory: InventoryItem[];
-  wealth: Money[];
+export type SpellsCreaturesCount = {
+  _count: { spellsOnCharacters: number; creaturesOnCharacters: number };
 };
 
-export type CharacterByOwner = Character & {
-  campaign: Campaign & { party: Party };
-};
+export type CharacterById = Character &
+  SpellsCreaturesCount & {
+    campaign: Campaign & { party: Party };
+    spellsOnCharacters: (SpellsOnCharacters & { spell: Spell })[];
+    skills: Skill[];
+    capacities: Capacity[];
+    savingThrows: SavingThrow[];
+    armors: Armor[];
+    weapons: (Weapon & { damages: WeaponDamage[] })[];
+    inventory: InventoryItem[];
+    wealth: Money[];
+  };
+
+export type CharacterByOwner = Character &
+  SpellsCreaturesCount & {
+    campaign: Campaign & { party: Party };
+  };
 
 export async function getValidCharacter(characterId: string) {
   const { userMail, isSuperAdmin } = await getSessionData();

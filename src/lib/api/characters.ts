@@ -1,6 +1,5 @@
 import prisma from "@/lib/prisma";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
-import { isNumber } from "remeda";
 
 export const getNumberOfCharactersByOwner = async ({
   ownerEmail,
@@ -61,6 +60,7 @@ export const getFilteredCharactersByOwner = async ({
       _count: {
         select: {
           spellsOnCharacters: true,
+          creaturesOnCharacters: true,
         },
       },
     },
@@ -104,6 +104,7 @@ export const getAllFilteredCharacters = async ({
       _count: {
         select: {
           spellsOnCharacters: true,
+          creaturesOnCharacters: true,
         },
       },
     },
@@ -155,21 +156,14 @@ export const getCharacterById = async ({
       wealth: {
         orderBy: [{ id: "asc" }],
       },
-    },
-  });
-};
-
-export const getCharactersByCreatureId = (creatureId: number | string) => {
-  if (isNumber(creatureId)) {
-    return prisma.character.findMany({
-      where: {
-        creatures: {
-          has: creatureId,
+      _count: {
+        select: {
+          spellsOnCharacters: true,
+          creaturesOnCharacters: true,
         },
       },
-    });
-  }
-  return [];
+    },
+  });
 };
 
 export const getCharactersFromCampaignId = (campaignId: number) => {
@@ -180,6 +174,7 @@ export const getCharactersFromCampaignId = (campaignId: number) => {
     },
     include: {
       spellsOnCharacters: true,
+      creaturesOnCharacters: true,
     },
   });
 };
