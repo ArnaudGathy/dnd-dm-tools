@@ -279,4 +279,81 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  vorn: {
+    name: "Vorn",
+    id: "_vorn",
+    type: "Artificiel",
+    size: "Large",
+    alignment: "Unaligned",
+    armorClass: 17,
+    hitPoints: "62",
+    challengeRating: 7,
+    speed: {
+      walk: "9 m",
+    },
+    abilities: {
+      strength: 18,
+      dexterity: 8,
+      constitution: 18,
+      intelligence: 7,
+      wisdom: 10,
+      charisma: 3,
+    },
+    savingThrows: {
+      strength: "+4",
+      dexterity: "-1",
+      constitution: "+4",
+      intelligence: "-2",
+      charisma: "-4",
+    },
+    immunities: [
+      "poison",
+      "charmé",
+      "fatigue",
+      "Apeuré",
+      "paralysé",
+      "pétrifié",
+      "Empoisonné",
+    ],
+    languages: [
+      "Comprends les commandes dans n'importe quelle langue, mais ne parle pas.",
+    ],
+    senses: {
+      blindSight: "3 m",
+      darkvision: "18 m",
+      passivePerception: 10,
+    },
+    traits: [
+      {
+        name: "Lié",
+        description:
+          "Le gardien est lié magiquement à une Amulette en Adamantium portant son nom. Tant que le gardien et l’amulette se trouvent sur le même plan d’existence, le porteur de l’amulette peut appeler télépathiquement le gardien pour qu’il le rejoigne, et le gardien connaît alors la distance et la direction de l’amulette. Si le gardien se trouve à moins de 12 cases du porteur de l’amulette, la moitié des dégâts subis par ce dernier (arrondie à l’unité supérieure) est transférée au gardien.",
+      },
+      {
+        name: "Stockage de sorts",
+        description:
+          "Un lanceur de sorts qui porte l’amulette du gardien peut faire en sorte que le gardien stocke un sort de niveau 4 ou inférieur. Pour ce faire, le porteur doit lancer le sort sur le gardien alors qu’il se trouve à 1 case de lui. Le sort n’a alors aucun effet, mais il est stocké à l’intérieur du gardien. Tout sort précédemment stocké est perdu lorsqu’un nouveau sort est enregistré. Le gardien peut lancer le sort stocké en utilisant tous les paramètres définis par le lanceur de sorts d’origine, sans nécessiter de composantes matérielles et en utilisant la caractéristique d’incantation du lanceur. Le sort stocké est ensuite perdu.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "Le gardien fait deux attaques de Poing.",
+      },
+      {
+        name: "Poing",
+        type: "Melee",
+        modifier: "+5",
+        reach: "3 m",
+        hit: "7 (1d6 cont. + 1d6 force + 4)",
+      },
+    ],
+    reactions: [
+      {
+        name: "Protection",
+        description:
+          "Déclencheur : Un jet d’attaque touche le porteur de l’amulette du gardien alors que celui-ci se trouve à 1 case du gardien. Réponse : Le porteur bénéficie d’un bonus de +2 à la CA, y compris contre l’attaque initiale, ce qui peut la faire échouer. Ce bonus dure jusqu’au début du prochain tour du gardien.",
+      },
+    ],
+  },
 };
