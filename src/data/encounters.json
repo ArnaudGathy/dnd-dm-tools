@@ -369,5 +369,86 @@
       ]
     },
     "youtubeId": "mswsmaHukRI"
+  },
+  {
+    "name": "Village de Yellyark",
+    "id": 72,
+    "scenario": "La tombe de l'annihilation",
+    "location": {
+      "name": "Yellyark",
+      "mapMarker": "Y1"
+    },
+    "ennemies": {
+      "1": [
+        {
+          "id": "swarm-of-insects",
+          "color": "#4D8E31"
+        },
+        {
+          "id": "swarm-of-insects",
+          "variant": "1",
+          "color": "#6B5032"
+        },
+        {
+          "id": "swarm-of-insects",
+          "color": "#40204A"
+        },
+        {
+          "id": "swarm-of-insects",
+          "color": "#8D9190"
+        },
+        {
+          "id": "swarm-of-insects",
+          "color": "#496B5D"
+        },
+        {
+          "id": "swarm-of-insects",
+          "variant": "2",
+          "color": "#6B5032"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Epee",
+          "color": "#ff0000"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Epee",
+          "color": "#463636"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Epee",
+          "color": "#7a00ff"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Epee",
+          "color": "#296c0b"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Arc",
+          "color": "#ff0000"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Arc",
+          "color": "#463636"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Arc",
+          "color": "#7a00ff"
+        },
+        {
+          "id": "goblin-warrior",
+          "variant": "Arc",
+          "color": "#296c0b"
+        },
+        { "id": "goblin-boss", "color": "#6B5032" }
+      ]
+    },
+    "youtubeId": "jFGq3nwApvA"
   }
 ]
