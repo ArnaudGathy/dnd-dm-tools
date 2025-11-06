@@ -175,18 +175,18 @@ export const roll = (value: number) => {
 };
 
 export const getInitiative = (creature: Creature) => {
-  return (roll(20) + getModifierFromCreature(creature, "dexterity")).toString();
+  return roll(20) + getModifierFromCreature(creature, "dexterity");
 };
 
 export const getInitiativeFromParticipant = (participant: Participant) => {
-  return (roll(20) + participant.dexMod).toString();
+  return roll(20) + participant.dexMod;
 };
 
 export const getParticipantFromCharacters = (group: Group) => {
   return group.map(({ name, id }) => ({
     id,
     name,
-    init: "",
+    init: -1,
     hp: "",
     currentHp: "",
     uuid: uuidv4(),

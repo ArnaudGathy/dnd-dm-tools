@@ -25,7 +25,7 @@ import { EllipsisHorizontalIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24
 import { ConditionImage } from "@/app/(with-nav)/encounters/[id]/ConditionImage";
 import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { BookOpenIcon, Dices, FastForwardIcon, RefreshCcw } from "lucide-react";
+import { BookOpenIcon, Dices, FastForwardIcon, RefreshCcw, Swords } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
 import {
@@ -33,6 +33,12 @@ import {
   useSetTurnsTracker,
 } from "@/hooks/useParticipantsListTracker";
 import PopoverComponent from "@/components/ui/PopoverComponent";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 
@@ -40,7 +46,7 @@ const DEFAULT_STATE = {
   id: "",
   currentHp: "",
   name: "",
-  init: "",
+  init: -1,
   hp: "",
   color: "#DD1D47",
   dexMod: 0,
@@ -79,8 +85,8 @@ const getNextTurn = ({
 };
 
 const sortParticipant = (a: Participant, b: Participant) => {
-  const aInit = b.init !== "" ? parseInt(b.init) : Infinity;
-  const bInit = a.init !== "" ? parseInt(a.init) : Infinity;
+  const aInit = b.init > -1 ? b.init : Infinity;
+  const bInit = a.init > -1 ? a.init : Infinity;
 
   if (aInit === bInit) {
     if (!a.isNPC && !b.isNPC) {
@@ -144,7 +150,7 @@ export const CombatModule = ({
               name: "Environement",
               hp: "",
               currentHp: "",
-              init: encounter.environmentTurnInitiative ?? "0",
+              init: Number(encounter.environmentTurnInitiative ?? "0"),
               dexMod: 0,
             }
           : undefined,
@@ -223,7 +229,7 @@ export const CombatModule = ({
             isNPC: true,
             id: -1,
             currentHp: participant.hp,
-            init: participant.init || roll(20).toString(),
+            init: participant.init || roll(20),
             dexMod: 0,
           },
         ].toSorted(sortParticipant),
@@ -310,7 +316,7 @@ export const CombatModule = ({
     }
   };
 
-  const handleUpdateInit = (participant: Participant, value: string) => {
+  const handleUpdateInit = (participant: Participant, value: number) => {
     setListOfParticipants((current) =>
       current
         .map((p) => (p.uuid === participant.uuid ? { ...p, init: value } : p))
@@ -407,7 +413,7 @@ export const CombatModule = ({
                 onChange={(e) =>
                   setParticipant({
                     ...participant,
-                    init: e.target.value,
+                    init: Number(e.target.value),
                   })
                 }
               />
@@ -459,7 +465,7 @@ export const CombatModule = ({
                   <PopoverComponent
                     definition={
                       <div className="flex flex-col gap-2">
-                        {participant.isNPC && (
+                        {participant.isNPC ? (
                           <>
                             <Button
                               size="sm"
@@ -477,7 +483,7 @@ export const CombatModule = ({
                               size="sm"
                               onClick={() => {
                                 const newRoll = getInitiativeFromParticipant(participant);
-                                if (Number(newRoll) > Number(participant.init)) {
+                                if (newRoll > participant.init) {
                                   handleUpdateInit(participant, newRoll);
                                 }
                               }}
@@ -486,7 +492,44 @@ export const CombatModule = ({
                               Avantage
                             </Button>
                           </>
+                        ) : (
+                          <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                              <Button size="sm" variant="secondary">
+                                Échanger initiative
+                              </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent>
+                              {listOfParticipants.map((participantFromList) => {
+                                if (
+                                  participantFromList.isNPC ||
+                                  participantFromList.uuid === participant.uuid
+                                ) {
+                                  return null;
+                                }
+
+                                return (
+                                  <DropdownMenuItem
+                                    key={participantFromList.uuid}
+                                    onSelect={() => {
+                                      handleUpdateInit(participant, participantFromList.init);
+                                      handleUpdateInit(participantFromList, participant.init);
+                                    }}
+                                  >
+                                    {participantFromList.name}
+                                  </DropdownMenuItem>
+                                );
+                              })}
+                            </DropdownMenuContent>
+                          </DropdownMenu>
                         )}
+                        <Button
+                          size="sm"
+                          onClick={() => handleUpdateInit(participant, participant.init + 0.2)}
+                        >
+                          <Swords />
+                          Gagne duel
+                        </Button>
                       </div>
                     }
                   >
@@ -508,10 +551,7 @@ export const CombatModule = ({
                     className="w-14"
                     id="init"
                     value={participant.init}
-                    onChange={(e) => handleUpdateInit(participant, e.target.value)}
-                    // onBlur={(e) =>
-                    //   handleUpdateInit(participant, e.target.value)
-                    // }
+                    onChange={(e) => handleUpdateInit(participant, Number(e.target.value))}
                     onFocus={(event) => event.target.select()}
                   />
                 </div>

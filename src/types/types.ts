@@ -7,7 +7,7 @@ export type Condition = {
 
 export type ParticipantToAdd = {
   name: string;
-  init: string;
+  init: number;
   hp: string;
   color?: string;
   dexMod: number;

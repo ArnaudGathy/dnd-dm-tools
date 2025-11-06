@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 import styles from "../page.module.css";
 import { useState } from "react";
 
-const removeInitFloating = (init: string) => {
-  return init.replace(/\.\d+$/, "");
+const removeInitFloating = (init: number) => {
+  return init.toString().replace(/\.\d+$/, "");
 };
 
 export default function PlayersList({
@@ -72,9 +72,7 @@ export default function PlayersList({
                   ["opacity-20"]: isNPCTurn,
                 })}
               >
-                <Hexagon isActive={isActive}>
-                  {removeInitFloating(participant.isNPC ? "?" : participant.init)}
-                </Hexagon>
+                <Hexagon isActive={isActive}>{removeInitFloating(participant.init)}</Hexagon>
                 <span className="truncate text-3xl font-bold">{participant.name}</span>
               </Card>
             );
