@@ -22,9 +22,7 @@ export const getSpellCastingModifier = (character: Character) => {
     spellCastingAbilityModifier,
     magicAttackBonus,
     total: addSignToNumber(
-      spellCastingAbilityModifier +
-        PROFICIENCY_BONUS_BY_LEVEL[character.level] +
-        magicAttackBonus,
+      spellCastingAbilityModifier + PROFICIENCY_BONUS_BY_LEVEL[character.level] + magicAttackBonus,
     ),
   };
 };
@@ -53,8 +51,7 @@ export const getSpellSaveDC = (character: Character) => {
 };
 
 export const getSpellsToPreparePerDay = (character: Character) => {
-  const spellsByLevel =
-    CLASS_SPELLS_PREPARED_PROGRESSION_MAP[character.className];
+  const spellsByLevel = CLASS_SPELLS_PREPARED_PROGRESSION_MAP[character.className];
   const preparationInfo = CLASS_SPELLS_WHEN_TO_PREPARE_MAP[character.className];
 
   if (spellsByLevel.length === 0 || preparationInfo === null) {
@@ -68,7 +65,5 @@ export const getHasSpells = ({
   className,
   _count,
 }: { className: CharacterById["className"] } & SpellsCreaturesCount) => {
-  return (
-    !!SPELLCASTING_MODIFIER_MAP[className] || _count.spellsOnCharacters > 0
-  );
+  return !!SPELLCASTING_MODIFIER_MAP[className] || _count.spellsOnCharacters > 0;
 };

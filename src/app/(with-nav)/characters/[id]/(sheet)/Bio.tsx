@@ -6,11 +6,7 @@ import NotesForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/NotesFor
 
 export default function Bio({ character }: { character: CharacterById }) {
   return (
-    <div
-      className={cn(
-        "flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4",
-      )}
-    >
+    <div className={cn("flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4")}>
       <div className="flex flex-col gap-4">
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-3xl font-bold text-transparent">
@@ -55,9 +51,7 @@ export default function Bio({ character }: { character: CharacterById }) {
 
       <div className="flex flex-col gap-4">
         <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">
-            Traits de personnalité
-          </span>
+          <span className="mb-2 self-center text-2xl font-bold">Traits de personnalité</span>
           <div className="flex flex-col gap-1 whitespace-pre-line">
             {character.personalityTraits}
           </div>
@@ -65,54 +59,34 @@ export default function Bio({ character }: { character: CharacterById }) {
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Idéaux</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">
-            {character.ideals}
-          </div>
+          <div className="flex flex-col gap-1 whitespace-pre-line">{character.ideals}</div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Liens</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">
-            {character.bonds}
-          </div>
+          <div className="flex flex-col gap-1 whitespace-pre-line">{character.bonds}</div>
         </SheetCard>
 
         <SheetCard className="flex flex-col">
           <span className="mb-2 self-center text-2xl font-bold">Défauts</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">
-            {character.flaws}
-          </div>
+          <div className="flex flex-col gap-1 whitespace-pre-line">{character.flaws}</div>
         </SheetCard>
       </div>
 
       <div className="col-span-2 flex flex-col gap-4">
         <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">
-            Background
-          </span>
+          <span className="mb-2 self-center text-2xl font-bold">Background</span>
           <div className="flex gap-4">
-            <StatCell
-              name="Alignement"
-              stat={ALIGNMENT_MAP[character.alignment]}
-              isInline
-            />
-            <StatCell
-              name="Historique"
-              stat={BACKGROUND_MAP[character.background]}
-              isInline
-            />
+            <StatCell name="Alignement" stat={ALIGNMENT_MAP[character.alignment]} isInline />
+            <StatCell name="Historique" stat={BACKGROUND_MAP[character.background]} isInline />
           </div>
           <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
             {character.lore || "Pas de lore."}
           </div>
         </SheetCard>
         <SheetCard className="flex flex-col gap-4">
-          <span className="mb-2 self-center text-2xl font-bold">
-            Alliés et organisations
-          </span>
-          <span className="whitespace-pre-line">
-            {character.allies || "Pas d'alliés."}
-          </span>
+          <span className="mb-2 self-center text-2xl font-bold">Alliés et organisations</span>
+          <span className="whitespace-pre-line">{character.allies || "Pas d'alliés."}</span>
         </SheetCard>
       </div>
     </div>

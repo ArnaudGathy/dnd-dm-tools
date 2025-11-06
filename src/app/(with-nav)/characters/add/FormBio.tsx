@@ -36,42 +36,12 @@ export default function FormBio({
         </div>
 
         <div className="grid grid-cols-[7%_7%_7%_15%_15%_15%_1fr] gap-4">
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="age"
-            label="Age"
-            required
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="weight"
-            label="Poids"
-            required
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="height"
-            label="Taille"
-            required
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="eyeColor"
-            label="yeux"
-            required
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="hair"
-            label="Cheveux"
-            required
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="skin"
-            label="Peau"
-            required
-          />
+          <FormFieldInput formInstance={form} formFieldName="age" label="Age" required />
+          <FormFieldInput formInstance={form} formFieldName="weight" label="Poids" required />
+          <FormFieldInput formInstance={form} formFieldName="height" label="Taille" required />
+          <FormFieldInput formInstance={form} formFieldName="eyeColor" label="yeux" required />
+          <FormFieldInput formInstance={form} formFieldName="hair" label="Cheveux" required />
+          <FormFieldInput formInstance={form} formFieldName="skin" label="Peau" required />
         </div>
 
         <div className="w-[76%]">

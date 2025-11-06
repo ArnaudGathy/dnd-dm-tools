@@ -7,15 +7,11 @@ export const Link = ({
   children,
   className,
   ...props
-}: LinkProps &
-  AnchorHTMLAttributes<HTMLAnchorElement> & { children: ReactNode }) => {
+}: LinkProps & AnchorHTMLAttributes<HTMLAnchorElement> & { children: ReactNode }) => {
   return (
     <NextLink
       {...props}
-      className={cn(
-        "text-muted-foreground underline hover:text-foreground",
-        className,
-      )}
+      className={cn("text-muted-foreground underline hover:text-foreground", className)}
     >
       {children}
     </NextLink>

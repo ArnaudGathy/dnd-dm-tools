@@ -3,11 +3,7 @@
 import { CharacterById } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import { StatCell } from "@/components/statblocks/StatCell";
-import {
-  CAMPAIGN_MAP,
-  CHARACTER_STATUS_MAP,
-  PARTY_MAP,
-} from "@/constants/maps";
+import { CAMPAIGN_MAP, CHARACTER_STATUS_MAP, PARTY_MAP } from "@/constants/maps";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -31,15 +27,9 @@ export default function Settings({ character }: { character: CharacterById }) {
         <StatCell name="Modification" stat={formatDate(character.updatedAt)} />
         <StatCell name="Création" stat={formatDate(character.createdAt)} />
         <Separator className="my-4 bg-muted-foreground" />
-        <StatCell
-          name="Campagne"
-          stat={CAMPAIGN_MAP[character.campaign.name]}
-        />
+        <StatCell name="Campagne" stat={CAMPAIGN_MAP[character.campaign.name]} />
         <StatCell name="DM de la Campagne" stat={character.campaign.owner} />
-        <StatCell
-          name="Groupe"
-          stat={PARTY_MAP[character.campaign.party.name]}
-        />
+        <StatCell name="Groupe" stat={PARTY_MAP[character.campaign.party.name]} />
         <Link href={`/characters/${character.id}/update`} className="mt-4">
           <Button className="w-full">
             <Edit /> Modifier le personnage
@@ -50,9 +40,7 @@ export default function Settings({ character }: { character: CharacterById }) {
           theme="white"
           onClick={() => {
             localStorage.clear();
-            toast(
-              "Les ressources et les emplacements de sorts on été réinitialisés.",
-            );
+            toast("Les ressources et les emplacements de sorts on été réinitialisés.");
           }}
         >
           <Trash /> Vider le cache

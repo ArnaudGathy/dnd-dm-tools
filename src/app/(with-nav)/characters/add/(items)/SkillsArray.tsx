@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { SKILL_NAME_MAP } from "@/constants/maps";
@@ -23,11 +17,7 @@ import { Label } from "@/components/ui/label";
 import ArrayAddButton from "@/app/(with-nav)/characters/add/(items)/ArrayAddButton";
 import ArrayDeleteButton from "@/app/(with-nav)/characters/add/(items)/ArrayDeleteButton";
 
-export default function SkillsArray({
-  form,
-}: {
-  form: UseFormReturn<CharacterCreationForm>;
-}) {
+export default function SkillsArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "skills";
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -37,12 +27,9 @@ export default function SkillsArray({
   const skills = form.watch("skills");
 
   const existingSkills = skills.map(
-    (skill: { skill: Skills; isProficient: boolean; isExpert: boolean }) =>
-      skill.skill,
+    (skill: { skill: Skills; isProficient: boolean; isExpert: boolean }) => skill.skill,
   );
-  const availableSkills = Object.values(Skills).filter(
-    (skill) => !existingSkills.includes(skill),
-  );
+  const availableSkills = Object.values(Skills).filter((skill) => !existingSkills.includes(skill));
 
   return (
     <FormItem>
@@ -54,10 +41,7 @@ export default function SkillsArray({
       <div className="flex flex-col gap-1">
         {fields.map((field, index) => (
           <div key={field.id} className="flex gap-1">
-            <ArrayDeleteButton
-              onClick={() => remove(index)}
-              disabled={fields.length < 2}
-            />
+            <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length < 2} />
             <FormField
               control={form.control}
               name={`${fieldName}.${index}`}
@@ -88,9 +72,7 @@ export default function SkillsArray({
                             <SelectItem
                               key={value}
                               value={value}
-                              disabled={
-                                !!skills.find((item) => item.skill === value)
-                              }
+                              disabled={!!skills.find((item) => item.skill === value)}
                             >
                               {label}
                             </SelectItem>
@@ -99,9 +81,7 @@ export default function SkillsArray({
                       </Select>
                       <RadioGroup
                         className="flex h-full gap-4"
-                        defaultValue={
-                          field.value?.isProficient ? "proficient" : "expert"
-                        }
+                        defaultValue={field.value?.isProficient ? "proficient" : "expert"}
                         onValueChange={(val) =>
                           field.onChange({
                             ...field.value,

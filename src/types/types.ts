@@ -10,6 +10,7 @@ export type ParticipantToAdd = {
   init: string;
   hp: string;
   color?: string;
+  dexMod: number;
 };
 
 export type Participant = ParticipantToAdd & {

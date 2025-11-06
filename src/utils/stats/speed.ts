@@ -10,12 +10,8 @@ export const getClassSpeed = (character: Character) => {
 };
 
 export const getMovementSpeed = (character: Character) => {
-  const raceSpeed = convertFeetDistanceIntoSquares(
-    SPEED_BY_RACE_MAP[character.race],
-  );
-  const movementSpeedBonus = convertFeetDistanceIntoSquares(
-    character.movementSpeedBonus,
-  );
+  const raceSpeed = convertFeetDistanceIntoSquares(SPEED_BY_RACE_MAP[character.race]);
+  const movementSpeedBonus = convertFeetDistanceIntoSquares(character.movementSpeedBonus);
   const classSpeed = getClassSpeed(character);
 
   return {

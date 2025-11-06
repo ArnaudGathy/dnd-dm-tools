@@ -25,21 +25,10 @@ const themeText: Record<Themes, string> = {
   white: "text-white",
 };
 
-export default function Icon({
-  icon,
-  theme,
-}: {
-  icon: ReactNode;
-  theme?: Themes;
-}) {
+export default function Icon({ icon, theme }: { icon: ReactNode; theme?: Themes }) {
   return (
     <div className={cn("rounded-lg p-1.5", "bg-neutral-700")}>
-      <Slot
-        className={cn(
-          "size-4",
-          theme ? themeText[theme] : "text-primary-foreground",
-        )}
-      >
+      <Slot className={cn("size-4", theme ? themeText[theme] : "text-primary-foreground")}>
         {icon}
       </Slot>
     </div>

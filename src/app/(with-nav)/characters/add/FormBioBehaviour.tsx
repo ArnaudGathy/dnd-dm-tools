@@ -3,11 +3,7 @@ import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
 import { UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 
-export default function FormBioBehaviour({
-  form,
-}: {
-  form: UseFormReturn<CharacterCreationForm>;
-}) {
+export default function FormBioBehaviour({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   return (
     <Card>
       <CardHeader>
@@ -52,20 +48,10 @@ export default function FormBioBehaviour({
             label="Alliés et organisations"
             textarea
           />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="notes"
-            label="Notes"
-            textarea
-          />
+          <FormFieldInput formInstance={form} formFieldName="notes" label="Notes" textarea />
         </div>
 
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="lore"
-          label="Lore"
-          textarea
-        />
+        <FormFieldInput formInstance={form} formFieldName="lore" label="Lore" textarea />
       </CardContent>
     </Card>
   );

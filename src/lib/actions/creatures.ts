@@ -68,15 +68,14 @@ export const tryToAddCreature = async (
 
   let creatureId = existingCreature?.id;
   const characterId = validation.data.characterId;
-  const existingCreatureForCharacter =
-    await prisma.creaturesOnCharacters.findUnique({
-      where: {
-        creatureId_characterId: {
-          characterId,
-          creatureId: creatureData.id,
-        },
+  const existingCreatureForCharacter = await prisma.creaturesOnCharacters.findUnique({
+    where: {
+      creatureId_characterId: {
+        characterId,
+        creatureId: creatureData.id,
       },
-    });
+    },
+  });
 
   if (!!existingCreatureForCharacter) {
     return { error: "Cette créature existe déjà pour ce personnage." };

@@ -51,9 +51,7 @@ export default function FormGeneral({
               formInstance={form}
               formFieldName="subclassName"
               label="Sous-classe"
-              description={
-                isEditMode ? undefined : "Peut-être choisi plus tard"
-              }
+              description={isEditMode ? undefined : "Peut-être choisi plus tard"}
               items={
                 className
                   ? SUBCLASSES_BY_CLASS[className].reduce((acc, next) => {

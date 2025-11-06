@@ -27,8 +27,7 @@ export default function SavingThrows({
       <span className="mb-2 self-center text-2xl font-bold">Sauvegardes</span>
       {entries(savingThrows).map(([ability, displayName]) => {
         const selectedSavingThrow = character.savingThrows.find(
-          ({ ability: abilityName }) =>
-            abilityName === ABILITY_NAME_MAP[ability],
+          ({ ability: abilityName }) => abilityName === ABILITY_NAME_MAP[ability],
         );
         return (
           <div key={ability} className="flex items-center justify-between">

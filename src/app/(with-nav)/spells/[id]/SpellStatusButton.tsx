@@ -1,11 +1,6 @@
 import { updateSpellFlagAction } from "@/lib/actions/spells";
 import { SpellWithFlags } from "@/lib/api/spells";
-import {
-  Sparkles,
-  SquareCheckBig,
-  SquarePlus,
-  WandSparkles,
-} from "lucide-react";
+import { Sparkles, SquareCheckBig, SquarePlus, WandSparkles } from "lucide-react";
 import { CharacterById, cn } from "@/lib/utils";
 import { Classes } from "@prisma/client";
 

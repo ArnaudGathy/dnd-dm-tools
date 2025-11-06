@@ -1,23 +1,8 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
-import {
-  ABILITY_NAME_MAP_TO_FR,
-  AMMUNITION_TYPE_MAP,
-  WEAPON_TYPE_MAP,
-} from "@/constants/maps";
-import {
-  Abilities,
-  WeaponDamageDices,
-  WeaponDamageType,
-  WeaponType,
-} from "@prisma/client";
+import { ABILITY_NAME_MAP_TO_FR, AMMUNITION_TYPE_MAP, WEAPON_TYPE_MAP } from "@/constants/maps";
+import { Abilities, WeaponDamageDices, WeaponDamageType, WeaponType } from "@prisma/client";
 import { cn } from "@/lib/utils";
 import {
   Select,
@@ -34,11 +19,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import WeaponDamagesArray from "@/app/(with-nav)/characters/add/(items)/WeaponDamagesArray";
 
-export default function WeaponsArray({
-  form,
-}: {
-  form: UseFormReturn<CharacterCreationForm>;
-}) {
+export default function WeaponsArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "weapons";
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -88,10 +69,7 @@ export default function WeaponsArray({
                       return (
                         <FormItem className="w-full">
                           <div className="flex w-full items-center gap-2">
-                            <Select
-                              defaultValue={field.value}
-                              onValueChange={field.onChange}
-                            >
+                            <Select defaultValue={field.value} onValueChange={field.onChange}>
                               <FormControl>
                                 <SelectTrigger
                                   className={cn({
@@ -102,13 +80,11 @@ export default function WeaponsArray({
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {entries(WEAPON_TYPE_MAP).map(
-                                  ([value, label]) => (
-                                    <SelectItem key={value} value={value}>
-                                      {label}
-                                    </SelectItem>
-                                  ),
-                                )}
+                                {entries(WEAPON_TYPE_MAP).map(([value, label]) => (
+                                  <SelectItem key={value} value={value}>
+                                    {label}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -124,10 +100,7 @@ export default function WeaponsArray({
                       return (
                         <FormItem className="w-full">
                           <div className="flex w-full items-center gap-2">
-                            <Select
-                              defaultValue={field.value}
-                              onValueChange={field.onChange}
-                            >
+                            <Select defaultValue={field.value} onValueChange={field.onChange}>
                               <FormControl>
                                 <SelectTrigger
                                   className={cn({
@@ -138,13 +111,11 @@ export default function WeaponsArray({
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {entries(ABILITY_NAME_MAP_TO_FR).map(
-                                  ([value, label]) => (
-                                    <SelectItem key={value} value={value}>
-                                      {label}
-                                    </SelectItem>
-                                  ),
-                                )}
+                                {entries(ABILITY_NAME_MAP_TO_FR).map(([value, label]) => (
+                                  <SelectItem key={value} value={value}>
+                                    {label}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -218,10 +189,7 @@ export default function WeaponsArray({
                         return (
                           <FormItem className="w-full">
                             <div className="flex w-full items-center gap-2">
-                              <Select
-                                defaultValue={field.value}
-                                onValueChange={field.onChange}
-                              >
+                              <Select defaultValue={field.value} onValueChange={field.onChange}>
                                 <FormControl>
                                   <SelectTrigger
                                     className={cn({
@@ -232,13 +200,11 @@ export default function WeaponsArray({
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  {entries(AMMUNITION_TYPE_MAP).map(
-                                    ([value, label]) => (
-                                      <SelectItem key={value} value={value}>
-                                        {label}
-                                      </SelectItem>
-                                    ),
-                                  )}
+                                  {entries(AMMUNITION_TYPE_MAP).map(([value, label]) => (
+                                    <SelectItem key={value} value={value}>
+                                      {label}
+                                    </SelectItem>
+                                  ))}
                                 </SelectContent>
                               </Select>
                             </div>
@@ -312,9 +278,7 @@ export default function WeaponsArray({
                             defaultChecked={field.value}
                             onCheckedChange={field.onChange}
                           />
-                          <Label htmlFor={`isProficient${index}`}>
-                            Maîtrisé
-                          </Label>
+                          <Label htmlFor={`isProficient${index}`}>Maîtrisé</Label>
                         </div>
                       );
                     }}

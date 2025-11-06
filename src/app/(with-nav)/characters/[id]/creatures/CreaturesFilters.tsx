@@ -62,9 +62,7 @@ export default function CreaturesFilters() {
         variant="outline"
         pressed={params.get("filterBy") === CREATURES_FILTER_BY.FAVORITE}
         onPressedChange={(isEnabled) =>
-          isEnabled
-            ? handleFilterBy(CREATURES_FILTER_BY.FAVORITE)
-            : handleFilterBy(undefined)
+          isEnabled ? handleFilterBy(CREATURES_FILTER_BY.FAVORITE) : handleFilterBy(undefined)
         }
       >
         <Heart /> Favoris

@@ -75,18 +75,11 @@ export default function Summary({ character }: { character: CharacterById }) {
               {CLASS_MAP[character.className]}
             </span>
             {character.subclassName && (
-              <StatCell
-                name="Sous-classe"
-                stat={SUBCLASS_MAP[character.subclassName]}
-              />
+              <StatCell name="Sous-classe" stat={SUBCLASS_MAP[character.subclassName]} />
             )}
             <StatCell
               name="Lancement de sort"
-              stat={
-                spellCastingModifier
-                  ? ABILITIES_MAP[spellCastingModifier]
-                  : "Non"
-              }
+              stat={spellCastingModifier ? ABILITIES_MAP[spellCastingModifier] : "Non"}
             />
             <StatCell
               name="Dés de vie"
@@ -96,9 +89,7 @@ export default function Summary({ character }: { character: CharacterById }) {
                   <X className="size-4" />
                   <div className="text-primary">
                     <span>{`1${HIT_DICE_MAP[character.className]}`}</span>
-                    {conModifier !== 0 && (
-                      <span>{addSignToNumber(conModifier)}</span>
-                    )}
+                    {conModifier !== 0 && <span>{addSignToNumber(conModifier)}</span>}
                   </div>
                 </div>
               }
@@ -108,25 +99,11 @@ export default function Summary({ character }: { character: CharacterById }) {
         </SheetCard>
         <SheetCard className="flex justify-center">
           <div className="flex flex-col gap-2 md:gap-0">
-            <span className="mb-2 self-center text-2xl font-bold">
-              {RACE_MAP[character.race]}
-            </span>
-            <StatCell
-              name="Catégorie de taille"
-              stat={SIZE_BY_RACE_MAP[character.race]}
-            />
-            <StatCell
-              name="Mouvements"
-              stat={`${movementSpeedDetails.total} cases par tour`}
-            />
-            <StatCell
-              name="Historique"
-              stat={BACKGROUND_MAP[character.background]}
-            />
-            <StatCell
-              name="Alignement"
-              stat={ALIGNMENT_MAP[character.alignment]}
-            />
+            <span className="mb-2 self-center text-2xl font-bold">{RACE_MAP[character.race]}</span>
+            <StatCell name="Catégorie de taille" stat={SIZE_BY_RACE_MAP[character.race]} />
+            <StatCell name="Mouvements" stat={`${movementSpeedDetails.total} cases par tour`} />
+            <StatCell name="Historique" stat={BACKGROUND_MAP[character.background]} />
+            <StatCell name="Alignement" stat={ALIGNMENT_MAP[character.alignment]} />
           </div>
         </SheetCard>
       </div>

@@ -50,9 +50,7 @@ export default async function CreatureList({
           <EditModeButton />
         </div>
 
-        {isEditMode && (
-          <AddCreatureForm characterId={character.id.toString()} />
-        )}
+        {isEditMode && <AddCreatureForm characterId={character.id.toString()} />}
         <CreaturesFilters />
       </div>
 
@@ -72,18 +70,10 @@ export default async function CreatureList({
               <CardContent className="flex flex-col">
                 {values.map((creature) => (
                   <div key={creature.id} className="flex items-center gap-2">
-                    <CreatureFavoriteIcon
-                      character={character}
-                      creature={creature}
-                    />
-                    <Link href={`/creatures/${creature.id}`}>
-                      {creature.name}
-                    </Link>
+                    <CreatureFavoriteIcon character={character} creature={creature} />
+                    <Link href={`/creatures/${creature.id}`}>{creature.name}</Link>
                     {isEditMode && (
-                      <DeleteCreatureButton
-                        characterId={character.id}
-                        creature={creature}
-                      />
+                      <DeleteCreatureButton characterId={character.id} creature={creature} />
                     )}
                   </div>
                 ))}

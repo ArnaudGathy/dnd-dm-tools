@@ -450,10 +450,7 @@ export const ROGUE_BACKSTAB_DICE_PER_LEVEL: Record<number, string> = {
   20: "10d6",
 };
 
-export const ROGUE_SOULKNIFE_DICE_PER_LEVEL: Record<
-  number,
-  string | undefined
-> = {
+export const ROGUE_SOULKNIFE_DICE_PER_LEVEL: Record<number, string | undefined> = {
   1: undefined,
   2: undefined,
   3: "4d6",
@@ -784,10 +781,7 @@ export const FULL_CASTER_PROGRESSION: Array<Record<number, number>> = [
   { 1: 4, 2: 3, 3: 3, 4: 3, 5: 3, 6: 2, 7: 2, 8: 1, 9: 1 },
 ];
 
-export const CLASS_SPELL_PROGRESSION_MAP: Record<
-  Classes,
-  Array<Record<number, number>>
-> = {
+export const CLASS_SPELL_PROGRESSION_MAP: Record<Classes, Array<Record<number, number>>> = {
   [Classes.BARD]: FULL_CASTER_PROGRESSION,
   [Classes.CLERIC]: FULL_CASTER_PROGRESSION,
   [Classes.DRUID]: FULL_CASTER_PROGRESSION,
@@ -813,22 +807,21 @@ export const PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER: number[] = [
   2, 3, 4, 5, 6, 6, 7, 7, 9, 9, 10, 10, 11, 11, 12, 12, 14, 14, 15, 15,
 ];
 
-export const CLASS_SPELLS_PREPARED_PROGRESSION_MAP: Record<Classes, number[]> =
-  {
-    [Classes.BARD]: [], // Known spells
-    [Classes.SORCERER]: [], // Known spells
-    [Classes.WARLOCK]: [], // Known spells
-    [Classes.CLERIC]: PREPARED_SPELLS_PROGRESSION,
-    [Classes.DRUID]: PREPARED_SPELLS_PROGRESSION,
-    [Classes.WIZARD]: PREPARED_SPELLS_PROGRESSION_WIZARD,
-    [Classes.ARTIFICER]: PREPARED_SPELLS_PROGRESSION,
-    [Classes.PALADIN]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
-    [Classes.RANGER]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
-    [Classes.FIGHTER]: [], // No spells
-    [Classes.ROGUE]: [], // No spells
-    [Classes.BARBARIAN]: [], // No spells
-    [Classes.MONK]: [], // No spells
-  };
+export const CLASS_SPELLS_PREPARED_PROGRESSION_MAP: Record<Classes, number[]> = {
+  [Classes.BARD]: [], // Known spells
+  [Classes.SORCERER]: [], // Known spells
+  [Classes.WARLOCK]: [], // Known spells
+  [Classes.CLERIC]: PREPARED_SPELLS_PROGRESSION,
+  [Classes.DRUID]: PREPARED_SPELLS_PROGRESSION,
+  [Classes.WIZARD]: PREPARED_SPELLS_PROGRESSION_WIZARD,
+  [Classes.ARTIFICER]: PREPARED_SPELLS_PROGRESSION,
+  [Classes.PALADIN]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
+  [Classes.RANGER]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
+  [Classes.FIGHTER]: [], // No spells
+  [Classes.ROGUE]: [], // No spells
+  [Classes.BARBARIAN]: [], // No spells
+  [Classes.MONK]: [], // No spells
+};
 
 const SPELL_PREPARATION = {
   when: "Long repos",

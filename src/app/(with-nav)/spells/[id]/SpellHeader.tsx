@@ -31,23 +31,15 @@ export default async function SpellHeader({
             {isRitual && <SparklesIcon className="size-6 text-emerald-500" />}
 
             <span className="truncate">
-              {tiny ? (
-                <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link>
-              ) : (
-                spellName
-              )}
+              {tiny ? <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link> : spellName}
             </span>
           </div>
         </CardTitle>
       )}
 
       <CardDescription className="flex gap-2">
-        {spellFromAPI.level !== undefined && (
-          <span>Niveau {spellFromAPI.level}</span>
-        )}
-        {!tiny && spellFromAPI.school && (
-          <span>{spellFromAPI.school.name}</span>
-        )}
+        {spellFromAPI.level !== undefined && <span>Niveau {spellFromAPI.level}</span>}
+        {!tiny && spellFromAPI.school && <span>{spellFromAPI.school.name}</span>}
       </CardDescription>
     </CardHeader>
   );

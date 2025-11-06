@@ -10,16 +10,7 @@ import {
 } from "@/types/types";
 import encounters from "@/data/encounters.json";
 import { v4 as uuidv4 } from "uuid";
-import {
-  entries,
-  groupBy,
-  isNumber,
-  isPlainObject,
-  map,
-  prop,
-  reduce,
-  values,
-} from "remeda";
+import { entries, groupBy, isNumber, isPlainObject, map, prop, reduce, values } from "remeda";
 import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
 import { getCreature } from "@/lib/external-apis/aidedd";
@@ -57,10 +48,7 @@ export const groupEncounters = (encounters: Encounter[]) => {
       if (encounters) {
         return {
           ...acc,
-          [scenario]: groupBy(
-            encounters,
-            (encounter) => encounter.location.name,
-          ),
+          [scenario]: groupBy(encounters, (encounter) => encounter.location.name),
         };
       }
       return acc;
@@ -144,9 +132,7 @@ export const getDistanceInSquares = (distance: string) => {
 
 export const getDistanceInSquaresFromUSUnits = (distance: string) => {
   if (distance.match(/feet/)) {
-    return convertFeetDistanceIntoSquares(
-      parseFloat(distance.split(" feet")[0]),
-    );
+    return convertFeetDistanceIntoSquares(parseFloat(distance.split(" feet")[0]));
   }
   if (distance.match(/mile/)) {
     return (parseFloat(distance.split(" mile")[0]) * 5280) / 5;
@@ -180,10 +166,7 @@ export const addSignToNumber = (number: number) => {
   return number;
 };
 
-export const getModifierFromCreature = (
-  creature: Creature,
-  characteristic: AbilityNameType,
-) => {
+export const getModifierFromCreature = (creature: Creature, characteristic: AbilityNameType) => {
   return getModifier(creature.abilities[characteristic]);
 };
 
@@ -195,6 +178,10 @@ export const getInitiative = (creature: Creature) => {
   return (roll(20) + getModifierFromCreature(creature, "dexterity")).toString();
 };
 
+export const getInitiativeFromParticipant = (participant: Participant) => {
+  return (roll(20) + participant.dexMod).toString();
+};
+
 export const getParticipantFromCharacters = (group: Group) => {
   return group.map(({ name, id }) => ({
     id,
@@ -204,6 +191,7 @@ export const getParticipantFromCharacters = (group: Group) => {
     currentHp: "",
     uuid: uuidv4(),
     isNPC: false,
+    dexMod: 0,
   }));
 };
 
@@ -236,8 +224,7 @@ const findClosestIndex = (partyLevels: string[], partylevel: string) => {
   return partyLevels.reduce((closestIndex, level, index) => {
     const levelNumber = parseFloat(level);
     const closestLevelNumber = parseFloat(partyLevels[closestIndex]);
-    return Math.abs(levelNumber - target) <
-      Math.abs(closestLevelNumber - target)
+    return Math.abs(levelNumber - target) < Math.abs(closestLevelNumber - target)
       ? index
       : closestIndex;
   }, 0);
@@ -262,23 +249,18 @@ const getCreatureColor = (
 ) => {
   if (creature.colors && isNumber(creature.id)) {
     const newColorIndex =
-      currentColorIndex[creature.id] !== undefined
-        ? currentColorIndex[creature.id] + 1
-        : 0;
+      currentColorIndex[creature.id] !== undefined ? currentColorIndex[creature.id] + 1 : 0;
     currentColorIndex[creature.id] = newColorIndex;
 
     return creature.colors[newColorIndex];
   }
 
-  return index > commonCreatureColors.length - 1
-    ? "#000000"
-    : commonCreatureColors[index];
+  return index > commonCreatureColors.length - 1 ? "#000000" : commonCreatureColors[index];
 };
 
 export const getCreatures = async (encounter: Encounter) => {
-  const enemiesIds = map(
-    getEnnemiesFromEncounter({ encounter, partyLevel: "1" }),
-    (enemy) => getIdFromEnemy(enemy),
+  const enemiesIds = map(getEnnemiesFromEncounter({ encounter, partyLevel: "1" }), (enemy) =>
+    getIdFromEnemy(enemy),
   );
 
   return Promise.all(enemiesIds.map((name) => getCreature(name)));
@@ -294,8 +276,7 @@ export const getParticipantFromEncounter = ({
   const currentColorIndex: { [key: number]: number } = {};
   return creatures.reduce((acc: Participant[], creature, index) => {
     const enemyData = encounter?.ennemies?.["1"]?.[index];
-    const shouldSkip =
-      isEnemyObject(enemyData) && enemyData.shouldHideInInitiativeTracker;
+    const shouldSkip = isEnemyObject(enemyData) && enemyData.shouldHideInInitiativeTracker;
 
     if (creature && !shouldSkip) {
       const hp = getHPAsString(creature);
@@ -317,6 +298,7 @@ export const getParticipantFromEncounter = ({
               : getCreatureColor(creature, index, currentColorIndex),
           uuid: uuidv4(),
           isNPC: true,
+          dexMod: getModifierFromCreature(creature, "dexterity"),
         },
       ];
     }
@@ -324,10 +306,7 @@ export const getParticipantFromEncounter = ({
   }, []);
 };
 
-export const getChallengeRatingAsFraction = (
-  number: number,
-  tolerance = 1e-10,
-) => {
+export const getChallengeRatingAsFraction = (number: number, tolerance = 1e-10) => {
   if (Number.isInteger(number) || number === 0) {
     return number.toString();
   }

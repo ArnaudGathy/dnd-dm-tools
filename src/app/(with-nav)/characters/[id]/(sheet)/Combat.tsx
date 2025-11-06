@@ -13,14 +13,8 @@ import {
   WandSparkles,
 } from "lucide-react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
-import {
-  convertFeetDistanceIntoSquares,
-  shortenAbilityName,
-} from "@/utils/utils";
-import {
-  ABILITY_NAME_MAP_TO_FR,
-  SPELLCASTING_MODIFIER_MAP,
-} from "@/constants/maps";
+import { convertFeetDistanceIntoSquares, shortenAbilityName } from "@/utils/utils";
+import { ABILITY_NAME_MAP_TO_FR, SPELLCASTING_MODIFIER_MAP } from "@/constants/maps";
 import SavingThrows from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/SavingThrows";
 import Name from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/Name";
 import Damages from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/Damages";
@@ -38,11 +32,7 @@ import {
   getSpellsToPreparePerDay,
 } from "@/utils/stats/spells";
 import { getInitiativeModifier } from "@/utils/stats/initiative";
-import {
-  getClassDice,
-  getMartialClassDC,
-  getSubClassDice,
-} from "@/utils/stats/classSpecific";
+import { getClassDice, getMartialClassDC, getSubClassDice } from "@/utils/stats/classSpecific";
 
 import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 import RessourcesWrapper from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
@@ -59,8 +49,7 @@ export default function Combat({ character }: { character: CharacterById }) {
   const martialClassDC = getMartialClassDC(character);
   const classDice = getClassDice(character);
   const subClassDice = getSubClassDice(character);
-  const hasMartialData =
-    martialClassDC?.total || classDice?.value || subClassDice?.value;
+  const hasMartialData = martialClassDC?.total || classDice?.value || subClassDice?.value;
   const hasSpells = SPELLCASTING_MODIFIER_MAP[character.className];
 
   const { ressources, spellsSlots } = useRessourceData({ character });
@@ -111,9 +100,7 @@ export default function Combat({ character }: { character: CharacterById }) {
             value={movementSpeedDetails.total}
             definition={
               <div>
-                <span className="font-bold">
-                  Vitesse de déplacement (en cases)
-                </span>
+                <span className="font-bold">Vitesse de déplacement (en cases)</span>
                 <div>
                   <span>Racial : </span>
                   <span>{movementSpeedDetails.raceSpeed}</span>
@@ -139,9 +126,7 @@ export default function Combat({ character }: { character: CharacterById }) {
             value={initiativeDetails.total}
             definition={
               <div>
-                <span className="font-bold">
-                  Bonus au jet d&apos;initiative
-                </span>
+                <span className="font-bold">Bonus au jet d&apos;initiative</span>
                 <div>
                   <span>DEX : </span>
                   <span>{initiativeDetails.dexterityModifier}</span>
@@ -182,9 +167,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                 icon={Dice6}
                 iconColor="text-blue-500"
                 value={subClassDice.value}
-                definition={
-                  <span className="font-bold">{subClassDice.name}</span>
-                }
+                definition={<span className="font-bold">{subClassDice.name}</span>}
               />
             )}
             {martialClassDC && (
@@ -201,9 +184,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                     </div>
                     {martialClassDC.modifier > 0 && (
                       <div>
-                        <span>
-                          {`Modificateur (${martialClassDC.modifierName}) :`}{" "}
-                        </span>
+                        <span>{`Modificateur (${martialClassDC.modifierName}) :`} </span>
                         <span>{martialClassDC.modifier}</span>
                       </div>
                     )}
@@ -231,14 +212,10 @@ export default function Combat({ character }: { character: CharacterById }) {
                   value={spellCastingDetails.total}
                   definition={
                     <div>
-                      <span className="font-bold">
-                        Bonus de jet d&apos;attaque des sorts
-                      </span>
+                      <span className="font-bold">Bonus de jet d&apos;attaque des sorts</span>
                       <div>
                         <span>{`${shortenAbilityName(spellCastingDetails.spellCastingStat)} : `}</span>
-                        <span>
-                          {spellCastingDetails.spellCastingAbilityModifier}
-                        </span>
+                        <span>{spellCastingDetails.spellCastingAbilityModifier}</span>
                       </div>
                       <div>
                         <span>Maîtrise : </span>
@@ -259,18 +236,14 @@ export default function Combat({ character }: { character: CharacterById }) {
                   value={spellSaveDCDetails.total}
                   definition={
                     <div>
-                      <span className="font-bold">
-                        DD de sauvegarde des sorts
-                      </span>
+                      <span className="font-bold">DD de sauvegarde des sorts</span>
                       <div>
                         <span>Base : </span>
                         <span>{spellSaveDCDetails.baseValue}</span>
                       </div>
                       <div>
                         <span>{`${shortenAbilityName(spellSaveDCDetails.spellCastingStat)} : `}</span>
-                        <span>
-                          {spellSaveDCDetails.spellCastingAbilityModifier}
-                        </span>
+                        <span>{spellSaveDCDetails.spellCastingAbilityModifier}</span>
                       </div>
                       <div>
                         <span>Maîtrise : </span>
@@ -292,18 +265,14 @@ export default function Combat({ character }: { character: CharacterById }) {
                     value={spellsToPreparePerDay.total}
                     definition={
                       <div>
-                        <span className="font-bold">
-                          Sorts à préparer par jour
-                        </span>
+                        <span className="font-bold">Sorts à préparer par jour</span>
                         <div>
                           <span>Quand : </span>
                           <span>{spellsToPreparePerDay.when}</span>
                         </div>
                         <div>
                           <span>Combien : </span>
-                          <span>
-                            {`${spellsToPreparePerDay.dailyAmount} par jour.`}
-                          </span>
+                          <span>{`${spellsToPreparePerDay.dailyAmount} par jour.`}</span>
                         </div>
                       </div>
                     }
@@ -321,10 +290,7 @@ export default function Combat({ character }: { character: CharacterById }) {
             <span className="mb-2 self-center text-2xl font-bold">Armes</span>
             <div className="flex flex-col gap-4">
               {character.weapons.map((weapon, index) => {
-                const weaponAttackBonusDetails = getWeaponAttackBonus(
-                  character,
-                  weapon,
-                );
+                const weaponAttackBonusDetails = getWeaponAttackBonus(character, weapon);
                 return (
                   <div key={weapon.id}>
                     <div className="flex flex-col gap-2">
@@ -335,29 +301,22 @@ export default function Combat({ character }: { character: CharacterById }) {
                           <PopoverComponent
                             definition={
                               <div>
-                                <span className="font-bold">
-                                  Bonus d&apos;attaque :{" "}
-                                </span>
+                                <span className="font-bold">Bonus d&apos;attaque : </span>
                                 <div>
                                   <span>{`${ABILITY_NAME_MAP_TO_FR[weaponAttackBonusDetails.modifierName]} : `}</span>
-                                  <span>
-                                    {weaponAttackBonusDetails.abilityModifier}
-                                  </span>
+                                  <span>{weaponAttackBonusDetails.abilityModifier}</span>
                                 </div>
                                 <div>
                                   <span>Maitrise : </span>
                                   <span>
-                                    {weaponAttackBonusDetails.proficiencyBonus >
-                                    0
+                                    {weaponAttackBonusDetails.proficiencyBonus > 0
                                       ? weaponAttackBonusDetails.proficiencyBonus
                                       : "non"}
                                   </span>
                                   {weaponAttackBonusDetails.attackBonus > 0 && (
                                     <div>
                                       <span>Bonus : </span>
-                                      <span>
-                                        {weaponAttackBonusDetails.attackBonus}
-                                      </span>
+                                      <span>{weaponAttackBonusDetails.attackBonus}</span>
                                     </div>
                                   )}
                                 </div>
@@ -405,9 +364,7 @@ export default function Combat({ character }: { character: CharacterById }) {
 
       <div className="flex flex-col gap-4">
         <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">
-            Traits & capacités
-          </span>
+          <span className="mb-2 self-center text-2xl font-bold">Traits & capacités</span>
           <ul className="flex flex-col gap-2">
             {character.capacities.map((capacity) => (
               <li key={capacity.id} className="leading-none">

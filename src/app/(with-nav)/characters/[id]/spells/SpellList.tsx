@@ -20,18 +20,13 @@ export const SpellList = ({
 }) => {
   const spellEntries = entries(spellsGroupedBy);
   if (spellEntries.length === 0) {
-    return (
-      <div className="mt-4 text-muted-foreground">Aucun sort à afficher.</div>
-    );
+    return <div className="mt-4 text-muted-foreground">Aucun sort à afficher.</div>;
   }
 
   return (
     <div className="flex flex-wrap gap-4">
       {spellEntries.map(([property, spells]) => (
-        <Card
-          key={property}
-          className="min-w-full md:min-w-[24%] md:max-w-[24%]"
-        >
+        <Card key={property} className="min-w-full md:min-w-[24%] md:max-w-[24%]">
           <CardHeader>
             <CardTitle>{`${label} ${capitalize(property)}`}</CardTitle>
           </CardHeader>
@@ -56,12 +51,7 @@ export const SpellList = ({
                   <Link href={`/spells/${spell.id}`} className="truncate">
                     {spell.name}
                   </Link>
-                  {isEditMode && (
-                    <DeleteSpellButton
-                      spell={spell}
-                      characterId={character.id}
-                    />
-                  )}
+                  {isEditMode && <DeleteSpellButton spell={spell} characterId={character.id} />}
                 </li>
               ))}
             </ul>

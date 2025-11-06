@@ -44,8 +44,7 @@ function SpellSlots({
   character: CharacterById;
   spellsSlotsData: SpellsSlotsData;
 }) {
-  const { addSlot, removeSlot, allSlots, baseSlots, spellSlots, resetSlots } =
-    spellsSlotsData;
+  const { addSlot, removeSlot, allSlots, baseSlots, spellSlots, resetSlots } = spellsSlotsData;
 
   if (spellSlots === undefined || baseSlots.length === 0) {
     return null;

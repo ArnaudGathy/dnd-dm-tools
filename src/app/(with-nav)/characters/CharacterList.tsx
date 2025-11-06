@@ -1,10 +1,4 @@
-import {
-  CardTitle,
-  Card,
-  CardDescription,
-  CardHeader,
-  CardContent,
-} from "@/components/ui/card";
+import { CardTitle, Card, CardDescription, CardHeader, CardContent } from "@/components/ui/card";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import { CAMPAIGN_MAP, CLASS_MAP, PARTY_MAP, RACE_MAP } from "@/constants/maps";
 import { CharacterByOwner, cn } from "@/lib/utils";
@@ -89,16 +83,8 @@ export default function CharacterList({
         <CardContent className="flex flex-col gap-4">
           {numberOfCharacters > 1 && (
             <div className="flex flex-col gap-4">
-              <StatCell
-                name={<Users />}
-                stat={PARTY_MAP[character.campaign.party.name]}
-                isInline
-              />
-              <StatCell
-                name={<MapPin />}
-                stat={CAMPAIGN_MAP[character.campaign.name]}
-                isInline
-              />
+              <StatCell name={<Users />} stat={PARTY_MAP[character.campaign.party.name]} isInline />
+              <StatCell name={<MapPin />} stat={CAMPAIGN_MAP[character.campaign.name]} isInline />
             </div>
           )}
           <div className="flex flex-wrap gap-4">

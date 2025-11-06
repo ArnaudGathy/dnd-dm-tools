@@ -11,11 +11,7 @@ import dynamic from "next/dynamic";
 import { Campaign, Party } from "@prisma/client";
 import { PARTY_MAP } from "@/constants/maps";
 
-const CampaignsList = ({
-  campaigns,
-}: {
-  campaigns: Array<Campaign & { party: Party }>;
-}) => {
+const CampaignsList = ({ campaigns }: { campaigns: Array<Campaign & { party: Party }> }) => {
   return (
     <Select
       defaultValue={localStorage.getItem("campaignId") ?? "0"}

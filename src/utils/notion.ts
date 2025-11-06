@@ -61,9 +61,7 @@ const getStatus = (prop: PropertyValue) => {
   throw new Error(`Property ${JSON.stringify(prop)} is not a status`);
 };
 
-export const mapQuestsFromNotion = (
-  properties: PageObjectResponse["properties"],
-) => {
+export const mapQuestsFromNotion = (properties: PageObjectResponse["properties"]) => {
   return {
     id: getNumber(properties.id)!,
     name: getTitle(properties.name)!,

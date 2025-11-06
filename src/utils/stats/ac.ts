@@ -1,10 +1,4 @@
-import {
-  Abilities,
-  Armor,
-  ArmorType,
-  Character,
-  Classes,
-} from "@prisma/client";
+import { Abilities, Armor, ArmorType, Character, Classes } from "@prisma/client";
 import { getModifier } from "@/utils/utils";
 import { ABILITY_NAME_MAP_TO_FR } from "@/constants/maps";
 
@@ -12,16 +6,13 @@ const getAcModifierByArmor = (character: Character, armor?: Armor) => {
   if (!armor) {
     if (character.className === Classes.BARBARIAN) {
       return {
-        abilityACModifier:
-          getModifier(character.constitution) +
-          getModifier(character.dexterity),
+        abilityACModifier: getModifier(character.constitution) + getModifier(character.dexterity),
         modifierName: `${ABILITY_NAME_MAP_TO_FR[Abilities.CONSTITUTION]} & ${ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY]}`,
       };
     }
     if (character.className === Classes.MONK) {
       return {
-        abilityACModifier:
-          getModifier(character.wisdom) + getModifier(character.dexterity),
+        abilityACModifier: getModifier(character.wisdom) + getModifier(character.dexterity),
         modifierName: `${ABILITY_NAME_MAP_TO_FR[Abilities.WISDOM]} & ${ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY]}`,
       };
     }
@@ -45,21 +36,12 @@ const getAcModifierByArmor = (character: Character, armor?: Armor) => {
 };
 
 export const getTotalAC = (character: Character & { armors: Armor[] }) => {
-  const equippedArmors = character.armors.filter(
-    ({ isEquipped }) => isEquipped,
-  );
-  const equippedBodyArmor = equippedArmors.find(
-    ({ type }) => type !== ArmorType.SHIELD,
-  );
+  const equippedArmors = character.armors.filter(({ isEquipped }) => isEquipped);
+  const equippedBodyArmor = equippedArmors.find(({ type }) => type !== ArmorType.SHIELD);
   const armorAC = !!equippedBodyArmor ? equippedBodyArmor.AC : 10;
   const armorName = !!equippedBodyArmor ? equippedBodyArmor.name : "Base";
-  const { abilityACModifier, modifierName } = getAcModifierByArmor(
-    character,
-    equippedBodyArmor,
-  );
-  const equippedShield = equippedArmors.find(
-    ({ type }) => type === ArmorType.SHIELD,
-  );
+  const { abilityACModifier, modifierName } = getAcModifierByArmor(character, equippedBodyArmor);
+  const equippedShield = equippedArmors.find(({ type }) => type === ArmorType.SHIELD);
   const shieldAc = !!equippedShield ? equippedShield.AC : 0;
 
   return {

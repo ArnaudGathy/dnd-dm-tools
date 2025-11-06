@@ -1,10 +1,6 @@
 import prisma from "@/lib/prisma";
 
-export const getOwnersParties = async ({
-  ownerEmail,
-}: {
-  ownerEmail?: string;
-}) => {
+export const getOwnersParties = async ({ ownerEmail }: { ownerEmail?: string }) => {
   return prisma.party.findMany({
     where: {
       OR: [

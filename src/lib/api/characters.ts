@@ -1,11 +1,7 @@
 import prisma from "@/lib/prisma";
 import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
 
-export const getNumberOfCharactersByOwner = async ({
-  ownerEmail,
-}: {
-  ownerEmail?: string;
-}) => {
+export const getNumberOfCharactersByOwner = async ({ ownerEmail }: { ownerEmail?: string }) => {
   return prisma.character.count({
     where: {
       OR: [{ owner: ownerEmail }, { campaign: { owner: ownerEmail } }],
@@ -112,11 +108,7 @@ export const getAllFilteredCharacters = async ({
   });
 };
 
-export const getCharacterById = async ({
-  characterId,
-}: {
-  characterId: number;
-}) => {
+export const getCharacterById = async ({ characterId }: { characterId: number }) => {
   return prisma.character.findUnique({
     where: {
       id: characterId,

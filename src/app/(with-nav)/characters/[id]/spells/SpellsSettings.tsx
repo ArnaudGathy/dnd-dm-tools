@@ -61,10 +61,7 @@ export default function SpellsSettings({
                 });
               }}
             />
-            <Label
-              htmlFor="isAlwaysPrepared"
-              className="text-sm text-amber-500"
-            >
+            <Label htmlFor="isAlwaysPrepared" className="text-sm text-amber-500">
               Toujours préparé
             </Label>
           </div>
@@ -102,10 +99,7 @@ export default function SpellsSettings({
                 });
               }}
             />
-            <Label
-              htmlFor="canBeSwappedOnLongRest"
-              className="text-sm text-rose-500"
-            >
+            <Label htmlFor="canBeSwappedOnLongRest" className="text-sm text-rose-500">
               Changement lors d&apos;un long repos
             </Label>
           </div>
@@ -124,10 +118,7 @@ export default function SpellsSettings({
                 });
               }}
             />
-            <Label
-              htmlFor="canBeSwappedOnLevelUp"
-              className="text-sm text-purple-500"
-            >
+            <Label htmlFor="canBeSwappedOnLevelUp" className="text-sm text-purple-500">
               Changement lors d&apos;un lvl up
             </Label>
           </div>

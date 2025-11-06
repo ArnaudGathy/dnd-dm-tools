@@ -59,9 +59,7 @@ export default function FormFieldSelect<
                 </div>
                 <div>
                   {description && (
-                    <FormDescription className="leading-3">
-                      {description}
-                    </FormDescription>
+                    <FormDescription className="leading-3">{description}</FormDescription>
                   )}
                 </div>
               </div>
@@ -73,9 +71,7 @@ export default function FormFieldSelect<
               disabled={rest.disabled}
             >
               <FormControl>
-                <SelectTrigger
-                  className={cn({ "text-muted-foreground": !field.value })}
-                >
+                <SelectTrigger className={cn({ "text-muted-foreground": !field.value })}>
                   <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
               </FormControl>

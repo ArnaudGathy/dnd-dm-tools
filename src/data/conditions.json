@@ -13,9 +13,7 @@
     "title": "Assourdi",
     "icon": "deafened",
     "description": "Vous ne pouvez pas entendre",
-    "bullets": [
-      "Vous échouez automatiquement à tout test de caractéristique nécessitant l'ouïe."
-    ]
+    "bullets": ["Vous échouez automatiquement à tout test de caractéristique nécessitant l'ouïe."]
   },
   {
     "title": "Attrapé",
@@ -59,9 +57,7 @@
     "title": "Empoisonné",
     "icon": "poisoned",
     "description": "Vous êtes empoisonné",
-    "bullets": [
-      "Vous avez un désavantage sur les jets d'attaque et les tests de caractéristique."
-    ]
+    "bullets": ["Vous avez un désavantage sur les jets d'attaque et les tests de caractéristique."]
   },
   {
     "title": "Entravé",

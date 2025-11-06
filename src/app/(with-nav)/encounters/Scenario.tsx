@@ -16,21 +16,14 @@ const Scenario = ({
   scenarioName: string;
   encounters: Record<string, Encounter[]>;
 }) => {
-  const [isOpen, setIsOpen] = useLocalStorage(
-    `campaign.${scenarioName}`,
-    false,
-  );
+  const [isOpen, setIsOpen] = useLocalStorage(`campaign.${scenarioName}`, false);
 
   return (
     <div key={scenarioName}>
       <h1 className="mb-4 space-x-2 text-2xl font-semibold leading-none tracking-tight">
         <span>{scenarioName}</span>
         <Button size="xs" variant="ghost" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? (
-            <ChevronDownIcon className="size-4" />
-          ) : (
-            <ChevronUpIcon className="size-4" />
-          )}
+          {isOpen ? <ChevronDownIcon className="size-4" /> : <ChevronUpIcon className="size-4" />}
         </Button>
       </h1>
       {isOpen && (

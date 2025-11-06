@@ -4,11 +4,7 @@ import InfoCell from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/InfoCel
 import { AMMUNITION_TYPE_MAP } from "@/constants/maps";
 import { Weapon, WeaponDamage } from "@prisma/client";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Check, LoaderCircle } from "lucide-react";
 import { updateWeaponAmmunitionCount } from "@/lib/actions/weapons";
@@ -21,9 +17,7 @@ export default function AmmunitionForm({
 }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [ammunitionCount, setAmmunitionCount] = useState(
-    weapon.ammunitionCount ?? undefined,
-  );
+  const [ammunitionCount, setAmmunitionCount] = useState(weapon.ammunitionCount ?? undefined);
 
   const handleSubmit = async () => {
     setIsLoading(true);
@@ -58,11 +52,7 @@ export default function AmmunitionForm({
                   onClick={handleSubmit}
                   disabled={isLoading}
                 >
-                  {isLoading ? (
-                    <LoaderCircle className="animate-spin" />
-                  ) : (
-                    <Check />
-                  )}
+                  {isLoading ? <LoaderCircle className="animate-spin" /> : <Check />}
                 </Button>
               </div>
             </PopoverContent>

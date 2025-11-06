@@ -19,9 +19,7 @@ export default async function WithNavLayout({
 }>) {
   return (
     <>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} overflow-y-auto antialiased`}
-      >
+      <body className={`${geistSans.variable} ${geistMono.variable} overflow-y-auto antialiased`}>
         <Toaster position="bottom-center" />
         <main className="mx-auto max-w-[1497px] p-4 md:p-8">
           <NavBar />

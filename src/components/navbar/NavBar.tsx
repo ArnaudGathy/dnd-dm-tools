@@ -76,9 +76,7 @@ export const NavBar = async () => {
               </NavigationMenuItem>
             </NavigationMenuList>
 
-            <NavigationMenuList className="hidden md:flex">
-              {getMenuItems()}
-            </NavigationMenuList>
+            <NavigationMenuList className="hidden md:flex">{getMenuItems()}</NavigationMenuList>
           </NavigationMenu>
         </div>
 

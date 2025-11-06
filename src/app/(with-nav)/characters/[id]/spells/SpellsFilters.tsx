@@ -75,23 +75,11 @@ export default function SpellsFilters() {
   return (
     <div className="flex flex-col gap-2 md:flex-row">
       <div className="flex gap-2">
-        <Toggle
-          variant="outline"
-          pressed={isCollapsed}
-          onPressedChange={handleCollapse}
-        >
+        <Toggle variant="outline" pressed={isCollapsed} onPressedChange={handleCollapse}>
           Filtres
-          {isCollapsed ? (
-            <ChevronDown className="size-4" />
-          ) : (
-            <ChevronUp className="size-4" />
-          )}
+          {isCollapsed ? <ChevronDown className="size-4" /> : <ChevronUp className="size-4" />}
         </Toggle>
-        <SearchField
-          search={params.get("search") ?? ""}
-          setSearch={handleSearchParams}
-          isDefault
-        />
+        <SearchField search={params.get("search") ?? ""} setSearch={handleSearchParams} isDefault />
       </div>
 
       <div
@@ -119,9 +107,7 @@ export default function SpellsFilters() {
             variant="outline"
             pressed={params.get("filterBy") === SPELLS_FILTER_BY.PREPARED}
             onPressedChange={(isEnabled) =>
-              isEnabled
-                ? handleFilterBy(SPELLS_FILTER_BY.PREPARED)
-                : handleFilterBy(undefined)
+              isEnabled ? handleFilterBy(SPELLS_FILTER_BY.PREPARED) : handleFilterBy(undefined)
             }
           >
             <SquareCheckBig /> Préparés

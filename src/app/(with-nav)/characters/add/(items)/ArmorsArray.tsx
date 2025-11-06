@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { ARMOR_TYPE_MAP } from "@/constants/maps";
@@ -24,11 +18,7 @@ import ArrayDeleteButton from "@/app/(with-nav)/characters/add/(items)/ArrayDele
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 
-export default function ArmorsArray({
-  form,
-}: {
-  form: UseFormReturn<CharacterCreationForm>;
-}) {
+export default function ArmorsArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "armors";
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -76,10 +66,7 @@ export default function ArmorsArray({
                       return (
                         <FormItem className="w-full">
                           <div className="flex w-full items-center gap-2">
-                            <Select
-                              defaultValue={field.value}
-                              onValueChange={field.onChange}
-                            >
+                            <Select defaultValue={field.value} onValueChange={field.onChange}>
                               <FormControl>
                                 <SelectTrigger
                                   className={cn({
@@ -90,13 +77,11 @@ export default function ArmorsArray({
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {entries(ARMOR_TYPE_MAP).map(
-                                  ([value, label]) => (
-                                    <SelectItem key={value} value={value}>
-                                      {label}
-                                    </SelectItem>
-                                  ),
-                                )}
+                                {entries(ARMOR_TYPE_MAP).map(([value, label]) => (
+                                  <SelectItem key={value} value={value}>
+                                    {label}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -187,9 +172,7 @@ export default function ArmorsArray({
                               defaultChecked={field.value}
                               onCheckedChange={field.onChange}
                             />
-                            <Label htmlFor={`isProficient${index}`}>
-                              Maîtrisé
-                            </Label>
+                            <Label htmlFor={`isProficient${index}`}>Maîtrisé</Label>
                           </div>
                         );
                       }}

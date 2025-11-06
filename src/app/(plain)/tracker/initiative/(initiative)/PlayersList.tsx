@@ -17,8 +17,7 @@ export default function PlayersList({
   list: Participant[];
   turnsTracker: Turns;
 }) {
-  const [lastActivePlayerIndex, setLastActivePlayerIndex] =
-    useState<number>(-1);
+  const [lastActivePlayerIndex, setLastActivePlayerIndex] = useState<number>(-1);
 
   const allPlayersIndices = list.reduce((acc: number[], next, index) => {
     if (!next.isNPC) {
@@ -26,9 +25,7 @@ export default function PlayersList({
     }
     return acc;
   }, []);
-  const isNPCTurn = !allPlayersIndices.includes(
-    turnsTracker.activeParticipantIndex,
-  );
+  const isNPCTurn = !allPlayersIndices.includes(turnsTracker.activeParticipantIndex);
 
   return (
     <div className="h-[1048px] w-[335px] bg-blue">
@@ -55,8 +52,7 @@ export default function PlayersList({
         </div>
         <div className="flex flex-col gap-4">
           {list.map((participant, index) => {
-            const isCurrentlyActive =
-              turnsTracker.activeParticipantIndex === index;
+            const isCurrentlyActive = turnsTracker.activeParticipantIndex === index;
             const previousActive = lastActivePlayerIndex === index;
             const isActive = isCurrentlyActive || previousActive;
 
@@ -77,13 +73,9 @@ export default function PlayersList({
                 })}
               >
                 <Hexagon isActive={isActive}>
-                  {removeInitFloating(
-                    participant.isNPC ? "?" : participant.init,
-                  )}
+                  {removeInitFloating(participant.isNPC ? "?" : participant.init)}
                 </Hexagon>
-                <span className="truncate text-3xl font-bold">
-                  {participant.name}
-                </span>
+                <span className="truncate text-3xl font-bold">{participant.name}</span>
               </Card>
             );
           })}

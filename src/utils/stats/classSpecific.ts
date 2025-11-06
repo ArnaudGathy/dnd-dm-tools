@@ -71,10 +71,7 @@ export const getClassDice = (character: Character) => {
 };
 
 export const getSubClassDice = (character: Character) => {
-  if (
-    character.className === Classes.ROGUE &&
-    character.subclassName === Subclasses.SOULKNIFE
-  ) {
+  if (character.className === Classes.ROGUE && character.subclassName === Subclasses.SOULKNIFE) {
     return {
       value: ROGUE_SOULKNIFE_DICE_PER_LEVEL[character.level],
       name: "Dés d'énergie d'âme acérée",

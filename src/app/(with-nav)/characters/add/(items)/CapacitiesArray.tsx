@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
@@ -12,11 +6,7 @@ import ArrayAddButton from "@/app/(with-nav)/characters/add/(items)/ArrayAddButt
 import ArrayDeleteButton from "@/app/(with-nav)/characters/add/(items)/ArrayDeleteButton";
 import { Textarea } from "@/components/ui/textarea";
 
-export default function CapacitiesArray({
-  form,
-}: {
-  form: UseFormReturn<CharacterCreationForm>;
-}) {
+export default function CapacitiesArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "capacities";
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -34,10 +24,7 @@ export default function CapacitiesArray({
         {fields.map((field, index) => (
           <div key={field.id} className="flex w-full flex-col gap-1">
             <div className="flex gap-1">
-              <ArrayDeleteButton
-                onClick={() => remove(index)}
-                disabled={fields.length < 2}
-              />
+              <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length < 2} />
               <FormField
                 control={form.control}
                 name={`${fieldName}.${index}.name`}

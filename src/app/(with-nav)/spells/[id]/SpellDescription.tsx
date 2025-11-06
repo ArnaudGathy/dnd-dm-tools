@@ -30,9 +30,7 @@ export const SpellDescription = async ({ spell }: { spell: APISpell }) => {
                 ))}
                 {!!spell.higher_level?.length && (
                   <div className="flex flex-col gap-2">
-                    {spell.higher_level?.map((level, index) => (
-                      <div key={index}>{level}</div>
-                    ))}
+                    {spell.higher_level?.map((level, index) => <div key={index}>{level}</div>)}
                   </div>
                 )}
               </div>

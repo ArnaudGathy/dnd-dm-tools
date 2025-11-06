@@ -12,10 +12,7 @@ const List = ({ list }: { list: string[] }) => {
       {list.map((info) => {
         const shouldEmphasize = info.match(/DD/);
         return (
-          <li
-            key={info}
-            className={clsx("my-2", { "text-green-600": shouldEmphasize })}
-          >
+          <li key={info} className={clsx("my-2", { "text-green-600": shouldEmphasize })}>
             {info}
           </li>
         );

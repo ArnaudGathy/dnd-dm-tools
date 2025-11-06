@@ -1,9 +1,4 @@
-import {
-  Character,
-  Weapon,
-  WeaponDamage,
-  WeaponDamageType,
-} from "@prisma/client";
+import { Character, Weapon, WeaponDamage, WeaponDamageType } from "@prisma/client";
 import {
   ABILITIES_MAP_TO_NAME,
   PROFICIENCY_BONUS_BY_LEVEL,
@@ -27,21 +22,14 @@ import {
 
 const getWeaponAbilityModifier = (character: Character, weapon: Weapon) => {
   const modifierName = weapon.abilityModifier;
-  const abilityModifier = getModifier(
-    character[ABILITIES_MAP_TO_NAME[weapon.abilityModifier]],
-  );
+  const abilityModifier = getModifier(character[ABILITIES_MAP_TO_NAME[weapon.abilityModifier]]);
   return { abilityModifier, modifierName };
 };
 
 export const getWeaponAttackBonus = (character: Character, weapon: Weapon) => {
-  const proficiencyBonus = weapon.isProficient
-    ? PROFICIENCY_BONUS_BY_LEVEL[character.level]
-    : 0;
+  const proficiencyBonus = weapon.isProficient ? PROFICIENCY_BONUS_BY_LEVEL[character.level] : 0;
   const attackBonus = weapon.attackBonus ?? 0;
-  const { modifierName, abilityModifier } = getWeaponAbilityModifier(
-    character,
-    weapon,
-  );
+  const { modifierName, abilityModifier } = getWeaponAbilityModifier(character, weapon);
 
   return {
     proficiencyBonus,
@@ -52,16 +40,10 @@ export const getWeaponAttackBonus = (character: Character, weapon: Weapon) => {
   };
 };
 
-export const getWeaponDamage = (
-  character: Character,
-  damage: WeaponDamage,
-  weapon: Weapon,
-) => {
+export const getWeaponDamage = (character: Character, damage: WeaponDamage, weapon: Weapon) => {
   const dices = `${damage.numberOfDices}${WEAPON_DICE_MAP[damage.dice]}`;
-  const {
-    modifierName: baseModifierName,
-    abilityModifier: baseAbilityModifier,
-  } = getWeaponAbilityModifier(character, weapon);
+  const { modifierName: baseModifierName, abilityModifier: baseAbilityModifier } =
+    getWeaponAbilityModifier(character, weapon);
   const modifierName = damage.isBaseDamage ? baseModifierName : null;
   const abilityModifier = damage.isBaseDamage ? baseAbilityModifier : 0;
   const flatBonus = damage.flatBonus ?? 0;

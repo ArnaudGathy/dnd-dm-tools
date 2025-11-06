@@ -1,11 +1,5 @@
 import { Creature } from "@/types/types";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { clsx } from "clsx";
 import {
   getDistanceInSquares,
@@ -28,9 +22,7 @@ const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
 };
 
 export const StatBlock = async ({ creature }: { creature: Creature }) => {
-  const creatureSpellsFromDb = await getSpellByIds(
-    (creature.spells ?? []).map((s) => s.id),
-  );
+  const creatureSpellsFromDb = await getSpellByIds((creature.spells ?? []).map((s) => s.id));
   const creatureSpells = creatureSpellsFromDb.map((s, index) => ({
     ...s,
     ...(creature.spells?.[index] ?? {}),
@@ -62,14 +54,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           {creature.type} de taille{" "}
           <span
             className={clsx("text-base", {
-              "text-primary": ![
-                "TP",
-                "P",
-                "M",
-                "Medium",
-                "Small",
-                "Tiny",
-              ].includes(creature.size),
+              "text-primary": !["TP", "P", "M", "Medium", "Small", "Tiny"].includes(creature.size),
             })}
           >
             {creature.size}
@@ -82,12 +67,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           <div className="flex flex-col gap-2">
             <div className="flex gap-8">
               <StatCell name="PV" stat={getHPAsString(creature)} isInline />
-              <StatCell
-                name="CA"
-                stat={creature.armorClass}
-                isHighlighted
-                isInline
-              />
+              <StatCell name="CA" stat={creature.armorClass} isHighlighted isInline />
               <StatCell
                 name="FP"
                 stat={getChallengeRatingAsFraction(creature.challengeRating)}
@@ -104,18 +84,10 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               />
 
               {creature.speed.swim && (
-                <StatCell
-                  name="Nage"
-                  stat={getDistanceInSquares(creature.speed.swim)}
-                  isInline
-                />
+                <StatCell name="Nage" stat={getDistanceInSquares(creature.speed.swim)} isInline />
               )}
               {creature.speed.fly && (
-                <StatCell
-                  name="Vol"
-                  stat={getDistanceInSquares(creature.speed.fly)}
-                  isInline
-                />
+                <StatCell name="Vol" stat={getDistanceInSquares(creature.speed.fly)} isInline />
               )}
               {creature.speed.climb && (
                 <StatCell
@@ -145,9 +117,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               <StatCell
                 name="Jets de sauvegarde"
                 stat={entries(creature.savingThrows)
-                  .map((t) =>
-                    t[1] ? `${shortenAbilityName(t[0])} ${t[1]}` : undefined,
-                  )
+                  .map((t) => (t[1] ? `${shortenAbilityName(t[0])} ${t[1]}` : undefined))
                   .filter(isDefined)
                   .join(", ")}
                 highlightClassName="text-pink-400"
@@ -175,9 +145,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               />
             )}
 
-            {creature.languages && (
-              <StatCell name="Langues" stat={creature.languages.join(", ")} />
-            )}
+            {creature.languages && <StatCell name="Langues" stat={creature.languages.join(", ")} />}
             {creature.senses &&
               entries(creature.senses).map(([name, value]) => {
                 let stat = value;
@@ -188,13 +156,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                   stat = `${getDistanceInSquares(value)} cases`;
                 }
 
-                return (
-                  <StatCell
-                    key={name}
-                    name={translatedSenses(name)}
-                    stat={stat}
-                  />
-                );
+                return <StatCell key={name} name={translatedSenses(name)} stat={stat} />;
               })}
           </div>
 
@@ -202,11 +164,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
             <div className={blockClassName}>
               <CategoryTitle>Traits</CategoryTitle>
               {creature.traits.map((trait) => (
-                <StatCell
-                  key={trait.name}
-                  name={trait.name}
-                  stat={trait.description}
-                />
+                <StatCell key={trait.name} name={trait.name} stat={trait.description} />
               ))}
             </div>
           )}
@@ -220,8 +178,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           {creature.legendaryActions && (
             <div className={blockClassName}>
               <CategoryTitle>
-                Actions légendaires (
-                {`${creature.legendaryActionsSlots} par tour`})
+                Actions légendaires ({`${creature.legendaryActionsSlots} par tour`})
               </CategoryTitle>
               {creature.legendaryActions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
@@ -231,9 +188,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
 
           {creature.lairActions && (
             <div className={blockClassName}>
-              <CategoryTitle>
-                Actions de repaire ({`1x par tour`})
-              </CategoryTitle>
+              <CategoryTitle>Actions de repaire ({`1x par tour`})</CategoryTitle>
               {creature.lairActions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
               ))}
@@ -276,12 +231,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                 />
                 {creature.spellStats.slots &&
                   entries(creature.spellStats.slots).map(([level, slots]) => (
-                    <StatCell
-                      key={level}
-                      name={`Slots ${level}`}
-                      stat={slots}
-                      isInline
-                    />
+                    <StatCell key={level} name={`Slots ${level}`} stat={slots} isInline />
                   ))}
               </div>
               {!!creature.spells &&

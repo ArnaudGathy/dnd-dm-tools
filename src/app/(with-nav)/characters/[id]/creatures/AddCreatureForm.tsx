@@ -11,11 +11,7 @@ import { tryToAddCreature } from "@/lib/actions/creatures";
 
 export const initialState: { message?: string; error?: string } = {};
 
-export default function AddCreatureForm({
-  characterId,
-}: {
-  characterId: string;
-}) {
+export default function AddCreatureForm({ characterId }: { characterId: string }) {
   const [state, formAction] = useActionState(tryToAddCreature, initialState);
 
   return (
@@ -23,9 +19,7 @@ export default function AddCreatureForm({
       <input type="hidden" name="characterId" value={characterId} />
       <div className="flex w-fit flex-col gap-2">
         <Label htmlFor="spellName">Nom de la créature à ajouter</Label>
-        <span className="flex gap-2 text-sm text-muted-foreground">
-          {"ANGLAIS uniquement"}
-        </span>
+        <span className="flex gap-2 text-sm text-muted-foreground">{"ANGLAIS uniquement"}</span>
         <a
           className="text-sm text-muted-foreground underline"
           target="_blank"

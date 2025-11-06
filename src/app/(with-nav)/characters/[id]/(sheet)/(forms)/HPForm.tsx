@@ -1,23 +1,11 @@
 "use client";
 
-import {
-  Check,
-  ChevronsLeft,
-  ChevronsRight,
-  Heart,
-  RotateCcw,
-  Shield,
-} from "lucide-react";
+import { Check, ChevronsLeft, ChevronsRight, Heart, RotateCcw, Shield } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { resetHp, setHp, setTempHp } from "@/lib/actions/characters";
 import { CharacterById, cn } from "@/lib/utils";
-import {
-  Popover,
-  PopoverClose,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverClose, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { useState } from "react";
 
@@ -38,10 +26,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
 
   const handleSetHp = async (amount: number) => {
     if (isTempHP) {
-      await setTempHp(
-        character.id,
-        character.currentTempHP + (isPlus ? amount : -amount),
-      );
+      await setTempHp(character.id, character.currentTempHP + (isPlus ? amount : -amount));
     } else {
       const newHp = await setHp(
         character.id,
@@ -70,10 +55,8 @@ export default function HPForm({ character }: { character: CharacterById }) {
               <span
                 className={cn({
                   "text-green-500": character.currentHP < character.maximumHP,
-                  "text-orange-500":
-                    character.currentHP <= character.maximumHP * 0.5,
-                  "text-red-500":
-                    character.currentHP <= character.maximumHP * 0.2,
+                  "text-orange-500": character.currentHP <= character.maximumHP * 0.5,
+                  "text-red-500": character.currentHP <= character.maximumHP * 0.2,
                   "text-stone-500": character.currentHP <= 0,
                 })}
               >
@@ -86,10 +69,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
               <span>{character.maximumHP}</span>
             </div>
           </PopoverTrigger>
-          <PopoverContent
-            className="w-[300px]"
-            onOpenAutoFocus={(event) => event.preventDefault()}
-          >
+          <PopoverContent className="w-[300px]" onOpenAutoFocus={(event) => event.preventDefault()}>
             <div className="flex flex-col items-center gap-4">
               <div>Points de vie (PV)</div>
               <div className="flex gap-2">
@@ -139,11 +119,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
                   </Button>
                   <Button
                     theme={isPlus ? "red" : "green"}
-                    onClick={() =>
-                      setMode((current) =>
-                        current === "plus" ? "minus" : "plus",
-                      )
-                    }
+                    onClick={() => setMode((current) => (current === "plus" ? "minus" : "plus"))}
                   >
                     {isPlus ? "-" : "+"}
                   </Button>
@@ -153,15 +129,7 @@ export default function HPForm({ character }: { character: CharacterById }) {
                   ).map((i) => (
                     <Button
                       key={i}
-                      theme={
-                        isTempHP
-                          ? isPlus
-                            ? "teal"
-                            : "orange"
-                          : isPlus
-                            ? "green"
-                            : "red"
-                      }
+                      theme={isTempHP ? (isPlus ? "teal" : "orange") : isPlus ? "green" : "red"}
                       className="font-mono"
                       onClick={() => {
                         void handleSetHp(i);

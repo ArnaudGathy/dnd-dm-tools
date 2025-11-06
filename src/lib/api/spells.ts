@@ -1,12 +1,5 @@
 import prisma from "@/lib/prisma";
-import {
-  groupBy as groupByRemeda,
-  map,
-  pipe,
-  prop,
-  reduce,
-  uniqueBy,
-} from "remeda";
+import { groupBy as groupByRemeda, map, pipe, prop, reduce, uniqueBy } from "remeda";
 import { Spell, Character, SpellsOnCharacters } from "@prisma/client";
 
 export enum SPELLS_GROUP_BY {
@@ -61,11 +54,7 @@ const getGroupedSpells = (
     );
   }
 
-  const spells = pipe(
-    transformedResponse,
-    map(prop("spell")),
-    uniqueBy(prop("id")),
-  );
+  const spells = pipe(transformedResponse, map(prop("spell")), uniqueBy(prop("id")));
 
   if (groupBy === SPELLS_GROUP_BY.LEVEL) {
     return groupByRemeda(spells, prop("level"));
@@ -108,9 +97,7 @@ export const getGroupedCharacterSpells = async ({
   filterBy?: SPELLS_FILTER_BY;
   isWizard?: boolean;
 }) => {
-  const filterCondition = filterBy
-    ? filterBy === SPELLS_FILTER_BY.PREPARED
-    : undefined;
+  const filterCondition = filterBy ? filterBy === SPELLS_FILTER_BY.PREPARED : undefined;
 
   const response = await prisma.spellsOnCharacters.findMany({
     where: {
@@ -134,10 +121,7 @@ export const getGroupedCharacterSpells = async ({
             },
             {
               spell: {
-                isRitual:
-                  filterBy && isWizard
-                    ? filterBy === SPELLS_FILTER_BY.PREPARED
-                    : undefined,
+                isRitual: filterBy && isWizard ? filterBy === SPELLS_FILTER_BY.PREPARED : undefined,
               },
             },
           ],

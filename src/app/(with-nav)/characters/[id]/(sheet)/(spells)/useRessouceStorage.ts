@@ -209,10 +209,10 @@ export const useRessourceStorage = (character: CharacterById) => {
   const allSlots = baseSlots[character.level - 1];
   const parsedCharacterName = character.name.toLowerCase().replace(/ /g, "_");
 
-  const [store, setStore] = useLocalStorage<RessourceStorage>(
-    `${parsedCharacterName}.ressources`,
-    { ressources: {}, spellsSlots: allSlots },
-  );
+  const [store, setStore] = useLocalStorage<RessourceStorage>(`${parsedCharacterName}.ressources`, {
+    ressources: {},
+    spellsSlots: allSlots,
+  });
   const ressources = store?.ressources;
   const spellSlots = store?.spellsSlots;
 
@@ -225,9 +225,7 @@ export const useRessourceStorage = (character: CharacterById) => {
         /* Human feat : "Ingénieux" */
         if (key === "inspiration") {
           newAvailable =
-            character.race === Races.HUMAN
-              ? Math.max(1, value.available)
-              : value.available;
+            character.race === Races.HUMAN ? Math.max(1, value.available) : value.available;
         }
 
         return {
@@ -306,9 +304,7 @@ export const useRessourceStorage = (character: CharacterById) => {
     }
 
     if (!ressource) {
-      throw new Error(
-        `Ressource ${ressourceName} not found for character ${character.name}`,
-      );
+      throw new Error(`Ressource ${ressourceName} not found for character ${character.name}`);
     }
 
     const setSpecificRessource = (ressource: Ressource) => {
@@ -323,17 +319,10 @@ export const useRessourceStorage = (character: CharacterById) => {
       }
     };
 
-    if (
-      ressource.total === -1 ||
-      ressource.total !== total ||
-      ressource.available === -1
-    ) {
+    if (ressource.total === -1 || ressource.total !== total || ressource.available === -1) {
       setSpecificRessource({
         ...ressource,
-        total:
-          ressource.total === -1 || ressource.total !== total
-            ? total
-            : ressource.total,
+        total: ressource.total === -1 || ressource.total !== total ? total : ressource.total,
         available: ressource.available === -1 ? total : ressource.available,
         order: index,
       });

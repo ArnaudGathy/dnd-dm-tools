@@ -58,11 +58,7 @@ type RessourceDefinition = CommonRessource & {
   total: number;
 };
 
-export default function useRessourceData({
-  character,
-}: {
-  character: CharacterById;
-}) {
+export default function useRessourceData({ character }: { character: CharacterById }) {
   const {
     ressources: { getSpecificRessource, longRest, shortRest, sortRessources },
     spellsSlots,
@@ -90,8 +86,7 @@ export default function useRessourceData({
       total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
       condition: character.capacities.some(
         ({ name }) =>
-          name.toLowerCase().includes("lucky") ||
-          name.toLowerCase().includes("chanceux"),
+          name.toLowerCase().includes("lucky") || name.toLowerCase().includes("chanceux"),
       ),
     },
   ];
@@ -128,8 +123,7 @@ export default function useRessourceData({
       icon: <Sparkles />,
       ressourceName: "sorceryPoints",
       total: character.level,
-      condition:
-        character.className === Classes.SORCERER && character.level >= 2,
+      condition: character.className === Classes.SORCERER && character.level >= 2,
     },
     {
       name: "Sorcell. innée",
@@ -185,8 +179,7 @@ export default function useRessourceData({
       icon: <Clover />,
       ressourceName: "luckyStrike",
       total: 1,
-      condition:
-        character.className === Classes.ROGUE && character.level === 20,
+      condition: character.className === Classes.ROGUE && character.level === 20,
     },
   ];
   const ranger: RessourceDefinition[] = [
@@ -202,16 +195,14 @@ export default function useRessourceData({
       icon: <HeartPlus />,
       ressourceName: "tireless",
       total: Math.max(1, getModifier(character.wisdom)),
-      condition:
-        character.className === Classes.RANGER && character.level >= 10,
+      condition: character.className === Classes.RANGER && character.level >= 10,
     },
     {
       name: "Voile Nature",
       icon: <EyeOff />,
       ressourceName: "naturesVeil",
       total: Math.max(1, getModifier(character.wisdom)),
-      condition:
-        character.className === Classes.RANGER && character.level >= 14,
+      condition: character.className === Classes.RANGER && character.level >= 14,
     },
   ];
   const monk: RessourceDefinition[] = [
@@ -273,8 +264,7 @@ export default function useRessourceData({
       icon: <Sparkles />,
       ressourceName: "divineIntervention",
       total: 1,
-      condition:
-        character.className === Classes.CLERIC && character.level >= 10,
+      condition: character.className === Classes.CLERIC && character.level >= 10,
     },
   ];
   const wizard: RessourceDefinition[] = [
@@ -344,10 +334,7 @@ export default function useRessourceData({
             total,
             index,
           });
-          return [
-            ...characterRessources,
-            { name, icon, useRessource, ressourceName },
-          ];
+          return [...characterRessources, { name, icon, useRessource, ressourceName }];
         }
         return characterRessources;
       },

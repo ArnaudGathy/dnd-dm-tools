@@ -26,9 +26,7 @@ export default async function AdminCharacterList({
   return (
     <div className="space-y-4">
       <div className="flex justify-between">
-        <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>
-          Liste des personnages
-        </h1>
+        <h1 className={"scroll-m-20 text-2xl font-bold tracking-tight"}>Liste des personnages</h1>
         <Link href={`/characters/add`}>
           <Button variant="secondary">
             <UserPlus />

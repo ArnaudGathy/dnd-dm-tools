@@ -11,18 +11,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  CAMPAIGN_MAP,
-  CHARACTER_STATUS_MAP,
-  PARTY_MAP,
-} from "@/constants/maps";
-import {
-  Campaign,
-  CampaignId,
-  CharacterStatus,
-  Party,
-  PartyId,
-} from "@prisma/client";
+import { CAMPAIGN_MAP, CHARACTER_STATUS_MAP, PARTY_MAP } from "@/constants/maps";
+import { Campaign, CampaignId, CharacterStatus, Party, PartyId } from "@prisma/client";
 import { entries } from "remeda";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
@@ -119,25 +109,15 @@ export default function CharacterFilters({
           onClick={() => setIsCollapsed((current) => !current)}
         >
           Filtres
-          {isCollapsed ? (
-            <ChevronDown className="size-4" />
-          ) : (
-            <ChevronUp className="size-4" />
-          )}
+          {isCollapsed ? <ChevronDown className="size-4" /> : <ChevronUp className="size-4" />}
         </Toggle>
-        <SearchField
-          search={params.get("search") ?? ""}
-          setSearch={handleSearchParams}
-          isDefault
-        />
+        <SearchField search={params.get("search") ?? ""} setSearch={handleSearchParams} isDefault />
       </div>
 
       {!isCollapsed && (
         <>
           <Select
-            onValueChange={(value) =>
-              handleFilterByStatus(value as CharacterStatus)
-            }
+            onValueChange={(value) => handleFilterByStatus(value as CharacterStatus)}
             value={params.get("status") ?? ""}
           >
             <SelectTrigger className="w-auto">
@@ -178,9 +158,7 @@ export default function CharacterFilters({
 
           {hasMultipleCampaigns && (
             <Select
-              onValueChange={(value) =>
-                handleFilterByCampaign(value as CampaignId)
-              }
+              onValueChange={(value) => handleFilterByCampaign(value as CampaignId)}
               value={params.get("campaign") ?? ""}
             >
               <SelectTrigger className="w-auto">

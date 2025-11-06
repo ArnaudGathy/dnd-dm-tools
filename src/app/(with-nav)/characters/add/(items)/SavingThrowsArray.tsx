@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { ABILITY_NAME_MAP_TO_FR } from "@/constants/maps";
@@ -35,8 +29,7 @@ export default function SavingThrowsArray({
   const savingThrows = form.watch("savingThrows");
 
   const existingAbilities = savingThrows.map(
-    (savingThrow: { ability: Abilities; isProficient: boolean }) =>
-      savingThrow.ability,
+    (savingThrow: { ability: Abilities; isProficient: boolean }) => savingThrow.ability,
   );
   const availableAbilities = Object.values(Abilities).filter(
     (ability) => !existingAbilities.includes(ability),
@@ -52,10 +45,7 @@ export default function SavingThrowsArray({
       <div className="flex flex-wrap gap-x-8 gap-y-4">
         {fields.map((field, index) => (
           <div key={field.id} className="flex gap-1">
-            <ArrayDeleteButton
-              onClick={() => remove(index)}
-              disabled={fields.length < 2}
-            />
+            <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length < 2} />
             <FormField
               control={form.control}
               name={`${fieldName}.${index}`}
@@ -81,21 +71,15 @@ export default function SavingThrowsArray({
                         </SelectTrigger>
                       </FormControl>
                       <SelectContent>
-                        {entries(ABILITY_NAME_MAP_TO_FR).map(
-                          ([value, label]) => (
-                            <SelectItem
-                              key={value}
-                              value={value}
-                              disabled={
-                                !!savingThrows.find(
-                                  (item) => item.ability === value,
-                                )
-                              }
-                            >
-                              {label}
-                            </SelectItem>
-                          ),
-                        )}
+                        {entries(ABILITY_NAME_MAP_TO_FR).map(([value, label]) => (
+                          <SelectItem
+                            key={value}
+                            value={value}
+                            disabled={!!savingThrows.find((item) => item.ability === value)}
+                          >
+                            {label}
+                          </SelectItem>
+                        ))}
                       </SelectContent>
                     </Select>
                     <FormMessage />
@@ -110,9 +94,7 @@ export default function SavingThrowsArray({
       <ArrayAddButton
         label="Ajouter une maîtrise"
         disabled={savingThrows.length === 6}
-        onClick={() =>
-          append({ ability: availableAbilities[0], isProficient: true })
-        }
+        onClick={() => append({ ability: availableAbilities[0], isProficient: true })}
       />
     </FormItem>
   );

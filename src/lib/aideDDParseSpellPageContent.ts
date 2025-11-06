@@ -10,11 +10,7 @@ export const getBaseSpellData = (html: string, spellName: string) => {
 
   const levelAndSchoolBlock = mainDataBlock.find(".ecole").text();
   const level = levelAndSchoolBlock.split("-")[0].trim().match(/\d+/)?.[0];
-  const isRitual = mainDataBlock
-    .find(".t")
-    .text()
-    .toLowerCase()
-    .includes("rituel");
+  const isRitual = mainDataBlock.find(".t").text().toLowerCase().includes("rituel");
 
   if (!level) {
     return null;
@@ -28,13 +24,7 @@ export const getBaseSpellData = (html: string, spellName: string) => {
   } satisfies SummaryAPISpell;
 };
 
-export const parseSpellFromAideDD = ({
-  html,
-  spellName,
-}: {
-  html: string;
-  spellName: string;
-}) => {
+export const parseSpellFromAideDD = ({ html, spellName }: { html: string; spellName: string }) => {
   const $ = cheerio.load(html);
   const mainDataBlock = $(".col1");
   const baseSpellData = getBaseSpellData(html, spellName);
@@ -49,11 +39,7 @@ export const parseSpellFromAideDD = ({
   const castingTime = mainDataBlock.find(".t").text().split(":")[1].trim();
   const range = mainDataBlock.find(".r").text().split(":")[1].trim();
 
-  const componentsFullString = mainDataBlock
-    .find(".c")
-    .text()
-    .split(":")[1]
-    .trim();
+  const componentsFullString = mainDataBlock.find(".c").text().split(":")[1].trim();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [_, componentsString, material] =
     componentsFullString.match(/^([^()]+?)(?:\s*\(([^)]*)\))?$/) || [];
@@ -78,9 +64,7 @@ export const parseSpellFromAideDD = ({
     }, []);
   const description = descriptionArray.join(" ");
 
-  const [desc, atHigherLevel] = description.includes(
-    "Emplacement de niveau supérieur",
-  )
+  const [desc, atHigherLevel] = description.includes("Emplacement de niveau supérieur")
     ? description.split("Emplacement de niveau supérieur")
     : description.split("Amélioration de sort mineur");
 

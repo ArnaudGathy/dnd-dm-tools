@@ -2,11 +2,7 @@ import { entries } from "remeda";
 import { getModifier, shortenAbilityName } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
 
-export default function Abilities({
-  abilities,
-}: {
-  abilities: Record<AbilityNameType, number>;
-}) {
+export default function Abilities({ abilities }: { abilities: Record<AbilityNameType, number> }) {
   return entries(abilities).map(([name, value]) => {
     const modifier = getModifier(value);
     return (

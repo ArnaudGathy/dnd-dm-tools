@@ -9,12 +9,7 @@ export default function Hexagon({
   isActive?: boolean;
 }) {
   return (
-    <div
-      className={cn(
-        styles.hexagonContainer,
-        "relative flex w-12 items-center justify-center",
-      )}
-    >
+    <div className={cn(styles.hexagonContainer, "relative flex w-12 items-center justify-center")}>
       <div className="text-xl font-bold">{children}</div>
       <div
         className={cn(

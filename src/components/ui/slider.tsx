@@ -81,10 +81,7 @@ const Slider = React.forwardRef<
 >(({ className, theme, ...props }, ref) => (
   <SliderPrimitive.Root
     ref={ref}
-    className={cn(
-      "relative flex w-full touch-none select-none items-center",
-      className,
-    )}
+    className={cn("relative flex w-full touch-none select-none items-center", className)}
     {...props}
   >
     <SliderPrimitive.Track
@@ -94,10 +91,7 @@ const Slider = React.forwardRef<
       )}
     >
       <SliderPrimitive.Range
-        className={cn(
-          "absolute h-full",
-          theme ? themeRange[theme] : "bg-primary",
-        )}
+        className={cn("absolute h-full", theme ? themeRange[theme] : "bg-primary")}
       />
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb

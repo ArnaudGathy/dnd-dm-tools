@@ -72,8 +72,8 @@ export default async function Spells({
                       <Sparkles className="size-4" /> Sort rituel
                     </div>
                     <div className="flex items-center gap-2">
-                      <WandSparkles className="size-4" /> 1 utilisation sans
-                      emplacement par long repos
+                      <WandSparkles className="size-4" /> 1 utilisation sans emplacement par long
+                      repos
                     </div>
 
                     <Separator className="my-2" />
@@ -83,20 +83,19 @@ export default async function Spells({
                       Un sort coloré veut dire qu&apos;il peut-être utilisé.
                     </div>
                     <div className="flex items-center gap-2">
-                      <Circle className="size-4 text-sky-500" /> Sort préparé
-                      (inclus dans le compte total)
+                      <Circle className="size-4 text-sky-500" /> Sort préparé (inclus dans le compte
+                      total)
                     </div>
                     <div className="flex items-center gap-2">
-                      <Circle className="size-4 text-amber-500" /> Sort toujours
-                      préparé
+                      <Circle className="size-4 text-amber-500" /> Sort toujours préparé
                     </div>
                     <div className="flex items-center gap-2">
-                      <Circle className="size-4 text-purple-500" /> Sort
-                      échangeable lors d&apos;un lvl up
+                      <Circle className="size-4 text-purple-500" /> Sort échangeable lors d&apos;un
+                      lvl up
                     </div>
                     <div className="flex items-center gap-2">
-                      <Circle className="size-4 text-rose-500" /> Sort
-                      échangeable lors d&apos;un long repos
+                      <Circle className="size-4 text-rose-500" /> Sort échangeable lors d&apos;un
+                      long repos
                     </div>
                     <div className="flex items-center gap-2">
                       <Circle className="size-4 text-emerald-500" /> Sort rituel
@@ -129,9 +128,7 @@ export default async function Spells({
                 icon={RefreshCcw}
                 iconColor="text-sky-500"
                 value={spellsToPreparePerDay.dailyAmount}
-                definition={
-                  <div>Combien de sorts peuvent être changés chaque jour</div>
-                }
+                definition={<div>Combien de sorts peuvent être changés chaque jour</div>}
               />
             </div>
           )}

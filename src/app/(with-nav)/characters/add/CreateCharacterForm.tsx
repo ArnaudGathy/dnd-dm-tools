@@ -45,10 +45,7 @@ export default function AddCharacter({
     setIsLoading(true);
     try {
       // eslint-disable-next-line no-console
-      console.log(
-        "Données de création à copier (clique droit : \"copier l'objet",
-        data,
-      );
+      console.log("Données de création à copier (clique droit : \"copier l'objet", data);
 
       if (!isEditMode && !!owner) {
         await createCharacter(data, owner);
@@ -70,10 +67,7 @@ export default function AddCharacter({
   return (
     <div>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
           <div className="grid grid-cols-[60%_1fr] gap-8">
             <div className="flex flex-col gap-8">
               <FormApp form={form} isEditMode={isEditMode} />
@@ -96,16 +90,11 @@ export default function AddCharacter({
               <Alert>
                 <AlertCircle className="h-6 w-6 stroke-primary" />
                 <AlertTitle className="text-primary">
-                  {error
-                    ? "Erreur backend"
-                    : "Erreur de validation du formulaire"}
+                  {error ? "Erreur backend" : "Erreur de validation du formulaire"}
                 </AlertTitle>
                 {hasFormErrors && (
                   <AlertDescription>
-                    <p>
-                      Il y a une erreur de validation du formulaire, il faut la
-                      corriger.
-                    </p>
+                    <p>Il y a une erreur de validation du formulaire, il faut la corriger.</p>
                     <p>Chercher un champ marqué en rouge</p>
                   </AlertDescription>
                 )}
@@ -113,9 +102,8 @@ export default function AddCharacter({
                   <AlertDescription>
                     <p>, il faut contacter Arnaud 🙈</p>
                     <p>
-                      Ne quittes pas encore la page, envoie moi aussi les
-                      informations de création de personnage pour ne pas les
-                      perdre.
+                      Ne quittes pas encore la page, envoie moi aussi les informations de création
+                      de personnage pour ne pas les perdre.
                     </p>
                     <ul className="list-inside list-disc pl-4">
                       <li>{'Clique droit sur la page, option "Inspecter"'}</li>

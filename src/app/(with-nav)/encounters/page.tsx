@@ -8,11 +8,7 @@ const Encounters = () => {
   return (
     <div className="flex flex-col">
       {entries(groupedEncounters).map(([scenario, encounters]) => (
-        <Scenario
-          key={scenario}
-          scenarioName={scenario}
-          encounters={encounters}
-        />
+        <Scenario key={scenario} scenarioName={scenario} encounters={encounters} />
       ))}
     </div>
   );

@@ -45,9 +45,7 @@ export function minMax(min: number, max?: number) {
 export const inventoryItemFormSchema = z.object({
   name: formRequiredString,
   description: z.string().nullish(),
-  quantity: z
-    .union([z.number(), z.string().regex(/^\d+$/, "Chiffre")])
-    .optional(),
+  quantity: z.union([z.number(), z.string().regex(/^\d+$/, "Chiffre")]).optional(),
   value: z.string().nullish(),
 });
 export type InventoryFormSchema = z.infer<typeof inventoryItemFormSchema>;
@@ -128,11 +126,10 @@ export const signUpFormSchema = z.object({
         isProficient: z.boolean(),
         stealthDisadvantage: z.boolean(),
       })
-      .refine(
-        (armor) =>
-          armor.type !== ArmorType.HEAVY || !!armor.strengthRequirement,
-        { message: "Requis", path: ["strengthRequirement"] },
-      ),
+      .refine((armor) => armor.type !== ArmorType.HEAVY || !!armor.strengthRequirement, {
+        message: "Requis",
+        path: ["strengthRequirement"],
+      }),
   ),
   weapons: z.array(
     z
@@ -172,9 +169,7 @@ export const signUpFormSchema = z.object({
       })
       .refine(
         (weapon) =>
-          (weapon.type !== WeaponType.MELEE &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.reach,
+          (weapon.type !== WeaponType.MELEE && weapon.type !== WeaponType.THROWN) || weapon.reach,
         {
           message: "Requis",
           path: ["reach"],
@@ -182,9 +177,7 @@ export const signUpFormSchema = z.object({
       )
       .refine(
         (weapon) =>
-          (weapon.type !== WeaponType.RANGED &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.range,
+          (weapon.type !== WeaponType.RANGED && weapon.type !== WeaponType.THROWN) || weapon.range,
         {
           message: "Requis",
           path: ["range"],
@@ -192,28 +185,21 @@ export const signUpFormSchema = z.object({
       )
       .refine(
         (weapon) =>
-          (weapon.type !== WeaponType.RANGED &&
-            weapon.type !== WeaponType.THROWN) ||
+          (weapon.type !== WeaponType.RANGED && weapon.type !== WeaponType.THROWN) ||
           weapon.longRange,
         {
           message: "Requis",
           path: ["longRange"],
         },
       )
-      .refine(
-        (weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionType,
-        {
-          message: "Requis",
-          path: ["ammunitionType"],
-        },
-      )
-      .refine(
-        (weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionCount,
-        {
-          message: "Requis",
-          path: ["ammunitionCount"],
-        },
-      ),
+      .refine((weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionType, {
+        message: "Requis",
+        path: ["ammunitionType"],
+      })
+      .refine((weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionCount, {
+        message: "Requis",
+        path: ["ammunitionCount"],
+      }),
   ),
 });
 
@@ -248,11 +234,7 @@ export const signupFormDefaultValues = {
   lore: "",
   allies: "",
   notes: "",
-  proficiencies: [
-    { name: "Langues: " },
-    { name: "Armures : " },
-    { name: "Armes : " },
-  ],
+  proficiencies: [{ name: "Langues: " }, { name: "Armures : " }, { name: "Armes : " }],
   capacities: [
     {
       name: "",
@@ -343,9 +325,7 @@ export const backendCharacterSchema = z.object({
     )
     .nonempty(),
   savingThrows: z
-    .array(
-      z.object({ ability: z.nativeEnum(Abilities), isProficient: z.boolean() }),
-    )
+    .array(z.object({ ability: z.nativeEnum(Abilities), isProficient: z.boolean() }))
     .nonempty(),
   skills: z
     .array(
@@ -375,11 +355,10 @@ export const backendCharacterSchema = z.object({
         isProficient: z.boolean(),
         stealthDisadvantage: z.boolean(),
       })
-      .refine(
-        (armor) =>
-          armor.type !== ArmorType.HEAVY || !!armor.strengthRequirement,
-        { message: "Requis", path: ["strengthRequirement"] },
-      ),
+      .refine((armor) => armor.type !== ArmorType.HEAVY || !!armor.strengthRequirement, {
+        message: "Requis",
+        path: ["strengthRequirement"],
+      }),
   ),
   weapons: z.array(
     z
@@ -415,9 +394,7 @@ export const backendCharacterSchema = z.object({
       })
       .refine(
         (weapon) =>
-          (weapon.type !== WeaponType.MELEE &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.reach,
+          (weapon.type !== WeaponType.MELEE && weapon.type !== WeaponType.THROWN) || weapon.reach,
         {
           message: "Requis",
           path: ["reach"],
@@ -425,9 +402,7 @@ export const backendCharacterSchema = z.object({
       )
       .refine(
         (weapon) =>
-          (weapon.type !== WeaponType.RANGED &&
-            weapon.type !== WeaponType.THROWN) ||
-          weapon.range,
+          (weapon.type !== WeaponType.RANGED && weapon.type !== WeaponType.THROWN) || weapon.range,
         {
           message: "Requis",
           path: ["range"],
@@ -435,28 +410,21 @@ export const backendCharacterSchema = z.object({
       )
       .refine(
         (weapon) =>
-          (weapon.type !== WeaponType.RANGED &&
-            weapon.type !== WeaponType.THROWN) ||
+          (weapon.type !== WeaponType.RANGED && weapon.type !== WeaponType.THROWN) ||
           weapon.longRange,
         {
           message: "Requis",
           path: ["longRange"],
         },
       )
-      .refine(
-        (weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionType,
-        {
-          message: "Requis",
-          path: ["ammunitionType"],
-        },
-      )
-      .refine(
-        (weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionCount,
-        {
-          message: "Requis",
-          path: ["ammunitionCount"],
-        },
-      ),
+      .refine((weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionType, {
+        message: "Requis",
+        path: ["ammunitionType"],
+      })
+      .refine((weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionCount, {
+        message: "Requis",
+        path: ["ammunitionCount"],
+      }),
   ),
 });
 
@@ -468,10 +436,7 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
   const capacities = character.capacities.map((capacity) => ({
     name: capacity.name,
     description: capacity.description ?? undefined,
-  })) as [
-    { name: string; description?: string },
-    ...{ name: string; description?: string }[],
-  ];
+  })) as [{ name: string; description?: string }, ...{ name: string; description?: string }[]];
   const savingThrows = character.savingThrows.map((savingThrow) => ({
     ability: savingThrow.ability,
     isProficient: savingThrow.isProficient,

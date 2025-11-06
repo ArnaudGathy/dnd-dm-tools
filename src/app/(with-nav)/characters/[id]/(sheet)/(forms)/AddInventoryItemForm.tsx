@@ -10,10 +10,7 @@ import {
   inventoryItemFormSchema,
 } from "@/app/(with-nav)/characters/add/utils";
 import { Form } from "@/components/ui/form";
-import {
-  addInventoryItem,
-  deleteInventoryItem,
-} from "@/lib/actions/InventoryItems";
+import { addInventoryItem, deleteInventoryItem } from "@/lib/actions/InventoryItems";
 import { CharacterById } from "@/lib/utils";
 import { useState } from "react";
 import { InventoryItem } from "@prisma/client";
@@ -61,29 +58,13 @@ export default function AddInventoryItemForm({
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="flex flex-col gap-4"
-      >
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
         <h1 className="text-2xl font-bold">{title}</h1>
         {error && <p className="max-w-[300px] text-red-500">{error}</p>}
         <div className="grid w-[350px] grid-cols-[1fr_50px_60px] gap-2 md:w-[400px]">
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="name"
-            label="Nom"
-            required
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="quantity"
-            label="Qté"
-          />
-          <FormFieldInput
-            formInstance={form}
-            formFieldName="value"
-            label="Valeur"
-          />
+          <FormFieldInput formInstance={form} formFieldName="name" label="Nom" required />
+          <FormFieldInput formInstance={form} formFieldName="quantity" label="Qté" />
+          <FormFieldInput formInstance={form} formFieldName="value" label="Valeur" />
         </div>
         <FormFieldInput
           formInstance={form}

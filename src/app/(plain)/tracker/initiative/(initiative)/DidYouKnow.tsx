@@ -92,9 +92,7 @@ export default function DidYouKnow() {
               "flex flex-col gap-4 rounded-xl border-2 border-amber-800 p-4 text-amber-800",
             )}
           >
-            <div className="text-3xl font-semibold tracking-tight">
-              Le saviez-vous ?
-            </div>
+            <div className="text-3xl font-semibold tracking-tight">Le saviez-vous ?</div>
 
             <span className="text-2xl">{current}</span>
           </div>

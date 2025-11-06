@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { WEAPON_DAMAGE_TYPE_MAP, WEAPON_DICE_MAP } from "@/constants/maps";
@@ -41,9 +35,7 @@ export default function WeaponDamagesArray({
 
   const weapons = form.watch("weapons");
   const currentWeaponDamages = weapons[index].damages;
-  const hasBaseDamages = currentWeaponDamages.some(
-    ({ isBaseDamage }) => isBaseDamage,
-  );
+  const hasBaseDamages = currentWeaponDamages.some(({ isBaseDamage }) => isBaseDamage);
 
   return (
     <FormItem>
@@ -55,15 +47,11 @@ export default function WeaponDamagesArray({
       {fields.length > 0 && (
         <div className="flex flex-col gap-4 pb-2">
           {fields.map((field, index) => {
-            const isCurrentBaseDamage =
-              currentWeaponDamages[index].isBaseDamage;
+            const isCurrentBaseDamage = currentWeaponDamages[index].isBaseDamage;
             return (
               <div key={field.id} className="flex flex-col gap-2">
                 <div className="grid grid-cols-[auto_10%_15%_10%_32%_1fr] gap-1">
-                  <ArrayDeleteButton
-                    onClick={() => remove(index)}
-                    disabled={fields.length === 1}
-                  />
+                  <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length === 1} />
                   <FormField
                     control={form.control}
                     name={`${fieldName}.${index}.numberOfDices`}
@@ -87,10 +75,7 @@ export default function WeaponDamagesArray({
                       return (
                         <FormItem className="w-full">
                           <div className="flex w-full items-center gap-2">
-                            <Select
-                              defaultValue={field.value}
-                              onValueChange={field.onChange}
-                            >
+                            <Select defaultValue={field.value} onValueChange={field.onChange}>
                               <FormControl>
                                 <SelectTrigger
                                   className={cn({
@@ -101,13 +86,11 @@ export default function WeaponDamagesArray({
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {entries(WEAPON_DICE_MAP).map(
-                                  ([value, label]) => (
-                                    <SelectItem key={value} value={value}>
-                                      {label}
-                                    </SelectItem>
-                                  ),
-                                )}
+                                {entries(WEAPON_DICE_MAP).map(([value, label]) => (
+                                  <SelectItem key={value} value={value}>
+                                    {label}
+                                  </SelectItem>
+                                ))}
                               </SelectContent>
                             </Select>
                           </div>
@@ -140,10 +123,7 @@ export default function WeaponDamagesArray({
                       return (
                         <FormItem className="w-full">
                           <div className="flex w-full items-center gap-2">
-                            <Select
-                              defaultValue={field.value}
-                              onValueChange={field.onChange}
-                            >
+                            <Select defaultValue={field.value} onValueChange={field.onChange}>
                               <FormControl>
                                 <SelectTrigger
                                   className={cn({
@@ -154,20 +134,17 @@ export default function WeaponDamagesArray({
                                 </SelectTrigger>
                               </FormControl>
                               <SelectContent>
-                                {entries(WEAPON_DAMAGE_TYPE_MAP).map(
-                                  ([value, label]) => {
-                                    const { icon: Icon, color } =
-                                      getDamageTypeIconAndColor(value);
-                                    return (
-                                      <SelectItem key={value} value={value}>
-                                        <div className="flex items-center gap-2">
-                                          <Icon className="size-4" />
-                                          <span style={{ color }}>{label}</span>
-                                        </div>
-                                      </SelectItem>
-                                    );
-                                  },
-                                )}
+                                {entries(WEAPON_DAMAGE_TYPE_MAP).map(([value, label]) => {
+                                  const { icon: Icon, color } = getDamageTypeIconAndColor(value);
+                                  return (
+                                    <SelectItem key={value} value={value}>
+                                      <div className="flex items-center gap-2">
+                                        <Icon className="size-4" />
+                                        <span style={{ color }}>{label}</span>
+                                      </div>
+                                    </SelectItem>
+                                  );
+                                })}
                               </SelectContent>
                             </Select>
                           </div>
@@ -188,9 +165,7 @@ export default function WeaponDamagesArray({
                             onCheckedChange={field.onChange}
                             disabled={hasBaseDamages && !isCurrentBaseDamage}
                           />
-                          <Label htmlFor={`isBaseDamage${index}`}>
-                            Dgt de base
-                          </Label>
+                          <Label htmlFor={`isBaseDamage${index}`}>Dgt de base</Label>
                         </div>
                       );
                     }}

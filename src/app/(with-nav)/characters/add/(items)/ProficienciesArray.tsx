@@ -1,10 +1,4 @@
-import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
@@ -32,10 +26,7 @@ export default function ProficienciesArray({
       <div className="flex flex-col gap-1">
         {fields.map((field, index) => (
           <div key={field.id} className="flex h-full gap-2">
-            <ArrayDeleteButton
-              onClick={() => remove(index)}
-              disabled={fields.length < 2}
-            />
+            <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length < 2} />
             <FormField
               control={form.control}
               name={`${fieldName}.${index}.name`}
@@ -56,10 +47,7 @@ export default function ProficienciesArray({
         ))}
       </div>
 
-      <ArrayAddButton
-        label="Ajouter une maîtrise"
-        onClick={() => append({ name: "" })}
-      />
+      <ArrayAddButton label="Ajouter une maîtrise" onClick={() => append({ name: "" })} />
     </FormItem>
   );
 }

@@ -34,8 +34,7 @@ function QuestCategory({
           <ChevronUp className="size-4 md:size-6" />
         )}
       </div>
-      {isOpen &&
-        quests.map((quest) => <QuestDetails key={quest.id} quest={quest} />)}
+      {isOpen && quests.map((quest) => <QuestDetails key={quest.id} quest={quest} />)}
     </div>
   );
 }

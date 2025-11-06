@@ -119,9 +119,7 @@
         }
       ]
     },
-    "informations": [
-      "Lorsque plus que 2 en vie, prennent la fuite vers le bateau."
-    ],
+    "informations": ["Lorsque plus que 2 en vie, prennent la fuite vers le bateau."],
     "loots": [
       "Carte (physique a donner)",
       "7po 15pa",

@@ -20,15 +20,8 @@ export default async function SignInButton() {
       }}
     >
       <div className="flex items-center gap-2">
-        {isLoggedIn && (
-          <span className="text-xs text-muted-foreground">{userMail}</span>
-        )}
-        <Button
-          type="submit"
-          variant={"secondary"}
-          className="flex items-center gap-2"
-          size="xs"
-        >
+        {isLoggedIn && <span className="text-xs text-muted-foreground">{userMail}</span>}
+        <Button type="submit" variant={"secondary"} className="flex items-center gap-2" size="xs">
           {!isLoggedIn ? (
             <Image src={googleLogo} alt="Logo Google" width="20" height="20" />
           ) : (

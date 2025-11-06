@@ -4,11 +4,7 @@ import { Check, Edit, LoaderCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { updateNotes } from "@/lib/actions/characters";
 import { CharacterById } from "@/lib/utils";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 
@@ -45,11 +41,7 @@ export default function NotesForm({ character }: { character: CharacterById }) {
           onClick={handleSubmit}
           disabled={isLoading}
         >
-          {isLoading ? (
-            <LoaderCircle className="size-6 animate-spin" />
-          ) : (
-            <Check />
-          )}
+          {isLoading ? <LoaderCircle className="size-6 animate-spin" /> : <Check />}
         </Button>
       </PopoverContent>
     </Popover>

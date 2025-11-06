@@ -1,16 +1,10 @@
-import {
-  ABILITY_NAME_MAP_TO_FR,
-  WEAPON_DAMAGE_TYPE_MAP_SENTENCE,
-} from "@/constants/maps";
+import { ABILITY_NAME_MAP_TO_FR, WEAPON_DAMAGE_TYPE_MAP_SENTENCE } from "@/constants/maps";
 import { Fragment } from "react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import { cn } from "@/lib/utils";
 import InfoCell from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/InfoCell";
 import { Character, Weapon, WeaponDamage } from "@prisma/client";
-import {
-  getDamageTypeIconAndColor,
-  getWeaponDamage,
-} from "@/utils/stats/weapons";
+import { getDamageTypeIconAndColor, getWeaponDamage } from "@/utils/stats/weapons";
 
 export default function Damages({
   weapon,
@@ -26,26 +20,17 @@ export default function Damages({
         <div className="flex gap-2">
           {weapon.damages.map((damage, index) => {
             const isLast = index === weapon.damages.length - 1;
-            const { icon: Icon, color } = getDamageTypeIconAndColor(
-              damage.type,
-            );
-            const weaponDamageDetails = getWeaponDamage(
-              character,
-              damage,
-              weapon,
-            );
+            const { icon: Icon, color } = getDamageTypeIconAndColor(damage.type);
+            const weaponDamageDetails = getWeaponDamage(character, damage, weapon);
             const hasBonusDamage =
-              weaponDamageDetails.modifierName !== null ||
-              weaponDamageDetails.flatBonus > 0;
+              weaponDamageDetails.modifierName !== null || weaponDamageDetails.flatBonus > 0;
 
             return (
               <Fragment key={damage.id}>
                 <PopoverComponent
                   definition={
                     <div>
-                      {hasBonusDamage && (
-                        <span className="font-bold">Bonus de dégâts :</span>
-                      )}
+                      {hasBonusDamage && <span className="font-bold">Bonus de dégâts :</span>}
                       {weaponDamageDetails.modifierName && (
                         <div>
                           <span>{`${ABILITY_NAME_MAP_TO_FR[weaponDamageDetails.modifierName]} : `}</span>

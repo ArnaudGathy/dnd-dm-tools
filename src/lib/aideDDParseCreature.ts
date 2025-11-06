@@ -87,10 +87,7 @@ function extractStats(html: string) {
   return result;
 }
 
-function getSavingThrow(
-  abilities: Record<string, string[]>,
-  abilityName: string,
-) {
+function getSavingThrow(abilities: Record<string, string[]>, abilityName: string) {
   const savingThrow = abilities[abilityName][2];
   if (savingThrow === "+0") {
     return undefined;
@@ -162,22 +159,13 @@ function parseSenseString(input?: string): Creature["senses"] {
           return ["passivePerception", parseInt(value, 10)];
         }
         if (sense === "truesight") {
-          return [
-            "trueSight",
-            `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`,
-          ];
+          return ["trueSight", `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`];
         }
         if (sense === "blindsight") {
-          return [
-            "blindSight",
-            `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`,
-          ];
+          return ["blindSight", `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`];
         }
         if (sense === "darkvision") {
-          return [
-            "darkvision",
-            `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`,
-          ];
+          return ["darkvision", `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`];
         }
         return [sense, value];
       }),
@@ -192,19 +180,12 @@ function convertFeetToMeters(text: string): string {
   });
 }
 
-function extractSectionParagraphs(
-  html: string,
-  sectionTitle: string,
-  isAction = false,
-) {
+function extractSectionParagraphs(html: string, sectionTitle: string, isAction = false) {
   const $ = load(html);
   const entries = [];
 
   const sectionDiv = $("div.rub")
-    .filter(
-      (_, el) =>
-        $(el).text().trim().toLowerCase() === sectionTitle.toLowerCase(),
-    )
+    .filter((_, el) => $(el).text().trim().toLowerCase() === sectionTitle.toLowerCase())
     .first();
 
   if (!sectionDiv.length) return undefined;
@@ -219,13 +200,7 @@ function extractSectionParagraphs(
       if (el.is("p")) {
         const name = el.find("strong em").first().text().trim();
 
-        const descriptionRaw = el
-          .clone()
-          .children("strong")
-          .remove()
-          .end()
-          .text()
-          .trim();
+        const descriptionRaw = el.clone().children("strong").remove().end().text().trim();
         const description = descriptionRaw.replace(/^\.\s*/, "");
 
         if (isAction && /attack roll/i.test(description)) {
@@ -239,10 +214,7 @@ function extractSectionParagraphs(
               name,
               type: type.trim(),
               modifier: modifier.trim(),
-              reach: convertFeetToMeters(reach.trim()).replace(
-                "or range",
-                "ou portée",
-              ),
+              reach: convertFeetToMeters(reach.trim()).replace("or range", "ou portée"),
               hit: hit.trim(),
             });
             node = node.nextSibling;
@@ -280,10 +252,7 @@ function extractLegendaryActionUses(html: string): string | undefined {
   return match ? match[1].trim() : undefined;
 }
 
-export const parseCreaturesFromAideDD = (
-  html: string,
-  creatureName: string,
-) => {
+export const parseCreaturesFromAideDD = (html: string, creatureName: string) => {
   const creatureData = getBaseCreatureData(html, creatureName);
 
   const $ = cheerio.load(html);
@@ -340,11 +309,7 @@ export const parseCreaturesFromAideDD = (
 
   const reactions = extractSectionParagraphs(html, "Reactions", true);
   const bonusActions = extractSectionParagraphs(html, "Bonus actions", true);
-  const legendaryActions = extractSectionParagraphs(
-    html,
-    "Legendary actions",
-    true,
-  );
+  const legendaryActions = extractSectionParagraphs(html, "Legendary actions", true);
   const legendaryActionsSlots = extractLegendaryActionUses(html);
 
   return {
@@ -379,15 +344,9 @@ export const parseCreaturesFromAideDD = (
       charisma: getSavingThrow(abilities, "Cha"),
     },
     skills: skills ? parseSkillString(skills) : undefined,
-    immunities: immunities
-      ? commaSeparatedValuesToArray(immunities)
-      : undefined,
-    vulnerabilities: vulnerabilities
-      ? commaSeparatedValuesToArray(vulnerabilities)
-      : undefined,
-    resistances: resistances
-      ? commaSeparatedValuesToArray(resistances)
-      : undefined,
+    immunities: immunities ? commaSeparatedValuesToArray(immunities) : undefined,
+    vulnerabilities: vulnerabilities ? commaSeparatedValuesToArray(vulnerabilities) : undefined,
+    resistances: resistances ? commaSeparatedValuesToArray(resistances) : undefined,
     languages: languages ? commaSeparatedValuesToArray(languages) : undefined,
     senses: parseSenseString(senses),
     traits,

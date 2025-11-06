@@ -12,9 +12,7 @@ export const useSetParticipantsListTracker = () => {
   return { setParticipantsTracker };
 };
 export const useParticipantsListTracker = () => {
-  const [initiativeTracker, setInitiativeTracker] = useState<
-    Participant[] | null
-  >(null);
+  const [initiativeTracker, setInitiativeTracker] = useState<Participant[] | null>(null);
 
   useEffect(() => {
     const unsubscribe = onValue(participantsRef, (snapshot) => {
@@ -40,19 +38,13 @@ export const useSetTurnsTracker = () => {
     [],
   );
 
-  const setNumberOfTurnsTracker = useCallback(
-    (numberOfTurns: Turns["numberOfTurns"]) => {
-      void update(turnsRef, { numberOfTurns });
-    },
-    [],
-  );
+  const setNumberOfTurnsTracker = useCallback((numberOfTurns: Turns["numberOfTurns"]) => {
+    void update(turnsRef, { numberOfTurns });
+  }, []);
 
-  const setHasStartedTracker = useCallback(
-    (hasStarted: Turns["hasStarted"]) => {
-      void update(turnsRef, { hasStarted });
-    },
-    [],
-  );
+  const setHasStartedTracker = useCallback((hasStarted: Turns["hasStarted"]) => {
+    void update(turnsRef, { hasStarted });
+  }, []);
 
   return {
     setActiveParticipantTracker,

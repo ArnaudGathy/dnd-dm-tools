@@ -76,8 +76,7 @@ export default function Inventory({ character }: { character: CharacterById }) {
             <div className="flex flex-col gap-4">
               {character.armors.map((armor, index) => {
                 const hasNoStrRequirement =
-                  !!armor.strengthRequirement &&
-                  character.strength < armor.strengthRequirement;
+                  !!armor.strengthRequirement && character.strength < armor.strengthRequirement;
                 return (
                   <div key={armor.id}>
                     <div className="flex flex-col">
@@ -85,12 +84,9 @@ export default function Inventory({ character }: { character: CharacterById }) {
                         <div>
                           <div className="flex items-start justify-between gap-4">
                             <span
-                              className={cn(
-                                "flex items-center gap-1 text-lg font-bold",
-                                {
-                                  "text-primary": hasNoStrRequirement,
-                                },
-                              )}
+                              className={cn("flex items-center gap-1 text-lg font-bold", {
+                                "text-primary": hasNoStrRequirement,
+                              })}
                             >
                               {hasNoStrRequirement && (
                                 <PopoverComponent
@@ -120,9 +116,7 @@ export default function Inventory({ character }: { character: CharacterById }) {
                                 <Shield className="text-muted-foreground" />
                               </PopoverComponent>
                             </span>
-                            <span className="text-2xl font-bold">
-                              {armor.AC}
-                            </span>
+                            <span className="text-2xl font-bold">{armor.AC}</span>
                           </div>
                           {armor.stealthDisadvantage && (
                             <PopoverComponent definition="Désavantage à la discrétion">
@@ -138,10 +132,7 @@ export default function Inventory({ character }: { character: CharacterById }) {
 
                       <div className="flex gap-4">
                         {armor.strengthRequirement && (
-                          <InfoCell
-                            name="FOR min."
-                            value={armor.strengthRequirement}
-                          />
+                          <InfoCell name="FOR min." value={armor.strengthRequirement} />
                         )}
                       </div>
                     </div>

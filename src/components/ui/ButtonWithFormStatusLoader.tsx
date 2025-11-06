@@ -17,11 +17,7 @@ export default function ButtonWithFormStatusLoader({
 }) {
   const { pending } = useFormStatus();
   return (
-    <Button
-      type="submit"
-      disabled={pending}
-      className={cn("space-x-2", className)}
-    >
+    <Button type="submit" disabled={pending} className={cn("space-x-2", className)}>
       {pending && <LoaderCircle className="size-6 animate-spin" />}
       {pending ? (hasTextDuringLoad ? "Chargement ..." : "") : children}
     </Button>

@@ -1,10 +1,6 @@
 "use client";
 
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import AddInventoryItemForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddInventoryItemForm";
 import { ReactNode, useState } from "react";
 import { CharacterById } from "@/lib/utils";
@@ -27,11 +23,7 @@ export default function AddInventoryItem({
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger
-        onClick={() => setOpen(true)}
-        className={className}
-        asChild
-      >
+      <PopoverTrigger onClick={() => setOpen(true)} className={className} asChild>
         {children}
       </PopoverTrigger>
       <PopoverContent className="w-fit">

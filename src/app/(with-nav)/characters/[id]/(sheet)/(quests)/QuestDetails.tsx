@@ -17,11 +17,7 @@ function QuestDetails({ quest }: { quest: Quest }) {
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="text-l font-bold md:text-xl">{quest.name}</span>
-        {isOpen ? (
-          <ChevronDown className="size-6" />
-        ) : (
-          <ChevronUp className="size-6" />
-        )}
+        {isOpen ? <ChevronDown className="size-6" /> : <ChevronUp className="size-6" />}
       </div>
 
       {isOpen && (
@@ -29,16 +25,10 @@ function QuestDetails({ quest }: { quest: Quest }) {
           <StatCell name="Donneur de quête" stat={quest.giver} />
           <StatCell name="Localisation" stat={quest.location} />
           <StatCell name="Tâche à accomplir" stat={quest.task} />
-          {quest.providedItem && (
-            <StatCell name="Matériel fourni" stat={quest.providedItem} />
-          )}
+          {quest.providedItem && <StatCell name="Matériel fourni" stat={quest.providedItem} />}
           <StatCell name="Récompense" stat={quest.reward ?? "Aucune"} />
           {quest.outcome && (
-            <StatCell
-              name="Résolution"
-              stat={quest.outcome}
-              highlightClassName="text-green-400"
-            />
+            <StatCell name="Résolution" stat={quest.outcome} highlightClassName="text-green-400" />
           )}
         </>
       )}

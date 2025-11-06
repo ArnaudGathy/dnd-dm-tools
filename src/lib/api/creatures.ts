@@ -29,9 +29,7 @@ export async function getCharacterCreatures({
           characterId: characterId,
         },
         {
-          isFavorite: filterBy
-            ? filterBy === CREATURES_FILTER_BY.FAVORITE
-            : undefined,
+          isFavorite: filterBy ? filterBy === CREATURES_FILTER_BY.FAVORITE : undefined,
         },
       ],
     },
@@ -50,12 +48,8 @@ export async function getCharacterCreatures({
   })) satisfies FlatCreature[];
 
   if (groupBy === CREATURES_GROUP_BY.CR) {
-    return remedaGroupBy(flattenedCreatures, (creature) =>
-      creature.challengeRating.toString(),
-    );
+    return remedaGroupBy(flattenedCreatures, (creature) => creature.challengeRating.toString());
   }
 
-  return remedaGroupBy(flattenedCreatures, (creature) =>
-    creature.name[0].toLowerCase(),
-  );
+  return remedaGroupBy(flattenedCreatures, (creature) => creature.name[0].toLowerCase());
 }

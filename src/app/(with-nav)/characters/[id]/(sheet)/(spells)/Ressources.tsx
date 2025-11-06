@@ -15,13 +15,8 @@ function Ressources({
   character: CharacterById;
   ressources: RessourcesData;
 }) {
-  const {
-    characterRessources,
-    displayedRessources,
-    shortRest,
-    longRest,
-    sortRessources,
-  } = ressources;
+  const { characterRessources, displayedRessources, shortRest, longRest, sortRessources } =
+    ressources;
 
   return (
     <SheetCard>
@@ -40,12 +35,7 @@ function Ressources({
       {displayedRessources.length > 0 && (
         <div className="mt-4 grid grid-cols-2 gap-4">
           {displayedRessources.map(({ name, icon, useRessource }) => (
-            <RessourceTracker
-              key={name}
-              name={name}
-              icon={icon}
-              useRessource={useRessource}
-            />
+            <RessourceTracker key={name} name={name} icon={icon} useRessource={useRessource} />
           ))}
         </div>
       )}

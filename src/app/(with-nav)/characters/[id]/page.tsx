@@ -35,10 +35,7 @@ export default async function Character({
       <Card
         className={`mt-4 border-background bg-background md:mb-0 md:ml-0 md:mr-0 md:border-border md:bg-card`}
       >
-        <TabsContent
-          value={SHEETS_TABS.GENERAL}
-          className={tabContentClassName}
-        >
+        <TabsContent value={SHEETS_TABS.GENERAL} className={tabContentClassName}>
           <Summary character={character} />
         </TabsContent>
 
@@ -50,10 +47,7 @@ export default async function Character({
           <Combat character={character} />
         </TabsContent>
 
-        <TabsContent
-          value={SHEETS_TABS.INVENTORY}
-          className={tabContentClassName}
-        >
+        <TabsContent value={SHEETS_TABS.INVENTORY} className={tabContentClassName}>
           <Inventory character={character} />
         </TabsContent>
 
@@ -73,10 +67,7 @@ export default async function Character({
           </Suspense>
         </TabsContent>
 
-        <TabsContent
-          value={SHEETS_TABS.SETTINGS}
-          className={tabContentClassName}
-        >
+        <TabsContent value={SHEETS_TABS.SETTINGS} className={tabContentClassName}>
           <Settings character={character} />
         </TabsContent>
       </Card>

@@ -3,11 +3,7 @@
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { CharacterById } from "@/lib/utils";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { Check, LoaderCircle } from "lucide-react";
 import { updateInspiration } from "@/lib/actions/characters";
@@ -36,9 +32,7 @@ export default function InspirationForm({
       label="Inspiration"
       value={
         <Popover open={isOpen} onOpenChange={setIsOpen}>
-          <PopoverTrigger onClick={() => setIsOpen(true)}>
-            {character.inspiration}
-          </PopoverTrigger>
+          <PopoverTrigger onClick={() => setIsOpen(true)}>{character.inspiration}</PopoverTrigger>
           <PopoverContent className="w-full">
             <div className="flex w-[60px] flex-col items-center gap-4">
               <Input
@@ -54,11 +48,7 @@ export default function InspirationForm({
                 onClick={handleSubmit}
                 disabled={isLoading}
               >
-                {isLoading ? (
-                  <LoaderCircle className="animate-spin" />
-                ) : (
-                  <Check />
-                )}
+                {isLoading ? <LoaderCircle className="animate-spin" /> : <Check />}
               </Button>
             </div>
           </PopoverContent>

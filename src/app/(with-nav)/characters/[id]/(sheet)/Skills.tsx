@@ -1,19 +1,11 @@
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
-import {
-  PROFICIENCY_BONUS_BY_LEVEL,
-  SKILL_ABILITY_MAP,
-  SKILL_NAME_MAP,
-} from "@/constants/maps";
+import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP, SKILL_NAME_MAP } from "@/constants/maps";
 import SheetCard from "@/components/ui/SheetCard";
 import { Asterisk, Crown } from "lucide-react";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { Skills as SkillList } from "@prisma/client";
-import {
-  addSignToNumber,
-  getModifier,
-  shortenAbilityName,
-} from "@/utils/utils";
+import { addSignToNumber, getModifier, shortenAbilityName } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/SavingThrows";
 import { getSkillModifier } from "@/utils/stats/skills";
@@ -45,9 +37,7 @@ export default function Skills({ character }: { character: CharacterById }) {
               <div className="flex items-center gap-1">
                 <div className="flex items-center gap-1 text-clip whitespace-nowrap">
                   {skillName}
-                  <span className="text-xs text-muted-foreground">
-                    {skillAbilityName}
-                  </span>
+                  <span className="text-xs text-muted-foreground">{skillAbilityName}</span>
                 </div>
                 {selectedSkill?.isProficient && !selectedSkill?.isExpert && (
                   <PopoverComponent definition="Compétence maîtrisée : bonus de maitrise appliqué">
@@ -72,21 +62,16 @@ export default function Skills({ character }: { character: CharacterById }) {
                     </div>
                     {skillDetails.proficiencyModifier > 0 && (
                       <div>
-                        <span>
-                          {skillDetails.isExpert
-                            ? "Expertise : "
-                            : "Maîtrise : "}
-                        </span>
+                        <span>{skillDetails.isExpert ? "Expertise : " : "Maîtrise : "}</span>
                         <span>{skillDetails.proficiencyModifier}</span>
                       </div>
                     )}
-                    {skillDetails.skillSpecial > 0 &&
-                      skillDetails.skillSpecialName && (
-                        <div>
-                          <span>{`${skillDetails.skillSpecialName} : `}</span>
-                          <span>{skillDetails.skillSpecial}</span>
-                        </div>
-                      )}
+                    {skillDetails.skillSpecial > 0 && skillDetails.skillSpecialName && (
+                      <div>
+                        <span>{`${skillDetails.skillSpecialName} : `}</span>
+                        <span>{skillDetails.skillSpecial}</span>
+                      </div>
+                    )}
                     {skillDetails.bonusModifier > 0 && (
                       <div>
                         <span>{"Bonus (autres) : "}</span>
@@ -111,18 +96,14 @@ export default function Skills({ character }: { character: CharacterById }) {
       </SheetCard>
 
       <SheetCard className="row-span-2 flex flex-col">
-        <span className="mb-2 self-center text-2xl font-bold">
-          Caractéristiques
-        </span>
+        <span className="mb-2 self-center text-2xl font-bold">Caractéristiques</span>
         {entries(abilities).map(([name, value]) => {
           const modifier = getModifier(value);
           return (
             <div key={name} className="flex items-center justify-between">
               <span>{name}</span>
               <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
-              <span className="w-4 text-right text-lg font-bold">
-                {addSignToNumber(modifier)}
-              </span>
+              <span className="w-4 text-right text-lg font-bold">{addSignToNumber(modifier)}</span>
             </div>
           );
         })}

@@ -2,20 +2,11 @@ import { getAllQuests } from "@/lib/external-apis/notion/quests";
 import { CharacterById, cn } from "@/lib/utils";
 import { groupBy, prop } from "remeda";
 import { QuestStatus } from "@/types/schemas";
-import {
-  CircleAlert,
-  CircleCheckBig,
-  CircleFadingArrowUp,
-  CircleSlash,
-} from "lucide-react";
+import { CircleAlert, CircleCheckBig, CircleFadingArrowUp, CircleSlash } from "lucide-react";
 import SheetCard from "@/components/ui/SheetCard";
 import QuestCategoryClientWrapper from "./(quests)/QuestCategoryWrapper";
 
-export default async function Quests({
-  character,
-}: {
-  character: CharacterById;
-}) {
+export default async function Quests({ character }: { character: CharacterById }) {
   const fetchedQuests = await getAllQuests(character.campaign.party.name);
   const groupedQuests = groupBy(fetchedQuests, prop("status"));
 
@@ -36,9 +27,7 @@ export default async function Quests({
             <QuestCategoryClientWrapper
               quests={onGoingQuests}
               status={QuestStatus.IN_PROGRESS}
-              icon={
-                <CircleFadingArrowUp className="size-6 animate-pulse text-indigo-500" />
-              }
+              icon={<CircleFadingArrowUp className="size-6 animate-pulse text-indigo-500" />}
             />
           )}
           {interestedQuests && (

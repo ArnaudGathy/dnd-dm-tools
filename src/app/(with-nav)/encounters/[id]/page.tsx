@@ -1,19 +1,11 @@
-import {
-  getCreatures,
-  getEncounterFromId,
-  getEncounterFromLocation,
-} from "@/utils/utils";
+import { getCreatures, getEncounterFromId, getEncounterFromLocation } from "@/utils/utils";
 import { notFound } from "next/navigation";
 import { InfoModule } from "@/app/(with-nav)/encounters/[id]/InfoModule";
 import StatBlocksModule from "@/app/(with-nav)/encounters/[id]/StatBlocksModule";
 import { Creature } from "@/types/types";
 import { isDefined } from "remeda";
 
-const EncounterById = async ({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) => {
+const EncounterById = async ({ params }: { params: Promise<{ id: string }> }) => {
   const CombatModuleWrapper = (await import("./CombatModuleWrapper")).default;
 
   const encounterId = (await params).id;

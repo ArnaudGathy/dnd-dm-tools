@@ -26,9 +26,7 @@ export const getAllQuests = async (partyName: PartyId) => {
       if (isPageObjectResponse(result)) {
         return questSchema.parse(mapQuestsFromNotion(result.properties));
       }
-      throw new Error(
-        "Error querying Notion database : Response is not a page object.",
-      );
+      throw new Error("Error querying Notion database : Response is not a page object.");
     });
   }
 

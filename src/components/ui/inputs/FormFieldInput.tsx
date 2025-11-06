@@ -50,10 +50,7 @@ export default function FormFieldInput<
                   {rest.required && <span className="text-primary">*</span>}
                 </div>
                 {description && (
-                  <FormDescription
-                    className="leading-3"
-                    disabled={rest.disabled}
-                  >
+                  <FormDescription className="leading-3" disabled={rest.disabled}>
                     {description}
                   </FormDescription>
                 )}
@@ -68,11 +65,7 @@ export default function FormFieldInput<
                   className="h-[100px]"
                 />
               ) : (
-                <Input
-                  {...rest}
-                  {...field}
-                  value={field.value?.toString() ?? ""}
-                />
+                <Input {...rest} {...field} value={field.value?.toString() ?? ""} />
               )}
             </FormControl>
             <FormMessage className="text-left" />

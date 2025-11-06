@@ -40,8 +40,7 @@ export const localCreatures: Record<string, Creature> = {
     actions: [
       {
         name: "Multiattack",
-        description:
-          "Soit 3 attaques: morsure + 2 griffes. Soit 2 attaques au javelin (piqué)",
+        description: "Soit 3 attaques: morsure + 2 griffes. Soit 2 attaques au javelin (piqué)",
       },
       {
         name: "Morsure",
@@ -306,18 +305,8 @@ export const localCreatures: Record<string, Creature> = {
       intelligence: "-2",
       charisma: "-4",
     },
-    immunities: [
-      "poison",
-      "charmé",
-      "fatigue",
-      "Apeuré",
-      "paralysé",
-      "pétrifié",
-      "Empoisonné",
-    ],
-    languages: [
-      "Comprends les commandes dans n'importe quelle langue, mais ne parle pas.",
-    ],
+    immunities: ["poison", "charmé", "fatigue", "Apeuré", "paralysé", "pétrifié", "Empoisonné"],
+    languages: ["Comprends les commandes dans n'importe quelle langue, mais ne parle pas."],
     senses: {
       blindSight: "3 m",
       darkvision: "18 m",

@@ -1,9 +1,6 @@
 "use client";
 
-import {
-  useParticipantsListTracker,
-  useTurnsTracker,
-} from "@/hooks/useParticipantsListTracker";
+import { useParticipantsListTracker, useTurnsTracker } from "@/hooks/useParticipantsListTracker";
 import InitiativeTrackerLoader from "@/app/(plain)/tracker/initiative/(initiative)/InitiativeTrackerLoader";
 import { motion } from "framer-motion";
 import { AnimatePresence } from "framer-motion";

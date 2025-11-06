@@ -53,9 +53,7 @@
       "Déplacement lent : 1 case par tour",
       "Jouer sur l’effet de surprise et attaques espacées"
     ],
-    "loots": [
-      "Nature ou survie DD12 pour trouver 1d6 champignons tête de coeur (durée 15 min)"
-    ]
+    "loots": ["Nature ou survie DD12 pour trouver 1d6 champignons tête de coeur (durée 15 min)"]
   },
   {
     "name": "Garde-manger",
@@ -69,10 +67,7 @@
       "1": [4, 4, 4, 4, 4, 4],
       "2": [4, 4, 4, 4, 4, 4, 4, 4]
     },
-    "informations": [
-      "Identifier le nid : Nature DD15",
-      "S’accroche (T1) et suce le sang (T2)"
-    ]
+    "informations": ["Identifier le nid : Nature DD15", "S’accroche (T1) et suce le sang (T2)"]
   },
   {
     "name": "La grotte au Cristal - partie 1",
@@ -86,11 +81,7 @@
       "1": [6, 6],
       "2": [6, 6, 6]
     },
-    "informations": [
-      "Explose à la mort",
-      "Attaque souffle de feu en cône",
-      "Plusieurs immunités"
-    ]
+    "informations": ["Explose à la mort", "Attaque souffle de feu en cône", "Plusieurs immunités"]
   },
   {
     "name": "La grotte au Cristal - partie 2",
@@ -154,12 +145,7 @@
       "Zombis alertés et prêts si : La barre est tombée, la porte a du être enfoncée plusieurs fois",
       "Trou du coffre vers la cale !"
     ],
-    "loots": [
-      "Bourse de 50po",
-      "Outils de cartographe",
-      "Une dague",
-      "Boussole de 25po"
-    ]
+    "loots": ["Bourse de 50po", "Outils de cartographe", "Une dague", "Boussole de 25po"]
   },
   {
     "name": "Pont inférieur",
@@ -356,9 +342,7 @@
       "3": [18, 19],
       "4": [17, 18, 19]
     },
-    "informations": [
-      "Une fois le chef vaincu, les gobelins fuient vers H3 libérer les loups"
-    ],
+    "informations": ["Une fois le chef vaincu, les gobelins fuient vers H3 libérer les loups"],
     "loots": ["Chef gobelin : Sacoche de ceinture contenant 16pa"]
   },
   {
@@ -613,15 +597,8 @@
     "ennemies": {
       "1": [29, 29, 30, 30]
     },
-    "informations": [
-      "Effet de surprise pour les joueurs",
-      "Toute action ennemie avec désavantage"
-    ],
-    "loots": [
-      "Sur la table :",
-      "75pc, 55pa, 17po",
-      "Boucle d'oreilles en or (30po la paire)"
-    ],
+    "informations": ["Effet de surprise pour les joueurs", "Toute action ennemie avec désavantage"],
+    "loots": ["Sur la table :", "75pc, 55pa, 17po", "Boucle d'oreilles en or (30po la paire)"],
     "youtubeId": "NYtPB459e6Y"
   },
   {
@@ -707,10 +684,7 @@
       "Le crane leur parle et les supplie de les libérer",
       "Parchemin biblio brûlent si non sauvé (1 action)"
     ],
-    "loots": [
-      "Bouclier de résistance au feu (+2 CA)",
-      "Un gros rubis d’une valeur de 1000po"
-    ],
+    "loots": ["Bouclier de résistance au feu (+2 CA)", "Un gros rubis d’une valeur de 1000po"],
     "youtubeId": "WahaiTaVw2k"
   },
   {
@@ -954,10 +928,7 @@
       "L'homme retient les joueurs alors que la femme informe le Roc",
       "Supprimer 2 gobelours de la rencontre au roc"
     ],
-    "loots": [
-      "Dessin à la main avis de recherche",
-      "Beau gros baton (+1 en dressage)"
-    ],
+    "loots": ["Dessin à la main avis de recherche", "Beau gros baton (+1 en dressage)"],
     "youtubeId": "8Q7cioftmKs"
   },
   {
@@ -1092,9 +1063,7 @@
       ]
     },
     "extraZonesEnnemies": ["C7"],
-    "informations": [
-      "En cas de bruit dans la zone, une patrouille arrive de C7"
-    ],
+    "informations": ["En cas de bruit dans la zone, une patrouille arrive de C7"],
     "youtubeId": "GMXiYs-wi3A"
   },
   {
@@ -1129,10 +1098,7 @@
         }
       ]
     },
-    "informations": [
-      "Disponible si pas repérés avant",
-      "Veulent devenir les chefs"
-    ],
+    "informations": ["Disponible si pas repérés avant", "Veulent devenir les chefs"],
     "youtubeId": "2nmn1AkRsbE"
   },
   {
@@ -1254,9 +1220,7 @@
         }
       ]
     },
-    "informations": [
-      "Un part avertir le roi Grol et revient 2 rounds plus tard"
-    ],
+    "informations": ["Un part avertir le roi Grol et revient 2 rounds plus tard"],
     "youtubeId": "2nmn1AkRsbE"
   },
   {

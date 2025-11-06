@@ -6,11 +6,7 @@ import WealthArray from "@/app/(with-nav)/characters/add/(items)/WealthArray";
 import ArmorsArray from "@/app/(with-nav)/characters/add/(items)/ArmorsArray";
 import WeaponsArray from "@/app/(with-nav)/characters/add/(items)/WeaponsArray";
 
-export default function FormInventory({
-  form,
-}: {
-  form: UseFormReturn<CharacterCreationForm>;
-}) {
+export default function FormInventory({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   return (
     <Card>
       <CardHeader>

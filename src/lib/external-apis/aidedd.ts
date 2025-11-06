@@ -1,13 +1,7 @@
 import axios from "axios";
-import {
-  getBaseSpellData,
-  parseSpellFromAideDD,
-} from "@/lib/aideDDParseSpellPageContent";
+import { getBaseSpellData, parseSpellFromAideDD } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
-import {
-  getBaseCreatureData,
-  parseCreaturesFromAideDD,
-} from "@/lib/aideDDParseCreature";
+import { getBaseCreatureData, parseCreaturesFromAideDD } from "@/lib/aideDDParseCreature";
 import { Creature, SummaryCreature } from "@/types/types";
 import { APISpell } from "@/types/schemas";
 import { creatureOverrides } from "@/data/creatureOverrides";
@@ -36,10 +30,7 @@ export const getEnSpellIdFromFrName = async (frSpellName: string) => {
   return linkHref?.split("/")[1] ?? "";
 };
 
-const getSpellDataFromFRName = async (
-  frSpellName: string,
-  enSpellName: string,
-) => {
+const getSpellDataFromFRName = async (frSpellName: string, enSpellName: string) => {
   const response = await axios.get(`${getFrSpellURL}/${frSpellName}`);
   return parseSpellFromAideDD({ html: response.data, spellName: enSpellName });
 };
@@ -49,9 +40,7 @@ export const getSummarySpellFromFR = async (spellName: string) => {
   return getBaseSpellData(response.data, spellName);
 };
 
-export const getSpellDetails = async (
-  enSpellName: string,
-): Promise<APISpell> => {
+export const getSpellDetails = async (enSpellName: string): Promise<APISpell> => {
   const { frId } = await getSpellDataFromFrName(enSpellName);
   return getSpellDataFromFRName(frId, enSpellName);
 };

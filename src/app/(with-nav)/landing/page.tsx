@@ -1,10 +1,4 @@
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import Image from "next/image";
 import googleLogo from "@/../public/google_logo.png";
 import { Button } from "@/components/ui/button";
@@ -24,9 +18,7 @@ export default async function Landing() {
       <Card className="text-center">
         <CardHeader>
           <CardTitle>Connectez-vous</CardTitle>
-          <CardDescription>
-            Pour accéder aux fonctionnalités de l&#39;application.
-          </CardDescription>
+          <CardDescription>Pour accéder aux fonctionnalités de l&#39;application.</CardDescription>
         </CardHeader>
         <CardContent>
           <form
@@ -36,12 +28,7 @@ export default async function Landing() {
             }}
           >
             <Button type="submit" variant="secondary" size="lg">
-              <Image
-                src={googleLogo}
-                alt="Logo Google"
-                width="20"
-                height="20"
-              />
+              <Image src={googleLogo} alt="Logo Google" width="20" height="20" />
               Connexion avec Google
             </Button>
           </form>

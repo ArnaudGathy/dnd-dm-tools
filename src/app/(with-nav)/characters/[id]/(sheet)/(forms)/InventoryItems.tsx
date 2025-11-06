@@ -4,25 +4,15 @@ import AddInventoryItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/A
 import { Button } from "@/components/ui/button";
 import { Plus } from "lucide-react";
 
-export default function InventoryItems({
-  character,
-}: {
-  character: CharacterById;
-}) {
+export default function InventoryItems({ character }: { character: CharacterById }) {
   return (
     <SheetCard className="relative flex flex-col gap-4">
-      <AddInventoryItem
-        character={character}
-        className="absolute right-4"
-        title="Ajouter un objet"
-      >
+      <AddInventoryItem character={character} className="absolute right-4" title="Ajouter un objet">
         <Button size="sm">
           <Plus />
         </Button>
       </AddInventoryItem>
-      <span className="mb-2 flex self-center text-2xl font-bold">
-        Inventaire
-      </span>
+      <span className="mb-2 flex self-center text-2xl font-bold">Inventaire</span>
       <ul className="flex flex-col">
         {character.inventory.map((inventoryItem) => (
           <AddInventoryItem
@@ -39,9 +29,7 @@ export default function InventoryItems({
                 <div className="space-x-2">
                   <span>{`${inventoryItem.name}`}</span>
                   {inventoryItem.value && (
-                    <span className="text-sm text-slate-400">
-                      ({inventoryItem.value})
-                    </span>
+                    <span className="text-sm text-slate-400">({inventoryItem.value})</span>
                   )}
                   {inventoryItem.description && (
                     <span className="text-sm leading-4 text-muted-foreground">

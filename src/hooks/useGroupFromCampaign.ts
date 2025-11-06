@@ -4,9 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Character, SpellsOnCharacters } from "@prisma/client";
 
-export type Group = Array<
-  Character & { spellsOnCharacters: SpellsOnCharacters[] }
->;
+export type Group = Array<Character & { spellsOnCharacters: SpellsOnCharacters[] }>;
 
 export const useGroupFromCampaign = ({
   groupAction,

@@ -11,9 +11,7 @@ export default function Unauthorized() {
             <span>Accès refusé</span>
           </CardTitle>
         </CardHeader>
-        <CardContent>
-          Vous n&apos;avez pas l&apos;autorisation de vous connecter.
-        </CardContent>
+        <CardContent>Vous n&apos;avez pas l&apos;autorisation de vous connecter.</CardContent>
       </Card>
     </div>
   );

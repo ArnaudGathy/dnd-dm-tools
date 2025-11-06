@@ -1,22 +1,13 @@
 import { Character, Classes, SavingThrow, Skills } from "@prisma/client";
-import {
-  ABILITY_NAME_MAP,
-  PROFICIENCY_BONUS_BY_LEVEL,
-  SKILL_ABILITY_MAP,
-} from "@/constants/maps";
+import { ABILITY_NAME_MAP, PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP } from "@/constants/maps";
 import { addSignToNumber, getModifier } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
 import { CharacterById } from "@/lib/utils";
 
-export const getSkillSpecial = (
-  character: CharacterById,
-  skillName: Skills,
-) => {
+export const getSkillSpecial = (character: CharacterById, skillName: Skills) => {
   if (
     character.className === Classes.DRUID &&
-    character.capacities.some(({ name }) =>
-      name.toLowerCase().includes("ordre primitif (mage)"),
-    ) &&
+    character.capacities.some(({ name }) => name.toLowerCase().includes("ordre primitif (mage)")) &&
     (skillName === Skills.ARCANA || skillName === Skills.NATURE)
   ) {
     return {
@@ -27,14 +18,9 @@ export const getSkillSpecial = (
   return { skillSpecial: 0, skillSpecialName: undefined };
 };
 
-export const getSkillModifier = (
-  character: CharacterById,
-  skillName: Skills,
-) => {
+export const getSkillModifier = (character: CharacterById, skillName: Skills) => {
   const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
-  const selectedSkill = character.skills.find(
-    ({ skill }) => skill === skillName,
-  );
+  const selectedSkill = character.skills.find(({ skill }) => skill === skillName);
   const proficiencyModifier = selectedSkill?.isExpert
     ? proficiencyBonus * 2
     : selectedSkill?.isProficient
@@ -44,10 +30,7 @@ export const getSkillModifier = (
         : 0;
   const bonusModifier = selectedSkill?.modifier ?? 0;
   const abilityModifier = getModifier(character[SKILL_ABILITY_MAP[skillName]]);
-  const { skillSpecial, skillSpecialName } = getSkillSpecial(
-    character,
-    skillName,
-  );
+  const { skillSpecial, skillSpecialName } = getSkillSpecial(character, skillName);
 
   return {
     abilityModifier,

@@ -4,11 +4,7 @@ import { MONEY_TYPE_MAP } from "@/constants/maps";
 import SheetSingleData from "@/components/ui/SheetSingleData";
 import { Money, MoneyType } from "@prisma/client";
 import { Input } from "@/components/ui/input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Check, LoaderCircle } from "lucide-react";
 import { updateMoney } from "@/lib/actions/money";
 import { useState } from "react";
@@ -44,9 +40,7 @@ export default function MoneyForm({ money }: { money: Money }) {
       label={<span className={labelColor}>{MONEY_TYPE_MAP[money.type]}</span>}
       value={
         <Popover open={isOpen} onOpenChange={setIsOpen}>
-          <PopoverTrigger onClick={() => setIsOpen(true)}>
-            {money.quantity}
-          </PopoverTrigger>
+          <PopoverTrigger onClick={() => setIsOpen(true)}>{money.quantity}</PopoverTrigger>
           <PopoverContent className="w-fit">
             <div className="flex w-[60px] flex-col items-center gap-4">
               <Input
@@ -62,11 +56,7 @@ export default function MoneyForm({ money }: { money: Money }) {
                 onClick={handleUpdateMoney}
                 disabled={isLoading}
               >
-                {isLoading ? (
-                  <LoaderCircle className="size-6 animate-spin" />
-                ) : (
-                  <Check />
-                )}
+                {isLoading ? <LoaderCircle className="size-6 animate-spin" /> : <Check />}
               </Button>
             </div>
           </PopoverContent>

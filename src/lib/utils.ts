@@ -32,11 +32,8 @@ export async function getSessionData() {
     userName: session?.user?.name?.split(" ")[0],
     userMail: session?.user?.email || undefined,
     isLoggedIn: !!session,
-    isAdmin:
-      !!session?.user?.email &&
-      [...admins, ...superAdmins].includes(session.user.email),
-    isSuperAdmin:
-      !!session?.user?.email && superAdmins.includes(session.user.email),
+    isAdmin: !!session?.user?.email && [...admins, ...superAdmins].includes(session.user.email),
+    isSuperAdmin: !!session?.user?.email && superAdmins.includes(session.user.email),
   };
 }
 
@@ -72,11 +69,7 @@ export async function getValidCharacter(characterId: string) {
     notFound();
   }
 
-  if (
-    isSuperAdmin ||
-    userMail === character.owner ||
-    userMail === character.campaign.owner
-  ) {
+  if (isSuperAdmin || userMail === character.owner || userMail === character.campaign.owner) {
     return character;
   }
 

@@ -29,12 +29,7 @@ export const NavBarItem = async ({
   return (
     <NavigationMenuItem>
       <Link href={to} legacyBehavior passHref>
-        <NavigationMenuLink
-          className={cn(
-            navigationMenuTriggerStyle(),
-            "flex items-center gap-2",
-          )}
-        >
+        <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "flex items-center gap-2")}>
           <Icon className="size-5 text-primary" />
           {label}
         </NavigationMenuLink>

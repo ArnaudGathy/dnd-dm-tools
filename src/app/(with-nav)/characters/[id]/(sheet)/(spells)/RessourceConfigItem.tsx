@@ -42,14 +42,9 @@ export default function RessourceConfigItem({
 }) {
   const [ressource, setRessource] = displayRessource.useRessource;
 
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    transition,
-    isDragging,
-  } = useSortable({ id });
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
+    id,
+  });
 
   const style = {
     transform: CSS.Transform.toString(transform),
@@ -91,13 +86,9 @@ export default function RessourceConfigItem({
               {entries(themes).map(([theme, color]) => (
                 <PopoverClose key={theme}>
                   <div
-                    className={cn(
-                      "size-6 cursor-pointer rounded-2xl p-1",
-                      color,
-                      {
-                        ["border-2 border-white"]: theme === ressource.theme,
-                      },
-                    )}
+                    className={cn("size-6 cursor-pointer rounded-2xl p-1", color, {
+                      ["border-2 border-white"]: theme === ressource.theme,
+                    })}
                     onClick={() => setRessource({ ...ressource, theme })}
                   />
                 </PopoverClose>
@@ -105,11 +96,7 @@ export default function RessourceConfigItem({
             </div>
           }
         >
-          <Button
-            size="sm"
-            disabled={!ressource.isEnabled}
-            theme={ressource.theme}
-          >
+          <Button size="sm" disabled={!ressource.isEnabled} theme={ressource.theme}>
             <Palette />
           </Button>
         </PopoverComponent>

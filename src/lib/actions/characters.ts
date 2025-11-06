@@ -33,10 +33,7 @@ const getBaseHP = (
   );
 };
 
-export const createCharacter = async (
-  data: CharacterCreationForm,
-  owner: string,
-) => {
+export const createCharacter = async (data: CharacterCreationForm, owner: string) => {
   const validation = backendCharacterSchema.safeParse({
     ...data,
     owner,
@@ -135,13 +132,9 @@ export const createCharacter = async (
         data: {
           ...armor,
           strengthRequirement:
-            armor.type === ArmorType.HEAVY
-              ? armor.strengthRequirement
-              : undefined,
+            armor.type === ArmorType.HEAVY ? armor.strengthRequirement : undefined,
           stealthDisadvantage:
-            armor.type !== ArmorType.SHIELD
-              ? armor.stealthDisadvantage
-              : undefined,
+            armor.type !== ArmorType.SHIELD ? armor.stealthDisadvantage : undefined,
           characterId: character.id,
         },
       });
@@ -152,24 +145,13 @@ export const createCharacter = async (
       const createdWeapon = await prisma.weapon.create({
         data: {
           ...weaponData,
-          reach:
-            weaponData.type !== WeaponType.RANGED
-              ? weaponData.reach
-              : undefined,
-          range:
-            weaponData.type !== WeaponType.MELEE ? weaponData.range : undefined,
-          longRange:
-            weaponData.type !== WeaponType.MELEE
-              ? weaponData.longRange
-              : undefined,
+          reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : undefined,
+          range: weaponData.type !== WeaponType.MELEE ? weaponData.range : undefined,
+          longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : undefined,
           ammunitionCount:
-            weaponData.type === WeaponType.RANGED
-              ? weaponData.ammunitionCount
-              : undefined,
+            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : undefined,
           ammunitionType:
-            weaponData.type === WeaponType.RANGED
-              ? weaponData.ammunitionType
-              : undefined,
+            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : undefined,
           characterId: character.id,
         },
       });
@@ -237,19 +219,14 @@ const getNewHP = (character: CharacterById, newLevel: number) => {
   if (newLevel > 1) {
     return (
       baseHp +
-      (newLevel - 1) *
-        (LEVEL_UP_HP_MAP[character.className] +
-          getModifier(character.constitution))
+      (newLevel - 1) * (LEVEL_UP_HP_MAP[character.className] + getModifier(character.constitution))
     );
   }
 
   return baseHp;
 };
 
-export const updateCharacter = async (
-  data: CharacterCreationForm,
-  character: CharacterById,
-) => {
+export const updateCharacter = async (data: CharacterCreationForm, character: CharacterById) => {
   const validation = backendCharacterSchema.safeParse({
     ...data,
     owner: character.owner, // keep original owner
@@ -324,50 +301,38 @@ export const updateCharacter = async (
         data: { ...st, characterId: character.id },
       }),
     update: (id, st) => prisma.savingThrow.update({ where: { id }, data: st }),
-    deleteMany: (ids) =>
-      prisma.savingThrow.deleteMany({ where: { id: { in: ids } } }),
+    deleteMany: (ids) => prisma.savingThrow.deleteMany({ where: { id: { in: ids } } }),
   });
 
   await syncSimpleTable(character.skills, validation.data.skills, {
-    create: (sk) =>
-      prisma.skill.create({ data: { ...sk, characterId: character.id } }),
+    create: (sk) => prisma.skill.create({ data: { ...sk, characterId: character.id } }),
     update: (id, sk) => prisma.skill.update({ where: { id }, data: sk }),
-    deleteMany: (ids) =>
-      prisma.skill.deleteMany({ where: { id: { in: ids } } }),
+    deleteMany: (ids) => prisma.skill.deleteMany({ where: { id: { in: ids } } }),
   });
 
   await syncSimpleTable(character.capacities, validation.data.capacities, {
-    create: (c) =>
-      prisma.capacity.create({ data: { ...c, characterId: character.id } }),
+    create: (c) => prisma.capacity.create({ data: { ...c, characterId: character.id } }),
     update: (id, c) => prisma.capacity.update({ where: { id }, data: c }),
-    deleteMany: (ids) =>
-      prisma.capacity.deleteMany({ where: { id: { in: ids } } }),
+    deleteMany: (ids) => prisma.capacity.deleteMany({ where: { id: { in: ids } } }),
   });
 
   await syncSimpleTable(
     character.armors,
     validation.data.armors.map((armor) => ({
       ...armor,
-      strengthRequirement:
-        armor.type === ArmorType.HEAVY ? armor.strengthRequirement : null,
-      stealthDisadvantage:
-        armor.type !== ArmorType.SHIELD ? armor.stealthDisadvantage : false,
+      strengthRequirement: armor.type === ArmorType.HEAVY ? armor.strengthRequirement : null,
+      stealthDisadvantage: armor.type !== ArmorType.SHIELD ? armor.stealthDisadvantage : false,
     })),
     {
-      create: (a) =>
-        prisma.armor.create({ data: { ...a, characterId: character.id } }),
+      create: (a) => prisma.armor.create({ data: { ...a, characterId: character.id } }),
       update: (id, a) => prisma.armor.update({ where: { id }, data: a }),
-      deleteMany: (ids) =>
-        prisma.armor.deleteMany({ where: { id: { in: ids } } }),
+      deleteMany: (ids) => prisma.armor.deleteMany({ where: { id: { in: ids } } }),
     },
   );
 
   const weaponOps = [];
 
-  const maxWeapons = Math.max(
-    character.weapons.length,
-    validation.data.weapons.length,
-  );
+  const maxWeapons = Math.max(character.weapons.length, validation.data.weapons.length);
 
   for (let i = 0; i < maxWeapons; i++) {
     const existingWeapon = character.weapons[i];
@@ -379,30 +344,18 @@ export const updateCharacter = async (
           where: { id: existingWeapon.id },
           data: {
             ...weaponData,
-            reach:
-              weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
-            range:
-              weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
-            longRange:
-              weaponData.type !== WeaponType.MELEE
-                ? weaponData.longRange
-                : null,
+            reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
+            range: weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
+            longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
             ammunitionCount:
-              weaponData.type === WeaponType.RANGED
-                ? weaponData.ammunitionCount
-                : null,
+              weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : null,
             ammunitionType:
-              weaponData.type === WeaponType.RANGED
-                ? weaponData.ammunitionType
-                : null,
+              weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : null,
           },
         }),
       );
 
-      const maxDamages = Math.max(
-        existingWeapon.damages.length,
-        damages.length,
-      );
+      const maxDamages = Math.max(existingWeapon.damages.length, damages.length);
       for (let j = 0; j < maxDamages; j++) {
         const existingDmg = existingWeapon.damages[j];
         const incomingDamages = damages[j];
@@ -420,9 +373,7 @@ export const updateCharacter = async (
             }),
           );
         } else if (existingDmg && !incomingDamages) {
-          weaponOps.push(
-            prisma.weaponDamage.delete({ where: { id: existingDmg.id } }),
-          );
+          weaponOps.push(prisma.weaponDamage.delete({ where: { id: existingDmg.id } }));
         }
       }
     } else if (!existingWeapon && incoming) {
@@ -430,19 +381,12 @@ export const updateCharacter = async (
       const newWeapon = await prisma.weapon.create({
         data: {
           ...weaponData,
-          reach:
-            weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
+          reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
           range: weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
-          longRange:
-            weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
+          longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
           ammunitionCount:
-            weaponData.type === WeaponType.RANGED
-              ? weaponData.ammunitionCount
-              : null,
-          ammunitionType:
-            weaponData.type === WeaponType.RANGED
-              ? weaponData.ammunitionType
-              : null,
+            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : null,
+          ammunitionType: weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : null,
           characterId: character.id,
         },
       });
@@ -454,9 +398,7 @@ export const updateCharacter = async (
         );
       }
     } else if (existingWeapon && !incoming) {
-      weaponOps.push(
-        prisma.weapon.delete({ where: { id: existingWeapon.id } }),
-      );
+      weaponOps.push(prisma.weapon.delete({ where: { id: existingWeapon.id } }));
     }
   }
 
@@ -467,18 +409,14 @@ export const updateCharacter = async (
       prisma.inventoryItem.create({
         data: { ...inv, characterId: character.id },
       }),
-    update: (id, inv) =>
-      prisma.inventoryItem.update({ where: { id }, data: inv }),
-    deleteMany: (ids) =>
-      prisma.inventoryItem.deleteMany({ where: { id: { in: ids } } }),
+    update: (id, inv) => prisma.inventoryItem.update({ where: { id }, data: inv }),
+    deleteMany: (ids) => prisma.inventoryItem.deleteMany({ where: { id: { in: ids } } }),
   });
 
   await syncSimpleTable(character.wealth, validation.data.wealth, {
-    create: (coin) =>
-      prisma.money.create({ data: { ...coin, characterId: character.id } }),
+    create: (coin) => prisma.money.create({ data: { ...coin, characterId: character.id } }),
     update: (id, coin) => prisma.money.update({ where: { id }, data: coin }),
-    deleteMany: (ids) =>
-      prisma.money.deleteMany({ where: { id: { in: ids } } }),
+    deleteMany: (ids) => prisma.money.deleteMany({ where: { id: { in: ids } } }),
   });
 
   redirect(`/characters/${character.id}`);
@@ -494,11 +432,7 @@ const getHpWithinBounds = (newHp: number, maxHp: number) => {
   return newHp;
 };
 
-export const setHp = async (
-  characterId: number,
-  maxHp: number,
-  newHp: number,
-) => {
+export const setHp = async (characterId: number, maxHp: number, newHp: number) => {
   const hp = getHpWithinBounds(newHp, maxHp);
   await prisma.character.update({
     where: { id: characterId },
@@ -524,10 +458,7 @@ export const resetHp = async (characterId: number, maxHp: number) => {
   revalidatePath(`/characters/${characterId}`);
 };
 
-export const updateInspiration = async (
-  characterId: number,
-  inspiration: number,
-) => {
+export const updateInspiration = async (characterId: number, inspiration: number) => {
   const validation = z
     .object({
       inspiration: z.number().min(0),
