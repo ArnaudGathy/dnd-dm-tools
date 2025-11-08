@@ -8,7 +8,6 @@ import {
   getParticipantFromCharacters,
   getParticipantFromEncounter,
   roll,
-  typedConditions,
 } from "@/utils/utils";
 import { v4 as uuidv4 } from "uuid";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -39,6 +38,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { conditions } from "@/data/conditions";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 
@@ -652,7 +652,7 @@ export const CombatModule = ({
 
                           <h4 className="text-xl font-semibold tracking-tight">États et effets</h4>
                           <div className="flex max-w-[500px] flex-wrap gap-2">
-                            {typedConditions.map((condition) => (
+                            {conditions.map((condition) => (
                               <div
                                 key={condition.title}
                                 className={clsx("flex items-center gap-2")}

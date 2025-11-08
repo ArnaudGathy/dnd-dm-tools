@@ -1,8 +1,9 @@
 import { entries } from "remeda";
-import { groupEncounters, typedEncounters } from "@/utils/utils";
+import { groupEncounters } from "@/utils/utils";
 import Scenario from "@/app/(with-nav)/encounters/Scenario";
+import { encounters } from "@/data/encounters";
 
-const groupedEncounters = groupEncounters(typedEncounters);
+const groupedEncounters = groupEncounters(encounters);
 
 const Encounters = () => {
   return (

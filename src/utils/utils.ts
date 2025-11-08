@@ -1,6 +1,5 @@
 import {
   AbilityNameType,
-  Condition,
   Creature,
   Encounter,
   EncounterEnemy,
@@ -8,17 +7,13 @@ import {
   Participant,
   Skills,
 } from "@/types/types";
-import encounters from "@/data/encounters.json";
+import { encounters } from "@/data/encounters";
 import { v4 as uuidv4 } from "uuid";
 import { entries, groupBy, isNumber, isPlainObject, map, prop, reduce, values } from "remeda";
-import conditions from "@/data/conditions.json";
 import { Group } from "@/hooks/useGroupFromCampaign";
 import { getCreature } from "@/lib/external-apis/aidedd";
 import { Classes } from "@prisma/client";
 import { CharacterById, SpellsCreaturesCount } from "@/lib/utils";
-
-export const typedEncounters: Encounter[] = encounters;
-export const typedConditions: Condition[] = conditions;
 
 export const commonCreatureColors = [
   "#ffffff",
@@ -197,7 +192,7 @@ export const getParticipantFromCharacters = (group: Group) => {
 
 export const getEncounterFromId = (encounterId: string) => {
   const encId = parseInt(encounterId, 10);
-  const encounter = typedEncounters.find(({ id }) => id === encId);
+  const encounter = encounters.find(({ id }) => id === encId);
 
   if (!encounter) {
     return null;
@@ -207,7 +202,7 @@ export const getEncounterFromId = (encounterId: string) => {
 };
 
 export const getEncounterFromLocation = (location: Encounter["location"]) => {
-  const encounter = typedEncounters.find(
+  const encounter = encounters.find(
     ({ location: { name, mapMarker } }) =>
       name === location.name && mapMarker === location.mapMarker,
   );
