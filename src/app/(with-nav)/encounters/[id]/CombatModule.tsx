@@ -461,7 +461,7 @@ export const CombatModule = ({
                   },
                 )}
               >
-                <div className="w-5">
+                <div className="flex w-5 items-center">
                   <PopoverComponent
                     definition={
                       <div className="flex flex-col gap-2">
@@ -495,7 +495,11 @@ export const CombatModule = ({
                         ) : (
                           <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                              <Button size="sm" variant="secondary">
+                              <Button
+                                size="sm"
+                                variant="secondary"
+                                disabled={participant.init === -1}
+                              >
                                 Échanger initiative
                               </Button>
                             </DropdownMenuTrigger>
@@ -526,6 +530,7 @@ export const CombatModule = ({
                         <Button
                           size="sm"
                           onClick={() => handleUpdateInit(participant, participant.init + 0.2)}
+                          disabled={participant.init === -1}
                         >
                           <Swords />
                           Gagne duel

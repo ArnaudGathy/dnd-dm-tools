@@ -116,6 +116,7 @@ export type Creature = {
     darkvision?: string;
     passivePerception: number;
     trueSight?: string;
+    tremorsense?: string;
   };
   traits?: Array<{
     name: string;

@@ -167,6 +167,9 @@ function parseSenseString(input?: string): Creature["senses"] {
         if (sense === "darkvision") {
           return ["darkvision", `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`];
         }
+        if (sense === "tremorsense") {
+          return ["tremorsense", `${(parseInt(value.split(" ")[0], 10) / 5) * 1.5} m`];
+        }
         return [sense, value];
       }),
   );

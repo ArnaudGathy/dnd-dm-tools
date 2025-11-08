@@ -58,6 +58,7 @@ export const translatedSenses = (sense: keyof Creature["senses"]) => {
     passivePerception: "Perception passive",
     blindSight: "Vision aveugle",
     trueSight: "Vision véritable",
+    tremorsense: "Sensibilité vibrations",
   } satisfies Record<keyof Creature["senses"], string>;
   return translations[sense];
 };

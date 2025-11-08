@@ -23,10 +23,13 @@ const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
 
 export const StatBlock = async ({ creature }: { creature: Creature }) => {
   const creatureSpellsFromDb = await getSpellByIds((creature.spells ?? []).map((s) => s.id));
-  const creatureSpells = creatureSpellsFromDb.map((s, index) => ({
-    ...s,
-    ...(creature.spells?.[index] ?? {}),
-  }));
+  const creatureSpells = creatureSpellsFromDb.map((s) => {
+    const spell = creature.spells?.find((sp) => sp.id === s.id);
+    return {
+      ...s,
+      ...(spell ?? {}),
+    };
+  });
 
   const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
   const linkToAideDD =
@@ -150,7 +153,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               entries(creature.senses).map(([name, value]) => {
                 let stat = value;
                 if (
-                  ["darkvision", "blindSight", "trueSight"].includes(name) &&
+                  ["darkvision", "blindSight", "trueSight", "tremorsense"].includes(name) &&
                   typeof value === "string"
                 ) {
                   stat = `${getDistanceInSquares(value)} cases`;

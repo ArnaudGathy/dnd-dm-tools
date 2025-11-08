@@ -1,0 +1,3603 @@
+[
+  {
+    "name": "Pieuvre Serviteur des Spores",
+    "id": 1,
+    "type": "Plante",
+    "size": "G",
+    "alignment": "Non alignée",
+    "armorClass": 11,
+    "hitPoints": "52 (8d10 + 8)",
+    "speed": {
+      "walk": "1.5 m",
+      "swim": "15 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 13,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 6,
+      "charisma": 1
+    },
+    "immunities": ["Aveuglé", "Charmé", "Effrayé", "Paralysé"],
+    "senses": {
+      "blindSight": "9 m",
+      "passivePerception": 8
+    },
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Tentacules",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "4.5 m",
+
+        "hit": "7 (1d8 + 3) dégâts contondants"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Apnée",
+        "description": "La pieuvre peut retenir son souffle hors de l'eau pendant 1 heure."
+      },
+      {
+        "name": "Respiration aquatique",
+        "description": "La pieuvre ne peut respirer que sous l'eau."
+      }
+    ],
+    "colors": ["#bb3d3d"]
+  },
+  {
+    "name": "Zombi",
+    "id": 2,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 8,
+    "hitPoints": "22 (3d8 + 9)",
+    "speed": {
+      "walk": "6 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 6,
+      "constitution": 16,
+      "intelligence": 3,
+      "wisdom": 6,
+      "charisma": 5
+    },
+    "savingThrows": {
+      "wisdom": "+0"
+    },
+    "immunities": ["Dégâts de poison", "État empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 8
+    },
+    "languages": ["Langues connues de son vivant, ne parle pas"],
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Coup",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d6 + 1) dégâts contondants"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Robustesse de la non-vie",
+        "description": "Si les dégâts réduisent le zombi à 0 PV, il doit faire un jet de sauvegarde de Constitution DD 5 + dégâts subis. En cas de succès, il tombe à 1 PV. Sauf en cas de dégats radiants ou de coup critique."
+      }
+    ],
+    "colors": ["#aad09a", "#57abbb", "#d3bf69"]
+  },
+  {
+    "name": "Thallophyte Violette",
+    "id": 3,
+    "type": "Plante",
+    "size": "M",
+    "alignment": "Non alignée",
+    "armorClass": 5,
+    "hitPoints": "18 (4d8)",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 3,
+      "dexterity": 1,
+      "constitution": 10,
+      "intelligence": 0,
+      "wisdom": 3,
+      "charisma": 1
+    },
+    "immunities": ["Assourdi", "Aveuglé", "Effrayé"],
+    "senses": {
+      "blindSight": "9 m",
+      "passivePerception": 6
+    },
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "La thallophyte effectue 1d4 attaques de Contact putréfiant."
+      },
+      {
+        "name": "Contact putréfiant",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d8) dégâts nécrotiques"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Faux-semblant",
+        "description": "Si elle reste immobile, elle a avantage sur son jet d'initiative. Un test d'Investigation DD 18 est nécessaire pour la détecter."
+      }
+    ]
+  },
+  {
+    "name": "Stirge",
+    "id": 4,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Non alignée",
+    "armorClass": 14,
+    "hitPoints": "2 (1d4)",
+    "speed": {
+      "walk": "3 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 4,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 8,
+      "charisma": 6
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Suction du sang",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d4+3) dégâts perforants, la stirge se fixe et inflige 5 (1d4+3) PV au début du tour de la cible."
+      }
+    ],
+    "colors": [
+      "#bd3333",
+      "#0b1e4f",
+      "#055f93",
+      "#db81f1",
+      "#bd3333",
+      "#0b1e4f",
+      "#055f93",
+      "#db81f1"
+    ]
+  },
+  {
+    "name": "Serpent de Feu",
+    "id": 5,
+    "type": "Élémentaire",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 14,
+    "hitPoints": "22 (5d8)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 14,
+      "constitution": 11,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "vulnerabilities": ["Froid"],
+    "resistances": ["Contondants", "Perforants", "Tranchants (non magiques)"],
+    "immunities": ["Feu"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Igné (ne parle pas)"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le serpent effectue une attaque de Morsure et de Queue."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "3 (1d4 + 1) dégâts perforants + 3 (1d6) dégâts de feu"
+      },
+      {
+        "name": "Queue",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "3 (1d4 + 1) dégâts contondants + 3 (1d6) dégâts de feu"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Corps brûlant",
+        "description": "Une créature en contact avec le serpent subit 3 (1d6) dégâts de feu."
+      }
+    ],
+    "colors": ["#c95a08"]
+  },
+  {
+    "name": "Guivre-Follette",
+    "id": 6,
+    "type": "Élémentaire",
+    "size": "P",
+    "alignment": "Généralement Neutre",
+    "armorClass": 12,
+    "hitPoints": "22 (5d6 + 5)",
+    "speed": {
+      "walk": "9 m",
+      "fly": "9 m"
+    },
+    "abilities": {
+      "strength": 6,
+      "dexterity": 14,
+      "constitution": 12,
+      "intelligence": 6,
+      "wisdom": 10,
+      "charisma": 11
+    },
+    "immunities": ["Feu", "Poison", "Empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Draconique", "Igné"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Déflagration funèbre",
+        "description": "Lorsqu’une guivre-follette meurt, elle explose dans un nuage de vapeurs toxiques. Chaque créature dans un rayon de 1 case de la guivre-follette doit réussir un jet de sauvegarde de Constitution DD 11 sous peine de subir 4 (1d8) dégâts de poison."
+      },
+      {
+        "name": "Être singulier",
+        "description": "La guivre-follette peut se passer de nourriture, de boisson et de sommeil."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d4 + 2) dégâts de feu"
+      },
+      {
+        "name": "Souffle bouillant (Recharge 6)",
+        "description": "La guivre-follette exhale de la vapeur brûlante sous forme de cône de 4,5 m. Chaque créature prise dans le cône doit réussir un jet de sauvegarde de Dextérité DD 11 et subit 4 (1d8) dégâts de feu en cas d’échec, la moitié en cas de réussite."
+      }
+    ],
+    "colors": ["#f57100", "#4f1b07"]
+  },
+  {
+    "name": "Goule",
+    "id": 7,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Généralement Chaotique Mauvais",
+    "armorClass": 12,
+    "hitPoints": "22 (5d8)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 15,
+      "constitution": 10,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 6
+    },
+    "immunities": ["Poison", "Charmé", "Empoisonné", "Épuisement"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Griffe",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "7 (2d4 + 2) dégâts tranchants. Si != mort vivant ou elfe, JdS CON 10 (n/a) ou paralysé"
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+
+        "hit": "9 (2d6 + 2) dégâts perforants"
+      }
+    ],
+    "colors": ["#1fa483", "#8dd549"]
+  },
+  {
+    "name": "Harpie",
+    "id": 8,
+    "type": "Créature monstrueuse",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 11,
+    "hitPoints": "38 (7d8 + 7)",
+    "speed": {
+      "walk": "6 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 13,
+      "constitution": 12,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 13
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "languages": ["Commun"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "La harpie effectue deux attaques : une avec ses griffes et une avec son gourdin."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "6 (2d4 + 1) dégâts tranchants"
+      },
+      {
+        "name": "Gourdin",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "3 (1d4 + 1) dégâts contondants"
+      },
+      {
+        "name": "Chant captivant",
+        "description": "La harpie chante une mélodie magique. Les humanoïdes et géants situés à 90 m ou moins et qui entendent le chant doivent réussir un jet de sauvegarde de Sagesse DD 11 sous peine d’être charmés jusqu’à la fin du chant. 1 cible charmée doit se déplacer vers la harpie par le chemin le plus court. Elle peut retenter un jet de sauvegarde à la fin de chacun de ses tours. 1 cible qui réussit est immunisée contre ce chant pendant 24 heures."
+      }
+    ],
+    "colors": ["#0c7ec9", "#6b462f"]
+  },
+  {
+    "name": "Hibours",
+    "id": 9,
+    "type": "Monstruosité",
+    "size": "G",
+    "alignment": "Non alignée",
+    "armorClass": 13,
+    "hitPoints": "59 (7d10 + 21)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 20,
+      "dexterity": 12,
+      "constitution": 17,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 13
+    },
+    "challengeRating": 3,
+    "traits": [
+      {
+        "name": "Odorat et vue aiguisés",
+        "description": "Le hibours est avantagé aux tests de Sagesse (Perception) qui font intervenir l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le hibours effectue une attaque de Bec et de Griffe."
+      },
+      {
+        "name": "Bec",
+        "type": "Melee",
+        "modifier": "+7",
+        "reach": "1.5 m",
+
+        "hit": "10 (1d10 + 5) dégâts perforants"
+      },
+      {
+        "name": "Griffe",
+        "type": "Melee",
+        "modifier": "+7",
+        "reach": "1.5 m",
+
+        "hit": "14 (2d8 + 5) dégâts tranchants"
+      }
+    ],
+    "colors": ["#855842"]
+  },
+  {
+    "name": "Kobold Bouclier",
+    "id": 10,
+    "type": "Humanoïde",
+    "size": "P",
+    "alignment": "Tout alignement",
+    "armorClass": 14,
+    "hitPoints": "10 (3d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 7,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 15,
+      "wisdom": 7,
+      "charisma": 9
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Sensibilité au soleil",
+        "description": "Quand le kobold est exposé à la lumière du soleil, il a désavantage aux jets d’attaque et aux tests de Sagesse (Perception) basés sur la vue."
+      },
+      {
+        "name": "Tactique de meute",
+        "description": "Si la créature ciblée est dans un rayon de 1,5 m d’au moins un allié du kobold, ce dernier bénéficie d’avantage à son jet d’attaque."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Dague",
+        "type": "Melee ou distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 6/18 m",
+
+        "hit": "4 (1d4 + 2) dégâts perforants"
+      },
+      {
+        "name": "Flammes alchimiques (Recharge 6)",
+        "description": "Le kobold lance des flammes sous forme d’un cône de 4,5 m. Les cibles doivent réussir un jet de Dextérité DD 12 ou subir 10 (3d6) dégâts de feu en cas d’échec, ou la moitié en cas de réussite."
+      }
+    ],
+    "colors": ["#58d860", "#276cad"]
+  },
+  {
+    "name": "Kobold lancier",
+    "id": 11,
+    "type": "Humanoïde",
+    "size": "P",
+    "alignment": "Tout alignement",
+    "armorClass": 13,
+    "hitPoints": "7 (3d6 - 3)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 7,
+      "dexterity": 16,
+      "constitution": 9,
+      "intelligence": 8,
+      "wisdom": 7,
+      "charisma": 8
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 8
+    },
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Sensibilité au soleil",
+        "description": "Quand le kobold est exposé à la lumière du soleil, il a désavantage aux jets d’attaque et aux tests de Sagesse (Perception) basés sur la vue."
+      },
+      {
+        "name": "Tactique de meute",
+        "description": "Si la créature ciblée est dans un rayon de 1,5 m d’au moins un allié du kobold, ce dernier bénéficie d’avantage à son jet d’attaque."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Lance",
+        "type": "Melee ou distance",
+        "modifier": "+5",
+        "reach": "1.5 m ou portée 6/18 m",
+
+        "hit": "5 (1d4 + 3) dégâts perforants"
+      },
+      {
+        "name": "Lâcher de rocher",
+        "type": "Distance",
+        "modifier": "+5",
+        "hit": "6 (1d6 + 3) dégâts contondants"
+      }
+    ],
+    "colors": ["#09700d", "#77d7cc"]
+  },
+  {
+    "name": "Kobold",
+    "id": 12,
+    "type": "Humanoïde",
+    "size": "P",
+    "alignment": "Tout alignement",
+    "armorClass": 12,
+    "hitPoints": "5 (2d6 - 2)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 7,
+      "dexterity": 15,
+      "constitution": 9,
+      "intelligence": 8,
+      "wisdom": 7,
+      "charisma": 8
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 8
+    },
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 0.125,
+    "traits": [
+      {
+        "name": "Sensibilité au soleil",
+        "description": "Quand le kobold est exposé à la lumière du soleil, il a désavantage aux jets d’attaque et aux tests de Sagesse (Perception) basés sur la vue."
+      },
+      {
+        "name": "Tactique de meute",
+        "description": "Si la créature ciblée est dans un rayon de 1,5 m d’un allié du kobold, ce dernier bénéficie d’avantage à son jet d’attaque."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Dague",
+        "type": "Melee ou distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 6/18 m",
+
+        "hit": "4 (1d4 + 2) dégâts perforants"
+      },
+      {
+        "name": "Fronde",
+        "type": "distance",
+        "modifier": "+4",
+        "reach": "portée 9/36 m",
+
+        "hit": "4 (1d4 + 2) dégâts contondants"
+      }
+    ],
+    "colors": ["#dc0005", "#e08023"]
+  },
+  {
+    "name": "Manticore",
+    "id": 13,
+    "type": "Monstruosité",
+    "size": "G",
+    "alignment": "Généralement Mauvais",
+    "armorClass": 14,
+    "hitPoints": "68 (8d10 + 24)",
+    "speed": {
+      "walk": "9 m",
+      "fly": "15 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 16,
+      "constitution": 17,
+      "intelligence": 7,
+      "wisdom": 12,
+      "charisma": 8
+    },
+    "senses": {
+      "darkvision": "30 m",
+      "passivePerception": 11
+    },
+    "languages": ["Commun"],
+    "challengeRating": 3,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "La manticore effectue trois attaques parmi : 1 avec sa morsure, 2 avec ses griffes ou 3 avec ses dards."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "7 (1d8 + 3) dégâts perforants"
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "6 (1d6 + 3) dégâts tranchants"
+      },
+      {
+        "name": "Dards",
+        "type": "Distance",
+        "modifier": "+5",
+        "reach": "portée 30/90 m",
+
+        "hit": "7 (1d8 + 3) dégâts perforants"
+      }
+    ],
+    "traits": [
+      {
+        "name": "Dards",
+        "description": "La manticore possède une queue hérissée de dards qu'elle peut projeter à distance. Elle en a jusqu'à 24 et en régénère 1d10 par jour."
+      },
+      {
+        "name": "Vol",
+        "description": "La manticore peut parcourir de longues distances en vol et préfère attaquer en piqué avant de remonter hors de portée."
+      }
+    ],
+    "colors": ["#cb8f54"]
+  },
+  {
+    "name": "Vrilléclair",
+    "id": 14,
+    "type": "Dragon",
+    "size": "M",
+    "alignment": "Généralement Loyal Mauvais",
+    "armorClass": 17,
+    "hitPoints": "80 (8d8 + 16)",
+    "speed": {
+      "walk": "9 m",
+      "fly": "18 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 10,
+      "constitution": 15,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 15
+    },
+    "savingThrows": {
+      "dexterity": "+2",
+      "constitution": "+4",
+      "wisdom": "+2",
+      "charisma": "+4"
+    },
+    "skills": {
+      "stealth": "+2",
+      "perception": "+4"
+    },
+    "immunities": ["Foudre"],
+    "senses": {
+      "blindSight": "3 m",
+      "darkvision": "18 m",
+      "passivePerception": 14
+    },
+    "languages": ["Draconique"],
+    "challengeRating": 3,
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "8 (1d10 + 3) dégâts perforants + 3 (1d6) dégâts de foudre"
+      },
+      {
+        "name": "Souffle de foudre (recharge 5-6)",
+        "description": "Le dragon exhale de la foudre sous forme d’une ligne de 6 cases de long pour 1 case de large. Chaque créature prise dans la ligne effectue un jet de sauvegarde de Dextérité DD 12 et subit 22 (4d8) dégâts de foudre en cas d’échec, la moitié en cas de réussite."
+      }
+    ],
+    "colors": ["#0021ff"]
+  },
+  {
+    "name": "Aïdron",
+    "id": 15,
+    "type": "Dragon",
+    "size": "M",
+    "alignment": "Généralement Loyal Bon",
+    "armorClass": 17,
+    "hitPoints": "32 (5d8 + 10)",
+    "speed": {
+      "walk": "6 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": -1000,
+      "constitution": 15,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 15
+    },
+    "savingThrows": {
+      "dexterity": "+2",
+      "constitution": "+4",
+      "wisdom": "+2",
+      "charisma": "+4"
+    },
+    "skills": {
+      "stealth": "+2",
+      "perception": "+4"
+    },
+    "immunities": ["Foudre"],
+    "senses": {
+      "blindSight": "3 m",
+      "darkvision": "18 m",
+      "passivePerception": 14
+    },
+    "languages": ["Draconique"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Amphibie",
+        "description": "Le dragon peut respirer sous l’eau comme à l’air libre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "8 (1d10 + 3) dégâts perforants"
+      },
+      {
+        "name": "Souffle (Recharge 5-6)",
+        "description": "Le dragon utilise l’un des souffles suivants :"
+      },
+      {
+        "name": "Souffle de foudre",
+        "description": "Le dragon exhale de la foudre sous forme d’une ligne de 12 m de long pour 1.5 m de large. Chaque créature prise dans la ligne effectue un jet de sauvegarde de Dextérité DD 12 et subit 16 (3d10) dégâts de foudre en cas d’échec, la moitié en cas de réussite."
+      },
+      {
+        "name": "Souffle répulsif",
+        "description": "Le dragon exhale une vague d’énergie sous forme d’un cône de 9 m. Chaque créature prise dans la zone doit réussir un jet de sauvegarde de Force DD 12 sous peine d’être repoussée du dragon d’un maximum de 9 m."
+      }
+    ],
+    "colors": ["#ffb45e"]
+  },
+  {
+    "name": "Gobelin Ėpee",
+    "id": 17,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "7 (2d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts tranchants"
+      }
+    ],
+    "colors": ["#ff0000", "#463636", "#7a00ff"]
+  },
+  {
+    "name": "Gobelin Dague",
+    "id": 67,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "7 (2d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts tranchants"
+      }
+    ],
+    "colors": ["#ff0000", "#463636", "#7a00ff"]
+  },
+  {
+    "name": "Gobelin Archer",
+    "id": 18,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "7 (2d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Arc court",
+        "type": "Distance",
+        "modifier": "+4",
+        "reach": "portée 24/96 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "colors": ["#7a00ff", "#296c0b", "#7a00ff"]
+  },
+  {
+    "name": "Gobelin Chef",
+    "id": 19,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 17,
+    "hitPoints": "21 (6d6)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 10,
+      "wisdom": 8,
+      "charisma": 10
+    },
+    "skills": {
+      "stealth": "+6"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Fuite agile",
+        "description": "Le chef gobelin peut effectuer l’action Se désengager ou Se cacher par une action bonus à chacun de ses tours."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le chef gobelin effectue deux attaques avec son cimeterre. La seconde attaque est désavantagée."
+      },
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts tranchants"
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 9/36 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      },
+      {
+        "name": "Arc court",
+        "type": "Distance",
+        "modifier": "+4",
+        "reach": "portée 24/96 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "reactions": [
+      {
+        "name": "Attaque redirigée",
+        "description": "Quand une créature dans le champ de vision du chef gobelin le vise avec une attaque, il peut choisir un autre gobelin allié à 1.5 m ou moins de lui. Les deux gobelins échangent leur position et le gobelin choisi devient la cible de l’attaque à la place du premier."
+      }
+    ],
+    "colors": ["#937a39", "#808080"]
+  },
+  {
+    "name": "Loup",
+    "id": 20,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 15,
+      "constitution": 12,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 6
+    },
+    "skills": {
+      "stealth": "+4",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Tactique de groupe",
+        "description": "Le loup a un avantage aux jets d’attaque contre une créature si au moins l’un de ses alliés est à 1,50 m ou moins de la créature et n’est pas incapable d’agir."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "7 (2d4 + 2) dégâts perforants. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 11 pour ne pas être à terre."
+      }
+    ],
+    "colors": ["#283538", "#e3f3f5", "#748b8c"]
+  },
+  {
+    "name": "Serpent Venimeux",
+    "id": 21,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "2 (1d4)",
+    "speed": {
+      "walk": "9 m",
+      "swim": "9 m"
+    },
+    "abilities": {
+      "strength": 2,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 1,
+      "wisdom": 10,
+      "charisma": 3
+    },
+    "senses": {
+      "blindSight": "3 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "1 (1) dégât perforant et la cible doit réussir un jet de sauvegarde de Constitution DD 10 ou subir 5 (2d4) dégâts de poison, ou la moitié en cas de réussite."
+      }
+    ],
+    "colors": ["#ea3c07"]
+  },
+  {
+    "name": "Gobelours",
+    "id": 22,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 16,
+    "hitPoints": "27 (5d8 + 5)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 13,
+      "intelligence": 8,
+      "wisdom": 11,
+      "charisma": 9
+    },
+    "skills": {
+      "stealth": "+6",
+      "survival": "+2"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Attaque surprise",
+        "description": "Si un gobelours surprend une créature et touche avec une attaque lors du premier round de combat, la cible subit 7 (2d6) dégâts supplémentaires."
+      },
+      {
+        "name": "Brutal",
+        "description": "Une arme de corps à corps inflige un dé de dégâts supplémentaire lorsque le gobelours réussit son attaque."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morgenstern",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "11 (2d8 + 2) dégâts perforants."
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 9/36 m",
+
+        "hit": "9 (2d6 + 2) dégâts perforants en mêlée, ou 5 (1d6 + 2) dégâts perforants à distance."
+      }
+    ],
+    "colors": ["#6b4a04", "#1c5fd0"]
+  },
+  {
+    "name": "Sildar Halledhiver",
+    "id": 23,
+    "type": "Humanoïde (Humain)",
+    "size": "M",
+    "alignment": "Neutre Bon",
+    "armorClass": 10,
+    "hitPoints": "27 (5d8 + 5)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "savingThrows": {
+      "strength": "+3",
+      "constitution": "+3"
+    },
+    "skills": {
+      "perception": "+2"
+    },
+    "senses": {
+      "passivePerception": 12
+    },
+    "languages": ["Commun"],
+    "challengeRating": 1,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Sildar effectue deux attaques d'une arme de corps a corps."
+      },
+      {
+        "name": "Arme de joueur",
+        "description": "Un joueur peut l'équiper d'une arme."
+      },
+      {
+        "name": "Cimeterre gobeline",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+
+        "hit": "1d6 dégâts tranchants"
+      }
+    ],
+    "reactions": [
+      {
+        "name": "Parade",
+        "description": "Quand un assaillant que Sildar voit est censé le toucher avec une attaque de corps à corps, Sildar peut lancer un d6 et en ajouter le résultat à sa CA contre l’attaque concernée, à condition qu’il manie lui-même une arme de corps à corps."
+      }
+    ]
+  },
+  {
+    "name": "Totem Bronze",
+    "id": 24,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -100,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets"
+      },
+      {
+        "name": "1-2 Bronze",
+        "description": "Une lueur de bronze enveloppe les participants et soigne +1d4 + 4 PV"
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Or",
+    "id": 25,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -200,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "3-4 Or",
+        "description": "Une lueur dorée s'abat sur Vrilléclair. Doit réussir un JdS DEX DD12 sous peine de subir 2d6 dégats de feu."
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Bleu",
+    "id": 26,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -300,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "5-6 Bleu",
+        "description": "Le souffle de Vrilléclair se recharge alors qu'une lueur bleue l'enveloppe"
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Rouge",
+    "id": 27,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -400,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "7-8 Rouge",
+        "description": "JdS DEX DD12 sous peine de subir 1d6 dégats de feu alors que la lumière rouge se mue en flammes."
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Totem Argent",
+    "id": 28,
+    "type": "Effet",
+    "size": "M",
+    "alignment": "N/A",
+    "armorClass": 15,
+    "hitPoints": "5",
+    "speed": {
+      "walk": "1.5 m"
+    },
+    "abilities": {
+      "strength": 0,
+      "dexterity": -500,
+      "constitution": 0,
+      "intelligence": 0,
+      "wisdom": 0,
+      "charisma": 0
+    },
+    "senses": {
+      "passivePerception": 0
+    },
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Esprits draconiques",
+        "description": "A chaque tour, lancer un d10 pour déclencher les effets suivants :"
+      },
+      {
+        "name": "9-10 Argent",
+        "description": "Une lueur d'argent chatoie, avantages aux jets de sauvegarde et d'attaque jusqu'au prochain esprit draconique"
+      }
+    ],
+    "colors": ["#000"]
+  },
+  {
+    "name": "Voyou Fer-rouge",
+    "id": 29,
+    "type": "Humanoïde",
+    "size": "M",
+    "alignment": "Généralement Neutre Mauvais",
+    "armorClass": 11,
+    "hitPoints": "16 (3d8 + 3)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 9,
+      "wisdom": 9,
+      "charisma": 11
+    },
+    "skills": {
+      "intimidation": "+2"
+    },
+    "senses": {
+      "passivePerception": 9
+    },
+    "languages": ["Commun"],
+    "challengeRating": 0.5,
+    "actions": [
+      {
+        "name": "Épée courte",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      }
+    ],
+    "colors": ["#f10000", "#1c8811", "#1383c5", "#fd7400"]
+  },
+  {
+    "name": "Bandit",
+    "id": 30,
+    "type": "Humanoïde",
+    "size": "M",
+    "alignment": "Tout alignement non loyal",
+    "armorClass": 12,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 11,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "skills": {
+      "athletics": "+2",
+      "intimidation": "+2"
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "languages": ["Commun"],
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Cimeterre",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 1) dégâts tranchants."
+      },
+      {
+        "name": "Arbalète légère",
+        "type": "Distance",
+        "modifier": "+3",
+        "reach": "portée 24/96 m",
+
+        "hit": "5 (1d8 + 1) dégâts perforants."
+      }
+    ],
+    "colors": ["#132a5e", "#b47f12", "#21c412"]
+  },
+  {
+    "name": "Squelette",
+    "id": 31,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 13,
+    "hitPoints": "13 (2d8 + 4)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 6,
+      "wisdom": 8,
+      "charisma": 5
+    },
+    "vulnerabilities": ["Contondants"],
+    "immunities": ["Poison", "État empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 9
+    },
+    "languages": ["Langues connues de son vivant"],
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Épée courte",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      },
+      {
+        "name": "Arc court",
+        "type": "Distance",
+        "modifier": "+4",
+        "reach": "portée 24/96 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      },
+      {
+        "name": "Lance",
+        "type": "Melee ou distance",
+        "modifier": "+4",
+        "reach": "1.5 m ou portée 6/18 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "colors": ["#f50000", "#1323f6"]
+  },
+  {
+    "name": "Nothic (fer-rouge)",
+    "id": 32,
+    "type": "Aberration",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 15,
+    "hitPoints": "66 (6d8 + 18)",
+    "speed": {
+      "walk": "9 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 16,
+      "constitution": 16,
+      "intelligence": 13,
+      "wisdom": 10,
+      "charisma": 8
+    },
+    "skills": {
+      "arcana": "+3",
+      "stealth": "+5",
+      "insight": "+4",
+      "perception": "+2"
+    },
+    "senses": {
+      "trueSight": "36 m",
+      "passivePerception": 12
+    },
+    "languages": ["Commun des profondeurs"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Vue aiguisée",
+        "description": "Le nothic a un avantage aux jets de Sagesse (Perception) faisant appel à la vue."
+      },
+      {
+        "name": "Camouflage",
+        "description": "Peut se cacher dans une zone de visibilité partielle"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le nothic effectue deux attaques avec ses griffes."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "6 (1d6 + 3) dégâts tranchants."
+      },
+      {
+        "name": "Regard de putréfaction (4-6)",
+        "description": "Cible une créature qu'il peut voir das un rayon de 6 cases. JdS CON 12 (n/a) ou 3d6 dégâts nécrotiques."
+      },
+      {
+        "name": "Intuition mystérieuse",
+        "description": "La cible fais un JdS de SAG DD14, Si le Nothic l’emporte, il apprend un fait ou un secret de la cible."
+      }
+    ],
+    "colors": ["#062157"]
+  },
+  {
+    "name": "Quasit",
+    "id": 33,
+    "type": "Fiélon (Démon, Métamorphe)",
+    "size": "TP",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 13,
+    "hitPoints": "7 (3d4)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 5,
+      "dexterity": 17,
+      "constitution": 10,
+      "intelligence": 7,
+      "wisdom": 10,
+      "charisma": 10
+    },
+    "skills": {
+      "stealth": "+5"
+    },
+    "resistances": ["Froid", "Feu", "Foudre", "Contondant, Perforant, Tranchant (non magiques)"],
+    "immunities": ["Poison", "Empoisonné"],
+    "senses": {
+      "darkvision": "36 m",
+      "passivePerception": 10
+    },
+    "languages": ["Abyssal", "Commun"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Métamorphe",
+        "description": "Le quasit peut utiliser son action pour se transformer en une forme animale ressemblant à une chauve-souris (vitesse de vol 12 m), un mille-pattes (vitesse de marche 12 m, escalade 12 m), ou un crapaud (vitesse de marche 12 m, nage 12 m), ou revenir à sa forme d'origine. Ses statistiques sont identiques dans chaque forme, à l’exception de ses vitesses qui changent. L'équipement qu'il porte n'est pas transformé. Il revient à sa forme d'origine s'il meurt."
+      },
+      {
+        "name": "Résistance à la magie",
+        "description": "Le quasit a un avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Griffes (Morsure en forme animale)",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d4 + 3) dégâts perforants et la cible doit réussir un jet de sauvegarde de Constitution DD 10 ou subir 5 (2d4) dégâts de poison et être empoisonnée pendant 1 minute. La cible peut refaire le jet de sauvegarde à la fin de chacun de ses tours, mettant fin à l'effet sur elle en cas de réussite."
+      },
+      {
+        "name": "Terreur (1/jour)",
+        "description": "Le quasit choisit une créature dans un rayon de 6 m de lui. Cette créature doit réussir un jet de sauvegarde de Sagesse DD 10 ou être effrayée pendant 1 minute. La cible peut refaire le jet de sauvegarde à la fin de chacun de ses tours, mettant fin à l'effet sur elle en cas de réussite."
+      },
+      {
+        "name": "Invisibilité",
+        "description": "Le quasit devient invisible jusqu'à ce qu'il attaque ou lance un sort, ou jusqu'à ce que sa concentration soit interrompue (comme s'il se concentrait sur un sort). Tout équipement porté ou transporté par le quasit est invisible avec lui."
+      }
+    ],
+    "colors": ["#21c412"]
+  },
+  {
+    "name": "Iarno Albrek",
+    "id": 34,
+    "type": "Humanoïde (Humain, Magicien)",
+    "size": "M",
+    "alignment": "Loyal Mauvais",
+    "armorClass": "13 (react 18) (mage 16) (total 21)",
+    "hitPoints": "22 (5d8)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 9,
+      "dexterity": 14,
+      "constitution": 11,
+      "intelligence": 17,
+      "wisdom": 12,
+      "charisma": 11
+    },
+    "savingThrows": {
+      "intelligence": "+5",
+      "wisdom": "+3"
+    },
+    "skills": {
+      "arcana": "+5",
+      "history": "+5"
+    },
+    "senses": {
+      "passivePerception": 11
+    },
+    "languages": ["Commun", "Draconique", "Elfique", "Nain"],
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Équipement spécial",
+        "description": "Bâton-de-verre possède un bâton de défense. Tant qu’il a ce bâton en main, il peut consacrer une action pour lancer le sort armure du mage et jouer sa réaction pour lancer le sort bouclier."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Lancer un sort",
+        "description": "Lancer un sort et dépenser l'emplacement correspondant"
+      },
+      {
+        "name": "Attaques multiples",
+        "description": "Bâton-de-verre effectue deux attaques de Décharge électrique."
+      },
+      {
+        "name": "Décharge électrique",
+        "type": "Melee ou Distance",
+        "modifier": "+5",
+        "reach": "36 m",
+
+        "hit": "6 (1d6 + 3) dégâts de foudre."
+      }
+    ],
+    "spellStats": {
+      "attackMod": 5,
+      "spellDC": 13,
+      "slots": {
+        "1": 2,
+        "2": 1
+      }
+    },
+    "spells": [
+      {
+        "id": "mage-armor",
+        "summary": "Monte le CA à 16"
+      },
+      {
+        "id": "magic-missile",
+        "summary": "3x 1d4+1 force. (lvl2 : 4x)"
+      },
+      {
+        "id": "hold-person",
+        "summary": "JdS SAG ou paralysée 1min (concentration)"
+      }
+    ],
+    "reactions": [
+      {
+        "name": "Bouclier",
+        "description": "+5 CA jusqu'au début du prochain tour."
+      }
+    ],
+    "bonusActions": [
+      {
+        "name": "Téléportation (2/jour)",
+        "description": "Bâton-de-verre se téléporte d’un maximum de 9 m (6 cases) avec tout l’équipement qu’il porte vers un espace inoccupé qu’il voit."
+      }
+    ],
+    "colors": ["#061f5b"]
+  },
+  {
+    "name": "Araignée",
+    "id": 35,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 12,
+    "hitPoints": "1 (1d4 - 1)",
+    "speed": {
+      "walk": "6 m",
+      "climb": "6 m"
+    },
+    "abilities": {
+      "strength": 2,
+      "dexterity": 14,
+      "constitution": 8,
+      "intelligence": 1,
+      "wisdom": 10,
+      "charisma": 2
+    },
+    "skills": {
+      "stealth": "+4"
+    },
+    "senses": {
+      "darkvision": "9 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Pattes d'araignée",
+        "description": "L'araignée peut escalader des surfaces difficiles et être au plafond la tête en bas sans avoir besoin d'effectuer un jet de caractéristique."
+      },
+      {
+        "name": "Sens de la toile",
+        "description": "Lorsqu'elle est en contact avec une toile, l'araignée connaît l'emplacement exact de toutes les créatures qui sont en contact avec cette toile."
+      },
+      {
+        "name": "Déplacement sur la toile",
+        "description": "L'araignée ignore les restrictions de mouvement causées par une toile d'araignée."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "1 dégât perforant et la cible doit réussir un jet de sauvegarde de Constitution DD 9 ou subir 2 (1d4) dégâts de poison."
+      }
+    ],
+    "colors": ["#4b4b4b"]
+  },
+  {
+    "name": "Belette",
+    "id": 36,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "1 (1d4 - 1)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 3,
+      "dexterity": 16,
+      "constitution": 8,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 3
+    },
+    "skills": {
+      "stealth": "+5",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "La belette a un avantage aux jets de Sagesse (Perception) basés sur l'odorat ou l'ouïe."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "1 dégât perforant."
+      }
+    ],
+    "colors": ["#805E24"]
+  },
+  {
+    "name": "Blaireau",
+    "id": 37,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "3 (1d4 + 1)",
+    "speed": {
+      "walk": "6 m",
+      "burrow": "1.5 m"
+    },
+    "abilities": {
+      "strength": 4,
+      "dexterity": 11,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 5
+    },
+    "senses": {
+      "darkvision": "9 m",
+      "passivePerception": 11
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "Le blaireau a un avantage aux jets de Sagesse (Perception) basés sur l'odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+
+        "hit": "1 dégât perforant."
+      }
+    ],
+    "colors": ["#3E3E3E"]
+  },
+  {
+    "name": "Cerf",
+    "id": 38,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 13,
+    "hitPoints": "4 (1d8)",
+    "speed": {
+      "walk": "15 m"
+    },
+    "abilities": {
+      "strength": 11,
+      "dexterity": 16,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 14,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 12
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+
+        "hit": "2 (1d4) dégâts perforants."
+      }
+    ],
+    "colors": ["#D4A76A"]
+  },
+  {
+    "name": "Chat",
+    "id": 39,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 12,
+    "hitPoints": "2 (1d4)",
+    "speed": {
+      "walk": "12 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 3,
+      "dexterity": 15,
+      "constitution": 10,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "stealth": "+4",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "Le chat a un avantage aux jets de Sagesse (Perception) basés sur l'odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+0",
+        "reach": "1.5 m",
+
+        "hit": "1 dégât tranchant."
+      }
+    ],
+    "colors": ["#808080"]
+  },
+  {
+    "name": "Cheval de selle",
+    "id": 40,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "13 (2d10 + 2)",
+    "speed": {
+      "walk": "18 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Attaque au corps à corps",
+        "description": "+5 au toucher, allonge 1,50 m, une cible. Touché : 8 (2d4 + 3) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Cheval de trait",
+    "id": 41,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "19 (3d10 + 3)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 18,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.25,
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Attaque au corps à corps",
+        "description": "+6 au toucher, allonge 1,50 m, une cible. Touché : 9 (2d4 + 4) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Élan",
+    "id": 42,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "13 (2d10 + 2)",
+    "speed": {
+      "walk": "15 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 10,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 6
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Charge",
+        "description": "Si l’élan se déplace d’au moins 6 mètres en ligne droite vers une cible, puis la touche lors d’une attaque avec un coup de tête dans le même tour, la cible subit 7 (2d6) dégâts supplémentaires. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 13 ou tomber à terre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Coup de tête",
+        "type": "Attaque au corps à corps",
+        "description": "+5 au toucher, allonge 1,50 m, une cible. Touché : 6 (1d6 + 3) dégâts contondants."
+      },
+      {
+        "name": "Sabots",
+        "type": "Attaque au corps à corps",
+        "description": "+8 au toucher, allonge 1,50 m, une cible au sol. Touché : 8 (2d4 + 3) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Chèvre",
+    "id": 43,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "4 (1d8)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 12,
+      "dexterity": 10,
+      "constitution": 11,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Charge",
+        "description": "Si la chèvre se déplace d’au moins 6 mètres en ligne droite vers une cible, puis la touche lors d’une attaque avec un coup de tête dans le même tour, la cible subit 2 (1d4) dégâts contondants supplémentaires. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 10 ou tomber à terre."
+      },
+      {
+        "name": "Stable",
+        "description": "La chèvre a un avantage aux jets de sauvegarde de Force et de Dextérité contre les effets susceptibles de la faire tomber à terre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Coup de tête",
+        "type": "Attaque au corps à corps",
+        "description": "+3 au toucher, allonge 1,50 m, une cible. Touché : 3 (1d4 + 1) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Loup sanguinaire",
+    "id": 44,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 14,
+    "hitPoints": "37 (5d10 + 10)",
+    "speed": {
+      "walk": "15 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 15,
+      "constitution": 15,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "stealth": "+4",
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 1,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "Le loup a un avantage aux jets de Sagesse (Perception) basés sur l’odorat ou l’ouïe."
+      },
+      {
+        "name": "Tactique de groupe",
+        "description": "Le loup a un avantage aux jets d’attaque contre une créature si au moins l’un de ses alliés est à 1,50 mètre ou moins de la créature et n’est pas incapable d’agir."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "10 (2d6 + 3) dégâts perforants. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 13 pour ne pas être jetée à terre."
+      }
+    ]
+  },
+  {
+    "name": "Molosse",
+    "id": 45,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 12,
+    "hitPoints": "5 (1d8 + 1)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 14,
+      "constitution": 12,
+      "intelligence": 3,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 0.125,
+    "traits": [
+      {
+        "name": "Odorat et ouïe aiguisés",
+        "description": "Le molosse a un avantage aux jets de Sagesse (Perception) basés sur l’odorat ou l’ouïe."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d6 + 1) dégâts perforants. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 11 pour ne pas tomber à terre."
+      }
+    ]
+  },
+  {
+    "name": "Mule",
+    "id": 46,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 10,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.125,
+    "traits": [
+      {
+        "name": "Bête de somme",
+        "description": "La mule est considérée comme un animal de taille G pour déterminer sa capacité de charge."
+      },
+      {
+        "name": "Pied sûr",
+        "description": "La mule a un avantage aux jets de sauvegarde de Force et Dextérité effectués pour ne pas tomber à terre."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d4 + 2) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Ours brun",
+    "id": 47,
+    "type": "Bête",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 11,
+    "hitPoints": "34 (4d10 + 12)",
+    "speed": {
+      "walk": "12 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 19,
+      "dexterity": 10,
+      "constitution": 16,
+      "intelligence": 2,
+      "wisdom": 13,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "L’ours a un avantage aux jets de Sagesse (Perception) basés sur l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "L’ours réalise deux attaques : une avec ses griffes et une avec sa morsure."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+
+        "hit": "11 (2d6 + 4) dégâts tranchants."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+
+        "hit": "8 (1d8 + 4) dégâts perforants."
+      }
+    ]
+  },
+  {
+    "name": "Ours noir",
+    "id": 48,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 11,
+    "hitPoints": "19 (3d8 + 6)",
+    "speed": {
+      "walk": "12 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 10,
+      "constitution": 14,
+      "intelligence": 2,
+      "wisdom": 12,
+      "charisma": 7
+    },
+    "skills": {
+      "perception": "+3"
+    },
+    "senses": {
+      "passivePerception": 13
+    },
+    "challengeRating": 0.5,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "L’ours a un avantage aux jets de Sagesse (Perception) basés sur l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "L’ours réalise deux attaques : une avec ses griffes et une avec sa morsure."
+      },
+      {
+        "name": "Griffes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "7 (2d4 + 2) dégâts tranchants."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants."
+      }
+    ]
+  },
+  {
+    "name": "Rat",
+    "id": 49,
+    "type": "Bête",
+    "size": "TP",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "1 (1d4 - 1)",
+    "speed": {
+      "walk": "6 m"
+    },
+    "abilities": {
+      "strength": 2,
+      "dexterity": 11,
+      "constitution": 9,
+      "intelligence": 2,
+      "wisdom": 10,
+      "charisma": 4
+    },
+    "senses": {
+      "darkvision": "9 m",
+      "passivePerception": 10
+    },
+    "challengeRating": 0,
+    "traits": [
+      {
+        "name": "Odorat aiguisé",
+        "description": "Le rat a un avantage aux jets de Sagesse (Perception) basés sur l’odorat."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+0",
+        "reach": "1.5 m",
+
+        "hit": "1 dégât perforant."
+      }
+    ]
+  },
+  {
+    "name": "Sanglier",
+    "id": 50,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 11,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 11,
+      "constitution": 12,
+      "intelligence": 2,
+      "wisdom": 9,
+      "charisma": 5
+    },
+    "senses": {
+      "passivePerception": 9
+    },
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Charge",
+        "description": "Si le sanglier se déplace d’au moins 6 mètres en ligne droite vers une cible, puis la touche lors d’une attaque avec ses défenses dans le même tour, la cible subit 3 (1d6) dégâts tranchants supplémentaires. Si la cible est une créature, elle doit réussir un jet de sauvegarde de Force DD 11 pour ne pas être jetée à terre."
+      },
+      {
+        "name": "Implacable (Recharge après un repos court ou long)",
+        "description": "Si le sanglier subit 7 points de dégâts ou moins qui réduiraient ses points de vie à 0, il se retrouve à la place avec 1 point de vie."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Défenses",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d6 + 1) dégâts tranchants."
+      }
+    ]
+  },
+  {
+    "name": "Poney",
+    "id": 51,
+    "type": "Bête",
+    "size": "M",
+    "alignment": "Sans alignement",
+    "armorClass": 10,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 10,
+      "constitution": 13,
+      "intelligence": 2,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "challengeRating": 0.125,
+    "actions": [
+      {
+        "name": "Sabots",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "7 (2d4 + 2) dégâts contondants."
+      }
+    ]
+  },
+  {
+    "name": "Agent du Zentharim",
+    "id": 52,
+    "type": "Humanoïde",
+    "size": "M",
+    "alignment": "Généralement Neutre Chaotique",
+    "armorClass": 15,
+    "hitPoints": "65 (10d8 + 20)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 16,
+      "constitution": 14,
+      "intelligence": 14,
+      "wisdom": 11,
+      "charisma": 14
+    },
+    "savingThrows": {
+      "strength": "+4",
+      "dexterity": "+5",
+      "wisdom": "+2"
+    },
+    "skills": {
+      "athletics": "+4",
+      "deception": "+4"
+    },
+    "senses": {
+      "passivePerception": 11
+    },
+    "languages": ["Commun"],
+    "challengeRating": 2,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "2 attaques épée, 1 dague"
+      },
+      {
+        "name": "Épée longue",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "9 (1d8 + 3) dégâts tranchants."
+      },
+      {
+        "name": "Dague",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d4 + 3) dégâts perforants."
+      }
+    ],
+    "colors": ["#f10000", "#1c8811", "#1383c5"]
+  },
+  {
+    "name": "Cube gélatineux",
+    "id": 53,
+    "type": "Vase",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 6,
+    "hitPoints": "84 (8d10 + 40)",
+    "speed": {
+      "walk": "4.5 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 3,
+      "constitution": 20,
+      "intelligence": 1,
+      "wisdom": 6,
+      "charisma": 1
+    },
+    "immunities": ["Assourdi", "À terre", "Aveuglé", "Charmé", "Effrayé", "Épuisement"],
+    "senses": {
+      "blindSight": "18 m (aveugle au-delà de ce rayon)",
+      "passivePerception": 8
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Transparent",
+        "description": "Y compris lorsque le cube est visible, il est nécessaire de réussir un jet de Sagesse (Perception) DD 15 pour repérer le cube s’il n’a ni bougé ni attaqué. Une créature qui tente d’entrer dans l’espace du cube sans le savoir est surprise par le cube."
+      },
+      {
+        "name": "Vase cubique",
+        "description": "Si pénètre volontairement, engloutie avec désavantage au JdS. Libérer un allié FOR DD12 et subit 3d6 dégats dans l'opération. Les créatures à l'intérieur du cube sont visibles mais disposes d'un abri total. Le cube ne peut contenir qu'une seule créature de taille G ou jusqu'à quatre créatures de taille M ou inférieur en même temps.\n"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Pseudopode",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "10 (3d6) dégâts d’acide."
+      },
+      {
+        "name": "Engloutissement",
+        "description": "DEX DD12 pour esquiver d'une case ou engloutie (entravée). 3d6 direct, 6d6 ou 3d6 par nouveau tour du cube. Force DD 12 pour se libérer."
+      }
+    ],
+    "colors": ["#16d9f3"]
+  },
+  {
+    "name": "Mimique",
+    "id": 54,
+    "type": "Monstruosité (métamorphe)",
+    "size": "M",
+    "alignment": "Neutre",
+    "armorClass": 12,
+    "hitPoints": "58 (9d8 + 18)",
+    "speed": {
+      "walk": "4.5 m"
+    },
+    "abilities": {
+      "strength": 17,
+      "dexterity": 12,
+      "constitution": 15,
+      "intelligence": 5,
+      "wisdom": 13,
+      "charisma": 8
+    },
+    "skills": {
+      "stealth": "+5"
+    },
+    "immunities": ["Acide", "À terre"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 11
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Collant",
+        "description": "Créature ou objet de taille <= TG est agrippée : Athlétisme ou Acrobatie DD13 avec désavantage pour se libérer."
+      },
+      {
+        "name": "Lutteur",
+        "description": "Le mimique a un avantage aux jets d’attaque effectués contre une créature qu’il agrippe."
+      },
+      {
+        "name": "Apparence trompeuse",
+        "description": "Tant que le mimique reste immobile, elle est indiscernable d’un objet ordinaire."
+      },
+      {
+        "name": "Métamorphe",
+        "description": "La mimique peut utiliser son action pour se métamorphoser en un objet, ou pour reprendre son aspect véritable informe. Ses statistiques sont les mêmes quelle que soit sa forme. L'équipement qu'elle porte ou transporte ne se transforme pas. Elle retrouve sa forme véritable lorsqu'elle meurt."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Pseudopode",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "7 (1d8 + 3) dégâts contondants. Collé si touché"
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+5 avantage si collé",
+        "reach": "1.5 m",
+
+        "hit": "7 (1d8 + 3 + 1d8) dégâts perforants + dégâts d’acide."
+      }
+    ],
+    "colors": ["#15ea76", "#a2128b"]
+  },
+  {
+    "name": "Babelien",
+    "id": 55,
+    "type": "Aberration",
+    "size": "M",
+    "alignment": "Neutre",
+    "armorClass": 9,
+    "hitPoints": "67 (9d8 + 27)",
+    "speed": {
+      "walk": "3 m",
+      "swim": "3 m"
+    },
+    "abilities": {
+      "strength": 10,
+      "dexterity": 8,
+      "constitution": 16,
+      "intelligence": 3,
+      "wisdom": 10,
+      "charisma": 6
+    },
+    "immunities": ["À terre"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Sol aberrant",
+        "description": "Terrain difficile sur 2 cases de rayon. Au début du tour, JdS FOR 10 pour ne pas être immobilisé (0 mouvements) pendant le tour."
+      },
+      {
+        "name": "Charabia",
+        "description": "Aura de 4 cases de rayon, au début du tour du joueur, JdS SAG 10 ou être charmé : pas de réaction et lancer d8, 1-4, elle ne fait rien. 5-6 aucune action et utilise tous ses mouvements dans une direction aléatoire. 7-8 attaque une cible aléatoire à portée de 1 case max."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le babelien effectue une attaque de morsure et, s’il le peut, utilise sa Salive aveuglante."
+      },
+      {
+        "name": "Morsure",
+        "type": "Melee",
+        "modifier": "+2",
+        "reach": "1.5 m",
+        "hit": "17 (5d6) dégâts perforants. taille <= M, JdS FOR 10 ou prone. Si la cible est tuée, elle est absorbée par le babelien."
+      },
+      {
+        "name": "Salive aveuglante (Recharge 5-6)",
+        "type": "Distance",
+        "reach": "4.5 m",
+        "hit": "(0d0) Zone 3x3 JdS DEX 13 ou aveuglé jusqu'auprochain tour du babelien"
+      }
+    ],
+    "colors": ["#e71c37"]
+  },
+  {
+    "name": "Crânefeu",
+    "id": 56,
+    "type": "Mort-vivant",
+    "size": "TP",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 13,
+    "hitPoints": "40 (9d4 + 18)",
+    "speed": {
+      "walk": "0 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 1,
+      "dexterity": 17,
+      "constitution": 14,
+      "intelligence": 16,
+      "wisdom": 10,
+      "charisma": 11
+    },
+    "skills": {
+      "perception": "+2",
+      "arcana": "+5"
+    },
+    "resistances": ["Foudre", "Nécrotique", "Perforant", "magie (avantage)"],
+    "immunities": [
+      "Feu",
+      "Froid",
+      "Poison",
+      "À terre",
+      "Charmé",
+      "Empoisonné",
+      "Paralysé",
+      "Effrayé"
+    ],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 12
+    },
+    "languages": ["Commun"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Illumination",
+        "description": "Le crânefeu émet une lumière faible dans un rayon de 4,50 mètres, une lumière vive dans un rayon de 4,50 mètres et une lumière faible sur 4,50 mètres supplémentaires. Il peut passer d’une option à l’autre en utilisant une action."
+      },
+      {
+        "name": "Résistance à la magie",
+        "description": "Le crânefeu a un avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Reconstitution",
+        "description": "Si le crânefeu est détruit, il récupère tous ses points de vie en 1 heure, à moins que de l’eau bénite ne soit versée sur ses restes, ou qu’un sort de Dissipation de la magie ou de Délivrance des malédictions ne lui soit lancé."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Lancer un sort",
+        "description": "Lancer un sort et dépenser un emplacement"
+      },
+      {
+        "name": "Attaques multiples",
+        "description": "Le crânefeu effectue deux attaques de Rayon de feu."
+      },
+      {
+        "name": "Rayon de feu",
+        "type": "Distance",
+        "modifier": "+5",
+        "reach": "9 m",
+
+        "hit": "10 (3d6) dégâts de feu"
+      }
+    ],
+    "spellStats": {
+      "attackMod": 5,
+      "spellDC": 13,
+      "slots": {
+        "1": 3,
+        "2": 2,
+        "3": 1
+      }
+    },
+    "spells": [
+      { "id": "mage-hand" },
+      { "id": "shield" },
+      { "id": "magic-missile" },
+      { "id": "blur" },
+      { "id": "flaming-sphere" },
+      { "id": "scorching-ray" }
+    ],
+    "colors": ["#f84200"]
+  },
+  {
+    "name": "Méphite Boueux",
+    "id": 57,
+    "type": "Élémentaire",
+    "size": "P",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 11,
+    "hitPoints": "27 (6d6 + 6)",
+    "speed": {
+      "walk": "6 m",
+      "swim": "6 m",
+      "fly": "7.5 m"
+    },
+    "skills": {
+      "stealth": "+3"
+    },
+    "abilities": {
+      "strength": 8,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 9,
+      "wisdom": 11,
+      "charisma": 7
+    },
+    "immunities": ["Dégâts de poison", "Empoisonné"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Aquatique", "Terreux"],
+    "challengeRating": 0.25,
+    "traits": [
+      {
+        "name": "Mort explosive",
+        "description": "Lors de la mort, cible taille <= M, en zone autours du CaC, JdS DEX 11 ou être entravé jusqu'au prochain tour."
+      },
+      {
+        "name": "Apparence trompeuse",
+        "description": "Tant que le méphite reste immobile, il ne peut être distingué d’un tas de boue ordinaire."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Poing",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "4 (1d6 + 1) dégâts contondants"
+      },
+      {
+        "name": "Souffle boueux (Recharge 6)",
+        "description": "Cible taille <= M, sur une cible de CaC, JdS DEX 11 ou être entravé pendant 1 minute. Peut retenter le JdS à son tour."
+      }
+    ],
+    "colors": ["#8B4513", "#654321"]
+  },
+  {
+    "name": "Banshee",
+    "id": 58,
+    "type": "Mort-vivant",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 12,
+    "hitPoints": "58 (13d8)",
+    "speed": {
+      "walk": "0 m",
+      "fly": "12 m"
+    },
+    "abilities": {
+      "strength": 1,
+      "dexterity": 14,
+      "constitution": 10,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 17
+    },
+    "savingThrows": {
+      "wisdom": "+2",
+      "charisma": "+5"
+    },
+    "resistances": [
+      "Acide",
+      "Foudre",
+      "Feu",
+      "Tonnerre",
+      "Contondants, perforants et tranchants d'attaques non magiques"
+    ],
+    "immunities": [
+      "Froid",
+      "Nécrotique",
+      "Poison",
+      "Charmé",
+      "Empoisonné",
+      "Agrippé",
+      "Entravé",
+      "Épuisement",
+      "Paralysé",
+      "Pétrifié",
+      "Effrayé"
+    ],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Elfe"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Détection de la vie",
+        "description": "Grâce à la magie, la banshee peut sentir la présence de créatures qui ne sont ni des morts-vivants ni des créatures artificielles jusqu’à 7,5 kilomètres de distance. Elle connaît dans quelle direction elles se trouvent, mais pas leur localisation exacte."
+      },
+      {
+        "name": "Déplacement intangible",
+        "description": "La banshee peut se déplacer à travers d’autres créatures ou des objets comme si elle traversait un terrain difficile. Elle subit 5 (1d10) dégâts de force si elle termine son tour à l’intérieur d’un objet."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Contact corrupteur",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "12 (3d6 + 2) dégâts nécrotiques"
+      },
+      {
+        "name": "Visage Effroyable",
+        "description": "Créature a 12 cases de la banshee JdS SAG 13 ou effrayé pendant 1min. Retenter à la fin de chacun de ses tours, avec désavantage. Si réussite, immunisé."
+      },
+      {
+        "name": "Hurlement (1/jour)",
+        "description": "A 6 cases de la banshee, JdS CON 13 ou tomber à 0 PV. Réussite, subir 3d6 dégats psy."
+      }
+    ],
+    "colors": ["#3ce2ff"]
+  },
+  {
+    "name": "TzKal Zuk P1",
+    "id": 59,
+    "type": "Humanoïde",
+    "size": "G",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 14,
+    "hitPoints": "99",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 16,
+      "wisdom": 14,
+      "charisma": 13
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "savingThrows": {
+      "strength": "+3",
+      "wisdom": "+2"
+    },
+    "resistances": ["Feu"],
+    "weaknesses": ["Glace"],
+    "immunities": ["Charmé", "Effrayé"],
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Résistance magique",
+        "description": "Avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Résistance légendaire (1x/jour)",
+        "description": "En cas de JdS raté, peut choisir de réussir."
+      },
+      {
+        "name": "Armes du gladiateur",
+        "description": "Au début de chacun de ses tours, TzKal Zuk change d'armée équipée selon l'ordre des armes de la catégorie actions"
+      },
+      {
+        "name": "Bouclier de lave",
+        "description": "Un bouclier de lave entoure TzKal Zuk, ce qui lui confère +1 au CA et inflige 1d4 dégats à l'attaquant après une attaque de corps à corps."
+      },
+      {
+        "name": "Main de flammes",
+        "description": "Bonus de 1d4 dégats de feu à toute attaque portée avec une arme de corps à corps."
+      }
+    ],
+    "spellStats": {
+      "attackMod": 5,
+      "spellDC": 13,
+      "slots": {
+        "1": 4,
+        "2": 2
+      }
+    },
+    "spells": [{ "id": "burning-hands" }, { "id": "scorching-ray" }],
+    "actions": [
+      {
+        "name": "Masse d'armes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "(1d6 cont + 1d4 feu + 2)"
+      },
+      {
+        "name": "Épée longue",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "(1d8 tran + 1d4 feu + 2)"
+      },
+      {
+        "name": "Marteau de guerre",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "(1d10 cont + 1d4 feu + 2)"
+      },
+      {
+        "name": "Hallebarde",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "3 m",
+
+        "hit": "(1d10 tran + 1d4 feu + 2)"
+      },
+      {
+        "name": "Sort",
+        "description": "Utiliser un sort et dépenser un emplacement."
+      }
+    ],
+    "legendaryActionsSlots": "2",
+    "legendaryActions": [
+      {
+        "name": "Attaque à l'arme (1)",
+        "description": "Attaque avec l'arme actuellement équipée"
+      },
+      {
+        "name": "Flaque de lave (1)",
+        "description": "Zone 3x3, JdS DEX/FOR 15 pour sortir ou 1d8 feu. Terrain difficile. Rejouer JdS en cas d'entrée / fin de tour dans la zone."
+      },
+      {
+        "name": "Lance d'os (1)",
+        "type": "Distance",
+        "modifier": "+4",
+        "reach": "9 m / 36 m",
+
+        "hit": "(1d6 perf + 1d4 feu + 2) Cible entravée, 1 action pour retirer la lance"
+      },
+      {
+        "name": "Intimidation draconique (2)",
+        "description": "JdS SAG 16 (n/a) ou injonction d'attaquer ses alliés. Rejoue JdS à la fin de chaque tour, ou lorsqu'elle subit des dégats."
+      }
+    ],
+    "lairActions": [
+      {
+        "name": "Éruption de gaz",
+        "description": "Apparition de 2 zones de 4x4 en jetant 4x2d6 pour chaque cadrant, JdS CON 12 (n/a) ou empoisonné jusqu'à la fin du prochain tour."
+      },
+      {
+        "name": "Flaques de lave",
+        "description": "Apparition de 5 zones de 3x3 en jetant 4x 5d12 pour chaque cadrant. Voir effet dans l'action flaque de lave"
+      }
+    ],
+    "colors": ["#b41414"]
+  },
+  {
+    "name": "TzKal Zuk P2",
+    "id": 60,
+    "type": "Humanoïde",
+    "size": "TG",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 14,
+    "hitPoints": "99",
+    "speed": {
+      "walk": "9 m",
+      "fly": "15 m"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 15,
+      "intelligence": 16,
+      "wisdom": 14,
+      "charisma": 13
+    },
+    "senses": {
+      "passivePerception": 10
+    },
+    "savingThrows": {
+      "strength": "+3",
+      "wisdom": "+2"
+    },
+    "weaknesses": ["Glace"],
+    "immunities": ["Feu", "Charmé", "Effrayé"],
+    "languages": ["Commun", "Draconique"],
+    "challengeRating": 4,
+    "traits": [
+      {
+        "name": "Résistance magique",
+        "description": "Avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Résistance légendaire (1x/jour)",
+        "description": "En cas de JdS raté, peut choisir de réussir."
+      },
+      {
+        "name": "Bouclier de lave",
+        "description": "Un bouclier de lave entoure TzKal Zuk, ce qui lui confère +1 au CA et inflige 1d4 dégats à l'attaquant après une attaque de corps à corps."
+      },
+      {
+        "name": "Main de flammes",
+        "description": "Bonus de 1d4 dégats de feu à toute attaque portée avec une arme de corps à corps."
+      }
+    ],
+    "spellStats": {
+      "attackMod": 5,
+      "spellDC": 13,
+      "slots": {
+        "1": 4,
+        "2": 2,
+        "3": 1
+      }
+    },
+    "spells": [{ "id": "burning-hands" }, { "id": "scorching-ray" }, { "id": "fireball" }],
+    "actions": [
+      {
+        "name": "Attaque multiples",
+        "description": "Attaque avec son épée longue et son fouet à chaque action"
+      },
+      {
+        "name": "Fouet de flammes",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "6 m",
+
+        "hit": "(1d4 tranchant + 2d4 feu + 2) JdS FOR 12 (n/a) ou attiré au CàC"
+      },
+      {
+        "name": "Epée longue magique",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "3 m ou 12/36 m",
+
+        "hit": "(1d8 tran + 1d4 feu + 2) Si lancée, peut utiliser une action légendaire pour rappeler l'épée et ré-infliger les dégâts"
+      },
+      {
+        "name": "Sort",
+        "description": "Utiliser un sort et dépenser un emplacement."
+      }
+    ],
+    "legendaryActionsSlots": "2",
+    "legendaryActions": [
+      {
+        "name": "Attaque à l'arme (1)",
+        "description": "Attaque avec une arme au choix"
+      },
+      {
+        "name": "Rappel d'épée (1)",
+        "description": "Rappelle l'épée magique lancée auparavant, qui traverse tout ennemi sur sa route et ré-inflige les dégâts de base."
+      },
+      {
+        "name": "Lancer un sort (1)",
+        "description": "Lance un sort au choix et consomme un emplacement"
+      },
+      {
+        "name": "Repositionnement (2)",
+        "description": "S'envole tout en ignorant les attaques d'opportunités afin de se repositionner dans la portée de ses déplacement en vol. A l'atterrissage frappe le sol dans carré de 5x5 cases, 1d6 dégâts + JdS DEX 12 (n/a) prone"
+      },
+      {
+        "name": "Balayage calcinant (2)",
+        "description": "Frappe le sol dans une zone de 1 case tout autours de lui et inflige 1d6 dégats aux ennemis à portée. JdS DEX/FOR 14 (n/a) ou repoussé de 2 cases. Tout ennemi repoussé, subit aussi une attaque d'opportunité à l'épée longue."
+      }
+    ],
+    "lairActions": [
+      {
+        "name": "Cercles de flamme",
+        "description": "Un cercle de flamme de 3x3 cases et 1,5m de haut apparait autours de chaque joueur. Il obscure la vision et toute attaque à distance subit un désavantage. Traverser les flammes inflige 1d8 dégâts de feu."
+      },
+      {
+        "name": "Terreur",
+        "description": "L'énergie ambiante infuse TzKal Zuk qui émet un rugissement de rage dans un rayon de 7 cases. JdS SAG 12 (n/a) ou effrayé"
+      },
+      {
+        "name": "Chute de météores",
+        "description": "De nombreux stalactites ardents tombent du plafond de la caverne dans l'arène (voir carte). JdS DEX 12 ou 1d8 dégâts"
+      }
+    ],
+    "colors": ["#da7700"]
+  },
+  {
+    "name": "Golem enchanté",
+    "id": 61,
+    "type": "Artificiel",
+    "size": "G",
+    "alignment": "Sans alignement",
+    "armorClass": 17,
+    "hitPoints": "50",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 9,
+      "constitution": 16,
+      "intelligence": 3,
+      "wisdom": 11,
+      "charisma": 1
+    },
+    "immunities": [
+      "Poison",
+      "Psychique",
+      "Charmé",
+      "Épuisement",
+      "Effrayé",
+      "Paralysé",
+      "Pétrifié",
+      "Empoisonné"
+    ],
+    "resistances": ["Perforants", "Tranchants"],
+    "vulnerabilities": ["Contondant"],
+    "senses": {
+      "passivePerception": 10
+    },
+    "languages": ["Comprend les langues mais ne peut pas parler"],
+    "challengeRating": 5,
+    "traits": [
+      {
+        "name": "Résistance à la magie",
+        "description": "Le golem a un avantage aux jets de sauvegarde contre les sorts et autres effets magiques."
+      },
+      {
+        "name": "Armes magiques",
+        "description": "Les attaques avec une arme du golem sont magiques."
+      },
+      {
+        "name": "Renforcement des tablettes",
+        "description": "Les stats du golem sont amélioré par chaque tablette magique dont le golem est en possesion. Le nombre de tablettes est indiqué par la lettre 'N'"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le golem effectue 1 + N attaques de coup"
+      },
+      {
+        "name": "Coup",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "(1d8 + 3) dégâts contondants"
+      },
+      {
+        "name": "Rayon de feu (Recharge (6-N)-6)",
+        "description": "Le golem tire 1 + N rayons de feu sur 1+N cibles. JdS DEX 12 (n/a) ou 1d8 feu"
+      }
+    ],
+    "colors": ["#fa6800"]
+  },
+  {
+    "name": "Ogre",
+    "id": 62,
+    "type": "Géant",
+    "size": "G",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 11,
+    "hitPoints": "91 (59 - 7d10 + 21)",
+    "speed": {
+      "walk": "12 m"
+    },
+    "abilities": {
+      "strength": 19,
+      "dexterity": 8,
+      "constitution": 16,
+      "intelligence": 5,
+      "wisdom": 7,
+      "charisma": 7
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 8
+    },
+    "languages": ["Commun", "Géant"],
+    "challengeRating": 2,
+    "actions": [
+      {
+        "name": "Massue",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+
+        "hit": "13 (2d8 + 4) dégâts contondants"
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+6",
+        "reach": "1.5 m ou portée 9/36 m",
+
+        "hit": "11 (2d6 + 4) dégâts perforants"
+      }
+    ],
+    "colors": ["#d3a78b"]
+  },
+  {
+    "name": "Brughor (orc)",
+    "id": 63,
+    "type": "Humanoïde (Orc)",
+    "size": "M",
+    "alignment": "Chaotique Mauvais",
+    "armorClass": 14,
+    "hitPoints": "30",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 16,
+      "dexterity": 12,
+      "constitution": 16,
+      "intelligence": 7,
+      "wisdom": 11,
+      "charisma": 10
+    },
+    "skills": {
+      "intimidation": "+2"
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Orc"],
+    "challengeRating": 0.5,
+    "traits": [
+      {
+        "name": "Aggressif",
+        "description": "Action bonus pour se déplacer 1x sa vitesse vers une cible qu'il peut voir"
+      }
+    ],
+    "actions": [
+      {
+        "name": "Hache à deux mains",
+        "type": "Melee",
+        "modifier": "+5",
+        "reach": "1.5 m",
+
+        "hit": "9 (1d12 + 3) dégâts tranchants"
+      },
+      {
+        "name": "Javeline",
+        "type": "Melee ou Distance",
+        "modifier": "+5",
+        "reach": "1.5 m ou portée 9/36 m",
+
+        "hit": "6 (1d6 + 3) dégâts perforants"
+      }
+    ],
+    "colors": ["#00bb01"]
+  },
+  {
+    "name": "Hobgobelin",
+    "id": 64,
+    "type": "Humanoïde (Gobelinoïde)",
+    "size": "M",
+    "alignment": "Loyal Mauvais",
+    "armorClass": 18,
+    "hitPoints": "11 (2d8 + 2)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 13,
+      "dexterity": 12,
+      "constitution": 12,
+      "intelligence": 10,
+      "wisdom": 10,
+      "charisma": 9
+    },
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 10
+    },
+    "languages": ["Commun", "Gobelin"],
+    "challengeRating": 0.5,
+    "traits": [
+      {
+        "name": "Avantage martial",
+        "description": "Une fois par tour, un hobgobelin peut infliger 7 (2d6) dégâts supplémentaires à une créature s’il la touche à l’aide d’une attaque armée réussie à condition que cette créature se situe à 1,50 mètre ou moins d’un allié de l’hobgobelin qui ne soit pas incapable d’agir."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Épée longue",
+        "type": "Melee",
+        "modifier": "+3",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d8 + 1) dégâts tranchants, ou 6 (1d10 + 1) dégâts tranchants si utilisée à deux mains"
+      },
+      {
+        "name": "Arc long",
+        "type": "Distance",
+        "modifier": "+3",
+        "reach": "portée 45/180 m",
+
+        "hit": "5 (1d8 + 1) dégâts perforants"
+      }
+    ],
+    "colors": ["#ff0000"]
+  },
+  {
+    "name": "Grick",
+    "id": 65,
+    "type": "Monstruosité",
+    "size": "M",
+    "alignment": "Neutre",
+    "armorClass": 14,
+    "hitPoints": "27 (6d8)",
+    "speed": {
+      "walk": "9 m",
+      "climb": "9 m"
+    },
+    "abilities": {
+      "strength": 14,
+      "dexterity": 14,
+      "constitution": 11,
+      "intelligence": 3,
+      "wisdom": 14,
+      "charisma": 5
+    },
+    "resistances": ["Contondants, perforants et tranchants d'attaques non magiques"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 12
+    },
+    "languages": ["Aucune"],
+    "challengeRating": 2,
+    "traits": [
+      {
+        "name": "Camouflage dans les rochers",
+        "description": "Le grick a un avantage aux jets de Dextérité (Discrétion) effectués pour se cacher sur un terrain rocailleux."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le grick effectue une attaque avec ses tentacules. Si cette attaque touche, il peut effectuer une attaque avec son bec contre la même cible."
+      },
+      {
+        "name": "Tentacules",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "9 (2d6 + 2) dégâts tranchants"
+      },
+      {
+        "name": "Bec",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+
+        "hit": "5 (1d6 + 2) dégâts perforants"
+      }
+    ],
+    "colors": ["#206b08"]
+  },
+  {
+    "name": "Doppelganger",
+    "id": 68,
+    "type": "Monstruosité (métamorphe)",
+    "size": "M",
+    "alignment": "Neutre",
+    "armorClass": 14,
+    "hitPoints": "52 (8d8 + 16)",
+    "speed": {
+      "walk": "9 m"
+    },
+    "abilities": {
+      "strength": 11,
+      "dexterity": 18,
+      "constitution": 14,
+      "intelligence": 11,
+      "wisdom": 12,
+      "charisma": 14
+    },
+    "skills": {
+      "insight": "+3",
+      "deception": "+6"
+    },
+    "immunities": ["Charmé"],
+    "senses": {
+      "darkvision": "18 m",
+      "passivePerception": 11
+    },
+    "languages": ["Commun"],
+    "challengeRating": 3,
+    "traits": [
+      {
+        "name": "Métamorphe",
+        "description": "Le doppelganger peut utiliser son action pour se métamorphoser en un humanoïde de taille P ou M qu’il a déjà vu, ou pour reprendre sa forme véritable. Mise à part sa taille, ses statistiques sont les mêmes quelle que soit sa forme. L’équipement qu’il porte ou transporte ne se transforme pas. Il retrouve sa forme véritable s’il meurt."
+      },
+      {
+        "name": "Embuscade",
+        "description": "Lors du premier round de combat, le doppelganger a un avantage aux jets d’attaque contre toute créature qu’il a surprise."
+      },
+      {
+        "name": "Attaque surprise",
+        "description": "Si le doppelganger surprend une créature et réussit une attaque lors du premier round de combat, la cible subit 10 (3d6) dégâts supplémentaires pour cette attaque."
+      }
+    ],
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le doppelganger effectue deux attaques au corps à corps."
+      },
+      {
+        "name": "Coup",
+        "type": "Melee",
+        "modifier": "+6",
+        "reach": "1.5 m",
+
+        "hit": "7 (1d6 + 4) dégâts contondants."
+      },
+      {
+        "name": "Lecture des pensées",
+        "description": "Le doppelganger lit par magie les pensées de surface d’une créature située à 18 mètres ou moins de lui. Cet effet peut passer au travers d’un obstacle, mais est bloqué par 90 centimètres de bois ou de terre, 60 centimètres de pierre, 5 centimètres de métal ou une fine couche de plomb. Quand la cible est à portée, le doppelganger lit une pensée tant que sa concentration n’est pas rompue (de la même manière que la concentration d’un sort). Le doppelganger a un avantage aux jets de Sagesse (Intuition) ou de Charisme (Intimidation, Persuasion et Tromperie) contre une cible dont il lit les pensées."
+      }
+    ],
+    "colors": ["#5510a2"]
+  },
+  {
+    "name": "Grell",
+    "id": 69,
+    "type": "Aberration",
+    "size": "M",
+    "alignment": "Neutre Mauvais",
+    "armorClass": 12,
+    "hitPoints": "55 (10d8 + 10)",
+    "speed": {
+      "walk": "3 m",
+      "fly": "9 m (stationnaire)"
+    },
+    "abilities": {
+      "strength": 15,
+      "dexterity": 14,
+      "constitution": 13,
+      "intelligence": 12,
+      "wisdom": 11,
+      "charisma": 9
+    },
+    "skills": {
+      "stealth": "+6",
+      "perception": "+4"
+    },
+    "immunities": ["Foudre", "Aveuglé", "À terre"],
+    "senses": {
+      "blindSight": "18 m (aveugle au-delà de ce rayon)",
+      "passivePerception": 14
+    },
+    "languages": ["Grell"],
+    "challengeRating": 3,
+    "actions": [
+      {
+        "name": "Attaques multiples",
+        "description": "Le grell effectue deux attaques : une avec ses tentacules et une avec son bec."
+      },
+      {
+        "name": "Tentacules",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "3 m",
+        "hit": "7 (1d10 + 2) dégâts perforants, et la cible doit réussir un jet de sauvegarde de Constitution DD 11 ou être empoisonnée pendant 1 minute. La cible empoisonnée est paralysée, et peut retenter un jet de sauvegarde à la fin de chacun de ses tours, mettant fin à l'effet en cas de réussite. La cible de taille TG ou inférieure est également entravée tant qu’elle est paralysée de cette manière. Le grell a un avantage aux jets d’attaque effectués contre cette cible, mais ne peut pas utiliser l’attaque avec ses tentacules contre d’autres cibles. Lorsque le grell se déplace, il emporte avec lui toute créature de taille M ou inférieure qu’il a agrippée."
+      },
+      {
+        "name": "Bec",
+        "type": "Melee",
+        "modifier": "+4",
+        "reach": "1.5 m",
+        "hit": "7 (2d4 + 2) dégâts perforants."
+      }
+    ],
+    "colors": ["#931743"]
+  }
+]

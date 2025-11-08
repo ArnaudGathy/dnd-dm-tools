@@ -215,7 +215,7 @@ export const localCreatures: Record<string, Creature> = {
     traits: [
       {
         name: "Fausse apparence",
-        description: "Idétectable tant qu'elle ne bouge pas.",
+        description: "Indétectable tant qu'elle ne bouge pas.",
       },
     ],
     actions: [
@@ -342,6 +342,494 @@ export const localCreatures: Record<string, Creature> = {
         name: "Protection",
         description:
           "Déclencheur : Un jet d’attaque touche le porteur de l’amulette du gardien alors que celui-ci se trouve à 1 case du gardien. Réponse : Le porteur bénéficie d’un bonus de +2 à la CA, y compris contre l’attaque initiale, ce qui peut la faire échouer. Ce bonus dure jusqu’au début du prochain tour du gardien.",
+      },
+    ],
+  },
+  "yellow-musk-creeper": {
+    name: "Lierre musqué",
+    id: "_yellow-musk-creeper",
+    type: "Plant",
+    size: "Medium",
+    alignment: "Unaligned",
+    armorClass: 8,
+    hitPoints: "70 (11d8 + 11)",
+    speed: { walk: "1.5 m", climb: "1.5 m" },
+    challengeRating: 2,
+    abilities: {
+      strength: 12,
+      dexterity: 3,
+      constitution: 12,
+      intelligence: 1,
+      wisdom: 10,
+      charisma: 3,
+    },
+    immunities: ["blinded", "deafened", "exhaustion", "prone"],
+    senses: { blindSight: "9 m", passivePerception: 10 },
+    traits: [
+      {
+        name: "Fausse apparence",
+        description: "Indétectable tant qu'elle ne bouge pas.",
+      },
+      {
+        name: "Régénération",
+        description:
+          "+10 pv au début du tour, sauf si sa subit dégâts feu, nécro ou radiant lors du tour. Meurt uniquement au début de son tour, si ne régénère pas.",
+      },
+    ],
+    actions: [
+      {
+        name: "Toucher",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "13 (3d8) psi. Si la cible tombe a 0 PV, +1 jet de mort et implanté un bulbe. Animation après 24h.",
+      },
+      {
+        name: "Musc jaune (3/j)",
+        description:
+          "Rayon de 6 cases, humanoïde JdS SAG 13 ou charmé (ne pas agir, et avancer vers la plante). Relancer le JdS à la fin du tour.",
+      },
+    ],
+  },
+  "yellow-musk-zombie": {
+    name: "Zombie musqué",
+    id: "_yellow-musk-zombie",
+    type: "Undead",
+    size: "Medium",
+    alignment: "Unaligned",
+    armorClass: 9,
+    hitPoints: "33 (6d8 + 6)",
+    speed: { walk: "6 m" },
+    challengeRating: 0.5,
+    abilities: {
+      strength: 13,
+      dexterity: 9,
+      constitution: 12,
+      intelligence: 1,
+      wisdom: 6,
+      charisma: 3,
+    },
+    immunities: ["charmed", "exhaustion"],
+    senses: { blindSight: "9 m", passivePerception: 8 },
+    traits: [
+      {
+        name: "Robustess de la non-vie",
+        description:
+          "A 0 PV : JdS CON DD 5 + dégâts subits, sauf si dégâts de feu ou critique. Si réussi, revient à 1 PV.",
+      },
+    ],
+    actions: [
+      {
+        name: "Coup",
+        type: "Melee",
+        modifier: "+3",
+        reach: "1.5 m",
+        hit: "5 (1d10 + 2) bludgeoning damage.",
+      },
+    ],
+  },
+  mantrap: {
+    name: "Attrape-homme",
+    id: "_mantrap",
+    type: "Plant",
+    size: "Large",
+    alignment: "Unaligned",
+    armorClass: 12,
+    hitPoints: "45 (7d10 + 7)",
+    speed: { walk: "1.5 m" },
+    challengeRating: 1,
+    abilities: {
+      strength: 15,
+      dexterity: 14,
+      constitution: 12,
+      intelligence: 1,
+      wisdom: 10,
+      charisma: 2,
+    },
+    immunities: ["blinded", "deafened", "exhaustion", "prone"],
+    senses: { tremorsense: "9 m", passivePerception: 10 },
+    traits: [
+      {
+        name: "Fausse apparence",
+        description: "Indétectable tant qu'elle ne bouge pas.",
+      },
+    ],
+    actions: [
+      {
+        name: "Engloutir",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "Si touché piégé dans la bouche, aveuglé et entravé. Abri total de l'exérieur. Subit 4d6 dégâts acide début chaque tour. Libération à la mort",
+      },
+    ],
+    reactions: [
+      {
+        name: "Pollen attractif (1/j)",
+        description:
+          "Rayon de 6 cases, humanoïde JdS SAG 13 ou charmé (ne pas agir, et avancer vers la plante). Relancer le JdS à la fin du tour.",
+      },
+    ],
+  },
+  zalkore: {
+    name: "Zalkoré",
+    id: "_zalkore",
+    type: "Monstrosity",
+    size: "Medium",
+    alignment: "Lawful Evil",
+    armorClass: "15",
+    hitPoints: "127 (17d8 + 51)",
+    challengeRating: 6,
+    speed: {
+      walk: "9 m",
+    },
+    abilities: {
+      strength: 10,
+      dexterity: 17,
+      constitution: 16,
+      intelligence: 12,
+      wisdom: 13,
+      charisma: 15,
+    },
+    savingThrows: {
+      dexterity: "+3",
+      constitution: "+3",
+      intelligence: "+1",
+      wisdom: "+4",
+      charisma: "+2",
+    },
+    skills: {
+      deception: "+5",
+      perception: "+4",
+      stealth: "+6",
+    },
+    languages: ["common plus one other language"],
+    senses: {
+      darkvision: "45 m",
+      passivePerception: 14,
+    },
+    traits: [
+      {
+        name: "test",
+        description: "A 50% PV (63). Invoque l'esprit de Thiru-taya (active sa réaction)",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaque multiples",
+        description: "2 griffes et 1 serpent OU 3 rayons",
+      },
+      {
+        name: "Griffe",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "(2d6 + 3) tranchants.",
+      },
+      {
+        name: "Chevelure serpents",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "(1d4 tranchants + 4d6 poison + 3)",
+      },
+      {
+        name: "Rayon empoisonné",
+        reach: "45 m",
+        type: "Distance",
+        modifier: "+6",
+        hit: "(2d8 + 2) poison",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Regard pétrifiant (5–6)",
+        description:
+          "Cone de 6 cases. JdS CON 13 ou restrained. Relancer JdS à la fin du tour si tjs restrained et devenir Petrified",
+      },
+    ],
+    reactions: [
+      {
+        name: "Lance de Thiru-taya",
+        type: "Melee",
+        modifier: "+6",
+        reach: "4.5 m",
+        hit: "(2d8 + 6) force",
+      },
+    ],
+  },
+  eblis: {
+    name: "Eblis",
+    id: "_eblis",
+    type: "Monstrosity",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 14,
+    hitPoints: "36 (4d10 + 4)",
+    speed: { walk: "9 m", fly: "12 m" },
+    challengeRating: 1,
+    abilities: {
+      strength: 11,
+      dexterity: 16,
+      constitution: 12,
+      intelligence: 12,
+      wisdom: 14,
+      charisma: 11,
+    },
+    skills: { perception: "+4" },
+    senses: { passivePerception: 14 },
+    languages: ["Auran", "Common"],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x bec",
+      },
+      {
+        name: "Beak",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "5 (1d6 + 3) piercing damage.",
+      },
+    ],
+    spellStats: {
+      attackMod: 3,
+      spellDC: 12,
+      slots: {
+        "1": 2,
+      },
+    },
+    spells: [
+      {
+        id: "blur",
+        summary: "Désavantage des attaques adverses (concentration, 1m)",
+      },
+      {
+        id: "hypnotic-pattern",
+        summary: "JdS SAG 12 charmé. Incapacité + 0 Vit. Subir dgts ou aider",
+      },
+    ],
+  },
+  "meme-poupou": {
+    name: "Mémé Pou'pou",
+    id: "_green-hag",
+    type: "Fey",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: "17",
+    hitPoints: "82 (11d8 + 33)",
+    challengeRating: 3,
+    speed: {
+      walk: "9 m",
+      swim: "9 m",
+    },
+    abilities: {
+      strength: 18,
+      dexterity: 12,
+      constitution: 16,
+      intelligence: 13,
+      wisdom: 14,
+      charisma: 14,
+    },
+    savingThrows: {
+      strength: "+4",
+      dexterity: "+1",
+      constitution: "+3",
+      intelligence: "+1",
+      wisdom: "+2",
+      charisma: "+2",
+    },
+    skills: {
+      arcana: "+5",
+      deception: "+4",
+      perception: "+4",
+      stealth: "+3",
+    },
+    languages: ["common", "elvish", "sylvan"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 14,
+    },
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "3x griffe",
+      },
+      {
+        name: "Griffe",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "8 (1d8 tranchant + 1d6 poison + 4)",
+      },
+    ],
+    spellStats: {
+      attackMod: 4,
+      spellDC: 12,
+      slots: {
+        "1": 3,
+      },
+    },
+    spells: [
+      {
+        id: "mage-hand",
+        summary: "Déplacement 6 case via une action",
+      },
+      {
+        id: "invisibility",
+        summary: "Invisible jusqu'à attaquer (concentration, 1h)",
+      },
+      {
+        id: "ray-of-sickness",
+        summary: "Attaque (+4) 4d8 poison + empoisonné jusqu'à fin prochain tour",
+      },
+    ],
+  },
+  "flesh-golem": {
+    name: "Flesh Golem",
+    id: "_flesh-golem",
+    type: "Construct",
+    size: "Medium",
+    alignment: "Neutral",
+    armorClass: "9",
+    hitPoints: "127 (15d8 + 60)",
+    challengeRating: 5,
+    speed: {
+      walk: "6m",
+    },
+    abilities: {
+      strength: 19,
+      dexterity: 9,
+      constitution: 18,
+      intelligence: 6,
+      wisdom: 10,
+      charisma: 5,
+    },
+    savingThrows: {
+      strength: "+4",
+      dexterity: "-1",
+      constitution: "+4",
+      intelligence: "-2",
+      charisma: "-3",
+    },
+    immunities: [
+      "lightning",
+      "poison",
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+    ],
+    languages: ["understands common plus one other language but can't speak"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 10,
+    },
+    traits: [
+      {
+        name: "Aversion au feu",
+        description:
+          "Si dégats de feu subits, désavantage attaque et caract. jusqu'à la fin de son prochain tour.",
+      },
+      {
+        name: "Berserk",
+        description:
+          "A partir de 50% PV, 1d6 au début du tour, sur 6 devenir berserk. Attaquer la cible la plus proche. Soigner > 50% ou Persuasion DD 15 pour arrêter.",
+      },
+      {
+        name: "Forme immuable",
+        description: "Ne peut pas être transformé",
+      },
+      {
+        name: "Absorption de foudre",
+        description: "Soigné par les dégâts de foudre",
+      },
+      {
+        name: "Résistance magique",
+        description: "Avantage JdS effets de sorts.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x Claque",
+      },
+      {
+        name: "Claque",
+        type: "Melee",
+        modifier: "+7",
+        reach: "1.5 m",
+        hit: "13 (2d8 cont. + 1d8 foudre + 4)",
+      },
+    ],
+  },
+  chaudron: {
+    name: "Chaudron",
+    id: "_chaudron",
+    armorClass: 16,
+    hitPoints: "50",
+    type: "Décor",
+    size: "M",
+    alignment: "N/A",
+    resistances: ["Dégâts physiques (tranchants, perçants, contondants)"],
+    speed: {
+      walk: "0 m",
+    },
+    abilities: {
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10,
+    },
+    senses: {
+      passivePerception: 0,
+    },
+    challengeRating: 0,
+    traits: [
+      {
+        name: "Explosion",
+        description:
+          "Explose au 7ème ingrédient. Expose et touche tout le monde avec un effet de petrification : 2x JdS CON 13 (Restrained + Petrified). Soigne Zalkoré de sa condition de méduse",
+      },
+      {
+        name: "Jaune (Sève)",
+        description:
+          "Explosion tout le monde dans la pièce JdS CON 14 ou 2d6 dégats d’acide. Sauf le golem qui passe en mode Berserk (+2 toucher, +1d6 dégats) (La sève est très volatile (explosive))",
+      },
+      {
+        name: "Bleu (Pétales)",
+        description:
+          "Tous les ennemis morts ou inconscients génèrent des feu follets (max 3). Les joueurs au sol reviennent à la conscience avec 1 PV. (Utilisé dans les rituels pour aider les âmes à passer dans l’outre-monde)",
+      },
+      {
+        name: "Rouge (Sang)",
+        description:
+          "Tout sort lancé dans la pièce pendant le tour est relancé sur une cible aléatoire. ( est réputé imiter la magie, parfois de manière imprévisible)",
+      },
+      {
+        name: "Vert (Feuillages)",
+        description:
+          "Soigne tout le monde dans la pièce sauf le golem 2d6+3. Les joueurs gagnent avantage à leur prochaine attaque unique. (Utilisé dans les potions et sorts de soins)",
+      },
+      {
+        name: "Mauve (Poudre fée)",
+        description:
+          "Dissipe tous les effets magique et de status : buff, débuffs, poison, maladies, invisibilité, invocations, brise la concentration. (Les anciens druides l’utilisaient pour rompre les enchantements ou purifier les auras corrompues)",
+      },
+    ],
+    actions: [
+      {
+        name: "Ramasser et jeter",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Analyser ingrédient",
+        description: "Arcane ou Nature DD 14",
       },
     ],
   },

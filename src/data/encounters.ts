@@ -451,4 +451,107 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "jFGq3nwApvA",
   },
+  {
+    name: "Attrape-homme",
+    id: 73,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Nangaloré",
+      mapMarker: "NG1",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "_mantrap",
+          color: "#BB564E",
+        },
+        {
+          id: "_yellow-musk-creeper",
+          color: "#F4ED37",
+        },
+        {
+          id: "_yellow-musk-zombie",
+          color: "#566142",
+        },
+        {
+          id: "_yellow-musk-zombie",
+          variant: "fleur",
+          color: "#566142",
+        },
+        {
+          id: "_yellow-musk-zombie",
+          color: "#B89250",
+        },
+        {
+          id: "_yellow-musk-zombie",
+          variant: "fleur",
+          color: "#B89250",
+        },
+        {
+          id: "_yellow-musk-zombie",
+          color: "#BC5D8C",
+        },
+        {
+          id: "_yellow-musk-zombie",
+          variant: "fleur",
+          color: "#BC5D8C",
+        },
+      ],
+    },
+    informations: ["3 zombies pop au 1er tour", "3 zombies au 2eme tour"],
+  },
+  {
+    name: "Zalkoré",
+    id: 74,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Nangaloré",
+      mapMarker: "NG2",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "_zalkore",
+          color: "#85BE43",
+        },
+        {
+          id: "_eblis",
+          color: "#B66F40",
+        },
+        {
+          id: "_eblis",
+          color: "#31384D",
+        },
+        {
+          id: "_eblis",
+          color: "#5F9EBF",
+        },
+        {
+          id: "_meme-poupou",
+          color: "#AF512B",
+        },
+        {
+          id: "_flesh-golem",
+          color: "#814F3D",
+        },
+        {
+          id: "will-o--wisp",
+          color: "#76D8DB",
+        },
+        {
+          id: "will-o--wisp",
+          color: "#CC61C2",
+        },
+        {
+          id: "will-o--wisp",
+          color: "#E3BA50",
+        },
+        {
+          id: "_chaudron",
+          shouldHideInInitiativeTracker: true,
+        },
+      ],
+    },
+    youtubeId: "Ud7e2Qvm5Mg",
+  },
 ];
