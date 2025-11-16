@@ -1,0 +1,18 @@
+table {
+  border: 1px solid black;
+
+  th {
+    border: 1px solid black;
+    padding: 2px;
+  }
+
+  td {
+    border: 1px solid black;
+    padding: 2px;
+    text-align: center;
+  }
+
+  td:first-child {
+    font-weight: bold;
+  }
+}

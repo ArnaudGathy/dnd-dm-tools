@@ -220,6 +220,7 @@ model Character {
   maximumHP     Int
   currentHP     Int
   currentTempHP Int         @default(0)
+  HPModifier    Int         @default(0)
 
   strength     Int
   dexterity    Int

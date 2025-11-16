@@ -1,5 +1,13 @@
 import prisma from "@/lib/prisma";
-import { CampaignId, CharacterStatus, PartyId } from "@prisma/client";
+import {
+  Armor,
+  CampaignId,
+  Capacity,
+  Character,
+  CharacterStatus,
+  PartyId,
+  Skill,
+} from "@prisma/client";
 
 export const getNumberOfCharactersByOwner = async ({ ownerEmail }: { ownerEmail?: string }) => {
   return prisma.character.count({
@@ -169,4 +177,47 @@ export const getCharactersFromCampaignId = (campaignId: number) => {
       creaturesOnCharacters: true,
     },
   });
+};
+
+export type DMScreenCharacter = Character & {
+  armors: Armor[];
+  skills: Skill[];
+  capacities: Capacity[];
+};
+export const getDMScreenCharactersFromCampaignId = async (
+  campaignName = CampaignId.TOMB,
+  partyName = PartyId.MIFA,
+) => {
+  const party = await prisma.party.findFirst({
+    where: {
+      name: partyName,
+    },
+  });
+
+  if (party) {
+    const campaign = await prisma.campaign.findUnique({
+      where: {
+        name_partyId: {
+          partyId: party.id,
+          name: campaignName,
+        },
+      },
+    });
+
+    if (campaign) {
+      return prisma.character.findMany({
+        where: {
+          campaignId: campaign.id,
+          status: CharacterStatus.ACTIVE,
+        },
+        include: {
+          armors: true,
+          skills: true,
+          capacities: true,
+        },
+      });
+    }
+  }
+
+  throw new Error(`Character not found for party ${partyName} and the campaign ${campaignName}`);
 };

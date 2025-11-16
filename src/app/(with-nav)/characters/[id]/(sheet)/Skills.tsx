@@ -4,11 +4,10 @@ import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP, SKILL_NAME_MAP } from "@
 import SheetCard from "@/components/ui/SheetCard";
 import { Asterisk, Crown } from "lucide-react";
 import SheetSingleData from "@/components/ui/SheetSingleData";
-import { Skills as SkillList } from "@prisma/client";
 import { addSignToNumber, getModifier, shortenAbilityName } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/SavingThrows";
-import { getSkillModifier } from "@/utils/stats/skills";
+import { getPassivePerception, getSkillModifier } from "@/utils/stats/skills";
 
 export default function Skills({ character }: { character: CharacterById }) {
   const abilities = {
@@ -125,10 +124,7 @@ export default function Skills({ character }: { character: CharacterById }) {
         value={`+${PROFICIENCY_BONUS_BY_LEVEL[character.level]}`}
       />
 
-      <SheetSingleData
-        label="Perception passive"
-        value={8 + getSkillModifier(character, SkillList.PERCEPTION).total}
-      />
+      <SheetSingleData label="Perception passive" value={getPassivePerception(character)} />
     </div>
   );
 }

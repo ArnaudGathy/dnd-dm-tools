@@ -19,16 +19,19 @@ const getBaseHP = (
     className,
     capacities,
     constitution,
+    HPModifier,
   }: {
     className: Classes;
     capacities: { name: string }[];
     constitution: number;
+    HPModifier?: number;
   },
   level = 1,
 ) => {
   return (
     BASE_HP_PER_CLASS_MAP[className] +
     (getBonusHP(capacities, level) ?? 0) +
+    (HPModifier ?? 0) +
     getModifier(constitution)
   );
 };

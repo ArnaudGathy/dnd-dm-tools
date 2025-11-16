@@ -1,10 +1,12 @@
-import { Character, Classes, SavingThrow, Skills } from "@prisma/client";
+import { Capacity, Character, Classes, SavingThrow, Skill, Skills } from "@prisma/client";
 import { ABILITY_NAME_MAP, PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP } from "@/constants/maps";
 import { addSignToNumber, getModifier } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
-import { CharacterById } from "@/lib/utils";
 
-export const getSkillSpecial = (character: CharacterById, skillName: Skills) => {
+export const getSkillSpecial = (
+  character: Character & { capacities: Capacity[] },
+  skillName: Skills,
+) => {
   if (
     character.className === Classes.DRUID &&
     character.capacities.some(({ name }) => name.toLowerCase().includes("ordre primitif (mage)")) &&
@@ -18,7 +20,10 @@ export const getSkillSpecial = (character: CharacterById, skillName: Skills) => 
   return { skillSpecial: 0, skillSpecialName: undefined };
 };
 
-export const getSkillModifier = (character: CharacterById, skillName: Skills) => {
+export const getSkillModifier = (
+  character: Character & { skills: Skill[]; capacities: Capacity[] },
+  skillName: Skills,
+) => {
   const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
   const selectedSkill = character.skills.find(({ skill }) => skill === skillName);
   const proficiencyModifier = selectedSkill?.isExpert
@@ -42,6 +47,12 @@ export const getSkillModifier = (character: CharacterById, skillName: Skills) =>
     skillSpecialName,
     total: abilityModifier + proficiencyModifier + bonusModifier + skillSpecial,
   };
+};
+
+export const getPassivePerception = (
+  character: Character & { skills: Skill[]; capacities: Capacity[] },
+) => {
+  return 8 + getSkillModifier(character, Skills.PERCEPTION).total;
 };
 
 export const getSavingThrowModifier = (

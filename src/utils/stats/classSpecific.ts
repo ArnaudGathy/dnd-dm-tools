@@ -7,6 +7,7 @@ import {
   ROGUE_BACKSTAB_DICE_PER_LEVEL,
   ROGUE_SOULKNIFE_DICE_PER_LEVEL,
 } from "@/constants/maps";
+import { getSpellSaveDC } from "@/utils/stats/spells";
 
 export const getMartialClassDCModifier = (character: Character) => {
   if (
@@ -32,13 +33,16 @@ export const getMartialClassDCModifier = (character: Character) => {
   throw new Error("Invalid class to compute martial DC");
 };
 
-export const getMartialClassDC = (character: Character) => {
-  if (
+const hasMartialDC = (character: Character) => {
+  return (
     (character.className === Classes.FIGHTER &&
       character.subclassName === Subclasses.BATTLE_MASTER) ||
     character.className === Classes.MONK ||
     character.className === Classes.ROGUE
-  ) {
+  );
+};
+export const getMartialClassDC = (character: Character) => {
+  if (hasMartialDC(character)) {
     const base = 8;
     const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
     const { name, modifier } = getMartialClassDCModifier(character);
@@ -52,6 +56,14 @@ export const getMartialClassDC = (character: Character) => {
     };
   }
   return null;
+};
+
+export const getSaveDC = (character: Character) => {
+  const martialDC = getMartialClassDC(character);
+  if (martialDC) {
+    return martialDC.total;
+  }
+  return getSpellSaveDC(character).total;
 };
 
 export const getClassDice = (character: Character) => {

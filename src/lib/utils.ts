@@ -37,6 +37,14 @@ export async function getSessionData() {
   };
 }
 
+export const restrictToAdmins = async () => {
+  const { isAdmin } = await getSessionData();
+
+  if (!isAdmin) {
+    redirect("/");
+  }
+};
+
 export type SpellsCreaturesCount = {
   _count: { spellsOnCharacters: number; creaturesOnCharacters: number };
 };
