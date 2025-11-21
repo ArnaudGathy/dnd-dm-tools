@@ -28,7 +28,7 @@ export default function PlayersList({
   const isNPCTurn = !allPlayersIndices.includes(turnsTracker.activeParticipantIndex);
 
   return (
-    <div className="h-[1048px] w-[335px] bg-blue">
+    <div className="h-[1048px] w-[335px]">
       <div className="flex max-w-[300px] flex-col gap-4">
         <div className="flex flex-col items-center">
           <div

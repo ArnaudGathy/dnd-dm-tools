@@ -53,6 +53,9 @@ export default {
         blue: {
           DEFAULT: "var(--blue)",
         },
+        chroma: {
+          DEFAULT: "var(--chroma)",
+        },
       },
       borderRadius: {
         lg: "var(--radius)",

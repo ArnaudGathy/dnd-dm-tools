@@ -8,7 +8,6 @@ export default function Card({
 }: {
   children: React.ReactNode;
   isActive?: boolean;
-  index?: number;
   className?: string;
 }) {
   return (
@@ -24,7 +23,7 @@ export default function Card({
     >
       <div
         className={cn(
-          "m-1 flex h-full items-center gap-4 rounded-lg",
+          "m-1 flex items-center gap-4 rounded-lg",
           "border-2 border-neutral-700 p-2 text-neutral-700",
           {
             ["border-amber-800 p-2 text-amber-800"]: isActive,

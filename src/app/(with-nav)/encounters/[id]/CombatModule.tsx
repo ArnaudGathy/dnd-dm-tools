@@ -24,7 +24,7 @@ import { EllipsisHorizontalIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24
 import { ConditionImage } from "@/app/(with-nav)/encounters/[id]/ConditionImage";
 import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { BookOpenIcon, Dices, FastForwardIcon, RefreshCcw, Swords } from "lucide-react";
+import { BookOpenIcon, Dices, FastForwardIcon, RefreshCcw, SkullIcon, Swords } from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
 import {
@@ -365,6 +365,11 @@ export const CombatModule = ({
                 <UserPlusIcon className="size-6" />
                 Participants
               </Button>
+              <Link target="_blank" href="/death">
+                <Button variant="outline">
+                  <SkullIcon />
+                </Button>
+              </Link>
               <Button size="lg" onClick={handleNextTurn}>
                 {hasCombatStarted ? (
                   <FastForwardIcon className="size-6" />

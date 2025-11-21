@@ -1,0 +1,4 @@
+.container {
+  background: white url("../../../../constants/phb-bg-texture.jpg") repeat;
+  font-family: var(--font-medieval-sharp);
+}
