@@ -368,7 +368,7 @@ export const encounters: Encounter[] = [
         },
       ],
     },
-    youtubeId: "mswsmaHukRI",
+    youtubeId: "morqY2DkGuk",
   },
   {
     name: "Village de Yellyark",
