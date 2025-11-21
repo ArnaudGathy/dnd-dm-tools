@@ -30,25 +30,26 @@ export default function PlayersList({
   return (
     <div className="h-[1048px] w-[335px]">
       <div className="flex max-w-[300px] flex-col gap-4">
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col gap-4 rounded-lg bg-blue p-2">
+          <div className="flex flex-col items-center">
+            <div
+              className={cn(
+                styles.antiqua,
+                "text-center text-4xl uppercase text-orange-100 transition",
+              )}
+            >
+              {`Tour n°${turnsTracker.numberOfTurns}`}
+            </div>
+          </div>
+
           <div
             className={cn(
               styles.antiqua,
-              "mt-8 text-center text-4xl uppercase text-orange-100 transition",
+              "flex items-center justify-center text-3xl font-bold text-orange-100 transition duration-500",
             )}
           >
-            {`Tour n°${turnsTracker.numberOfTurns}`}
+            {`Tour de ${isNPCTurn ? "l'ennemi" : ""}`}
           </div>
-        </div>
-
-        <div
-          className={cn(
-            styles.antiqua,
-            "flex items-center justify-center text-3xl font-bold text-orange-100 opacity-0 transition duration-500",
-            { "opacity-100": isNPCTurn },
-          )}
-        >
-          {`Tour de l'ennemi`}
         </div>
         <div className="flex flex-col gap-4">
           {list.map((participant, index) => {
