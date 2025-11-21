@@ -195,7 +195,7 @@ export const localCreatures: Record<string, Creature> = {
     name: "Lianes assassines",
     id: "_assassin-vine",
     type: "Plant",
-    size: "Large",
+    size: "Medium",
     alignment: "Unaligned",
     armorClass: 13,
     hitPoints: "85 (10d10 + 30)",
