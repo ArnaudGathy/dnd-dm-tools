@@ -42,11 +42,12 @@ import { conditions } from "@/data/conditions";
 
 const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
 
+const DEFAULT_INIT = -999;
 const DEFAULT_STATE = {
   id: "",
   currentHp: "",
   name: "",
-  init: -1,
+  init: DEFAULT_INIT,
   hp: "",
   color: "#DD1D47",
   dexMod: 0,
@@ -85,8 +86,8 @@ const getNextTurn = ({
 };
 
 const sortParticipant = (a: Participant, b: Participant) => {
-  const aInit = b.init > -1 ? b.init : Infinity;
-  const bInit = a.init > -1 ? a.init : Infinity;
+  const aInit = b.init > DEFAULT_INIT ? b.init : Infinity;
+  const bInit = a.init > DEFAULT_INIT ? a.init : Infinity;
 
   if (aInit === bInit) {
     if (!a.isNPC && !b.isNPC) {

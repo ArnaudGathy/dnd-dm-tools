@@ -554,4 +554,53 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "Ud7e2Qvm5Mg",
   },
+  {
+    name: "Treant",
+    id: 75,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Jungle du Chult",
+      mapMarker: "JC6",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "_treant",
+          color: "#E6D645",
+        },
+        {
+          id: "_treant-weak-spot",
+          variant: "3",
+          color: "#fff300",
+        },
+        {
+          id: "_treant-weak-spot",
+          variant: "2",
+          color: "#0015ff",
+        },
+        {
+          id: "_treant-weak-spot",
+          variant: "1",
+          color: "#fd0000",
+        },
+        {
+          id: "_zombie-triceratops",
+          color: "#A8943F",
+        },
+        {
+          id: "_zombie-triceratops",
+          color: "#905954",
+        },
+        {
+          id: "zombie",
+          color: "#237785",
+        },
+        {
+          id: "zombie",
+          color: "#669727",
+        },
+      ],
+    },
+    youtubeId: "n8bmE76sETo",
+  },
 ];
