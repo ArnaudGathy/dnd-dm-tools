@@ -945,4 +945,72 @@ export const localCreatures: Record<string, Creature> = {
     },
     actions: [],
   },
+  kamadan: {
+    name: "Kamadan",
+    id: "_kamadan",
+    type: "Monstrosity",
+    size: "Large",
+    alignment: "Unaligned",
+    armorClass: "13",
+    hitPoints: "67 (9d10 + 18)",
+    speed: { walk: "9 m" },
+    challengeRating: 4,
+    abilities: {
+      strength: 16,
+      dexterity: 16,
+      constitution: 14,
+      intelligence: 3,
+      wisdom: 14,
+      charisma: 10,
+    },
+    skills: {
+      perception: "+4",
+      stealth: "+7",
+    },
+    senses: { passivePerception: 14 },
+    traits: [
+      {
+        name: "Keen Smell",
+        description: "The kamadan has advantage on Wisdom (Perception) checks that rely on smell.",
+      },
+      {
+        name: "Pounce",
+        description:
+          "If the kamadan moves at least 6 m straight toward a creature and then hits it with a claw attack on the same turn, the target must succeed on a DC 13 Strength saving throw or be knocked prone. If the target is knocked prone, the kamadan can make two attacks—one with its bite and one with its snakes—as a bonus action.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description:
+          "The kamadan makes two attacks: one with its bite or claw and one with its snakes.",
+      },
+      {
+        name: "Bite",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "6 (1d6 + 3) piercing damage.",
+      },
+      {
+        name: "Claw",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "6 (1d6 + 3) slashing damage.",
+      },
+      {
+        name: "Snakes",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "6 (1d6 + 3) piercing damage, and the target must make a DC 12 Constitution saving throw, taking 21 (6d6) poison damage on a failed save, or half as much damage on a successful one.",
+      },
+      {
+        name: "Sleep Breath (Recharge 4–6)",
+        description:
+          "The kamadan exhales sleep gas in a 9 m cone. Each creature in that area must succeed on a DC 12 Constitution saving throw or fall unconscious for 10 minutes. The effect ends if the creature takes damage or someone uses an action to wake it.",
+      },
+    ],
+  },
 };
