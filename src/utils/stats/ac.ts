@@ -1,4 +1,4 @@
-import { Abilities, Armor, ArmorType, Character, Classes } from "@prisma/client";
+import { Abilities, Armor, ArmorType, Character, Classes, InventoryItem } from "@prisma/client";
 import { getModifier } from "@/utils/utils";
 import { ABILITY_NAME_MAP_TO_FR } from "@/constants/maps";
 
@@ -35,7 +35,9 @@ const getAcModifierByArmor = (character: Character, armor?: Armor) => {
   return { abilityACModifier: 0, modifierName: "Aucun" };
 };
 
-export const getTotalAC = (character: Character & { armors: Armor[] }) => {
+export const getTotalAC = (
+  character: Character & { armors: Armor[]; inventory: InventoryItem[] },
+) => {
   const equippedArmors = character.armors.filter(({ isEquipped }) => isEquipped);
   const equippedBodyArmor = equippedArmors.find(({ type }) => type !== ArmorType.SHIELD);
   const armorAC = !!equippedBodyArmor ? equippedBodyArmor.AC : 10;
@@ -43,6 +45,11 @@ export const getTotalAC = (character: Character & { armors: Armor[] }) => {
   const { abilityACModifier, modifierName } = getAcModifierByArmor(character, equippedBodyArmor);
   const equippedShield = equippedArmors.find(({ type }) => type === ArmorType.SHIELD);
   const shieldAc = !!equippedShield ? equippedShield.AC : 0;
+  const protectionRingModifier = character.inventory.find(({ name }) =>
+    name.toLowerCase().includes("anneau de protection"),
+  )
+    ? 1
+    : 0;
 
   return {
     armorAC,
@@ -50,7 +57,8 @@ export const getTotalAC = (character: Character & { armors: Armor[] }) => {
     abilityACModifier,
     modifierName,
     shieldAc,
+    protectionRingModifier,
     ACBonus: character.ACBonus,
-    total: armorAC + abilityACModifier + shieldAc + character.ACBonus,
+    total: armorAC + abilityACModifier + shieldAc + character.ACBonus + protectionRingModifier,
   };
 };

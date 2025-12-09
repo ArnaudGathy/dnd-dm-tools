@@ -33,19 +33,42 @@ export const getMartialClassDCModifier = (character: Character) => {
   throw new Error("Invalid class to compute martial DC");
 };
 
-const hasMartialDC = (character: Character) => {
-  return (
+export const getMartialClassDC = (character: Character) => {
+  if (
     (character.className === Classes.FIGHTER &&
       character.subclassName === Subclasses.BATTLE_MASTER) ||
     character.className === Classes.MONK ||
     character.className === Classes.ROGUE
-  );
-};
-export const getMartialClassDC = (character: Character) => {
-  if (hasMartialDC(character)) {
+  ) {
     const base = 8;
     const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
     const { name, modifier } = getMartialClassDCModifier(character);
+
+    return {
+      base,
+      proficiencyBonus,
+      modifier,
+      modifierName: name,
+      total: base + proficiencyBonus + modifier,
+    };
+  }
+  return null;
+};
+
+export const getSubMartialClassDCModifier = (character: Character) => {
+  if (character.className === Classes.MONK) {
+    const modifier = getModifier(character.dexterity);
+    const name = ABILITY_NAME_MAP_TO_FR[Abilities.DEXTERITY];
+    return { modifier, name };
+  }
+  throw new Error("Invalid class to compute martial DC");
+};
+
+export const getSubMartialClassDC = (character: Character) => {
+  if (character.className === Classes.MONK) {
+    const base = 8;
+    const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
+    const { name, modifier } = getSubMartialClassDCModifier(character);
 
     return {
       base,

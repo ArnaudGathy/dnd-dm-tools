@@ -1,6 +1,14 @@
-import { Capacity, Character, Classes, SavingThrow, Skill, Skills } from "@prisma/client";
+import {
+  Capacity,
+  Character,
+  Classes,
+  InventoryItem,
+  SavingThrow,
+  Skill,
+  Skills,
+} from "@prisma/client";
 import { ABILITY_NAME_MAP, PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP } from "@/constants/maps";
-import { addSignToNumber, getModifier } from "@/utils/utils";
+import { getModifier } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
 
 export const getSkillSpecial = (
@@ -56,7 +64,7 @@ export const getPassivePerception = (
 };
 
 export const getSavingThrowModifier = (
-  character: Character & { savingThrows: SavingThrow[] },
+  character: Character & { savingThrows: SavingThrow[]; inventory: InventoryItem[] },
   ability: AbilityNameType,
 ) => {
   const selectedSavingThrow = character.savingThrows.find(
@@ -67,6 +75,17 @@ export const getSavingThrowModifier = (
     : 0;
   const bonusModifier = selectedSavingThrow?.modifier ?? 0;
   const abilityModifier = getModifier(character[ability]);
+  const protectionRingModifier = character.inventory.find(({ name }) =>
+    name.toLowerCase().includes("anneau de protection"),
+  )
+    ? 1
+    : 0;
 
-  return addSignToNumber(abilityModifier + proficiencyModifier + bonusModifier);
+  return {
+    proficiencyModifier,
+    bonusModifier,
+    abilityModifier,
+    protectionRingModifier,
+    total: abilityModifier + proficiencyModifier + bonusModifier + protectionRingModifier,
+  };
 };

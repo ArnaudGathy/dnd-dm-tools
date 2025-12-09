@@ -32,7 +32,12 @@ import {
   getSpellsToPreparePerDay,
 } from "@/utils/stats/spells";
 import { getInitiativeModifier } from "@/utils/stats/initiative";
-import { getClassDice, getMartialClassDC, getSubClassDice } from "@/utils/stats/classSpecific";
+import {
+  getClassDice,
+  getMartialClassDC,
+  getSubClassDice,
+  getSubMartialClassDC,
+} from "@/utils/stats/classSpecific";
 
 import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 import RessourcesWrapper from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
@@ -47,6 +52,7 @@ export default function Combat({ character }: { character: CharacterById }) {
   const initiativeDetails = getInitiativeModifier(character);
   const movementSpeedDetails = getMovementSpeed(character);
   const martialClassDC = getMartialClassDC(character);
+  const subMartialClassDC = getSubMartialClassDC(character);
   const classDice = getClassDice(character);
   const subClassDice = getSubClassDice(character);
   const hasMartialData = martialClassDC?.total || classDice?.value || subClassDice?.value;
@@ -89,6 +95,12 @@ export default function Combat({ character }: { character: CharacterById }) {
                   <div>
                     <span>Bonus : </span>
                     <span>{ACDetails.ACBonus}</span>
+                  </div>
+                )}
+                {ACDetails.protectionRingModifier > 0 && (
+                  <div>
+                    <span>Anneau de protection : </span>
+                    <span>{ACDetails.protectionRingModifier}</span>
                   </div>
                 )}
               </div>
@@ -154,22 +166,6 @@ export default function Combat({ character }: { character: CharacterById }) {
       <div className="flex flex-col gap-4">
         {hasMartialData && (
           <div className="grid grid-cols-2 gap-4">
-            {classDice?.value && (
-              <StatCard
-                icon={Dice6}
-                iconColor="text-rose-500"
-                value={classDice.value}
-                definition={<span className="font-bold">{classDice.name}</span>}
-              />
-            )}
-            {subClassDice?.value && (
-              <StatCard
-                icon={Dice6}
-                iconColor="text-blue-500"
-                value={subClassDice.value}
-                definition={<span className="font-bold">{subClassDice.name}</span>}
-              />
-            )}
             {martialClassDC && (
               <StatCard
                 icon={Hand}
@@ -177,7 +173,7 @@ export default function Combat({ character }: { character: CharacterById }) {
                 value={martialClassDC.total}
                 definition={
                   <div>
-                    <span className="font-bold">DD martial</span>
+                    <span className="font-bold">DD martial ({martialClassDC.modifierName})</span>
                     <div>
                       <span>Base : </span>
                       <span>{martialClassDC.base}</span>
@@ -196,6 +192,50 @@ export default function Combat({ character }: { character: CharacterById }) {
                     )}
                   </div>
                 }
+              />
+            )}
+            {subMartialClassDC && (
+              <StatCard
+                icon={Hand}
+                iconColor="text-teal-600"
+                value={subMartialClassDC.total}
+                definition={
+                  <div>
+                    <span className="font-bold">DD martial ({subMartialClassDC.modifierName})</span>
+                    <div>
+                      <span>Base : </span>
+                      <span>{subMartialClassDC.base}</span>
+                    </div>
+                    {subMartialClassDC.modifier > 0 && (
+                      <div>
+                        <span>{`Modificateur (${subMartialClassDC.modifierName}) :`} </span>
+                        <span>{subMartialClassDC.modifier}</span>
+                      </div>
+                    )}
+                    {subMartialClassDC.proficiencyBonus > 0 && (
+                      <div>
+                        <span>Maîtrise : </span>
+                        <span>{subMartialClassDC.proficiencyBonus}</span>
+                      </div>
+                    )}
+                  </div>
+                }
+              />
+            )}
+            {classDice?.value && (
+              <StatCard
+                icon={Dice6}
+                iconColor="text-rose-500"
+                value={classDice.value}
+                definition={<span className="font-bold">{classDice.name}</span>}
+              />
+            )}
+            {subClassDice?.value && (
+              <StatCard
+                icon={Dice6}
+                iconColor="text-blue-500"
+                value={subClassDice.value}
+                definition={<span className="font-bold">{subClassDice.name}</span>}
               />
             )}
           </div>
