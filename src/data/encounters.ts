@@ -593,14 +593,36 @@ export const encounters: Encounter[] = [
         },
         {
           id: "zombie",
-          color: "#237785",
+          color: "#5fd1e4",
         },
         {
           id: "zombie",
-          color: "#669727",
+          color: "#b1ed66",
+        },
+        {
+          id: "zombie",
+          color: "#fdef52",
         },
       ],
     },
     youtubeId: "n8bmE76sETo",
+  },
+  {
+    name: "Le roi des plumes",
+    id: 76,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O1",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "_king-of-feathers",
+          color: "#93dc1e",
+        },
+      ],
+    },
+    youtubeId: "TODO",
   },
 ];

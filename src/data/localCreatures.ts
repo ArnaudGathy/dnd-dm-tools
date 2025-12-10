@@ -859,6 +859,11 @@ export const localCreatures: Record<string, Creature> = {
         description:
           "If damage reduces the zombie to 0 hit points, it must make a Constitution saving throw with a DC of 5 + the damage taken, unless the damage is radiant or from a critical hit. On a success, the zombie drops to 1 hit point instead.",
       },
+      {
+        name: "Charge",
+        description:
+          "S'il se déplace d'au moins 4 cases en ligne droite avant d'attaquer, ajoute 2d4 dégâts",
+      },
     ],
     actions: [
       {
@@ -866,7 +871,7 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+6",
         reach: "1.5 m",
-        hit: "18 (4d6 + 4) dégâts perçants. JdS FOR 14 ou au sol.",
+        hit: "18 (4d6 (+2d4) + 4) dégâts perçants. JdS FOR 14 ou au sol.",
       },
     ],
   },
@@ -1010,6 +1015,72 @@ export const localCreatures: Record<string, Creature> = {
         name: "Sleep Breath (Recharge 4–6)",
         description:
           "The kamadan exhales sleep gas in a 9 m cone. Each creature in that area must succeed on a DC 12 Constitution saving throw or fall unconscious for 10 minutes. The effect ends if the creature takes damage or someone uses an action to wake it.",
+      },
+    ],
+  },
+  "king-of-feathers": {
+    name: "Le roi des plumes",
+    id: "_king-of-feathers",
+    type: "Monstrosity",
+    size: "Huge",
+    alignment: "Unaligned",
+    armorClass: "13",
+    hitPoints: "200 (19d12 + 52)",
+    speed: { walk: "15 m" },
+    challengeRating: 8,
+    abilities: {
+      strength: 25,
+      dexterity: 10,
+      constitution: 19,
+      intelligence: 2,
+      wisdom: 12,
+      charisma: 9,
+    },
+    skills: { perception: "+4" },
+    senses: { passivePerception: 14 },
+    traits: [
+      {
+        name: "Detect Invisibility",
+        description:
+          "The King of Feathers can see invisible creatures and objects as if they were visible.",
+      },
+      {
+        name: "Legendary Resistance (3/Day)",
+        description:
+          "If the King of Feathers fails a saving throw, it can choose to succeed instead.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description:
+          "The King of Feathers makes two attacks: one with its bite and one with its tail. It can’t make both attacks against the same target.",
+      },
+      {
+        name: "Bite",
+        type: "Melee",
+        modifier: "+10",
+        reach: "3 m",
+        hit: "33 (4d12 + 7) piercing damage. If the target is Medium or smaller, it is grappled (escape DC 17). Until the grapple ends, the target is restrained, and the tyrannosaurus can’t bite another target.",
+      },
+      {
+        name: "Tail",
+        type: "Melee",
+        modifier: "+10",
+        reach: "3 m",
+        hit: "20 (3d8 + 7) bludgeoning damage.",
+      },
+      {
+        name: "Summon Swarm (Recharge 5–6)",
+        description:
+          "The King of Feathers exhales a swarm of insects (wasps) that forms in a space within 6 m of it. The swarm acts as its ally and takes its turn immediately after it. The swarm disperses after 1 minute. The King of Feathers cannot use this action while it is grappling a creature with its jaws.",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Saut éthéré",
+        description:
+          "Peut passer dans le plan éthéré et en ressortir durant le même tour, dans une distance de 10 cases.",
       },
     ],
   },
