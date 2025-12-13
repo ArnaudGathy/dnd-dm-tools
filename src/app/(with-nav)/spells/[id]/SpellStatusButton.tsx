@@ -33,7 +33,7 @@ export const SpellStatusButton = ({
     }
 
     if (spell.hasLongRestCast) {
-      return "text-fuchsia-500";
+      return "text-lime-500";
     }
 
     if (spell.isRitual) {

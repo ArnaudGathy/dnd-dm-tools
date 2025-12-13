@@ -69,7 +69,7 @@ export default function SpellsSettings({
           <div className="flex items-center gap-2">
             <Switch
               id="hasLongRestCast"
-              theme="green"
+              theme="lime"
               checked={hasLongRestCast}
               onCheckedChange={async (checked) => {
                 await updateSpellFlagAction({
@@ -80,7 +80,7 @@ export default function SpellsSettings({
                 });
               }}
             />
-            <Label htmlFor="hasLongRestCast" className="text-sm text-green-500">
+            <Label htmlFor="hasLongRestCast" className="text-sm text-lime-500">
               Un lancement par long repos
             </Label>
           </div>
