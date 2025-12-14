@@ -20,6 +20,7 @@ export type Participant = ParticipantToAdd & {
   conditions?: Condition[];
   notes?: string[];
   isNPC: boolean;
+  inactive?: boolean;
 };
 
 type EnemyObject = {
@@ -27,6 +28,7 @@ type EnemyObject = {
   color?: string;
   variant?: string;
   shouldHideInInitiativeTracker?: boolean;
+  inactive?: true;
 };
 export type EncounterEnemy = string | EnemyObject;
 

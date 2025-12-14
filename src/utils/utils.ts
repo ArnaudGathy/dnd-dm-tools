@@ -295,6 +295,7 @@ export const getParticipantFromEncounter = ({
           uuid: uuidv4(),
           isNPC: true,
           dexMod: getModifierFromCreature(creature, "dexterity"),
+          inactive: (isEnemyObject(enemyData) && enemyData.inactive) ?? false,
         },
       ];
     }

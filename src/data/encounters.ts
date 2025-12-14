@@ -533,21 +533,26 @@ export const encounters: Encounter[] = [
         {
           id: "_flesh-golem",
           color: "#814F3D",
+          inactive: true,
         },
         {
           id: "will-o--wisp",
           color: "#76D8DB",
+          inactive: true,
         },
         {
           id: "will-o--wisp",
           color: "#CC61C2",
+          inactive: true,
         },
         {
           id: "will-o--wisp",
           color: "#E3BA50",
+          inactive: true,
         },
         {
           id: "_chaudron",
+          inactive: true,
         },
       ],
     },

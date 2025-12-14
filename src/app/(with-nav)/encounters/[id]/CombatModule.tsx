@@ -24,7 +24,15 @@ import { EllipsisHorizontalIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24
 import { ConditionImage } from "@/app/(with-nav)/encounters/[id]/ConditionImage";
 import { filter, isDefined, map, pipe, prop } from "remeda";
 import { ConfirmDialog } from "@/components/ConfirmDialog";
-import { BookOpenIcon, Dices, FastForwardIcon, RefreshCcw, SkullIcon, Swords } from "lucide-react";
+import {
+  BookOpenIcon,
+  CheckIcon,
+  Dices,
+  FastForwardIcon,
+  RefreshCcw,
+  SkullIcon,
+  Swords,
+} from "lucide-react";
 import { usePathname, useRouter } from "next/navigation";
 import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
 import {
@@ -350,6 +358,12 @@ export const CombatModule = ({
     );
   };
 
+  const handleMarkAsActive = (participant: Participant) => {
+    setListOfParticipants((current) =>
+      current.map((p) => (p.uuid === participant.uuid ? { ...p, inactive: false } : p)),
+    );
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -464,6 +478,9 @@ export const CombatModule = ({
                     "opacity-20": participant.currentHp === "0",
                     "scale-[105%] bg-red-900": isActiveTurn,
                     "bg-stone-950": isEnvironment && !isActiveTurn,
+                  },
+                  {
+                    "pointer-events-none [&>*:not(#markActive)]:opacity-20": participant.inactive,
                   },
                 )}
               >
@@ -791,14 +808,26 @@ export const CombatModule = ({
                     })}
                   </div>
                 )}
-                <ConfirmDialog
-                  description="Supprimer cet élément est irréversible."
-                  onConfirm={() => handleRemoveParticipant(participant)}
-                >
-                  <Button variant="ghost" size="xs">
-                    <XMarkIcon className="size-4" />
+                {participant.inactive ? (
+                  <Button
+                    variant="ghost"
+                    size="xs"
+                    id="markActive"
+                    className="pointer-events-auto"
+                    onClick={() => handleMarkAsActive(participant)}
+                  >
+                    <CheckIcon className="size-4" />
                   </Button>
-                </ConfirmDialog>
+                ) : (
+                  <ConfirmDialog
+                    description="Supprimer cet élément est irréversible."
+                    onConfirm={() => handleRemoveParticipant(participant)}
+                  >
+                    <Button variant="ghost" size="xs">
+                      <XMarkIcon className="size-4" />
+                    </Button>
+                  </ConfirmDialog>
+                )}
               </div>
             );
           })}
