@@ -398,7 +398,7 @@ export const CombatModule = ({
         </CardTitle>
       </CardHeader>
 
-      <CardContent>
+      <CardContent className="max-h-[calc(100vh-6.5rem)] overflow-y-auto">
         {shouldShowAddParticipant && (
           <div className="mb-6 flex items-end space-x-4">
             <div className="w-full">

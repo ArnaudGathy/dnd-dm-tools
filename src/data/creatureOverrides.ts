@@ -39,5 +39,7 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
   },
   "will-o--wisp": {
     name: "Feu follet",
+    bonusActions: undefined,
+    behavior: "Traverse tout. Shock sur Golem.",
   },
 };

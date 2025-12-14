@@ -135,6 +135,7 @@ export type Creature = {
   };
   spells?: Array<{ id: string; summary?: string }>;
   colors?: Array<string>;
+  behavior?: string;
 };
 
 export type SummaryCreature = {

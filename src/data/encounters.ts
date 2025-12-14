@@ -548,7 +548,6 @@ export const encounters: Encounter[] = [
         },
         {
           id: "_chaudron",
-          shouldHideInInitiativeTracker: true,
         },
       ],
     },

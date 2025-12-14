@@ -564,6 +564,8 @@ export const localCreatures: Record<string, Creature> = {
         hit: "(2d8 + 6) force",
       },
     ],
+    behavior:
+      "Réaction Thiru > Regard > 2x Griffe + 1x serpent si melee > 3x Rayons si personne en melee",
   },
   eblis: {
     name: "Eblis",
@@ -603,7 +605,8 @@ export const localCreatures: Record<string, Creature> = {
       attackMod: 3,
       spellDC: 12,
       slots: {
-        "1": 2,
+        "2": 1,
+        "3": 1,
       },
     },
     spells: [
@@ -613,9 +616,10 @@ export const localCreatures: Record<string, Creature> = {
       },
       {
         id: "hypnotic-pattern",
-        summary: "JdS SAG 12 charmé. Incapacité + 0 Vit. Subir dgts ou aider",
+        summary: "Cube. JdS SAG 12 charmé. Incapacité + 0 Vit. Subir dmg ou aider",
       },
     ],
+    behavior: "Flou si attaqué > Motif sur qq personnes > 2x Bec",
   },
   "meme-poupou": {
     name: "Mémé Pou'pou",
@@ -659,6 +663,11 @@ export const localCreatures: Record<string, Creature> = {
     },
     actions: [
       {
+        name: "Lancer ingrédient",
+        description:
+          "Ajoute un ingrédient au chaudron via sa main de mage. Peut utiliser invisibilité pour le faire elle même.",
+      },
+      {
         name: "Attaques multiples",
         description: "3x griffe",
       },
@@ -674,7 +683,7 @@ export const localCreatures: Record<string, Creature> = {
       attackMod: 4,
       spellDC: 12,
       slots: {
-        "1": 3,
+        "1": Infinity,
       },
     },
     spells: [
@@ -691,6 +700,7 @@ export const localCreatures: Record<string, Creature> = {
         summary: "Attaque (+4) 4d8 poison + empoisonné jusqu'à fin prochain tour",
       },
     ],
+    behavior: "Lancer ingrédient main de main > Invisibilité ingrédients > Rayon > 3x griffe",
   },
   "flesh-golem": {
     name: "Flesh Golem",
@@ -729,6 +739,7 @@ export const localCreatures: Record<string, Creature> = {
       "petrified",
       "poisoned",
     ],
+    vulnerabilities: ["Feu (voir trait)"],
     languages: ["understands common plus one other language but can't speak"],
     senses: {
       darkvision: "18 m",
@@ -766,11 +777,19 @@ export const localCreatures: Record<string, Creature> = {
       {
         name: "Claque",
         type: "Melee",
-        modifier: "+7",
+        modifier: "+6",
         reach: "1.5 m",
         hit: "13 (2d8 cont. + 1d8 foudre + 4)",
       },
+      {
+        name: "Claque (berserk)",
+        type: "Melee",
+        modifier: "+7",
+        reach: "1.5 m",
+        hit: "13 (2d8 cont. + 1d8 foudre + 1d6 + 4)",
+      },
     ],
+    behavior: "Berserk 50%, feu, avantage JdS. 2x Claque (bonus berserk) ",
   },
   chaudron: {
     name: "Chaudron",
@@ -786,7 +805,7 @@ export const localCreatures: Record<string, Creature> = {
     },
     abilities: {
       strength: 10,
-      dexterity: 10,
+      dexterity: -99,
       constitution: 10,
       intelligence: 10,
       wisdom: 10,
@@ -800,7 +819,7 @@ export const localCreatures: Record<string, Creature> = {
       {
         name: "Explosion",
         description:
-          "Explose au 7ème ingrédient. Expose et touche tout le monde avec un effet de petrification : 2x JdS CON 13 (Restrained + Petrified). Soigne Zalkoré de sa condition de méduse",
+          "Explose au 7ème ingrédient. Touche tout le monde avec un effet de petrification : 2x JdS CON 13 (Restrained + Petrified). Soigne Zalkoré de sa condition de méduse",
       },
       {
         name: "Jaune (Sève)",
@@ -810,7 +829,7 @@ export const localCreatures: Record<string, Creature> = {
       {
         name: "Bleu (Pétales)",
         description:
-          "Tous les ennemis morts ou inconscients génèrent des feu follets (max 3). Les joueurs au sol reviennent à la conscience avec 1 PV. (Utilisé dans les rituels pour aider les âmes à passer dans l’outre-monde)",
+          "Tous les ennemis morts ou inconscients génèrent des feu follets (max 3). Les joueurs au sol reviennent à la conscience avec 1d10 PV. (Utilisé dans les rituels pour aider les âmes à passer dans l’outre-monde)",
       },
       {
         name: "Rouge (Sang)",

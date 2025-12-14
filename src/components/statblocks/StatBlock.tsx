@@ -100,6 +100,10 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                 />
               )}
             </div>
+
+            {creature.behavior && (
+              <StatCell name="Comportement" stat={creature.behavior} isInline />
+            )}
           </div>
 
           <div className="flex flex-wrap justify-between border-t-2 pt-4 md:justify-start md:gap-4">
