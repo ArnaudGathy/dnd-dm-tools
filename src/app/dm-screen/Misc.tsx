@@ -4,7 +4,7 @@ import TableTitle from "@/app/dm-screen/TableTitle";
 const data = [
   {
     name: "Concentration",
-    description: "DD : 10 + ½ dégâts subits",
+    description: "DD : 10 ou ½ dégâts subits",
   },
   {
     name: "Épuisement",

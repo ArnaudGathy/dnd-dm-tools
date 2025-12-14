@@ -510,7 +510,7 @@ export const localCreatures: Record<string, Creature> = {
     },
     traits: [
       {
-        name: "test",
+        name: "Esprit de Thiru-taya",
         description: "A 50% PV (63). Invoque l'esprit de Thiru-taya (active sa réaction)",
       },
     ],
@@ -550,7 +550,14 @@ export const localCreatures: Record<string, Creature> = {
     ],
     reactions: [
       {
-        name: "Lance de Thiru-taya",
+        name: "Riposte (100%)",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "(1d8 + 3) force",
+      },
+      {
+        name: "Riposte (50%)",
         type: "Melee",
         modifier: "+6",
         reach: "4.5 m",
