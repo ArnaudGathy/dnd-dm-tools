@@ -1110,4 +1110,58 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  "su-monster": {
+    name: "Monstre de Su",
+    id: "_su-monster",
+    type: "Monstrosity",
+    size: "Medium",
+    alignment: "Chaotic Evil",
+    armorClass: 12,
+    hitPoints: "27 (5d8 + 5)",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    challengeRating: 1,
+    abilities: {
+      strength: 14,
+      dexterity: 15,
+      constitution: 12,
+      intelligence: 9,
+      wisdom: 13,
+      charisma: 9,
+    },
+    skills: {
+      athletics: "+6",
+      perception: "+3",
+    },
+    senses: {
+      passivePerception: 13,
+    },
+    actions: [
+      {
+        name: "Multiattack",
+        description: "The su-monster makes two attacks: one with its bite and one with its claws.",
+      },
+      {
+        name: "Bite",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "4 (1d4 + 2) piercing damage.",
+      },
+      {
+        name: "Claws",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "7 (2d4 + 2) slashing damage, or 12 (4d4 + 2) slashing damage if the su-monster is hanging by its tail and all four of its limbs are free.",
+      },
+      {
+        name: "Psychic Crush (Recharge 5–6)",
+        description:
+          "The su-monster targets one creature it can see within 9 m of it. The target must succeed on a DC 11 Wisdom saving throw or take 17 (5d6) psychic damage and be stunned for 1 minute. The stunned target can repeat the saving throw at the end of each of its turns, ending the effect on itself on a success.",
+      },
+    ],
+  },
 };

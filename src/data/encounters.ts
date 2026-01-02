@@ -629,4 +629,27 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "TODO",
   },
+  {
+    name: "Grotte monstres de Su",
+    id: 77,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Jungle du Chult",
+      mapMarker: "JC7",
+    },
+    ennemies: {
+      "1": [
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+        "_su-monster",
+      ],
+    },
+  },
 ];
