@@ -480,7 +480,7 @@ export const CombatModule = ({
                     "bg-stone-950": isEnvironment && !isActiveTurn,
                   },
                   {
-                    "pointer-events-none [&>*:not(#markActive)]:opacity-20": participant.inactive,
+                    "pointer-events-none [&>*:not(#markActive)]:opacity-40": participant.inactive,
                   },
                 )}
               >
@@ -583,7 +583,11 @@ export const CombatModule = ({
                     onFocus={(event) => event.target.select()}
                   />
                 </div>
-                <div className={clsx("w-[200px] truncate px-4 text-center")}>
+                <div
+                  className={clsx("w-[200px] truncate px-4 text-center", {
+                    ["text-red-400 line-through"]: participant.currentHp === "0",
+                  })}
+                >
                   <TooltipComponent definition={participant.name}>
                     {participant.isNPC ? (
                       <Link href={`#${participant.id}`}>{participant.name}</Link>

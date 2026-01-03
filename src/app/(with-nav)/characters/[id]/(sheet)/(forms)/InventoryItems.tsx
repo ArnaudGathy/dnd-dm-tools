@@ -1,20 +1,35 @@
 "use client";
 
 import SheetCard from "@/components/ui/SheetCard";
-import { CharacterById } from "@/lib/utils";
+import { CharacterById, cn } from "@/lib/utils";
 import AddInventoryItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddInventoryItem";
 import { Button } from "@/components/ui/button";
-import { Plus, Sparkle } from "lucide-react";
+import { AlertCircle, Plus, Sparkle } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 
-export default function InventoryItems({ character }: { character: CharacterById }) {
+export default function InventoryItems({
+  character,
+  numberOfAttunedItems,
+}: {
+  character: CharacterById;
+  numberOfAttunedItems: number;
+}) {
+  const hasTooManyAttunedItems = numberOfAttunedItems > 3;
   return (
-    <SheetCard className="relative flex flex-col gap-4">
+    <SheetCard className={cn("relative flex flex-col gap-4")}>
       <AddInventoryItem character={character} className="absolute right-4" title="Ajouter un objet">
         <Button size="sm">
           <Plus />
         </Button>
       </AddInventoryItem>
       <span className="mb-2 flex self-center text-2xl font-bold">Inventaire</span>
+      {hasTooManyAttunedItems && (
+        <Alert className="bg-red-900">
+          <AlertCircle className="h-6 w-6" />
+          <AlertTitle>Trop d&apos;objets magique harmonisés</AlertTitle>
+          <AlertDescription>Il y en a {numberOfAttunedItems} sur un maximum de 3</AlertDescription>
+        </Alert>
+      )}
       <ul className="flex flex-col">
         {character.inventory.map((inventoryItem) => (
           <AddInventoryItem

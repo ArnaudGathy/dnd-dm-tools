@@ -17,6 +17,8 @@ import InventoryItems from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/Inv
 import AttunedItems from "@/app/(with-nav)/characters/[id]/(sheet)/(inventory)/AttunedItems";
 
 export default function Inventory({ character }: { character: CharacterById }) {
+  const numberOfAttunedItems = character.inventory.filter((item) => item.isAttuned).length;
+
   return (
     <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-[1fr_30%_30%] md:p-4">
       <div className="flex flex-col gap-4">
@@ -25,8 +27,8 @@ export default function Inventory({ character }: { character: CharacterById }) {
             <MoneyForm key={money.id} money={money} />
           ))}
         </div>
-        <InventoryItems character={character} />
-        <AttunedItems character={character} />
+        <InventoryItems character={character} numberOfAttunedItems={numberOfAttunedItems} />
+        <AttunedItems numberOfAttunedItems={numberOfAttunedItems} />
       </div>
 
       {character.weapons.length > 0 && (

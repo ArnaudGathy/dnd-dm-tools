@@ -1,12 +1,7 @@
-"use client";
-
 import { Progress } from "@/components/ui/progress";
-import { CharacterById } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 
-export default function AttunedItems({ character }: { character: CharacterById }) {
-  const numberOfAttunedItems = character.inventory.filter((item) => item.isAttuned).length;
-
+export default function AttunedItems({ numberOfAttunedItems }: { numberOfAttunedItems: number }) {
   return (
     <SheetCard className="flex flex-col items-center justify-center">
       <span className="mb-2 text-2xl font-bold">Objets magique harmonisés</span>
