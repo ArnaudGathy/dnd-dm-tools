@@ -1,7 +1,7 @@
 "use client";
 
 import { useDeathTracker } from "@/hooks/useDeathTracker";
-import Card from "@/app/(plain)/tracker/initiative/(initiative)/Card";
+import PlayerInitiativeCard from "@/app/(plain)/tracker/initiative/(initiative)/PlayerInitiativeCard";
 import { Heart, Skull } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
@@ -25,7 +25,7 @@ export default function DeathTracker() {
             transition={{ duration: 2 }}
             className="flex"
           >
-            <Card>
+            <PlayerInitiativeCard>
               <div className="flex flex-col p-1">
                 <div className="mb-2 truncate text-center text-3xl font-bold">{characterName}</div>
                 <div className="flex gap-1">
@@ -55,7 +55,7 @@ export default function DeathTracker() {
                   ))}
                 </div>
               </div>
-            </Card>
+            </PlayerInitiativeCard>
           </motion.div>
         </AnimatePresence>
       ))}

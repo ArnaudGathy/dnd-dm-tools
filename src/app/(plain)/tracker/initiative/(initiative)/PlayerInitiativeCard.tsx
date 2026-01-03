@@ -1,14 +1,16 @@
 import { cn } from "@/lib/utils";
 import styles from "@/app/(plain)/tracker/initiative/page.module.css";
 
-export default function Card({
+export default function PlayerInitiativeCard({
   children,
   isActive,
   className,
+  isNPCTurn = false,
 }: {
   children: React.ReactNode;
   isActive?: boolean;
   className?: string;
+  isNPCTurn?: boolean;
 }) {
   return (
     <div
@@ -26,6 +28,7 @@ export default function Card({
           "m-1 flex items-center gap-4 rounded-lg",
           "border-2 border-neutral-700 p-2 text-neutral-700",
           {
+            ["opacity-20"]: isNPCTurn,
             ["border-amber-800 p-2 text-amber-800"]: isActive,
           },
         )}

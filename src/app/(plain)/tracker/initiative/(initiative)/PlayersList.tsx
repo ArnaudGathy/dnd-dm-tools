@@ -1,4 +1,4 @@
-import Card from "@/app/(plain)/tracker/initiative/(initiative)/Card";
+import PlayerInitiativeCard from "@/app/(plain)/tracker/initiative/(initiative)/PlayerInitiativeCard";
 import Hexagon from "@/app/(plain)/tracker/initiative/(initiative)/Hexagon";
 import { Participant } from "@/types/types";
 import { Turns } from "@/hooks/useParticipantsListTracker";
@@ -66,16 +66,14 @@ export default function PlayersList({
             }
 
             return (
-              <Card
+              <PlayerInitiativeCard
                 key={participant.uuid}
                 isActive={isActive}
-                className={cn({
-                  ["opacity-20"]: isNPCTurn,
-                })}
+                isNPCTurn={isNPCTurn}
               >
                 <Hexagon isActive={isActive}>{removeInitFloating(participant.init)}</Hexagon>
                 <span className="truncate text-3xl font-bold">{participant.name}</span>
-              </Card>
+              </PlayerInitiativeCard>
             );
           })}
         </div>
