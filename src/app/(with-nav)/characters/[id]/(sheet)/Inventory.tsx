@@ -1,3 +1,5 @@
+"use client";
+
 import { CharacterById, cn } from "@/lib/utils";
 import SheetCard from "@/components/ui/SheetCard";
 import { ARMOR_TYPE_MAP } from "@/constants/maps";
@@ -12,6 +14,7 @@ import { Separator } from "@/components/ui/separator";
 import AmmunitionForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AmmunitionForm";
 import MoneyForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/MoneyForm";
 import InventoryItems from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/InventoryItems";
+import AttunedItems from "@/app/(with-nav)/characters/[id]/(sheet)/(inventory)/AttunedItems";
 
 export default function Inventory({ character }: { character: CharacterById }) {
   return (
@@ -23,6 +26,7 @@ export default function Inventory({ character }: { character: CharacterById }) {
           ))}
         </div>
         <InventoryItems character={character} />
+        <AttunedItems character={character} />
       </div>
 
       {character.weapons.length > 0 && (

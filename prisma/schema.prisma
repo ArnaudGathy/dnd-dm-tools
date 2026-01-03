@@ -273,6 +273,7 @@ model InventoryItem {
   description String?
   quantity    Int       @default(1)
   value       String?
+  isAttuned   Boolean   @default(false)
 }
 
 enum MoneyType {

@@ -96,7 +96,7 @@ export default function InventoryArray({ form }: { form: UseFormReturn<Character
 
       <ArrayAddButton
         label="Ajouter un objet"
-        onClick={() => append({ name: "", description: "" })}
+        onClick={() => append({ name: "", description: "", isAttuned: false })}
       />
     </FormItem>
   );

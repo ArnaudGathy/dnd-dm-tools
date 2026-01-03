@@ -47,6 +47,7 @@ export const inventoryItemFormSchema = z.object({
   description: z.string().nullish(),
   quantity: z.union([z.number(), z.string().regex(/^\d+$/, "Chiffre")]).optional(),
   value: z.string().nullish(),
+  isAttuned: z.boolean(),
 });
 export type InventoryFormSchema = z.infer<typeof inventoryItemFormSchema>;
 
@@ -279,6 +280,7 @@ export const backendInventoryItemSchema = z.object({
   description: optionalNullableString,
   quantity: backendStringToNumber.optional(),
   value: optionalNullableString,
+  isAttuned: z.boolean(),
 });
 export const backendCharacterSchema = z.object({
   owner: backendRequiredString,
@@ -516,6 +518,7 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
       description: item.description ?? undefined,
       quantity: item.quantity?.toString() ?? "1",
       value: item.value ?? undefined,
+      isAttuned: item.isAttuned,
     })),
     wealth: character.wealth.map((w) => ({
       type: w.type,

@@ -25,6 +25,7 @@ export const addInventoryItem = async (
     description: validated.data.description,
     quantity: validated.data.quantity,
     value: validated.data.value,
+    isAttuned: validated.data.isAttuned,
     characterId: characterId,
   };
 
