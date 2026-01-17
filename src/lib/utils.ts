@@ -9,6 +9,7 @@ import {
   Capacity,
   Character,
   InventoryItem,
+  MagicItem,
   Money,
   Party,
   SavingThrow,
@@ -59,6 +60,7 @@ export type CharacterById = Character &
     armors: Armor[];
     weapons: (Weapon & { damages: WeaponDamage[] })[];
     inventory: InventoryItem[];
+    magicItems: MagicItem[];
     wealth: Money[];
   };
 

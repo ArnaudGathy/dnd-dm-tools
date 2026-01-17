@@ -157,6 +157,9 @@ export const getCharacterById = async ({ characterId }: { characterId: number })
       wealth: {
         orderBy: [{ id: "asc" }],
       },
+      magicItems: {
+        orderBy: [{ name: "asc" }],
+      },
       _count: {
         select: {
           spellsOnCharacters: true,

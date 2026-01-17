@@ -1,0 +1,4 @@
+-- AlterTable
+ALTER TABLE "MagicItem" ALTER COLUMN "description" DROP NOT NULL,
+ALTER COLUMN "charges" DROP NOT NULL,
+ALTER COLUMN "dice" DROP NOT NULL;

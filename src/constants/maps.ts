@@ -8,6 +8,8 @@ import {
   CharacterStatus,
   Classes,
   MoneyType,
+  MagicItemDice,
+  MagicItemRarity,
   PartyId,
   Races,
   Skills,
@@ -800,6 +802,34 @@ export const CLASS_SPELL_PROGRESSION_MAP: Record<Classes, Array<Record<number, n
 export const PREPARED_SPELLS_PROGRESSION_WIZARD: number[] = [
   4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 16, 17, 18, 19, 21, 22, 23, 24, 25,
 ];
+
+export const MAGIC_ITEM_DICE_MAP: Record<MagicItemDice, string> = {
+  [MagicItemDice.D4]: "d4",
+  [MagicItemDice.D6]: "d6",
+  [MagicItemDice.D8]: "d8",
+  [MagicItemDice.D10]: "d10",
+  [MagicItemDice.D12]: "d12",
+  [MagicItemDice.D20]: "d20",
+};
+
+export const MAGIC_ITEM_RARITY_MAP: Record<MagicItemRarity, string> = {
+  [MagicItemRarity.COMMON]: "Commun",
+  [MagicItemRarity.UNCOMMON]: "Inhabituel",
+  [MagicItemRarity.RARE]: "Rare",
+  [MagicItemRarity.EPIC]: "Épique",
+  [MagicItemRarity.LEGENDARY]: "Légendaire",
+  [MagicItemRarity.ARTIFACT]: "Artefact",
+};
+
+export const MAGIC_ITEM_RARITY_COLOR_MAP: Record<MagicItemRarity, string> = {
+  [MagicItemRarity.COMMON]: "text-white",
+  [MagicItemRarity.UNCOMMON]: "text-green-500",
+  [MagicItemRarity.RARE]: "text-blue-500",
+  [MagicItemRarity.EPIC]: "text-purple-500",
+  [MagicItemRarity.LEGENDARY]: "text-orange-500",
+  [MagicItemRarity.ARTIFACT]: "text-red-500",
+};
+
 export const PREPARED_SPELLS_PROGRESSION: number[] = [
   4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 16, 17, 17, 18, 18, 19, 20, 21, 22,
 ];

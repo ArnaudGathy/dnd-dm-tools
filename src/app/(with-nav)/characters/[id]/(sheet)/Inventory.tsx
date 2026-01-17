@@ -14,11 +14,9 @@ import { Separator } from "@/components/ui/separator";
 import AmmunitionForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AmmunitionForm";
 import MoneyForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/MoneyForm";
 import InventoryItems from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/InventoryItems";
-import AttunedItems from "@/app/(with-nav)/characters/[id]/(sheet)/(inventory)/AttunedItems";
+import MagicItems from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/MagicItems";
 
 export default function Inventory({ character }: { character: CharacterById }) {
-  const numberOfAttunedItems = character.inventory.filter((item) => item.isAttuned).length;
-
   return (
     <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-[1fr_30%_30%] md:p-4">
       <div className="flex flex-col gap-4">
@@ -27,8 +25,8 @@ export default function Inventory({ character }: { character: CharacterById }) {
             <MoneyForm key={money.id} money={money} />
           ))}
         </div>
-        <InventoryItems character={character} numberOfAttunedItems={numberOfAttunedItems} />
-        <AttunedItems numberOfAttunedItems={numberOfAttunedItems} />
+        <InventoryItems character={character} />
+        <MagicItems character={character} />
       </div>
 
       {character.weapons.length > 0 && (

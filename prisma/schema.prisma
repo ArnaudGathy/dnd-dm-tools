@@ -300,9 +300,9 @@ model MagicItem {
   character   Character       @relation(fields: [characterId], references: [id])
   characterId Int
   name        String
-  description String
-  charges     Int
-  dice        MagicItemDice
+  description String?
+  charges     String?
+  dice        MagicItemDice?
   rarity      MagicItemRarity
   isAttuned   Boolean         @default(false)
 }

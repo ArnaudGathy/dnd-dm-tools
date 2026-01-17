@@ -9,6 +9,8 @@ import {
   CharacterStatus,
   Classes,
   MoneyType,
+  MagicItemDice,
+  MagicItemRarity,
   PartyId,
   Races,
   Skills,
@@ -50,6 +52,16 @@ export const inventoryItemFormSchema = z.object({
   isAttuned: z.boolean(),
 });
 export type InventoryFormSchema = z.infer<typeof inventoryItemFormSchema>;
+
+export const magicItemFormSchema = z.object({
+  name: formRequiredString,
+  description: z.string().nullish(),
+  charges: z.string().nullish(),
+  dice: z.nativeEnum(MagicItemDice).nullish(),
+  rarity: z.nativeEnum(MagicItemRarity),
+  isAttuned: z.boolean(),
+});
+export type MagicItemFormSchema = z.infer<typeof magicItemFormSchema>;
 
 export const signUpFormSchema = z.object({
   campaign: z.nativeEnum(CampaignId),
@@ -109,6 +121,7 @@ export const signUpFormSchema = z.object({
     )
     .nonempty(),
   inventory: z.array(inventoryItemFormSchema),
+  magicItems: z.array(magicItemFormSchema),
   wealth: z.array(
     z.object({
       type: z.nativeEnum(MoneyType),
@@ -256,8 +269,10 @@ export const signupFormDefaultValues = {
       description: "L'outil essentiel de tout aventurier",
       quantity: "1",
       value: "25po",
+      isAttuned: false,
     },
   ],
+  magicItems: [],
   wealth: [
     { type: MoneyType.GOLD, quantity: "0" },
     { type: MoneyType.SILVER, quantity: "0" },
@@ -280,6 +295,15 @@ export const backendInventoryItemSchema = z.object({
   description: optionalNullableString,
   quantity: backendStringToNumber.optional(),
   value: optionalNullableString,
+  isAttuned: z.boolean(),
+});
+
+export const backendMagicItemSchema = z.object({
+  name: backendRequiredString,
+  description: z.string().optional(),
+  charges: optionalNullableString,
+  dice: z.nativeEnum(MagicItemDice).nullable(),
+  rarity: z.nativeEnum(MagicItemRarity),
   isAttuned: z.boolean(),
 });
 export const backendCharacterSchema = z.object({
@@ -339,6 +363,8 @@ export const backendCharacterSchema = z.object({
     )
     .nonempty(),
   inventory: z.array(backendInventoryItemSchema),
+  magicItems: z.array(backendMagicItemSchema),
+
   wealth: z.array(
     z.object({
       type: z.nativeEnum(MoneyType),
@@ -518,6 +544,14 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
       description: item.description ?? undefined,
       quantity: item.quantity?.toString() ?? "1",
       value: item.value ?? undefined,
+      isAttuned: item.isAttuned,
+    })),
+    magicItems: character.magicItems.map((item) => ({
+      name: item.name,
+      description: item.description,
+      charges: item.charges ?? undefined,
+      dice: item.dice,
+      rarity: item.rarity,
       isAttuned: item.isAttuned,
     })),
     wealth: character.wealth.map((w) => ({
