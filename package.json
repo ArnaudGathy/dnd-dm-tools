@@ -12,7 +12,10 @@
     "prepare": "husky",
     "typecheck": "tsc --noEmit",
     "pre-commit": "lint-staged",
-    "seedOld": "prisma db push && node prisma/seedOld.js"
+    "seedOld": "prisma db push && node prisma/seedOld.js",
+    "db:backup": "mkdir -p backups && set -a && . ./.env && set +a && pg_dump --clean --if-exists \"$DATABASE_URL\" > backups/backup_$(date +%Y-%m-%d_%H-%M-%S).sql",
+    "db:restore": "echo 'Usage: npm run db:restore -- backups/your_backup_file.sql' && set -a && . ./.env && set +a && psql \"$DATABASE_URL\" < ",
+    "db:migrate": "prisma migrate dev"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",

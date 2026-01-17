@@ -243,6 +243,7 @@ model Character {
   weapons   Weapon[]
   armors    Armor[]
   inventory InventoryItem[]
+  magicItems MagicItem[]
   wealth    Money[]
 
   age            Int
@@ -274,6 +275,36 @@ model InventoryItem {
   quantity    Int       @default(1)
   value       String?
   isAttuned   Boolean   @default(false)
+}
+
+enum MagicItemRarity {
+  COMMON
+  UNCOMMON
+  RARE
+  EPIC
+  LEGENDARY
+  ARTIFACT
+}
+
+enum MagicItemDice {
+  D4
+  D6
+  D8
+  D10
+  D12
+  D20
+}
+
+model MagicItem {
+  id          Int             @id @default(autoincrement())
+  character   Character       @relation(fields: [characterId], references: [id])
+  characterId Int
+  name        String
+  description String
+  charges     Int
+  dice        MagicItemDice
+  rarity      MagicItemRarity
+  isAttuned   Boolean         @default(false)
 }
 
 enum MoneyType {
