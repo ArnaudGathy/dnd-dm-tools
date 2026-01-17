@@ -21,7 +21,6 @@ export const addMagicItem = async (
     name: validated.data.name,
     description: validated.data.description,
     charges: validated.data.charges,
-    dice: validated.data.dice,
     rarity: validated.data.rarity,
     isAttuned: validated.data.isAttuned,
     characterId: characterId,

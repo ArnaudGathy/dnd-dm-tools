@@ -274,7 +274,6 @@ model InventoryItem {
   description String?
   quantity    Int       @default(1)
   value       String?
-  isAttuned   Boolean   @default(false)
 }
 
 enum MagicItemRarity {
@@ -286,14 +285,7 @@ enum MagicItemRarity {
   ARTIFACT
 }
 
-enum MagicItemDice {
-  D4
-  D6
-  D8
-  D10
-  D12
-  D20
-}
+
 
 model MagicItem {
   id          Int             @id @default(autoincrement())
@@ -302,7 +294,7 @@ model MagicItem {
   name        String
   description String?
   charges     String?
-  dice        MagicItemDice?
+
   rarity      MagicItemRarity
   isAttuned   Boolean         @default(false)
 }

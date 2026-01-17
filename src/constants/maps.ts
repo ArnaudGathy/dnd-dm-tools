@@ -8,7 +8,6 @@ import {
   CharacterStatus,
   Classes,
   MoneyType,
-  MagicItemDice,
   MagicItemRarity,
   PartyId,
   Races,
@@ -802,15 +801,6 @@ export const CLASS_SPELL_PROGRESSION_MAP: Record<Classes, Array<Record<number, n
 export const PREPARED_SPELLS_PROGRESSION_WIZARD: number[] = [
   4, 5, 6, 7, 9, 10, 11, 12, 14, 15, 16, 16, 17, 18, 19, 21, 22, 23, 24, 25,
 ];
-
-export const MAGIC_ITEM_DICE_MAP: Record<MagicItemDice, string> = {
-  [MagicItemDice.D4]: "d4",
-  [MagicItemDice.D6]: "d6",
-  [MagicItemDice.D8]: "d8",
-  [MagicItemDice.D10]: "d10",
-  [MagicItemDice.D12]: "d12",
-  [MagicItemDice.D20]: "d20",
-};
 
 export const MAGIC_ITEM_RARITY_MAP: Record<MagicItemRarity, string> = {
   [MagicItemRarity.COMMON]: "Commun",

@@ -9,7 +9,6 @@ import {
   CharacterStatus,
   Classes,
   MoneyType,
-  MagicItemDice,
   MagicItemRarity,
   PartyId,
   Races,
@@ -49,7 +48,6 @@ export const inventoryItemFormSchema = z.object({
   description: z.string().nullish(),
   quantity: z.union([z.number(), z.string().regex(/^\d+$/, "Chiffre")]).optional(),
   value: z.string().nullish(),
-  isAttuned: z.boolean(),
 });
 export type InventoryFormSchema = z.infer<typeof inventoryItemFormSchema>;
 
@@ -57,7 +55,7 @@ export const magicItemFormSchema = z.object({
   name: formRequiredString,
   description: z.string().nullish(),
   charges: z.string().nullish(),
-  dice: z.nativeEnum(MagicItemDice).nullish(),
+
   rarity: z.nativeEnum(MagicItemRarity),
   isAttuned: z.boolean(),
 });
@@ -269,7 +267,6 @@ export const signupFormDefaultValues = {
       description: "L'outil essentiel de tout aventurier",
       quantity: "1",
       value: "25po",
-      isAttuned: false,
     },
   ],
   magicItems: [],
@@ -295,14 +292,13 @@ export const backendInventoryItemSchema = z.object({
   description: optionalNullableString,
   quantity: backendStringToNumber.optional(),
   value: optionalNullableString,
-  isAttuned: z.boolean(),
 });
 
 export const backendMagicItemSchema = z.object({
   name: backendRequiredString,
   description: z.string().optional(),
   charges: optionalNullableString,
-  dice: z.nativeEnum(MagicItemDice).nullable(),
+
   rarity: z.nativeEnum(MagicItemRarity),
   isAttuned: z.boolean(),
 });
@@ -544,13 +540,12 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
       description: item.description ?? undefined,
       quantity: item.quantity?.toString() ?? "1",
       value: item.value ?? undefined,
-      isAttuned: item.isAttuned,
     })),
     magicItems: character.magicItems.map((item) => ({
       name: item.name,
       description: item.description,
       charges: item.charges ?? undefined,
-      dice: item.dice,
+
       rarity: item.rarity,
       isAttuned: item.isAttuned,
     })),

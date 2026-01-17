@@ -9,13 +9,11 @@ import {
   InventoryFormSchema,
   inventoryItemFormSchema,
 } from "@/app/(with-nav)/characters/add/utils";
-import { Form, FormField } from "@/components/ui/form";
+import { Form } from "@/components/ui/form";
 import { addInventoryItem, deleteInventoryItem } from "@/lib/actions/InventoryItems";
 import { CharacterById } from "@/lib/utils";
 import { useState } from "react";
 import { InventoryItem } from "@prisma/client";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Label } from "@/components/ui/label";
 
 export default function AddInventoryItemForm({
   character,
@@ -38,7 +36,6 @@ export default function AddInventoryItemForm({
       name: "",
       quantity: "1",
       description: "",
-      isAttuned: false,
     },
   });
 
@@ -69,22 +66,7 @@ export default function AddInventoryItemForm({
           <FormFieldInput formInstance={form} formFieldName="quantity" label="Qté" />
           <FormFieldInput formInstance={form} formFieldName="value" label="Valeur" />
         </div>
-        <FormField
-          control={form.control}
-          name="isAttuned"
-          render={({ field }) => {
-            return (
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="isAttuned"
-                  defaultChecked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-                <Label htmlFor="isAttuned">Objet harmonisé avec le personnage</Label>
-              </div>
-            );
-          }}
-        />
+
         <FormFieldInput
           formInstance={form}
           formFieldName="description"

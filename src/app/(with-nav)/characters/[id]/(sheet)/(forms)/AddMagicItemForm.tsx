@@ -14,11 +14,8 @@ import { useState } from "react";
 import { MagicItem, MagicItemRarity } from "@prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import {
-  MAGIC_ITEM_DICE_MAP,
-  MAGIC_ITEM_RARITY_COLOR_MAP,
-  MAGIC_ITEM_RARITY_MAP,
-} from "@/constants/maps";
+
+import { MAGIC_ITEM_RARITY_COLOR_MAP, MAGIC_ITEM_RARITY_MAP } from "@/constants/maps";
 import { mapValues } from "remeda";
 
 export default function AddMagicItemForm({
@@ -47,8 +44,8 @@ export default function AddMagicItemForm({
           name: "",
           charges: "",
           description: "",
+
           isAttuned: false,
-          dice: null,
           rarity: MagicItemRarity.COMMON,
         },
   });
@@ -78,7 +75,7 @@ export default function AddMagicItemForm({
 
         <FormFieldInput formInstance={form} formFieldName="name" label="Nom" required />
 
-        <div className="grid w-[350px] grid-cols-[2fr_1fr_1fr] gap-2 md:w-[400px]">
+        <div className="grid w-[350px] grid-cols-[1fr_1fr] gap-2 md:w-[400px]">
           <FormFieldSelect
             formInstance={form}
             formFieldName="rarity"
@@ -89,13 +86,6 @@ export default function AddMagicItemForm({
             required
           />
           <FormFieldInput formInstance={form} formFieldName="charges" label="Charges" />
-          <FormFieldSelect
-            formInstance={form}
-            formFieldName="dice"
-            label="Dés"
-            items={MAGIC_ITEM_DICE_MAP}
-            allowNoValue
-          />
         </div>
 
         <FormField

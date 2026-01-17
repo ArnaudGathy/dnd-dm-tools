@@ -6,7 +6,7 @@ import AddMagicItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddMa
 import { Button } from "@/components/ui/button";
 import { AlertCircle, Plus, Sparkle } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { MAGIC_ITEM_DICE_MAP, MAGIC_ITEM_RARITY_COLOR_MAP } from "@/constants/maps";
+import { MAGIC_ITEM_RARITY_COLOR_MAP } from "@/constants/maps";
 import { Progress } from "@/components/ui/progress";
 
 export default function MagicItems({ character }: { character: CharacterById }) {
@@ -63,11 +63,6 @@ export default function MagicItems({ character }: { character: CharacterById }) 
                     )}
                     {magicItem.charges && (
                       <span className="text-sm text-indigo-400">({magicItem.charges})</span>
-                    )}
-                    {magicItem.dice !== null && (
-                      <span className="text-sm text-amber-400">
-                        {`1${MAGIC_ITEM_DICE_MAP[magicItem.dice]}`}
-                      </span>
                     )}
 
                     {magicItem.description && (

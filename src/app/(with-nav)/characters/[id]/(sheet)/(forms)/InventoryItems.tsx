@@ -4,7 +4,7 @@ import SheetCard from "@/components/ui/SheetCard";
 import { CharacterById, cn } from "@/lib/utils";
 import AddInventoryItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddInventoryItem";
 import { Button } from "@/components/ui/button";
-import { Plus, Sparkle } from "lucide-react";
+import { Plus } from "lucide-react";
 
 export default function InventoryItems({ character }: { character: CharacterById }) {
   return (
@@ -28,11 +28,7 @@ export default function InventoryItems({ character }: { character: CharacterById
               <span className="min-w-7 leading-5">{`${inventoryItem.quantity ?? "1"}`}</span>
               <div className="space-x-2">
                 <span className="leading-5">{`${inventoryItem.name}`}</span>
-                {inventoryItem.isAttuned && (
-                  <span className="inline-block">
-                    <Sparkle className="size-3 text-sky-400" />
-                  </span>
-                )}
+
                 {inventoryItem.value && (
                   <span className="text-sm text-slate-400">({inventoryItem.value})</span>
                 )}
