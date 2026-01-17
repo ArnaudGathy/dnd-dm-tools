@@ -62,7 +62,7 @@ export default function MagicItems({ character }: { character: CharacterById }) 
                       </span>
                     )}
                     {magicItem.charges && (
-                      <span className="text-sm text-indigo-400">{magicItem.charges} charges</span>
+                      <span className="text-sm text-indigo-400">({magicItem.charges})</span>
                     )}
                     {magicItem.dice !== null && (
                       <span className="text-sm text-amber-400">
