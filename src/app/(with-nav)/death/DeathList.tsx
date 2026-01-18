@@ -1,14 +1,14 @@
 "use client";
 
 import { useGroupFromCampaign } from "@/hooks/useGroupFromCampaign";
-import { useDeathTracker } from "@/hooks/useDeathTracker";
+import { useCharacterTracker } from "@/hooks/useCharacterTracker";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Heart, Skull } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export default function DeathList() {
-  const { deaths, setDeaths } = useDeathTracker();
+  const { charactersData, setCharactersData } = useCharacterTracker();
 
   const group = useGroupFromCampaign();
 
@@ -16,17 +16,28 @@ export default function DeathList() {
     return <div>Select a group</div>;
   }
 
-  const hasDeaths = !!deaths?.length;
+  const hasCharacters = !!charactersData?.length;
 
-  const handleSetCount = (characterName: string, type: "failure" | "success", total: number) => {
-    if (hasDeaths) {
-      setDeaths(
-        deaths?.map((death) => {
-          if (death.characterName !== characterName) {
-            return death;
+  const handleSetCount = (
+    characterName: string,
+    type: "failure" | "success" | "both",
+    total: number,
+  ) => {
+    if (hasCharacters) {
+      setCharactersData(
+        charactersData?.map((char) => {
+          if (char.characterName !== characterName) {
+            return char;
+          }
+          if (type === "both") {
+            return {
+              ...char,
+              success: total,
+              failure: total,
+            };
           }
           return {
-            ...death,
+            ...char,
             [type]: total,
           };
         }),
@@ -36,40 +47,10 @@ export default function DeathList() {
 
   return (
     <div className="mt-8 flex min-h-[264px] gap-8">
-      <div className="flex min-w-[100px] flex-col gap-4">
-        {group.map((character) => {
-          const isEnabled =
-            hasDeaths && deaths.some(({ characterName }) => characterName === character.name);
-          return (
-            <div key={character.id}>
-              <Button
-                variant={isEnabled ? "outline" : "secondary"}
-                className="w-full hover:cursor-pointer"
-                onClick={() => {
-                  if (isEnabled) {
-                    setDeaths(
-                      deaths?.filter(({ characterName }) => characterName !== character.name),
-                    );
-                  } else {
-                    setDeaths([
-                      ...(deaths || []),
-                      { characterName: character.name, success: 0, failure: 0 },
-                    ]);
-                  }
-                }}
-              >
-                {character.name}
-              </Button>
-            </div>
-          );
-        })}
-        <Button onClick={() => setDeaths([])}>Reset</Button>
-      </div>
-
       <div className="flex w-full justify-center">
-        {hasDeaths ? (
+        {hasCharacters ? (
           <div className="flex gap-4">
-            {(deaths ?? []).map(({ characterName, success, failure }) => (
+            {(charactersData ?? []).map(({ characterName, success, failure }) => (
               <Card key={characterName} className="h-fit text-center">
                 <CardHeader>
                   <CardTitle>{characterName}</CardTitle>
@@ -96,7 +77,7 @@ export default function DeathList() {
                         />
                       ))}
                     </div>
-                    <div className="mt-2 flex w-full flex-col gap-1">
+                    <div className="mt-2 grid w-full grid-cols-2 gap-2">
                       <Button
                         theme="red"
                         onClick={() =>
@@ -128,6 +109,15 @@ export default function DeathList() {
                         20
                       </Button>
                     </div>
+                    <Button
+                      variant="secondary"
+                      className="mt-4"
+                      onClick={() => {
+                        handleSetCount(characterName, "both", 0);
+                      }}
+                    >
+                      Reset
+                    </Button>
                   </div>
                 </CardContent>
               </Card>

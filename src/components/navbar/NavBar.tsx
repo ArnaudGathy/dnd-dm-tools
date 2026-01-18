@@ -23,7 +23,7 @@ const menuItems = [
     isPrivate: true,
   },
   {
-    label: "Death Saving",
+    label: "Death Tracker",
     to: "/death",
     icon: SkullIcon,
     isPrivate: true,

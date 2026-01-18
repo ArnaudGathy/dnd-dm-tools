@@ -16,7 +16,7 @@ export default function PlayerInitiativeCard({
     <div
       className={cn(
         styles.container,
-        "rounded-xl transition duration-500 ease-out",
+        "flex h-fit rounded-xl transition duration-500 ease-out",
         {
           ["translate-x-[35px]"]: isActive,
         },
@@ -25,7 +25,7 @@ export default function PlayerInitiativeCard({
     >
       <div
         className={cn(
-          "m-1 flex items-center gap-4 rounded-lg",
+          "m-1 flex min-w-[160px] items-center justify-center gap-4 rounded-lg",
           "border-2 border-neutral-700 p-2 text-neutral-700",
           {
             ["opacity-20"]: isNPCTurn,
