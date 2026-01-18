@@ -2,7 +2,14 @@ import { onValue, ref, set } from "firebase/database";
 import { database } from "@/lib/firebase/firebase";
 import { useCallback, useEffect, useState } from "react";
 
-export type CharacterTracking = { characterName: string; success: number; failure: number };
+export type CharacterTracking = {
+  characterName: string;
+  success: number;
+  failure: number;
+  currentHP: number;
+  currentTempHP: number;
+  maximumHP: number;
+};
 
 const character = ref(database, "character");
 

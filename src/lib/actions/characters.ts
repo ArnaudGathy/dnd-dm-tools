@@ -11,8 +11,34 @@ import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { backendCharacterSchema } from "@/app/(with-nav)/characters/add/utils";
 import { CharacterById } from "@/lib/utils";
+import { get, ref, set } from "firebase/database";
+import { database } from "@/lib/firebase/firebase";
+import { CharacterTracking } from "@/hooks/useCharacterTracker";
 
 import { getBonusHP } from "@/utils/stats/hp";
+
+const syncCharacterHPToFirebase = async (
+  characterName: string,
+  hpData: Partial<Pick<CharacterTracking, "currentHP" | "currentTempHP" | "maximumHP">>,
+) => {
+  try {
+    const characterRef = ref(database, "character");
+    const snapshot = await get(characterRef);
+    const characters: CharacterTracking[] | null = snapshot.val();
+
+    if (!characters) {
+      return;
+    }
+
+    const updatedCharacters = characters.map((char) =>
+      char.characterName === characterName ? { ...char, ...hpData } : char,
+    );
+
+    await set(characterRef, updatedCharacters);
+  } catch (error) {
+    console.error("Failed to sync character HP to Firebase:", error);
+  }
+};
 
 const getBaseHP = (
   {
@@ -180,6 +206,12 @@ export const createCharacter = async (data: CharacterCreationForm, owner: string
         data: { ...money, characterId: character.id },
       });
     }
+
+    await syncCharacterHPToFirebase(character.name, {
+      currentHP: HP,
+      currentTempHP: 0,
+      maximumHP: HP,
+    });
 
     redirect(`/characters/${character.id}`);
   } else {
@@ -422,6 +454,11 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
     deleteMany: (ids) => prisma.money.deleteMany({ where: { id: { in: ids } } }),
   });
 
+  await syncCharacterHPToFirebase(validation.data.name, {
+    currentHP: newHP,
+    maximumHP: newHP,
+  });
+
   redirect(`/characters/${character.id}`);
 };
 
@@ -437,27 +474,43 @@ const getHpWithinBounds = (newHp: number, maxHp: number) => {
 
 export const setHp = async (characterId: number, maxHp: number, newHp: number) => {
   const hp = getHpWithinBounds(newHp, maxHp);
-  await prisma.character.update({
+  const character = await prisma.character.update({
     where: { id: characterId },
     data: { currentHP: hp },
   });
+
+  await syncCharacterHPToFirebase(character.name, {
+    currentHP: hp,
+  });
+
   revalidatePath(`/characters/${characterId}`);
   return hp;
 };
 
 export const setTempHp = async (characterId: number, newTempHp: number) => {
-  await prisma.character.update({
+  const tempHp = newTempHp < 0 ? 0 : newTempHp;
+  const character = await prisma.character.update({
     where: { id: characterId },
-    data: { currentTempHP: newTempHp < 0 ? 0 : newTempHp },
+    data: { currentTempHP: tempHp },
   });
+
+  await syncCharacterHPToFirebase(character.name, {
+    currentTempHP: tempHp,
+  });
+
   revalidatePath(`/characters/${characterId}`);
 };
 
 export const resetHp = async (characterId: number, maxHp: number) => {
-  await prisma.character.update({
+  const character = await prisma.character.update({
     where: { id: characterId },
     data: { currentHP: maxHp },
   });
+
+  await syncCharacterHPToFirebase(character.name, {
+    currentHP: maxHp,
+  });
+
   revalidatePath(`/characters/${characterId}`);
 };
 
