@@ -3,6 +3,7 @@ import {
   Character,
   Classes,
   InventoryItem,
+  MagicItem,
   SavingThrow,
   Skill,
   Skills,
@@ -10,6 +11,7 @@ import {
 import { ABILITY_NAME_MAP, PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP } from "@/constants/maps";
 import { getModifier } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
+import { hasMagicItem } from "@/utils/items";
 
 export const getSkillSpecial = (
   character: Character & { capacities: Capacity[] },
@@ -64,7 +66,11 @@ export const getPassivePerception = (
 };
 
 export const getSavingThrowModifier = (
-  character: Character & { savingThrows: SavingThrow[]; inventory: InventoryItem[] },
+  character: Character & {
+    savingThrows: SavingThrow[];
+    inventory: InventoryItem[];
+    magicItems: MagicItem[];
+  },
   ability: AbilityNameType,
 ) => {
   const selectedSavingThrow = character.savingThrows.find(
@@ -75,11 +81,7 @@ export const getSavingThrowModifier = (
     : 0;
   const bonusModifier = selectedSavingThrow?.modifier ?? 0;
   const abilityModifier = getModifier(character[ability]);
-  const protectionRingModifier = character.inventory.find(({ name }) =>
-    name.toLowerCase().includes("anneau de protection"),
-  )
-    ? 1
-    : 0;
+  const protectionRingModifier = hasMagicItem(character, "anneau de protection") ? 1 : 0;
 
   return {
     proficiencyModifier,

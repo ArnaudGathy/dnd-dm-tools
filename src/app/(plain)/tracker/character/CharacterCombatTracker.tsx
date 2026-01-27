@@ -18,7 +18,7 @@ export default function CharacterCombatTracker() {
     <div className="flex justify-center gap-4">
       {charactersData.map(
         ({ characterName, success, failure, currentHP, currentTempHP, maximumHP }) => {
-          const hasStartedRollingDeath = failure > 0 || success > 0;
+          const hasStartedRollingDeath = currentHP <= 0;
           return (
             <PlayerInitiativeCard key={characterName}>
               <div className="flex w-full flex-col p-1">

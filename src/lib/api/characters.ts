@@ -6,6 +6,7 @@ import {
   Character,
   CharacterStatus,
   InventoryItem,
+  MagicItem,
   PartyId,
   Skill,
 } from "@prisma/client";
@@ -188,6 +189,7 @@ export type DMScreenCharacter = Character & {
   skills: Skill[];
   capacities: Capacity[];
   inventory: InventoryItem[];
+  magicItems: MagicItem[];
 };
 export const getDMScreenCharactersFromCampaignId = async (
   campaignName = CampaignId.TOMB,
@@ -220,6 +222,7 @@ export const getDMScreenCharactersFromCampaignId = async (
           skills: true,
           capacities: true,
           inventory: true,
+          magicItems: true,
         },
       });
     }
