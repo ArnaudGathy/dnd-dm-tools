@@ -17,5 +17,6 @@ export const config = {
     "/creatures/:path*",
     "/dm-screen",
     "/death",
+    "/rules",
   ],
 };

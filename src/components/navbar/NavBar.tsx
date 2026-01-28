@@ -12,7 +12,7 @@ import Link from "next/link";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
-import { SkullIcon, SquareUserIcon, SwordsIcon } from "lucide-react";
+import { BookText, SkullIcon, SquareUserIcon, SwordsIcon } from "lucide-react";
 import { CampaignSelect } from "@/components/navbar/CampaignSelect";
 
 const menuItems = [
@@ -32,6 +32,12 @@ const menuItems = [
     label: "Personnages",
     to: "/characters",
     icon: SquareUserIcon,
+    shouldBeLoggedIn: true,
+  },
+  {
+    label: "Règles",
+    to: "/rules",
+    icon: BookText,
     shouldBeLoggedIn: true,
   },
 ];

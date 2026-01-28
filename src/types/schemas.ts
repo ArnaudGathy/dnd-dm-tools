@@ -98,3 +98,9 @@ export const questSchema = z.object({
   outcome: z.string().optional(),
 });
 export type Quest = z.infer<typeof questSchema>;
+
+export const rulesSchema = z.object({
+  name: z.string(),
+  url: z.string().url(),
+  icon: z.string().optional(),
+});

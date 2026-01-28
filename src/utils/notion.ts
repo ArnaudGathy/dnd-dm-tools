@@ -61,6 +61,13 @@ const getStatus = (prop: PropertyValue) => {
   throw new Error(`Property ${JSON.stringify(prop)} is not a status`);
 };
 
+const getEmoji = (response: PageObjectResponse) => {
+  if (response.icon && response.icon.type === "emoji") {
+    return response.icon.emoji;
+  }
+  return undefined;
+};
+
 export const mapQuestsFromNotion = (properties: PageObjectResponse["properties"]) => {
   return {
     id: getNumber(properties.id)!,
@@ -72,5 +79,13 @@ export const mapQuestsFromNotion = (properties: PageObjectResponse["properties"]
     reward: getRichText(properties.reward),
     status: getStatus(properties.status),
     outcome: getRichText(properties.outcome),
+  };
+};
+
+export const mapRulesFromNotion = (response: PageObjectResponse) => {
+  return {
+    name: getTitle(response.properties.name)!,
+    url: response.public_url,
+    icon: getEmoji(response),
   };
 };
