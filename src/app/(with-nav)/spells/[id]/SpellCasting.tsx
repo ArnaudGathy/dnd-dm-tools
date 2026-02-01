@@ -30,7 +30,7 @@ export default function SpellCasting({ spell, tiny }: { spell: APISpell; tiny?: 
       {spell.duration && (
         <StatCell
           name="Durée"
-          stat={`${spell.duration}${spell.concentration ? " (c)" : ""}`}
+          stat={`${spell.duration}`}
           isInline
           highlightClassName={spell.concentration ? "text-yellow-500" : undefined}
         />

@@ -112,8 +112,8 @@ export const getHPAsString = (creature: Creature) => {
 };
 
 export const convertFromFeetToSquares = (distance: string) => {
-  // match "feet" or "mile"
-  if (!distance.match(/feet|mile/)) {
+  // match "feet", "mile" or "m"
+  if (!distance.match(/feet|mile|m/)) {
     return distance;
   }
   return `${getDistanceInSquaresFromUSUnits(distance)} cases`;
@@ -132,6 +132,9 @@ export const getDistanceInSquaresFromUSUnits = (distance: string) => {
   }
   if (distance.match(/mile/)) {
     return (parseFloat(distance.split(" mile")[0]) * 5280) / 5;
+  }
+  if (distance.match(/m/)) {
+    return parseFloat(distance.split(" m")[0]) / 1.5;
   }
   throw new Error("Invalid distance. Speed must be in feet or mile");
 };
