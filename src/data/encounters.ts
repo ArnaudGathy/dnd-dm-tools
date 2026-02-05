@@ -652,4 +652,21 @@ export const encounters: Encounter[] = [
       ],
     },
   },
+  {
+    name: "Epreuve de Peggy Mortecloche",
+    id: 78,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Jungle du Chult",
+      mapMarker: "JC8",
+    },
+    ennemies: {
+      "1": [
+        { id: "_la-mort", variant: "1" },
+        { id: "_le-temps", variant: "2", inactive: true },
+        { id: "_le-bon", variant: "3", inactive: true },
+        { id: "_la-folie", variant: "4", inactive: true },
+      ],
+    },
+  },
 ];
