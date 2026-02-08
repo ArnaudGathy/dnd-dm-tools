@@ -653,7 +653,7 @@ export const encounters: Encounter[] = [
     },
   },
   {
-    name: "Epreuve de Peggy Mortecloche",
+    name: "Epreuve de la Veuve",
     id: 78,
     scenario: "La tombe de l'annihilation",
     location: {
@@ -662,11 +662,42 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
+        { id: "_widow-zombie", variant: "1" },
+        { id: "_widow-zombie", variant: "2", inactive: true },
+        { id: "_widow-zombie", variant: "3", inactive: true },
+        { id: "_widow-zombie", variant: "4", inactive: true },
+        { id: "_widow-zombie", variant: "5", inactive: true },
+        { id: "_widow-zombie", variant: "6", inactive: true },
+      ],
+    },
+  },
+  {
+    name: "Epreuve de Peggy Mortecloche",
+    id: 79,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Jungle du Chult",
+      mapMarker: "JC9",
+    },
+    ennemies: {
+      "1": [
         { id: "_la-mort", variant: "1" },
         { id: "_le-temps", variant: "2", inactive: true },
         { id: "_le-bon", variant: "3", inactive: true },
         { id: "_la-folie", variant: "4", inactive: true },
       ],
+    },
+  },
+  {
+    name: "Gargouilles",
+    id: 80,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O2",
+    },
+    ennemies: {
+      "1": ["gargoyle"],
     },
   },
 ];

@@ -1316,4 +1316,54 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  "widow-zombie": {
+    name: "Zombie (widow)",
+    id: "_widow-zombie",
+    type: "Undead",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: "8",
+    hitPoints: "15 (2d8 + 6)",
+    challengeRating: 0.25,
+    speed: {
+      walk: "6 m",
+    },
+    abilities: {
+      strength: 13,
+      dexterity: 6,
+      constitution: 16,
+      intelligence: 3,
+      wisdom: 6,
+      charisma: 5,
+    },
+    savingThrows: {
+      strength: "+1",
+      dexterity: "-2",
+      constitution: "+3",
+      intelligence: "-4",
+      charisma: "-3",
+    },
+    immunities: ["poison", "exhaustion", "poisoned"],
+    languages: ["understands common plus one other language but can't speak"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 8,
+    },
+    traits: [
+      {
+        name: "Undead Fortitude",
+        description:
+          "If damage reduces the zombie to 0 Hit Points, it must make a Constitution saving throw (DC 5 plus the damage taken) unless the damage is Radiant or from a Critical Hit. On a successful save, the zombie drops to 1 Hit Point instead.",
+      },
+    ],
+    actions: [
+      {
+        name: "Agripper",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "5 (1d8 + 3) Bludgeoning damage. + Agrippé DD15, 3d6+5 au début de chaque tour du zombie.",
+      },
+    ],
+  },
 };
