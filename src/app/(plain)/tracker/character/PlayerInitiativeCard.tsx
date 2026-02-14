@@ -38,7 +38,7 @@ export default function PlayerInitiativeCard({
       </AnimatePresence>
       <div
         className={cn(
-          "m-1 flex min-w-[160px] items-center justify-center gap-4 rounded-lg",
+          "m-1 flex min-w-[280px] items-center justify-center gap-4 rounded-lg",
           "border-2 border-neutral-700 p-2 text-neutral-700",
           {
             ["border-amber-800 p-2 text-amber-800"]: isActive,
