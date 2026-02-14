@@ -6,7 +6,7 @@ import PlayerInitiativeCard from "@/app/(plain)/tracker/character/PlayerInitiati
 import { Heart, Skull } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { Progress } from "@/components/ui/progress";
+import CombatHPBar from "@/app/(plain)/tracker/character/CombatHPBar";
 import { useMemo } from "react";
 import styles from "@/app/(plain)/tracker/character/page.module.css";
 
@@ -122,14 +122,11 @@ export default function CharacterCombatTracker() {
                             </div>
                           </motion.div>
                         ) : (
-                          <div className="my-2 flex w-full flex-col items-center justify-center">
-                            <div className="text-xl">{`${currentHP}/${maximumHP} ${currentTempHP && currentTempHP > 0 ? `(+${currentTempHP})` : ""}`}</div>
-                            <Progress
-                              value={Math.round((currentHP / maximumHP) * 100)}
-                              className="bg-neutral-300"
-                              classNameTop="bg-rose-600"
-                            />
-                          </div>
+                          <CombatHPBar
+                            currentHP={currentHP}
+                            maximumHP={maximumHP}
+                            currentTempHP={currentTempHP}
+                          />
                         )}
                       </AnimatePresence>
                     </div>
