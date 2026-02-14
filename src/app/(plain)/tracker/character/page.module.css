@@ -2,3 +2,7 @@
   background: white url("../../../../constants/phb-bg-texture.jpg") repeat;
   font-family: var(--font-medieval-sharp);
 }
+
+.antiqua {
+  font-family: var(--font-uncial-antiqua);
+}

@@ -32,7 +32,7 @@ export default async function PlainLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} ${medievalSharp.variable} ${uncialAntiqua.variable} bg-chroma`}
       >
-        <main className="mx-auto h-dvh max-w-[1497px] p-4 md:p-8">{children}</main>
+        <main className="mx-auto h-dvh max-w-[1497px]">{children}</main>
       </body>
     </>
   );
