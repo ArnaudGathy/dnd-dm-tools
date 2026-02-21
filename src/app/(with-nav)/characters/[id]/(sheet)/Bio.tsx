@@ -5,6 +5,8 @@ import { ALIGNMENT_MAP, BACKGROUND_MAP } from "@/constants/maps";
 import NotesForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/NotesForm";
 
 export default function Bio({ character }: { character: CharacterById }) {
+  const characterImageUrl = `/characters/${character.imageUrl ?? "avatar_warrior.png"}`;
+
   return (
     <div className={cn("flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4")}>
       <div className="flex flex-col gap-4">
@@ -13,12 +15,10 @@ export default function Bio({ character }: { character: CharacterById }) {
             {character.name}
           </span>
           <div className="mb-4 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-pink-500 p-0.5">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src={`/characters/${character.imageUrl ?? "avatar_warrior.png"}`}
-              alt="Avatar"
-              className="rounded-xl"
-            />
+            <a href={character.imageUrl ? characterImageUrl : "#"}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={characterImageUrl} alt="Avatar" className="rounded-xl" />
+            </a>
           </div>
 
           <div className="flex justify-between">
