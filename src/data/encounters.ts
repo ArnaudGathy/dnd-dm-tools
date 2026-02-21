@@ -689,7 +689,7 @@ export const encounters: Encounter[] = [
     },
   },
   {
-    name: "Gargouilles",
+    name: "Gargouilles (falaises)",
     id: 80,
     scenario: "La tombe de l'annihilation",
     location: {
@@ -699,5 +699,99 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": ["gargoyle"],
     },
+  },
+  {
+    name: "Aléatoire : Stirges",
+    id: 81,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O3",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "_stirge",
+          variant: "1",
+          color: "#bd3333",
+        },
+        {
+          id: "_stirge",
+          variant: "1",
+          color: "#0b1e4f",
+        },
+        {
+          id: "_stirge",
+          variant: "1",
+          color: "#055f93",
+        },
+        {
+          id: "_stirge",
+          variant: "1",
+          color: "#db81f1",
+        },
+        {
+          id: "_stirge",
+          variant: "2",
+          color: "#bd3333",
+        },
+        {
+          id: "_stirge",
+          variant: "2",
+          color: "#0b1e4f",
+        },
+        {
+          id: "_stirge",
+          variant: "2",
+          color: "#055f93",
+        },
+        {
+          id: "_stirge",
+          variant: "2",
+          color: "#db81f1",
+        },
+        {
+          id: "_swarm-of-bats",
+          color: "#C64C38",
+        },
+        {
+          id: "_swarm-of-bats",
+          color: "#7D9D85",
+        },
+        {
+          id: "_swarm-of-bats",
+          color: "#3D444A",
+        },
+      ],
+    },
+    loots: ["Roll table"],
+    youtubeId: "n8bmE76sETo",
+  },
+  {
+    name: "Aléatoire : Assassin vines",
+    id: 82,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O4",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "_assassin-vine",
+          color: "#699846",
+        },
+        {
+          id: "_assassin-vine",
+          color: "#5E4737",
+        },
+        {
+          id: "_yellow-musk-creeper",
+          color: "#F4ED37",
+        },
+      ],
+    },
+    loots: ["Roll table"],
+    youtubeId: "l6pwrEnOUSA",
   },
 ];

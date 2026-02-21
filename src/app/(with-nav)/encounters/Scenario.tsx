@@ -16,7 +16,7 @@ const Scenario = ({
   scenarioName: string;
   encounters: Record<string, Encounter[]>;
 }) => {
-  const [isOpen, setIsOpen] = useLocalStorage(`campaign.${scenarioName}`, false);
+  const [isOpen, setIsOpen] = useLocalStorage(`campaign.${scenarioName}`, true);
 
   return (
     <div key={scenarioName}>
