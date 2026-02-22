@@ -13,6 +13,8 @@ const getFrSpellURL = "https://www.aidedd.org/public/spell/fr";
 const getEnSpellURL = "https://www.aidedd.org/public/spell";
 const getEnCreatureURL = "https://www.aidedd.org/public/monster";
 
+const inFlightCreatureRequests = new Map<string, Promise<Creature | null>>();
+
 export const getSpellDataFromFrName = async (enSpellName: string) => {
   const response = await axios.get(`${getEnSpellURL}/${enSpellName}`);
   const $ = cheerio.load(response.data);
@@ -50,33 +52,52 @@ export const getSpellDetails = async (enSpellName: string): Promise<APISpell> =>
  * Look up a creature in the DB cache, or fetch from AideDD and cache it.
  * Returns the full parsed Creature, or null if the creature wasn't found on AideDD.
  */
-const getOrFetchCreature = async (creatureName: string) => {
-  // 1. Check the DB cache
-  const cached = await prisma.cachedCreature.findUnique({
-    where: { id: creatureName },
-  });
-
-  if (cached) {
-    return creatureSchema.parse(cached.data);
+const getOrFetchCreature = async (creatureName: string): Promise<Creature | null> => {
+  // 1. Check if there's already an in-flight request for this creature
+  const inFlight = inFlightCreatureRequests.get(creatureName);
+  if (inFlight) {
+    return inFlight;
   }
 
-  // 2. Fetch from AideDD
-  const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
-  const creature = parseCreaturesFromAideDD(response.data, creatureName);
+  // 2. Wrap the fetch logic in a promise and cache it
+  const fetchPromise = (async () => {
+    try {
+      // 1. Check the DB cache
+      const cached = await prisma.cachedCreature.findUnique({
+        where: { id: creatureName },
+      });
 
-  if (!creature) {
-    return null;
-  }
+      if (cached) {
+        return creatureSchema.parse(cached.data);
+      }
 
-  // 3. Save to DB cache
-  await prisma.cachedCreature.create({
-    data: {
-      id: creatureName,
-      data: creature,
-    },
-  });
+      // 2. Fetch from AideDD
+      const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
+      const creature = parseCreaturesFromAideDD(response.data, creatureName);
 
-  return creature;
+      if (!creature) {
+        return null;
+      }
+
+      // 3. Save to DB cache (upsert to handle concurrent requests)
+      await prisma.cachedCreature.upsert({
+        where: { id: creatureName },
+        update: { data: creature },
+        create: {
+          id: creatureName,
+          data: creature,
+        },
+      });
+
+      return creature;
+    } finally {
+      // 3. Remove from in-flight requests once done
+      inFlightCreatureRequests.delete(creatureName);
+    }
+  })();
+
+  inFlightCreatureRequests.set(creatureName, fetchPromise);
+  return fetchPromise;
 };
 
 export const getSummaryCreatureFromEN = async (creatureName: string) => {
