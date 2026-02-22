@@ -42,4 +42,26 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
     bonusActions: undefined,
     behavior: "Traverse tout. Shock sur Golem.",
   },
+  gargoyle: {
+    actions: [
+      {
+        name: "Multiattack",
+        description: "The gargoyle makes two Claw attacks.",
+      },
+      {
+        name: "Claw",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "7 (2d4 + 2) Slashing damage.",
+      },
+      {
+        name: "Attraper au filet",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "0 (S'enfuit avec la cible dans le filet. Nécessite 2 gargouilles)",
+      },
+    ],
+  },
 };

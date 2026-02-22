@@ -794,4 +794,39 @@ export const encounters: Encounter[] = [
     loots: ["Roll table"],
     youtubeId: "l6pwrEnOUSA",
   },
+  {
+    name: "Aléatoire : Gargouilles",
+    id: 83,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O5",
+    },
+    ennemies: {
+      "1": [
+        { id: "gargoyle", color: "#D7AB38" },
+        { id: "gargoyle", color: "#6F5236" },
+        { id: "gargoyle", color: "#DDEEF9" },
+        { id: "gargoyle", color: "#555554" },
+        { id: "gargoyle", color: "#65aaca" },
+      ],
+    },
+    informations: ["Arrête le combat après 2 morts ou 50%"],
+    loots: ["Roll table"],
+    youtubeId: "GMXiYs-wi3A",
+  },
+  {
+    name: "Sanctuaire de Kubazan",
+    id: 84,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu - Sanctuaire",
+      mapMarker: "OS1",
+    },
+    ennemies: {
+      "1": [{ id: "_froghemoth", color: "#85A553" }],
+    },
+    informations: ["Est dans le livre de Volo", "Grosse vulnérabilité à la foudre"],
+    youtubeId: "UFJiNIyrTXo",
+  },
 ];

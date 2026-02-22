@@ -1366,4 +1366,75 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  froghemoth: {
+    name: "Crapaudonte",
+    id: "_froghemoth",
+    type: "Monstrosity",
+    size: "Huge",
+    alignment: "Unaligned",
+    armorClass: "14",
+    hitPoints: "204 (16d12 + 80)",
+    speed: {
+      walk: "9 m",
+      swim: "9 m",
+    },
+    challengeRating: 10,
+    abilities: {
+      strength: 23,
+      dexterity: 13,
+      constitution: 20,
+      intelligence: 2,
+      wisdom: 12,
+      charisma: 5,
+    },
+    savingThrows: {
+      strength: "+6",
+      dexterity: "+1",
+      constitution: "+9",
+      intelligence: "-4",
+      wisdom: "+5",
+      charisma: "-3",
+    },
+    skills: {
+      perception: "+9",
+      stealth: "+5",
+    },
+    resistances: ["fire", "lightning"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 19,
+    },
+    traits: [
+      {
+        name: "Vulnérabilité à la foudre",
+        description:
+          "Lors de dégats de foudre subits : moitié vitesse, -2 CA et JdS DEX, pas de réactions ou multiattack, action ou bonus action (pas les 2) au prochain tour.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "2x tentacules + 1 fois morsure ou langue.",
+      },
+      {
+        name: "Tentacule x4",
+        type: "Melee",
+        modifier: "+10",
+        reach: "6 m",
+        hit: "19 (3d8 + 6) dégâts contondants, et la cible est aggripée (DD16) si <= TG. 1 cible par tentacule",
+      },
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+10",
+        reach: "1.5 m",
+        hit: "22 (3d10 + 6) dégâts perçants, avalée si <=M => Aveuglé et restreint, abri total, 3d6 dégats d'acide au début du tour du Crapaudonte. 2 Créatures max. Si subit >=20 dégats depuis l'intérieur JdS CON 20 ou recracher toutes les cibles, au sol dans les 2 cases autours.",
+      },
+      {
+        name: "Langue",
+        description:
+          "Cible <=M à 4 cases max. JdS FOR 18 ou attirée au CaC into attaque morsure en action bonus.",
+      },
+    ],
+  },
 };

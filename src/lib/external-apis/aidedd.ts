@@ -136,6 +136,8 @@ export const getCreature = async (creatureName: string): Promise<Creature> => {
   }
 
   const APICreature = await getOrFetchCreature(creatureName);
+  // eslint-disable-next-line no-console
+  console.info("Creature : ", APICreature);
   if (!APICreature) {
     throw new Error("No creature found locally nor on aidedd.");
   }
