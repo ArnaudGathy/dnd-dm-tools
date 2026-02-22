@@ -711,55 +711,55 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": [
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "1",
           color: "#bd3333",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "1",
           color: "#0b1e4f",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "1",
           color: "#055f93",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "1",
           color: "#db81f1",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "2",
           color: "#bd3333",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "2",
           color: "#0b1e4f",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "2",
           color: "#055f93",
         },
         {
-          id: "_stirge",
+          id: "stirge",
           variant: "2",
           color: "#db81f1",
         },
         {
-          id: "_swarm-of-bats",
+          id: "swarm-of-bats",
           color: "#C64C38",
         },
         {
-          id: "_swarm-of-bats",
+          id: "swarm-of-bats",
           color: "#7D9D85",
         },
         {
-          id: "_swarm-of-bats",
+          id: "swarm-of-bats",
           color: "#3D444A",
         },
       ],

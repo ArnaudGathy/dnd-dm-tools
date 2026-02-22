@@ -410,6 +410,11 @@ model Creature {
   CreaturesOnCharacters CreaturesOnCharacters[]
 }
 
+model CachedCreature {
+  id   String @id
+  data Json
+}
+
 model CreaturesOnCharacters {
   character   Character @relation(fields: [characterId], references: [id])
   characterId Int

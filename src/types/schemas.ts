@@ -104,3 +104,98 @@ export const rulesSchema = z.object({
   url: z.string().url(),
   icon: z.string().optional(),
 });
+
+const actionSchema = z.object({
+  name: z.string(),
+  description: z.string().optional(),
+  type: z.string().optional(),
+  modifier: z.string().optional(),
+  reach: z.string().optional(),
+  hit: z.string().optional(),
+});
+
+export const creatureSchema = z.object({
+  name: z.string(),
+  id: z.string(),
+  type: z.string(),
+  size: z.string(),
+  challengeRating: z.number(),
+  alignment: z.string(),
+  armorClass: z.union([z.number(), z.string()]),
+  hitPoints: z.string(),
+  speed: z.object({
+    walk: z.string(),
+    swim: z.string().optional(),
+    fly: z.string().optional(),
+    climb: z.string().optional(),
+  }),
+  abilities: z.object({
+    strength: z.number(),
+    dexterity: z.number(),
+    constitution: z.number(),
+    intelligence: z.number(),
+    wisdom: z.number(),
+    charisma: z.number(),
+  }),
+  savingThrows: z
+    .record(
+      z.enum(["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]),
+      z.string().optional(),
+    )
+    .optional(),
+  skills: z
+    .record(
+      z.enum([
+        "acrobatics",
+        "animalHandling",
+        "arcana",
+        "athletics",
+        "deception",
+        "history",
+        "insight",
+        "intimidation",
+        "investigation",
+        "medicine",
+        "nature",
+        "perception",
+        "performance",
+        "persuasion",
+        "religion",
+        "sleightOfHand",
+        "stealth",
+        "survival",
+      ]),
+      z.string().optional(),
+    )
+    .optional(),
+  immunities: z.array(z.string()).optional(),
+  vulnerabilities: z.array(z.string()).optional(),
+  resistances: z.array(z.string()).optional(),
+  languages: z.array(z.string()).optional(),
+  senses: z.object({
+    blindSight: z.string().optional(),
+    darkvision: z.string().optional(),
+    passivePerception: z.number(),
+    trueSight: z.string().optional(),
+    tremorsense: z.string().optional(),
+  }),
+  traits: z.array(z.object({ name: z.string(), description: z.string() })).optional(),
+  actions: z.array(actionSchema),
+  reactions: z.array(actionSchema).optional(),
+  legendaryActions: z.array(actionSchema).optional(),
+  legendaryActionsSlots: z.string().optional(),
+  lairActions: z.array(actionSchema).optional(),
+  bonusActions: z.array(actionSchema).optional(),
+  spellStats: z
+    .object({
+      attackMod: z.number(),
+      spellDC: z.number(),
+      slots: z.record(z.string(), z.number()).optional(),
+    })
+    .optional(),
+  spells: z.array(z.object({ id: z.string(), summary: z.string().optional() })).optional(),
+  colors: z.array(z.string()).optional(),
+  behavior: z.string().optional(),
+});
+
+export type Creature = z.infer<typeof creatureSchema>;

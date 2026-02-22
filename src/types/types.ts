@@ -82,63 +82,10 @@ export type Skills =
   | "stealth"
   | "survival";
 
-export type Action = {
-  name: string;
-  description?: string;
-  type?: string;
-  modifier?: string;
-  reach?: string;
-  hit?: string;
-};
+import { Creature } from "@/types/schemas";
+export type { Creature } from "@/types/schemas";
 
-export type Creature = {
-  name: string;
-  id: string;
-  type: string;
-  size: string;
-  challengeRating: number;
-  alignment: string;
-  armorClass: number | string;
-  hitPoints: string;
-  speed: {
-    walk: string;
-    swim?: string;
-    fly?: string;
-    climb?: string;
-  };
-  abilities: Record<AbilityNameType, number>;
-  savingThrows?: Partial<Record<AbilityNameType, string>>;
-  skills?: Partial<Record<Skills, string>>;
-  immunities?: string[];
-  vulnerabilities?: string[];
-  resistances?: string[];
-  languages?: string[];
-  senses: {
-    blindSight?: string;
-    darkvision?: string;
-    passivePerception: number;
-    trueSight?: string;
-    tremorsense?: string;
-  };
-  traits?: Array<{
-    name: string;
-    description: string;
-  }>;
-  actions: Array<Action>;
-  reactions?: Array<Action>;
-  legendaryActions?: Array<Action>;
-  legendaryActionsSlots?: string;
-  lairActions?: Array<Action>;
-  bonusActions?: Array<Action>;
-  spellStats?: {
-    attackMod: number;
-    spellDC: number;
-    slots?: Partial<Record<string, number>>;
-  };
-  spells?: Array<{ id: string; summary?: string }>;
-  colors?: Array<string>;
-  behavior?: string;
-};
+export type Action = Creature["actions"][number];
 
 export type SummaryCreature = {
   id: string;

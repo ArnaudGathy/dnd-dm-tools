@@ -1,12 +1,13 @@
 import axios from "axios";
 import { getBaseSpellData, parseSpellFromAideDD } from "@/lib/aideDDParseSpellPageContent";
 import * as cheerio from "cheerio";
-import { getBaseCreatureData, parseCreaturesFromAideDD } from "@/lib/aideDDParseCreature";
+import { parseCreaturesFromAideDD } from "@/lib/aideDDParseCreature";
 import { Creature, SummaryCreature } from "@/types/types";
-import { APISpell } from "@/types/schemas";
+import { APISpell, creatureSchema } from "@/types/schemas";
 import { creatureOverrides } from "@/data/creatureOverrides";
 import { mergeDeep } from "remeda";
 import { localCreatures } from "@/data/localCreatures";
+import prisma from "@/lib/prisma";
 
 const getFrSpellURL = "https://www.aidedd.org/public/spell/fr";
 const getEnSpellURL = "https://www.aidedd.org/public/spell";
@@ -45,6 +46,39 @@ export const getSpellDetails = async (enSpellName: string): Promise<APISpell> =>
   return getSpellDataFromFRName(frId, enSpellName);
 };
 
+/**
+ * Look up a creature in the DB cache, or fetch from AideDD and cache it.
+ * Returns the full parsed Creature, or null if the creature wasn't found on AideDD.
+ */
+const getOrFetchCreature = async (creatureName: string) => {
+  // 1. Check the DB cache
+  const cached = await prisma.cachedCreature.findUnique({
+    where: { id: creatureName },
+  });
+
+  if (cached) {
+    return creatureSchema.parse(cached.data);
+  }
+
+  // 2. Fetch from AideDD
+  const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
+  const creature = parseCreaturesFromAideDD(response.data, creatureName);
+
+  if (!creature) {
+    return null;
+  }
+
+  // 3. Save to DB cache
+  await prisma.cachedCreature.create({
+    data: {
+      id: creatureName,
+      data: creature,
+    },
+  });
+
+  return creature;
+};
+
 export const getSummaryCreatureFromEN = async (creatureName: string) => {
   const localCreature = localCreatures[creatureName];
   if (localCreature) {
@@ -55,8 +89,16 @@ export const getSummaryCreatureFromEN = async (creatureName: string) => {
     } satisfies SummaryCreature;
   }
 
-  const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
-  return getBaseCreatureData(response.data, creatureName);
+  const creature = await getOrFetchCreature(creatureName);
+  if (!creature) {
+    return null;
+  }
+
+  return {
+    id: creature.id,
+    name: creature.name,
+    challengeRating: creature.challengeRating,
+  } satisfies SummaryCreature;
 };
 
 // const getFRCreatureNameFromEN = async (html: string) => {
@@ -72,18 +114,14 @@ export const getCreature = async (creatureName: string): Promise<Creature> => {
     return localCreatures[generalName];
   }
 
-  const enResponse = await axios.get(`${getEnCreatureURL}/${creatureName}`);
-  // const frResponse = await getFRCreatureNameFromEN(enResponse.data);
-  const APICreature = parseCreaturesFromAideDD(enResponse.data, creatureName);
+  const APICreature = await getOrFetchCreature(creatureName);
   if (!APICreature) {
     throw new Error("No creature found locally nor on aidedd.");
   }
-  // eslint-disable-next-line no-console
-  console.log("Creature:", APICreature);
 
   const localCreature = creatureOverrides[creatureName];
   if (localCreature) {
-    return mergeDeep(APICreature, localCreature) as Promise<Creature>;
+    return mergeDeep(APICreature, localCreature) as Creature;
   }
 
   return APICreature;
