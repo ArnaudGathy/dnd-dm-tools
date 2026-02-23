@@ -617,7 +617,7 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O1",
+      mapMarker: "O13",
     },
     ennemies: {
       "1": [
@@ -694,7 +694,7 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O2",
+      mapMarker: "O1",
     },
     ennemies: {
       "1": ["gargoyle"],
@@ -706,7 +706,7 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O3",
+      mapMarker: "O97",
     },
     ennemies: {
       "1": [
@@ -773,7 +773,7 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O4",
+      mapMarker: "O98",
     },
     ennemies: {
       "1": [
@@ -800,7 +800,7 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O5",
+      mapMarker: "O99",
     },
     ennemies: {
       "1": [
@@ -820,13 +820,47 @@ export const encounters: Encounter[] = [
     id: 84,
     scenario: "La tombe de l'annihilation",
     location: {
-      name: "Omu - Sanctuaire",
-      mapMarker: "OS1",
+      name: "Omu",
+      mapMarker: "O3",
     },
     ennemies: {
       "1": [{ id: "_froghemoth", color: "#85A553" }],
     },
     informations: ["Est dans le livre de Volo", "Grosse vulnérabilité à la foudre"],
     youtubeId: "UFJiNIyrTXo",
+  },
+  {
+    name: "Sanctuaire de Shagambi",
+    id: 85,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O4",
+    },
+    ennemies: {
+      "1": [
+        { id: "_kamadan", color: "#FAF46D" },
+        { id: "_kamadan", color: "#B96924" },
+      ],
+    },
+    youtubeId: "hJnG5tAVbH8",
+  },
+  {
+    name: "Sanctuaire de Shagambi",
+    id: 86,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O4D",
+    },
+    ennemies: {
+      "1": [
+        { id: "_clay-gladitator", color: "#B69C53" },
+        { id: "_clay-gladitator", color: "#6C89A1" },
+        { id: "_clay-gladitator", color: "#5A8045" },
+        { id: "_clay-gladitator", color: "#8E3A34" },
+      ],
+    },
+    youtubeId: "hJnG5tAVbH8",
   },
 ];

@@ -1437,4 +1437,76 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  "clay-gladitator": {
+    name: "Gladiateur d'argile",
+    id: "_clay-gladitator",
+    type: "Articial",
+    size: "Medium",
+    challengeRating: 5,
+    alignment: "Neutral",
+    armorClass: "17",
+    hitPoints: "112 (15d8 + 45)",
+    immunities: ["poison", "charmed", "frightened"],
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    abilities: {
+      strength: 18,
+      dexterity: 15,
+      constitution: 16,
+      intelligence: 10,
+      wisdom: 12,
+      charisma: 15,
+    },
+    savingThrows: {
+      wisdom: "+4",
+      charisma: "+2",
+      strength: "+7",
+      dexterity: "+5",
+      constitution: "+6",
+    },
+    skills: {
+      athletics: "+10",
+      performance: "+5",
+    },
+    languages: ["Aucune"],
+    senses: {
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Escalade",
+        description:
+          "Peut grimper sur n'importe quelle surface rugueuse, y compris les murs et les plafonds, sans avoir besoin de faire un test d'athlétisme.",
+      },
+      {
+        name: "Lance intégrée",
+        description: "Ne peut pas être désarmé",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "3x lance OU 2x lance + 1 coup de bouclier",
+      },
+      {
+        name: "Lance",
+        type: "Melee",
+        modifier: "+7",
+        reach: "1.5 m",
+        hit: "11 (2d6 + 4) Piercing damage.",
+      },
+      {
+        name: "Coup de bouclier",
+        description: "JdS FOR 15 ou 2d4 + 4 dégâts contondants. Si <= M état au sol.",
+      },
+    ],
+    reactions: [
+      {
+        name: "Parade",
+        description: "Attaqué au corps à corps, +3 au CA et peut faire rater.",
+      },
+    ],
+  },
 };

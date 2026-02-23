@@ -30,10 +30,17 @@ export const groupEncounters = (encounters: Encounter[]) => {
     entries(
       groupBy(
         encounters.toSorted((a, b) => {
-          // Extract the number out of the mapMarker to avoid lexicographical sorting
-          const numA = parseInt(a.location.mapMarker.slice(1), 10);
-          const numB = parseInt(b.location.mapMarker.slice(1), 10);
-          return numA - numB;
+          // Natural sort: split mapMarker into [letter prefix, number, optional letter suffix]
+          // e.g. "O2B" -> ["O", 2, "B"], "FB10" -> ["FB", 10, ""]
+          const parse = (marker: string) => {
+            const match = marker.match(/^([A-Za-z]+)(\d+)([A-Za-z]*)$/);
+            return match
+              ? ([match[1], parseInt(match[2], 10), match[3]] as [string, number, string])
+              : ([marker, 0, ""] as [string, number, string]);
+          };
+          const [prefixA, numA, suffixA] = parse(a.location.mapMarker);
+          const [prefixB, numB, suffixB] = parse(b.location.mapMarker);
+          return prefixA.localeCompare(prefixB) || numA - numB || suffixA.localeCompare(suffixB);
         }),
         prop("scenario"),
       ),
