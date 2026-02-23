@@ -1509,4 +1509,212 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  vegepygmy: {
+    name: "Végépygmé",
+    id: "_vegepygmy",
+    type: "Plant",
+    size: "Small",
+    alignment: "Neutral",
+    armorClass: "13",
+    hitPoints: "9 (2d6 + 2)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 0.25,
+    abilities: {
+      strength: 7,
+      dexterity: 14,
+      constitution: 13,
+      intelligence: 6,
+      wisdom: 11,
+      charisma: 7,
+    },
+    savingThrows: {
+      strength: "-2",
+      dexterity: "+2",
+      constitution: "+1",
+      intelligence: "-2",
+      wisdom: "+0",
+      charisma: "-2",
+    },
+    skills: {
+      perception: "+2",
+      stealth: "+4",
+    },
+    resistances: ["lightning", "piercing"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 12,
+    },
+    languages: ["Vegepygmy"],
+    traits: [
+      {
+        name: "Plant Camouflage",
+        description:
+          "The vegepygmy has advantage on Dexterity (Stealth) checks it makes in any terrain with ample obscuring plant life.",
+      },
+      {
+        name: "Regeneration",
+        description:
+          "Regen 3 PV au début du tour. Stoppé par dégats Givre, feu ou nécrotique, ne fonctionne pas au prochain tour. Meurt seulement si pas de regen au début de son tour.",
+      },
+    ],
+    actions: [
+      {
+        name: "Griffes",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "5 (1d6 + 2) slashing damage.",
+      },
+      {
+        name: "Lance pierre",
+        type: "Ranged",
+        modifier: "+4",
+        reach: "9/36 m",
+        hit: "4 (1d4 + 2) bludgeoning damage.",
+      },
+    ],
+  },
+  "vegepygmy-chief": {
+    name: "Chef végépygmé",
+    id: "_vegepygmy-chief",
+    type: "Plant",
+    size: "Small",
+    alignment: "Neutral",
+    armorClass: "14",
+    hitPoints: "33 (6d6 + 12)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 2,
+    abilities: {
+      strength: 14,
+      dexterity: 14,
+      constitution: 14,
+      intelligence: 7,
+      wisdom: 12,
+      charisma: 9,
+    },
+    savingThrows: {
+      strength: "+2",
+      dexterity: "+2",
+      constitution: "+2",
+      intelligence: "-2",
+      wisdom: "+1",
+      charisma: "-1",
+    },
+    skills: {
+      perception: "+3",
+      stealth: "+4",
+    },
+    resistances: ["lightning", "piercing"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    languages: ["Vegepygmy"],
+    traits: [
+      {
+        name: "Plant Camouflage",
+        description:
+          "The vegepygmy has advantage on Dexterity (Stealth) checks it makes in any terrain with ample obscuring plant life.",
+      },
+      {
+        name: "Regeneration",
+        description:
+          "Regen 5 PV au début du tour. Stoppé par dégats Givre, feu ou nécrotique, ne fonctionne pas au prochain tour. Meurt seulement si pas de regen au début de son tour.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "2x giffes OU 2x lance.",
+      },
+      {
+        name: "Griffes",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "5 (1d6 + 2) slashing –damage.",
+      },
+      {
+        name: "Lance",
+        type: "Melee or Ranged",
+        modifier: "+4",
+        reach: "1.5 m ou distance 6/18 m",
+        hit: "5 (1d8 + 2) piercing damage",
+      },
+      {
+        name: "Spores (1/jour)",
+        description:
+          "Nuage de 4.5m de rayon. JdS CON 12 ou empoisonné : 2d8 dégâts poison au début de chaque tour. Relancer JdS à la fin de chaque tour pour finir l'effet.",
+      },
+    ],
+  },
+  "vegepygmy-thorny": {
+    name: "Végépygmé épineux",
+    id: "_vegepygmy-thorny",
+    type: "Plant",
+    size: "Medium",
+    alignment: "Neutral",
+    armorClass: "14",
+    hitPoints: "27 (5d8 + 5)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 1,
+    abilities: {
+      strength: 13,
+      dexterity: 12,
+      constitution: 13,
+      intelligence: 2,
+      wisdom: 10,
+      charisma: 6,
+    },
+    savingThrows: {
+      strength: "+1",
+      dexterity: "+1",
+      constitution: "+1",
+      intelligence: "-4",
+      wisdom: "+0",
+      charisma: "-2",
+    },
+    skills: {
+      perception: "+4",
+      stealth: "+3",
+    },
+    resistances: ["lightning", "piercing"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 14,
+    },
+    traits: [
+      {
+        name: "Plant Camouflage",
+        description:
+          "The thorny has advantage on Dexterity (Stealth) checks it makes in any terrain with ample obscuring plant life.",
+      },
+      {
+        name: "Regeneration",
+        description:
+          "Regen 5 PV au début du tour. Stoppé par dégats Givre, feu ou nécrotique, ne fonctionne pas au prochain tour. Meurt seulement si pas de regen au début de son tour.",
+      },
+    ],
+    actions: [
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+3",
+        reach: "1.5 m",
+        hit: "8 (2d6 + 1) piercing damage.",
+      },
+    ],
+    reactions: [
+      {
+        name: "Corps épineux",
+        description: "Inflige 1d6 dégâts aux créature en saisie",
+      },
+    ],
+  },
 };

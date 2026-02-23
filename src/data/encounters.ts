@@ -863,4 +863,29 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "hJnG5tAVbH8",
   },
+  {
+    name: "Sacrifice du feu (vegépygmés)",
+    id: 87,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O5",
+    },
+    ennemies: {
+      "1": [
+        { id: "_vegepygmy", variant: "1" },
+        { id: "_vegepygmy", variant: "2" },
+        { id: "_vegepygmy", variant: "3" },
+        { id: "_vegepygmy", variant: "4" },
+        { id: "_vegepygmy", variant: "5" },
+        { id: "_vegepygmy", variant: "6" },
+        { id: "_vegepygmy", variant: "7" },
+        { id: "_vegepygmy", variant: "8" },
+        { id: "_vegepygmy-chief" },
+        { id: "_vegepygmy-thorny" },
+      ],
+    },
+    loots: ["Roll table"],
+    youtubeId: "QnX4rkyygOg",
+  },
 ];
