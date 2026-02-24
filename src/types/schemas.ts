@@ -120,23 +120,27 @@ export const creatureSchema = z.object({
   type: z.string(),
   size: z.string(),
   challengeRating: z.number(),
-  alignment: z.string(),
+  alignment: z.string().optional(),
   armorClass: z.union([z.number(), z.string()]),
   hitPoints: z.string(),
-  speed: z.object({
-    walk: z.string(),
-    swim: z.string().optional(),
-    fly: z.string().optional(),
-    climb: z.string().optional(),
-  }),
-  abilities: z.object({
-    strength: z.number(),
-    dexterity: z.number(),
-    constitution: z.number(),
-    intelligence: z.number(),
-    wisdom: z.number(),
-    charisma: z.number(),
-  }),
+  speed: z
+    .object({
+      walk: z.string(),
+      swim: z.string().optional(),
+      fly: z.string().optional(),
+      climb: z.string().optional(),
+    })
+    .optional(),
+  abilities: z
+    .object({
+      strength: z.number(),
+      dexterity: z.number(),
+      constitution: z.number(),
+      intelligence: z.number(),
+      wisdom: z.number(),
+      charisma: z.number(),
+    })
+    .optional(),
   savingThrows: z
     .record(
       z.enum(["strength", "dexterity", "constitution", "intelligence", "wisdom", "charisma"]),
@@ -172,13 +176,15 @@ export const creatureSchema = z.object({
   vulnerabilities: z.array(z.string()).optional(),
   resistances: z.array(z.string()).optional(),
   languages: z.array(z.string()).optional(),
-  senses: z.object({
-    blindSight: z.string().optional(),
-    darkvision: z.string().optional(),
-    passivePerception: z.number(),
-    trueSight: z.string().optional(),
-    tremorsense: z.string().optional(),
-  }),
+  senses: z
+    .object({
+      blindSight: z.string().optional(),
+      darkvision: z.string().optional(),
+      passivePerception: z.number().optional(),
+      trueSight: z.string().optional(),
+      tremorsense: z.string().optional(),
+    })
+    .optional(),
   traits: z.array(z.object({ name: z.string(), description: z.string() })).optional(),
   actions: z.array(actionSchema),
   reactions: z.array(actionSchema).optional(),

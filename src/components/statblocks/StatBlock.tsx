@@ -62,7 +62,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           >
             {creature.size}
           </span>
-          , {creature.alignment}
+          , {creature.alignment ?? "Sans alignement"}
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -78,37 +78,43 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               />
             </div>
 
-            <div className="flex gap-8">
-              <StatCell
-                name="Marche"
-                stat={getDistanceInSquares(creature.speed.walk)}
-                isHighlighted
-                isInline
-              />
-
-              {creature.speed.swim && (
-                <StatCell name="Nage" stat={getDistanceInSquares(creature.speed.swim)} isInline />
-              )}
-              {creature.speed.fly && (
-                <StatCell name="Vol" stat={getDistanceInSquares(creature.speed.fly)} isInline />
-              )}
-              {creature.speed.climb && (
+            {creature.speed ? (
+              <div className="flex gap-8">
                 <StatCell
-                  name="Escalade"
-                  stat={getDistanceInSquares(creature.speed.climb)}
+                  name="Marche"
+                  stat={getDistanceInSquares(creature.speed.walk)}
+                  isHighlighted
                   isInline
                 />
-              )}
-            </div>
+
+                {creature.speed.swim && (
+                  <StatCell name="Nage" stat={getDistanceInSquares(creature.speed.swim)} isInline />
+                )}
+                {creature.speed.fly && (
+                  <StatCell name="Vol" stat={getDistanceInSquares(creature.speed.fly)} isInline />
+                )}
+                {creature.speed.climb && (
+                  <StatCell
+                    name="Escalade"
+                    stat={getDistanceInSquares(creature.speed.climb)}
+                    isInline
+                  />
+                )}
+              </div>
+            ) : (
+              <StatCell name="Déplacements" stat="Aucun" isInline />
+            )}
 
             {creature.behavior && (
               <StatCell name="Comportement" stat={creature.behavior} isInline />
             )}
           </div>
 
-          <div className="flex flex-wrap justify-between border-t-2 pt-4 md:justify-start md:gap-4">
-            <Abilities abilities={creature.abilities} />
-          </div>
+          {creature.abilities && (
+            <div className="flex flex-wrap justify-between border-t-2 pt-4 md:justify-start md:gap-4">
+              <Abilities abilities={creature.abilities} />
+            </div>
+          )}
 
           <div className={blockClassName}>
             <CategoryTitle>Général</CategoryTitle>

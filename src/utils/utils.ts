@@ -59,7 +59,7 @@ export const groupEncounters = (encounters: Encounter[]) => {
   );
 };
 
-export const translatedSenses = (sense: keyof Creature["senses"]) => {
+export const translatedSenses = (sense: keyof NonNullable<Creature["senses"]>) => {
   const translations = {
     darkvision: "Vision dans le noir",
     passivePerception: "Perception passive",
@@ -172,8 +172,14 @@ export const addSignToNumber = (number: number) => {
   return number;
 };
 
-export const getModifierFromCreature = (creature: Creature, characteristic: AbilityNameType) => {
-  return getModifier(creature.abilities[characteristic]);
+export const getModifierFromCreature = (
+  abilities: Creature["abilities"],
+  characteristic: AbilityNameType,
+) => {
+  if (abilities) {
+    return getModifier(abilities[characteristic]);
+  }
+  return 0;
 };
 
 export const roll = (value: number) => {
@@ -181,7 +187,7 @@ export const roll = (value: number) => {
 };
 
 export const getInitiative = (creature: Creature) => {
-  return roll(20) + getModifierFromCreature(creature, "dexterity");
+  return roll(20) + getModifierFromCreature(creature.abilities, "dexterity");
 };
 
 export const getInitiativeFromParticipant = (participant: Participant) => {
@@ -304,7 +310,7 @@ export const getParticipantFromEncounter = ({
               : getCreatureColor(creature, index, currentColorIndex),
           uuid: uuidv4(),
           isNPC: true,
-          dexMod: getModifierFromCreature(creature, "dexterity"),
+          dexMod: getModifierFromCreature(creature.abilities, "dexterity"),
           inactive: (isEnemyObject(enemyData) && enemyData.inactive) ?? false,
         },
       ];

@@ -888,4 +888,36 @@ export const encounters: Encounter[] = [
     loots: ["Roll table"],
     youtubeId: "QnX4rkyygOg",
   },
+  {
+    name: "Sanctuaire de Moa",
+    id: 88,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O6A",
+    },
+    ennemies: {
+      "1": [
+        { id: "_jaculi", color: "#5D495C" },
+        { id: "_jaculi", color: "#62779A" },
+        { id: "_jaculi", color: "#B99D60" },
+        { id: "_jaculi", color: "#995245" },
+        { id: "_jaculi", color: "#8F905A" },
+      ],
+    },
+    youtubeId: "8Q7cioftmKs",
+  },
+  {
+    name: "Sanctuaire de Moa",
+    id: 89,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O6C",
+    },
+    ennemies: {
+      "1": [{ id: "_statue-archer", variant: "x12", shouldHideInInitiativeTracker: true }],
+    },
+    environmentTurnInitiative: "20",
+  },
 ];

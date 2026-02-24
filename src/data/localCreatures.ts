@@ -1717,4 +1717,81 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  jaculi: {
+    name: "Jaculi",
+    id: "_jaculi",
+    type: "Beast",
+    size: "Large",
+    alignment: "Unaligned",
+    armorClass: "14",
+    hitPoints: "30 (3d10)",
+    speed: {
+      walk: "9 m",
+      climb: "6 m",
+    },
+    challengeRating: 0.5,
+    abilities: {
+      strength: 15,
+      dexterity: 14,
+      constitution: 11,
+      intelligence: 2,
+      wisdom: 8,
+      charisma: 3,
+    },
+    skills: {
+      athletics: "+4",
+      perception: "+1",
+      stealth: "+4",
+    },
+    senses: {
+      blindSight: "9 m",
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Camouflage",
+        description: "The jaculi has advantage on Dexterity (Stealth) checks made to hide.",
+      },
+      {
+        name: "Keen Smell",
+        description: "The jaculi has advantage on Wisdom (Perception) checks that rely on smell.",
+      },
+    ],
+    actions: [
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "9 (2d6 + 2) piercing damage.",
+      },
+      {
+        name: "Saut",
+        description:
+          "Saute 6c en ligne droite, fait une attaque morsure. Si le jaculi saute au moins 2c, l'attaque a l'avantage et inflige 2d6 dégâts supplémentaires.",
+      },
+    ],
+  },
+  "statue-archer": {
+    name: "Archer statue",
+    id: "_statue-archer",
+    type: "Artificial",
+    size: "Medium",
+    armorClass: "17",
+    hitPoints: "30 (6d10)",
+    immunities: ["perçant", "contondant", "tranchant", "poison", "psi"],
+    challengeRating: 1,
+    senses: {
+      trueSight: "18m",
+    },
+    actions: [
+      {
+        name: "Arc",
+        type: "Distance",
+        modifier: "+5",
+        reach: "24/96 m",
+        hit: "7 (1d8+1) piercing damage.",
+      },
+    ],
+  },
 };
