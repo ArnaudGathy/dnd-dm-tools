@@ -976,7 +976,11 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": ["assassin"],
     },
-    informations: ["1ere attaque : gros dégats", "Se rend a 50% PV"],
+    informations: [
+      "1ere attaque : gros dégats",
+      "Se cache après chaque attaque (jet Discrétion DD 15, résultat = DD perception à réussir)",
+      "Se rend a 50% PV",
+    ],
     youtubeId: "eVJSMUViEWw",
   },
 ];

@@ -111,5 +111,12 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
         hit: "7 (1d8+ 4) dégâts perçants, +6d6 poison",
       },
     ],
+    bonusActions: [
+      {
+        name: "Cunning Action",
+        description:
+          "Sprint, désengagement ou furtivité. Se déplace puis se cache. Jet Discrétion(+10) DD 15, résultat = DD perception à réussir, avantage jet d'attaque suivante, désavantage attaque si pas vu.",
+      },
+    ],
   },
 };
