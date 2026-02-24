@@ -920,4 +920,17 @@ export const encounters: Encounter[] = [
     },
     environmentTurnInitiative: "20",
   },
+  {
+    name: "Avertissement d'Acererak",
+    id: 90,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombe des neufs dieux",
+      mapMarker: "T1",
+    },
+    ennemies: {
+      "1": [{ id: "nalfeshnee", color: "#479BAD" }],
+    },
+    youtubeId: "L9dhkINF5Vk",
+  },
 ];
