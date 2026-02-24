@@ -1794,4 +1794,225 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  hadrosaurus: {
+    name: "Hadrosaurus",
+    id: "_hadrosaurus",
+    type: "Beast",
+    size: "Large",
+    alignment: "Unaligned",
+    armorClass: "11",
+    hitPoints: "19 (3d10 + 3)",
+    speed: {
+      walk: "12 m",
+    },
+    challengeRating: 0.25,
+    abilities: {
+      strength: 15,
+      dexterity: 10,
+      constitution: 13,
+      intelligence: 2,
+      wisdom: 10,
+      charisma: 5,
+    },
+    savingThrows: {
+      strength: "+2",
+      dexterity: "+0",
+      constitution: "+1",
+      intelligence: "-4",
+      wisdom: "+0",
+      charisma: "-3",
+    },
+    skills: {
+      perception: "+2",
+    },
+    senses: {
+      passivePerception: 12,
+    },
+    actions: [
+      {
+        name: "Tail",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "7 (1d10 + 2) bludgeoning damage.",
+      },
+    ],
+  },
+  "grung-elite-warrior": {
+    name: "Grung d'élite",
+    id: "_grung-elite-warrior",
+    type: "Humanoid (Grung)",
+    size: "Small",
+    alignment: "Lawful Evil",
+    armorClass: 13,
+    hitPoints: "49 (9d6 + 18)",
+    speed: {
+      walk: "7.5 m",
+      climb: "7.5 m",
+    },
+    challengeRating: 2,
+    abilities: {
+      strength: 7,
+      dexterity: 16,
+      constitution: 15,
+      intelligence: 10,
+      wisdom: 11,
+      charisma: 12,
+    },
+    savingThrows: {
+      strength: "-2",
+      dexterity: "+5",
+      constitution: "+2",
+      intelligence: "+0",
+      wisdom: "+0",
+      charisma: "+1",
+    },
+    skills: {
+      athletics: "+2",
+      perception: "+2",
+      stealth: "+5",
+      survival: "+2",
+    },
+    immunities: ["poison", "poisoned"],
+    senses: {
+      passivePerception: 12,
+    },
+    languages: ["Grung"],
+    traits: [
+      {
+        name: "Peau vénéneuse",
+        description:
+          "Toucher ou aggriper, JdS CON 12 ou empoisonné (selon couleur) pour 1 minute. Relancer JdS à la fin de chaque tour pour finir l'effet.",
+      },
+      {
+        name: "Poison jaune",
+        description: "Charmé et parle le Grung",
+      },
+      {
+        name: "Poison orange",
+        description: "Effrayé par ses alliés",
+      },
+      {
+        name: "Poison rouge",
+        description: "Utiliser son action pour manger la nourriture sur sois",
+      },
+      {
+        name: "Poison vert",
+        description:
+          "Ne peut se déplacer qu'en grimpant ou en sautant sur place. Une créature volante est forcée à atterir.",
+      },
+      {
+        name: "Poison mauve",
+        description: "Se sent l'envie de se couvrir d'eau ou de vase. Ne peut qu'agir en ce sens.",
+      },
+      {
+        name: "Poison bleu",
+        description:
+          "Doit crier ou fait un bruit fort au début et à la fin de son tour (peut jouer)",
+      },
+    ],
+    actions: [
+      {
+        name: "Dague",
+        type: "Melee or Ranged",
+        modifier: "+5",
+        reach: "1.5 m ou distance 6/18 m",
+        hit: "5 (1d4 + 3) dégâts perçants, JdS CON 12 ou 2d4 poison.",
+      },
+      {
+        name: "Arc court",
+        type: "Ranged",
+        modifier: "+5",
+        reach: "24/96 m",
+        hit: "6 (1d6 + 3) dégâts perçant, JdS CON 12 ou 2d4 poison.",
+      },
+      {
+        name: "Cri envoutant (Recharge 6)",
+        description: "JdS SAG 12 ou étourdit jusqu'à la fin du prochain tour du Grung",
+      },
+    ],
+  },
+  grung: {
+    name: "Grung",
+    id: "grung",
+    type: "Humanoid (Grung)",
+    size: "Small",
+    alignment: "Lawful Evil",
+    armorClass: 12,
+    hitPoints: "11 (2d6 + 4)",
+    speed: {
+      walk: "7.5 m",
+      climb: "7.5 m",
+    },
+    challengeRating: 0.25,
+    abilities: {
+      strength: 7,
+      dexterity: 14,
+      constitution: 15,
+      intelligence: 10,
+      wisdom: 11,
+      charisma: 10,
+    },
+    savingThrows: {
+      strength: "-2",
+      dexterity: "+4",
+      constitution: "+2",
+      intelligence: "+0",
+      wisdom: "+0",
+      charisma: "+0",
+    },
+    skills: {
+      athletics: "+2",
+      perception: "+2",
+      stealth: "+4",
+      survival: "+2",
+    },
+    immunities: ["poison", "poisoned"],
+    senses: {
+      passivePerception: 12,
+    },
+    languages: ["Grung"],
+    traits: [
+      {
+        name: "Peau vénéneuse",
+        description:
+          "Toucher ou aggriper, JdS CON 12 ou empoisonné (selon couleur) pour 1 minute. Relancer JdS à la fin de chaque tour pour finir l'effet.",
+      },
+      {
+        name: "Poison jaune",
+        description: "Charmé et parle le Grung",
+      },
+      {
+        name: "Poison orange",
+        description: "Effrayé par ses alliés",
+      },
+      {
+        name: "Poison rouge",
+        description: "Utiliser son action pour manger la nourriture sur sois",
+      },
+      {
+        name: "Poison vert",
+        description:
+          "Ne peut se déplacer qu'en grimpant ou en sautant sur place. Une créature volante est forcée à atterir.",
+      },
+      {
+        name: "Poison mauve",
+        description: "Se sent l'envie de se couvrir d'eau ou de vase. Ne peut qu'agir en ce sens.",
+      },
+      {
+        name: "Poison bleu",
+        description:
+          "Doit crier ou fait un bruit fort au début et à la fin de son tour (peut jouer)",
+      },
+    ],
+    actions: [
+      {
+        name: "Dague",
+        type: "Melee or Ranged",
+        modifier: "+4",
+        reach: "1.5 m ou distance 6/18 m",
+        hit: "4 (1d4 + 2) dégâts perçants, JdS CON 12 ou 2d4 poison.",
+      },
+    ],
+  },
 };
