@@ -64,4 +64,52 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
       },
     ],
   },
+  assassin: {
+    name: "Sac de clous",
+    alignment: "Chaotic Neutral",
+    languages: ["Commun", "Nain", "Argot des voleurs"],
+    speed: {
+      walk: "9 m",
+      climb: "7.5 m",
+    },
+    senses: {
+      passivePerception: 16,
+      darkvision: "18m",
+    },
+    traits: [
+      {
+        name: "Agilité féline",
+        description:
+          "Double la vitesse de déplacement. Recharge après avoir bougé 0 cases en 1 tour.",
+      },
+      {
+        name: "Évasion",
+        description: "JdS DEX dégats 1/2 ou aucun. Si pas incapacité",
+      },
+      {
+        name: "Marque de l'assassin",
+        description: "Première attaque du combat : 20d6 + 2d8 + 4",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "3x épée ou arc",
+      },
+      {
+        name: "Epee courte",
+        type: "Melee",
+        modifier: "+7",
+        reach: "1.5 m",
+        hit: "7 (1d6 + 4) dégâts perçants, +5d6 poison et empoisonné jusqu'au début du prochain tour de l'assassin.",
+      },
+      {
+        name: "Arc long",
+        type: "Ranged",
+        modifier: "+7",
+        reach: "45/180 m ",
+        hit: "7 (1d8+ 4) dégâts perçants, +6d6 poison",
+      },
+    ],
+  },
 };

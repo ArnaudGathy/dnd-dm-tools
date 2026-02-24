@@ -965,4 +965,18 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "2GX9lVHfnxs",
   },
+  {
+    name: "Arbre déraciné",
+    id: 92,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O7",
+    },
+    ennemies: {
+      "1": ["assassin"],
+    },
+    informations: ["1ere attaque : gros dégats", "Se rend a 50% PV"],
+    youtubeId: "eVJSMUViEWw",
+  },
 ];
