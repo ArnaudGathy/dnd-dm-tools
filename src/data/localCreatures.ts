@@ -1063,43 +1063,36 @@ export const localCreatures: Record<string, Creature> = {
       charisma: 9,
     },
     skills: { perception: "+4" },
-    senses: { passivePerception: 14 },
+    senses: { passivePerception: 14, trueSight: "18m" },
     traits: [
       {
-        name: "Detect Invisibility",
-        description:
-          "The King of Feathers can see invisible creatures and objects as if they were visible.",
-      },
-      {
-        name: "Legendary Resistance (3/Day)",
-        description:
-          "If the King of Feathers fails a saving throw, it can choose to succeed instead.",
+        name: "Résistance légendaire (3 / jour)",
+        description: "Si JdS raté, peut choisir de réussir.",
       },
     ],
     actions: [
       {
         name: "Multiattack",
         description:
-          "The King of Feathers makes two attacks: one with its bite and one with its tail. It can’t make both attacks against the same target.",
+          "1x morsure, 1x queue, sur cibles différentes. Peut remplacer morsure par cri d'invocation",
       },
       {
-        name: "Bite",
+        name: "Morsure",
         type: "Melee",
         modifier: "+10",
         reach: "3 m",
-        hit: "33 (4d12 + 7) piercing damage. If the target is Medium or smaller, it is grappled (escape DC 17). Until the grapple ends, the target is restrained, and the tyrannosaurus can’t bite another target.",
+        hit: "33 (4d12 + 7) dégâts perçants. Cible <=M = aggripé DD 17 + restrained. Le dino ne peut plus mordre.",
       },
       {
-        name: "Tail",
+        name: "Queue",
         type: "Melee",
         modifier: "+10",
         reach: "3 m",
         hit: "20 (3d8 + 7) bludgeoning damage.",
       },
       {
-        name: "Summon Swarm (Recharge 5–6)",
-        description:
-          "The King of Feathers exhales a swarm of insects (wasps) that forms in a space within 6 m of it. The swarm acts as its ally and takes its turn immediately after it. The swarm disperses after 1 minute. The King of Feathers cannot use this action while it is grappling a creature with its jaws.",
+        name: "Cri d'invocation (Recharge 5–6)",
+        description: "Invoque un deinonychus qui joue a son propre tour d'initiative.",
       },
     ],
     bonusActions: [

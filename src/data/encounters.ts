@@ -625,9 +625,29 @@ export const encounters: Encounter[] = [
           id: "_king-of-feathers",
           color: "#93dc1e",
         },
+        {
+          id: "_deinonychus",
+          color: "#30850e",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#d52c06",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#30616C",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#B2457B",
+          inactive: true,
+        },
       ],
     },
-    youtubeId: "TODO",
+    youtubeId: "Yx-QqEc2Feg",
   },
   {
     name: "Grotte monstres de Su",
