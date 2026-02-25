@@ -983,4 +983,37 @@ export const encounters: Encounter[] = [
     ],
     youtubeId: "eVJSMUViEWw",
   },
+  {
+    name: "Sanctuaire de Unkh",
+    id: 93,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O8",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "ghast",
+          color: "#d3bf69",
+        },
+        {
+          id: "ghast",
+          variant: "homme",
+          color: "#1fa483",
+        },
+        {
+          id: "ghast",
+          variant: "femme",
+          color: "#8dd549",
+        },
+        {
+          id: "ghast",
+          variant: "homme",
+          color: "#A0A667",
+        },
+      ],
+    },
+    youtubeId: "n9KsWzdxi4Y",
+  },
 ];

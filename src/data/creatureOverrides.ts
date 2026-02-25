@@ -119,4 +119,29 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
       },
     ],
   },
+  ghast: {
+    traits: [
+      {
+        name: "Puanteur",
+        description:
+          "Au début du tour, a portée de CàC : JdS CON 10 (immunisé) ou empoisonné jusqu'au début de son prochain tour.",
+      },
+    ],
+    actions: [
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "7 (1d8 + 3) perçant +2d8 Necrotic",
+      },
+      {
+        name: "Griffe",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "10 (2d6 + 3) Tranchant. JdS CON 10 ou paralysé jusqu'à la fin de son prochain tour.",
+      },
+    ],
+  },
 };
