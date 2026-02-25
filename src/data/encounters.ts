@@ -1042,7 +1042,7 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O12",
+      mapMarker: "O12B",
     },
     ennemies: {
       "1": [
@@ -1079,5 +1079,24 @@ export const encounters: Encounter[] = [
       ],
     },
     youtubeId: "LV1ONUee-Fg",
+  },
+  {
+    name: "Sanctuaire de Wongo",
+    id: 95,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O12C",
+    },
+    ennemies: {
+      "1": [
+        { id: "_su-monster", variant: "1" },
+        { id: "_su-monster", variant: "2" },
+        { id: "_su-monster", variant: "3" },
+        { id: "_su-monster", variant: "4" },
+        { id: "_su-monster", variant: "5" },
+      ],
+    },
+    youtubeId: "l6pwrEnOUSA",
   },
 ];
