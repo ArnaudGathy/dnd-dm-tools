@@ -144,4 +144,30 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
       },
     ],
   },
+  "steam-mephit": {
+    traits: [
+      {
+        name: "Forme brouillée",
+        description: "Désavantage aux attaquants, sauf si incapacité.",
+      },
+      {
+        name: "Explosion de mort",
+        description: "A la mort, explose sur 1 case de portée. JdS DEX 10 (moiti) ou 2d4 feu",
+      },
+    ],
+    actions: [
+      {
+        name: "Griffe",
+        type: "Melee",
+        modifier: "+2",
+        reach: "1.5 m",
+        hit: "2 (1d4) dégâts tranchants +1d4 feu.",
+      },
+      {
+        name: "Souffle de vapeur (Recharge 6)",
+        description:
+          "Cone de 3 cases. JdS CON 10 (moitié) ou 2d4 feu et vitesse -2 cases jusqu'à la fin du prochaine tour du méphite.",
+      },
+    ],
+  },
 };

@@ -1036,4 +1036,48 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "n9KsWzdxi4Y",
   },
+  {
+    name: "Sanctuaire de Wongo",
+    id: 94,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O12",
+    },
+    ennemies: {
+      "1": [
+        {
+          id: "steam-mephit",
+          color: "#D467D6",
+          variant: "1",
+        },
+        {
+          id: "steam-mephit",
+          color: "#D467D6",
+          variant: "2",
+        },
+        {
+          id: "steam-mephit",
+          color: "#273039",
+          variant: "1",
+        },
+        {
+          id: "steam-mephit",
+          color: "#273039",
+          variant: "2",
+        },
+        {
+          id: "steam-mephit",
+          color: "#D4E1D8",
+          variant: "1",
+        },
+        {
+          id: "steam-mephit",
+          color: "#D4E1D8",
+          variant: "2",
+        },
+      ],
+    },
+    youtubeId: "LV1ONUee-Fg",
+  },
 ];
