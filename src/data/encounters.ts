@@ -1099,4 +1099,23 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "l6pwrEnOUSA",
   },
+  {
+    name: "Sanctuaire de Obo'Laka",
+    id: 96,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O19",
+    },
+    ennemies: {
+      "1": [
+        { id: "_zorbo-acid", variant: "" },
+        { id: "_zorbo", variant: "1" },
+        { id: "_zorbo", variant: "2" },
+        { id: "_zorbo", variant: "3" },
+        { id: "_zorbo", variant: "4" },
+      ],
+    },
+    youtubeId: "XwCayTrPMYI",
+  },
 ];

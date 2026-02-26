@@ -2008,4 +2008,114 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  zorbo: {
+    name: "Zorbo",
+    id: "_zorbo",
+    type: "Monstrosity",
+    size: "Small",
+    alignment: "Unaligned",
+    armorClass: "10 (base) 17 (sanctuaire)",
+    hitPoints: "27 (6d6 + 6)",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    challengeRating: 0.5,
+    abilities: {
+      strength: 13,
+      dexterity: 11,
+      constitution: 13,
+      intelligence: 3,
+      wisdom: 12,
+      charisma: 7,
+    },
+    savingThrows: {
+      strength: "+1",
+      dexterity: "+0",
+      constitution: "+1",
+      intelligence: "-4",
+      wisdom: "+1",
+      charisma: "-2",
+    },
+    skills: {
+      athletics: "+3",
+    },
+    senses: {
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Résistance magique",
+        description: "Avantage JdS contre sorts.",
+      },
+      {
+        name: "Armure naturelle",
+        description: "CA 15 bois ou os, CA 17 terre ou pierre, CA 19 métal. Sinon 10.",
+      },
+    ],
+    actions: [
+      {
+        name: "Griffe destructrices",
+        type: "Melee",
+        modifier: "+3",
+        reach: "1.5 m",
+        hit: "8 (2d6 + 1) slashing damage.",
+      },
+    ],
+  },
+  "zorbo-acid": {
+    name: "Zorbo (Acide)",
+    id: "_zorbo-acid",
+    type: "Monstrosity",
+    size: "Small",
+    alignment: "Unaligned",
+    armorClass: "10 (base) 17 (sanctuaire)",
+    hitPoints: "27 (6d6 + 6)",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    challengeRating: 0.5,
+    abilities: {
+      strength: 13,
+      dexterity: 11,
+      constitution: 13,
+      intelligence: 3,
+      wisdom: 12,
+      charisma: 7,
+    },
+    savingThrows: {
+      strength: "+1",
+      dexterity: "+0",
+      constitution: "+1",
+      intelligence: "-4",
+      wisdom: "+1",
+      charisma: "-2",
+    },
+    skills: {
+      athletics: "+3",
+    },
+    senses: {
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Résistance magique",
+        description: "Avantage JdS contre sorts.",
+      },
+      {
+        name: "Armure naturelle",
+        description: "CA 15 bois ou os, CA 17 terre ou pierre, CA 19 métal. Sinon 10.",
+      },
+    ],
+    actions: [
+      {
+        name: "Griffe destructrices",
+        type: "Melee",
+        modifier: "+3",
+        reach: "1.5 m",
+        hit: "8 (2d6 + 1) slashing damage. JdS DEX 11 ou réduit de 1 la CA d'un objet d'armure portée (armure, bouclier, objet magique). Si l'objet atteint 0, il est détruit.",
+      },
+    ],
+  },
 };
