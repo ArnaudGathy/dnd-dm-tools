@@ -1,3 +1,5 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Encounter } from "@/types/types";
@@ -5,6 +7,8 @@ import { clsx } from "clsx";
 import { getYoutubeUrlFromId } from "@/utils/utils";
 import Link from "next/link";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/16/solid";
+import { useState } from "react";
+import { PlayIcon } from "@heroicons/react/24/outline";
 
 const List = ({ list }: { list: string[] }) => {
   return (
@@ -22,6 +26,8 @@ const List = ({ list }: { list: string[] }) => {
 };
 
 export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
+  const [iframeExpanded, setIframeExpanded] = useState(true);
+
   return (
     <>
       <Card>
@@ -35,8 +41,18 @@ export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
                   </Link>
                 </Button>
               )}
-              <div>
+              <div className="flex items-center gap-2">
                 {encounter.location.mapMarker} - {encounter.name}
+                <div>
+                  <Button
+                    size="xs"
+                    variant="link"
+                    onClick={() => setIframeExpanded((v) => !v)}
+                    className="mb-1 flex items-center gap-1 text-xs text-muted-foreground"
+                  >
+                    <PlayIcon /> Player
+                  </Button>
+                </div>
               </div>
               <Button size="xs" variant="ghost">
                 <Link href={`/encounters/${encounter.id + 1}`}>
@@ -46,13 +62,20 @@ export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
             </div>
 
             {encounter.youtubeId && (
-              <iframe
-                width="100%"
-                height="45"
-                src={getYoutubeUrlFromId(encounter.youtubeId)}
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerPolicy="strict-origin-when-cross-origin"
-              ></iframe>
+              <div
+                className={clsx(
+                  "overflow-hidden transition-all duration-300",
+                  iframeExpanded ? "h-[200px]" : "h-0",
+                )}
+              >
+                <iframe
+                  width="100%"
+                  height="100%"
+                  src={getYoutubeUrlFromId(encounter.youtubeId)}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  referrerPolicy="strict-origin-when-cross-origin"
+                ></iframe>
+              </div>
             )}
           </CardTitle>
         </CardHeader>
