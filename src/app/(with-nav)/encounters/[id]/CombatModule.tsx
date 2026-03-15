@@ -36,6 +36,7 @@ import {
 import { usePathname, useRouter } from "next/navigation";
 import { useGroupFromCampaign, Group } from "@/hooks/useGroupFromCampaign";
 import {
+  useClearCombatTracker,
   useSetParticipantsListTracker,
   useSetTurnsTracker,
 } from "@/hooks/useParticipantsListTracker";
@@ -134,6 +135,7 @@ export const CombatModule = ({
   const { setParticipantsTracker } = useSetParticipantsListTracker();
   const { setActiveParticipantTracker, setNumberOfTurnsTracker, setHasStartedTracker } =
     useSetTurnsTracker();
+  const clearCombatTracker = useClearCombatTracker();
 
   const router = useRouter();
   const pathName = usePathname();
@@ -170,6 +172,9 @@ export const CombatModule = ({
 
   useEffect(() => {
     setHasStartedTracker(false);
+    return () => {
+      clearCombatTracker();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

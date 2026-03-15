@@ -30,6 +30,13 @@ export type Turns = {
   numberOfTurns: number;
   hasStarted: boolean;
 };
+export const useClearCombatTracker = () => {
+  return useCallback(() => {
+    void set(participantsRef, null);
+    void set(turnsRef, null);
+  }, []);
+};
+
 export const useSetTurnsTracker = () => {
   const setActiveParticipantTracker = useCallback(
     (activeParticipantIndex: Turns["activeParticipantIndex"]) => {
