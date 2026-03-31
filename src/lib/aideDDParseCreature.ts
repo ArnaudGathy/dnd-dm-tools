@@ -187,7 +187,7 @@ function extractSectionParagraphs(html: string, sectionTitle: string, isAction =
   const $ = load(html);
   const entries = [];
 
-  const sectionDiv = $("div.rub")
+  const sectionDiv = $(".rub")
     .filter((_, el) => $(el).text().trim().toLowerCase() === sectionTitle.toLowerCase())
     .first();
 
@@ -199,7 +199,7 @@ function extractSectionParagraphs(html: string, sectionTitle: string, isAction =
     if (node.type === "tag") {
       const el = $(node);
 
-      if (el.is("div.rub")) break;
+      if (el.is(".rub")) break;
       if (el.is("p")) {
         const name = el.find("strong em").first().text().trim();
 
@@ -257,6 +257,10 @@ function extractLegendaryActionUses(html: string): string | undefined {
 
 export const parseCreaturesFromAideDD = (html: string, creatureName: string) => {
   const creatureData = getBaseCreatureData(html, creatureName);
+
+  if (!creatureData) {
+    return null;
+  }
 
   const $ = cheerio.load(html);
   const statBlockSelector = $(".jaune");
