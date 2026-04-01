@@ -19,7 +19,6 @@ import {
   Gavel,
   GraduationCap,
   HandFist,
-  HandGrab,
   HandHelping,
   Heart,
   HeartPlus,
@@ -31,6 +30,7 @@ import {
   Sparkles,
   Sprout,
   Star,
+  SwordIcon,
   Waves,
 } from "lucide-react";
 import { Classes, Races, Subclasses } from "@prisma/client";
@@ -41,7 +41,7 @@ import {
   RANGER_HUNTERS_MARK_PER_LEVEL,
   ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL,
   FIGHTER_SECOND_WIND_PER_LEVEL,
-  FIGHTER_ARDOR_PER_LEVEL,
+  FIGHTER_ACTION_SURGE_PER_LEVEL,
   FIGHTER_UNYIELDING_PER_LEVEL,
   FIGHTER_WAR_MASTER_SUPERIORITY_DICE_PER_LEVEL,
 } from "@/constants/maps";
@@ -335,10 +335,10 @@ export default function useRessourceData({ character }: { character: CharacterBy
       condition: character.className === Classes.FIGHTER,
     },
     {
-      name: "Ardeur",
-      icon: <HandGrab />,
-      ressourceName: "ardor",
-      total: FIGHTER_ARDOR_PER_LEVEL[character.level],
+      name: "Fougue",
+      icon: <SwordIcon />,
+      ressourceName: "actionSurge",
+      total: FIGHTER_ACTION_SURGE_PER_LEVEL[character.level],
       condition: character.className === Classes.FIGHTER && character.level >= 2,
     },
     {

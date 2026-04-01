@@ -59,7 +59,7 @@ const ressourceNames = [
   "starMap",
   "cosmicOmen",
   "secondWind",
-  "ardor",
+  "actionSurge",
   "unyielding",
   "superiorityDice",
   "observeEnemy",
@@ -209,7 +209,7 @@ const initialValues: RessourceStorage = {
       theme: "green",
       canShortRest: true,
     },
-    ardor: {
+    actionSurge: {
       ...initialRessource,
       theme: "fuchsia",
       canShortRest: true,
@@ -281,7 +281,9 @@ export const useRessourceStorage = (character: CharacterById) => {
         }
 
         /* One per short rest */
-        if (["psiDices", "channelDivinity", "wildShape", "secondWind", "ardor"].includes(key)) {
+        if (
+          ["psiDices", "channelDivinity", "wildShape", "secondWind", "actionSurge"].includes(key)
+        ) {
           available = Math.min(value.available + 1, value.total);
         }
 

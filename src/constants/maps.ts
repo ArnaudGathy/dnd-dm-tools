@@ -428,7 +428,7 @@ export const FIGHTER_SECOND_WIND_PER_LEVEL: Record<number, number> = {
   20: 4,
 };
 
-export const FIGHTER_ARDOR_PER_LEVEL: Record<number, number> = {
+export const FIGHTER_ACTION_SURGE_PER_LEVEL: Record<number, number> = {
   1: 0,
   2: 1,
   3: 1,
