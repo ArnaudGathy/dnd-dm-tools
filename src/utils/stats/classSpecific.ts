@@ -2,6 +2,7 @@ import { Abilities, Character, Classes, Subclasses } from "@prisma/client";
 import { getModifier } from "@/utils/utils";
 import {
   ABILITY_NAME_MAP_TO_FR,
+  FIGHTER_SUPERIORITY_DICE_PER_LEVEL,
   MONK_MARTIAL_DICE_PER_LEVEL,
   PROFICIENCY_BONUS_BY_LEVEL,
   ROGUE_BACKSTAB_DICE_PER_LEVEL,
@@ -100,6 +101,15 @@ export const getClassDice = (character: Character) => {
     return {
       value: ROGUE_BACKSTAB_DICE_PER_LEVEL[character.level],
       name: "Dés d'attaque sournoise",
+    };
+  }
+  if (
+    character.className === Classes.FIGHTER &&
+    character.subclassName === Subclasses.BATTLE_MASTER
+  ) {
+    return {
+      value: FIGHTER_SUPERIORITY_DICE_PER_LEVEL[character.level],
+      name: "Dés de supériorité",
     };
   }
   return undefined;

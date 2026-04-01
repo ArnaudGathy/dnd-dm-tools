@@ -58,6 +58,11 @@ const ressourceNames = [
   "natureMagician",
   "starMap",
   "cosmicOmen",
+  "secondWind",
+  "ardor",
+  "unyielding",
+  "superiorityDice",
+  "observeEnemy",
 ] as const;
 export type RessourceName = (typeof ressourceNames)[number];
 
@@ -199,6 +204,29 @@ const initialValues: RessourceStorage = {
       ...initialRessource,
       theme: "orange",
     },
+    secondWind: {
+      ...initialRessource,
+      theme: "green",
+      canShortRest: true,
+    },
+    ardor: {
+      ...initialRessource,
+      theme: "fuchsia",
+      canShortRest: true,
+    },
+    unyielding: {
+      ...initialRessource,
+      theme: "blue",
+    },
+    superiorityDice: {
+      ...initialRessource,
+      theme: "orange",
+      canShortRest: true,
+    },
+    observeEnemy: {
+      ...initialRessource,
+      theme: "teal",
+    },
   },
 };
 
@@ -248,12 +276,12 @@ export const useRessourceStorage = (character: CharacterById) => {
         let available = value.available;
 
         /* All per short rest */
-        if (["focusPoints", "warPriest"].includes(key)) {
+        if (["focusPoints", "warPriest", "superiorityDice"].includes(key)) {
           available = value.total;
         }
 
         /* One per short rest */
-        if (["psiDices", "channelDivinity", "wildShape"].includes(key)) {
+        if (["psiDices", "channelDivinity", "wildShape", "secondWind", "ardor"].includes(key)) {
           available = Math.min(value.available + 1, value.total);
         }
 

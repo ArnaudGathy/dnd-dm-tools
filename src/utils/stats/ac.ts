@@ -2,6 +2,7 @@ import {
   Abilities,
   Armor,
   ArmorType,
+  Capacity,
   Character,
   Classes,
   InventoryItem,
@@ -44,8 +45,27 @@ const getAcModifierByArmor = (character: Character, armor?: Armor) => {
   return { abilityACModifier: 0, modifierName: "Aucun" };
 };
 
+export const getFeatAC = (character: Character & { capacities: Capacity[]; armors: Armor[] }) => {
+  const hasDefensStyle = character.capacities.find(({ name }) =>
+    name.includes("Style de combat: Défense"),
+  );
+  const hasEquippedArmor = character.armors.some((armor) => armor.isEquipped);
+  if (hasDefensStyle && hasEquippedArmor) {
+    return {
+      modifier: 1,
+      modifierName: "Style de combat: Défense",
+    };
+  }
+  return { modifier: 0, modifierName: "Aucun" };
+};
+
 export const getTotalAC = (
-  character: Character & { armors: Armor[]; inventory: InventoryItem[]; magicItems: MagicItem[] },
+  character: Character & {
+    armors: Armor[];
+    inventory: InventoryItem[];
+    magicItems: MagicItem[];
+    capacities: Capacity[];
+  },
 ) => {
   const equippedArmors = character.armors.filter(({ isEquipped }) => isEquipped);
   const equippedBodyArmor = equippedArmors.find(({ type }) => type !== ArmorType.SHIELD);
@@ -55,6 +75,7 @@ export const getTotalAC = (
   const equippedShield = equippedArmors.find(({ type }) => type === ArmorType.SHIELD);
   const shieldAc = !!equippedShield ? equippedShield.AC : 0;
   const protectionRingModifier = hasMagicItem(character, "anneau de protection") ? 1 : 0;
+  const featAc = getFeatAC(character);
 
   return {
     armorAC,
@@ -64,6 +85,13 @@ export const getTotalAC = (
     shieldAc,
     protectionRingModifier,
     ACBonus: character.ACBonus,
-    total: armorAC + abilityACModifier + shieldAc + character.ACBonus + protectionRingModifier,
+    featAc,
+    total:
+      armorAC +
+      abilityACModifier +
+      shieldAc +
+      character.ACBonus +
+      protectionRingModifier +
+      featAc.modifier,
   };
 };
