@@ -274,6 +274,7 @@ export const RACE_MAP = {
   [Races.DRAGONBORN]: "Drakéide",
   [Races.TABAXI]: "Tabaxi",
   [Races.TIEFLING]: "Tiefelin",
+  [Races.YUANTI]: "Yuan-ti",
 };
 
 export const SPEED_BY_RACE_MAP = {
@@ -288,6 +289,7 @@ export const SPEED_BY_RACE_MAP = {
   [Races.ORC]: 30,
   [Races.TIEFLING]: 30,
   [Races.TABAXI]: 30,
+  [Races.YUANTI]: 30,
 };
 
 export const MONK_SPEED_IN_SQUARE: Record<number, number> = {
@@ -601,6 +603,7 @@ export const SIZE_BY_RACE_MAP = {
   [Races.ORC]: "M", // Moyen
   [Races.TIEFLING]: "M", // Moyen
   [Races.TABAXI]: "M", // Moyen
+  [Races.YUANTI]: "M", // Moyen
 };
 
 export const BACKGROUND_MAP = {

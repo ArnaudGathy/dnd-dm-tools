@@ -157,6 +157,7 @@ enum Races {
   ORC
   TABAXI
   TIEFLING
+  YUANTI
 }
 
 enum Backgrounds {
