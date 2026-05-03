@@ -170,4 +170,255 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
       },
     ],
   },
+  "yuan-ti-malison-type-1": {
+    id: "_yuan-ti-malison-type-1",
+    name: "Yuan-ti Malison 1 - Ray",
+    size: "Medium",
+    type: "Monstrosity",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    skills: {},
+    traits: [
+      {
+        name: "Magic Resistance",
+        description:
+          "The yuan-ti has Advantage on saving throws against spells and other magical effects.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "2x Morsure ou poison (au choix)",
+      },
+      {
+        hit: "5 (1d4 + 3) Piercing damage plus 7 (2d6) Poison damage.",
+        name: "Morsure",
+        type: "Melee",
+        reach: "1.5 m",
+        modifier: "+5",
+      },
+      {
+        name: "Poison Ray",
+        reach: "36 m",
+        type: "Ranged",
+        modifier: "+5",
+        hit: "12 (2d8 + 3) Poison damage",
+      },
+    ],
+    abilities: {
+      wisdom: 16,
+      charisma: 12,
+      strength: 16,
+      dexterity: 14,
+      constitution: 13,
+      intelligence: 14,
+    },
+    alignment: "Neutral Evil",
+    hitPoints: "66 (12d8 + 12)",
+    languages: ["abyssal", "common", "draconic"],
+    armorClass: "12",
+    immunities: ["poison", "poisoned"],
+    savingThrows: {
+      wisdom: "+3",
+      charisma: "+1",
+      strength: "+3",
+      dexterity: "+2",
+      constitution: "+1",
+      intelligence: "+2",
+    },
+    challengeRating: 3,
+    bonusActions: [],
+  },
+  "yuan-ti-malison-type-2": {
+    id: "_yuan-ti-malison-type-2",
+    name: "Yuan-ti Malison 2 - bras",
+    size: "Medium",
+    type: "Monstrosity",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    skills: {},
+    traits: [
+      {
+        name: "Magic Resistance",
+        description:
+          "The yuan-ti has Advantage on saving throws against spells and other magical effects.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "2x Morsure",
+      },
+      {
+        hit: "7 (1d8 + 3) Piercing damage plus 7 (2d6) Poison damage.",
+        name: "Morsure",
+        type: "Melee",
+        reach: "3 m",
+        modifier: "+5",
+      },
+    ],
+    abilities: {
+      wisdom: 16,
+      charisma: 12,
+      strength: 16,
+      dexterity: 14,
+      constitution: 13,
+      intelligence: 14,
+    },
+    alignment: "Neutral Evil",
+    hitPoints: "66 (12d8 + 12)",
+    languages: ["abyssal", "common", "draconic"],
+    armorClass: "12",
+    immunities: ["poison", "poisoned"],
+    savingThrows: {
+      wisdom: "+3",
+      charisma: "+1",
+      strength: "+3",
+      dexterity: "+2",
+      constitution: "+1",
+      intelligence: "+2",
+    },
+    challengeRating: 3,
+    bonusActions: [],
+  },
+  "yuan-ti-malison-type-3": {
+    id: "_yuan-ti-malison-type-3",
+    name: "Yuan-ti Malison 3 - Constrictor",
+    size: "Medium",
+    type: "Monstrosity",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    skills: {},
+    traits: [
+      {
+        name: "Magic Resistance",
+        description:
+          "The yuan-ti has Advantage on saving throws against spells and other magical effects.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "2x poison burst",
+      },
+      {
+        hit: "12 (2d8 + 3) Poison damage.",
+        name: "Poison Burst",
+        type: "Melee or Ranged",
+        reach: "1.5 m ou portée 36 m",
+        modifier: "+5",
+      },
+      {
+        name: "Constrict",
+        description:
+          "JdS FOR 13, M ou S CàC, 4d8+3 dégats contondants, aggripé et entravé. Escape DD13.",
+      },
+    ],
+    abilities: {
+      wisdom: 16,
+      charisma: 12,
+      strength: 16,
+      dexterity: 14,
+      constitution: 13,
+      intelligence: 14,
+    },
+    alignment: "Neutral Evil",
+    hitPoints: "66 (12d8 + 12)",
+    languages: ["abyssal", "common", "draconic"],
+    armorClass: "12",
+    immunities: ["poison", "poisoned"],
+    bonusActions: [],
+    savingThrows: {
+      wisdom: "+3",
+      charisma: "+1",
+      strength: "+3",
+      dexterity: "+2",
+      constitution: "+1",
+      intelligence: "+2",
+    },
+    challengeRating: 3,
+  },
+  "yuan-ti-infiltrator": {
+    id: "_yuan-ti-infiltrator",
+    name: "Yuan-ti Sang-pur",
+    size: "Medium",
+    type: "Monstrosity",
+    speed: {
+      walk: "9 m",
+    },
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 14,
+    },
+    skills: {
+      stealth: "+3",
+      deception: "+5",
+      perception: "+4",
+    },
+    traits: [
+      {
+        name: "Magic Resistance",
+        description:
+          "The yuan-ti has Advantage on saving throws against spells and other magical effects.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "2x Scimitar",
+      },
+      {
+        hit: "4 (1d6 + 1) Slashing damage.",
+        name: "Scimitar",
+        type: "Melee",
+        reach: "1.5 m",
+        modifier: "+3",
+      },
+      {
+        name: "Poison Ray",
+        reach: "36 m",
+        type: "Ranged",
+        modifier: "+4",
+        hit: "12 (2d6 + 2) Poison damage",
+      },
+    ],
+    abilities: {
+      wisdom: 14,
+      charisma: 12,
+      strength: 11,
+      dexterity: 12,
+      constitution: 11,
+      intelligence: 13,
+    },
+    alignment: "Neutral Evil",
+    hitPoints: "40 (9d8)",
+    languages: ["abyssal", "common", "draconic"],
+    armorClass: "11",
+    immunities: ["poison", "poisoned"],
+    savingThrows: {
+      wisdom: "+2",
+      charisma: "+1",
+      dexterity: "+1",
+      intelligence: "+1",
+    },
+    challengeRating: 1,
+  },
 };

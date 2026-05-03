@@ -1128,11 +1128,11 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        "yuan-ti-malison-type-1",
-        "yuan-ti-malison-type-2",
-        "yuan-ti-malison-type-3",
-        "yuan-ti-infiltrator",
-        "yuan-ti-infiltrator",
+        { id: "yuan-ti-malison-type-1", color: "#76ea04" },
+        { id: "yuan-ti-malison-type-2", color: "#faed3e" },
+        { id: "yuan-ti-malison-type-3", color: "#8da2ef" },
+        { id: "yuan-ti-infiltrator", color: "#092a6e" },
+        { id: "yuan-ti-infiltrator", color: "#602803" },
       ],
     },
     youtubeId: "HOmjkQ_3W5Q",
