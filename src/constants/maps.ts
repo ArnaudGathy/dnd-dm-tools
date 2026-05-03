@@ -274,6 +274,7 @@ export const RACE_MAP = {
   [Races.DRAGONBORN]: "Drakéide",
   [Races.TABAXI]: "Tabaxi",
   [Races.TIEFLING]: "Tiefelin",
+  [Races.YUANTI]: "Yuan-ti",
 };
 
 export const SPEED_BY_RACE_MAP = {
@@ -288,6 +289,7 @@ export const SPEED_BY_RACE_MAP = {
   [Races.ORC]: 30,
   [Races.TIEFLING]: 30,
   [Races.TABAXI]: 30,
+  [Races.YUANTI]: 30,
 };
 
 export const MONK_SPEED_IN_SQUARE: Record<number, number> = {
@@ -405,6 +407,98 @@ export const DRUID_WILD_SHAPE_PER_LEVEL: Record<number, number> = {
   20: 4,
 };
 
+export const FIGHTER_SECOND_WIND_PER_LEVEL: Record<number, number> = {
+  1: 2,
+  2: 2,
+  3: 2,
+  4: 3,
+  5: 3,
+  6: 3,
+  7: 3,
+  8: 3,
+  9: 3,
+  10: 4,
+  11: 4,
+  12: 4,
+  13: 4,
+  14: 4,
+  15: 4,
+  16: 4,
+  17: 4,
+  18: 4,
+  19: 4,
+  20: 4,
+};
+
+export const FIGHTER_ACTION_SURGE_PER_LEVEL: Record<number, number> = {
+  1: 0,
+  2: 1,
+  3: 1,
+  4: 1,
+  5: 1,
+  6: 1,
+  7: 1,
+  8: 1,
+  9: 1,
+  10: 1,
+  11: 1,
+  12: 1,
+  13: 1,
+  14: 1,
+  15: 1,
+  16: 1,
+  17: 2,
+  18: 2,
+  19: 2,
+  20: 2,
+};
+
+export const FIGHTER_WAR_MASTER_SUPERIORITY_DICE_PER_LEVEL: Record<number, number> = {
+  1: 4,
+  2: 4,
+  3: 4,
+  4: 4,
+  5: 4,
+  6: 4,
+  7: 5,
+  8: 5,
+  9: 5,
+  10: 5,
+  11: 5,
+  12: 5,
+  13: 5,
+  14: 5,
+  15: 6,
+  16: 6,
+  17: 6,
+  18: 6,
+  19: 6,
+  20: 6,
+};
+
+export const FIGHTER_UNYIELDING_PER_LEVEL: Record<number, number> = {
+  1: 0,
+  2: 0,
+  3: 0,
+  4: 0,
+  5: 0,
+  6: 0,
+  7: 0,
+  8: 0,
+  9: 1,
+  10: 1,
+  11: 1,
+  12: 1,
+  13: 2,
+  14: 2,
+  15: 2,
+  16: 2,
+  17: 3,
+  18: 3,
+  19: 3,
+  20: 3,
+};
+
 export const MONK_MARTIAL_DICE_PER_LEVEL: Record<number, string> = {
   1: "1d6",
   2: "1d6",
@@ -474,6 +568,29 @@ export const ROGUE_SOULKNIFE_DICE_PER_LEVEL: Record<number, string | undefined> 
   20: "12d12",
 };
 
+export const FIGHTER_SUPERIORITY_DICE_PER_LEVEL: Record<number, string> = {
+  1: "1d8",
+  2: "1d8",
+  3: "1d8",
+  4: "1d8",
+  5: "1d8",
+  6: "1d8",
+  7: "1d8",
+  8: "1d8",
+  9: "1d8",
+  10: "1d10",
+  11: "1d10",
+  12: "1d10",
+  13: "1d10",
+  14: "1d10",
+  15: "1d10",
+  16: "1d10",
+  17: "1d10",
+  18: "1d12",
+  19: "1d12",
+  20: "1d12",
+};
+
 export const SIZE_BY_RACE_MAP = {
   [Races.AASIMAR]: "M", // Moyen
   [Races.DRAGONBORN]: "M", // Moyen
@@ -486,6 +603,7 @@ export const SIZE_BY_RACE_MAP = {
   [Races.ORC]: "M", // Moyen
   [Races.TIEFLING]: "M", // Moyen
   [Races.TABAXI]: "M", // Moyen
+  [Races.YUANTI]: "M", // Moyen
 };
 
 export const BACKGROUND_MAP = {

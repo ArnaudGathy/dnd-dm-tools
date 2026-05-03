@@ -11,6 +11,7 @@ import {
   CopyCheck,
   Cross,
   Crosshair,
+  Dice3Icon,
   Drama,
   Eye,
   EyeOff,
@@ -25,9 +26,11 @@ import {
   PawPrint,
   RefreshCcw,
   RefreshCcwDot,
+  ShieldPlus,
   Sparkles,
   Sprout,
   Star,
+  SwordIcon,
   Waves,
 } from "lucide-react";
 import { Classes, Races, Subclasses } from "@prisma/client";
@@ -37,6 +40,10 @@ import {
   PROFICIENCY_BONUS_BY_LEVEL,
   RANGER_HUNTERS_MARK_PER_LEVEL,
   ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL,
+  FIGHTER_SECOND_WIND_PER_LEVEL,
+  FIGHTER_ACTION_SURGE_PER_LEVEL,
+  FIGHTER_UNYIELDING_PER_LEVEL,
+  FIGHTER_WAR_MASTER_SUPERIORITY_DICE_PER_LEVEL,
 } from "@/constants/maps";
 import { getModifier } from "@/utils/utils";
 import { filter, reduce, sortBy } from "remeda";
@@ -289,7 +296,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       icon: <RefreshCcw />,
       ressourceName: "wildResurgence",
       total: 1,
-      condition: character.className === Classes.DRUID && character.level >= 4,
+      condition: character.className === Classes.DRUID && character.level >= 5,
     },
     {
       name: "Mage de nature",
@@ -317,6 +324,49 @@ export default function useRessourceData({ character }: { character: CharacterBy
         character.className === Classes.DRUID &&
         character.subclassName === Subclasses.CIRCLE_OF_THE_STARS &&
         character.level >= 6,
+    },
+  ];
+  const fighter: RessourceDefinition[] = [
+    {
+      name: "Second souffle",
+      icon: <HeartPlus />,
+      ressourceName: "secondWind",
+      total: FIGHTER_SECOND_WIND_PER_LEVEL[character.level],
+      condition: character.className === Classes.FIGHTER,
+    },
+    {
+      name: "Fougue",
+      icon: <SwordIcon />,
+      ressourceName: "actionSurge",
+      total: FIGHTER_ACTION_SURGE_PER_LEVEL[character.level],
+      condition: character.className === Classes.FIGHTER && character.level >= 2,
+    },
+    {
+      name: "Dés de supériorité",
+      icon: <Dice3Icon />,
+      ressourceName: "superiorityDice",
+      total: FIGHTER_WAR_MASTER_SUPERIORITY_DICE_PER_LEVEL[character.level],
+      condition:
+        character.className === Classes.FIGHTER &&
+        character.subclassName === Subclasses.BATTLE_MASTER &&
+        character.level >= 3,
+    },
+    {
+      name: "Observation de l'enn.",
+      icon: <Eye />,
+      ressourceName: "observeEnemy",
+      total: 1,
+      condition:
+        character.className === Classes.FIGHTER &&
+        character.subclassName === Subclasses.BATTLE_MASTER &&
+        character.level >= 7,
+    },
+    {
+      name: "Inflexible",
+      icon: <ShieldPlus />,
+      ressourceName: "unyielding",
+      total: FIGHTER_UNYIELDING_PER_LEVEL[character.level],
+      condition: character.className === Classes.FIGHTER && character.level >= 9,
     },
   ];
 
@@ -355,6 +405,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       ...cleric,
       ...wizard,
       ...druid,
+      ...fighter,
     ]),
     ({ useRessource }) => useRessource[0].order,
   );

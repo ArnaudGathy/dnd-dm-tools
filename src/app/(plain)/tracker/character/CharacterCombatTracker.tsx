@@ -98,7 +98,7 @@ export default function CharacterCombatTracker() {
                                   <Heart
                                     key={index}
                                     className={cn(
-                                      "size-10 stroke-cyan-700 stroke-[2.5px] transition duration-1000",
+                                      "size-10 stroke-green-700 stroke-[2.5px] transition duration-1000",
                                       {
                                         "stroke-stone-600/20": index >= success,
                                       },
@@ -111,7 +111,7 @@ export default function CharacterCombatTracker() {
                                   <Skull
                                     key={index}
                                     className={cn(
-                                      "size-10 stroke-red-700 stroke-[2.5px] transition duration-1000",
+                                      "size-10 stroke-red-600 stroke-[2.5px] transition duration-1000",
                                       {
                                         "stroke-stone-600/20": index >= failure,
                                       },

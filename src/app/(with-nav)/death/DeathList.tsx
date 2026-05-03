@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useGroupFromCampaign } from "@/hooks/useGroupFromCampaign";
 import { useCharacterTracker } from "@/hooks/useCharacterTracker";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,28 @@ export default function DeathList() {
   const { charactersData, setCharactersData } = useCharacterTracker();
 
   const group = useGroupFromCampaign();
+
+  useEffect(() => {
+    if (!group.length || charactersData === null) return;
+
+    const existing = charactersData.filter((c) => c != null);
+
+    const missing = group.filter((char) => !existing.some((c) => c.characterName === char.name));
+
+    if (missing.length > 0) {
+      setCharactersData([
+        ...existing,
+        ...missing.map((char) => ({
+          characterName: char.name,
+          success: 0,
+          failure: 0,
+          currentHP: 0,
+          currentTempHP: 0,
+          maximumHP: 0,
+        })),
+      ]);
+    }
+  }, [group, charactersData, setCharactersData]);
 
   if (!group.length) {
     return <div>Select a group</div>;

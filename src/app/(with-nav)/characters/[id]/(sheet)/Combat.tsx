@@ -91,6 +91,12 @@ export default function Combat({ character }: { character: CharacterById }) {
                     <span>{ACDetails.abilityACModifier}</span>
                   </div>
                 )}
+                {ACDetails.featAc.modifier > 0 && (
+                  <div>
+                    <span>{ACDetails.featAc.modifierName} : </span>
+                    <span>{ACDetails.featAc.modifier}</span>
+                  </div>
+                )}
                 {ACDetails.ACBonus > 0 && (
                   <div>
                     <span>Bonus : </span>
