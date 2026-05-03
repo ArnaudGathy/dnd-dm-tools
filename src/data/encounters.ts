@@ -1118,4 +1118,23 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "XwCayTrPMYI",
   },
+  {
+    name: "Aléatoire : Yuan-ti (patrouille)",
+    id: 97,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O99",
+    },
+    ennemies: {
+      "1": [
+        "yuan-ti-malison-type-1",
+        "yuan-ti-malison-type-2",
+        "yuan-ti-malison-type-3",
+        "yuan-ti-infiltrator",
+        "yuan-ti-infiltrator",
+      ],
+    },
+    youtubeId: "HOmjkQ_3W5Q",
+  },
 ];
