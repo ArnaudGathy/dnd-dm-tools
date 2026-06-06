@@ -315,6 +315,9 @@ export const MONK_SPEED_IN_SQUARE: Record<number, number> = {
   20: 6,
 };
 
+export const RANGER_ROVING_LEVEL = 6;
+export const RANGER_SPEED_BONUS_IN_SQUARE = 2; // Roving (level 6+): +10 ft / +3 m
+
 export const ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL: Record<number, number> = {
   1: 0,
   2: 0,
