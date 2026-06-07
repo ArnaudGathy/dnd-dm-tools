@@ -1832,7 +1832,7 @@ export const localCreatures: Record<string, Creature> = {
     ],
   },
   "grung-elite-warrior": {
-    name: "Grung d'élite",
+    name: "Grung Eli.",
     id: "_grung-elite-warrior",
     type: "Humanoid (Grung)",
     size: "Small",
