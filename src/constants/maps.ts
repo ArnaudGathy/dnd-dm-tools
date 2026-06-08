@@ -647,12 +647,14 @@ export const CAMPAIGN_MAP = {
   [CampaignId.DRAGONS]: "Les dragons de l'île aux tempêtes",
   [CampaignId.TOMB]: "La tombe de l'annihilation",
   [CampaignId.NETHERDEEP]: "Call of the Netherdeep",
+  [CampaignId.DRAGONLORDS]: "L'odyssée des seigneurs dragons",
 };
 
 export const PARTY_MAP = {
   [PartyId.MIFA]: "La mifa",
   [PartyId.PAINTERS]: "Les peintres",
   [PartyId.ANTHONY]: "Le groupe d'Anthony",
+  [PartyId.LOGARCADY]: "Logacardy",
 };
 
 export const CHARACTER_STATUS_MAP = {

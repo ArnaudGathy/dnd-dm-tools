@@ -33,6 +33,7 @@ enum CampaignId {
   PHANDELVER
   TOMB
   NETHERDEEP
+  DRAGONLORDS
 }
 
 enum CampaignStatus {
@@ -320,6 +321,7 @@ enum PartyId {
   MIFA
   PAINTERS
   ANTHONY
+  LOGARCADY
 }
 
 model Party {
