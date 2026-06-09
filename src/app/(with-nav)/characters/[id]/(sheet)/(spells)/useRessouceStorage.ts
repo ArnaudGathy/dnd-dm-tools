@@ -63,6 +63,8 @@ const ressourceNames = [
   "unyielding",
   "superiorityDice",
   "observeEnemy",
+  "layOfHands",
+  "divineConduit",
 ] as const;
 export type RessourceName = (typeof ressourceNames)[number];
 
@@ -227,6 +229,14 @@ const initialValues: RessourceStorage = {
       ...initialRessource,
       theme: "teal",
     },
+    layOfHands: {
+      ...initialRessource,
+      theme: "emerald",
+    },
+    divineConduit: {
+      ...initialRessource,
+      theme: "yellow",
+    },
   },
 };
 
@@ -282,7 +292,14 @@ export const useRessourceStorage = (character: CharacterById) => {
 
         /* One per short rest */
         if (
-          ["psiDices", "channelDivinity", "wildShape", "secondWind", "actionSurge"].includes(key)
+          [
+            "psiDices",
+            "channelDivinity",
+            "wildShape",
+            "secondWind",
+            "actionSurge",
+            "divineConduit",
+          ].includes(key)
         ) {
           available = Math.min(value.available + 1, value.total);
         }

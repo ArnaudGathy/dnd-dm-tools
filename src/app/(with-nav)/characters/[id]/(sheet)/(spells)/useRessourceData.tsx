@@ -20,6 +20,7 @@ import {
   GraduationCap,
   HandFist,
   HandHelping,
+  Handshake,
   Heart,
   HeartPlus,
   Mountain,
@@ -369,6 +370,22 @@ export default function useRessourceData({ character }: { character: CharacterBy
       condition: character.className === Classes.FIGHTER && character.level >= 9,
     },
   ];
+  const paladin: RessourceDefinition[] = [
+    {
+      name: "Imposition des mains",
+      icon: <Handshake />,
+      ressourceName: "layOfHands",
+      total: character.level * 5,
+      condition: character.className === Classes.PALADIN,
+    },
+    {
+      name: "Conduit divin",
+      icon: <Cross />,
+      ressourceName: "divineConduit",
+      total: character.level >= 11 ? 3 : 2,
+      condition: character.className === Classes.PALADIN && character.level >= 3,
+    },
+  ];
 
   const buildRessourceArray = (ressources: RessourceDefinition[]) => {
     return reduce(
@@ -406,6 +423,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       ...wizard,
       ...druid,
       ...fighter,
+      ...paladin,
     ]),
     ({ useRessource }) => useRessource[0].order,
   );

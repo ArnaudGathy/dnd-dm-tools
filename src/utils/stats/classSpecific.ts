@@ -12,8 +12,9 @@ import { getSpellSaveDC } from "@/utils/stats/spells";
 
 export const getMartialClassDCModifier = (character: Character) => {
   if (
-    character.className === Classes.FIGHTER &&
-    character.subclassName === Subclasses.BATTLE_MASTER
+    (character.className === Classes.FIGHTER &&
+      character.subclassName === Subclasses.BATTLE_MASTER) ||
+    character.className === Classes.PALADIN
   ) {
     const modifier = getModifier(character.strength);
     const name = ABILITY_NAME_MAP_TO_FR[Abilities.STRENGTH];
@@ -38,6 +39,7 @@ export const getMartialClassDC = (character: Character) => {
   if (
     (character.className === Classes.FIGHTER &&
       character.subclassName === Subclasses.BATTLE_MASTER) ||
+    character.className === Classes.PALADIN ||
     character.className === Classes.MONK ||
     character.className === Classes.ROGUE
   ) {
