@@ -1,0 +1,5 @@
+-- AlterEnum
+ALTER TYPE "CampaignId" ADD VALUE 'DRAGONLORDS';
+
+-- AlterEnum
+ALTER TYPE "PartyId" ADD VALUE 'LOGARCADY';

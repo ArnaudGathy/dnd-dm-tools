@@ -113,72 +113,86 @@ export const SUBCLASS_MAP = {
   [Subclasses.PATH_OF_THE_WILD_HEART]: "Voie du Coeur sauvage",
   [Subclasses.PATH_OF_THE_WORLD_TREE]: "Voie de l'Arbre-Monde",
   [Subclasses.PATH_OF_THE_ZEALOT]: "Voie du Zélateur",
+  [Subclasses.OOTDL_HERCULEAN_PATH]: "OotDL - Voie herculéenne",
 
   // Barde
   [Subclasses.COLLEGE_OF_DANCE]: "Collège de la danse",
   [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_GLAMOUR]: "Collège de la séduction",
   [Subclasses.COLLEGE_OF_VALOR]: "Collège de la Vaillance",
+  [Subclasses.OOTDL_COLLEGE_OF_EPIC_POETRY]: "OotDL - Collège de poésie épique",
 
   // Clerc
   [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
   [Subclasses.LIGHT_DOMAIN]: "Domaine de la Lumière",
   [Subclasses.TRICKERY_DOMAIN]: "Domaine de la Ruse",
   [Subclasses.WAR_DOMAIN]: "Domaine de la Guerre",
+  [Subclasses.OOTDL_PROPHECY_DOMAIN]: "OotDL - Domaine de la Prophétie",
 
   // Druide
   [Subclasses.CIRCLE_OF_THE_LAND]: "Cercle de la Terre",
   [Subclasses.CIRCLE_OF_THE_MOON]: "Cercle de la Lune",
   [Subclasses.CIRCLE_OF_THE_SEA]: "Cercle des Mers",
   [Subclasses.CIRCLE_OF_THE_STARS]: "Cercle des Astres",
+  [Subclasses.OOTDL_CIRCLE_OF_SACRIFICE]: "OotDL - Cercle du Sacrifice",
+  [Subclasses.OOTDL_CIRCLE_OF_THE_WYRM]: "OotDL - Cercle du Wyrm",
 
   // Guerrier
   [Subclasses.CHAMPION]: "Champion",
   [Subclasses.ELDRITCH_KNIGHT]: "Chevalier occulte",
   [Subclasses.BATTLE_MASTER]: "Maître de guerre",
   [Subclasses.PSI_WARRIOR]: "Soldat Psi",
+  [Subclasses.OOTDL_DRAGON_KNIGHT]: "OotDL - Chevalier dragon",
+  [Subclasses.OOTDL_HOPLITE]: "OotDL - Hoplite",
 
   // Moine
   [Subclasses.WAY_OF_THE_OPEN_HAND]: "Credo de la Paume",
   [Subclasses.WAY_OF_MERCY]: "Credo de la Miséricorde",
   [Subclasses.WAY_OF_SHADOW]: "Credo de l’Ombre",
   [Subclasses.WAY_OF_THE_ELEMENTS]: "Credo des éléments",
+  [Subclasses.OOTDL_WARRIOR_OF_THE_SHIELD]: "OotDL - Credo du bouclier",
 
   // Paladin
   [Subclasses.OATH_OF_THE_ANCIENTS]: "Serment des Anciens",
   [Subclasses.OATH_OF_DEVOTION]: "Serment de Dévotion",
   [Subclasses.OATH_OF_GLORY]: "Serment de Gloire",
   [Subclasses.OATH_OF_VENGEANCE]: "Serment de Vengeance",
+  [Subclasses.OOTDL_OATH_OF_THE_DRAGONLORD]: "OotDL - Serment du Seigneur Dragon",
 
   // Rôdeur
   [Subclasses.BEAST_MASTER]: "Belluaire",
   [Subclasses.HUNTER]: "Chasseur",
   [Subclasses.FEY_WANDERER]: "Vagabond féerique",
   [Subclasses.GLOOM_STALKER]: "Traqueur des Ténèbres",
+  [Subclasses.OOTDL_AMAZON]: "OotDL - Conclave des Amazones",
 
   // Roublard
   [Subclasses.ARCANE_TRICKSTER]: "Arnaqueur arcanique",
   [Subclasses.ASSASSIN]: "Assassin",
   [Subclasses.SOULKNIFE]: "Âme acérée",
   [Subclasses.THIEF]: "Voleur",
+  [Subclasses.OOTDL_ODYSSEAN]: "OotDL - Odysséen",
 
   // Ensorceleur
   [Subclasses.CLOCKWORK]: "Sorcellerie mécanique",
   [Subclasses.DRACONIC]: "Sorcellerie draconique",
   [Subclasses.ABERRANT]: "Sorcellerie aberrante",
   [Subclasses.WILD_MAGIC]: "Sorcellerie sauvage",
+  [Subclasses.OOTDL_DIVINE_SORCERY]: "OotDL - Sorcellerie divine",
 
   // Ocultiste
   [Subclasses.THE_ARCHFEY]: "Protecteur Archifée",
   [Subclasses.THE_GREAT_OLD_ONE]: "Protecteur Grand Ancien",
   [Subclasses.THE_FIEND]: "Protecteur Fiélon",
   [Subclasses.THE_CELESTIAL]: "Protecteur Céleste",
+  [Subclasses.OOTDL_THE_FATES]: "OotDL - Serviteur des Moires",
 
   // Mage
   [Subclasses.SCHOOL_OF_ABJURATION]: "Abjurateur",
   [Subclasses.SCHOOL_OF_DIVINATION]: "Devin",
   [Subclasses.SCHOOL_OF_EVOCATION]: "Évocateur",
   [Subclasses.SCHOOL_OF_ILLUSION]: "Illustioniste",
+  [Subclasses.OOTDL_ACADEMY_PHILOSOPHER]: "OotDL - Philosophe de l'Académie",
 };
 
 export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
@@ -193,72 +207,86 @@ export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
     Subclasses.PATH_OF_THE_WILD_HEART,
     Subclasses.PATH_OF_THE_ZEALOT,
     Subclasses.PATH_OF_THE_WORLD_TREE,
+    Subclasses.OOTDL_HERCULEAN_PATH,
   ],
   [Classes.BARD]: [
     Subclasses.COLLEGE_OF_VALOR,
     Subclasses.COLLEGE_OF_LORE,
     Subclasses.COLLEGE_OF_GLAMOUR,
     Subclasses.COLLEGE_OF_DANCE,
+    Subclasses.OOTDL_COLLEGE_OF_EPIC_POETRY,
   ],
   [Classes.CLERIC]: [
     Subclasses.LIFE_DOMAIN,
     Subclasses.LIGHT_DOMAIN,
     Subclasses.WAR_DOMAIN,
     Subclasses.TRICKERY_DOMAIN,
+    Subclasses.OOTDL_PROPHECY_DOMAIN,
   ],
   [Classes.DRUID]: [
     Subclasses.CIRCLE_OF_THE_LAND,
     Subclasses.CIRCLE_OF_THE_MOON,
     Subclasses.CIRCLE_OF_THE_SEA,
     Subclasses.CIRCLE_OF_THE_STARS,
+    Subclasses.OOTDL_CIRCLE_OF_SACRIFICE,
+    Subclasses.OOTDL_CIRCLE_OF_THE_WYRM,
   ],
   [Classes.FIGHTER]: [
     Subclasses.CHAMPION,
     Subclasses.BATTLE_MASTER,
     Subclasses.ELDRITCH_KNIGHT,
     Subclasses.PSI_WARRIOR,
+    Subclasses.OOTDL_DRAGON_KNIGHT,
+    Subclasses.OOTDL_HOPLITE,
   ],
   [Classes.MONK]: [
     Subclasses.WAY_OF_THE_OPEN_HAND,
     Subclasses.WAY_OF_SHADOW,
     Subclasses.WAY_OF_THE_ELEMENTS,
     Subclasses.WAY_OF_MERCY,
+    Subclasses.OOTDL_WARRIOR_OF_THE_SHIELD,
   ],
   [Classes.PALADIN]: [
     Subclasses.OATH_OF_DEVOTION,
     Subclasses.OATH_OF_THE_ANCIENTS,
     Subclasses.OATH_OF_VENGEANCE,
     Subclasses.OATH_OF_GLORY,
+    Subclasses.OOTDL_OATH_OF_THE_DRAGONLORD,
   ],
   [Classes.RANGER]: [
     Subclasses.HUNTER,
     Subclasses.BEAST_MASTER,
     Subclasses.GLOOM_STALKER,
     Subclasses.FEY_WANDERER,
+    Subclasses.OOTDL_AMAZON,
   ],
   [Classes.ROGUE]: [
     Subclasses.THIEF,
     Subclasses.ASSASSIN,
     Subclasses.ARCANE_TRICKSTER,
     Subclasses.SOULKNIFE,
+    Subclasses.OOTDL_ODYSSEAN,
   ],
   [Classes.SORCERER]: [
     Subclasses.DRACONIC,
     Subclasses.WILD_MAGIC,
     Subclasses.CLOCKWORK,
     Subclasses.ABERRANT,
+    Subclasses.OOTDL_DIVINE_SORCERY,
   ],
   [Classes.WARLOCK]: [
     Subclasses.THE_ARCHFEY,
     Subclasses.THE_FIEND,
     Subclasses.THE_GREAT_OLD_ONE,
     Subclasses.THE_CELESTIAL,
+    Subclasses.OOTDL_THE_FATES,
   ],
   [Classes.WIZARD]: [
     Subclasses.SCHOOL_OF_EVOCATION,
     Subclasses.SCHOOL_OF_ABJURATION,
     Subclasses.SCHOOL_OF_ILLUSION,
     Subclasses.SCHOOL_OF_DIVINATION,
+    Subclasses.OOTDL_ACADEMY_PHILOSOPHER,
   ],
 };
 
@@ -275,6 +303,17 @@ export const RACE_MAP = {
   [Races.TABAXI]: "Tabaxi",
   [Races.TIEFLING]: "Tiefelin",
   [Races.YUANTI]: "Yuan-ti",
+  [Races.OOTDL_AUTOMATAI]: "OotDL - Automataï",
+  [Races.OOTDL_GYGAN]: "OotDL - Gygan",
+  [Races.OOTDL_JANCAN]: "OotDL - Jancan",
+  [Races.OOTDL_MYRMEKES]: "OotDL - Myrmékès",
+  [Races.OOTDL_NYMPH]: "OotDL - Nymphe",
+  [Races.OOTDL_NYXIAN]: "OotDL - Nyxien",
+  [Races.OOTDL_THYLEAN_CENTAUR]: "OotDL - Centaure",
+  [Races.OOTDL_THYLEAN_MEDUSA]: "OotDL - Méduse",
+  [Races.OOTDL_THYLEAN_MINOTAUR]: "OotDL - Minotaure",
+  [Races.OOTDL_THYLEAN_SATYR]: "OotDL - Satyre",
+  [Races.OOTDL_THYLEAN_SIREN]: "OotDL - Sirène",
 };
 
 export const SPEED_BY_RACE_MAP = {
@@ -290,6 +329,17 @@ export const SPEED_BY_RACE_MAP = {
   [Races.TIEFLING]: 30,
   [Races.TABAXI]: 30,
   [Races.YUANTI]: 30,
+  [Races.OOTDL_AUTOMATAI]: 30,
+  [Races.OOTDL_GYGAN]: 30,
+  [Races.OOTDL_JANCAN]: 30,
+  [Races.OOTDL_MYRMEKES]: 30,
+  [Races.OOTDL_NYMPH]: 30,
+  [Races.OOTDL_NYXIAN]: 30,
+  [Races.OOTDL_THYLEAN_CENTAUR]: 40,
+  [Races.OOTDL_THYLEAN_MEDUSA]: 30,
+  [Races.OOTDL_THYLEAN_MINOTAUR]: 30,
+  [Races.OOTDL_THYLEAN_SATYR]: 30,
+  [Races.OOTDL_THYLEAN_SIREN]: 30,
 };
 
 export const MONK_SPEED_IN_SQUARE: Record<number, number> = {
@@ -607,6 +657,17 @@ export const SIZE_BY_RACE_MAP = {
   [Races.TIEFLING]: "M", // Moyen
   [Races.TABAXI]: "M", // Moyen
   [Races.YUANTI]: "M", // Moyen
+  [Races.OOTDL_AUTOMATAI]: "M", // Moyen
+  [Races.OOTDL_GYGAN]: "M", // Moyen
+  [Races.OOTDL_JANCAN]: "M", // Moyen
+  [Races.OOTDL_MYRMEKES]: "P", // Moyen
+  [Races.OOTDL_NYMPH]: "M", // Moyen
+  [Races.OOTDL_NYXIAN]: "M", // Moyen
+  [Races.OOTDL_THYLEAN_CENTAUR]: "M", // Moyen
+  [Races.OOTDL_THYLEAN_MEDUSA]: "M", // Moyen
+  [Races.OOTDL_THYLEAN_MINOTAUR]: "M", // Moyen
+  [Races.OOTDL_THYLEAN_SATYR]: "M", // Moyen
+  [Races.OOTDL_THYLEAN_SIREN]: "M", // Moyen
 };
 
 export const BACKGROUND_MAP = {
@@ -628,6 +689,14 @@ export const BACKGROUND_MAP = {
   [Backgrounds.SCRIBE]: "Scribe",
   [Backgrounds.SOLDIER]: "Soldat",
   [Backgrounds.WAYFARER]: "Voyageur",
+  [Backgrounds.OOTDL_CURSED_ONE]: "OotDL - Le Héro Maudit",
+  [Backgrounds.OOTDL_DEMIGOD]: "OotDL - Le Demi-dieu",
+  [Backgrounds.OOTDL_DOOMED_ONE]: "OotDL - Le Damné",
+  [Backgrounds.OOTDL_DRAGON_SLAYER]: "OotDL - Le Tueur de dragons",
+  [Backgrounds.OOTDL_GIFTED_ONE]: "OotDL - Le fortuné",
+  [Backgrounds.OOTDL_HAUNTED_ONE]: "OotDL - Le tourmenté",
+  [Backgrounds.OOTDL_LOST_ONE]: "OotDL - L'exilé",
+  [Backgrounds.OOTDL_VANISHED_ONE]: "OotDL - Le disparu",
 };
 
 export const ALIGNMENT_MAP = {

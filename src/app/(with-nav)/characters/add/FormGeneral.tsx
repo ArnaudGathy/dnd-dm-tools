@@ -13,6 +13,11 @@ import {
 } from "@/constants/maps";
 import { keys } from "remeda";
 import { shortenAbilityName } from "@/utils/utils";
+import { CampaignId } from "@prisma/client";
+
+// Odyssey of the Dragonlords (OotDL) enum values are prefixed with `OOTDL_`
+// and must only be selectable when the character belongs to that campaign.
+const OOTDL_PREFIX = "OOTDL_";
 
 export default function FormGeneral({
   form,
@@ -24,6 +29,13 @@ export default function FormGeneral({
   hasSubclass: boolean;
 }) {
   const className = form.watch("className");
+  const campaign = form.watch("campaign");
+  const allowOotdl = campaign === CampaignId.DRAGONLORDS;
+
+  const filterByCampaign = (map: Record<string, string>) =>
+    allowOotdl
+      ? map
+      : Object.fromEntries(Object.entries(map).filter(([key]) => !key.startsWith(OOTDL_PREFIX)));
 
   return (
     <Card>
@@ -54,9 +66,11 @@ export default function FormGeneral({
               description={isEditMode ? undefined : "Peut-être choisi plus tard"}
               items={
                 className
-                  ? SUBCLASSES_BY_CLASS[className].reduce((acc, next) => {
-                      return { ...acc, [next]: SUBCLASS_MAP[next] };
-                    }, {})
+                  ? SUBCLASSES_BY_CLASS[className]
+                      .filter((subclass) => allowOotdl || !subclass.startsWith(OOTDL_PREFIX))
+                      .reduce((acc, next) => {
+                        return { ...acc, [next]: SUBCLASS_MAP[next] };
+                      }, {})
                   : []
               }
               disabled={!className || (isEditMode && hasSubclass)}
@@ -68,7 +82,7 @@ export default function FormGeneral({
               formInstance={form}
               formFieldName="race"
               label="Race"
-              items={RACE_MAP}
+              items={filterByCampaign(RACE_MAP)}
               required
               disabled={isEditMode}
             />
@@ -76,7 +90,7 @@ export default function FormGeneral({
               formInstance={form}
               formFieldName="background"
               label="Historique"
-              items={BACKGROUND_MAP}
+              items={filterByCampaign(BACKGROUND_MAP)}
               required
               disabled={isEditMode}
             />
