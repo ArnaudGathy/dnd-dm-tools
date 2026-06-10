@@ -21,7 +21,7 @@ const formatDate = (date: Date) =>
 export default function Settings({ character }: { character: CharacterById }) {
   return (
     <div className="flex w-full flex-col gap-4 p-0 md:w-auto md:p-4">
-      <SheetCard className="flex flex-col">
+      <SheetCard className="flex max-w-[450px] flex-col">
         <span className="mb-2 text-2xl font-bold">Informations</span>
         <StatCell name="État" stat={CHARACTER_STATUS_MAP[character.status]} />
         <Separator className="my-4 bg-muted-foreground" />
