@@ -1137,4 +1137,342 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "HOmjkQ_3W5Q",
   },
+  {
+    name: "Porte principale",
+    id: 99,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F1",
+    },
+    ennemies: {
+      "1": [
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "Nahth" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" },
+        { id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" },
+        { id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "HOmjkQ_3W5Q",
+  },
+  {
+    name: "Salle de la guerre",
+    id: 100,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F2",
+    },
+    ennemies: {
+      "1": [
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "Soakosh" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "basilisk", color: "#FFF", variant: "" },
+        { id: "basilisk", color: "#FFF", variant: "" },
+        { id: "triceratops", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "XZtL7PsJAoc",
+  },
+  {
+    name: "Armurerie",
+    id: 101,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F4",
+    },
+    ennemies: {
+      "1": [
+        { id: "bone-naga", color: "#FFF", variant: "" },
+        { id: "minotaur-skeleton", color: "#FFF", variant: "" },
+        { id: "minotaur-skeleton", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "zp8ZlBUGdgs",
+  },
+  {
+    name: "Quartiers de Fenthaza",
+    id: 102,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F5",
+    },
+    ennemies: {
+      "1": [
+        { id: "_yuan-ti-nightmare-speaker", color: "#FFF", variant: "Fenthaza" },
+        { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
+        { id: "air-elemental", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "n9KsWzdxi4Y",
+  },
+  {
+    name: "Chambre sacrificielle",
+    id: 103,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F6",
+    },
+    ennemies: {
+      "1": [
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "HOmjkQ_3W5Q",
+  },
+  {
+    name: "Oracle maléfique",
+    id: 104,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F7",
+    },
+    ennemies: {
+      "1": [
+        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "8Q7cioftmKs",
+  },
+  {
+    name: "Harem",
+    id: 105,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F10",
+    },
+    ennemies: {
+      "1": [
+        { id: "doppelganger", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "KPSVPFwOLyE",
+  },
+  {
+    name: "Salle du trône",
+    id: 106,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F11",
+    },
+    ennemies: {
+      "1": [
+        { id: "_ras-nsi", color: "#FFF", variant: "" },
+        { id: "_sekelok", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "ghoul", color: "#FFF", variant: "" },
+        { id: "ghoul", color: "#FFF", variant: "" },
+        { id: "ghoul", color: "#FFF", variant: "" },
+        { id: "ghoul", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "oVZ8KGtZtwY",
+  },
+  {
+    name: "Antre de Ras Nsi",
+    id: 107,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F12",
+    },
+    ennemies: {
+      "1": [{ id: "_ras-nsi", color: "#FFF", variant: "" }],
+    },
+    youtubeId: "6pnMzBTUiIA",
+  },
+  {
+    name: "Réserve",
+    id: 108,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F13",
+    },
+    ennemies: {
+      "1": [{ id: "giant-constrictor-snake", color: "#FFF", variant: "" }],
+    },
+    youtubeId: "sd1Otp7s1Fk",
+  },
+  {
+    name: "Distillerie de venin",
+    id: 109,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F14",
+    },
+    ennemies: {
+      "1": [
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "Xopal" },
+        { id: "zombie", color: "#FFF", variant: "" },
+        { id: "zombie", color: "#FFF", variant: "" },
+        { id: "zombie", color: "#FFF", variant: "" },
+        { id: "zombie", color: "#FFF", variant: "" },
+        { id: "zombie", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "5iMeaTItPhE",
+  },
+  {
+    name: "Fosse aux serpents",
+    id: 110,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F15",
+    },
+    ennemies: {
+      "1": [{ id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" }],
+    },
+    youtubeId: "8Q7cioftmKs",
+  },
+  {
+    name: "Bains de sang",
+    id: 111,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F16",
+    },
+    ennemies: {
+      "1": [
+        { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "HOmjkQ_3W5Q",
+  },
+  {
+    name: "Sauna",
+    id: 112,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F17",
+    },
+    ennemies: {
+      "1": [
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "Yahru" },
+        { id: "gladiator", color: "#FFF", variant: "" },
+        { id: "gladiator", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "XZtL7PsJAoc",
+  },
+  {
+    name: "Nids des yuan-ti",
+    id: 113,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F18",
+    },
+    ennemies: {
+      "1": [
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "l6pwrEnOUSA",
+  },
+  {
+    name: "Grotte des esclaves",
+    id: 114,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F19",
+    },
+    ennemies: {
+      "1": [
+        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "Issar" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "GMXiYs-wi3A",
+  },
+  {
+    name: "Rivière souterraine",
+    id: 115,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F20",
+    },
+    ennemies: {
+      "1": [
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "2GX9lVHfnxs",
+  },
+  {
+    name: "Antre de l'hydre",
+    id: 116,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F21",
+    },
+    ennemies: {
+      "1": [{ id: "hydra", color: "#FFF", variant: "" }],
+    },
+    youtubeId: "Yx-QqEc2Feg",
+  },
 ];

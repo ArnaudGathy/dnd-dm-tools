@@ -356,6 +356,24 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
     },
     challengeRating: 3,
   },
+  "giant-constrictor-snake": {
+    name: "Azi Mas",
+    abilities: {
+      strength: 19,
+      dexterity: 14,
+      constitution: 12,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 3,
+    },
+    languages: ["Common"],
+    traits: [
+      {
+        name: "Éveillé",
+        description: "Serpent éveillé par magie : intelligent et capable de parler le commun.",
+      },
+    ],
+  },
   "yuan-ti-infiltrator": {
     id: "_yuan-ti-infiltrator",
     name: "Yuan-ti Sang-pur",

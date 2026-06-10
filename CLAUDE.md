@@ -50,8 +50,11 @@ Pre-commit hooks run lint-staged automatically via Husky.
 
 ## Rules & Agents
 
-Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md
+Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md · @.claude/rules/creature-data.md
 
 Custom agents for scoped work: `prisma-agent` (schema/migrations/queries), `encounter-builder` (encounter data).
 
-Custom commands: `/add-encounter`, `/db-migrate`, `/commit`.
+Custom commands: `/db-migrate`, `/commit`.
+
+Custom skills: `/add-creature <english name> [source]` — import a monster from the sibling `../5etools-src` repo into `src/data/localCreatures.ts`, converted to the `Creature` type and translated/summarized in French.
+Custom skills: `/translate-readalouds <adventure> <chapter>` — translate read-aloud text from `../5etools-src/data/adventure/adventure-<id>.json` and format it for DM use.

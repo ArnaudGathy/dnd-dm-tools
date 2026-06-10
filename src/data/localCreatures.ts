@@ -2164,4 +2164,712 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  lich: {
+    name: "Liche",
+    id: "_lich",
+    type: "Undead (Wizard)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 20,
+    hitPoints: "315 (42d8 + 126)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 21,
+    abilities: {
+      strength: 11,
+      dexterity: 16,
+      constitution: 16,
+      intelligence: 21,
+      wisdom: 14,
+      charisma: 16,
+    },
+    savingThrows: {
+      dexterity: "+10",
+      constitution: "+10",
+      intelligence: "+12",
+      wisdom: "+9",
+    },
+    skills: {
+      arcana: "+19",
+      history: "+12",
+      insight: "+9",
+      perception: "+9",
+    },
+    resistances: ["cold", "lightning"],
+    immunities: [
+      "necrotic",
+      "poison",
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned",
+    ],
+    languages: ["all"],
+    senses: {
+      trueSight: "36 m",
+      passivePerception: 19,
+    },
+    traits: [
+      {
+        name: "Résistance légendaire (4/jour, 5/jour dans l'antre)",
+        description: "Si JdS raté, peut choisir de réussir.",
+      },
+      {
+        name: "Réceptacle d'âme",
+        description:
+          "Si détruite, se reforme en 1d10 jours avec tous ses PV (tant que le réceptacle existe). Le nouveau corps apparaît dans son antre.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "3 attaques : Explosion occulte et/ou Toucher paralysant.",
+      },
+      {
+        name: "Explosion occulte",
+        type: "Melee or Ranged",
+        modifier: "+12",
+        reach: "1.5 m ou distance 36 m",
+        hit: "31 (4d12 + 5) dégâts de force.",
+      },
+      {
+        name: "Toucher paralysant",
+        type: "Melee",
+        modifier: "+12",
+        reach: "1.5 m",
+        hit: "15 (3d6 + 5) dégâts de froid, et la cible est paralysée jusqu'au début du prochain tour de la liche.",
+      },
+    ],
+    reactions: [
+      {
+        name: "Magie protectrice",
+        description:
+          "Déclencheur : un sort. Réponse : lance Contresort ou Bouclier (à volonté, voir sorts).",
+      },
+    ],
+    legendaryActions: [
+      {
+        name: "Téléportation morbide",
+        description:
+          "Se téléporte jusqu'à 12 cases. Chaque créature à 2 cases de l'espace quitté subit 11 (2d10) dégâts nécrotiques.",
+      },
+      {
+        name: "Perturbation de la vie",
+        description:
+          "Émanation de 4 cases, toute créature non morte-vivante : JdS CON 20 ou 31 (9d6) dégâts nécrotiques (moitié si réussi). 1x par round (recharge au début de son tour).",
+      },
+      {
+        name: "Regard effrayant",
+        description:
+          "Lance Peur (DD 20) : cône de 6 cases, JdS SAG ou lâche ce qu'elle tient, effrayée et doit fuir. 1x par round (recharge au début de son tour).",
+      },
+    ],
+    legendaryActionsSlots: "3 (4 dans l'antre)",
+    spellStats: {
+      attackMod: 12,
+      spellDC: 20,
+    },
+    spells: [
+      {
+        id: "detect-magic",
+        summary: "À volonté. Détecte la magie à 6 cases (concentration)",
+      },
+      {
+        id: "detect-thoughts",
+        summary: "À volonté. Lit les pensées à 6 cases, sonder : JdS SAG 20 (concentration)",
+      },
+      {
+        id: "dispel-magic",
+        summary: "À volonté. Dissipe un sort niv ≤ 3 auto, sinon test INT DD 10 + niv du sort",
+      },
+      {
+        id: "fireball",
+        summary:
+          "À volonté (niv 5). Rayon 4 cases à 30 cases, JdS DEX 20 ou 10d6 feu (moitié si réussi)",
+      },
+      {
+        id: "invisibility",
+        summary: "À volonté. Invisible jusqu'à attaquer ou lancer un sort (concentration, 1h)",
+      },
+      {
+        id: "lightning-bolt",
+        summary:
+          "À volonté (niv 5). Ligne de 20 cases, JdS DEX 20 ou 10d6 foudre (moitié si réussi)",
+      },
+      {
+        id: "mage-hand",
+        summary: "À volonté. Main spectrale, manipule des objets à 6 cases",
+      },
+      {
+        id: "prestidigitation",
+        summary: "À volonté. Tours de magie mineurs",
+      },
+      {
+        id: "counterspell",
+        summary: "À volonté (réaction). Annule un sort lancé à 12 cases",
+      },
+      {
+        id: "shield",
+        summary: "À volonté (réaction). +5 CA jusqu'au début de son prochain tour",
+      },
+      {
+        id: "animate-dead",
+        summary: "2/jour. Crée un squelette ou zombie depuis un cadavre",
+      },
+      {
+        id: "dimension-door",
+        summary: "2/jour. Téléportation 100 cases, peut emmener 1 créature consentante",
+      },
+      {
+        id: "plane-shift",
+        summary: "2/jour. Change de plan d'existence (jusqu'à 8 créatures consentantes)",
+      },
+      {
+        id: "chain-lightning",
+        summary:
+          "1/jour. 1 cible + 3 rebonds à 6 cases : JdS DEX 20 ou 10d8 foudre (moitié si réussi)",
+      },
+      {
+        id: "finger-of-death",
+        summary:
+          "1/jour. JdS CON 20 ou 7d8 + 30 nécrotiques (moitié si réussi). Humanoïde tué → zombie",
+      },
+      {
+        id: "power-word-kill",
+        summary: "1/jour. Tue une créature à 12 cases si elle a ≤ 100 PV",
+      },
+      {
+        id: "scrying",
+        summary: "1/jour. Espionne une créature à distance, JdS SAG 20 pour résister",
+      },
+      {
+        id: "fear",
+        summary:
+          "Action légendaire (Regard effrayant). Cône 6 cases, JdS SAG 20 ou effrayé + fuite",
+      },
+    ],
+  },
+  "yuan-ti-broodguard": {
+    name: "Garde-couvée yuan-ti",
+    id: "_yuan-ti-broodguard",
+    type: "Monstrosity",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 14,
+    hitPoints: "45 (7d8 + 14)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 2,
+    abilities: {
+      strength: 15,
+      dexterity: 14,
+      constitution: 14,
+      intelligence: 6,
+      wisdom: 11,
+      charisma: 4,
+    },
+    savingThrows: {
+      strength: "+4",
+      dexterity: "+4",
+      wisdom: "+2",
+    },
+    skills: {
+      perception: "+2",
+    },
+    immunities: ["poison", "charmed", "paralyzed", "poisoned"],
+    languages: ["Abyssal", "Common", "Draconic"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 12,
+    },
+    traits: [
+      {
+        name: "Téméraire",
+        description:
+          "Au début de son tour, peut gagner l'avantage à toutes ses attaques de mêlée du tour, mais les attaques contre lui ont l'avantage jusqu'au début de son prochain tour.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "1x morsure + 2x griffes",
+      },
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "6 (1d8 + 2) dégâts perçants.",
+      },
+      {
+        name: "Griffes",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "5 (1d6 + 2) dégâts tranchants.",
+      },
+    ],
+  },
+  "yuan-ti-pureblood": {
+    name: "Sang-pur yuan-ti",
+    id: "_yuan-ti-pureblood",
+    type: "Humanoid (Yuan-ti)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 11,
+    hitPoints: "40 (9d8)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 1,
+    abilities: {
+      strength: 11,
+      dexterity: 12,
+      constitution: 11,
+      intelligence: 13,
+      wisdom: 12,
+      charisma: 14,
+    },
+    skills: {
+      deception: "+6",
+      perception: "+3",
+      stealth: "+3",
+    },
+    immunities: ["poison", "poisoned"],
+    languages: ["Abyssal", "Common", "Draconic"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    traits: [
+      {
+        name: "Résistance magique",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x attaques de mêlée",
+      },
+      {
+        name: "Cimeterre",
+        type: "Melee",
+        modifier: "+3",
+        reach: "1.5 m",
+        hit: "4 (1d6 + 1) dégâts tranchants.",
+      },
+      {
+        name: "Arc court",
+        type: "Ranged",
+        modifier: "+3",
+        reach: "24/96 m",
+        hit: "4 (1d6 + 1) dégâts perçants + 7 (2d6) poison.",
+      },
+    ],
+    spellStats: {
+      attackMod: 4,
+      spellDC: 12,
+    },
+    spells: [
+      {
+        id: "animal-friendship",
+        summary: "À volonté. Charme un serpent (JdS SAG 12)",
+      },
+      {
+        id: "poison-spray",
+        summary: "3/jour. 2 cases, JdS CON 12 ou 1d12 poison",
+      },
+      {
+        id: "suggestion",
+        summary: "3/jour. JdS SAG 12 ou suit une suggestion raisonnable (8h, concentration)",
+      },
+    ],
+  },
+  "yuan-ti-nightmare-speaker": {
+    name: "Diseuse de cauchemars yuan-ti",
+    id: "_yuan-ti-nightmare-speaker",
+    type: "Monstrosity (Warlock)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 14,
+    hitPoints: "71 (13d8 + 13)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 4,
+    abilities: {
+      strength: 16,
+      dexterity: 14,
+      constitution: 13,
+      intelligence: 14,
+      wisdom: 12,
+      charisma: 16,
+    },
+    savingThrows: {
+      wisdom: "+3",
+      charisma: "+5",
+    },
+    skills: {
+      deception: "+5",
+      stealth: "+4",
+    },
+    immunities: ["poison", "poisoned"],
+    languages: ["Abyssal", "Common", "Draconic"],
+    senses: {
+      darkvision: "36 m",
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Vision diabolique",
+        description: "Les ténèbres magiques n'entravent pas sa vision dans le noir.",
+      },
+      {
+        name: "Résistance magique",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "1x constriction + 1x cimeterre OU 2x crocs spectraux",
+      },
+      {
+        name: "Constriction",
+        type: "Melee",
+        modifier: "+5",
+        reach: "3 m",
+        hit: "10 (2d6 + 3) dégâts contondants. Cible <= L agrippée (DD 14 pour se libérer) + entravée. 1 cible à la fois.",
+      },
+      {
+        name: "Cimeterre (forme yuan-ti)",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "6 (1d6 + 3) dégâts tranchants.",
+      },
+      {
+        name: "Crocs spectraux",
+        type: "Ranged",
+        modifier: "+5",
+        reach: "36 m",
+        hit: "16 (3d8 + 3) dégâts nécrotiques.",
+      },
+      {
+        name: "Invoquer un cauchemar (Recharge après un repos)",
+        description:
+          "Cible visible à 12 cases. JdS INT 13 ou 22 (4d10) psychiques + effrayée par une illusion de ses pires peurs (visible d'elle seule, 1 min, concentration). Relancer JdS à la fin de chaque tour : fin sur réussite, 11 (2d10) psychiques sur échec.",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Changement de forme",
+        description:
+          "Se transforme en serpent M ou reprend sa vraie forme. Stats identiques, l'équipement n'est pas transformé.",
+      },
+    ],
+    spellStats: {
+      attackMod: 5,
+      spellDC: 13,
+    },
+    spells: [
+      {
+        id: "suggestion",
+        summary: "3/jour. JdS SAG 13 ou suit une suggestion raisonnable (8h, concentration)",
+      },
+      {
+        id: "darkness",
+        summary: "2/jour. Sphère de ténèbres de 3 cases de rayon (10 min, concentration)",
+      },
+      {
+        id: "fear",
+        summary: "2/jour. Cône de 6 cases, JdS SAG 13 ou effrayé + fuite (1 min, concentration)",
+      },
+      {
+        id: "animal-friendship",
+        summary: "À volonté. Charme un serpent (JdS SAG 13)",
+      },
+      {
+        id: "mage-hand",
+        summary: "À volonté. Main spectrale, manipule des objets à 6 cases",
+      },
+      {
+        id: "message",
+        summary: "À volonté. Message chuchoté à 24 cases",
+      },
+      {
+        id: "prestidigitation",
+        summary: "À volonté. Tours de magie mineurs",
+      },
+    ],
+    behavior:
+      "Cauchemar sur une cible isolée > Crocs spectraux à distance > Constriction + cimeterre en mêlée",
+  },
+  "ras-nsi": {
+    name: "Ras Nsi",
+    id: "_ras-nsi",
+    type: "Monstrosity (Shapechanger, Yuan-ti)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 15,
+    hitPoints: "107 (127 max, -1 par jour écoulé dans l'aventure)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 7,
+    abilities: {
+      strength: 17,
+      dexterity: 16,
+      constitution: 17,
+      intelligence: 18,
+      wisdom: 18,
+      charisma: 21,
+    },
+    savingThrows: {
+      constitution: "+6",
+      wisdom: "+7",
+    },
+    skills: {
+      deception: "+8",
+      persuasion: "+8",
+      religion: "+7",
+      stealth: "+6",
+    },
+    immunities: ["poison", "poisoned"],
+    languages: ["Abyssal", "Common", "Draconic"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 14,
+    },
+    traits: [
+      {
+        name: "Équipement spécial",
+        description:
+          "Porte des bracelets de défense, une épée longue langue-de-feu et une pierre de communication liée à celle du guide Salida.",
+      },
+      {
+        name: "Métamorphe",
+        description:
+          "Action : se transforme en serpent M ou reprend sa forme yuan-ti. Stats identiques, l'équipement n'est pas transformé.",
+      },
+      {
+        name: "Résistance magique",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "3x attaques de mêlée (constriction 1x max)",
+      },
+      {
+        name: "Morsure (forme serpent)",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "5 (1d4 + 3) dégâts perçants + 7 (2d6) poison.",
+      },
+      {
+        name: "Constriction",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "10 (2d6 + 3) dégâts contondants. Cible agrippée (DD 14 pour se libérer) + entravée. 1 cible à la fois.",
+      },
+      {
+        name: "Épée langue-de-feu (forme yuan-ti)",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "7 (1d8 + 3) tranchants, ou 8 (1d10 + 3) à deux mains, + 7 (2d6) feu.",
+      },
+    ],
+    spellStats: {
+      attackMod: 7,
+      spellDC: 15,
+      slots: {
+        "1": 4,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 2,
+        "6": 1,
+      },
+    },
+    spells: [
+      {
+        id: "fireball",
+        summary: "Niv 3. Rayon 4 cases, JdS DEX 15 ou 8d6 feu (moitié si réussi)",
+      },
+      {
+        id: "counterspell",
+        summary: "Niv 3 (réaction). Annule un sort lancé à 12 cases",
+      },
+      {
+        id: "shield",
+        summary: "Niv 1 (réaction). +5 CA jusqu'au début de son prochain tour",
+      },
+      {
+        id: "misty-step",
+        summary: "Niv 2 (action bonus). Téléportation 6 cases",
+      },
+      {
+        id: "hold-person",
+        summary: "Niv 2. JdS SAG 15 ou paralysé. Relancer JdS fin de tour (1 min, concentration)",
+      },
+      {
+        id: "blindness-deafness",
+        summary: "Niv 2. JdS CON 15 ou aveuglé ou assourdi (1 min)",
+      },
+      {
+        id: "blight",
+        summary: "Niv 4. JdS CON 15 ou 8d8 nécrotiques (moitié si réussi)",
+      },
+      {
+        id: "polymorph",
+        summary: "Niv 4. JdS SAG 15 ou transformé en bête (1h, concentration)",
+      },
+      {
+        id: "geas",
+        summary:
+          "Niv 5. JdS SAG 15 ou charmé : ordre imposé, 5d10 psychiques si désobéit (30 jours)",
+      },
+      {
+        id: "animate-dead",
+        summary: "Niv 3. Crée un squelette ou zombie depuis un cadavre",
+      },
+      {
+        id: "create-undead",
+        summary: "Niv 6. Crée jusqu'à 3 goules depuis des cadavres",
+      },
+      {
+        id: "expeditious-retreat",
+        summary: "Niv 1 (action bonus). Dash en action bonus (10 min, concentration)",
+      },
+      {
+        id: "false-life",
+        summary: "Niv 1. 1d4 + 4 PV temporaires (1h)",
+      },
+      {
+        id: "magic-missile",
+        summary: "Niv 1. 3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
+      },
+      {
+        id: "fire-bolt",
+        summary: "À volonté. Attaque +7, 2d10 feu",
+      },
+      {
+        id: "chill-touch",
+        summary: "À volonté. Attaque +7, 2d8 nécrotiques, pas de soins pour la cible (1 tour)",
+      },
+      {
+        id: "poison-spray",
+        summary: "À volonté. 2 cases, JdS CON 15 ou 2d12 poison",
+      },
+      {
+        id: "suggestion",
+        summary: "3/jour (inné, JdS SAG 16). Suit une suggestion raisonnable (8h, concentration)",
+      },
+      {
+        id: "animal-friendship",
+        summary: "À volonté (inné, JdS SAG 16). Charme un serpent",
+      },
+    ],
+    behavior:
+      "Contresort/Bouclier en réaction > Boule de feu groupée > Immobilisation > 3x épée langue-de-feu en mêlée. Fuit ou négocie si dominé.",
+  },
+  sekelok: {
+    name: "Sekelok",
+    id: "_sekelok",
+    type: "Humanoid (Yuan-ti)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 18,
+    hitPoints: "143 (22d8 + 44)",
+    speed: {
+      walk: "10.5 m",
+    },
+    challengeRating: 9,
+    abilities: {
+      strength: 20,
+      dexterity: 15,
+      constitution: 14,
+      intelligence: 10,
+      wisdom: 14,
+      charisma: 12,
+    },
+    savingThrows: {
+      strength: "+9",
+      constitution: "+6",
+    },
+    skills: {
+      athletics: "+9",
+      intimidation: "+5",
+      perception: "+6",
+    },
+    immunities: ["poison", "poisoned"],
+    languages: ["Common", "Abyssal", "Draconic"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 16,
+    },
+    traits: [
+      {
+        name: "Indomptable (2/jour)",
+        description: "Relance un JdS raté.",
+      },
+      {
+        name: "Résistance magique",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "3x épée à deux mains OU 3x arc court",
+      },
+      {
+        name: "Épée à deux mains",
+        type: "Melee",
+        modifier: "+9",
+        reach: "1.5 m",
+        hit: "12 (2d6 + 5) dégâts tranchants, + 7 (2d6) si Sekelok est au-dessus de 50% PV.",
+      },
+      {
+        name: "Arc court",
+        type: "Ranged",
+        modifier: "+6",
+        reach: "24/96 m",
+        hit: "5 (1d6 + 2) dégâts perçants, + 7 (2d6) si Sekelok est au-dessus de 50% PV.",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Second souffle (Recharge après un repos)",
+        description: "Récupère 20 PV.",
+      },
+    ],
+    spellStats: {
+      attackMod: 5,
+      spellDC: 13,
+    },
+    spells: [
+      {
+        id: "poison-spray",
+        summary: "À volonté. 2 cases, JdS CON 13 ou 2d12 poison",
+      },
+      {
+        id: "animal-friendship",
+        summary: "À volonté. Charme un serpent (JdS SAG 13)",
+      },
+      {
+        id: "suggestion",
+        summary: "3/jour. JdS SAG 13 ou suit une suggestion raisonnable (8h, concentration)",
+      },
+    ],
+  },
 };
