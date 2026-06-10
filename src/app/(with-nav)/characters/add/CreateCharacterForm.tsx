@@ -75,6 +75,7 @@ export default function AddCharacter({
                 form={form}
                 isEditMode={isEditMode}
                 hasSubclass={!!character?.subclassName}
+                level={character?.level}
               />
               <FormBio form={form} isEditMode={isEditMode} />
               <FormBioBehaviour form={form} />

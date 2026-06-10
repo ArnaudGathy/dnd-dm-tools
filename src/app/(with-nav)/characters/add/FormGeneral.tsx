@@ -23,10 +23,12 @@ export default function FormGeneral({
   form,
   isEditMode,
   hasSubclass,
+  level,
 }: {
   form: UseFormReturn<CharacterCreationForm>;
   isEditMode: boolean;
   hasSubclass: boolean;
+  level?: number;
 }) {
   const className = form.watch("className");
   const campaign = form.watch("campaign");
@@ -73,7 +75,7 @@ export default function FormGeneral({
                       }, {})
                   : []
               }
-              disabled={!className || (isEditMode && hasSubclass)}
+              disabled={!className || (isEditMode && hasSubclass && (level ?? 1) > 3)}
             />
           </div>
 
