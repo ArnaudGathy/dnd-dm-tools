@@ -7,8 +7,10 @@ import { CAMPAIGN_MAP, CHARACTER_STATUS_MAP, PARTY_MAP } from "@/constants/maps"
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Edit, Trash } from "lucide-react";
+import { Edit, RefreshCcw, Trash } from "lucide-react";
 import { toast } from "sonner";
+import ToggleConfirmDialog from "@/components/ui/ToggleConfirmDialog";
+import { deleteCharacter } from "@/lib/actions/characters";
 
 const formatDate = (date: Date) =>
   Intl.DateTimeFormat("fr-FR", {
@@ -31,20 +33,38 @@ export default function Settings({ character }: { character: CharacterById }) {
         <StatCell name="DM de la Campagne" stat={character.campaign.owner} />
         <StatCell name="Groupe" stat={PARTY_MAP[character.campaign.party.name]} />
         <Link href={`/characters/${character.id}/update`} className="mt-4">
-          <Button className="w-full">
+          <Button variant="outline" className="w-full">
             <Edit /> Modifier le personnage
           </Button>
         </Link>
-        <Separator className="my-4 bg-muted-foreground" />
-        <Button
-          theme="white"
-          onClick={() => {
-            localStorage.clear();
-            toast("Les ressources et les emplacements de sorts on été réinitialisés.");
-          }}
-        >
-          <Trash /> Vider le cache
-        </Button>
+        <Separator className="my-8 bg-muted-foreground" />
+        <div className="flex gap-4">
+          <Button
+            theme="white"
+            onClick={() => {
+              localStorage.clear();
+              toast("Les ressources et les emplacements de sorts on été réinitialisés.");
+            }}
+          >
+            <RefreshCcw /> Vider le cache
+          </Button>
+          <ToggleConfirmDialog
+            title="Supprimer le personnage ?"
+            description="Cette action est irréversible. Le personnage et toutes ses données (sorts, créatures, armes, armures, équipement, objets magiques et argent) seront définitivement supprimés."
+            onConfirm={async () => {
+              const result = await deleteCharacter(character.id);
+              if (result?.error) {
+                toast.error(result.error);
+              }
+            }}
+          >
+            {(setIsOpen) => (
+              <Button theme="red" onClick={() => setIsOpen(true)}>
+                <Trash /> Supprimer le personnage
+              </Button>
+            )}
+          </ToggleConfirmDialog>
+        </div>
       </SheetCard>
     </div>
   );

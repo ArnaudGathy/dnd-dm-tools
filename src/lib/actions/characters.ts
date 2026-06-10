@@ -40,6 +40,24 @@ const syncCharacterHPToFirebase = async (
   }
 };
 
+const removeCharacterFromFirebase = async (characterName: string) => {
+  try {
+    const characterRef = ref(database, "character");
+    const snapshot = await get(characterRef);
+    const characters: CharacterTracking[] | null = snapshot.val();
+
+    if (!characters) {
+      return;
+    }
+
+    const updatedCharacters = characters.filter((char) => char.characterName !== characterName);
+
+    await set(characterRef, updatedCharacters);
+  } catch (error) {
+    console.error("Failed to remove character from Firebase:", error);
+  }
+};
+
 const getBaseHP = (
   {
     className,
@@ -532,6 +550,44 @@ export const updateInspiration = async (characterId: number, inspiration: number
   } else {
     console.error(validation.error);
   }
+};
+
+export const deleteCharacter = async (characterId: number) => {
+  const character = await prisma.character.findUnique({
+    where: { id: characterId },
+    select: { name: true },
+  });
+
+  if (!character) {
+    return { error: "Personnage introuvable." };
+  }
+
+  try {
+    // Delete all relations before the character itself, since none of the
+    // foreign keys cascade at the DB level (except WeaponDamage -> Weapon,
+    // which is handled automatically when weapons are deleted).
+    await prisma.$transaction([
+      prisma.savingThrow.deleteMany({ where: { characterId } }),
+      prisma.skill.deleteMany({ where: { characterId } }),
+      prisma.capacity.deleteMany({ where: { characterId } }),
+      prisma.spellsOnCharacters.deleteMany({ where: { characterId } }),
+      prisma.creaturesOnCharacters.deleteMany({ where: { characterId } }),
+      prisma.weapon.deleteMany({ where: { characterId } }),
+      prisma.armor.deleteMany({ where: { characterId } }),
+      prisma.inventoryItem.deleteMany({ where: { characterId } }),
+      prisma.magicItem.deleteMany({ where: { characterId } }),
+      prisma.money.deleteMany({ where: { characterId } }),
+      prisma.character.delete({ where: { id: characterId } }),
+    ]);
+  } catch (error) {
+    console.error("Failed to delete character:", error);
+    return { error: "La suppression du personnage a échoué." };
+  }
+
+  await removeCharacterFromFirebase(character.name);
+
+  revalidatePath("/characters");
+  redirect("/characters");
 };
 
 export const updateNotes = async (characterId: number, notes: string) => {

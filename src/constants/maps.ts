@@ -113,86 +113,86 @@ export const SUBCLASS_MAP = {
   [Subclasses.PATH_OF_THE_WILD_HEART]: "Voie du Coeur sauvage",
   [Subclasses.PATH_OF_THE_WORLD_TREE]: "Voie de l'Arbre-Monde",
   [Subclasses.PATH_OF_THE_ZEALOT]: "Voie du Zélateur",
-  [Subclasses.OOTDL_HERCULEAN_PATH]: "OotDL - Voie herculéenne",
+  [Subclasses.OOTDL_HERCULEAN_PATH]: "Voie herculéenne (OotDL)",
 
   // Barde
   [Subclasses.COLLEGE_OF_DANCE]: "Collège de la danse",
   [Subclasses.COLLEGE_OF_LORE]: "Collège du Savoir",
   [Subclasses.COLLEGE_OF_GLAMOUR]: "Collège de la séduction",
   [Subclasses.COLLEGE_OF_VALOR]: "Collège de la Vaillance",
-  [Subclasses.OOTDL_COLLEGE_OF_EPIC_POETRY]: "OotDL - Collège de poésie épique",
+  [Subclasses.OOTDL_COLLEGE_OF_EPIC_POETRY]: "Collège de poésie épique (OotDL)",
 
   // Clerc
   [Subclasses.LIFE_DOMAIN]: "Domaine de la Vie",
   [Subclasses.LIGHT_DOMAIN]: "Domaine de la Lumière",
   [Subclasses.TRICKERY_DOMAIN]: "Domaine de la Ruse",
   [Subclasses.WAR_DOMAIN]: "Domaine de la Guerre",
-  [Subclasses.OOTDL_PROPHECY_DOMAIN]: "OotDL - Domaine de la Prophétie",
+  [Subclasses.OOTDL_PROPHECY_DOMAIN]: "Domaine de la Prophétie (OotDL)",
 
   // Druide
   [Subclasses.CIRCLE_OF_THE_LAND]: "Cercle de la Terre",
   [Subclasses.CIRCLE_OF_THE_MOON]: "Cercle de la Lune",
   [Subclasses.CIRCLE_OF_THE_SEA]: "Cercle des Mers",
   [Subclasses.CIRCLE_OF_THE_STARS]: "Cercle des Astres",
-  [Subclasses.OOTDL_CIRCLE_OF_SACRIFICE]: "OotDL - Cercle du Sacrifice",
-  [Subclasses.OOTDL_CIRCLE_OF_THE_WYRM]: "OotDL - Cercle du Wyrm",
+  [Subclasses.OOTDL_CIRCLE_OF_SACRIFICE]: "Cercle du Sacrifice (OotDL)",
+  [Subclasses.OOTDL_CIRCLE_OF_THE_WYRM]: "Cercle du Wyrm (OotDL)",
 
   // Guerrier
   [Subclasses.CHAMPION]: "Champion",
   [Subclasses.ELDRITCH_KNIGHT]: "Chevalier occulte",
   [Subclasses.BATTLE_MASTER]: "Maître de guerre",
   [Subclasses.PSI_WARRIOR]: "Soldat Psi",
-  [Subclasses.OOTDL_DRAGON_KNIGHT]: "OotDL - Chevalier dragon",
-  [Subclasses.OOTDL_HOPLITE]: "OotDL - Hoplite",
+  [Subclasses.OOTDL_DRAGON_KNIGHT]: "Chevalier dragon (OotDL)",
+  [Subclasses.OOTDL_HOPLITE]: "Hoplite (OotDL)",
 
   // Moine
   [Subclasses.WAY_OF_THE_OPEN_HAND]: "Credo de la Paume",
   [Subclasses.WAY_OF_MERCY]: "Credo de la Miséricorde",
   [Subclasses.WAY_OF_SHADOW]: "Credo de l’Ombre",
   [Subclasses.WAY_OF_THE_ELEMENTS]: "Credo des éléments",
-  [Subclasses.OOTDL_WARRIOR_OF_THE_SHIELD]: "OotDL - Credo du bouclier",
+  [Subclasses.OOTDL_WARRIOR_OF_THE_SHIELD]: "Credo du bouclier (OotDL)",
 
   // Paladin
   [Subclasses.OATH_OF_THE_ANCIENTS]: "Serment des Anciens",
   [Subclasses.OATH_OF_DEVOTION]: "Serment de Dévotion",
   [Subclasses.OATH_OF_GLORY]: "Serment de Gloire",
   [Subclasses.OATH_OF_VENGEANCE]: "Serment de Vengeance",
-  [Subclasses.OOTDL_OATH_OF_THE_DRAGONLORD]: "OotDL - Serment du Seigneur Dragon",
+  [Subclasses.OOTDL_OATH_OF_THE_DRAGONLORD]: "Serment du Seigneur Dragon (OotDL)",
 
   // Rôdeur
   [Subclasses.BEAST_MASTER]: "Belluaire",
   [Subclasses.HUNTER]: "Chasseur",
   [Subclasses.FEY_WANDERER]: "Vagabond féerique",
   [Subclasses.GLOOM_STALKER]: "Traqueur des Ténèbres",
-  [Subclasses.OOTDL_AMAZON]: "OotDL - Conclave des Amazones",
+  [Subclasses.OOTDL_AMAZON]: "Conclave des Amazones (OotDL)",
 
   // Roublard
   [Subclasses.ARCANE_TRICKSTER]: "Arnaqueur arcanique",
   [Subclasses.ASSASSIN]: "Assassin",
   [Subclasses.SOULKNIFE]: "Âme acérée",
   [Subclasses.THIEF]: "Voleur",
-  [Subclasses.OOTDL_ODYSSEAN]: "OotDL - Odysséen",
+  [Subclasses.OOTDL_ODYSSEAN]: "Odysséen (OotDL)",
 
   // Ensorceleur
   [Subclasses.CLOCKWORK]: "Sorcellerie mécanique",
   [Subclasses.DRACONIC]: "Sorcellerie draconique",
   [Subclasses.ABERRANT]: "Sorcellerie aberrante",
   [Subclasses.WILD_MAGIC]: "Sorcellerie sauvage",
-  [Subclasses.OOTDL_DIVINE_SORCERY]: "OotDL - Sorcellerie divine",
+  [Subclasses.OOTDL_DIVINE_SORCERY]: "Sorcellerie divine (OotDL)",
 
   // Ocultiste
   [Subclasses.THE_ARCHFEY]: "Protecteur Archifée",
   [Subclasses.THE_GREAT_OLD_ONE]: "Protecteur Grand Ancien",
   [Subclasses.THE_FIEND]: "Protecteur Fiélon",
   [Subclasses.THE_CELESTIAL]: "Protecteur Céleste",
-  [Subclasses.OOTDL_THE_FATES]: "OotDL - Serviteur des Moires",
+  [Subclasses.OOTDL_THE_FATES]: "Serviteur des Moires (OotDL)",
 
   // Mage
   [Subclasses.SCHOOL_OF_ABJURATION]: "Abjurateur",
   [Subclasses.SCHOOL_OF_DIVINATION]: "Devin",
   [Subclasses.SCHOOL_OF_EVOCATION]: "Évocateur",
   [Subclasses.SCHOOL_OF_ILLUSION]: "Illustioniste",
-  [Subclasses.OOTDL_ACADEMY_PHILOSOPHER]: "OotDL - Philosophe de l'Académie",
+  [Subclasses.OOTDL_ACADEMY_PHILOSOPHER]: "Philosophe de l'Académie (OotDL)",
 };
 
 export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
@@ -303,17 +303,17 @@ export const RACE_MAP = {
   [Races.TABAXI]: "Tabaxi",
   [Races.TIEFLING]: "Tiefelin",
   [Races.YUANTI]: "Yuan-ti",
-  [Races.OOTDL_AUTOMATAI]: "OotDL - Automataï",
-  [Races.OOTDL_GYGAN]: "OotDL - Gygan",
-  [Races.OOTDL_JANCAN]: "OotDL - Jancan",
-  [Races.OOTDL_MYRMEKES]: "OotDL - Myrmékès",
-  [Races.OOTDL_NYMPH]: "OotDL - Nymphe",
-  [Races.OOTDL_NYXIAN]: "OotDL - Nyxien",
-  [Races.OOTDL_THYLEAN_CENTAUR]: "OotDL - Centaure",
-  [Races.OOTDL_THYLEAN_MEDUSA]: "OotDL - Méduse",
-  [Races.OOTDL_THYLEAN_MINOTAUR]: "OotDL - Minotaure",
-  [Races.OOTDL_THYLEAN_SATYR]: "OotDL - Satyre",
-  [Races.OOTDL_THYLEAN_SIREN]: "OotDL - Sirène",
+  [Races.OOTDL_AUTOMATAI]: "Automata (OotDL)",
+  [Races.OOTDL_GYGAN]: "Gygan (OotDL)",
+  [Races.OOTDL_JANCAN]: "Jancan (OotDL)",
+  [Races.OOTDL_MYRMEKES]: "Myrmekes (OotDL)",
+  [Races.OOTDL_NYMPH]: "Nymphe (OotDL)",
+  [Races.OOTDL_NYXIAN]: "Nyxien (OotDL)",
+  [Races.OOTDL_THYLEAN_CENTAUR]: "Centaure (OotDL)",
+  [Races.OOTDL_THYLEAN_MEDUSA]: "Méduse (OotDL)",
+  [Races.OOTDL_THYLEAN_MINOTAUR]: "Minotaure (OotDL)",
+  [Races.OOTDL_THYLEAN_SATYR]: "Satyre (OotDL)",
+  [Races.OOTDL_THYLEAN_SIREN]: "Sirène (OotDL)",
 };
 
 export const SPEED_BY_RACE_MAP = {
@@ -689,14 +689,14 @@ export const BACKGROUND_MAP = {
   [Backgrounds.SCRIBE]: "Scribe",
   [Backgrounds.SOLDIER]: "Soldat",
   [Backgrounds.WAYFARER]: "Voyageur",
-  [Backgrounds.OOTDL_CURSED_ONE]: "OotDL - Le Héro Maudit",
-  [Backgrounds.OOTDL_DEMIGOD]: "OotDL - Le Demi-dieu",
-  [Backgrounds.OOTDL_DOOMED_ONE]: "OotDL - Le Damné",
-  [Backgrounds.OOTDL_DRAGON_SLAYER]: "OotDL - Le Tueur de dragons",
-  [Backgrounds.OOTDL_GIFTED_ONE]: "OotDL - Le fortuné",
-  [Backgrounds.OOTDL_HAUNTED_ONE]: "OotDL - Le tourmenté",
-  [Backgrounds.OOTDL_LOST_ONE]: "OotDL - L'exilé",
-  [Backgrounds.OOTDL_VANISHED_ONE]: "OotDL - Le disparu",
+  [Backgrounds.OOTDL_CURSED_ONE]: "Le Héro Maudit (OotDL)",
+  [Backgrounds.OOTDL_DEMIGOD]: "Le Demi-dieu (OotDL)",
+  [Backgrounds.OOTDL_DOOMED_ONE]: "Le Damné (OotDL)",
+  [Backgrounds.OOTDL_DRAGON_SLAYER]: "Le Tueur de dragons (OotDL)",
+  [Backgrounds.OOTDL_GIFTED_ONE]: "Le fortuné (OotDL)",
+  [Backgrounds.OOTDL_HAUNTED_ONE]: "Le tourmenté (OotDL)",
+  [Backgrounds.OOTDL_LOST_ONE]: "L'exilé (OotDL)",
+  [Backgrounds.OOTDL_VANISHED_ONE]: "Le disparu (OotDL)",
 };
 
 export const ALIGNMENT_MAP = {
