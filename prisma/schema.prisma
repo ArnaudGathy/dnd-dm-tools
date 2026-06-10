@@ -49,7 +49,7 @@ model Campaign {
   character Character[]
   party     Party          @relation(fields: [partyId], references: [id])
   partyId   Int
-  owner     String         @default("arno.firefox@gmail.com")
+  owner     String[]       @default(["arno.firefox@gmail.com"])
 
   @@unique([name, partyId])
 }

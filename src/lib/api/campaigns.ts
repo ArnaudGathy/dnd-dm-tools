@@ -11,7 +11,7 @@ export const getOwnersCampaigns = async ({ ownerEmail }: { ownerEmail?: string }
             },
           },
         },
-        { owner: ownerEmail },
+        { owner: { has: ownerEmail } },
       ],
     },
   });

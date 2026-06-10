@@ -79,7 +79,11 @@ export async function getValidCharacter(characterId: string) {
     notFound();
   }
 
-  if (isSuperAdmin || userMail === character.owner || userMail === character.campaign.owner) {
+  if (
+    isSuperAdmin ||
+    userMail === character.owner ||
+    (!!userMail && character.campaign.owner.includes(userMail))
+  ) {
     return character;
   }
 

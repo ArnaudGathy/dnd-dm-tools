@@ -18,7 +18,7 @@ export const getOwnersParties = async ({ ownerEmail }: { ownerEmail?: string }) 
         {
           campaigns: {
             some: {
-              owner: ownerEmail,
+              owner: { has: ownerEmail },
             },
           },
         },
