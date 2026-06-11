@@ -1485,14 +1485,14 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_valindra-shadowmantle", color: "#FFF", variant: "" },
-        { id: "_artus-cimber", color: "#FFF", variant: "" },
         { id: "frost-giant", color: "#FFF", variant: "Thorun Permafrost" },
         { id: "frost-giant", color: "#FFF", variant: "Drufi (commandante)" },
         { id: "frost-giant", color: "#FFF", variant: "" },
         { id: "frost-giant", color: "#FFF", variant: "" },
         { id: "winter-wolf", color: "#FFF", variant: "" },
         { id: "winter-wolf", color: "#FFF", variant: "" },
+        { id: "_artus-cimber", color: "#FFF", variant: "" },
+        { id: "_valindra-shadowmantle", color: "#FFF", variant: "" },
       ],
     },
     youtubeId: "k9H-qtO2E8I",
