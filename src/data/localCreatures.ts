@@ -2300,11 +2300,11 @@ export const localCreatures: Record<string, Creature> = {
       },
       {
         id: "mage-hand",
-        summary: "À volonté. Main spectrale, manipule des objets à 6 cases",
+        summary: "Main spectrale, manipule des objets à 6 cases",
       },
       {
         id: "prestidigitation",
-        summary: "À volonté. Tours de magie mineurs",
+        summary: "Tours de magie mineurs",
       },
       {
         id: "counterspell",
@@ -2595,15 +2595,15 @@ export const localCreatures: Record<string, Creature> = {
       },
       {
         id: "mage-hand",
-        summary: "À volonté. Main spectrale, manipule des objets à 6 cases",
+        summary: "Main spectrale, manipule des objets à 6 cases",
       },
       {
         id: "message",
-        summary: "À volonté. Message chuchoté à 24 cases",
+        summary: "Message chuchoté à 24 cases",
       },
       {
         id: "prestidigitation",
-        summary: "À volonté. Tours de magie mineurs",
+        summary: "Tours de magie mineurs",
       },
     ],
     behavior:
@@ -2703,35 +2703,35 @@ export const localCreatures: Record<string, Creature> = {
     spells: [
       {
         id: "fireball",
-        summary: "Niv 3. Rayon 4 cases, JdS DEX 15 ou 8d6 feu (moitié si réussi)",
+        summary: "Rayon 4 cases, JdS DEX 15 ou 8d6 feu (moitié si réussi)",
       },
       {
         id: "counterspell",
-        summary: "Niv 3 (réaction). Annule un sort lancé à 12 cases",
+        summary: "Réaction. Annule un sort lancé à 12 cases",
       },
       {
         id: "shield",
-        summary: "Niv 1 (réaction). +5 CA jusqu'au début de son prochain tour",
+        summary: "Réaction. +5 CA jusqu'au début de son prochain tour",
       },
       {
         id: "misty-step",
-        summary: "Niv 2 (action bonus). Téléportation 6 cases",
+        summary: "Action bonus. Téléportation 6 cases",
       },
       {
         id: "hold-person",
-        summary: "Niv 2. JdS SAG 15 ou paralysé. Relancer JdS fin de tour (1 min, concentration)",
+        summary: "JdS SAG 15 ou paralysé. Relancer JdS fin de tour (1 min, concentration)",
       },
       {
         id: "blindness-deafness",
-        summary: "Niv 2. JdS CON 15 ou aveuglé ou assourdi (1 min)",
+        summary: "JdS CON 15 ou aveuglé ou assourdi (1 min)",
       },
       {
         id: "blight",
-        summary: "Niv 4. JdS CON 15 ou 8d8 nécrotiques (moitié si réussi)",
+        summary: "JdS CON 15 ou 8d8 nécrotiques (moitié si réussi)",
       },
       {
         id: "polymorph",
-        summary: "Niv 4. JdS SAG 15 ou transformé en bête (1h, concentration)",
+        summary: "JdS SAG 15 ou transformé en bête (1h, concentration)",
       },
       {
         id: "geas",
@@ -2740,35 +2740,35 @@ export const localCreatures: Record<string, Creature> = {
       },
       {
         id: "animate-dead",
-        summary: "Niv 3. Crée un squelette ou zombie depuis un cadavre",
+        summary: "Crée un squelette ou zombie depuis un cadavre",
       },
       {
         id: "create-undead",
-        summary: "Niv 6. Crée jusqu'à 3 goules depuis des cadavres",
+        summary: "Crée jusqu'à 3 goules depuis des cadavres",
       },
       {
         id: "expeditious-retreat",
-        summary: "Niv 1 (action bonus). Dash en action bonus (10 min, concentration)",
+        summary: "Action bonus. Dash en action bonus (10 min, concentration)",
       },
       {
         id: "false-life",
-        summary: "Niv 1. 1d4 + 4 PV temporaires (1h)",
+        summary: "1d4 + 4 PV temporaires (1h)",
       },
       {
         id: "magic-missile",
-        summary: "Niv 1. 3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
+        summary: "3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
       },
       {
         id: "fire-bolt",
-        summary: "À volonté. Attaque +7, 2d10 feu",
+        summary: "Attaque +7, 2d10 feu",
       },
       {
         id: "chill-touch",
-        summary: "À volonté. Attaque +7, 2d8 nécrotiques, pas de soins pour la cible (1 tour)",
+        summary: "Attaque +7, 2d8 nécrotiques, pas de soins pour la cible (1 tour)",
       },
       {
         id: "poison-spray",
-        summary: "À volonté. 2 cases, JdS CON 15 ou 2d12 poison",
+        summary: "2 cases, JdS CON 15 ou 2d12 poison",
       },
       {
         id: "suggestion",
@@ -2860,7 +2860,7 @@ export const localCreatures: Record<string, Creature> = {
     spells: [
       {
         id: "poison-spray",
-        summary: "À volonté. 2 cases, JdS CON 13 ou 2d12 poison",
+        summary: "2 cases, JdS CON 13 ou 2d12 poison",
       },
       {
         id: "animal-friendship",
@@ -2869,6 +2869,297 @@ export const localCreatures: Record<string, Creature> = {
       {
         id: "suggestion",
         summary: "3/jour. JdS SAG 13 ou suit une suggestion raisonnable (8h, concentration)",
+      },
+    ],
+  },
+  "artus-cimber": {
+    name: "Artus Cimber",
+    id: "_artus-cimber",
+    type: "Humanoid (Human)",
+    size: "Medium",
+    alignment: "Neutral Good",
+    armorClass: 14,
+    hitPoints: "82 (15d8 + 15)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 7,
+    abilities: {
+      strength: 10,
+      dexterity: 15,
+      constitution: 13,
+      intelligence: 17,
+      wisdom: 16,
+      charisma: 18,
+    },
+    savingThrows: {
+      dexterity: "+5",
+      charisma: "+7",
+    },
+    skills: {
+      deception: "+7",
+      history: "+9",
+      insight: "+6",
+      survival: "+9",
+    },
+    immunities: ["cold (Ring of Winter)"],
+    languages: ["Common", "Draconic", "Dwarvish", "Goblin"],
+    senses: {
+      passivePerception: 13,
+    },
+    traits: [
+      {
+        name: "Équipement spécial",
+        description:
+          "Anneau de l'Hiver : immunisé au froid et au froid extrême, ne vieillit plus, indétectable à la divination/scrutation. Bookmark (dague +3) : en action bonus, lumière vive 6 cases, boussole, Porte dimensionnelle (1/jour à l'aube), ou Compulsion (JdS 15, portée 18 cases, vise les araignées-bêtes, 1/jour).",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "3x Bookmark OU 3x arc long",
+      },
+      {
+        name: "Bookmark (dague +3)",
+        type: "Melee",
+        modifier: "+8",
+        reach: "1.5 m",
+        hit: "7 (1d4 + 5) dégâts perçants.",
+      },
+      {
+        name: "Arc long",
+        type: "Ranged",
+        modifier: "+5",
+        reach: "45/180 m",
+        hit: "6 (1d8 + 2) dégâts perçants.",
+      },
+      {
+        name: "Anneau de l'Hiver",
+        description:
+          "12 charges, récupérées à l'aube. Sorts (JdS DD 17) : Main de Bigby glaciale (2 ch.), Cône de froid (2 ch.), Chair de glace = chair en pierre mais glace (3 ch.), Tempête de grêle (2 ch.), Sphère glaciale d'Otiluke (3 ch.), Tempête de neige (1 ch.), Croissance d'épines de glace (1 ch.), Mur de glace (2 ch.). 1 ch. : refroidit une sphère de 24 cases (jusqu'à -34 °C). Crée un objet de glace (2 ch.) ou une créature-bête de glace FP ≤ 2 (4 ch., obéit à Artus, fond en 24 h ou à 0 PV).",
+      },
+    ],
+  },
+  "valindra-shadowmantle": {
+    name: "Valindra Shadowmantle",
+    id: "_valindra-shadowmantle",
+    type: "Undead",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 17,
+    hitPoints: "135 (18d8 + 54)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 21,
+    abilities: {
+      strength: 11,
+      dexterity: 16,
+      constitution: 16,
+      intelligence: 20,
+      wisdom: 14,
+      charisma: 16,
+    },
+    savingThrows: {
+      constitution: "+10",
+      intelligence: "+12",
+      wisdom: "+9",
+    },
+    skills: {
+      arcana: "+19",
+      history: "+12",
+      insight: "+9",
+      perception: "+9",
+    },
+    resistances: ["cold", "lightning", "necrotic"],
+    immunities: [
+      "poison",
+      "bludgeoning, piercing, and slashing from nonmagical attacks",
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned",
+    ],
+    languages: ["Common", "Abyssal", "Draconic", "Dwarvish", "Elvish", "Infernal"],
+    senses: {
+      trueSight: "36 m",
+      passivePerception: 19,
+    },
+    traits: [
+      {
+        name: "Masque",
+        description:
+          "En action bonus, prend l'apparence d'une elfe vivante. Dure jusqu'à ce qu'elle l'annule (action bonus), utilise Regard terrifiant, tombe à 30 PV ou moins, ou subit Dissipation de la magie.",
+      },
+      {
+        name: "Préparation",
+        description:
+          "Peut échanger un sort préparé contre un autre sort de magicien de même niveau.",
+      },
+      {
+        name: "Résistance légendaire (3/jour)",
+        description: "Sur un JdS raté, peut choisir de réussir à la place.",
+      },
+      {
+        name: "Renaissance",
+        description:
+          "Si détruite, renaît dans un nouveau corps en 1d10 jours (PV au max), à 1 case de son phylactère.",
+      },
+      {
+        name: "Résistance au renvoi",
+        description: "Avantage aux JdS contre le renvoi des morts-vivants.",
+      },
+    ],
+    actions: [
+      {
+        name: "Contact paralysant",
+        type: "Melee",
+        modifier: "+12",
+        reach: "1.5 m",
+        hit: "10 (3d6) dégâts de froid. JdS CON 18 ou paralysé 1 min (relance le JdS en fin de tour).",
+      },
+    ],
+    legendaryActions: [
+      {
+        name: "Sort mineur",
+        description: "Valindra lance un sort mineur.",
+      },
+      {
+        name: "Contact paralysant (coûte 2 actions)",
+        description: "Valindra utilise son Contact paralysant.",
+      },
+      {
+        name: "Regard terrifiant (coûte 2 actions)",
+        description:
+          "Une créature visible dans 2 cases : JdS SAG 18 ou effrayée 1 min (relance en fin de tour). En cas de réussite ou de fin d'effet, immunisée 24 h.",
+      },
+      {
+        name: "Perturbation de la vie (coûte 3 actions)",
+        description:
+          "Chaque créature non morte-vivante dans 4 cases : JdS CON 18, 21 (6d6) dégâts nécrotiques (moitié si réussi).",
+      },
+    ],
+    legendaryActionsSlots: "3",
+    spellStats: {
+      attackMod: 12,
+      spellDC: 20,
+      slots: {
+        "1": 4,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 3,
+        "6": 1,
+        "7": 1,
+        "8": 1,
+        "9": 1,
+      },
+    },
+    spells: [
+      {
+        id: "mage-hand",
+        summary: "Main spectrale, manipule des objets (9 cases)",
+      },
+      {
+        id: "prestidigitation",
+        summary: "Petits effets magiques mineurs",
+      },
+      {
+        id: "ray-of-frost",
+        summary: "Attaque +12, 1d8 froid, vitesse -2 cases",
+      },
+      {
+        id: "detect-magic",
+        summary: "Détecte la magie (concentration, 6 cases)",
+      },
+      {
+        id: "magic-missile",
+        summary: "3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
+      },
+      {
+        id: "shield",
+        summary: "Réaction. +5 CA jusqu'au prochain tour, bloque Projectile magique",
+      },
+      {
+        id: "thunderwave",
+        summary: "Cube 3c, JdS CON 20 ou 2d8 tonnerre + repoussé (moitié)",
+      },
+      {
+        id: "detect-thoughts",
+        summary: "Lit les pensées (concentration, JdS SAG 20)",
+      },
+      {
+        id: "invisibility",
+        summary: "Invisible jusqu'à attaque/sort (concentration, 1h)",
+      },
+      {
+        id: "melfs-acid-arrow",
+        summary: "Attaque +12, 4d4 acide + 2d4 au tour suivant",
+      },
+      {
+        id: "mirror-image",
+        summary: "3 leurres, détournent les attaques",
+      },
+      {
+        id: "animate-dead",
+        summary: "Anime un squelette/zombie sous son contrôle",
+      },
+      {
+        id: "counterspell",
+        summary: "Réaction. Annule un sort adverse (niv ≤ 3 auto)",
+      },
+      {
+        id: "dispel-magic",
+        summary: "Dissipe les effets magiques (niv ≤ 3 auto)",
+      },
+      {
+        id: "fireball",
+        summary: "Sphère 4 cases, JdS DEX 20 ou 8d6 feu (moitié si réussi)",
+      },
+      {
+        id: "blight",
+        summary: "JdS CON 20 ou 8d8 nécrotiques (moitié si réussi)",
+      },
+      {
+        id: "dimension-door",
+        summary: "Téléportation jusqu'à 100 cases",
+      },
+      {
+        id: "cloudkill",
+        summary: "Nuage 4 cases, JdS CON 20 ou 5d8 poison (concentration, se déplace)",
+      },
+      {
+        id: "scrying",
+        summary: "Espionne une cible à distance (JdS SAG 20, concentration)",
+      },
+      {
+        id: "disintegrate",
+        summary: "JdS DEX 20 ou 10d6 + 40 force ; réduit en poussière si tué",
+      },
+      {
+        id: "globe-of-invulnerability",
+        summary: "Bloque les sorts de niv ≤ 5 dans 2 cases (concentration)",
+      },
+      {
+        id: "finger-of-death",
+        summary: "JdS CON 20 ou 7d8 + 30 nécrotiques (moitié si réussi) ; tué = zombie",
+      },
+      {
+        id: "plane-shift",
+        summary: "Voyage vers un autre plan (JdS CHA 20 pour cible récalcitrante)",
+      },
+      {
+        id: "dominate-monster",
+        summary: "JdS SAG 20 ou charmée et contrôlée (concentration, 1h)",
+      },
+      {
+        id: "power-word-stun",
+        summary: "Cible ≤ 150 PV étourdie (pas de JdS)",
+      },
+      {
+        id: "power-word-kill",
+        summary: "Tue instantanément une cible ≤ 100 PV (pas de JdS)",
       },
     ],
   },

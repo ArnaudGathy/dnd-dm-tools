@@ -56,6 +56,41 @@ export const getWeaponDamage = (character: Character, damage: WeaponDamage, weap
     totalString: `${dices}${damageBonus >= 1 ? `+${damageBonus}` : damageBonus < 0 ? damageBonus : ""}`,
   };
 };
+const DAMAGE_TYPE_KEYWORDS: { type: WeaponDamageType; keywords: string[] }[] = [
+  { type: WeaponDamageType.BLUDGEONING, keywords: ["bludgeoning", "contondant"] },
+  { type: WeaponDamageType.SLASHING, keywords: ["slashing", "tranchant"] },
+  { type: WeaponDamageType.PIERCING, keywords: ["piercing", "perçant", "percant"] },
+  { type: WeaponDamageType.ACID, keywords: ["acid", "acide"] },
+  { type: WeaponDamageType.COLD, keywords: ["cold", "froid", "givre"] },
+  { type: WeaponDamageType.FIRE, keywords: ["fire", "feu"] },
+  { type: WeaponDamageType.FORCE, keywords: ["force"] },
+  { type: WeaponDamageType.LIGHTNING, keywords: ["lightning", "foudre", "éclair", "eclair"] },
+  { type: WeaponDamageType.NECROTIC, keywords: ["necrotic", "nécrotique", "necrotique"] },
+  { type: WeaponDamageType.POISON, keywords: ["poison"] },
+  { type: WeaponDamageType.PSYCHIC, keywords: ["psychic", "psychique", "psi"] },
+  { type: WeaponDamageType.RADIANT, keywords: ["radiant", "radieux"] },
+];
+
+// Damage keywords can pick up plural/feminine forms ("tranchants", "froide") but must NOT
+// bleed into status effects ("poison" damage vs the "poisoned"/"empoisonné" condition).
+const DAMAGE_KEYWORD_SUFFIXES = ["", "s", "e", "es"];
+
+// Resistance/immunity/vulnerability labels are free-form (mixed FR/EN, e.g. "Feu (voir
+// trait)"), so match a damage type by whole word and return its icon/color, or undefined
+// for condition immunities and other non-damage entries.
+export const getDamageTypeStyleFromLabel = (label: string) => {
+  const tokens = label
+    .toLowerCase()
+    .split(/[^\p{L}]+/u)
+    .filter(Boolean);
+  const match = DAMAGE_TYPE_KEYWORDS.find(({ keywords }) =>
+    keywords.some((keyword) =>
+      tokens.some((token) => DAMAGE_KEYWORD_SUFFIXES.some((suffix) => token === keyword + suffix)),
+    ),
+  );
+  return match ? getDamageTypeIconAndColor(match.type) : undefined;
+};
+
 export const getDamageTypeIconAndColor = (damageType: WeaponDamageType) => {
   switch (damageType) {
     case WeaponDamageType.BLUDGEONING:

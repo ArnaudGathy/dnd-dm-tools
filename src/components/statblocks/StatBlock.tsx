@@ -9,9 +9,10 @@ import {
   getChallengeRatingAsFraction,
   translateSkill,
 } from "@/utils/utils";
-import { entries, isDefined, isNumber } from "remeda";
+import { entries, groupBy, isDefined, isNumber } from "remeda";
 import Link from "next/link";
 import { StatCell } from "@/components/statblocks/StatCell";
+import { TagList } from "@/components/statblocks/TagList";
 import { ActionBlock } from "@/components/statblocks/ActionBlock";
 import { getSpellByIds } from "@/lib/api/spells";
 import Abilities from "@/components/statblocks/Abilities";
@@ -30,6 +31,9 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
       ...(spell ?? {}),
     };
   });
+  const spellsByLevel = entries(groupBy(creatureSpells, (s) => s.level)).sort(
+    ([a], [b]) => Number(a) - Number(b),
+  );
 
   const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
   const linkToAideDD =
@@ -116,49 +120,71 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
             </div>
           )}
 
-          <div className={blockClassName}>
+          <div className={cn(blockClassName, "gap-3 md:gap-3")}>
             <CategoryTitle>Général</CategoryTitle>
             {creature.skills && (
               <StatCell
                 name="Compétences"
-                stat={entries(creature.skills)
-                  .map((t) => `${translateSkill(t[0])} ${t[1]}`)
-                  .join(", ")}
+                stat={
+                  <TagList
+                    items={entries(creature.skills).map((t) => `${translateSkill(t[0])} ${t[1]}`)}
+                  />
+                }
               />
             )}
             {creature.savingThrows && (
               <StatCell
                 name="Jets de sauvegarde"
-                stat={entries(creature.savingThrows)
-                  .map((t) => (t[1] ? `${shortenAbilityName(t[0])} ${t[1]}` : undefined))
-                  .filter(isDefined)
-                  .join(", ")}
-                highlightClassName="text-pink-400"
+                stat={
+                  <TagList
+                    accentClassName="border-pink-400/50 text-pink-300"
+                    items={entries(creature.savingThrows)
+                      .map((t) => (t[1] ? `${shortenAbilityName(t[0])} ${t[1]}` : undefined))
+                      .filter(isDefined)}
+                  />
+                }
               />
             )}
             {creature.vulnerabilities && (
               <StatCell
                 name="Vulnérabilités (x2)"
-                stat={creature.vulnerabilities.join(", ")}
-                highlightClassName="text-emerald-400"
+                stat={
+                  <TagList
+                    items={creature.vulnerabilities}
+                    colorizeDamage
+                    accentClassName="border-orange-400/50 text-orange-300"
+                  />
+                }
               />
             )}
             {creature.resistances && (
               <StatCell
                 name="Résistances (x0,5)"
-                stat={creature.resistances.join(", ")}
-                highlightClassName="text-emerald-400"
+                stat={
+                  <TagList
+                    items={creature.resistances}
+                    colorizeDamage
+                    accentClassName="border-emerald-400/50 text-emerald-300"
+                  />
+                }
               />
             )}
             {creature.immunities && (
               <StatCell
                 name="Immunités (x0)"
-                stat={creature.immunities.join(", ")}
-                highlightClassName="text-emerald-400"
+                stat={
+                  <TagList
+                    items={creature.immunities}
+                    colorizeDamage
+                    accentClassName="border-emerald-400/50 text-emerald-300"
+                  />
+                }
               />
             )}
 
-            {creature.languages && <StatCell name="Langues" stat={creature.languages.join(", ")} />}
+            {creature.languages && (
+              <StatCell name="Langues" stat={<TagList items={creature.languages} />} />
+            )}
             {creature.senses &&
               entries(creature.senses).map(([name, value]) => {
                 let stat = value;
@@ -229,7 +255,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           {creature.spellStats && (
             <div className={blockClassName}>
               <CategoryTitle>Sorts</CategoryTitle>
-              <div className="mb-2 flex gap-8">
+              <div className="mb-2 flex flex-wrap items-center gap-x-8 gap-y-2">
                 <StatCell
                   name="Attaque des sorts"
                   stat={`+${creature.spellStats.attackMod}`}
@@ -242,31 +268,51 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                   isInline
                   isHighlighted
                 />
-                {creature.spellStats.slots &&
-                  entries(creature.spellStats.slots).map(([level, slots]) => (
-                    <StatCell key={level} name={`Slots ${level}`} stat={slots} isInline />
-                  ))}
-              </div>
-              {!!creature.spells &&
-                creatureSpells.map((spell) => {
-                  if (!spell) {
-                    return null;
-                  }
-
-                  return (
-                    <div key={spell.id} className="flex items-center gap-2">
-                      <div className="text-sky-500">{`${spell.level}`}</div>
-                      <Link
-                        href={`/spells/${spell.id}`}
-                        target="_blank"
-                        className="w-[175px] overflow-hidden truncate text-muted-foreground underline"
-                      >
-                        {spell.name}
-                      </Link>
-                      {spell.summary && <span>{spell.summary}</span>}
+                {creature.spellStats.slots && (
+                  <div className="flex items-center gap-2">
+                    <span className="mr-1 text-muted-foreground">Emplacements</span>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {entries(creature.spellStats.slots).map(([level, slots]) => (
+                        <span
+                          key={level}
+                          className="inline-flex items-center gap-1 rounded border border-neutral-700 px-1.5 py-0.5 text-sm"
+                        >
+                          <span className="text-sky-500">N{level}</span>
+                          <span className="font-semibold">×{slots}</span>
+                        </span>
+                      ))}
                     </div>
-                  );
-                })}
+                  </div>
+                )}
+              </div>
+              {!!creature.spells && (
+                <div className="flex flex-col gap-3">
+                  {spellsByLevel.map(([level, spells]) => (
+                    <div key={level} className="flex gap-3">
+                      <span className="mt-0.5 w-4 shrink-0 text-sm font-semibold uppercase tracking-wide text-sky-500">
+                        {`N${level}`}
+                      </span>
+                      <div className="flex flex-1 flex-col gap-1">
+                        {spells.map((spell) => (
+                          <div
+                            key={spell.id}
+                            className="flex flex-col gap-x-3 md:flex-row md:items-baseline"
+                          >
+                            <Link
+                              href={`/spells/${spell.id}`}
+                              target="_blank"
+                              className="w-[180px] shrink-0 truncate text-muted-foreground underline"
+                            >
+                              {spell.name}
+                            </Link>
+                            {spell.summary && <span className="text-sm">{spell.summary}</span>}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
         </div>

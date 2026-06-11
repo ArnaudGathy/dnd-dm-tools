@@ -1475,4 +1475,25 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "Yx-QqEc2Feg",
   },
+  {
+    name: "Valindra VS Artus VS Géants",
+    id: 117,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Omu",
+      mapMarker: "O20",
+    },
+    ennemies: {
+      "1": [
+        { id: "_valindra-shadowmantle", color: "#FFF", variant: "" },
+        { id: "_artus-cimber", color: "#FFF", variant: "" },
+        { id: "frost-giant", color: "#FFF", variant: "Thorun Permafrost" },
+        { id: "frost-giant", color: "#FFF", variant: "" },
+        { id: "frost-giant", color: "#FFF", variant: "" },
+        { id: "winter-wolf", color: "#FFF", variant: "" },
+        { id: "winter-wolf", color: "#FFF", variant: "" },
+      ],
+    },
+    youtubeId: "k9H-qtO2E8I",
+  },
 ];

@@ -113,7 +113,12 @@ From the `spellcasting` array:
   (e.g. `"ray-of-sickness"`, `"hypnotic-pattern"` — it's a lookup key, do NOT translate).
   `summary` = very short French gist of the spell's combat effect
   (e.g. `"Désavantage des attaques adverses (concentration, 1m)"`).
-- Daily/rest-limited spells: note the limit in the summary, e.g. `(1/jour)`.
+- **Never put the spell level in the summary** (no `"Niv 3."` prefix). The `id`
+  fetches the spell's level, so it's redundant. Likewise, **don't write `"À volonté"`
+  for cantrips** (level 0) — being at-will is implied by the level.
+- Do keep usage info that is NOT derivable from the level: `(1/jour)`, `(Recharge 5–6)`,
+  `(réaction)`/`(action bonus)` cast time, and `"À volonté"` only when a *leveled* spell
+  is cast at will (innate at-will casting) — that's special and not implied by the level.
 
 ## Step 3 — Translation & summarization rules (French)
 
