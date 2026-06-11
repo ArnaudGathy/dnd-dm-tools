@@ -6,6 +6,7 @@ import {
 } from "@/constants/maps";
 import { addSignToNumber, getModifier } from "@/utils/utils";
 import {
+  AudioLines,
   Droplet,
   Droplets,
   Eye,
@@ -69,6 +70,7 @@ const DAMAGE_TYPE_KEYWORDS: { type: WeaponDamageType; keywords: string[] }[] = [
   { type: WeaponDamageType.POISON, keywords: ["poison"] },
   { type: WeaponDamageType.PSYCHIC, keywords: ["psychic", "psychique", "psi"] },
   { type: WeaponDamageType.RADIANT, keywords: ["radiant", "radieux"] },
+  { type: WeaponDamageType.THUNDER, keywords: ["thunder", "tonnerre"] },
 ];
 
 // Damage keywords can pick up plural/feminine forms ("tranchants", "froide") but must NOT
@@ -117,5 +119,7 @@ export const getDamageTypeIconAndColor = (damageType: WeaponDamageType) => {
       return { icon: Eye, color: "oklch(0.833 0.145 321.434)" };
     case WeaponDamageType.RADIANT:
       return { icon: Sun, color: "oklch(0.879 0.169 91.605)" };
+    case WeaponDamageType.THUNDER:
+      return { icon: AudioLines, color: "oklch(0.673 0.182 276.935)" };
   }
 };

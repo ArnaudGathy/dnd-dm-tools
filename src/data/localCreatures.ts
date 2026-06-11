@@ -2003,7 +2003,7 @@ export const localCreatures: Record<string, Creature> = {
         name: "Dague",
         type: "Melee or Ranged",
         modifier: "+4",
-        reach: "1.5 m ou distance 6/18 m",
+        reach: "1.5 m ou portée 6/18 m",
         hit: "4 (1d4 + 2) dégâts perçants, JdS CON 12 ou 2d4 poison.",
       },
     ],

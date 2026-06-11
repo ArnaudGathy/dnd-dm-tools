@@ -10,7 +10,7 @@ export const statLabelClassName = "text-sm font-medium text-neutral-100";
 // name vs. dimmed description gives each entry clear separation. Stacks on mobile.
 export const NamedEntry = ({ name, children }: { name: string; children?: ReactNode }) => {
   return (
-    <div className="flex flex-col gap-0.5 md:flex-row md:items-baseline md:gap-4">
+    <div className="flex flex-col gap-0.5 md:flex-row md:items-start md:gap-4">
       <span className={cn(statLabelClassName, "md:w-[150px] md:shrink-0")}>{name}</span>
       {children && <div className="flex-1 leading-relaxed text-muted-foreground">{children}</div>}
     </div>

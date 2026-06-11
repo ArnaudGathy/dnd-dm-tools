@@ -861,6 +861,7 @@ export const WEAPON_DAMAGE_TYPE_MAP_SENTENCE: {
   [WeaponDamageType.POISON]: "de poison",
   [WeaponDamageType.PSYCHIC]: "psychiques",
   [WeaponDamageType.RADIANT]: "radiants",
+  [WeaponDamageType.THUNDER]: "de tonnerre",
 };
 
 export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
@@ -876,6 +877,7 @@ export const WEAPON_DAMAGE_TYPE_MAP: { [key in WeaponDamageType]: string } = {
   [WeaponDamageType.PSYCHIC]: "Psychiques",
   [WeaponDamageType.RADIANT]: "Radiants",
   [WeaponDamageType.SLASHING]: "Tranchants",
+  [WeaponDamageType.THUNDER]: "Tonnerre",
 };
 
 export const AMMUNITION_TYPE_MAP: Record<AmmunitionType, string> = {

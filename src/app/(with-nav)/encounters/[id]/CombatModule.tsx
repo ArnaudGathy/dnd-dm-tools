@@ -111,6 +111,19 @@ const sortParticipant = (a: Participant, b: Participant) => {
   return aInit - bInit;
 };
 
+// "Stirge (2)" → the duplicate marker reads quieter than the name itself.
+const ParticipantName = ({ name }: { name: string }) => {
+  const match = name.match(/^(.*?)\s*(\(.*\))$/);
+  if (!match) {
+    return name;
+  }
+  return (
+    <>
+      {match[1]} <span className="text-muted-foreground">{match[2]}</span>
+    </>
+  );
+};
+
 const getHPBarColor = (hpPercent: number) => {
   if (hpPercent <= 25) {
     return "bg-red-600";
@@ -482,10 +495,11 @@ export const CombatModule = ({
               <div
                 key={participant.uuid}
                 className={clsx(
-                  "flex min-h-10 w-full items-center gap-4 space-x-2 px-4 py-1 transition duration-300",
+                  "flex min-h-11 w-full items-center gap-3 rounded-lg border px-3 py-1.5 transition duration-300",
                   {
                     "opacity-20": participant.currentHp === "0",
-                    "scale-[105%] bg-red-900": isActiveTurn,
+                    "scale-[102%] border-red-700/60 bg-red-950": isActiveTurn,
+                    "border-neutral-800 bg-neutral-800/30 hover:bg-neutral-800/50": !isActiveTurn,
                     "bg-stone-950": isEnvironment && !isActiveTurn,
                   },
                   {
@@ -575,17 +589,17 @@ export const CombatModule = ({
                         style={{
                           backgroundColor: participant.color,
                         }}
-                        className={clsx("h-5 w-5 rounded-full")}
+                        className="h-5 w-5 cursor-pointer rounded-full"
                       />
                     ) : (
-                      <Dices className="size-5" />
+                      <Dices className="size-5 cursor-pointer" />
                     )}
                   </PopoverComponent>
                 </div>
-                <div className="w-10 text-center text-sm">
+                <div className="w-14 shrink-0">
                   <Input
                     type="number"
-                    className="w-14"
+                    className="w-14 text-center font-semibold tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
                     id="init"
                     value={participant.init}
                     onChange={(e) => handleUpdateInit(participant, Number(e.target.value))}
@@ -593,15 +607,19 @@ export const CombatModule = ({
                   />
                 </div>
                 <div
-                  className={clsx("w-[200px] truncate px-4 text-center", {
+                  className={clsx("w-[200px] truncate px-2 text-left text-sm font-medium", {
                     ["text-red-400 line-through"]: participant.currentHp === "0",
                   })}
                 >
                   <TooltipComponent definition={participant.name}>
                     {participant.isNPC ? (
-                      <Link href={`#${participant.id}`}>{participant.name}</Link>
+                      <Link href={`#${participant.id}`}>
+                        <ParticipantName name={participant.name} />
+                      </Link>
                     ) : (
-                      <span>{participant.name}</span>
+                      <span>
+                        <ParticipantName name={participant.name} />
+                      </span>
                     )}
                   </TooltipComponent>
                 </div>
@@ -612,10 +630,11 @@ export const CombatModule = ({
                         <PopoverTrigger asChild>
                           <div className="relative w-full hover:cursor-pointer">
                             <Progress
-                              classNameTop={clsx(getHPBarColor(hpPercent))}
+                              className="ring-1 ring-inset ring-white/10"
+                              classNameTop={clsx("transition-colors", getHPBarColor(hpPercent))}
                               value={hpPercent}
                             />
-                            <span className="absolute left-[50%] top-[1px] -translate-x-1/2 transform font-bold leading-4">
+                            <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold tabular-nums leading-none drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
                               {participant.currentHp} / {participant.hp}
                             </span>
                           </div>
@@ -836,7 +855,11 @@ export const CombatModule = ({
                     description="Supprimer cet élément est irréversible."
                     onConfirm={() => handleRemoveParticipant(participant)}
                   >
-                    <Button variant="ghost" size="xs">
+                    <Button
+                      variant="ghost"
+                      size="xs"
+                      className="text-muted-foreground hover:text-foreground"
+                    >
                       <XMarkIcon className="size-4" />
                     </Button>
                   </ConfirmDialog>

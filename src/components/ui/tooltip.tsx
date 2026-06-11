@@ -30,15 +30,19 @@ TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 export const TooltipComponent = ({
   children,
   definition,
+  delayDuration,
+  contentClassName,
 }: {
   children: React.ReactNode;
   definition: React.ReactNode;
+  delayDuration?: number;
+  contentClassName?: string;
 }) => {
   return (
-    <TooltipProvider>
+    <TooltipProvider delayDuration={delayDuration}>
       <Tooltip>
         <TooltipTrigger asChild>{children}</TooltipTrigger>
-        <TooltipContent>{definition}</TooltipContent>
+        <TooltipContent className={contentClassName}>{definition}</TooltipContent>
       </Tooltip>
     </TooltipProvider>
   );

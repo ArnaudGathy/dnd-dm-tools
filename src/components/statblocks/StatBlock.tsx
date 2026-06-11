@@ -79,7 +79,8 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div className="flex flex-col gap-4">
+        {/* Statblock body text caps at 14px — titles and stat values set their own size. */}
+        <div className="flex flex-col gap-4 text-sm">
           <div className="flex flex-col gap-3">
             <div className="flex flex-wrap gap-2">
               <VitalStat
@@ -136,8 +137,6 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                 <VitalStat label="Déplacement" value="Aucun" icon={Footprints} />
               )}
             </div>
-
-            {creature.behavior && <NamedEntry name="Comportement">{creature.behavior}</NamedEntry>}
           </div>
 
           {(creature.abilities || isNonEmptyRecord(creature.skills)) && (
@@ -218,15 +217,16 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
           {isNonEmptyArray(creature.traits) && (
             <StatSection title="Traits">
               {creature.traits.map((trait) => (
-                <NamedEntry key={trait.name} name={trait.name}>
-                  {trait.description}
-                </NamedEntry>
+                <ActionBlock key={trait.name} action={trait} />
               ))}
             </StatSection>
           )}
 
           {isNonEmptyArray(creature.actions) && (
             <StatSection title="Actions" accentClassName="text-green-400">
+              {creature.behavior && (
+                <NamedEntry name="Comportement">{creature.behavior}</NamedEntry>
+              )}
               {creature.actions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
               ))}

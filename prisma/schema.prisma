@@ -474,6 +474,7 @@ enum WeaponDamageType {
   POISON
   PSYCHIC
   RADIANT
+  THUNDER
 }
 
 enum WeaponDamageDices {
