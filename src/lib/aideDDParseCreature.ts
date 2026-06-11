@@ -208,7 +208,7 @@ function extractSectionParagraphs(html: string, sectionTitle: string, isAction =
 
         if (isAction && /attack roll/i.test(description)) {
           const match = description.match(
-            /^([A-Za-z\s]+?)\s+Attack Roll:\s*([+-]?\d+),\s*reach\s+(.+?)\s*Hit:\s*(.+)$/i,
+            /^([A-Za-z\s]+?)\s+Attack Roll:\s*([+-]?\d+),\s*(?:reach|range)\s+(.+?)\s*Hit:\s*(.+)$/i,
           );
 
           if (match) {
