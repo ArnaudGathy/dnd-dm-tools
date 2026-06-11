@@ -19,7 +19,8 @@ import { VitalStat } from "@/components/statblocks/VitalStat";
 import { ActionBlock } from "@/components/statblocks/ActionBlock";
 import { getSpellByIds } from "@/lib/api/spells";
 import Abilities from "@/components/statblocks/Abilities";
-import { cn } from "@/lib/utils";
+import { cn, getSessionData } from "@/lib/utils";
+import ClearCreatureCacheButton from "@/components/statblocks/ClearCreatureCacheButton";
 
 const isNonEmptyArray = <T,>(value: T[] | undefined | null): value is T[] =>
   Array.isArray(value) && value.length > 0;
@@ -39,6 +40,8 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
     ([a], [b]) => Number(a) - Number(b),
   );
 
+  const { isAdmin } = await getSessionData();
+
   const linkToAideDD =
     isNumber(creature.id) || creature.id.includes("_")
       ? undefined
@@ -50,14 +53,17 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
         <CardTitle className="flex justify-between">
           <span>{creature.name}</span>
           {linkToAideDD && (
-            <Link
-              href={linkToAideDD}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="ml-2 text-xs text-muted-foreground underline"
-            >
-              AideDD
-            </Link>
+            <span className="flex items-center">
+              <Link
+                href={linkToAideDD}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="ml-2 text-xs text-muted-foreground underline"
+              >
+                AideDD
+              </Link>
+              {isAdmin && <ClearCreatureCacheButton creatureId={creature.id.toString()} />}
+            </span>
           )}
         </CardTitle>
         <CardDescription>

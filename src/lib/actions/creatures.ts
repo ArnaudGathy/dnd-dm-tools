@@ -6,6 +6,25 @@ import { kebabCaseify } from "@/utils/utils";
 import { getSummaryCreatureFromEN } from "@/lib/external-apis/aidedd";
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { restrictToAdmins } from "@/lib/utils";
+
+export const clearCreatureCache = async ({
+  creatureId,
+  pathToRevalidate,
+}: {
+  creatureId: string;
+  pathToRevalidate?: string;
+}) => {
+  await restrictToAdmins();
+
+  await prisma.cachedCreature.deleteMany({
+    where: { id: creatureId },
+  });
+
+  if (pathToRevalidate) {
+    revalidatePath(pathToRevalidate);
+  }
+};
 
 export async function setCreatureFavorite({
   characterId,
