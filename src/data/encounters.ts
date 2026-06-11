@@ -1488,6 +1488,7 @@ export const encounters: Encounter[] = [
         { id: "_valindra-shadowmantle", color: "#FFF", variant: "" },
         { id: "_artus-cimber", color: "#FFF", variant: "" },
         { id: "frost-giant", color: "#FFF", variant: "Thorun Permafrost" },
+        { id: "frost-giant", color: "#FFF", variant: "Drufi (commandante)" },
         { id: "frost-giant", color: "#FFF", variant: "" },
         { id: "frost-giant", color: "#FFF", variant: "" },
         { id: "winter-wolf", color: "#FFF", variant: "" },
