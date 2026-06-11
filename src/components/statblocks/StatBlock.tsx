@@ -3,24 +3,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { clsx } from "clsx";
 import {
   getDistanceInSquares,
-  shortenAbilityName,
   translatedSenses,
   getHPAsString,
   getChallengeRatingAsFraction,
   translateSkill,
 } from "@/utils/utils";
-import { entries, groupBy, isDefined, isNumber } from "remeda";
+import { entries, groupBy, isNumber } from "remeda";
 import Link from "next/link";
-import { StatCell } from "@/components/statblocks/StatCell";
+import { Feather, Footprints, Heart, Mountain, Shield, Skull, Waves } from "lucide-react";
 import { TagList } from "@/components/statblocks/TagList";
+import { StatSection } from "@/components/statblocks/StatSection";
+import { NamedEntry, statLabelClassName } from "@/components/statblocks/NamedEntry";
+import { Pill } from "@/components/statblocks/Pill";
+import { VitalStat } from "@/components/statblocks/VitalStat";
 import { ActionBlock } from "@/components/statblocks/ActionBlock";
 import { getSpellByIds } from "@/lib/api/spells";
 import Abilities from "@/components/statblocks/Abilities";
 import { cn } from "@/lib/utils";
 
-const CategoryTitle = ({ children }: { children: React.ReactNode }) => {
-  return <h5 className="text-neutral-300 underline md:mb-2">{children}</h5>;
-};
+const isNonEmptyArray = <T,>(value: T[] | undefined | null): value is T[] =>
+  Array.isArray(value) && value.length > 0;
+const isNonEmptyRecord = (value: object | undefined | null): boolean =>
+  !!value && Object.keys(value).length > 0;
 
 export const StatBlock = async ({ creature }: { creature: Creature }) => {
   const creatureSpellsFromDb = await getSpellByIds((creature.spells ?? []).map((s) => s.id));
@@ -35,7 +39,6 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
     ([a], [b]) => Number(a) - Number(b),
   );
 
-  const blockClassName = "flex flex-col gap-2 border-t-2 pt-4 md:gap-0";
   const linkToAideDD =
     isNumber(creature.id) || creature.id.includes("_")
       ? undefined
@@ -71,221 +74,227 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-4">
-          <div className="flex flex-col gap-2">
-            <div className="flex gap-8">
-              <StatCell name="PV" stat={getHPAsString(creature)} isInline />
-              <StatCell name="CA" stat={creature.armorClass} isHighlighted isInline />
-              <StatCell
-                name="FP"
-                stat={getChallengeRatingAsFraction(creature.challengeRating)}
-                isInline
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-wrap gap-2">
+              <VitalStat
+                label="CA"
+                value={creature.armorClass}
+                icon={Shield}
+                iconClassName="text-sky-400"
+                valueClassName="text-sky-400"
               />
+              <VitalStat
+                label="PV"
+                value={getHPAsString(creature)}
+                icon={Heart}
+                iconClassName="text-red-400"
+                valueClassName="text-red-400"
+              />
+              <VitalStat
+                label="FP"
+                value={getChallengeRatingAsFraction(creature.challengeRating)}
+                icon={Skull}
+                iconClassName="text-amber-400"
+                valueClassName="text-amber-400"
+              />
+              {creature.speed ? (
+                <>
+                  <VitalStat
+                    label="Marche"
+                    value={getDistanceInSquares(creature.speed.walk)}
+                    icon={Footprints}
+                  />
+                  {creature.speed.swim && (
+                    <VitalStat
+                      label="Nage"
+                      value={getDistanceInSquares(creature.speed.swim)}
+                      icon={Waves}
+                    />
+                  )}
+                  {creature.speed.fly && (
+                    <VitalStat
+                      label="Vol"
+                      value={getDistanceInSquares(creature.speed.fly)}
+                      icon={Feather}
+                    />
+                  )}
+                  {creature.speed.climb && (
+                    <VitalStat
+                      label="Escalade"
+                      value={getDistanceInSquares(creature.speed.climb)}
+                      icon={Mountain}
+                    />
+                  )}
+                </>
+              ) : (
+                <VitalStat label="Déplacement" value="Aucun" icon={Footprints} />
+              )}
             </div>
 
-            {creature.speed ? (
-              <div className="flex gap-8">
-                <StatCell
-                  name="Marche"
-                  stat={getDistanceInSquares(creature.speed.walk)}
-                  isHighlighted
-                  isInline
-                />
-
-                {creature.speed.swim && (
-                  <StatCell name="Nage" stat={getDistanceInSquares(creature.speed.swim)} isInline />
-                )}
-                {creature.speed.fly && (
-                  <StatCell name="Vol" stat={getDistanceInSquares(creature.speed.fly)} isInline />
-                )}
-                {creature.speed.climb && (
-                  <StatCell
-                    name="Escalade"
-                    stat={getDistanceInSquares(creature.speed.climb)}
-                    isInline
-                  />
-                )}
-              </div>
-            ) : (
-              <StatCell name="Déplacements" stat="Aucun" isInline />
-            )}
-
-            {creature.behavior && (
-              <StatCell name="Comportement" stat={creature.behavior} isInline />
-            )}
+            {creature.behavior && <NamedEntry name="Comportement">{creature.behavior}</NamedEntry>}
           </div>
 
-          {creature.abilities && (
-            <div className="flex flex-wrap justify-between border-t-2 pt-4 md:justify-start md:gap-4">
-              <Abilities abilities={creature.abilities} />
+          {(creature.abilities || isNonEmptyRecord(creature.skills)) && (
+            <div className="flex flex-col gap-3 border-t-2 pt-4">
+              {creature.abilities && (
+                <div className="flex flex-wrap gap-2">
+                  <Abilities abilities={creature.abilities} savingThrows={creature.savingThrows} />
+                </div>
+              )}
+              {isNonEmptyRecord(creature.skills) && (
+                <NamedEntry name="Compétences">
+                  <TagList
+                    items={entries(creature.skills!).map((t) => `${translateSkill(t[0])} ${t[1]}`)}
+                  />
+                </NamedEntry>
+              )}
             </div>
           )}
 
-          <div className={cn(blockClassName, "gap-3 md:gap-3")}>
-            <CategoryTitle>Général</CategoryTitle>
-            {creature.skills && (
-              <StatCell
-                name="Compétences"
-                stat={
-                  <TagList
-                    items={entries(creature.skills).map((t) => `${translateSkill(t[0])} ${t[1]}`)}
-                  />
-                }
-              />
-            )}
-            {creature.savingThrows && (
-              <StatCell
-                name="Jets de sauvegarde"
-                stat={
-                  <TagList
-                    accentClassName="border-pink-400/50 text-pink-300"
-                    items={entries(creature.savingThrows)
-                      .map((t) => (t[1] ? `${shortenAbilityName(t[0])} ${t[1]}` : undefined))
-                      .filter(isDefined)}
-                  />
-                }
-              />
-            )}
-            {creature.vulnerabilities && (
-              <StatCell
-                name="Vulnérabilités (x2)"
-                stat={
+          {(isNonEmptyArray(creature.vulnerabilities) ||
+            isNonEmptyArray(creature.resistances) ||
+            isNonEmptyArray(creature.immunities) ||
+            isNonEmptyArray(creature.languages) ||
+            isNonEmptyRecord(creature.senses)) && (
+            <StatSection title="Général" contentClassName="gap-3">
+              {isNonEmptyArray(creature.vulnerabilities) && (
+                <NamedEntry name="Vulnérabilités (x2)">
                   <TagList
                     items={creature.vulnerabilities}
                     colorizeDamage
                     accentClassName="border-orange-400/50 text-orange-300"
                   />
-                }
-              />
-            )}
-            {creature.resistances && (
-              <StatCell
-                name="Résistances (x0,5)"
-                stat={
+                </NamedEntry>
+              )}
+              {isNonEmptyArray(creature.resistances) && (
+                <NamedEntry name="Résistances (x0,5)">
                   <TagList
                     items={creature.resistances}
                     colorizeDamage
                     accentClassName="border-emerald-400/50 text-emerald-300"
                   />
-                }
-              />
-            )}
-            {creature.immunities && (
-              <StatCell
-                name="Immunités (x0)"
-                stat={
+                </NamedEntry>
+              )}
+              {isNonEmptyArray(creature.immunities) && (
+                <NamedEntry name="Immunités (x0)">
                   <TagList
                     items={creature.immunities}
                     colorizeDamage
                     accentClassName="border-emerald-400/50 text-emerald-300"
                   />
-                }
-              />
-            )}
+                </NamedEntry>
+              )}
 
-            {creature.languages && (
-              <StatCell name="Langues" stat={<TagList items={creature.languages} />} />
-            )}
-            {creature.senses &&
-              entries(creature.senses).map(([name, value]) => {
-                let stat = value;
-                if (
-                  ["darkvision", "blindSight", "trueSight", "tremorsense"].includes(name) &&
-                  typeof value === "string"
-                ) {
-                  stat = `${getDistanceInSquares(value)} cases`;
-                }
+              {isNonEmptyArray(creature.languages) && (
+                <NamedEntry name="Langues">
+                  <TagList items={creature.languages} />
+                </NamedEntry>
+              )}
+              {isNonEmptyRecord(creature.senses) &&
+                entries(creature.senses!).map(([name, value]) => {
+                  let stat = value;
+                  if (
+                    ["darkvision", "blindSight", "trueSight", "tremorsense"].includes(name) &&
+                    typeof value === "string"
+                  ) {
+                    stat = `${getDistanceInSquares(value)} cases`;
+                  }
 
-                return <StatCell key={name} name={translatedSenses(name)} stat={stat} />;
-              })}
-          </div>
-
-          {creature.traits && (
-            <div className={blockClassName}>
-              <CategoryTitle>Traits</CategoryTitle>
-              {creature.traits.map((trait) => (
-                <StatCell key={trait.name} name={trait.name} stat={trait.description} />
-              ))}
-            </div>
+                  return (
+                    <NamedEntry key={name} name={translatedSenses(name)}>
+                      {stat}
+                    </NamedEntry>
+                  );
+                })}
+            </StatSection>
           )}
-          <div className={blockClassName}>
-            <CategoryTitle>Actions</CategoryTitle>
-            {creature.actions.map((action) => (
-              <ActionBlock key={action.name} action={action} />
-            ))}
-          </div>
 
-          {creature.legendaryActions && (
-            <div className={blockClassName}>
-              <CategoryTitle>
-                Actions légendaires ({`${creature.legendaryActionsSlots} par tour`})
-              </CategoryTitle>
+          {isNonEmptyArray(creature.traits) && (
+            <StatSection title="Traits">
+              {creature.traits.map((trait) => (
+                <NamedEntry key={trait.name} name={trait.name}>
+                  {trait.description}
+                </NamedEntry>
+              ))}
+            </StatSection>
+          )}
+
+          {isNonEmptyArray(creature.actions) && (
+            <StatSection title="Actions" accentClassName="text-green-400">
+              {creature.actions.map((action) => (
+                <ActionBlock key={action.name} action={action} />
+              ))}
+            </StatSection>
+          )}
+
+          {isNonEmptyArray(creature.legendaryActions) && (
+            <StatSection
+              title="Actions légendaires"
+              subtitle={`${creature.legendaryActionsSlots} par tour`}
+              accentClassName="text-amber-400"
+            >
               {creature.legendaryActions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
               ))}
-            </div>
+            </StatSection>
           )}
 
-          {creature.lairActions && (
-            <div className={blockClassName}>
-              <CategoryTitle>Actions de repaire ({`1x par tour`})</CategoryTitle>
+          {isNonEmptyArray(creature.lairActions) && (
+            <StatSection
+              title="Actions de repaire"
+              subtitle="1x par tour"
+              accentClassName="text-teal-400"
+            >
               {creature.lairActions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
               ))}
-            </div>
+            </StatSection>
           )}
 
-          {creature.bonusActions && (
-            <div className={cn(blockClassName, "text-orange-400")}>
-              <CategoryTitle>Actions bonus</CategoryTitle>
+          {isNonEmptyArray(creature.bonusActions) && (
+            <StatSection title="Actions bonus" accentClassName="text-orange-400">
               {creature.bonusActions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
               ))}
-            </div>
+            </StatSection>
           )}
 
-          {creature.reactions && (
-            <div className={cn(blockClassName, "text-purple-400")}>
-              <CategoryTitle>Réactions</CategoryTitle>
+          {isNonEmptyArray(creature.reactions) && (
+            <StatSection title="Réactions" accentClassName="text-purple-400">
               {creature.reactions.map((action) => (
                 <ActionBlock key={action.name} action={action} />
               ))}
-            </div>
+            </StatSection>
           )}
 
           {creature.spellStats && (
-            <div className={blockClassName}>
-              <CategoryTitle>Sorts</CategoryTitle>
+            <StatSection title="Sorts" accentClassName="text-sky-400">
               <div className="mb-2 flex flex-wrap items-center gap-x-8 gap-y-2">
-                <StatCell
-                  name="Attaque des sorts"
-                  stat={`+${creature.spellStats.attackMod}`}
-                  isInline
-                  isHighlighted
-                />
-                <StatCell
-                  name="DD des sorts"
-                  stat={creature.spellStats.spellDC}
-                  isInline
-                  isHighlighted
-                />
-                {creature.spellStats.slots && (
+                <div className="flex items-center gap-2">
+                  <span className={statLabelClassName}>Attaque des sorts</span>
+                  <span className="font-semibold text-sky-500">
+                    +{creature.spellStats.attackMod}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <span className={statLabelClassName}>DD des sorts</span>
+                  <span className="font-semibold text-sky-500">{creature.spellStats.spellDC}</span>
+                </div>
+                {isNonEmptyRecord(creature.spellStats.slots) && (
                   <div className="flex items-center gap-2">
-                    <span className="mr-1 text-muted-foreground">Emplacements</span>
+                    <span className={cn(statLabelClassName, "mr-1")}>Emplacements</span>
                     <div className="flex flex-wrap items-center gap-1.5">
-                      {entries(creature.spellStats.slots).map(([level, slots]) => (
-                        <span
-                          key={level}
-                          className="inline-flex items-center gap-1 rounded border border-neutral-700 px-1.5 py-0.5 text-sm"
-                        >
+                      {entries(creature.spellStats.slots!).map(([level, slots]) => (
+                        <Pill key={level} className="gap-1 px-2 py-0.5">
                           <span className="text-sky-500">N{level}</span>
                           <span className="font-semibold">×{slots}</span>
-                        </span>
+                        </Pill>
                       ))}
                     </div>
                   </div>
                 )}
               </div>
-              {!!creature.spells && (
+              {isNonEmptyArray(creature.spells) && (
                 <div className="flex flex-col gap-3">
                   {spellsByLevel.map(([level, spells]) => (
                     <div key={level} className="flex gap-3">
@@ -313,7 +322,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                   ))}
                 </div>
               )}
-            </div>
+            </StatSection>
           )}
         </div>
       </CardContent>

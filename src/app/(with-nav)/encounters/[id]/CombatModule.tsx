@@ -280,11 +280,15 @@ export const CombatModule = ({
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const isTypingInInput =
+        target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
+
       if (e.key === "Enter") {
         e.preventDefault();
         handleAddParticipant();
       }
-      if (e.key === " ") {
+      if (e.key === " " && !isTypingInInput) {
         e.preventDefault();
         handleNextTurn();
       }

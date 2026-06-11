@@ -2341,10 +2341,6 @@ export const localCreatures: Record<string, Creature> = {
         summary: "1/jour. Tue une créature à 12 cases si elle a ≤ 100 PV",
       },
       {
-        id: "scrying",
-        summary: "1/jour. Espionne une créature à distance, JdS SAG 20 pour résister",
-      },
-      {
         id: "fear",
         summary:
           "Action légendaire (Regard effrayant). Cône 6 cases, JdS SAG 20 ou effrayé + fuite",
@@ -2476,16 +2472,8 @@ export const localCreatures: Record<string, Creature> = {
     },
     spells: [
       {
-        id: "animal-friendship",
-        summary: "À volonté. Charme un serpent (JdS SAG 12)",
-      },
-      {
         id: "poison-spray",
         summary: "3/jour. 2 cases, JdS CON 12 ou 1d12 poison",
-      },
-      {
-        id: "suggestion",
-        summary: "3/jour. JdS SAG 12 ou suit une suggestion raisonnable (8h, concentration)",
       },
     ],
   },
@@ -2578,32 +2566,12 @@ export const localCreatures: Record<string, Creature> = {
     },
     spells: [
       {
-        id: "suggestion",
-        summary: "3/jour. JdS SAG 13 ou suit une suggestion raisonnable (8h, concentration)",
-      },
-      {
         id: "darkness",
         summary: "2/jour. Sphère de ténèbres de 3 cases de rayon (10 min, concentration)",
       },
       {
         id: "fear",
         summary: "2/jour. Cône de 6 cases, JdS SAG 13 ou effrayé + fuite (1 min, concentration)",
-      },
-      {
-        id: "animal-friendship",
-        summary: "À volonté. Charme un serpent (JdS SAG 13)",
-      },
-      {
-        id: "mage-hand",
-        summary: "Main spectrale, manipule des objets à 6 cases",
-      },
-      {
-        id: "message",
-        summary: "Message chuchoté à 24 cases",
-      },
-      {
-        id: "prestidigitation",
-        summary: "Tours de magie mineurs",
       },
     ],
     behavior:
@@ -2702,6 +2670,10 @@ export const localCreatures: Record<string, Creature> = {
     },
     spells: [
       {
+        id: "fire-bolt",
+        summary: "Attaque +7, 2d10 feu",
+      },
+      {
         id: "fireball",
         summary: "Rayon 4 cases, JdS DEX 15 ou 8d6 feu (moitié si réussi)",
       },
@@ -2759,24 +2731,12 @@ export const localCreatures: Record<string, Creature> = {
         summary: "3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
       },
       {
-        id: "fire-bolt",
-        summary: "Attaque +7, 2d10 feu",
-      },
-      {
         id: "chill-touch",
         summary: "Attaque +7, 2d8 nécrotiques, pas de soins pour la cible (1 tour)",
       },
       {
         id: "poison-spray",
         summary: "2 cases, JdS CON 15 ou 2d12 poison",
-      },
-      {
-        id: "suggestion",
-        summary: "3/jour (inné, JdS SAG 16). Suit une suggestion raisonnable (8h, concentration)",
-      },
-      {
-        id: "animal-friendship",
-        summary: "À volonté (inné, JdS SAG 16). Charme un serpent",
       },
     ],
     behavior:
@@ -2861,14 +2821,6 @@ export const localCreatures: Record<string, Creature> = {
       {
         id: "poison-spray",
         summary: "2 cases, JdS CON 13 ou 2d12 poison",
-      },
-      {
-        id: "animal-friendship",
-        summary: "À volonté. Charme un serpent (JdS SAG 13)",
-      },
-      {
-        id: "suggestion",
-        summary: "3/jour. JdS SAG 13 ou suit une suggestion raisonnable (8h, concentration)",
       },
     ],
   },
@@ -3022,20 +2974,20 @@ export const localCreatures: Record<string, Creature> = {
     ],
     legendaryActions: [
       {
-        name: "Sort mineur",
+        name: "Sort mineur (1)",
         description: "Valindra lance un sort mineur.",
       },
       {
-        name: "Contact paralysant (coûte 2 actions)",
+        name: "Contact paralysant (2)",
         description: "Valindra utilise son Contact paralysant.",
       },
       {
-        name: "Regard terrifiant (coûte 2 actions)",
+        name: "Regard terrifiant (2)",
         description:
           "Une créature visible dans 2 cases : JdS SAG 18 ou effrayée 1 min (relance en fin de tour). En cas de réussite ou de fin d'effet, immunisée 24 h.",
       },
       {
-        name: "Perturbation de la vie (coûte 3 actions)",
+        name: "Perturbation de la vie (3)",
         description:
           "Chaque créature non morte-vivante dans 4 cases : JdS CON 18, 21 (6d6) dégâts nécrotiques (moitié si réussi).",
       },
@@ -3058,20 +3010,8 @@ export const localCreatures: Record<string, Creature> = {
     },
     spells: [
       {
-        id: "mage-hand",
-        summary: "Main spectrale, manipule des objets (9 cases)",
-      },
-      {
-        id: "prestidigitation",
-        summary: "Petits effets magiques mineurs",
-      },
-      {
         id: "ray-of-frost",
         summary: "Attaque +12, 1d8 froid, vitesse -2 cases",
-      },
-      {
-        id: "detect-magic",
-        summary: "Détecte la magie (concentration, 6 cases)",
       },
       {
         id: "magic-missile",
@@ -3086,15 +3026,11 @@ export const localCreatures: Record<string, Creature> = {
         summary: "Cube 3c, JdS CON 20 ou 2d8 tonnerre + repoussé (moitié)",
       },
       {
-        id: "detect-thoughts",
-        summary: "Lit les pensées (concentration, JdS SAG 20)",
-      },
-      {
         id: "invisibility",
         summary: "Invisible jusqu'à attaque/sort (concentration, 1h)",
       },
       {
-        id: "melfs-acid-arrow",
+        id: "melf-s-acid-arrow",
         summary: "Attaque +12, 4d4 acide + 2d4 au tour suivant",
       },
       {

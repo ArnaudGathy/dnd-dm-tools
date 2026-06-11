@@ -1,5 +1,5 @@
 import { getDamageTypeStyleFromLabel } from "@/utils/stats/weapons";
-import { cn } from "@/lib/utils";
+import { Pill } from "@/components/statblocks/Pill";
 
 export const TagList = ({
   items,
@@ -9,7 +9,7 @@ export const TagList = ({
   items: string[];
   colorizeDamage?: boolean;
   // Tailwind border/text classes applied to non-damage tags so a whole row reads as its
-  // category at a glance (e.g. saves, resistances). Damage-typed tags keep their own color.
+  // category at a glance (e.g. resistances, immunities). Damage-typed tags keep their own color.
   accentClassName?: string;
 }) => {
   return (
@@ -19,17 +19,14 @@ export const TagList = ({
         const Icon = style?.icon;
 
         return (
-          <span
+          <Pill
             key={item}
-            className={cn(
-              "inline-flex items-center gap-1.5 whitespace-normal rounded-md border bg-neutral-800/40 px-2 py-1 text-sm leading-none",
-              style ? "border-neutral-700" : (accentClassName ?? "border-neutral-700"),
-            )}
+            className={style ? undefined : accentClassName}
             style={style ? { borderColor: style.color } : undefined}
           >
-            {Icon && <Icon className="size-3.5 shrink-0" style={{ color: style?.color }} />}
+            {Icon && <Icon className="size-3.5 shrink-0" style={{ color: style.color }} />}
             <span style={style ? { color: style.color } : undefined}>{item}</span>
-          </span>
+          </Pill>
         );
       })}
     </div>
