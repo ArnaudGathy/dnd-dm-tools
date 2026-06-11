@@ -1,4 +1,4 @@
-import { Geist, Geist_Mono, MedievalSharp, Uncial_Antiqua } from "next/font/google";
+import { Geist, Geist_Mono, Russo_One } from "next/font/google";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -10,14 +10,8 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const medievalSharp = MedievalSharp({
-  variable: "--font-medieval-sharp",
-  subsets: ["latin"],
-  weight: "400",
-});
-
-const uncialAntiqua = Uncial_Antiqua({
-  variable: "--font-uncial-antiqua",
+const russoOne = Russo_One({
+  variable: "--font-russo-one",
   subsets: ["latin"],
   weight: "400",
 });
@@ -30,7 +24,7 @@ export default async function PlainLayout({
   return (
     <>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} ${medievalSharp.variable} ${uncialAntiqua.variable} bg-chroma`}
+        className={`${geistSans.variable} ${geistMono.variable} ${russoOne.variable} bg-chroma`}
       >
         <main className="mx-auto h-dvh max-w-[1497px]">{children}</main>
       </body>

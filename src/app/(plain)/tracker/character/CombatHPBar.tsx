@@ -4,14 +4,21 @@ import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import styles from "@/app/(plain)/tracker/character/combat-hp.module.css";
+import pageStyles from "@/app/(plain)/tracker/character/page.module.css";
 
 interface CombatHPBarProps {
+  name: string;
   currentHP: number;
   maximumHP: number;
   currentTempHP: number;
 }
 
-export default function CombatHPBar({ currentHP, maximumHP, currentTempHP }: CombatHPBarProps) {
+export default function CombatHPBar({
+  name,
+  currentHP,
+  maximumHP,
+  currentTempHP,
+}: CombatHPBarProps) {
   const prevHPRef = useRef(currentHP);
   const [isHit, setIsHit] = useState(false);
   const [isHealing, setIsHealing] = useState(false);
@@ -67,61 +74,27 @@ export default function CombatHPBar({ currentHP, maximumHP, currentTempHP }: Com
 
   // Bar color based on HP percentage
   const barColor =
-    currentPercent > 50 ? "bg-green-800" : currentPercent > 25 ? "bg-orange-600" : " bg-rose-700";
+    currentPercent > 50
+      ? "bg-gradient-to-b from-green-600 to-green-800"
+      : currentPercent > 25
+        ? "bg-gradient-to-b from-orange-500 to-orange-700"
+        : "bg-gradient-to-b from-red-600 to-red-800";
 
   const animKey = `${hitCountRef.current}-${healCountRef.current}`;
 
   return (
-    <div
-      className={cn("my-2 flex w-full flex-col items-center justify-center", {
-        [styles.shake]: isHit,
-      })}
-      key={animKey}
-    >
-      {/* HP Number */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={`hp-${currentHP}`}
-          className="text-xl font-bold tabular-nums"
-          initial={false}
-          animate={
-            isHit
-              ? {
-                  color: ["#b91c1c", "#ffffff", "#b91c1c", "#ffffff", "#b91c1c", "#dc2626"],
-                  scale: [1, 1.3, 1, 1.2, 1, 1],
-                }
-              : isHealing
-                ? {
-                    color: ["#404040", "#16a34a", "#22c55e", "#16a34a", "#404040"],
-                    scale: [1, 1.15, 1.1, 1.05, 1],
-                  }
-                : { color: "#404040", scale: 1 }
-          }
-          transition={{ duration: 0.6, ease: "easeOut" }}
-        >
-          {`${currentHP}/${maximumHP} ${currentTempHP && currentTempHP > 0 ? `(+${currentTempHP})` : ""}`}
-        </motion.div>
-      </AnimatePresence>
-
-      {/* HP Bar Container */}
-      <div
-        className={cn("relative h-5 w-full overflow-hidden rounded-full bg-neutral-300", {
-          [styles.hitGlow]: isHit,
-          [styles.healGlow]: isHealing,
-        })}
-      >
-        {/* Ghost bar (orange, drains slowly after damage) */}
+    <div className={cn("relative h-full w-full", { [styles.shake]: isHit })} key={animKey}>
+      {/* Bar layers fill the whole plate */}
+      <div className="absolute inset-0 bg-zinc-800">
+        {/* Ghost bar (amber, drains slowly after damage) */}
         <div
-          className={cn(
-            "absolute left-0 top-0 h-full rounded-full bg-amber-400/80",
-            styles.ghostBar,
-          )}
+          className={cn("absolute left-0 top-0 h-full bg-amber-400/70", styles.ghostBar)}
           style={{ width: `${ghostPercent}%` }}
         />
 
         {/* Main HP bar */}
         <div
-          className={cn("absolute left-0 top-0 h-full rounded-full", barColor, {
+          className={cn("absolute left-0 top-0 h-full", barColor, {
             "transition-none": !isHealing,
             [styles.barFlash]: isHit,
             [styles.healShimmer]: isHealing,
@@ -138,7 +111,7 @@ export default function CombatHPBar({ currentHP, maximumHP, currentTempHP }: Com
               animate={{ x: "100%", opacity: [0, 1, 1, 0] }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.9, ease: "easeInOut" }}
-              className="pointer-events-none absolute left-0 top-0 h-full rounded-full"
+              className="pointer-events-none absolute left-0 top-0 h-full"
               style={{
                 width: `${currentPercent}%`,
                 background:
@@ -148,11 +121,55 @@ export default function CombatHPBar({ currentHP, maximumHP, currentTempHP }: Com
           )}
         </AnimatePresence>
 
-        {/* Shine overlay on the bar for a polished look */}
+        {/* Shine strip on the filled portion */}
         <div
-          className="pointer-events-none absolute left-0 top-0 h-[40%] rounded-full bg-white/20"
+          className="pointer-events-none absolute left-0 top-0 h-[35%] bg-white/15"
           style={{ width: `${currentPercent}%` }}
         />
+      </div>
+
+      {/* Hit/heal glow above the bar layers, kept inset for clean chroma keying */}
+      <div
+        className={cn("pointer-events-none absolute inset-0 z-[5]", {
+          [styles.hitGlow]: isHit,
+          [styles.healGlow]: isHealing,
+        })}
+      />
+
+      {/* Name + HP overlaid on the bar */}
+      <div className="relative z-10 flex h-full items-center justify-between gap-3 px-3">
+        <span
+          className={cn(
+            pageStyles.display,
+            "truncate text-xl text-stone-100",
+            "[text-shadow:0_1px_3px_rgba(0,0,0,0.9)]",
+          )}
+        >
+          {name}
+        </span>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`hp-${currentHP}`}
+            className="text-xl font-bold tabular-nums [text-shadow:0_1px_3px_rgba(0,0,0,0.9)]"
+            initial={false}
+            animate={
+              isHit
+                ? {
+                    color: ["#b91c1c", "#ffffff", "#b91c1c", "#ffffff", "#b91c1c", "#fca5a5"],
+                    scale: [1, 1.3, 1, 1.2, 1, 1],
+                  }
+                : isHealing
+                  ? {
+                      color: ["#fafaf9", "#4ade80", "#86efac", "#4ade80", "#fafaf9"],
+                      scale: [1, 1.15, 1.1, 1.05, 1],
+                    }
+                  : { color: "#fafaf9", scale: 1 }
+            }
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            {`${currentHP}/${maximumHP} ${currentTempHP && currentTempHP > 0 ? `(+${currentTempHP})` : ""}`}
+          </motion.div>
+        </AnimatePresence>
       </div>
     </div>
   );

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/utils";
-import styles from "@/app/(plain)/tracker/character/page.module.css";
 import { AnimatePresence, motion } from "framer-motion";
+import styles from "@/app/(plain)/tracker/character/page.module.css";
 
 export default function PlayerInitiativeCard({
   children,
@@ -15,38 +15,44 @@ export default function PlayerInitiativeCard({
 }) {
   return (
     <div
+      data-active={isActive}
       className={cn(
-        styles.container,
-        "relative flex h-fit rounded-xl transition duration-500 ease-out",
+        "group relative h-14 min-w-0 max-w-[320px] flex-1 overflow-hidden rounded-lg",
+        "border-2 border-stone-600 bg-zinc-900 transition-all duration-500 ease-out",
         {
-          ["translate-y-[35px]"]: isActive,
+          // mx-4 reserves the ~16px per side the scale transform grows into, so neighbors aren't covered
+          "z-30 mx-4 translate-y-2 scale-110 border-white": isActive,
         },
         className,
       )}
     >
+      {children}
+
+      {/* Active player: pulsing white inset glow + recurring glint sweep — inset so nothing bleeds onto the chroma key */}
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-md opacity-0 transition-opacity duration-500",
+          {
+            [cn("opacity-100", styles.activeGlow)]: isActive,
+          },
+        )}
+      >
+        {isActive ? <div className={styles.activeGlint} /> : null}
+      </div>
+
+      {/* Dim overlay during enemy turns */}
       <AnimatePresence mode="wait">
         {isNPCTurn ? (
           <motion.div
-            key="loader"
+            key="dim"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 1 }}
-            className="absolute bottom-0 left-0 right-0 top-0 z-10 rounded-xl bg-black/60"
+            className="absolute inset-0 z-20 bg-black/55"
           />
         ) : null}
       </AnimatePresence>
-      <div
-        className={cn(
-          "m-1 flex min-w-[280px] items-center justify-center gap-4 rounded-lg",
-          "border-2 border-neutral-700 p-2 text-neutral-700",
-          {
-            ["border-amber-800 p-2 text-amber-800"]: isActive,
-          },
-        )}
-      >
-        {children}
-      </div>
     </div>
   );
 }

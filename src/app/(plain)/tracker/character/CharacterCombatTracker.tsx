@@ -3,12 +3,74 @@
 import { useCharacterTracker } from "@/hooks/useCharacterTracker";
 import { useParticipantsListTracker, useTurnsTracker } from "@/hooks/useParticipantsListTracker";
 import PlayerInitiativeCard from "@/app/(plain)/tracker/character/PlayerInitiativeCard";
-import { Heart, Skull } from "lucide-react";
+import CombatHPBar from "@/app/(plain)/tracker/character/CombatHPBar";
+import { Swords } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import CombatHPBar from "@/app/(plain)/tracker/character/CombatHPBar";
 import { useMemo } from "react";
 import styles from "@/app/(plain)/tracker/character/page.module.css";
+
+// Same subtle top-light treatment as the HP bar's shine strip
+const pillDepth = "shadow-[inset_0_1px_1px_rgba(255,255,255,0.25)]";
+const emptyPill = "bg-stone-800 shadow-[inset_0_1px_2px_rgba(0,0,0,0.4)]";
+
+function DeathSaves({
+  name,
+  success,
+  failure,
+}: {
+  name: string;
+  success: number;
+  failure: number;
+}) {
+  // One failed save away from death — sound the alarm
+  const isCritical = failure >= 2;
+
+  return (
+    <div className="flex h-full items-center justify-between gap-2 px-3">
+      <span
+        className={cn(
+          styles.display,
+          "truncate text-xl text-stone-100",
+          "[text-shadow:0_1px_3px_rgba(0,0,0,0.9)]",
+        )}
+      >
+        {name}
+      </span>
+      {/* Solid color pills read better at TV distance than icons: green = successes, red = failures */}
+      <div className="flex shrink-0 flex-col gap-1.5">
+        <div className="flex gap-1">
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className={cn(
+                "h-3.5 w-9 rounded-sm transition duration-1000",
+                index >= success
+                  ? emptyPill
+                  : cn("bg-gradient-to-b from-green-500 to-green-800", pillDepth),
+              )}
+            />
+          ))}
+        </div>
+        <div className="flex gap-1">
+          {[...Array(3)].map((_, index) => (
+            <div
+              key={index}
+              className={cn(
+                "h-3.5 w-9 rounded-sm transition duration-1000",
+                index >= failure
+                  ? emptyPill
+                  : cn("bg-gradient-to-b from-red-500 to-red-800", pillDepth, {
+                      [styles.deathPulse]: isCritical,
+                    }),
+              )}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function CharacterCombatTracker() {
   const { charactersData } = useCharacterTracker();
@@ -48,93 +110,75 @@ export default function CharacterCombatTracker() {
     <AnimatePresence mode="wait">
       {turnsTracker?.hasStarted && sortedCharacters.length ? (
         <motion.div
-          key="loader"
+          key="tracker"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 3 }}
-          className="flex w-full flex-col items-center justify-center pt-2"
+          className="flex w-full items-center justify-center gap-3 p-2"
         >
-          <div
-            className={cn(
-              styles.container,
-              "duration-[1s] flex w-fit justify-center rounded-xl bg-blue px-4 py-1 opacity-0 transition",
-              {
-                "opacity-100": isNPCTurn,
-              },
-            )}
-          >
-            <span className={cn(styles.antiqua, "text-4xl text-neutral-700")}>
-              {`Tour de l'ennemi`}
-            </span>
-          </div>
-          <motion.div className="flex justify-center gap-4 p-2">
-            {sortedCharacters.map(
-              ({ characterName, success, failure, currentHP, currentTempHP, maximumHP }) => {
-                const hasStartedRollingDeath = currentHP <= 0;
-                const isActive = characterName === activeCharacterName;
+          {/* Enemy turn banner — slides in inline so the tracker stays one row tall */}
+          <AnimatePresence>
+            {isNPCTurn ? (
+              <motion.div
+                key="npc-banner"
+                initial={{ width: 0, opacity: 0 }}
+                animate={{ width: "auto", opacity: 1 }}
+                exit={{ width: 0, opacity: 0 }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+                className="shrink-0 overflow-hidden"
+              >
+                <div className="flex h-14 items-center gap-3 whitespace-nowrap rounded-lg border-2 border-red-800 bg-zinc-900 px-5">
+                  <Swords className="size-7 shrink-0 text-red-500" />
+                  <span className={cn(styles.display, "text-xl text-red-500")}>
+                    {`Tour de l'ennemi`}
+                  </span>
+                </div>
+              </motion.div>
+            ) : null}
+          </AnimatePresence>
 
-                return (
-                  <PlayerInitiativeCard
-                    key={characterName}
-                    isActive={isActive}
-                    isNPCTurn={isNPCTurn}
-                  >
-                    <div className="flex w-full flex-col p-1">
-                      <div className="truncate text-center text-3xl font-bold">{characterName}</div>
-                      <AnimatePresence mode="wait">
-                        {hasStartedRollingDeath ? (
-                          <motion.div
-                            key="loader"
-                            initial={{ opacity: 0 }}
-                            animate={{ opacity: 1 }}
-                            exit={{ opacity: 0 }}
-                            transition={{ duration: 1.5 }}
-                            className="flex justify-center"
-                          >
-                            <div className="mt-2">
-                              <div className="flex gap-1">
-                                {[...Array(3)].map((_, index) => (
-                                  <Heart
-                                    key={index}
-                                    className={cn(
-                                      "size-10 stroke-green-700 stroke-[2.5px] transition duration-1000",
-                                      {
-                                        "stroke-stone-600/20": index >= success,
-                                      },
-                                    )}
-                                  />
-                                ))}
-                              </div>
-                              <div className="flex gap-1">
-                                {[...Array(3)].map((_, index) => (
-                                  <Skull
-                                    key={index}
-                                    className={cn(
-                                      "size-10 stroke-red-600 stroke-[2.5px] transition duration-1000",
-                                      {
-                                        "stroke-stone-600/20": index >= failure,
-                                      },
-                                    )}
-                                  />
-                                ))}
-                              </div>
-                            </div>
-                          </motion.div>
-                        ) : (
-                          <CombatHPBar
-                            currentHP={currentHP}
-                            maximumHP={maximumHP}
-                            currentTempHP={currentTempHP}
-                          />
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  </PlayerInitiativeCard>
-                );
-              },
-            )}
-          </motion.div>
+          {sortedCharacters.map(
+            ({ characterName, success, failure, currentHP, currentTempHP, maximumHP }) => {
+              const hasStartedRollingDeath = currentHP <= 0;
+              const isActive = characterName === activeCharacterName;
+
+              return (
+                <PlayerInitiativeCard key={characterName} isActive={isActive} isNPCTurn={isNPCTurn}>
+                  <AnimatePresence mode="wait">
+                    {hasStartedRollingDeath ? (
+                      <motion.div
+                        key="death-saves"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.5 }}
+                        className="h-full w-full"
+                      >
+                        <DeathSaves name={characterName} success={success} failure={failure} />
+                      </motion.div>
+                    ) : (
+                      <motion.div
+                        key="hp-bar"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 1.5 }}
+                        className="h-full w-full"
+                      >
+                        <CombatHPBar
+                          name={characterName}
+                          currentHP={currentHP}
+                          maximumHP={maximumHP}
+                          currentTempHP={currentTempHP}
+                        />
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </PlayerInitiativeCard>
+              );
+            },
+          )}
         </motion.div>
       ) : null}
     </AnimatePresence>
