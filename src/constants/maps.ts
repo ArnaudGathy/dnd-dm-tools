@@ -723,7 +723,7 @@ export const PARTY_MAP = {
   [PartyId.MIFA]: "La mifa",
   [PartyId.PAINTERS]: "Les peintres",
   [PartyId.ANTHONY]: "Le groupe d'Anthony",
-  [PartyId.LOGARCADY]: "Logacardy",
+  [PartyId.LOGARCADY]: "Logarcady",
 };
 
 export const CHARACTER_STATUS_MAP = {
