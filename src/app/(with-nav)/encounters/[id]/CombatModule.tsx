@@ -83,7 +83,8 @@ const getNextTurn = ({
     countTurn?.();
   }
 
-  if (parseInt(listOfParticipants[nextTurn].currentHp, 10) <= 0) {
+  const nextParticipant = listOfParticipants[nextTurn];
+  if (parseInt(nextParticipant.currentHp, 10) <= 0 || nextParticipant.inactive) {
     return getNextTurn({
       turnsCounter: nextTurn,
       listOfParticipants: listOfParticipants,

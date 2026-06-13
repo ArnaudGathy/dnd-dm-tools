@@ -1481,20 +1481,18 @@ export const encounters: Encounter[] = [
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Omu",
-      mapMarker: "O20",
+      mapMarker: "O100",
     },
     ennemies: {
       "1": [
-        { id: "frost-giant", color: "#FFF", variant: "Thorun Permafrost" },
-        { id: "frost-giant", color: "#FFF", variant: "Drufi (commandante)" },
-        { id: "frost-giant", color: "#FFF", variant: "" },
-        { id: "frost-giant", color: "#FFF", variant: "" },
-        { id: "winter-wolf", color: "#FFF", variant: "" },
-        { id: "winter-wolf", color: "#FFF", variant: "" },
-        { id: "_artus-cimber", color: "#FFF", variant: "" },
-        { id: "_valindra-shadowmantle", color: "#FFF", variant: "" },
+        { id: "frost-giant", color: "#F6F4C6", variant: "Drufi" },
+        { id: "frost-giant", color: "#D1F1FB" },
+        { id: "winter-wolf", color: "#7C5336" },
+        { id: "winter-wolf", color: "#87B3B9" },
+        { id: "_artus-cimber", color: "#242F3E" },
+        { id: "_valindra-shadowmantle", color: "#FFF", variant: "", inactive: true },
       ],
     },
-    youtubeId: "k9H-qtO2E8I",
+    youtubeId: "C5LWRU_RyBg",
   },
 ];

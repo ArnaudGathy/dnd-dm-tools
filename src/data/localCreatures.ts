@@ -2862,17 +2862,16 @@ export const localCreatures: Record<string, Creature> = {
     traits: [
       {
         name: "Équipement spécial",
-        description:
-          "Anneau de l'Hiver : immunisé au froid et au froid extrême, ne vieillit plus, indétectable à la divination/scrutation. Bookmark (dague +3) : en action bonus, lumière vive 6 cases, boussole, Porte dimensionnelle (1/jour à l'aube), ou Compulsion (JdS 15, portée 18 cases, vise les araignées-bêtes, 1/jour).",
+        description: "Anneau de l'hiver (12 charges) + Bookmark (dague +3)",
       },
     ],
     actions: [
       {
         name: "Attaques multiples",
-        description: "3x Bookmark OU 3x arc long",
+        description: "3x Signet/arc long OU 1x sort",
       },
       {
-        name: "Bookmark (dague +3)",
+        name: "Signet (dague +3)",
         type: "Melee",
         modifier: "+8",
         reach: "1.5 m",
@@ -2885,10 +2884,48 @@ export const localCreatures: Record<string, Creature> = {
         reach: "45/180 m",
         hit: "6 (1d8 + 2) dégâts perçants.",
       },
+    ],
+    spellStats: {
+      attackMod: 9,
+      spellDC: 17,
+    },
+    spells: [
+      // {
+      //   id: "bigby-s-hand",
+      //   summary:
+      //     "2 ch. La main est faite de glace, immunisée au froid, inflige des dégâts contondants au lieu de force (poing serré).",
+      // },
+      // {
+      //   id: "cone-of-cold",
+      //   summary: "2 ch. Cône de 18 m. JdS CON 17 : 8d8 froid (moitié si réussi).",
+      // },
+      // {
+      //   id: "flesh-to-stone",
+      //   summary: "3 ch.  Pétrification, mais de glace",
+      // },
+      // {
+      //   id: "ice-storm",
+      //   summary:
+      //     "2 ch. Rayon de 6 m. JdS DEX 17 : 2d8 contondant + 4d6 froid (moitié si réussi). La zone devient un terrain difficile.",
+      // },
+      // {
+      //   id: "otiluke-s-freezing-sphere",
+      //   summary: "3 ch. Sphère de 12 m de rayon. JdS CON 17 : 10d6 froid (moitié si réussi).",
+      // },
       {
-        name: "Anneau de l'Hiver",
-        description:
-          "12 charges, récupérées à l'aube. Sorts (JdS DD 17) : Main de Bigby glaciale (2 ch.), Cône de froid (2 ch.), Chair de glace = chair en pierre mais glace (3 ch.), Tempête de grêle (2 ch.), Sphère glaciale d'Otiluke (3 ch.), Tempête de neige (1 ch.), Croissance d'épines de glace (1 ch.), Mur de glace (2 ch.). 1 ch. : refroidit une sphère de 24 cases (jusqu'à -34 °C). Crée un objet de glace (2 ch.) ou une créature-bête de glace FP ≤ 2 (4 ch., obéit à Artus, fond en 24 h ou à 0 PV).",
+        id: "sleet-storm",
+        summary:
+          "1 ch. Cylindre de 12 m de rayon : terrain difficile, zone fortement obscurcie, flammes exposées éteintes. Entrer ou y commencer tour : JdS DEX 17 ou au sol + déconcentré",
+      },
+      // {
+      //   id: "spike-growth",
+      //   summary:
+      //     "1 ch. glace - 6m R, terrain difficile, 2d4 givre par case parcourus dans la zone.",
+      // },
+      {
+        id: "wall-of-ice",
+        summary:
+          "2 ch. Conc. 10 min. 10 panneaux de 3 m ou dôme, 12CA, 30PV. Apparition : JdS DEX 17 ou 10d6 givre (moitié). Traverser la nappe du mur brisé : JdS DEX 17, 5d6 froid (moitié). ",
       },
     ],
   },
