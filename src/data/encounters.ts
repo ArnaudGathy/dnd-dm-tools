@@ -1152,11 +1152,9 @@ export const encounters: Encounter[] = [
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-        { id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" },
-        { id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" },
-        { id: "swarm-of-venomous-snakes", color: "#FFF", variant: "" },
       ],
     },
+    extraZonesEnnemies: ["F2"],
     youtubeId: "HOmjkQ_3W5Q",
   },
   {
@@ -1176,27 +1174,11 @@ export const encounters: Encounter[] = [
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
         { id: "basilisk", color: "#FFF", variant: "" },
         { id: "basilisk", color: "#FFF", variant: "" },
-        { id: "triceratops", color: "#FFF", variant: "" },
+        { id: "triceratops", color: "#FFF", variant: "", inactive: true },
       ],
     },
-    youtubeId: "XZtL7PsJAoc",
-  },
-  {
-    name: "Armurerie",
-    id: 101,
-    scenario: "La tombe de l'annihilation",
-    location: {
-      name: "Fanum du serpent nocturne",
-      mapMarker: "F4",
-    },
-    ennemies: {
-      "1": [
-        { id: "bone-naga", color: "#FFF", variant: "" },
-        { id: "minotaur-skeleton", color: "#FFF", variant: "" },
-        { id: "minotaur-skeleton", color: "#FFF", variant: "" },
-      ],
-    },
-    youtubeId: "zp8ZlBUGdgs",
+    extraZonesEnnemies: ["F1"],
+    youtubeId: "HOmjkQ_3W5Q",
   },
   {
     name: "Quartiers de Fenthaza",
@@ -1208,12 +1190,13 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_yuan-ti-nightmare-speaker", color: "#FFF", variant: "Fenthaza" },
+        { id: "_yuan-ti-nightmare-speaker", color: "#FFF", variant: "Fenthaza", inactive: true },
+        { id: "air-elemental", color: "#FFF", variant: "", inactive: true },
         { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
         { id: "yuan-ti-malison-type-2", color: "#FFF", variant: "" },
-        { id: "air-elemental", color: "#FFF", variant: "" },
       ],
     },
+    extraZonesEnnemies: ["F6"],
     youtubeId: "n9KsWzdxi4Y",
   },
   {
@@ -1230,9 +1213,16 @@ export const encounters: Encounter[] = [
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_singing-skull", color: "#FFF", variant: "", inactive: true, fixedInitiative: -10 },
+        { id: "_singing-skull", color: "#FFF", variant: "", inactive: true, fixedInitiative: -10 },
+        { id: "_singing-skull", color: "#FFF", variant: "", inactive: true, fixedInitiative: -10 },
+        { id: "_singing-skull", color: "#FFF", variant: "", inactive: true, fixedInitiative: -10 },
+        { id: "_singing-skull", color: "#FFF", variant: "", inactive: true, fixedInitiative: -10 },
+        { id: "_singing-skull", color: "#FFF", variant: "", inactive: true, fixedInitiative: -10 },
       ],
     },
-    youtubeId: "HOmjkQ_3W5Q",
+    extraZonesEnnemies: ["F5"],
+    youtubeId: "5Y7oXb_Vmsc",
   },
   {
     name: "Oracle maléfique",
@@ -1244,9 +1234,9 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
-        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
-        { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-priest", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-priest", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-priest", color: "#FFF", variant: "" },
       ],
     },
     youtubeId: "8Q7cioftmKs",
@@ -1476,7 +1466,7 @@ export const encounters: Encounter[] = [
     youtubeId: "Yx-QqEc2Feg",
   },
   {
-    name: "Valindra VS Artus VS Géants",
+    name: "Artus VS géants de givre",
     id: 117,
     scenario: "La tombe de l'annihilation",
     location: {
@@ -1490,7 +1480,12 @@ export const encounters: Encounter[] = [
         { id: "winter-wolf", color: "#7C5336" },
         { id: "winter-wolf", color: "#87B3B9" },
         { id: "_artus-cimber", color: "#242F3E" },
-        { id: "_valindra-shadowmantle", color: "#FFF", variant: "", inactive: true },
+        {
+          id: "_valindra-shadowmantle",
+          color: "#FFF",
+          variant: "",
+          shouldHideInInitiativeTracker: true,
+        },
       ],
     },
     youtubeId: "C5LWRU_RyBg",

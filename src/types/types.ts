@@ -29,6 +29,7 @@ type EnemyObject = {
   variant?: string;
   shouldHideInInitiativeTracker?: boolean;
   inactive?: true;
+  fixedInitiative?: number;
 };
 export type EncounterEnemy = string | EnemyObject;
 

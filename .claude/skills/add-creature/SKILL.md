@@ -112,6 +112,8 @@ From the `spellcasting` array:
 - `spellStats.slots`: from leveled casting `spells: {"1": {"slots": 4}}` → `{"1": 4}`. At-will (`will`) spells the creature relies on → use `Infinity` as the slot value (see `meme-poupou`)
 - `spells`: one `{id, summary}` per spell. `id` = kebab-case **English** spell name
   (e.g. `"ray-of-sickness"`, `"hypnotic-pattern"` — it's a lookup key, do NOT translate).
+  An **apostrophe becomes a dash**, not nothing: "Bigby's Hand" → `"bigby-s-hand"`,
+  "Melf's Acid Arrow" → `"melf-s-acid-arrow"` (matches AideDD's url ids).
   `summary` = very short French gist of the spell's combat effect
   (e.g. `"Désavantage des attaques adverses (concentration, 1m)"`).
 - **Never put the spell level in the summary** (no `"Niv 3."` prefix). The `id`
@@ -164,6 +166,10 @@ force→`force`.
    Omit any field absent from the source — most are optional.
 2. If a creature with the same key already exists, ask before overwriting.
 3. Run `pnpm lint` and `pnpm typecheck` and fix any issue.
-4. Show the user the final entry and flag anything you were unsure about
+4. If the creature has any `spells`, run `pnpm spells:sync` to insert any new
+   spell into the `Spell` table (the stat block only lists spells present in the
+   DB). The script fails loudly listing any spell id it cannot resolve on AideDD
+   — fix those ids (usually a missing apostrophe-as-dash) and re-run.
+5. Show the user the final entry and flag anything you were unsure about
    (translation choices, summarization that compressed a lot, missing schema fields
    like burrow speed).

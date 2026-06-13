@@ -1805,6 +1805,24 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  "singing-skull": {
+    name: "Crâne chantant",
+    id: "_singing-skull",
+    type: "Undead",
+    size: "Tiny",
+    challengeRating: 0,
+    armorClass: 9,
+    hitPoints: "1",
+    immunities: ["poison", "psi"],
+    traits: [
+      {
+        name: "Chant abyssal",
+        description:
+          "Aura de : Résistance aux dégâts contondants, perforants et tranchants d'attaques non magiques. Avantage aux jets de sauvegarde contre les sorts et autres effets magiques. Prend fin si tué ou retirés.",
+      },
+    ],
+    actions: [],
+  },
   hadrosaurus: {
     name: "Hadrosaurus",
     id: "_hadrosaurus",
@@ -2363,9 +2381,22 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
     actions: [
+      { name: "Ouvrir l'urne", description: "Libère l'élémentaire d'air qui obéit a Fenthaza" },
+      {
+        name: "Invoquer un cauchemar (Recharge après un repos)",
+        description:
+          "Cible visible à 12 cases. JdS INT 13 ou 22 (4d10) psychiques + effrayée par une illusion de ses pires peurs (visible d'elle seule, 1 min, concentration). Relancer JdS à la fin de chaque tour : fin sur réussite, 11 (2d10) psychiques sur échec.",
+      },
       {
         name: "Attaques multiples",
         description: "1x constriction + 1x cimeterre OU 2x crocs spectraux",
+      },
+      {
+        name: "Crocs spectraux",
+        type: "Ranged",
+        modifier: "+5",
+        reach: "36 m",
+        hit: "16 (3d8 + 3) dégâts nécrotiques.",
       },
       {
         name: "Constriction",
@@ -2380,18 +2411,6 @@ export const localCreatures: Record<string, Creature> = {
         modifier: "+5",
         reach: "1.5 m",
         hit: "6 (1d6 + 3) dégâts tranchants.",
-      },
-      {
-        name: "Crocs spectraux",
-        type: "Ranged",
-        modifier: "+5",
-        reach: "36 m",
-        hit: "16 (3d8 + 3) dégâts nécrotiques.",
-      },
-      {
-        name: "Invoquer un cauchemar (Recharge après un repos)",
-        description:
-          "Cible visible à 12 cases. JdS INT 13 ou 22 (4d10) psychiques + effrayée par une illusion de ses pires peurs (visible d'elle seule, 1 min, concentration). Relancer JdS à la fin de chaque tour : fin sur réussite, 11 (2d10) psychiques sur échec.",
       },
     ],
     bonusActions: [
@@ -2416,7 +2435,7 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
     behavior:
-      "Cauchemar sur une cible isolée > Crocs spectraux à distance > Constriction + cimeterre en mêlée",
+      "Ouvrir urne > cauchemar sur une cible isolée > Crocs spectraux à distance > Constriction + cimeterre en mêlée",
   },
   "ras-nsi": {
     name: "Ras Nsi",
@@ -2978,6 +2997,85 @@ export const localCreatures: Record<string, Creature> = {
       {
         id: "power-word-kill",
         summary: "Tue instantanément une cible ≤ 100 PV (pas de JdS)",
+      },
+    ],
+  },
+  "yuan-ti-priest": {
+    name: "Prêtre yuan-ti",
+    id: "_yuan-ti-priest",
+    fiveETools: { name: "Yuan-ti Priest", source: "ToA" },
+    type: "Monstrosity (Shapechanger, Yuan-ti)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 12,
+    hitPoints: "66 (12d8 + 12)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 3,
+    abilities: {
+      strength: 16,
+      dexterity: 14,
+      constitution: 13,
+      intelligence: 14,
+      wisdom: 12,
+      charisma: 16,
+    },
+    skills: {
+      deception: "+5",
+      stealth: "+4",
+    },
+    immunities: ["poison", "poisoned"],
+    languages: ["Abyssal", "Common", "Draconic"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Résistance magique",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples (forme yuan-ti)",
+        description: "2x attaques de mêlée (constriction 1x max).",
+      },
+      {
+        name: "Morsure (forme serpent)",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "5 (1d4 + 3) dégâts perçants + 7 (2d6) poison.",
+      },
+      {
+        name: "Constriction",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "10 (2d6 + 3) dégâts contondants. Cible agrippée (DD 13 pour se libérer) + entravée. 1 cible à la fois.",
+      },
+      {
+        name: "Cimeterre (forme yuan-ti)",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "6 (1d6 + 3) dégâts tranchants.",
+      },
+    ],
+    spellStats: {
+      attackMod: 5,
+      spellDC: 13,
+    },
+    spells: [
+      {
+        id: "eldritch-blast",
+        summary: "2 rais, attaque +5, 1d10 force chacun",
+      },
+      {
+        id: "poison-spray",
+        summary: "JdS CON 13 ou 1d12 poison",
       },
     ],
   },

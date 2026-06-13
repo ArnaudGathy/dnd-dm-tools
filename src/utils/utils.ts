@@ -301,7 +301,10 @@ export const getParticipantFromEncounter = ({
             isEnemyObject(enemyData) && enemyData.variant
               ? `${creature.name} (${enemyData.variant})`
               : creature.name,
-          init: getInitiative(creature),
+          init:
+            isEnemyObject(enemyData) && enemyData.fixedInitiative !== undefined
+              ? enemyData.fixedInitiative
+              : getInitiative(creature),
           hp,
           currentHp: hp,
           color:
