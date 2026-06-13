@@ -47,6 +47,13 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
       ? undefined
       : `https://www.aidedd.org/public/monster/${creature.id}`;
 
+  // 5e.tools encodes a monster hash as `encodeURIComponent(x.toLowerCase()).toLowerCase()`
+  // for both the name and the source, joined by an underscore.
+  const encodeFor5eTools = (value: string) => encodeURIComponent(value.toLowerCase()).toLowerCase();
+  const linkTo5eTools = creature.fiveETools
+    ? `https://5e.tools/bestiary.html#${encodeFor5eTools(creature.fiveETools.name)}_${encodeFor5eTools(creature.fiveETools.source)}`
+    : undefined;
+
   return (
     <Card id={creature.id.toString()}>
       <CardHeader>
@@ -64,6 +71,16 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               </Link>
               {isAdmin && <ClearCreatureCacheButton creatureId={creature.id.toString()} />}
             </span>
+          )}
+          {!linkToAideDD && linkTo5eTools && (
+            <Link
+              href={linkTo5eTools}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="ml-2 text-xs text-muted-foreground underline"
+            >
+              5e.tools
+            </Link>
           )}
         </CardTitle>
         <CardDescription>

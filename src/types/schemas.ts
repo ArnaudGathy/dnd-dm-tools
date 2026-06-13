@@ -117,6 +117,9 @@ const actionSchema = z.object({
 export const creatureSchema = z.object({
   name: z.string(),
   id: z.string(),
+  // For local creatures that exist on 5e.tools: the exact English name and source
+  // code (e.g. "ToA", "VGM", "XMM") used to build a link to the original stat block.
+  fiveETools: z.object({ name: z.string(), source: z.string() }).optional(),
   type: z.string(),
   size: z.string(),
   challengeRating: z.number(),

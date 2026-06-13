@@ -4,6 +4,7 @@ export const localCreatures: Record<string, Creature> = {
   pterafolk: {
     name: "Ptérosaurien",
     id: "_pterafolk",
+    fiveETools: { name: "Pterafolk", source: "ToA" },
     type: "Monstrosity",
     size: "Large",
     alignment: "Neutral Evil",
@@ -130,6 +131,7 @@ export const localCreatures: Record<string, Creature> = {
   deinonychus: {
     name: "Deinonychus",
     id: "_deinonychus",
+    fiveETools: { name: "Deinonychus", source: "VGM" },
     type: "Beast",
     size: "Medium",
     alignment: "Unaligned",
@@ -194,6 +196,7 @@ export const localCreatures: Record<string, Creature> = {
   "assassin-vine": {
     name: "Lianes assassines",
     id: "_assassin-vine",
+    fiveETools: { name: "Assassin Vine", source: "ToA" },
     type: "Plant",
     size: "Medium",
     alignment: "Unaligned",
@@ -236,6 +239,7 @@ export const localCreatures: Record<string, Creature> = {
   almiraj: {
     name: "Almiraj",
     id: "_almiraj",
+    fiveETools: { name: "Almiraj", source: "ToA" },
     type: "Bête",
     size: "Small",
     alignment: "Non aligné",
@@ -348,6 +352,7 @@ export const localCreatures: Record<string, Creature> = {
   "yellow-musk-creeper": {
     name: "Lierre musqué",
     id: "_yellow-musk-creeper",
+    fiveETools: { name: "Yellow Musk Creeper", source: "ToA" },
     type: "Plant",
     size: "Medium",
     alignment: "Unaligned",
@@ -394,6 +399,7 @@ export const localCreatures: Record<string, Creature> = {
   "yellow-musk-zombie": {
     name: "Zombie musqué",
     id: "_yellow-musk-zombie",
+    fiveETools: { name: "Yellow Musk Zombie", source: "ToA" },
     type: "Undead",
     size: "Medium",
     alignment: "Unaligned",
@@ -431,6 +437,7 @@ export const localCreatures: Record<string, Creature> = {
   mantrap: {
     name: "Attrape-homme",
     id: "_mantrap",
+    fiveETools: { name: "Mantrap", source: "ToA" },
     type: "Plant",
     size: "Large",
     alignment: "Unaligned",
@@ -474,6 +481,7 @@ export const localCreatures: Record<string, Creature> = {
   zalkore: {
     name: "Zalkoré",
     id: "_zalkore",
+    fiveETools: { name: "Zalkoré", source: "ToA" },
     type: "Monstrosity",
     size: "Medium",
     alignment: "Lawful Evil",
@@ -570,6 +578,7 @@ export const localCreatures: Record<string, Creature> = {
   eblis: {
     name: "Eblis",
     id: "_eblis",
+    fiveETools: { name: "Eblis", source: "ToA" },
     type: "Monstrosity",
     size: "Medium",
     alignment: "Neutral Evil",
@@ -979,6 +988,7 @@ export const localCreatures: Record<string, Creature> = {
   kamadan: {
     name: "Kamadan",
     id: "_kamadan",
+    fiveETools: { name: "Kamadan", source: "ToA" },
     type: "Monstrosity",
     size: "Large",
     alignment: "Unaligned",
@@ -1047,6 +1057,7 @@ export const localCreatures: Record<string, Creature> = {
   "king-of-feathers": {
     name: "Le roi des plumes",
     id: "_king-of-feathers",
+    fiveETools: { name: "King of Feathers", source: "ToA" },
     type: "Monstrosity",
     size: "Huge",
     alignment: "Unaligned",
@@ -1106,6 +1117,7 @@ export const localCreatures: Record<string, Creature> = {
   "su-monster": {
     name: "Monstre de Su",
     id: "_su-monster",
+    fiveETools: { name: "Su-monster", source: "ToA" },
     type: "Monstrosity",
     size: "Medium",
     alignment: "Chaotic Evil",
@@ -1362,6 +1374,7 @@ export const localCreatures: Record<string, Creature> = {
   froghemoth: {
     name: "Crapaudonte",
     id: "_froghemoth",
+    fiveETools: { name: "Froghemoth", source: "VGM" },
     type: "Monstrosity",
     size: "Huge",
     alignment: "Unaligned",
@@ -1433,6 +1446,7 @@ export const localCreatures: Record<string, Creature> = {
   "clay-gladitator": {
     name: "Gladiateur d'argile",
     id: "_clay-gladitator",
+    fiveETools: { name: "Clay Gladiator", source: "ToA" },
     type: "Articial",
     size: "Medium",
     challengeRating: 5,
@@ -1505,6 +1519,7 @@ export const localCreatures: Record<string, Creature> = {
   vegepygmy: {
     name: "Végépygmé",
     id: "_vegepygmy",
+    fiveETools: { name: "Vegepygmy", source: "VGM" },
     type: "Plant",
     size: "Small",
     alignment: "Neutral",
@@ -1572,6 +1587,7 @@ export const localCreatures: Record<string, Creature> = {
   "vegepygmy-chief": {
     name: "Chef végépygmé",
     id: "_vegepygmy-chief",
+    fiveETools: { name: "Vegepygmy Chief", source: "VGM" },
     type: "Plant",
     size: "Small",
     alignment: "Neutral",
@@ -1648,6 +1664,7 @@ export const localCreatures: Record<string, Creature> = {
   "vegepygmy-thorny": {
     name: "Végépygmé épineux",
     id: "_vegepygmy-thorny",
+    fiveETools: { name: "Thorny", source: "VGM" },
     type: "Plant",
     size: "Medium",
     alignment: "Neutral",
@@ -1713,6 +1730,7 @@ export const localCreatures: Record<string, Creature> = {
   jaculi: {
     name: "Jaculi",
     id: "_jaculi",
+    fiveETools: { name: "Jaculi", source: "ToA" },
     type: "Beast",
     size: "Large",
     alignment: "Unaligned",
@@ -1790,6 +1808,7 @@ export const localCreatures: Record<string, Creature> = {
   hadrosaurus: {
     name: "Hadrosaurus",
     id: "_hadrosaurus",
+    fiveETools: { name: "Hadrosaurus", source: "VGM" },
     type: "Beast",
     size: "Large",
     alignment: "Unaligned",
@@ -1834,6 +1853,7 @@ export const localCreatures: Record<string, Creature> = {
   "grung-elite-warrior": {
     name: "Grung Eli.",
     id: "_grung-elite-warrior",
+    fiveETools: { name: "Grung Elite Warrior", source: "VGM" },
     type: "Humanoid (Grung)",
     size: "Small",
     alignment: "Lawful Evil",
@@ -2011,6 +2031,7 @@ export const localCreatures: Record<string, Creature> = {
   zorbo: {
     name: "Zorbo",
     id: "_zorbo",
+    fiveETools: { name: "Zorbo", source: "ToA" },
     type: "Monstrosity",
     size: "Small",
     alignment: "Unaligned",
@@ -2164,192 +2185,10 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
-  lich: {
-    name: "Liche",
-    id: "_lich",
-    type: "Undead (Wizard)",
-    size: "Medium",
-    alignment: "Neutral Evil",
-    armorClass: 20,
-    hitPoints: "315 (42d8 + 126)",
-    speed: {
-      walk: "9 m",
-    },
-    challengeRating: 21,
-    abilities: {
-      strength: 11,
-      dexterity: 16,
-      constitution: 16,
-      intelligence: 21,
-      wisdom: 14,
-      charisma: 16,
-    },
-    savingThrows: {
-      dexterity: "+10",
-      constitution: "+10",
-      intelligence: "+12",
-      wisdom: "+9",
-    },
-    skills: {
-      arcana: "+19",
-      history: "+12",
-      insight: "+9",
-      perception: "+9",
-    },
-    resistances: ["cold", "lightning"],
-    immunities: [
-      "necrotic",
-      "poison",
-      "charmed",
-      "exhaustion",
-      "frightened",
-      "paralyzed",
-      "poisoned",
-    ],
-    languages: ["all"],
-    senses: {
-      trueSight: "36 m",
-      passivePerception: 19,
-    },
-    traits: [
-      {
-        name: "Résistance légendaire (4/jour, 5/jour dans l'antre)",
-        description: "Si JdS raté, peut choisir de réussir.",
-      },
-      {
-        name: "Réceptacle d'âme",
-        description:
-          "Si détruite, se reforme en 1d10 jours avec tous ses PV (tant que le réceptacle existe). Le nouveau corps apparaît dans son antre.",
-      },
-    ],
-    actions: [
-      {
-        name: "Attaques multiples",
-        description: "3 attaques : Explosion occulte et/ou Toucher paralysant.",
-      },
-      {
-        name: "Explosion occulte",
-        type: "Melee or Ranged",
-        modifier: "+12",
-        reach: "1.5 m ou distance 36 m",
-        hit: "31 (4d12 + 5) dégâts de force.",
-      },
-      {
-        name: "Toucher paralysant",
-        type: "Melee",
-        modifier: "+12",
-        reach: "1.5 m",
-        hit: "15 (3d6 + 5) dégâts de froid, et la cible est paralysée jusqu'au début du prochain tour de la liche.",
-      },
-    ],
-    reactions: [
-      {
-        name: "Magie protectrice",
-        description:
-          "Déclencheur : un sort. Réponse : lance Contresort ou Bouclier (à volonté, voir sorts).",
-      },
-    ],
-    legendaryActions: [
-      {
-        name: "Téléportation morbide",
-        description:
-          "Se téléporte jusqu'à 12 cases. Chaque créature à 2 cases de l'espace quitté subit 11 (2d10) dégâts nécrotiques.",
-      },
-      {
-        name: "Perturbation de la vie",
-        description:
-          "Émanation de 4 cases, toute créature non morte-vivante : JdS CON 20 ou 31 (9d6) dégâts nécrotiques (moitié si réussi). 1x par round (recharge au début de son tour).",
-      },
-      {
-        name: "Regard effrayant",
-        description:
-          "Lance Peur (DD 20) : cône de 6 cases, JdS SAG ou lâche ce qu'elle tient, effrayée et doit fuir. 1x par round (recharge au début de son tour).",
-      },
-    ],
-    legendaryActionsSlots: "3 (4 dans l'antre)",
-    spellStats: {
-      attackMod: 12,
-      spellDC: 20,
-    },
-    spells: [
-      {
-        id: "detect-magic",
-        summary: "À volonté. Détecte la magie à 6 cases (concentration)",
-      },
-      {
-        id: "detect-thoughts",
-        summary: "À volonté. Lit les pensées à 6 cases, sonder : JdS SAG 20 (concentration)",
-      },
-      {
-        id: "dispel-magic",
-        summary: "À volonté. Dissipe un sort niv ≤ 3 auto, sinon test INT DD 10 + niv du sort",
-      },
-      {
-        id: "fireball",
-        summary:
-          "À volonté (niv 5). Rayon 4 cases à 30 cases, JdS DEX 20 ou 10d6 feu (moitié si réussi)",
-      },
-      {
-        id: "invisibility",
-        summary: "À volonté. Invisible jusqu'à attaquer ou lancer un sort (concentration, 1h)",
-      },
-      {
-        id: "lightning-bolt",
-        summary:
-          "À volonté (niv 5). Ligne de 20 cases, JdS DEX 20 ou 10d6 foudre (moitié si réussi)",
-      },
-      {
-        id: "mage-hand",
-        summary: "Main spectrale, manipule des objets à 6 cases",
-      },
-      {
-        id: "prestidigitation",
-        summary: "Tours de magie mineurs",
-      },
-      {
-        id: "counterspell",
-        summary: "À volonté (réaction). Annule un sort lancé à 12 cases",
-      },
-      {
-        id: "shield",
-        summary: "À volonté (réaction). +5 CA jusqu'au début de son prochain tour",
-      },
-      {
-        id: "animate-dead",
-        summary: "2/jour. Crée un squelette ou zombie depuis un cadavre",
-      },
-      {
-        id: "dimension-door",
-        summary: "2/jour. Téléportation 100 cases, peut emmener 1 créature consentante",
-      },
-      {
-        id: "plane-shift",
-        summary: "2/jour. Change de plan d'existence (jusqu'à 8 créatures consentantes)",
-      },
-      {
-        id: "chain-lightning",
-        summary:
-          "1/jour. 1 cible + 3 rebonds à 6 cases : JdS DEX 20 ou 10d8 foudre (moitié si réussi)",
-      },
-      {
-        id: "finger-of-death",
-        summary:
-          "1/jour. JdS CON 20 ou 7d8 + 30 nécrotiques (moitié si réussi). Humanoïde tué → zombie",
-      },
-      {
-        id: "power-word-kill",
-        summary: "1/jour. Tue une créature à 12 cases si elle a ≤ 100 PV",
-      },
-      {
-        id: "fear",
-        summary:
-          "Action légendaire (Regard effrayant). Cône 6 cases, JdS SAG 20 ou effrayé + fuite",
-      },
-    ],
-  },
   "yuan-ti-broodguard": {
     name: "Garde-couvée yuan-ti",
     id: "_yuan-ti-broodguard",
+    fiveETools: { name: "Yuan-ti Broodguard", source: "VGM" },
     type: "Monstrosity",
     size: "Medium",
     alignment: "Neutral Evil",
@@ -2412,6 +2251,7 @@ export const localCreatures: Record<string, Creature> = {
   "yuan-ti-pureblood": {
     name: "Sang-pur yuan-ti",
     id: "_yuan-ti-pureblood",
+    fiveETools: { name: "Yuan-ti Pureblood", source: "MM" },
     type: "Humanoid (Yuan-ti)",
     size: "Medium",
     alignment: "Neutral Evil",
@@ -2480,6 +2320,7 @@ export const localCreatures: Record<string, Creature> = {
   "yuan-ti-nightmare-speaker": {
     name: "Diseuse de cauchemars yuan-ti",
     id: "_yuan-ti-nightmare-speaker",
+    fiveETools: { name: "Yuan-ti Nightmare Speaker", source: "VGM" },
     type: "Monstrosity (Warlock)",
     size: "Medium",
     alignment: "Neutral Evil",
@@ -2580,6 +2421,7 @@ export const localCreatures: Record<string, Creature> = {
   "ras-nsi": {
     name: "Ras Nsi",
     id: "_ras-nsi",
+    fiveETools: { name: "Ras Nsi", source: "ToA" },
     type: "Monstrosity (Shapechanger, Yuan-ti)",
     size: "Medium",
     alignment: "Neutral Evil",
@@ -2745,6 +2587,7 @@ export const localCreatures: Record<string, Creature> = {
   sekelok: {
     name: "Sekelok",
     id: "_sekelok",
+    fiveETools: { name: "Sekelok", source: "ToA" },
     type: "Humanoid (Yuan-ti)",
     size: "Medium",
     alignment: "Neutral Evil",
@@ -2827,6 +2670,7 @@ export const localCreatures: Record<string, Creature> = {
   "artus-cimber": {
     name: "Artus Cimber",
     id: "_artus-cimber",
+    fiveETools: { name: "Artus Cimber", source: "ToA" },
     type: "Humanoid (Human)",
     size: "Medium",
     alignment: "Neutral Good",
@@ -2932,6 +2776,7 @@ export const localCreatures: Record<string, Creature> = {
   "valindra-shadowmantle": {
     name: "Valindra Shadowmantle",
     id: "_valindra-shadowmantle",
+    fiveETools: { name: "Valindra Shadowmantle", source: "ToA" },
     type: "Undead",
     size: "Medium",
     alignment: "Neutral Evil",

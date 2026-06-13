@@ -53,6 +53,7 @@ Read `src/types/schemas.ts` (the `creatureSchema`) and a few recent entries in
 |---|---|---|
 | record key | `name` | kebab-case English name, e.g. `"goblin-boss"` |
 | `id` | `name` | `"_"` + record key, e.g. `"_goblin-boss"` |
+| `fiveETools` | `name` + `source` | `{ name: "<English name>", source: "<SOURCE>" }` — copy the **exact** `name` and `source` values from the chosen bestiary JSON (e.g. `{ name: "Su-monster", source: "ToA" }`). Drives the "5e.tools" link in the stat block. **Omit** when `source` is `XMM` (those are fetched from AideDD, not 5etools — and an XMM-based local entry is a custom variant) or when the monster has no real 5etools bestiary entry (pure homebrew). |
 | `name` | `name` | **Translated to French** (e.g. "Goblin Boss" → "Chef gobelin") |
 | `type` | `type` | Capitalized English. Object form `{type, tags}` → `"Fey (Goblinoid)"` |
 | `size` | `size[0]` | `T`→Tiny, `S`→Small, `M`→Medium, `L`→Large, `H`→Huge, `G`→Gargantuan |
@@ -156,7 +157,7 @@ force→`force`.
 
 1. Append the new entry at the end of the `localCreatures` object in
    `src/data/localCreatures.ts` (before the closing `};`). Key order follows existing
-   entries: name, id, type, size, alignment, armorClass, hitPoints, speed,
+   entries: name, id, fiveETools, type, size, alignment, armorClass, hitPoints, speed,
    challengeRating, abilities, savingThrows, skills, resistances, immunities,
    vulnerabilities, languages, senses, traits, actions, bonusActions, reactions,
    legendaryActions, legendaryActionsSlots, lairActions, spellStats, spells.
