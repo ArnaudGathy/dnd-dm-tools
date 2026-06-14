@@ -1,4 +1,9 @@
-import { getCreatures, getEncounterFromId, getEncounterFromLocation } from "@/utils/utils";
+import {
+  getCreatures,
+  getEncounterFromId,
+  getEncounterFromLocation,
+  getEncountersFromLocationName,
+} from "@/utils/utils";
 import { notFound } from "next/navigation";
 import { InfoModule } from "@/app/(with-nav)/encounters/[id]/InfoModule";
 import StatBlocksModule from "@/app/(with-nav)/encounters/[id]/StatBlocksModule";
@@ -15,6 +20,7 @@ const EncounterById = async ({ params }: { params: Promise<{ id: string }> }) =>
     return notFound();
   }
 
+  const locationEncounters = getEncountersFromLocationName(encounter.location.name);
   const creatures = await getCreatures(encounter);
   const otherZonesCreaturesPromises = (
     await Promise.all(
@@ -40,7 +46,7 @@ const EncounterById = async ({ params }: { params: Promise<{ id: string }> }) =>
     <div className="flex flex-col gap-4">
       <div className="flex items-start gap-4">
         <div className="flex w-[50%] flex-col gap-4">
-          <InfoModule encounter={encounter} />
+          <InfoModule encounter={encounter} locationEncounters={locationEncounters} />
           <StatBlocksModule creatures={creatures} />
         </div>
         <div className="sticky top-4 flex w-[50%] flex-col gap-4">

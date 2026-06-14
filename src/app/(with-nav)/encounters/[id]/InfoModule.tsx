@@ -6,9 +6,15 @@ import { Encounter } from "@/types/types";
 import { clsx } from "clsx";
 import { getYoutubeUrlFromId } from "@/utils/utils";
 import Link from "next/link";
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/16/solid";
+import { ChevronDownIcon } from "@heroicons/react/16/solid";
 import { useState } from "react";
 import { PlayIcon } from "@heroicons/react/24/outline";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 const List = ({ list }: { list: string[] }) => {
   return (
@@ -25,24 +31,48 @@ const List = ({ list }: { list: string[] }) => {
   );
 };
 
-export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
+export const InfoModule = ({
+  encounter,
+  locationEncounters,
+}: {
+  encounter: Encounter;
+  locationEncounters: Encounter[];
+}) => {
   const [iframeExpanded, setIframeExpanded] = useState(true);
+  const hasSiblings = locationEncounters.length > 1;
 
   return (
     <>
       <Card>
         <CardHeader>
           <CardTitle>
-            <div className="flex items-center justify-between">
-              {encounter.id - 1 > 0 && (
-                <Button size="xs" variant="ghost">
-                  <Link href={`/encounters/${encounter.id - 1}`}>
-                    <ArrowLeftIcon className="size-4" />
-                  </Link>
-                </Button>
-              )}
+            <div className="flex items-center justify-center">
               <div className="flex items-center gap-2">
-                {encounter.location.mapMarker} - {encounter.name}
+                {hasSiblings ? (
+                  <DropdownMenu>
+                    <DropdownMenuTrigger className="flex items-center gap-1 outline-none hover:text-muted-foreground">
+                      {encounter.location.mapMarker} - {encounter.name}
+                      <ChevronDownIcon className="size-4" />
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent align="center" className="max-h-80 overflow-y-auto">
+                      {locationEncounters.map((sibling) => (
+                        <DropdownMenuItem
+                          key={sibling.id}
+                          asChild
+                          disabled={sibling.id === encounter.id}
+                        >
+                          <Link href={`/encounters/${sibling.id}`}>
+                            {sibling.location.mapMarker} - {sibling.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                ) : (
+                  <>
+                    {encounter.location.mapMarker} - {encounter.name}
+                  </>
+                )}
                 <div>
                   <Button
                     size="xs"
@@ -54,11 +84,6 @@ export const InfoModule = ({ encounter }: { encounter: Encounter }) => {
                   </Button>
                 </div>
               </div>
-              <Button size="xs" variant="ghost">
-                <Link href={`/encounters/${encounter.id + 1}`}>
-                  <ArrowRightIcon className="size-4" />
-                </Link>
-              </Button>
             </div>
 
             {encounter.youtubeId && (

@@ -7,7 +7,7 @@ import { revalidatePath } from "next/cache";
 
 export const addMagicItem = async (
   data: MagicItemFormSchema,
-  characterId: number,
+  characterId: number | null,
   itemId?: number,
 ) => {
   const validated = backendMagicItemSchema.safeParse(data);
@@ -37,7 +37,45 @@ export const addMagicItem = async (
     });
   }
 
+  if (characterId) {
+    revalidatePath(`/characters/${characterId}`);
+  } else {
+    revalidatePath("/magic-items");
+  }
+};
+
+export const assignMagicItemToCharacter = async ({
+  itemId,
+  characterId,
+}: {
+  itemId: number;
+  characterId: number;
+}) => {
+  await prisma.magicItem.update({
+    where: { id: itemId },
+    data: { characterId },
+  });
+
+  revalidatePath("/magic-items");
   revalidatePath(`/characters/${characterId}`);
+};
+
+export const transferMagicItem = async ({
+  itemId,
+  fromCharacterId,
+  toCharacterId,
+}: {
+  itemId: number;
+  fromCharacterId: number;
+  toCharacterId: number;
+}) => {
+  await prisma.magicItem.update({
+    where: { id: itemId },
+    data: { characterId: toCharacterId },
+  });
+
+  revalidatePath(`/characters/${fromCharacterId}`);
+  revalidatePath(`/characters/${toCharacterId}`);
 };
 
 export const deleteMagicItem = async (itemId: number) => {
@@ -45,4 +83,5 @@ export const deleteMagicItem = async (itemId: number) => {
     where: { id: itemId },
   });
   revalidatePath("/characters");
+  revalidatePath("/magic-items");
 };

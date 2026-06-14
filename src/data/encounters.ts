@@ -1222,7 +1222,7 @@ export const encounters: Encounter[] = [
       ],
     },
     extraZonesEnnemies: ["F5"],
-    youtubeId: "5Y7oXb_Vmsc",
+    youtubeId: "n9KsWzdxi4Y",
   },
   {
     name: "Oracle maléfique",
@@ -1239,7 +1239,7 @@ export const encounters: Encounter[] = [
         { id: "_yuan-ti-priest", color: "#FFF", variant: "" },
       ],
     },
-    youtubeId: "8Q7cioftmKs",
+    youtubeId: "5Y7oXb_Vmsc",
   },
   {
     name: "Harem",
@@ -1251,10 +1251,6 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "doppelganger", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
         { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
         { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
         { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
@@ -1270,7 +1266,7 @@ export const encounters: Encounter[] = [
     youtubeId: "KPSVPFwOLyE",
   },
   {
-    name: "Salle du trône",
+    name: "Salle du trône (Ras Nsi)",
     id: 106,
     scenario: "La tombe de l'annihilation",
     location: {
@@ -1292,20 +1288,7 @@ export const encounters: Encounter[] = [
         { id: "ghoul", color: "#FFF", variant: "" },
       ],
     },
-    youtubeId: "oVZ8KGtZtwY",
-  },
-  {
-    name: "Antre de Ras Nsi",
-    id: 107,
-    scenario: "La tombe de l'annihilation",
-    location: {
-      name: "Fanum du serpent nocturne",
-      mapMarker: "F12",
-    },
-    ennemies: {
-      "1": [{ id: "_ras-nsi", color: "#FFF", variant: "" }],
-    },
-    youtubeId: "6pnMzBTUiIA",
+    youtubeId: "m-1S1V1PZHA",
   },
   {
     name: "Réserve",
@@ -1316,7 +1299,7 @@ export const encounters: Encounter[] = [
       mapMarker: "F13",
     },
     ennemies: {
-      "1": [{ id: "giant-constrictor-snake", color: "#FFF", variant: "" }],
+      "1": [{ id: "giant-constrictor-snake", color: "#064c0b", variant: "" }],
     },
     youtubeId: "sd1Otp7s1Fk",
   },

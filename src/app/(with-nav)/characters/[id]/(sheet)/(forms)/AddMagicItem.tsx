@@ -3,17 +3,18 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import AddMagicItemForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddMagicItemForm";
 import { ReactNode, useState } from "react";
-import { CharacterById } from "@/lib/utils";
 import { MagicItem } from "@prisma/client";
 
 export default function AddMagicItem({
-  character,
+  characterId,
+  campaignId,
   item,
   children,
   className,
   title,
 }: {
-  character: CharacterById;
+  characterId: number | null;
+  campaignId?: number;
   item?: MagicItem;
   children: ReactNode;
   className?: string;
@@ -28,7 +29,8 @@ export default function AddMagicItem({
       </PopoverTrigger>
       <PopoverContent className="w-fit">
         <AddMagicItemForm
-          character={character}
+          characterId={characterId}
+          campaignId={campaignId}
           item={item}
           closeAction={() => setOpen(false)}
           title={title}

@@ -2255,14 +2255,14 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+4",
         reach: "1.5 m",
-        hit: "6 (1d8 + 2) dégâts perçants.",
+        hit: "6 (1d12 + 2) dégâts perçants.",
       },
       {
         name: "Griffes",
         type: "Melee",
         modifier: "+4",
         reach: "1.5 m",
-        hit: "5 (1d6 + 2) dégâts tranchants.",
+        hit: "5 (1d8 + 2) dégâts tranchants.",
       },
     ],
   },
@@ -2314,7 +2314,7 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+3",
         reach: "1.5 m",
-        hit: "4 (1d6 + 1) dégâts tranchants.",
+        hit: "5 (1d8 + 1) dégâts tranchants.",
       },
       {
         name: "Arc court",
@@ -2342,8 +2342,8 @@ export const localCreatures: Record<string, Creature> = {
     type: "Monstrosity (Warlock)",
     size: "Medium",
     alignment: "Neutral Evil",
-    armorClass: 14,
-    hitPoints: "71 (13d8 + 13)",
+    armorClass: 15,
+    hitPoints: "105 (13d8 + 13)",
     speed: {
       walk: "9 m",
     },
@@ -2444,8 +2444,8 @@ export const localCreatures: Record<string, Creature> = {
     type: "Monstrosity (Shapechanger, Yuan-ti)",
     size: "Medium",
     alignment: "Neutral Evil",
-    armorClass: 15,
-    hitPoints: "107 (127 max, -1 par jour écoulé dans l'aventure)",
+    armorClass: 16,
+    hitPoints: "135",
     speed: {
       walk: "9 m",
     },
@@ -2476,16 +2476,6 @@ export const localCreatures: Record<string, Creature> = {
     },
     traits: [
       {
-        name: "Équipement spécial",
-        description:
-          "Porte des bracelets de défense, une épée longue langue-de-feu et une pierre de communication liée à celle du guide Salida.",
-      },
-      {
-        name: "Métamorphe",
-        description:
-          "Action : se transforme en serpent M ou reprend sa forme yuan-ti. Stats identiques, l'équipement n'est pas transformé.",
-      },
-      {
         name: "Résistance magique",
         description: "Avantage aux JdS contre les sorts et effets magiques.",
       },
@@ -2496,13 +2486,6 @@ export const localCreatures: Record<string, Creature> = {
         description: "3x attaques de mêlée (constriction 1x max)",
       },
       {
-        name: "Morsure (forme serpent)",
-        type: "Melee",
-        modifier: "+6",
-        reach: "1.5 m",
-        hit: "5 (1d4 + 3) dégâts perçants + 7 (2d6) poison.",
-      },
-      {
         name: "Constriction",
         type: "Melee",
         modifier: "+6",
@@ -2510,12 +2493,28 @@ export const localCreatures: Record<string, Creature> = {
         hit: "10 (2d6 + 3) dégâts contondants. Cible agrippée (DD 14 pour se libérer) + entravée. 1 cible à la fois.",
       },
       {
-        name: "Épée langue-de-feu (forme yuan-ti)",
+        name: "Épée langue-de-feu",
         type: "Melee",
         modifier: "+6",
         reach: "1.5 m",
-        hit: "7 (1d8 + 3) tranchants, ou 8 (1d10 + 3) à deux mains, + 7 (2d6) feu.",
+        hit: "8 (1d8 + 3) tranchants, +7 (3d6) feu.",
       },
+    ],
+    bonusActions: [
+      {
+        name: "Repli expéditif N1",
+        description: "Sprint (concentration) + refaire en action bonus tant qu'actif",
+      },
+      { name: "Foulée brumeuse N2", description: "TP de 6 cases (pas d'opportunité)" },
+      {
+        name: "5 Boucliers volants",
+        description:
+          "Zone 12 uniquement. Prononcer 'Ssilum' et recevoir +2 CA par bouclier (10 CA). Chaque coup subit détruit un bouclier.",
+      },
+    ],
+    reactions: [
+      { name: "Bouclier N1", description: "Augmente le CA de 5 jusqu'au début du prochain tour" },
+      { name: "Contresort N3", description: "Interrompre un sort, JdS CON 15" },
     ],
     spellStats: {
       attackMod: 7,
@@ -2530,10 +2529,6 @@ export const localCreatures: Record<string, Creature> = {
       },
     },
     spells: [
-      {
-        id: "fire-bolt",
-        summary: "Attaque +7, 2d10 feu",
-      },
       {
         id: "fireball",
         summary: "Rayon 4 cases, JdS DEX 15 ou 8d6 feu (moitié si réussi)",
@@ -2572,10 +2567,6 @@ export const localCreatures: Record<string, Creature> = {
           "Niv 5. JdS SAG 15 ou charmé : ordre imposé, 5d10 psychiques si désobéit (30 jours)",
       },
       {
-        id: "animate-dead",
-        summary: "Crée un squelette ou zombie depuis un cadavre",
-      },
-      {
         id: "create-undead",
         summary: "Crée jusqu'à 3 goules depuis des cadavres",
       },
@@ -2587,21 +2578,9 @@ export const localCreatures: Record<string, Creature> = {
         id: "false-life",
         summary: "1d4 + 4 PV temporaires (1h)",
       },
-      {
-        id: "magic-missile",
-        summary: "3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
-      },
-      {
-        id: "chill-touch",
-        summary: "Attaque +7, 2d8 nécrotiques, pas de soins pour la cible (1 tour)",
-      },
-      {
-        id: "poison-spray",
-        summary: "2 cases, JdS CON 15 ou 2d12 poison",
-      },
     ],
     behavior:
-      "Contresort/Bouclier en réaction > Boule de feu groupée > Immobilisation > 3x épée langue-de-feu en mêlée. Fuit ou négocie si dominé.",
+      "Réactions > déplacements en actions bonus > Création de morts vivants si <= 3 morts > Boule de feu groupée > 3x épée langue-de-feu en mêlée. Fuit en zone 12 si domino.",
   },
   sekelok: {
     name: "Sekelok",
@@ -2611,7 +2590,7 @@ export const localCreatures: Record<string, Creature> = {
     size: "Medium",
     alignment: "Neutral Evil",
     armorClass: 18,
-    hitPoints: "143 (22d8 + 44)",
+    hitPoints: "150 (22d8 + 44)",
     speed: {
       walk: "10.5 m",
     },
@@ -2652,7 +2631,7 @@ export const localCreatures: Record<string, Creature> = {
     actions: [
       {
         name: "Attaques multiples",
-        description: "3x épée à deux mains OU 3x arc court",
+        description: "3x épée à deux mains OU 3x arc",
       },
       {
         name: "Épée à deux mains",
@@ -2662,17 +2641,17 @@ export const localCreatures: Record<string, Creature> = {
         hit: "12 (2d6 + 5) dégâts tranchants, + 7 (2d6) si Sekelok est au-dessus de 50% PV.",
       },
       {
-        name: "Arc court",
+        name: "Arc",
         type: "Ranged",
         modifier: "+6",
         reach: "24/96 m",
-        hit: "5 (1d6 + 2) dégâts perçants, + 7 (2d6) si Sekelok est au-dessus de 50% PV.",
+        hit: "5 (1d8 + 2) dégâts perçants, + 7 (2d6) si Sekelok est au-dessus de 50% PV.",
       },
     ],
     bonusActions: [
       {
-        name: "Second souffle (Recharge après un repos)",
-        description: "Récupère 20 PV.",
+        name: "Second souffle (1/long repos)",
+        description: "Récupère 40 PV.",
       },
     ],
     spellStats: {
@@ -3007,8 +2986,8 @@ export const localCreatures: Record<string, Creature> = {
     type: "Monstrosity (Shapechanger, Yuan-ti)",
     size: "Medium",
     alignment: "Neutral Evil",
-    armorClass: 12,
-    hitPoints: "66 (12d8 + 12)",
+    armorClass: 13,
+    hitPoints: "75 (12d8 + 12)",
     speed: {
       walk: "9 m",
     },
@@ -3043,13 +3022,6 @@ export const localCreatures: Record<string, Creature> = {
         description: "2x attaques de mêlée (constriction 1x max).",
       },
       {
-        name: "Morsure (forme serpent)",
-        type: "Melee",
-        modifier: "+5",
-        reach: "1.5 m",
-        hit: "5 (1d4 + 3) dégâts perçants + 7 (2d6) poison.",
-      },
-      {
         name: "Constriction",
         type: "Melee",
         modifier: "+5",
@@ -3061,7 +3033,7 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+5",
         reach: "1.5 m",
-        hit: "6 (1d6 + 3) dégâts tranchants.",
+        hit: "6 (1d8 + 3) dégâts tranchants.",
       },
     ],
     spellStats: {

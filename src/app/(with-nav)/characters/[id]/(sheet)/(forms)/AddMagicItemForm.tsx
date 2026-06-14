@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { magicItemFormSchema, MagicItemFormSchema } from "@/app/(with-nav)/characters/add/utils";
 import { Form, FormField } from "@/components/ui/form";
 import { addMagicItem, deleteMagicItem } from "@/lib/actions/MagicItems";
-import { CharacterById } from "@/lib/utils";
+import TransferMagicItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/TransferMagicItem";
 import { useState } from "react";
 import { MagicItem, MagicItemRarity } from "@prisma/client";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -19,12 +19,14 @@ import { MAGIC_ITEM_RARITY_COLOR_MAP, MAGIC_ITEM_RARITY_MAP } from "@/constants/
 import { mapValues } from "remeda";
 
 export default function AddMagicItemForm({
-  character,
+  characterId,
+  campaignId,
   item,
   closeAction,
   title,
 }: {
-  character: CharacterById;
+  characterId: number | null;
+  campaignId?: number;
   item?: MagicItem;
   closeAction: () => void;
   title: string;
@@ -38,7 +40,7 @@ export default function AddMagicItemForm({
     defaultValues: item
       ? {
           ...item,
-          charges: String(item.charges),
+          charges: item.charges ?? "",
         }
       : {
           name: "",
@@ -52,7 +54,7 @@ export default function AddMagicItemForm({
 
   const onSubmit = async (data: MagicItemFormSchema) => {
     setIsLoading(true);
-    const response = await addMagicItem(data, character.id, item?.id);
+    const response = await addMagicItem(data, characterId, item?.id);
     if (!!response) {
       setError(response);
     }
@@ -137,6 +139,15 @@ export default function AddMagicItemForm({
             </>
           )}
         </Button>
+      )}
+
+      {isEditMode && characterId !== null && campaignId !== undefined && (
+        <TransferMagicItem
+          itemId={item.id}
+          campaignId={campaignId}
+          currentCharacterId={characterId}
+          closeAction={closeAction}
+        />
       )}
     </Form>
   );

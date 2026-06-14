@@ -19,7 +19,7 @@ export default function MagicItems({ character }: { character: CharacterById }) 
     <>
       <SheetCard className={cn("relative flex flex-col gap-4")}>
         <AddMagicItem
-          character={character}
+          characterId={character.id}
           className="absolute right-4"
           title="Ajouter un objet magique"
         >
@@ -47,7 +47,8 @@ export default function MagicItems({ character }: { character: CharacterById }) 
             character.magicItems.map((magicItem) => (
               <AddMagicItem
                 key={magicItem.id}
-                character={character}
+                characterId={character.id}
+                campaignId={character.campaignId}
                 item={magicItem}
                 title="Modifier un objet magique"
               >

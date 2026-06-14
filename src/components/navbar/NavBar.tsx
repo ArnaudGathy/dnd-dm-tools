@@ -12,7 +12,7 @@ import Link from "next/link";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
-import { BookText, SkullIcon, SquareUserIcon, SwordsIcon } from "lucide-react";
+import { BookText, LayoutDashboard, SquareUserIcon, SwordsIcon } from "lucide-react";
 import { CampaignSelect } from "@/components/navbar/CampaignSelect";
 
 const menuItems = [
@@ -23,9 +23,9 @@ const menuItems = [
     isPrivate: true,
   },
   {
-    label: "Death Tracker",
-    to: "/death",
-    icon: SkullIcon,
+    label: "Outils MJ",
+    to: "/dm-tools",
+    icon: LayoutDashboard,
     isPrivate: true,
   },
   {

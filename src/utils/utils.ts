@@ -218,6 +218,16 @@ export const getEncounterFromId = (encounterId: string) => {
   return encounter;
 };
 
+export const getEncountersFromLocationName = (locationName: string) => {
+  return encounters
+    .filter(({ location: { name } }) => name === locationName)
+    .toSorted((a, b) =>
+      a.location.mapMarker.localeCompare(b.location.mapMarker, undefined, {
+        numeric: true,
+      }),
+    );
+};
+
 export const getEncounterFromLocation = (location: Encounter["location"]) => {
   const encounter = encounters.find(
     ({ location: { name, mapMarker } }) =>

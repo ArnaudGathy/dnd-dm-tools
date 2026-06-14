@@ -324,8 +324,8 @@ enum MagicItemRarity {
 
 model MagicItem {
   id          Int             @id @default(autoincrement())
-  character   Character       @relation(fields: [characterId], references: [id])
-  characterId Int
+  character   Character?      @relation(fields: [characterId], references: [id])
+  characterId Int?
   name        String
   description String?
   charges     String?
