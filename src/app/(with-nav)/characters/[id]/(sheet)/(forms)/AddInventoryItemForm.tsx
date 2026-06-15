@@ -11,17 +11,16 @@ import {
 } from "@/app/(with-nav)/characters/add/utils";
 import { Form } from "@/components/ui/form";
 import { addInventoryItem, deleteInventoryItem } from "@/lib/actions/InventoryItems";
-import { CharacterById } from "@/lib/utils";
 import { useState } from "react";
 import { InventoryItem } from "@prisma/client";
 
 export default function AddInventoryItemForm({
-  character,
+  characterId,
   item,
   closeAction,
   title,
 }: {
-  character: CharacterById;
+  characterId: number | null;
   item?: InventoryItem;
   closeAction: () => void;
   title: string;
@@ -41,7 +40,7 @@ export default function AddInventoryItemForm({
 
   const onSubmit = async (data: InventoryFormSchema) => {
     setIsLoading(true);
-    const response = await addInventoryItem(data, character.id, item?.id);
+    const response = await addInventoryItem(data, characterId, item?.id);
     if (!!response) {
       setError(response);
     }

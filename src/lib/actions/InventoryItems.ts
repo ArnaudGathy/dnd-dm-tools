@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 
 export const addInventoryItem = async (
   data: InventoryFormSchema,
-  characterId: number,
+  characterId: number | null,
   itemId?: number,
 ) => {
   const validated = backendInventoryItemSchema.safeParse(data);
@@ -39,6 +39,26 @@ export const addInventoryItem = async (
     });
   }
 
+  if (characterId) {
+    revalidatePath(`/characters/${characterId}`);
+  } else {
+    revalidatePath("/inventory-items");
+  }
+};
+
+export const assignInventoryItemToCharacter = async ({
+  itemId,
+  characterId,
+}: {
+  itemId: number;
+  characterId: number;
+}) => {
+  await prisma.inventoryItem.update({
+    where: { id: itemId },
+    data: { characterId },
+  });
+
+  revalidatePath("/inventory-items");
   revalidatePath(`/characters/${characterId}`);
 };
 
@@ -47,4 +67,5 @@ export const deleteInventoryItem = async (itemId: number) => {
     where: { id: itemId },
   });
   revalidatePath("/characters");
+  revalidatePath("/inventory-items");
 };

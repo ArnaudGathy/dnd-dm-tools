@@ -9,7 +9,11 @@ import { Plus } from "lucide-react";
 export default function InventoryItems({ character }: { character: CharacterById }) {
   return (
     <SheetCard className={cn("relative flex flex-col gap-4")}>
-      <AddInventoryItem character={character} className="absolute right-4" title="Ajouter un objet">
+      <AddInventoryItem
+        characterId={character.id}
+        className="absolute right-4"
+        title="Ajouter un objet"
+      >
         <Button size="sm">
           <Plus />
         </Button>
@@ -20,7 +24,7 @@ export default function InventoryItems({ character }: { character: CharacterById
         {character.inventory.map((inventoryItem) => (
           <AddInventoryItem
             key={inventoryItem.id}
-            character={character}
+            characterId={character.id}
             item={inventoryItem}
             title="Modifier un objet"
           >

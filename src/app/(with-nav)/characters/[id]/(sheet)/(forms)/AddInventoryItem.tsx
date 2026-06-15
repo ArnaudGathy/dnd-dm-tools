@@ -3,17 +3,16 @@
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import AddInventoryItemForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddInventoryItemForm";
 import { ReactNode, useState } from "react";
-import { CharacterById } from "@/lib/utils";
 import { InventoryItem } from "@prisma/client";
 
 export default function AddInventoryItem({
-  character,
+  characterId,
   item,
   children,
   className,
   title,
 }: {
-  character: CharacterById;
+  characterId: number | null;
   item?: InventoryItem;
   children: ReactNode;
   className?: string;
@@ -28,7 +27,7 @@ export default function AddInventoryItem({
       </PopoverTrigger>
       <PopoverContent className="w-fit">
         <AddInventoryItemForm
-          character={character}
+          characterId={characterId}
           item={item}
           closeAction={() => setOpen(false)}
           title={title}

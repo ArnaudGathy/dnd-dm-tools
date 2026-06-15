@@ -1,5 +1,6 @@
 import { restrictToAdmins } from "@/lib/utils";
 import { getUnassignedMagicItems } from "@/lib/api/magicItems";
+import { getUnassignedInventoryItems } from "@/lib/api/inventoryItems";
 import { BookOpenText, HeartPulse } from "lucide-react";
 import DmToolLinkCard from "@/app/(with-nav)/dm-tools/DmToolLinkCard";
 import DmToolsTabs from "@/app/(with-nav)/dm-tools/DmToolsTabs";
@@ -8,6 +9,7 @@ const DmToolsPage = async () => {
   await restrictToAdmins();
 
   const magicItems = await getUnassignedMagicItems();
+  const inventoryItems = await getUnassignedInventoryItems();
 
   return (
     <div className="mx-auto mt-4 flex w-full max-w-5xl flex-col gap-10">
@@ -22,7 +24,7 @@ const DmToolsPage = async () => {
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
           Gestion
         </h2>
-        <DmToolsTabs magicItems={magicItems} />
+        <DmToolsTabs magicItems={magicItems} inventoryItems={inventoryItems} />
       </section>
 
       <section className="flex flex-col gap-3">

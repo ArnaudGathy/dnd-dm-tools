@@ -302,9 +302,9 @@ model Character {
 }
 
 model InventoryItem {
-  id          Int       @id @default(autoincrement())
-  character   Character @relation(fields: [characterId], references: [id])
-  characterId Int
+  id          Int        @id @default(autoincrement())
+  character   Character? @relation(fields: [characterId], references: [id])
+  characterId Int?
   name        String
   description String?
   quantity    Int       @default(1)
