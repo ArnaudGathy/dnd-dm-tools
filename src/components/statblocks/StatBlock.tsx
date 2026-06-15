@@ -21,6 +21,7 @@ import { getSpellByIds } from "@/lib/api/spells";
 import Abilities from "@/components/statblocks/Abilities";
 import { cn, getSessionData } from "@/lib/utils";
 import ClearCreatureCacheButton from "@/components/statblocks/ClearCreatureCacheButton";
+import { creatureOverrides } from "@/data/creatureOverrides";
 
 const isNonEmptyArray = <T,>(value: T[] | undefined | null): value is T[] =>
   Array.isArray(value) && value.length > 0;
@@ -42,10 +43,14 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
 
   const { isAdmin } = await getSessionData();
 
+  // AideDD creatures use a kebab-case English id. Creature overrides always come from
+  // AideDD too, but some prefix their id with `_` — strip it and confirm the name is a
+  // known override key so genuine local creatures (also `_`-prefixed) keep no AideDD link.
+  const aideDDName = isNumber(creature.id) ? undefined : creature.id.replace(/^_/, "");
   const linkToAideDD =
-    isNumber(creature.id) || creature.id.includes("_")
-      ? undefined
-      : `https://www.aidedd.org/public/monster/${creature.id}`;
+    aideDDName && (!creature.id.includes("_") || aideDDName in creatureOverrides)
+      ? `https://www.aidedd.org/public/monster/${aideDDName}`
+      : undefined;
 
   // 5e.tools encodes a monster hash as `encodeURIComponent(x.toLowerCase()).toLowerCase()`
   // for both the name and the source, joined by an underscore.
@@ -69,7 +74,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
               >
                 AideDD
               </Link>
-              {isAdmin && <ClearCreatureCacheButton creatureId={creature.id.toString()} />}
+              {isAdmin && <ClearCreatureCacheButton creatureId={aideDDName!} />}
             </span>
           )}
           {!linkToAideDD && linkTo5eTools && (
