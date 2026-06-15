@@ -439,4 +439,39 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
     },
     challengeRating: 1,
   },
+  hydra: {
+    name: "Hydre",
+    id: "_hydra",
+    traits: [
+      {
+        name: "Têtes multiples",
+        description:
+          "5 têtes. 25 dgts en 1 tour = 1 tête morte. Meurt si toutes têtes mortes, ou PV à 0",
+      },
+      {
+        name: "Régénération de tête",
+        description:
+          "A la fin du tour, +2 tête par tête coupée durant le tour et rend +20P V chacune, sauf si dégâts de feu subits.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "1 attaque par tête.",
+      },
+      {
+        name: "Bite",
+        type: "Melee",
+        modifier: "+8",
+        reach: "3 m",
+        hit: "10 (1d10 + 5) Piercing damage.",
+      },
+    ],
+    reactions: [
+      {
+        name: "Opportunité",
+        description: "1 attaque d'opportunité par tête en vie",
+      },
+    ],
+  },
 };

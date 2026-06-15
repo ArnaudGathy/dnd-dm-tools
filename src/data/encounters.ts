@@ -1313,12 +1313,21 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "Xopal" },
-        { id: "zombie", color: "#FFF", variant: "" },
-        { id: "zombie", color: "#FFF", variant: "" },
-        { id: "zombie", color: "#FFF", variant: "" },
-        { id: "zombie", color: "#FFF", variant: "" },
-        { id: "zombie", color: "#FFF", variant: "" },
+        { id: "_xopal", color: "#FFF" },
+        {
+          id: "zombie",
+          color: "#aad09a",
+        },
+        {
+          id: "zombie",
+          color: "#57abbb",
+        },
+        {
+          id: "zombie",
+          color: "#d3bf69",
+        },
+        { id: "zombie", color: "#BC5D8C", variant: "plante" },
+        { id: "zombie", color: "#B89250", variant: "plante" },
       ],
     },
     youtubeId: "5iMeaTItPhE",
@@ -1354,7 +1363,8 @@ export const encounters: Encounter[] = [
         { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
       ],
     },
-    youtubeId: "HOmjkQ_3W5Q",
+    extraZonesEnnemies: ["F17"],
+    youtubeId: "QnX4rkyygOg",
   },
   {
     name: "Sauna",
@@ -1367,11 +1377,11 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": [
         { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "Yahru" },
-        { id: "gladiator", color: "#FFF", variant: "" },
-        { id: "gladiator", color: "#FFF", variant: "" },
+        { id: "yuan-ti-malison-type-1", color: "#FFF", variant: "" },
+        { id: "_yuan-ti-pureblood", color: "#FFF", variant: "" },
       ],
     },
-    youtubeId: "XZtL7PsJAoc",
+    youtubeId: "QnX4rkyygOg",
   },
   {
     name: "Nids des yuan-ti",
@@ -1410,30 +1420,16 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": [
         { id: "yuan-ti-malison-type-3", color: "#FFF", variant: "Issar" },
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
+        { id: "_tyrannosaurus-zombie", color: "#FFF", variant: "" },
+        { id: "zombie", color: "#aad09a", inactive: true },
+        { id: "zombie", color: "#57abbb", inactive: true },
+        { id: "zombie", color: "#d3bf69", inactive: true },
+        { id: "zombie", color: "#BC5D8C", variant: "plante", inactive: true },
+        { id: "zombie", color: "#B89250", variant: "plante", inactive: true },
+        { id: "zombie", variant: "plante", color: "#566142", inactive: true },
       ],
     },
     youtubeId: "GMXiYs-wi3A",
-  },
-  {
-    name: "Rivière souterraine",
-    id: 115,
-    scenario: "La tombe de l'annihilation",
-    location: {
-      name: "Fanum du serpent nocturne",
-      mapMarker: "F20",
-    },
-    ennemies: {
-      "1": [
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-        { id: "_yuan-ti-broodguard", color: "#FFF", variant: "" },
-      ],
-    },
-    youtubeId: "2GX9lVHfnxs",
   },
   {
     name: "Antre de l'hydre",

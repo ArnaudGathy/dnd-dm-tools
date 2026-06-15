@@ -3051,4 +3051,142 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  xopal: {
+    name: "Xopal",
+    id: "_yxopal",
+    fiveETools: { name: "Yuan-ti Pureblood", source: "MM" },
+    type: "Humanoid (Yuan-ti)",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 11,
+    hitPoints: "60 (9d8)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 1,
+    abilities: {
+      strength: 11,
+      dexterity: 12,
+      constitution: 11,
+      intelligence: 13,
+      wisdom: 12,
+      charisma: 14,
+    },
+    skills: {
+      deception: "+6",
+      perception: "+3",
+      stealth: "+3",
+    },
+    immunities: ["poison", "poisoned"],
+    languages: ["Abyssal", "Common", "Draconic"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    traits: [
+      {
+        name: "Résistance magique",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+      {
+        name: "Poison en bouteilles",
+        description:
+          "Explosion dans la pièce = sphere de 3 cases de rayon, 1min. Entrer ou débuter son tour dedans = JdS CON 15 ou 4d8 dégâts de poison.",
+      },
+      {
+        name: "Jarre de gaz",
+        description:
+          "Ouvrir le bouchon : du gaz rempli toute la pièce. JdS CON 13, ou inconscient 1h",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x seringue",
+      },
+      {
+        name: "Seringue de poison",
+        type: "Melee",
+        modifier: "+3",
+        reach: "1.5 m",
+        hit: "5 (1d4 + 1) dégâts perforants. JdS CON 15 3d6 poison + condition aveuglé (effet de type poison pendant 1h)",
+      },
+    ],
+    spellStats: {
+      attackMod: 4,
+      spellDC: 12,
+    },
+    spells: [
+      {
+        id: "poison-spray",
+        summary: "3/jour. 2 cases, JdS CON 12 ou 1d12 poison",
+      },
+    ],
+  },
+  "tyrannosaurus-zombie": {
+    name: "Tyrannosaure zombie",
+    id: "_tyrannosaurus-zombie",
+    fiveETools: { name: "Tyrannosaurus Zombie", source: "ToA" },
+    type: "Undead",
+    size: "Huge",
+    alignment: "Unaligned",
+    armorClass: 11,
+    hitPoints: "150 (13d12 + 52)",
+    speed: {
+      walk: "12 m",
+    },
+    challengeRating: 8,
+    abilities: {
+      strength: 25,
+      dexterity: 6,
+      constitution: 19,
+      intelligence: 1,
+      wisdom: 3,
+      charisma: 5,
+    },
+    immunities: ["poison", "poisoned"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 6,
+    },
+    traits: [
+      {
+        name: "Vigueur des morts-vivants",
+        description:
+          "Réduit à 0 PV : JdS CON 5 + dégâts subis ou tombe à 1 PV à la place. Inopérant contre les dégâts radiants ou un coup critique.",
+      },
+      {
+        name: "Explosion de zombie",
+        description:
+          "Si il reste des zombies en stock (Décharge de zombie), 1d4 zombie apparaissent à la mort.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "1x morsure + 1x queue (pas les deux sur la même cible).",
+      },
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+10",
+        reach: "3 m",
+        hit: "33 (4d12 + 7) dégâts perçants. Si cible M ou plus petite : agrippée (DD 17 pour se libérer) et entravée. Tant que l'agrippement dure, le tyrannosaure ne peut pas mordre une autre cible ni régurgiter de zombies.",
+      },
+      {
+        name: "Queue",
+        type: "Melee",
+        modifier: "+10",
+        reach: "3 m",
+        hit: "20 (3d8 + 7) dégâts contondants.",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Décharge de zombie",
+        description:
+          "Fait apparaître un zombie normal dans un espace libre à 2 cases. Le zombie agit à sa propre initiative. Après chaque régurgitation, lancer 1d6 : sur un 1, il n'a plus de zombies et perd cette compétence.",
+      },
+    ],
+  },
 };
