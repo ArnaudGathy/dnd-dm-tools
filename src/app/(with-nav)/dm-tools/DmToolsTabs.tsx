@@ -1,11 +1,10 @@
 "use client";
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Backpack, Skull, Sparkles } from "lucide-react";
+import { Backpack, Sparkles } from "lucide-react";
 import { InventoryItem, MagicItem } from "@prisma/client";
 import MagicItemsPool from "@/app/(with-nav)/magic-items/MagicItemsPool";
 import InventoryItemsPool from "@/app/(with-nav)/inventory-items/InventoryItemsPool";
-import DeathList from "@/app/(with-nav)/death/DeathList";
 
 export default function DmToolsTabs({
   magicItems,
@@ -15,12 +14,8 @@ export default function DmToolsTabs({
   inventoryItems: InventoryItem[];
 }) {
   return (
-    <Tabs defaultValue="death" className="flex flex-col">
+    <Tabs defaultValue="magic-items" className="flex flex-col">
       <TabsList className="h-auto w-fit flex-wrap self-center">
-        <TabsTrigger value="death" className="flex items-center gap-2">
-          <Skull className="size-4" />
-          Death Tracker
-        </TabsTrigger>
         <TabsTrigger value="magic-items" className="flex items-center gap-2">
           <Sparkles className="size-4" />
           Objets magiques
@@ -41,10 +36,6 @@ export default function DmToolsTabs({
         <div className="mx-auto flex w-full max-w-2xl flex-col">
           <InventoryItemsPool items={inventoryItems} />
         </div>
-      </TabsContent>
-
-      <TabsContent value="death" className="mt-6">
-        <DeathList />
       </TabsContent>
     </Tabs>
   );

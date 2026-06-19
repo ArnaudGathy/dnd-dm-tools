@@ -4,6 +4,7 @@ import { getUnassignedInventoryItems } from "@/lib/api/inventoryItems";
 import { BookOpenText, HeartPulse } from "lucide-react";
 import DmToolLinkCard from "@/app/(with-nav)/dm-tools/DmToolLinkCard";
 import DmToolsTabs from "@/app/(with-nav)/dm-tools/DmToolsTabs";
+import DeathList from "@/app/(with-nav)/death/DeathList";
 
 const DmToolsPage = async () => {
   await restrictToAdmins();
@@ -19,6 +20,8 @@ const DmToolsPage = async () => {
           Accès rapide aux écrans de jeu et aux outils de gestion réservés au MJ.
         </p>
       </header>
+
+      <DeathList hideWhenIdle />
 
       <section className="flex flex-col gap-3">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">

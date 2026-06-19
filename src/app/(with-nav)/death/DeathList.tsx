@@ -54,7 +54,7 @@ function Segment({
   );
 }
 
-export default function DeathList() {
+export default function DeathList({ hideWhenIdle = false }: { hideWhenIdle?: boolean }) {
   const { charactersData, setCharactersData } = useCharacterTracker();
 
   const group = useGroupFromCampaign();
@@ -99,7 +99,7 @@ export default function DeathList() {
   }, [charactersData, setCharactersData]);
 
   if (!group.length) {
-    return <div className="mt-8 text-muted-foreground">Select a group</div>;
+    return hideWhenIdle ? null : <div className="mt-8 text-muted-foreground">Select a group</div>;
   }
 
   const hasCharacters = !!charactersData?.length;
@@ -125,13 +125,15 @@ export default function DeathList() {
   };
 
   if (!hasCharacters) {
-    return <div className="mt-8 text-muted-foreground">Ajouter un personnage.</div>;
+    return hideWhenIdle ? null : (
+      <div className="mt-8 text-muted-foreground">Ajouter un personnage.</div>
+    );
   }
 
   const dyingCharacters = (charactersData ?? []).filter((char) => char.currentHP <= 0);
 
   if (!dyingCharacters.length) {
-    return (
+    return hideWhenIdle ? null : (
       <div className="mt-8 text-muted-foreground">
         Personne n&apos;est à terre. Les jets de sauvegarde apparaîtront quand un personnage tombera
         à 0 PV.
@@ -139,8 +141,8 @@ export default function DeathList() {
     );
   }
 
-  return (
-    <div className="mt-8 flex flex-col gap-3">
+  const list = (
+    <div className={cn("flex flex-col gap-3", !hideWhenIdle && "mt-8")}>
       {dyingCharacters.map(({ characterName, success, failure }) => {
         const status = getStatus(success, failure);
         const meta = statusMeta[status];
@@ -234,4 +236,17 @@ export default function DeathList() {
       })}
     </div>
   );
+
+  if (hideWhenIdle) {
+    return (
+      <section className="flex flex-col gap-3">
+        <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+          Death Tracker
+        </h2>
+        {list}
+      </section>
+    );
+  }
+
+  return list;
 }

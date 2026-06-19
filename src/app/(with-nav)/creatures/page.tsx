@@ -58,6 +58,9 @@ export default async function AllCreaturesList({
                         href={`/creatures/${creature.id}`}
                         className="group flex items-center gap-2 rounded-md px-2 py-1.5 text-sm no-underline transition-colors hover:bg-muted"
                       >
+                        <span className="min-w-[1.75rem] shrink-0 rounded bg-muted px-1.5 py-0.5 text-center font-mono text-xs text-muted-foreground transition-colors group-hover:bg-background group-hover:text-foreground">
+                          {getChallengeRatingAsFraction(creature.challengeRating)}
+                        </span>
                         <span className="flex-1 truncate text-muted-foreground transition-colors group-hover:text-foreground">
                           {creature.name}
                         </span>

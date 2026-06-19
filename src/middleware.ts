@@ -16,7 +16,6 @@ export const config = {
     "/spells/:path*",
     "/creatures/:path*",
     "/dm-screen",
-    "/death",
     "/rules",
     "/magic-items",
   ],

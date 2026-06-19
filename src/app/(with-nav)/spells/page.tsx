@@ -3,7 +3,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/components/ui/Link";
 import { entries } from "remeda";
-import { cn } from "@/lib/utils";
+import { cn, restrictToAdmins } from "@/lib/utils";
 import { Classes, SpellAction } from "@prisma/client";
 import SpellsListFilters from "./SpellsListFilters";
 import { Sparkle, MessageCircleMore } from "lucide-react";
@@ -34,6 +34,8 @@ export default async function AllSpellsList({
     class?: string;
   }>;
 }) {
+  await restrictToAdmins();
+
   const {
     groupBy = SPELLS_GROUP_BY.LEVEL,
     ritual,
