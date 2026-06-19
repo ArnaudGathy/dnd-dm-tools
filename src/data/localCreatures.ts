@@ -1965,7 +1965,7 @@ export const localCreatures: Record<string, Creature> = {
   },
   grung: {
     name: "Grung",
-    id: "grung",
+    id: "_grung",
     type: "Humanoid (Grung)",
     size: "Small",
     alignment: "Lawful Evil",

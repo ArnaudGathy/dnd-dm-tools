@@ -241,6 +241,21 @@ export const getEncounterFromLocation = (location: Encounter["location"]) => {
   return encounter;
 };
 
+export const getEncountersForCreatureId = (creatureId: string) => {
+  return encounters
+    .filter((encounter) =>
+      Object.values(encounter.ennemies ?? {}).some((enemies) =>
+        (enemies ?? []).some((enemy) => getIdFromEnemy(enemy) === creatureId),
+      ),
+    )
+    .toSorted(
+      (a, b) =>
+        a.scenario.localeCompare(b.scenario) ||
+        a.location.name.localeCompare(b.location.name) ||
+        a.location.mapMarker.localeCompare(b.location.mapMarker, undefined, { numeric: true }),
+    );
+};
+
 const findClosestIndex = (partyLevels: string[], partylevel: string) => {
   const target = parseFloat(partylevel);
   return partyLevels.reduce((closestIndex, level, index) => {

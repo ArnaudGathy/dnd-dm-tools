@@ -403,7 +403,7 @@ export const CombatModule = ({
                 <UserPlusIcon className="size-6" />
                 Participants
               </Button>
-              <Link target="_blank" href="/death">
+              <Link target="_blank" href="/dm-tools">
                 <Button variant="outline">
                   <SkullIcon />
                 </Button>

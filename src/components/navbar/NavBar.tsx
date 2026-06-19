@@ -12,7 +12,7 @@ import Link from "next/link";
 import SignInButton from "@/components/navbar/SignInButton";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { getSessionData } from "@/lib/utils";
-import { BookText, LayoutDashboard, SquareUserIcon, SwordsIcon } from "lucide-react";
+import { BookText, LayoutDashboard, PawPrint, SquareUserIcon, SwordsIcon } from "lucide-react";
 import { CampaignSelect } from "@/components/navbar/CampaignSelect";
 
 const menuItems = [
@@ -26,6 +26,12 @@ const menuItems = [
     label: "Outils MJ",
     to: "/dm-tools",
     icon: LayoutDashboard,
+    isPrivate: true,
+  },
+  {
+    label: "Créatures",
+    to: "/creatures",
+    icon: PawPrint,
     isPrivate: true,
   },
   {
