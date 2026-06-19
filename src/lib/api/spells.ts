@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { groupBy as groupByRemeda, map, pipe, prop, reduce, uniqueBy } from "remeda";
-import { Spell, Character, SpellsOnCharacters } from "@prisma/client";
+import { Spell, Character, Classes, SpellAction, SpellsOnCharacters } from "@prisma/client";
 
 export enum SPELLS_GROUP_BY {
   CHARACTER = "character",
@@ -69,6 +69,53 @@ export const getSpellById = async (spellId: string) => {
       id: spellId,
     },
   });
+};
+
+export const getAllSpells = async ({
+  groupBy = SPELLS_GROUP_BY.LEVEL,
+  ritualOnly = false,
+  concentrationOnly = false,
+  actionTypes,
+  level,
+  search,
+  spellClass,
+}: {
+  groupBy?: SPELLS_GROUP_BY;
+  ritualOnly?: boolean;
+  concentrationOnly?: boolean;
+  actionTypes?: SpellAction[];
+  level?: number;
+  search?: string;
+  spellClass?: Classes;
+} = {}) => {
+  const spells = (
+    await prisma.spell.findMany({
+      where: {
+        ...(ritualOnly ? { isRitual: true } : {}),
+        ...(concentrationOnly ? { concentration: true } : {}),
+        ...(actionTypes && actionTypes.length > 0 ? { actionType: { in: actionTypes } } : {}),
+        ...(level !== undefined ? { level } : {}),
+        ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
+        ...(spellClass ? { classes: { has: spellClass } } : {}),
+      },
+      // Exclude the heavy `data` payload — the list only needs these columns.
+      select: {
+        id: true,
+        name: true,
+        level: true,
+        isRitual: true,
+        concentration: true,
+        actionType: true,
+        classes: true,
+      },
+    })
+  ).sort((a, b) => a.name.localeCompare(b.name, "fr", { sensitivity: "base" }));
+
+  if (groupBy === SPELLS_GROUP_BY.LEVEL) {
+    return groupByRemeda(spells, (spell) => spell.level.toString());
+  }
+
+  return groupByRemeda(spells, (spell) => spell.name[0].toLowerCase());
 };
 
 export const getSpellByIds = async (spellIds: string[]) => {

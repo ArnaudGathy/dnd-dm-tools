@@ -20,6 +20,12 @@ pnpm typecheck    # TypeScript type checking
 pnpm db:migrate   # Run Prisma migrations
 pnpm db:backup    # PostgreSQL backup to backups/
 pnpm db:restore   # PostgreSQL restore from backup
+
+# Spell cache (AideDD — see .claude/rules/spell-data.md)
+pnpm spells:sync          # Insert missing creature-referenced spells into the Spell table
+pnpm spells:cache         # Fetch+cache spell data (Spell.data) from AideDD (only missing; resumable)
+pnpm spells:cache:refresh # Re-fetch & overwrite ALL cached spell payloads (AideDD data changed)
+pnpm spells:reproject     # Re-derive projected columns from Spell.data (no AideDD calls)
 ```
 
 Pre-commit hooks run lint-staged automatically via Husky.
@@ -50,7 +56,7 @@ Pre-commit hooks run lint-staged automatically via Husky.
 
 ## Rules & Agents
 
-Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md · @.claude/rules/creature-data.md
+Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md · @.claude/rules/creature-data.md · @.claude/rules/spell-data.md
 
 Custom agents for scoped work: `prisma-agent` (schema/migrations/queries), `encounter-builder` (encounter data).
 

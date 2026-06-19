@@ -44,6 +44,10 @@ export default function SpellCasting({ spell, tiny }: { spell: APISpell; tiny?: 
           isInline
         />
       )}
+
+      {!!spell.classes?.length && (
+        <StatCell name="Classes" stat={spell.classes.map((c) => c.name).join(", ")} isInline />
+      )}
     </div>
   );
 }

@@ -3,20 +3,46 @@ import { getBaseSpellData, parseSpellFromAideDD } from "@/lib/aideDDParseSpellPa
 import * as cheerio from "cheerio";
 import { parseCreaturesFromAideDD } from "@/lib/aideDDParseCreature";
 import { Creature, SummaryCreature } from "@/types/types";
-import { APISpell, creatureSchema } from "@/types/schemas";
+import { APISpell, apiSpellSchema, creatureSchema } from "@/types/schemas";
 import { creatureOverrides } from "@/data/creatureOverrides";
 import { mergeDeep } from "remeda";
 import { localCreatures } from "@/data/localCreatures";
 import prisma from "@/lib/prisma";
+import { Prisma } from "@prisma/client";
+import { projectSpellColumns } from "@/lib/spellProjection";
 
 const getFrSpellURL = "https://www.aidedd.org/public/spell/fr";
 const getEnSpellURL = "https://www.aidedd.org/public/spell";
 const getEnCreatureURL = "https://www.aidedd.org/public/monster";
 
+// AideDD is a public website, not an API. We present ourselves with realistic
+// browser headers so our requests don't look like an automated scraper (the
+// default axios User-Agent is a dead giveaway). Pacing/jitter between requests
+// is the caller's responsibility (see scripts/backfill-spell-cache.ts).
+const aideDDClient = axios.create({
+  timeout: 20000,
+  headers: {
+    "User-Agent":
+      "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+    Accept:
+      "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8",
+    "Accept-Language": "fr-BE,fr;q=0.9,en-US;q=0.8,en;q=0.7",
+    "Accept-Encoding": "gzip, deflate, br",
+    "Sec-Ch-Ua": '"Chromium";v="126", "Google Chrome";v="126", "Not.A/Brand";v="24"',
+    "Sec-Ch-Ua-Mobile": "?0",
+    "Sec-Ch-Ua-Platform": '"macOS"',
+    "Sec-Fetch-Dest": "document",
+    "Sec-Fetch-Mode": "navigate",
+    "Sec-Fetch-Site": "none",
+    "Sec-Fetch-User": "?1",
+    "Upgrade-Insecure-Requests": "1",
+  },
+});
+
 const inFlightCreatureRequests = new Map<string, Promise<Creature | null>>();
 
 export const getSpellDataFromFrName = async (enSpellName: string) => {
-  const response = await axios.get(`${getEnSpellURL}/${enSpellName}`);
+  const response = await aideDDClient.get(`${getEnSpellURL}/${enSpellName}`);
   const $ = cheerio.load(response.data);
   const mainDataBlock = $(".col1");
   const linkHref = mainDataBlock.find(".trad > a").attr("href");
@@ -26,7 +52,7 @@ export const getSpellDataFromFrName = async (enSpellName: string) => {
 };
 
 export const getEnSpellIdFromFrName = async (frSpellName: string) => {
-  const response = await axios.get(`${getFrSpellURL}/${frSpellName}`);
+  const response = await aideDDClient.get(`${getFrSpellURL}/${frSpellName}`);
   const $ = cheerio.load(response.data);
   const mainDataBlock = $(".col1");
   const linkHref = mainDataBlock.find(".trad > a").attr("href");
@@ -34,18 +60,73 @@ export const getEnSpellIdFromFrName = async (frSpellName: string) => {
 };
 
 const getSpellDataFromFRName = async (frSpellName: string, enSpellName: string) => {
-  const response = await axios.get(`${getFrSpellURL}/${frSpellName}`);
+  const response = await aideDDClient.get(`${getFrSpellURL}/${frSpellName}`);
   return parseSpellFromAideDD({ html: response.data, spellName: enSpellName });
 };
 
 export const getSummarySpellFromFR = async (spellName: string) => {
-  const response = await axios.get(`${getFrSpellURL}/${spellName}`);
+  const response = await aideDDClient.get(`${getFrSpellURL}/${spellName}`);
   return getBaseSpellData(response.data, spellName);
 };
 
-export const getSpellDetails = async (enSpellName: string): Promise<APISpell> => {
-  const { frId } = await getSpellDataFromFrName(enSpellName);
-  return getSpellDataFromFRName(frId, enSpellName);
+const inFlightSpellRequests = new Map<string, Promise<APISpell>>();
+
+/**
+ * Look up a spell's full data on the `Spell` row, or fetch it from AideDD and
+ * cache it there. A spell is only fetched from AideDD once; afterwards it is
+ * served from `Spell.data`. The fetch also projects the queryable columns
+ * (concentration, actionType, classes, …). Use `clearSpellCache` to drop the
+ * cached payload, or pass `{ force: true }` to refetch and overwrite it (e.g.
+ * when AideDD changed or a field was parsed incorrectly).
+ */
+export const getSpellDetails = async (
+  enSpellName: string,
+  { force = false }: { force?: boolean } = {},
+): Promise<APISpell> => {
+  // 1. Reuse an in-flight request for this spell (dedup) — but a forced refresh
+  // must always hit AideDD, so it never piggy-backs on an in-flight read.
+  const inFlight = inFlightSpellRequests.get(enSpellName);
+  if (inFlight && !force) {
+    return inFlight;
+  }
+
+  // 2. Wrap the fetch logic in a promise and cache it
+  const fetchPromise = (async () => {
+    try {
+      // 1. Serve the cached payload if present (skipped on a forced refresh)
+      if (!force) {
+        const existing = await prisma.spell.findUnique({
+          where: { id: enSpellName },
+        });
+
+        if (existing?.data) {
+          return apiSpellSchema.parse(existing.data);
+        }
+      }
+
+      // 2. Fetch from AideDD
+      const { frId } = await getSpellDataFromFrName(enSpellName);
+      const spell = await getSpellDataFromFRName(frId, enSpellName);
+
+      // 3. Cache the full payload + projected columns (upsert overwrites)
+      const columns = projectSpellColumns(spell);
+      await prisma.spell.upsert({
+        where: { id: enSpellName },
+        update: { ...columns, data: spell as unknown as Prisma.InputJsonValue },
+        create: { id: enSpellName, ...columns, data: spell as unknown as Prisma.InputJsonValue },
+      });
+
+      return spell;
+    } finally {
+      // 4. Remove from in-flight requests once done
+      inFlightSpellRequests.delete(enSpellName);
+    }
+  })();
+
+  if (!force) {
+    inFlightSpellRequests.set(enSpellName, fetchPromise);
+  }
+  return fetchPromise;
 };
 
 /**
@@ -72,7 +153,7 @@ const getOrFetchCreature = async (creatureName: string): Promise<Creature | null
       }
 
       // 2. Fetch from AideDD
-      const response = await axios.get(`${getEnCreatureURL}/${creatureName}`);
+      const response = await aideDDClient.get(`${getEnCreatureURL}/${creatureName}`);
       const creature = parseCreaturesFromAideDD(response.data, creatureName);
 
       if (!creature) {

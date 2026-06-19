@@ -12,6 +12,29 @@ import { z } from "zod";
 import { SummaryAPISpell } from "@/types/schemas";
 import { Prisma } from "@prisma/client";
 import { kebabCaseify } from "@/utils/utils";
+import { restrictToAdmins } from "@/lib/utils";
+
+export const clearSpellCache = async ({
+  spellId,
+  pathToRevalidate,
+}: {
+  spellId: string;
+  pathToRevalidate?: string;
+}) => {
+  await restrictToAdmins();
+
+  // Drop the cached payload so the next render refetches it from AideDD and
+  // repopulates the projected columns. The Spell row itself is kept (it's the
+  // FK target for SpellsOnCharacters).
+  await prisma.spell.update({
+    where: { id: spellId },
+    data: { data: Prisma.DbNull },
+  });
+
+  if (pathToRevalidate) {
+    revalidatePath(pathToRevalidate);
+  }
+};
 
 export const updateSpellFlagAction = async ({
   flagName,

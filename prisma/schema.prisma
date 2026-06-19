@@ -421,6 +421,13 @@ model Spell {
   name               String
   level              Int
   isRitual           Boolean              @default(false)
+  concentration      Boolean              @default(false)
+  actionType         SpellAction?
+  school             String?
+  classes            Classes[]
+  // Full APISpell payload used to render the details page; null until fetched
+  // from AideDD. Acts as the render cache (replaces the old CachedSpell table).
+  data               Json?
   spellsOnCharacters SpellsOnCharacters[]
 }
 
@@ -459,6 +466,13 @@ model CreaturesOnCharacters {
   isFavorite  Boolean   @default(false)
 
   @@id([creatureId, characterId])
+}
+
+enum SpellAction {
+  ACTION
+  BONUS_ACTION
+  REACTION
+  OTHER
 }
 
 enum WeaponDamageType {

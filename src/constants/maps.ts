@@ -733,6 +733,12 @@ export const CHARACTER_STATUS_MAP = {
   [CharacterStatus.BACKUP]: "Backup",
 };
 
+// Reverse of CLASS_MAP: AideDD's French class label → Classes enum, used when
+// projecting a spell's class list onto the shared Classes enum.
+export const CLASS_BY_LABEL: Record<string, Classes> = Object.fromEntries(
+  (Object.entries(CLASS_MAP) as [Classes, string][]).map(([key, label]) => [label, key]),
+);
+
 export const ABILITIES_MAP = {
   dexterity: "Dextérité",
   constitution: "Constitution",

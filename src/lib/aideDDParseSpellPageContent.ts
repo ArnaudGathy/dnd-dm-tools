@@ -68,16 +68,13 @@ export const parseSpellFromAideDD = ({ html, spellName }: { html: string; spellN
     ? description.split("Emplacement de niveau supérieur")
     : description.split("Amélioration de sort mineur");
 
-  const classRole = mainDataBlock
-    .find(".classe")
-    .contents()
-    .toArray()
-    .map((el) => {
-      if (el.type === "text") {
-        return el.data?.trim();
-      }
-      return null;
-    });
+  const classesString = levelAndSchoolBlock.match(/\(([^)]*)\)/)?.[1];
+  const classRole = classesString
+    ? classesString
+        .split(",")
+        .map((c) => c.trim())
+        .filter(Boolean)
+    : [];
 
   return {
     name: baseSpellData?.name,

@@ -3,6 +3,8 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 import { Spell } from "@prisma/client";
 import { APISpell } from "@/types/schemas";
 import Link from "next/link";
+import { getSessionData } from "@/lib/utils";
+import ClearSpellCacheButton from "@/components/spells/ClearSpellCacheButton";
 
 export default async function SpellHeader({
   spellFromAPI,
@@ -17,6 +19,8 @@ export default async function SpellHeader({
   if (!spellFromAPI.index) {
     throw new Error("Missing spell index");
   }
+
+  const { isAdmin } = await getSessionData();
 
   const spellName = spellFromApp?.name
     ? spellFromApp.name
@@ -33,6 +37,8 @@ export default async function SpellHeader({
             <span className="truncate">
               {tiny ? <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link> : spellName}
             </span>
+
+            {!tiny && isAdmin && <ClearSpellCacheButton spellId={spellFromAPI.index} />}
           </div>
         </CardTitle>
       )}
