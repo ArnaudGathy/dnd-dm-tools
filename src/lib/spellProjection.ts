@@ -4,16 +4,15 @@ import { CLASS_BY_LABEL } from "@/constants/maps";
 
 /**
  * Derive the combat-relevant casting time category from AideDD's French
- * `casting_time` string. Anything that isn't an action / bonus action /
- * reaction (e.g. "1 minute", "10 minutes", "1 heure") maps to OTHER.
+ * `casting_time` string. Anything that isn't a bonus action / reaction
+ * (e.g. "1 minute", "10 minutes", "1 heure") maps to ACTION.
  * Order matters: "Action bonus" must be checked before plain "Action".
  */
 export const deriveActionType = (castingTime?: string | null): SpellAction => {
   const ct = (castingTime ?? "").trim().toLowerCase();
   if (ct.startsWith("réaction") || ct.startsWith("reaction")) return SpellAction.REACTION;
   if (ct.startsWith("action bonus")) return SpellAction.BONUS_ACTION;
-  if (ct.startsWith("action")) return SpellAction.ACTION;
-  return SpellAction.OTHER;
+  return SpellAction.ACTION;
 };
 
 /** Map AideDD's French class names onto the Classes enum (unknown names dropped). */

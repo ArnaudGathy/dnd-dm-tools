@@ -472,7 +472,6 @@ enum SpellAction {
   ACTION
   BONUS_ACTION
   REACTION
-  OTHER
 }
 
 enum WeaponDamageType {
