@@ -8,10 +8,6 @@ export enum SPELLS_GROUP_BY {
   ALPHABETICAL = "alphabetical",
 }
 
-export enum SPELLS_FILTER_BY {
-  PREPARED = "prepared",
-}
-
 export type SpellWithFlags = Spell &
   Pick<
     SpellsOnCharacters,
@@ -135,45 +131,56 @@ export const getGroupedCharacterSpells = async ({
   characterId,
   search,
   groupBy,
-  filterBy,
-  isWizard,
+  isWizard = false,
+  usableOnly = false,
+  level,
+  ritualOnly = false,
+  concentrationOnly = false,
+  actionTypes,
+  hasLongRestCast = false,
+  canBeSwappedOnLongRest = false,
+  canBeSwappedOnLevelUp = false,
 }: {
   characterId?: number;
   search?: string;
   groupBy?: SPELLS_GROUP_BY;
-  filterBy?: SPELLS_FILTER_BY;
   isWizard?: boolean;
+  usableOnly?: boolean;
+  level?: number;
+  ritualOnly?: boolean;
+  concentrationOnly?: boolean;
+  actionTypes?: SpellAction[];
+  hasLongRestCast?: boolean;
+  canBeSwappedOnLongRest?: boolean;
+  canBeSwappedOnLevelUp?: boolean;
 }) => {
-  const filterCondition = filterBy ? filterBy === SPELLS_FILTER_BY.PREPARED : undefined;
-
   const response = await prisma.spellsOnCharacters.findMany({
     where: {
-      AND: [
-        { characterId: characterId },
-        {
-          spell: {
-            name: {
-              contains: search,
-              mode: "insensitive",
-            },
-          },
-        },
-        {
-          OR: [
-            {
-              isPrepared: filterCondition,
-            },
-            {
-              isAlwaysPrepared: filterCondition,
-            },
-            {
-              spell: {
-                isRitual: filterBy && isWizard ? filterBy === SPELLS_FILTER_BY.PREPARED : undefined,
-              },
-            },
-          ],
-        },
-      ],
+      characterId,
+      // Config flags live on the join row.
+      ...(hasLongRestCast ? { hasLongRestCast: true } : {}),
+      ...(canBeSwappedOnLongRest ? { canBeSwappedOnLongRest: true } : {}),
+      ...(canBeSwappedOnLevelUp ? { canBeSwappedOnLevelUp: true } : {}),
+      // Spell properties live on the related Spell.
+      spell: {
+        ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
+        ...(level !== undefined ? { level } : {}),
+        ...(ritualOnly ? { isRitual: true } : {}),
+        ...(concentrationOnly ? { concentration: true } : {}),
+        ...(actionTypes && actionTypes.length > 0 ? { actionType: { in: actionTypes } } : {}),
+      },
+      // "Usable" mirrors isSpellUsable: prepared, always prepared, a free
+      // long-rest cast, or (for wizards) a ritual.
+      ...(usableOnly
+        ? {
+            OR: [
+              { isPrepared: true },
+              { isAlwaysPrepared: true },
+              { hasLongRestCast: true },
+              ...(isWizard ? [{ spell: { isRitual: true } }] : []),
+            ],
+          }
+        : {}),
     },
     include: {
       spell: true,
