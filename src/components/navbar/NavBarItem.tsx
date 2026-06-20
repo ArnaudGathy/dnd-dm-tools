@@ -1,11 +1,7 @@
-import Link from "next/link";
-import {
-  NavigationMenuItem,
-  NavigationMenuLink,
-  navigationMenuTriggerStyle,
-} from "@/components/ui/navigation-menu";
-import { cn, getSessionData } from "@/lib/utils";
+import { NavigationMenuItem } from "@/components/ui/navigation-menu";
+import { getSessionData } from "@/lib/utils";
 import { ElementType } from "react";
+import { NavBarLink } from "@/components/navbar/NavBarLink";
 
 export const NavBarItem = async ({
   to,
@@ -28,12 +24,7 @@ export const NavBarItem = async ({
 
   return (
     <NavigationMenuItem>
-      <Link href={to} legacyBehavior passHref>
-        <NavigationMenuLink className={cn(navigationMenuTriggerStyle(), "flex items-center gap-2")}>
-          <Icon className="size-5 text-primary" />
-          {label}
-        </NavigationMenuLink>
-      </Link>
+      <NavBarLink to={to} label={label} icon={<Icon className="size-5 text-primary" />} />
     </NavigationMenuItem>
   );
 };
