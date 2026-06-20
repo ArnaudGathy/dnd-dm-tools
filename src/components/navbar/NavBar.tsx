@@ -45,7 +45,7 @@ const menuItems = [
     label: "Sorts",
     to: "/spells",
     icon: Book,
-    isPrivate: true,
+    shouldBeLoggedIn: true,
   },
   {
     label: "Personnages",

@@ -2,16 +2,20 @@
 
 import { MagnifyingGlassIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { Input } from "@/components/ui/input";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const SearchField = ({
   search,
   setSearch,
   isDefault = false,
+  clearSignal,
 }: {
   search: string;
   setSearch: (value: string) => void;
   isDefault?: boolean;
+  // Bump this number to imperatively empty the (uncontrolled) input — e.g. when a
+  // parent "clear all filters" action resets the search param externally.
+  clearSignal?: number;
 }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [hasValue, setHasValue] = useState(Boolean(search));
@@ -20,6 +24,19 @@ export const SearchField = ({
     setHasValue(Boolean(value));
     setSearch(value);
   };
+
+  const isFirstRender = useRef(true);
+  useEffect(() => {
+    // Skip the mount call; only react to subsequent clear signals.
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    setHasValue(false);
+  }, [clearSignal]);
 
   const clear = () => {
     if (inputRef.current) {

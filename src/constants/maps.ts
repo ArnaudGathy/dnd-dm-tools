@@ -775,6 +775,19 @@ export const ABILITY_NAME_MAP_TO_FR: { [key in Abilities]: string } = {
   [Abilities.CHARISMA]: "CHA",
 };
 
+// The eight schools of magic, stored verbatim (French) in Spell.school. Used as
+// the options for the spell-list school filter and to validate the URL param.
+export const SPELL_SCHOOLS = [
+  "Abjuration",
+  "Divination",
+  "Enchantement",
+  "Évocation",
+  "Illusion",
+  "Invocation",
+  "Nécromancie",
+  "Transmutation",
+] as const;
+
 export const SKILL_ABILITY_MAP: { [key in Skills]: AbilityNameType } = {
   [Skills.ATHLETICS]: "strength",
 

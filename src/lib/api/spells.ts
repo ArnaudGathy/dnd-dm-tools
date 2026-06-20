@@ -6,7 +6,12 @@ export enum SPELLS_GROUP_BY {
   CHARACTER = "character",
   LEVEL = "level",
   ALPHABETICAL = "alphabetical",
+  NONE = "none",
 }
+
+// Single-group key used when grouping is disabled — all spells land in one flat,
+// name-sorted list.
+export const SPELLS_NO_GROUP_KEY = "all";
 
 export type SpellWithFlags = Spell &
   Pick<
@@ -72,7 +77,8 @@ export const getAllSpells = async ({
   ritualOnly = false,
   concentrationOnly = false,
   actionTypes,
-  level,
+  levels,
+  schools,
   search,
   spellClass,
 }: {
@@ -80,7 +86,8 @@ export const getAllSpells = async ({
   ritualOnly?: boolean;
   concentrationOnly?: boolean;
   actionTypes?: SpellAction[];
-  level?: number;
+  levels?: number[];
+  schools?: string[];
   search?: string;
   spellClass?: Classes;
 } = {}) => {
@@ -90,7 +97,8 @@ export const getAllSpells = async ({
         ...(ritualOnly ? { isRitual: true } : {}),
         ...(concentrationOnly ? { concentration: true } : {}),
         ...(actionTypes && actionTypes.length > 0 ? { actionType: { in: actionTypes } } : {}),
-        ...(level !== undefined ? { level } : {}),
+        ...(levels && levels.length > 0 ? { level: { in: levels } } : {}),
+        ...(schools && schools.length > 0 ? { school: { in: schools } } : {}),
         ...(search ? { name: { contains: search, mode: "insensitive" } } : {}),
         ...(spellClass ? { classes: { has: spellClass } } : {}),
       },
@@ -106,6 +114,10 @@ export const getAllSpells = async ({
       },
     })
   ).sort((a, b) => a.name.localeCompare(b.name, "fr", { sensitivity: "base" }));
+
+  if (groupBy === SPELLS_GROUP_BY.NONE) {
+    return { [SPELLS_NO_GROUP_KEY]: spells };
+  }
 
   if (groupBy === SPELLS_GROUP_BY.LEVEL) {
     return groupByRemeda(spells, (spell) => spell.level.toString());

@@ -19,7 +19,8 @@
     "spells:sync": "tsx --env-file=.env scripts/sync-creature-spells.ts",
     "spells:cache": "tsx --env-file=.env scripts/backfill-spell-cache.ts",
     "spells:cache:refresh": "tsx --env-file=.env scripts/backfill-spell-cache.ts --refresh",
-    "spells:reproject": "tsx --env-file=.env scripts/reproject-spell-columns.ts"
+    "spells:reproject": "tsx --env-file=.env scripts/reproject-spell-columns.ts",
+    "spells:import": "tsx --env-file=.env scripts/import-spell-list.ts"
   },
   "dependencies": {
     "@dnd-kit/core": "^6.3.1",
