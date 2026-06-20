@@ -23,8 +23,11 @@ export default function DeleteSpellButton({
         })
       }
     >
-      <button className="flex items-center">
-        <X className="size-6 cursor-pointer text-primary" />
+      <button
+        title="Supprimer le sort"
+        className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-destructive"
+      >
+        <X className="size-4" />
       </button>
     </ConfirmDialog>
   );

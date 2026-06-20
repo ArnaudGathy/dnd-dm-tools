@@ -5,6 +5,14 @@ import { Switch } from "@/components/ui/switch";
 import { Label } from "@radix-ui/react-label";
 import { Settings } from "lucide-react";
 import { updateSpellFlagAction } from "@/lib/actions/spells";
+import { Themes } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
+
+type FlagName =
+  | "isPrepared"
+  | "isAlwaysPrepared"
+  | "hasLongRestCast"
+  | "canBeSwappedOnLongRest"
+  | "canBeSwappedOnLevelUp";
 
 export default function SpellsSettings({
   characterId,
@@ -23,109 +31,86 @@ export default function SpellsSettings({
   canBeSwappedOnLevelUp: boolean;
   isPrepared: boolean;
 }) {
+  const flags: {
+    name: FlagName;
+    label: string;
+    checked: boolean;
+    theme: Themes;
+    text: string;
+  }[] = [
+    {
+      name: "isPrepared",
+      label: "Préparé",
+      checked: isPrepared,
+      theme: "sky",
+      text: "text-sky-500",
+    },
+    {
+      name: "isAlwaysPrepared",
+      label: "Toujours préparé",
+      checked: isAlwaysPrepared,
+      theme: "amber",
+      text: "text-amber-500",
+    },
+    {
+      name: "hasLongRestCast",
+      label: "1 lancement / long repos",
+      checked: hasLongRestCast,
+      theme: "lime",
+      text: "text-lime-500",
+    },
+    {
+      name: "canBeSwappedOnLongRest",
+      label: "Échangeable / long repos",
+      checked: canBeSwappedOnLongRest,
+      theme: "rose",
+      text: "text-rose-500",
+    },
+    {
+      name: "canBeSwappedOnLevelUp",
+      label: "Échangeable / level up",
+      checked: canBeSwappedOnLevelUp,
+      theme: "purple",
+      text: "text-purple-500",
+    },
+  ];
+
   return (
     <PopoverComponent
       definition={
-        <div className="flex min-w-[200px] flex-col gap-2">
-          <h1 className="text-lg font-bold">Configuration</h1>
-          <div className="flex items-center gap-2">
-            <Switch
-              id="isPrepared"
-              theme="sky"
-              checked={isPrepared}
-              onCheckedChange={async (checked) => {
-                await updateSpellFlagAction({
-                  characterId: characterId,
-                  spellId: spellId,
-                  flagName: "isPrepared",
-                  newState: checked,
-                });
-              }}
-            />
-            <Label htmlFor="isPrepared" className="text-sm text-sky-500">
-              Préparé
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Switch
-              id="isAlwaysPrepared"
-              theme="amber"
-              checked={isAlwaysPrepared}
-              onCheckedChange={async (checked) => {
-                await updateSpellFlagAction({
-                  characterId: characterId,
-                  spellId: spellId,
-                  flagName: "isAlwaysPrepared",
-                  newState: checked,
-                });
-              }}
-            />
-            <Label htmlFor="isAlwaysPrepared" className="text-sm text-amber-500">
-              Toujours préparé
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Switch
-              id="hasLongRestCast"
-              theme="lime"
-              checked={hasLongRestCast}
-              onCheckedChange={async (checked) => {
-                await updateSpellFlagAction({
-                  characterId: characterId,
-                  spellId: spellId,
-                  flagName: "hasLongRestCast",
-                  newState: checked,
-                });
-              }}
-            />
-            <Label htmlFor="hasLongRestCast" className="text-sm text-lime-500">
-              Un lancement par long repos
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Switch
-              id="canBeSwappedOnLongRest"
-              theme="rose"
-              checked={canBeSwappedOnLongRest}
-              onCheckedChange={async (checked) => {
-                await updateSpellFlagAction({
-                  characterId: characterId,
-                  spellId: spellId,
-                  flagName: "canBeSwappedOnLongRest",
-                  newState: checked,
-                });
-              }}
-            />
-            <Label htmlFor="canBeSwappedOnLongRest" className="text-sm text-rose-500">
-              Changement lors d&apos;un long repos
-            </Label>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <Switch
-              id="canBeSwappedOnLevelUp"
-              theme="purple"
-              checked={canBeSwappedOnLevelUp}
-              onCheckedChange={async (checked) => {
-                await updateSpellFlagAction({
-                  characterId: characterId,
-                  spellId: spellId,
-                  flagName: "canBeSwappedOnLevelUp",
-                  newState: checked,
-                });
-              }}
-            />
-            <Label htmlFor="canBeSwappedOnLevelUp" className="text-sm text-purple-500">
-              Changement lors d&apos;un lvl up
-            </Label>
+        <div className="flex min-w-[220px] flex-col gap-3">
+          <h1 className="text-sm font-semibold">Configuration du sort</h1>
+          <div className="flex flex-col gap-2.5">
+            {flags.map((flag) => (
+              <div key={flag.name} className="flex items-center justify-between gap-4">
+                <Label htmlFor={`${flag.name}-${spellId}`} className={`text-sm ${flag.text}`}>
+                  {flag.label}
+                </Label>
+                <Switch
+                  id={`${flag.name}-${spellId}`}
+                  theme={flag.theme}
+                  checked={flag.checked}
+                  onCheckedChange={async (checked) => {
+                    await updateSpellFlagAction({
+                      characterId,
+                      spellId,
+                      flagName: flag.name,
+                      newState: checked,
+                    });
+                  }}
+                />
+              </div>
+            ))}
           </div>
         </div>
       }
     >
-      <Settings className="size-5 stroke-[1.5px]" />
+      <span
+        title="Configurer le sort"
+        className="flex size-6 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+      >
+        <Settings className="size-4" />
+      </span>
     </PopoverComponent>
   );
 }

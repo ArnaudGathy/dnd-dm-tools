@@ -1,8 +1,12 @@
 import { updateSpellFlagAction } from "@/lib/actions/spells";
 import { SpellWithFlags } from "@/lib/api/spells";
-import { Sparkles, SquareCheckBig, SquarePlus, WandSparkles } from "lucide-react";
 import { CharacterById, cn } from "@/lib/utils";
 import { Classes } from "@prisma/client";
+import {
+  CATEGORY_CONFIG,
+  getSpellCategory,
+  isSpellUsable,
+} from "@/app/(with-nav)/characters/[id]/spells/spellStatus";
 
 export const SpellStatusButton = ({
   spell,
@@ -11,52 +15,10 @@ export const SpellStatusButton = ({
   spell: SpellWithFlags;
   character: CharacterById;
 }) => {
-  const isSpellPrepared =
-    spell.isPrepared ||
-    spell.isAlwaysPrepared ||
-    (character.className === Classes.WIZARD && spell.isRitual);
-
-  const getColor = () => {
-    if (!isSpellPrepared) {
-      return "text-neutral-600";
-    }
-
-    if (spell.canBeSwappedOnLongRest) {
-      return "text-rose-500";
-    }
-    if (spell.canBeSwappedOnLevelUp) {
-      return "text-purple-500";
-    }
-
-    if (spell.isAlwaysPrepared) {
-      return "text-amber-500";
-    }
-
-    if (spell.hasLongRestCast) {
-      return "text-lime-500";
-    }
-
-    if (spell.isRitual) {
-      return "text-emerald-500";
-    }
-
-    return "text-sky-500";
-  };
-
-  const getIcon = () => {
-    const classes = cn(getColor(), "size-5");
-    if (spell.hasLongRestCast) {
-      return <WandSparkles className={classes} />;
-    }
-    if (spell.isRitual) {
-      return <Sparkles className={classes} />;
-    }
-    if (isSpellPrepared) {
-      return <SquareCheckBig className={classes} />;
-    }
-
-    return <SquarePlus className={classes} />;
-  };
+  const isWizard = character.className === Classes.WIZARD;
+  const usable = isSpellUsable(spell, isWizard);
+  const category = getSpellCategory(spell, isWizard);
+  const config = CATEGORY_CONFIG[category];
 
   return (
     <form
@@ -71,7 +33,20 @@ export const SpellStatusButton = ({
       }}
       className="flex items-center"
     >
-      <button type="submit">{getIcon()}</button>
+      <button
+        type="submit"
+        title={`${config.label} — cliquer pour ${usable ? "oublier" : "préparer"}`}
+        className="group/toggle flex size-5 shrink-0 items-center justify-center rounded-full transition-colors hover:bg-muted"
+      >
+        <span
+          className={cn(
+            "size-3 rounded-full transition-colors",
+            usable
+              ? config.fill
+              : "border-2 border-muted-foreground/40 group-hover/toggle:border-muted-foreground",
+          )}
+        />
+      </button>
     </form>
   );
 };

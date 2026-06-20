@@ -5,14 +5,13 @@ import { SearchField } from "@/components/SearchField";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDebouncedCallback } from "use-debounce";
 import { entries } from "remeda";
-import { ChevronDown, ChevronUp, SquareCheckBig } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { SquareCheckBig } from "lucide-react";
 import { Toggle } from "@/components/ui/toggle";
 import { SPELLS_FILTER_BY, SPELLS_GROUP_BY } from "@/lib/api/spells";
 
 const tabs = {
-  [SPELLS_GROUP_BY.ALPHABETICAL]: "Alphabétique",
   [SPELLS_GROUP_BY.LEVEL]: "Niveau",
+  [SPELLS_GROUP_BY.ALPHABETICAL]: "Alphabétique",
 };
 
 export type SpellsSearchParams = {
@@ -20,17 +19,14 @@ export type SpellsSearchParams = {
   search?: string;
   filterBy?: SPELLS_FILTER_BY;
   editMode?: "true" | "false";
-  isCollapsed?: "true" | "false";
 };
 
 export default function SpellsFilters() {
-  const defaultSearch = SPELLS_GROUP_BY.LEVEL;
+  const defaultGroupBy = SPELLS_GROUP_BY.LEVEL;
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
   const params = new URLSearchParams(searchParams);
-
-  const isCollapsed = params.get("isCollapsed") === "true";
 
   const updateParams = () => {
     router.replace(`${pathName}?${params.toString()}`);
@@ -46,7 +42,7 @@ export default function SpellsFilters() {
   }, 300);
 
   const handleGroupBy = (groupBy: SPELLS_GROUP_BY) => {
-    if (!!groupBy) {
+    if (groupBy) {
       params.set("groupBy", groupBy);
     } else {
       params.delete("groupBy");
@@ -63,57 +59,34 @@ export default function SpellsFilters() {
     updateParams();
   };
 
-  const handleCollapse = (isCollapsed: boolean) => {
-    if (isCollapsed) {
-      params.set("isCollapsed", "true");
-    } else {
-      params.delete("isCollapsed");
-    }
-    updateParams();
-  };
-
   return (
-    <div className="flex flex-col gap-2 md:flex-row">
-      <div className="flex gap-2">
-        <Toggle variant="outline" pressed={isCollapsed} onPressedChange={handleCollapse}>
-          Filtres
-          {isCollapsed ? <ChevronDown className="size-4" /> : <ChevronUp className="size-4" />}
-        </Toggle>
-        <SearchField search={params.get("search") ?? ""} setSearch={handleSearchParams} isDefault />
-      </div>
+    <div className="flex flex-col items-start gap-2 md:flex-row md:items-center">
+      <SearchField search={params.get("search") ?? ""} setSearch={handleSearchParams} isDefault />
 
-      <div
-        className={cn("flex items-center gap-2", {
-          hidden: params.get("isCollapsed"),
-        })}
+      <Tabs defaultValue={params.get("groupBy") ?? defaultGroupBy}>
+        <TabsList>
+          {entries(tabs).map(([key, value]) => (
+            <TabsTrigger
+              key={key}
+              value={key}
+              onClick={() => handleGroupBy(key as SPELLS_GROUP_BY)}
+            >
+              {value}
+            </TabsTrigger>
+          ))}
+        </TabsList>
+      </Tabs>
+
+      <Toggle
+        variant="outline"
+        aria-label="Afficher seulement les sorts utilisables (préparés)"
+        pressed={params.get("filterBy") === SPELLS_FILTER_BY.PREPARED}
+        onPressedChange={(isEnabled) =>
+          isEnabled ? handleFilterBy(SPELLS_FILTER_BY.PREPARED) : handleFilterBy(undefined)
+        }
       >
-        <Tabs defaultValue={params.get("groupBy") ?? defaultSearch}>
-          <TabsList>
-            {entries(tabs).map(([key, value]) => {
-              return (
-                <TabsTrigger
-                  key={key}
-                  value={key}
-                  onClick={() => handleGroupBy(key as SPELLS_GROUP_BY)}
-                >
-                  {value}
-                </TabsTrigger>
-              );
-            })}
-          </TabsList>
-        </Tabs>
-        <div className="flex items-center gap-2">
-          <Toggle
-            variant="outline"
-            pressed={params.get("filterBy") === SPELLS_FILTER_BY.PREPARED}
-            onPressedChange={(isEnabled) =>
-              isEnabled ? handleFilterBy(SPELLS_FILTER_BY.PREPARED) : handleFilterBy(undefined)
-            }
-          >
-            <SquareCheckBig /> Préparés
-          </Toggle>
-        </div>
-      </div>
+        <SquareCheckBig className="size-4" /> Sorts utilisables
+      </Toggle>
     </div>
   );
 }
