@@ -1,20 +1,15 @@
-import { CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SparklesIcon } from "@heroicons/react/24/solid";
 import { Spell } from "@prisma/client";
 import { APISpell } from "@/types/schemas";
-import Link from "next/link";
 import { getSessionData } from "@/lib/utils";
 import ClearSpellCacheButton from "@/components/spells/ClearSpellCacheButton";
 
 export default async function SpellHeader({
   spellFromAPI,
   spellFromApp,
-  tiny,
 }: {
   spellFromApp: Spell | null;
   spellFromAPI: APISpell;
   characterId?: number;
-  tiny?: boolean;
 }) {
   if (!spellFromAPI.index) {
     throw new Error("Missing spell index");
@@ -25,28 +20,27 @@ export default async function SpellHeader({
   const spellName = spellFromApp?.name
     ? spellFromApp.name
     : (spellFromAPI.name ?? spellFromAPI.index);
-  const isRitual = spellFromApp?.isRitual ?? spellFromAPI.ritual;
+  const eyebrow = [
+    spellFromAPI.school?.name,
+    spellFromAPI.level !== undefined && `Niveau ${spellFromAPI.level}`,
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   return (
-    <CardHeader>
-      {(spellFromApp?.name || spellFromAPI.name) && (
-        <CardTitle className="flex items-center justify-between gap-2">
-          <div className="flex items-center gap-2 truncate">
-            {isRitual && <SparklesIcon className="size-6 text-emerald-500" />}
+    <div className="flex items-start justify-between gap-4 border-l-2 border-primary bg-secondary/20 px-4 py-3 md:px-6">
+      <div className="flex min-w-0 flex-col gap-0.5">
+        {eyebrow && (
+          <span className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+            {eyebrow}
+          </span>
+        )}
+        <h1 className="truncate text-2xl font-semibold leading-tight tracking-tight md:text-3xl">
+          {spellName}
+        </h1>
+      </div>
 
-            <span className="truncate">
-              {tiny ? <Link href={`/spells/${spellFromAPI.index}`}>{spellName}</Link> : spellName}
-            </span>
-
-            {!tiny && isAdmin && <ClearSpellCacheButton spellId={spellFromAPI.index} />}
-          </div>
-        </CardTitle>
-      )}
-
-      <CardDescription className="flex gap-2">
-        {spellFromAPI.level !== undefined && <span>Niveau {spellFromAPI.level}</span>}
-        {!tiny && spellFromAPI.school && <span>{spellFromAPI.school.name}</span>}
-      </CardDescription>
-    </CardHeader>
+      {isAdmin && <ClearSpellCacheButton spellId={spellFromAPI.index} />}
+    </div>
   );
 }

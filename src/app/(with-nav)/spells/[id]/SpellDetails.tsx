@@ -1,14 +1,9 @@
-import { StatCell } from "@/components/statblocks/StatCell";
 import { convertFeetDistanceIntoSquares, translateShortenedAbilityName } from "@/utils/utils";
 import { DamageBlock } from "@/app/(with-nav)/spells/[id]/DamageBlock";
+import { StatTile } from "@/app/(with-nav)/spells/[id]/StatTile";
 import { APISpell } from "@/types/schemas";
-import { cn } from "@/lib/utils";
 
-export default function SpellDetails({ spell, tiny }: { spell: APISpell; tiny?: boolean }) {
-  const responsiveRows = cn("flex flex-col gap-2 md:flex-row md:flex-wrap md:gap-x-8 md:gap-y-4", {
-    "gap-0  md:gap-x-4 md:gap-y-2": tiny,
-  });
-
+export default function SpellDetails({ spell }: { spell: APISpell }) {
   const shouldShowSpellTypes = !!spell.dc || !!spell.attack_type;
   const shouldShowSpellEffects = !!spell.damage?.damage_type || !!spell.area_of_effect;
   const shouldShowSpellDetails =
@@ -19,49 +14,34 @@ export default function SpellDetails({ spell, tiny }: { spell: APISpell; tiny?: 
   }
 
   return (
-    <div className={cn("flex flex-col gap-2 border-t-2 pt-4", { "gap-0": tiny })}>
-      {shouldShowSpellTypes && (
-        <div className={responsiveRows}>
-          {spell.dc && (
-            <>
-              {spell.dc.dc_type && (
-                <StatCell
-                  name="Type de sort"
-                  stat={`JdS de ${spell.dc.dc_type?.index ? translateShortenedAbilityName(spell.dc.dc_type?.index) : ""}`}
-                  isHighlighted
-                  isInline
-                />
-              )}
-              {spell.dc.dc_success && (
-                <StatCell name="Réussite JdS" stat={spell.dc.dc_success} isInline />
-              )}
-            </>
-          )}
+    <section className="flex flex-col gap-3 border-t pt-6">
+      <h2 className="text-xs font-medium uppercase tracking-widest text-muted-foreground">
+        Effets
+      </h2>
 
-          {spell.attack_type && (
-            <StatCell
-              name="Type de sort"
-              stat={`Attaque : ${spell.attack_type}`}
-              isHighlighted
-              isInline
+      {(shouldShowSpellTypes || shouldShowSpellEffects) && (
+        <div className="grid grid-cols-2 gap-2 md:grid-cols-3">
+          {spell.dc?.dc_type && (
+            <StatTile
+              label="Jet de sauvegarde"
+              value={`JdS de ${spell.dc.dc_type.index ? translateShortenedAbilityName(spell.dc.dc_type.index) : ""}`}
+              valueClassName="text-indigo-400"
             />
           )}
-        </div>
-      )}
-
-      {shouldShowSpellEffects && (
-        <div className={responsiveRows}>
+          {spell.dc?.dc_success && <StatTile label="Réussite JdS" value={spell.dc.dc_success} />}
+          {spell.attack_type && (
+            <StatTile label="Attaque" value={spell.attack_type} valueClassName="text-indigo-400" />
+          )}
           {spell.damage?.damage_type && (
-            <StatCell name="Type de dégats" stat={spell.damage.damage_type.name} isInline />
+            <StatTile label="Type de dégâts" value={spell.damage.damage_type.name} />
           )}
           {spell.area_of_effect?.type && (
-            <StatCell name="Zone" stat={spell.area_of_effect.type} isInline />
+            <StatTile label="Zone" value={spell.area_of_effect.type} />
           )}
           {spell.area_of_effect?.size && (
-            <StatCell
-              name="Taille"
-              stat={convertFeetDistanceIntoSquares(spell.area_of_effect.size)}
-              isInline
+            <StatTile
+              label="Taille"
+              value={convertFeetDistanceIntoSquares(spell.area_of_effect.size)}
             />
           )}
         </div>
@@ -69,19 +49,16 @@ export default function SpellDetails({ spell, tiny }: { spell: APISpell; tiny?: 
 
       <DamageBlock
         damages={spell.damage?.damage_at_character_level}
-        label={tiny ? "Dégâts/niveau" : "Dégâts par niveau de personnage"}
-        tiny={tiny}
+        label="Dégâts par niveau de personnage"
       />
       <DamageBlock
         damages={spell.damage?.damage_at_slot_level}
-        label={tiny ? "Dégâts/emplacement" : "Dégâts par niveau d'emplacement de sort"}
-        tiny={tiny}
+        label="Dégâts par niveau d'emplacement de sort"
       />
       <DamageBlock
         damages={spell.heal_at_slot_level}
-        label={tiny ? "Soins/emplacement" : "Soins par niveau d'emplacement de sort"}
-        tiny={tiny}
+        label="Soins par niveau d'emplacement de sort"
       />
-    </div>
+    </section>
   );
 }

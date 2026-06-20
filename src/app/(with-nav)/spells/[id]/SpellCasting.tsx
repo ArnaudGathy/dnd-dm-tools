@@ -1,52 +1,66 @@
-import { StatCell } from "@/components/statblocks/StatCell";
+import { ReactNode } from "react";
 import { convertFromFeetToSquares } from "@/utils/utils";
 import { APISpell } from "@/types/schemas";
-import { cn } from "@/lib/utils";
+import { StatTile } from "@/app/(with-nav)/spells/[id]/StatTile";
+import { SpellComponents } from "@/app/(with-nav)/spells/[id]/SpellComponents";
+import { Crosshair, Hourglass, Zap } from "lucide-react";
 
-export default function SpellCasting({ spell, tiny }: { spell: APISpell; tiny?: boolean }) {
+// Render the casting time with each property color-coded inline: bonus → orange,
+// reaction → purple (the whole base phrase), and the "Rituel" option → emerald.
+// This carries the bonus/reaction/ritual info that used to live in header tags.
+const renderCastingTime = (raw: string): ReactNode => {
+  const lower = raw.toLowerCase();
+  const baseTone = lower.includes("bonus")
+    ? "text-orange-400"
+    : lower.includes("reaction") || lower.includes("réaction")
+      ? "text-purple-400"
+      : undefined;
+
+  return raw.split(/(\bRituel\b)/i).map((part, index) =>
+    /^rituel$/i.test(part) ? (
+      <span key={index} className="text-emerald-400">
+        {part}
+      </span>
+    ) : (
+      <span key={index} className={baseTone}>
+        {part}
+      </span>
+    ),
+  );
+};
+
+export default function SpellCasting({ spell }: { spell: APISpell }) {
   return (
-    <div
-      className={cn("flex flex-col gap-2 md:flex-row md:flex-wrap md:gap-x-8 md:gap-y-4", {
-        "gap-0 md:gap-x-4 md:gap-y-2": tiny,
-      })}
-    >
+    <div className="grid grid-cols-2 gap-2 md:grid-cols-[2fr_1fr_2fr]">
       {spell.casting_time && (
-        <StatCell
-          name="Incantation"
-          stat={spell.casting_time}
-          highlightClassName={
-            spell.casting_time.includes("bonus")
-              ? "text-orange-400"
-              : spell.casting_time.includes("reaction") || spell.casting_time.includes("réaction")
-                ? "text-purple-400"
-                : undefined
-          }
-          isInline
+        <StatTile
+          icon={<Zap className="size-3.5" />}
+          label="Incantation"
+          value={renderCastingTime(spell.casting_time)}
         />
       )}
       {spell.range && (
-        <StatCell name="Portée" stat={convertFromFeetToSquares(spell.range)} isInline />
+        <StatTile
+          icon={<Crosshair className="size-3.5" />}
+          label="Portée"
+          value={convertFromFeetToSquares(spell.range)}
+        />
       )}
       {spell.duration && (
-        <StatCell
-          name="Durée"
-          stat={`${spell.duration}`}
-          isInline
-          highlightClassName={spell.concentration ? "text-yellow-500" : undefined}
+        <StatTile
+          icon={<Hourglass className="size-3.5" />}
+          label="Durée"
+          value={spell.duration}
+          valueClassName={spell.concentration ? "text-yellow-500" : undefined}
         />
       )}
 
-      {!tiny && !!spell.components?.length && (
-        <StatCell
-          name="Composants"
-          stat={`${spell.components.join(", ")}${spell.material ? ` + ${spell.material}` : ""}`}
-          highlightClassName="truncate"
-          isInline
+      {!!spell.components?.length && (
+        <StatTile
+          className="col-span-2 md:col-span-3"
+          label="Composants"
+          value={<SpellComponents components={spell.components} material={spell.material} />}
         />
-      )}
-
-      {!!spell.classes?.length && (
-        <StatCell name="Classes" stat={spell.classes.map((c) => c.name).join(", ")} isInline />
       )}
     </div>
   );

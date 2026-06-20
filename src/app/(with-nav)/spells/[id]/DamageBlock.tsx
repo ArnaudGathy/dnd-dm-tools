@@ -1,32 +1,23 @@
 import { entries } from "remeda";
-import { StatCell } from "@/components/statblocks/StatCell";
-import { cn } from "@/lib/utils";
+import { StatTile } from "@/app/(with-nav)/spells/[id]/StatTile";
 
 export const DamageBlock = ({
   damages,
   label,
-  tiny,
 }: {
   damages?: Record<number, string>;
   label: string;
-  tiny?: boolean;
 }) => {
   if (!damages) {
     return null;
   }
 
   return (
-    <div className={cn("flex flex-col gap-1", { "gap-0": tiny })}>
-      <div>
-        <span className="text-muted-foreground">{label}</span>
-      </div>
-      <div
-        className={cn("flex flex-wrap gap-x-4 gap-y-2 md:gap-x-8 md:gap-y-4", {
-          "gap-x-2 gap-y-0 md:gap-x-4 md:gap-y-2": tiny,
-        })}
-      >
+    <div className="flex flex-col gap-2">
+      <span className="text-sm text-muted-foreground">{label}</span>
+      <div className="grid grid-cols-3 gap-2 md:grid-cols-6">
         {entries(damages).map(([level, damage]) => (
-          <StatCell key={level} name={level} stat={damage} isInline />
+          <StatTile key={level} label={level} value={damage} />
         ))}
       </div>
     </div>
