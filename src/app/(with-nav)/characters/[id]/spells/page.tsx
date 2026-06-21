@@ -82,6 +82,8 @@ export default async function Spells({
     search: awaitedSearchParams.search,
     groupBy,
     characterId: character.id,
+    className: character.className,
+    characterLevel: character.level,
     isWizard,
     usableOnly: awaitedSearchParams.usable === "true",
     level,

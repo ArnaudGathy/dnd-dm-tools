@@ -12,7 +12,8 @@ import { z } from "zod";
 import { SummaryAPISpell } from "@/types/schemas";
 import { Prisma } from "@prisma/client";
 import { kebabCaseify } from "@/utils/utils";
-import { restrictToAdmins } from "@/lib/utils";
+import { getSessionData, restrictToAdmins } from "@/lib/utils";
+import { getMaxCastableSpellLevel, isPreparedListClass } from "@/utils/stats/spells";
 
 export const clearSpellCache = async ({
   spellId,
@@ -36,25 +37,41 @@ export const clearSpellCache = async ({
   }
 };
 
+type SpellFlagName =
+  | "isFavorite"
+  | "isPrepared"
+  | "isAlwaysPrepared"
+  | "hasLongRestCast"
+  | "canBeSwappedOnLongRest"
+  | "canBeSwappedOnLevelUp";
+
 export const updateSpellFlagAction = async ({
   flagName,
   spellId,
   characterId,
   newState,
 }: {
-  flagName: keyof Prisma.SpellsOnCharactersUpdateInput;
+  flagName: SpellFlagName;
   spellId: string;
   characterId: number;
   newState: boolean;
 }) => {
-  await prisma.spellsOnCharacters.update({
+  // Upsert, not update: prepared-from-list classes have no row for an
+  // auto-listed spell until they prepare/configure it, so the first toggle
+  // must create the row. Known classes already have a row, so this updates it.
+  await prisma.spellsOnCharacters.upsert({
     where: {
       spellId_characterId: {
         characterId,
         spellId,
       },
     },
-    data: {
+    update: {
+      [flagName]: newState,
+    },
+    create: {
+      spellId,
+      characterId,
       [flagName]: newState,
     },
   });
@@ -144,6 +161,85 @@ export const tryToAddSpell = async (
   return {
     message: `Sort "${spellData.name}" ajouté avec succès !`,
     error: "",
+  };
+};
+
+// Add already-existing spells (picked from the global /spells list) to a
+// character's list in one go. Unlike tryToAddSpell, the spells are known to
+// exist in the Spell table, so no AideDD lookup is needed.
+export const addSpellsToCharacter = async ({
+  characterId,
+  spellIds,
+}: {
+  characterId: number;
+  spellIds: string[];
+}) => {
+  const validation = z
+    .object({
+      characterId: z.number().int(),
+      spellIds: z.array(z.string()).min(1),
+    })
+    .safeParse({ characterId, spellIds });
+
+  if (!validation.success) {
+    return { error: "Données invalides." };
+  }
+
+  const character = await prisma.character.findUnique({
+    where: { id: validation.data.characterId },
+    include: { campaign: { select: { owner: true } } },
+  });
+
+  if (!character) {
+    return { error: "Personnage introuvable." };
+  }
+
+  // Authorisation mirrors getValidCharacter: owner, campaign DM, or super admin.
+  const { userMail, isSuperAdmin } = await getSessionData();
+  const canEdit =
+    isSuperAdmin ||
+    userMail === character.owner ||
+    (!!userMail && character.campaign.owner.includes(userMail));
+
+  if (!canEdit) {
+    return { error: "Action non autorisée." };
+  }
+
+  const spells = await prisma.spell.findMany({
+    where: { id: { in: validation.data.spellIds } },
+    select: { id: true, level: true, classes: true },
+  });
+
+  // For prepared-from-list classes, a spell already on the auto-list is
+  // available without a row — skip it so we don't recreate the redundant
+  // leftovers we just cleaned up.
+  let autoListed = 0;
+  let toInsert = spells;
+  if (isPreparedListClass(character.className)) {
+    const maxLevel = getMaxCastableSpellLevel(character);
+    toInsert = spells.filter((spell) => {
+      const isAutoListed =
+        spell.level >= 1 && spell.level <= maxLevel && spell.classes.includes(character.className);
+      if (isAutoListed) {
+        autoListed += 1;
+      }
+      return !isAutoListed;
+    });
+  }
+
+  // skipDuplicates leaves spells already on the character untouched.
+  const created = await prisma.spellsOnCharacters.createMany({
+    data: toInsert.map((spell) => ({ characterId: character.id, spellId: spell.id })),
+    skipDuplicates: true,
+  });
+
+  revalidatePath(`/characters/${character.id}/spells`);
+
+  return {
+    added: created.count,
+    alreadyPresent: toInsert.length - created.count,
+    autoListed,
+    characterName: character.name,
   };
 };
 

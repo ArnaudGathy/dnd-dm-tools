@@ -139,7 +139,9 @@ export const SpellList = ({
                           canBeSwappedOnLevelUp={spell.canBeSwappedOnLevelUp}
                           isPrepared={spell.isPrepared}
                         />
-                        <DeleteSpellButton spell={spell} characterId={character.id} />
+                        {spell.canDelete && (
+                          <DeleteSpellButton spell={spell} characterId={character.id} />
+                        )}
                       </span>
                     ) : (
                       markers.length > 0 && (
