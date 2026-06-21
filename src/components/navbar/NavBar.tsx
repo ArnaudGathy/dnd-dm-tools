@@ -5,8 +5,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
-import logoMark from "@/../public/logo.png";
-import logoWordmark from "@/../public/logo_name.png";
+import logoWordmark from "@/../public/DMT_logo.webp";
 import Image from "next/image";
 import { NavBarItem } from "@/components/navbar/NavBarItem";
 import Link from "next/link";
@@ -43,15 +42,15 @@ const menuItems = [
     isPrivate: true,
   },
   {
-    label: "Sorts",
-    to: "/spells",
-    icon: Book,
-    shouldBeLoggedIn: true,
-  },
-  {
     label: "Personnages",
     to: "/characters",
     icon: SquareUserIcon,
+    shouldBeLoggedIn: true,
+  },
+  {
+    label: "Sorts",
+    to: "/spells",
+    icon: Book,
     shouldBeLoggedIn: true,
   },
   {
@@ -84,7 +83,7 @@ export const NavBar = async () => {
         <Link href="/" aria-label="Accueil" className="flex shrink-0 items-center">
           <Image
             className="h-8 w-auto md:hidden"
-            src={logoMark}
+            src={logoWordmark}
             alt="Dungeons & Dragons"
             height={32}
             priority
