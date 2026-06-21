@@ -16,8 +16,10 @@ export const NavBarLink = ({ to, label, icon }: { to: string; label: string; ico
         active={isActive}
         className={cn(
           navigationMenuTriggerStyle(),
-          "flex items-center gap-2",
-          isActive && "bg-accent text-accent-foreground",
+          "h-9 w-full justify-start gap-2 bg-transparent px-3 text-muted-foreground md:w-max md:justify-center",
+          "hover:bg-transparent hover:text-foreground focus:bg-transparent focus:text-foreground data-[active]:bg-transparent",
+          isActive &&
+            "text-foreground underline decoration-primary decoration-2 underline-offset-[6px]",
         )}
       >
         {icon}
