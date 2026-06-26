@@ -16,9 +16,9 @@ export default async function Characters({
   searchParams: Promise<CharacterListSearchParams>;
 }) {
   const params = await searchParams;
-  const { isSuperAdmin } = await getSessionData();
+  const { isAdmin } = await getSessionData();
 
-  if (isSuperAdmin) {
+  if (isAdmin) {
     return <AdminCharacterList searchParams={params} />;
   }
 

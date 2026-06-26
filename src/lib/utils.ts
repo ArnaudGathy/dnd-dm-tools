@@ -26,15 +26,13 @@ export function cn(...inputs: ClassValue[]) {
 
 export async function getSessionData() {
   const session = await auth();
-  const admins = ["arnaud.gathy@gmail.com"];
-  const superAdmins = ["arno.firefox@gmail.com"];
+  const admins = ["arno.firefox@gmail.com"];
 
   return {
     userName: session?.user?.name?.split(" ")[0],
     userMail: session?.user?.email || undefined,
     isLoggedIn: !!session,
-    isAdmin: !!session?.user?.email && [...admins, ...superAdmins].includes(session.user.email),
-    isSuperAdmin: !!session?.user?.email && superAdmins.includes(session.user.email),
+    isAdmin: !!session?.user?.email && admins.includes(session.user.email),
   };
 }
 
@@ -70,7 +68,7 @@ export type CharacterByOwner = Character &
   };
 
 export async function getValidCharacter(characterId: string) {
-  const { userMail, isSuperAdmin } = await getSessionData();
+  const { userMail, isAdmin } = await getSessionData();
   const character = await getCharacterById({
     characterId: parseInt(characterId, 10),
   });
@@ -80,7 +78,7 @@ export async function getValidCharacter(characterId: string) {
   }
 
   if (
-    isSuperAdmin ||
+    isAdmin ||
     userMail === character.owner ||
     (!!userMail && character.campaign.owner.includes(userMail))
   ) {

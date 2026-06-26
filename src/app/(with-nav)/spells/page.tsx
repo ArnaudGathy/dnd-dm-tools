@@ -65,9 +65,9 @@ export default async function AllSpellsList({
   const totalCount = Object.values(spells).reduce((sum, list) => sum + list.length, 0);
 
   // Characters the user can add spells to: their own (and DM'd) for players, all
-  // for super admins — same scoping as the /characters list.
-  const { userMail, isSuperAdmin } = await getSessionData();
-  const characterRecords = isSuperAdmin
+  // for admins — same scoping as the /characters list.
+  const { userMail, isAdmin } = await getSessionData();
+  const characterRecords = isAdmin
     ? await getAllFilteredCharacters({})
     : await getFilteredCharactersByOwner({ ownerEmail: userMail });
   const characters: PickerCharacter[] = characterRecords.map((character) => ({

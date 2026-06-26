@@ -14,7 +14,7 @@ export default async function AdminCharacterList({
 }: {
   searchParams: CharacterListSearchParams;
 }) {
-  const { isAdmin } = await getSessionData();
+  const { userMail, isAdmin } = await getSessionData();
 
   const characters = await getAllFilteredCharacters({
     ...searchParams,
@@ -22,6 +22,16 @@ export default async function AdminCharacterList({
 
   const campaigns = await getCampaigns();
   const parties = await getParties();
+
+  const myCharacters = characters.filter((character) => character.owner === userMail);
+  const myCampaignCharacters = characters.filter(
+    (character) =>
+      character.owner !== userMail && !!userMail && character.campaign.owner.includes(userMail),
+  );
+  const otherCharacters = characters.filter(
+    (character) =>
+      character.owner !== userMail && (!userMail || !character.campaign.owner.includes(userMail)),
+  );
 
   return (
     <div className="space-y-4">
@@ -37,24 +47,54 @@ export default async function AdminCharacterList({
       <CharacterFilters
         parties={parties}
         campaigns={campaigns}
-        numberOfCharacters={2}
+        numberOfCharacters={characters.length}
         isAdmin={isAdmin}
       />
 
-      <h1 className="text-2xl font-bold tracking-tight">Personnages</h1>
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-        {characters.length > 0 ? (
-          characters.map((character) => (
-            <CharacterList
-              key={character.id}
-              character={character}
-              numberOfCharacters={characters.length}
-            />
-          ))
-        ) : (
-          <div className="text-muted-foreground">Aucun personnage trouvé.</div>
-        )}
-      </div>
+      {myCharacters.length > 0 && (
+        <>
+          <h1 className="text-2xl font-bold tracking-tight">Mes personnages</h1>
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+            {myCharacters.map((character) => (
+              <CharacterList
+                key={character.id}
+                character={character}
+                numberOfCharacters={myCharacters.length}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {myCampaignCharacters.length > 0 && (
+        <>
+          <h1 className="pt-4 text-2xl font-bold tracking-tight">Personnages de mes campagnes</h1>
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+            {myCampaignCharacters.map((character) => (
+              <CharacterList
+                key={character.id}
+                character={character}
+                numberOfCharacters={myCampaignCharacters.length}
+              />
+            ))}
+          </div>
+        </>
+      )}
+
+      {otherCharacters.length > 0 && (
+        <>
+          <h1 className="pt-4 text-2xl font-bold tracking-tight">Autres personnages</h1>
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+            {otherCharacters.map((character) => (
+              <CharacterList
+                key={character.id}
+                character={character}
+                numberOfCharacters={otherCharacters.length}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

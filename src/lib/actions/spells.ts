@@ -194,10 +194,10 @@ export const addSpellsToCharacter = async ({
     return { error: "Personnage introuvable." };
   }
 
-  // Authorisation mirrors getValidCharacter: owner, campaign DM, or super admin.
-  const { userMail, isSuperAdmin } = await getSessionData();
+  // Authorisation mirrors getValidCharacter: owner, campaign DM, or admin.
+  const { userMail, isAdmin } = await getSessionData();
   const canEdit =
-    isSuperAdmin ||
+    isAdmin ||
     userMail === character.owner ||
     (!!userMail && character.campaign.owner.includes(userMail));
 

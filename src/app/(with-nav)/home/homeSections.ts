@@ -28,7 +28,7 @@ export const adminSections: HomeSection[] = [
   },
   {
     to: "/dm-tools",
-    label: "Outils MJ",
+    label: "Outils DM",
     description: "Écrans de jeu et gestion réservés au MJ.",
     icon: LayoutDashboard,
   },

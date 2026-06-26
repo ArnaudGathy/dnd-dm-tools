@@ -30,7 +30,7 @@ const menuItems = [
     isPrivate: true,
   },
   {
-    label: "Outils MJ",
+    label: "Outils DM",
     to: "/dm-tools",
     icon: LayoutDashboard,
     isPrivate: true,

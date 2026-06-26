@@ -46,35 +46,35 @@ export default async function PlayerCharacterList({
         isAdmin={isAdmin}
       />
 
-      <h1 className="text-2xl font-bold tracking-tight">Mes personnages</h1>
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-        {myCharacters.length > 0 ? (
-          myCharacters.map((character) => (
-            <CharacterList
-              key={character.id}
-              character={character}
-              numberOfCharacters={myCharacters.length}
-            />
-          ))
-        ) : (
-          <div className="text-muted-foreground">Aucun personnage trouvé.</div>
-        )}
-      </div>
+      {myCharacters.length > 0 && (
+        <>
+          <h1 className="text-2xl font-bold tracking-tight">Mes personnages</h1>
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+            {myCharacters.map((character) => (
+              <CharacterList
+                key={character.id}
+                character={character}
+                numberOfCharacters={myCharacters.length}
+              />
+            ))}
+          </div>
+        </>
+      )}
 
-      <h1 className="pt-4 text-2xl font-bold tracking-tight">Personnages de mes campagnes</h1>
-      <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
-        {myCampaignCharacters.length > 0 ? (
-          myCampaignCharacters.map((character) => (
-            <CharacterList
-              key={character.id}
-              character={character}
-              numberOfCharacters={myCampaignCharacters.length}
-            />
-          ))
-        ) : (
-          <div className="text-muted-foreground">Aucun personnage trouvé.</div>
-        )}
-      </div>
+      {myCampaignCharacters.length > 0 && (
+        <>
+          <h1 className="pt-4 text-2xl font-bold tracking-tight">Personnages de mes campagnes</h1>
+          <div className="flex flex-col gap-4 md:grid md:grid-cols-3">
+            {myCampaignCharacters.map((character) => (
+              <CharacterList
+                key={character.id}
+                character={character}
+                numberOfCharacters={myCampaignCharacters.length}
+              />
+            ))}
+          </div>
+        </>
+      )}
     </div>
   );
 }

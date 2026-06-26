@@ -80,7 +80,7 @@ export default function CharacterList({
         // Focus & recede: active cards lift and stay vivid, inactive recede.
         isActive
           ? "shadow-lg shadow-black/40"
-          : "opacity-70 saturate-[0.8] hover:opacity-100 hover:saturate-100",
+          : "opacity-50 saturate-[0.8] hover:opacity-100 hover:saturate-100",
       )}
     >
       {/* Class-color accent bar */}
