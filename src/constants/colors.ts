@@ -1,9 +1,9 @@
 import { Classes } from "@prisma/client";
 
 export const classColors = {
-  [Classes.ARTIFICER]: { background: "#33937F", foreground: "#ffffff" },
+  [Classes.ARTIFICER]: { background: "#0070DD", foreground: "#ffffff" },
   [Classes.BARBARIAN]: { background: "#C41E3A", foreground: "#000000" },
-  [Classes.BARD]: { background: "#ff7eff", foreground: "#000000" },
+  [Classes.BARD]: { background: "#33937F", foreground: "#000000" },
   [Classes.CLERIC]: { background: "#ffffff", foreground: "#000000" },
   [Classes.DRUID]: { background: "#ff7d0a", foreground: "#ffffff" },
   [Classes.FIGHTER]: { background: "#c79c6e", foreground: "#000000" },

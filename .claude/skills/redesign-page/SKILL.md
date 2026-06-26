@@ -147,9 +147,9 @@ often break on long lists, empty states, or overflowing text that a mockup never
 
 ## Step 5 — Polish & hand off
 
-1. Run **`/react-doctor`** to catch React issues (keys, effect deps, unnecessary client
-   components, re-render traps) introduced by the refactor.
-2. Run `pnpm lint` (0 warnings allowed) and `pnpm typecheck`; fix everything.
+1. Run `pnpm lint` (0 warnings allowed) and `pnpm typecheck`; fix everything.
+2. Manually review the refactor for React issues (keys, effect deps, unnecessary client
+   components, re-render traps) introduced by the change.
 3. Show the user a **before/after** (the Step 1 baseline screenshot vs. the final one) and
    a short summary of what changed.
 4. Do **not** commit unless the user asks — when they do, use the **`/commit`** skill. Let
