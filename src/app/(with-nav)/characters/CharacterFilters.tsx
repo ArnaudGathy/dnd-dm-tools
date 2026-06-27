@@ -11,13 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { CAMPAIGN_MAP, CHARACTER_STATUS_MAP, PARTY_MAP } from "@/constants/maps";
+import { CAMPAIGN_MAP, PARTY_MAP } from "@/constants/maps";
 import { Campaign, CampaignId, CharacterStatus, Party, PartyId } from "@prisma/client";
-import { entries } from "remeda";
+import { keys } from "remeda";
 import { Button } from "@/components/ui/button";
 import { Toggle } from "@/components/ui/toggle";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { useEffect, useState } from "react";
+import { STATUS_CONFIG, CharacterStatusChip } from "./CharacterStatusChip";
 
 export default function CharacterFilters({
   campaigns,
@@ -126,9 +127,9 @@ export default function CharacterFilters({
             <SelectContent>
               <SelectGroup>
                 <SelectItem value="all">Tous</SelectItem>
-                {entries(CHARACTER_STATUS_MAP).map(([status, name]) => (
+                {keys(STATUS_CONFIG).map((status) => (
                   <SelectItem key={status} value={status}>
-                    {name}
+                    <CharacterStatusChip status={status} />
                   </SelectItem>
                 ))}
               </SelectGroup>

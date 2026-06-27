@@ -1,23 +1,13 @@
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
-import {
-  CAMPAIGN_MAP,
-  CHARACTER_STATUS_MAP,
-  CLASS_MAP,
-  PARTY_MAP,
-  RACE_MAP,
-} from "@/constants/maps";
+import { CAMPAIGN_MAP, CLASS_MAP, PARTY_MAP, RACE_MAP } from "@/constants/maps";
 import { CharacterByOwner, cn } from "@/lib/utils";
 import {
   BookOpenIcon,
   ChevronRight,
   Edit,
-  Heart,
   type LucideIcon,
   MapPin,
   PawPrint,
-  RotateCcw,
-  Skull,
-  TreePalm,
   Users,
 } from "lucide-react";
 import { CharacterStatus } from "@prisma/client";
@@ -27,25 +17,7 @@ import { Button } from "@/components/ui/button";
 import { hasCreatures } from "@/utils/utils";
 import { getHasSpells } from "@/utils/stats/spells";
 import { ReactNode } from "react";
-
-const STATUS_CONFIG: Record<CharacterStatus, { icon: LucideIcon; className: string }> = {
-  [CharacterStatus.ACTIVE]: {
-    icon: Heart,
-    className: "bg-emerald-500/15 text-emerald-400 ring-emerald-500/30",
-  },
-  [CharacterStatus.DEAD]: {
-    icon: Skull,
-    className: "bg-rose-500/15 text-rose-400 ring-rose-500/30",
-  },
-  [CharacterStatus.RETIRED]: {
-    icon: TreePalm,
-    className: "bg-amber-500/15 text-amber-400 ring-amber-500/30",
-  },
-  [CharacterStatus.BACKUP]: {
-    icon: RotateCcw,
-    className: "bg-sky-500/15 text-sky-400 ring-sky-500/30",
-  },
-};
+import { CharacterStatusChip } from "./CharacterStatusChip";
 
 function InfoChip({ icon: Icon, children }: { icon?: LucideIcon; children: ReactNode }) {
   return (
@@ -66,8 +38,6 @@ export default function CharacterList({
   const hasSpells = getHasSpells(character);
   const hasCreatureList = hasCreatures(character);
   const classColor = classColors[character.className].background;
-  const status = STATUS_CONFIG[character.status];
-  const StatusIcon = status.icon;
   const showCampaignInfo = numberOfCharacters > 1;
   const isActive = character.status === CharacterStatus.ACTIVE;
 
@@ -101,16 +71,7 @@ export default function CharacterList({
           <span className="text-2xl font-semibold leading-tight tracking-tight">
             {character.name}
           </span>
-          <span
-            className={cn(
-              "inline-flex shrink-0 items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium ring-1 ring-inset",
-              status.className,
-            )}
-          >
-            {/* Living status pill: the active heart gently pulses. */}
-            <StatusIcon className={cn("size-3.5", isActive && "animate-pulse")} />
-            {CHARACTER_STATUS_MAP[character.status]}
-          </span>
+          <CharacterStatusChip status={character.status} />
         </div>
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm">
           <span
