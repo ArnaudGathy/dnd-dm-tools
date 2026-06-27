@@ -1,25 +1,26 @@
 "use client";
 
-import SheetCard from "@/components/ui/SheetCard";
-import { CharacterById, cn } from "@/lib/utils";
+import { CharacterById } from "@/lib/utils";
 import AddInventoryItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddInventoryItem";
 import { Button } from "@/components/ui/button";
-import { Plus } from "lucide-react";
+import { Backpack, Plus } from "lucide-react";
+import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 
 export default function InventoryItems({ character }: { character: CharacterById }) {
   return (
-    <SheetCard className={cn("relative flex flex-col gap-4")}>
-      <AddInventoryItem
-        characterId={character.id}
-        className="absolute right-4"
-        title="Ajouter un objet"
-      >
-        <Button size="sm">
-          <Plus />
-        </Button>
-      </AddInventoryItem>
-      <span className="mb-2 flex self-center text-2xl font-bold">Inventaire</span>
-
+    <SectionPanel
+      accent="amber"
+      icon={Backpack}
+      title="Inventaire"
+      contentClassName="gap-0"
+      action={
+        <AddInventoryItem characterId={character.id} title="Ajouter un objet">
+          <Button size="icon">
+            <Plus />
+          </Button>
+        </AddInventoryItem>
+      }
+    >
       <ul className="flex flex-col">
         {character.inventory.map((inventoryItem) => (
           <AddInventoryItem
@@ -28,8 +29,10 @@ export default function InventoryItems({ character }: { character: CharacterById
             item={inventoryItem}
             title="Modifier un objet"
           >
-            <li className="flex cursor-pointer p-2 leading-none hover:bg-white/5">
-              <span className="min-w-7 leading-5">{`${inventoryItem.quantity ?? "1"}`}</span>
+            <li className="flex cursor-pointer gap-1 rounded-md p-2 leading-none hover:bg-white/5">
+              <span className="min-w-7 font-bold tabular-nums leading-5 text-muted-foreground">
+                {`${inventoryItem.quantity ?? "1"}`}
+              </span>
               <div className="space-x-2">
                 <span className="leading-5">{`${inventoryItem.name}`}</span>
 
@@ -46,6 +49,6 @@ export default function InventoryItems({ character }: { character: CharacterById
           </AddInventoryItem>
         ))}
       </ul>
-    </SheetCard>
+    </SectionPanel>
   );
 }

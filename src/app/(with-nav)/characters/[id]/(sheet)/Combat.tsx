@@ -1,15 +1,17 @@
 "use client";
 
 import { CharacterById, cn } from "@/lib/utils";
-import SheetCard from "@/components/ui/SheetCard";
 import {
   ChevronsUp,
   CopyCheck,
   Dice6,
   Footprints,
   Hand,
+  HeartPulse,
   Shield,
   ShieldOff,
+  Sparkles,
+  Swords,
   WandSparkles,
 } from "lucide-react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
@@ -21,7 +23,6 @@ import Damages from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/Damages"
 import InfoCell from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/InfoCell";
 import ExtraEffects from "@/app/(with-nav)/characters/[id]/(sheet)/(weapons)/ExtraEffects";
 import SpellSlots from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/SpellSlots";
-import { Separator } from "@/components/ui/separator";
 import HPForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/HPForm";
 import AmmunitionForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AmmunitionForm";
 import { getMovementSpeed } from "@/utils/stats/speed";
@@ -43,6 +44,7 @@ import { getWeaponAttackBonus } from "@/utils/stats/weapons";
 import RessourcesWrapper from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
 import StatCard from "./StatCard";
 import useRessourceData from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
+import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 
 export default function Combat({ character }: { character: CharacterById }) {
   const ACDetails = getTotalAC(character);
@@ -61,15 +63,21 @@ export default function Combat({ character }: { character: CharacterById }) {
   const { ressources, spellsSlots } = useRessourceData({ character });
 
   return (
-    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-3 md:p-4">
+    <div className="flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-3 md:items-start md:p-4">
       <div className="flex flex-col gap-4">
-        <div className="grid grid-cols-2 gap-4">
+        <SectionPanel
+          accent="red"
+          icon={HeartPulse}
+          title="Vitalité"
+          contentClassName="grid grid-cols-2 gap-3"
+        >
           <HPForm character={character} />
 
           <StatCard
             icon={Shield}
             iconColor="text-stone-400"
             value={ACDetails.total}
+            label="Classe d'armure"
             definition={
               <div>
                 <span className="font-bold">Classe d&#39;armure (CA)</span>
@@ -114,8 +122,9 @@ export default function Combat({ character }: { character: CharacterById }) {
           />
           <StatCard
             icon={Footprints}
-            iconColor="text-amber-700"
+            iconColor="text-amber-600"
             value={movementSpeedDetails.total}
+            label="Vitesse"
             definition={
               <div>
                 <span className="font-bold">Vitesse de déplacement (en cases)</span>
@@ -140,8 +149,9 @@ export default function Combat({ character }: { character: CharacterById }) {
           />
           <StatCard
             icon={ChevronsUp}
-            iconColor="text-green-600"
+            iconColor="text-green-500"
             value={initiativeDetails.total}
+            label="Initiative"
             definition={
               <div>
                 <span className="font-bold">Bonus au jet d&apos;initiative</span>
@@ -164,19 +174,25 @@ export default function Combat({ character }: { character: CharacterById }) {
               </div>
             }
           />
-        </div>
+        </SectionPanel>
         <SavingThrows character={character} />
         <RessourcesWrapper character={character} ressources={ressources} />
       </div>
 
       <div className="flex flex-col gap-4">
         {hasMartialData && (
-          <div className="grid grid-cols-2 gap-4">
+          <SectionPanel
+            accent="violet"
+            icon={Hand}
+            title="Capacités martiales"
+            contentClassName="grid grid-cols-2 gap-3"
+          >
             {martialClassDC && (
               <StatCard
                 icon={Hand}
                 iconColor="text-[#90a1b9]"
                 value={martialClassDC.total}
+                label={`DD ${martialClassDC.modifierName}`}
                 definition={
                   <div>
                     <span className="font-bold">DD martial ({martialClassDC.modifierName})</span>
@@ -203,8 +219,9 @@ export default function Combat({ character }: { character: CharacterById }) {
             {subMartialClassDC && (
               <StatCard
                 icon={Hand}
-                iconColor="text-teal-600"
+                iconColor="text-teal-500"
                 value={subMartialClassDC.total}
+                label={`DD ${subMartialClassDC.modifierName}`}
                 definition={
                   <div>
                     <span className="font-bold">DD martial ({subMartialClassDC.modifierName})</span>
@@ -231,201 +248,192 @@ export default function Combat({ character }: { character: CharacterById }) {
             {classDice?.value && (
               <StatCard
                 icon={Dice6}
-                iconColor="text-rose-500"
+                iconColor="text-rose-400"
                 value={classDice.value}
+                label={classDice.name}
                 definition={<span className="font-bold">{classDice.name}</span>}
               />
             )}
             {subClassDice?.value && (
               <StatCard
                 icon={Dice6}
-                iconColor="text-blue-500"
+                iconColor="text-blue-400"
                 value={subClassDice.value}
+                label={subClassDice.name}
                 definition={<span className="font-bold">{subClassDice.name}</span>}
               />
             )}
-          </div>
+          </SectionPanel>
         )}
 
         {hasSpells && (
-          <>
-            <SheetCard className="flex flex-col">
-              <span className="mb-2 self-center text-2xl font-bold">Sorts</span>
-              <div className="flex justify-center gap-4">
+          <SectionPanel accent="sky" icon={WandSparkles} title="Sorts">
+            <div className="grid grid-cols-3 gap-3">
+              <StatCard
+                icon={WandSparkles}
+                iconColor="text-sky-400"
+                value={spellCastingDetails.total}
+                label="Attaque"
+                definition={
+                  <div>
+                    <span className="font-bold">Bonus de jet d&apos;attaque des sorts</span>
+                    <div>
+                      <span>{`${shortenAbilityName(spellCastingDetails.spellCastingStat)} : `}</span>
+                      <span>{spellCastingDetails.spellCastingAbilityModifier}</span>
+                    </div>
+                    <div>
+                      <span>Maîtrise : </span>
+                      <span>{spellCastingDetails.proficiencyBonus}</span>
+                    </div>
+                    {spellCastingDetails.magicAttackBonus > 0 && (
+                      <div>
+                        <span>Bonus : </span>
+                        <span>{spellCastingDetails.magicAttackBonus}</span>
+                      </div>
+                    )}
+                  </div>
+                }
+              />
+              <StatCard
+                icon={ShieldOff}
+                iconColor="text-sky-400"
+                value={spellSaveDCDetails.total}
+                label="DD sauv."
+                definition={
+                  <div>
+                    <span className="font-bold">DD de sauvegarde des sorts</span>
+                    <div>
+                      <span>Base : </span>
+                      <span>{spellSaveDCDetails.baseValue}</span>
+                    </div>
+                    <div>
+                      <span>{`${shortenAbilityName(spellSaveDCDetails.spellCastingStat)} : `}</span>
+                      <span>{spellSaveDCDetails.spellCastingAbilityModifier}</span>
+                    </div>
+                    <div>
+                      <span>Maîtrise : </span>
+                      <span>{spellSaveDCDetails.proficiencyBonus}</span>
+                    </div>
+                    {spellSaveDCDetails.magicDCBonus > 0 && (
+                      <div>
+                        <span>Bonus : </span>
+                        <span>{spellSaveDCDetails.magicDCBonus}</span>
+                      </div>
+                    )}
+                  </div>
+                }
+              />
+              {!!spellsToPreparePerDay && (
                 <StatCard
-                  icon={WandSparkles}
-                  iconColor="text-sky-500"
-                  value={spellCastingDetails.total}
+                  icon={CopyCheck}
+                  iconColor="text-sky-400"
+                  value={spellsToPreparePerDay.total}
+                  label="Préparés"
                   definition={
                     <div>
-                      <span className="font-bold">Bonus de jet d&apos;attaque des sorts</span>
+                      <span className="font-bold">Sorts à préparer par jour</span>
                       <div>
-                        <span>{`${shortenAbilityName(spellCastingDetails.spellCastingStat)} : `}</span>
-                        <span>{spellCastingDetails.spellCastingAbilityModifier}</span>
+                        <span>Quand : </span>
+                        <span>{spellsToPreparePerDay.when}</span>
                       </div>
                       <div>
-                        <span>Maîtrise : </span>
-                        <span>{spellCastingDetails.proficiencyBonus}</span>
+                        <span>Combien : </span>
+                        <span>{`${spellsToPreparePerDay.dailyAmount} par jour.`}</span>
                       </div>
-                      {spellCastingDetails.magicAttackBonus > 0 && (
-                        <div>
-                          <span>Bonus : </span>
-                          <span>{spellCastingDetails.magicAttackBonus}</span>
-                        </div>
-                      )}
                     </div>
                   }
                 />
-                <StatCard
-                  icon={ShieldOff}
-                  iconColor="text-sky-500"
-                  value={spellSaveDCDetails.total}
-                  definition={
-                    <div>
-                      <span className="font-bold">DD de sauvegarde des sorts</span>
-                      <div>
-                        <span>Base : </span>
-                        <span>{spellSaveDCDetails.baseValue}</span>
-                      </div>
-                      <div>
-                        <span>{`${shortenAbilityName(spellSaveDCDetails.spellCastingStat)} : `}</span>
-                        <span>{spellSaveDCDetails.spellCastingAbilityModifier}</span>
-                      </div>
-                      <div>
-                        <span>Maîtrise : </span>
-                        <span>{spellSaveDCDetails.proficiencyBonus}</span>
-                      </div>
-                      {spellSaveDCDetails.magicDCBonus > 0 && (
+              )}
+            </div>
+
+            <SpellSlots character={character} spellsSlotsData={spellsSlots} />
+          </SectionPanel>
+        )}
+
+        <SectionPanel accent="red" icon={Swords} title="Armes" contentClassName="gap-3">
+          {character.weapons.map((weapon) => {
+            const weaponAttackBonusDetails = getWeaponAttackBonus(character, weapon);
+            return (
+              <div key={weapon.id} className="flex flex-col gap-2 rounded-lg bg-muted p-3">
+                <Name weapon={weapon} />
+                <InfoCell
+                  name="Attaque"
+                  value={
+                    <PopoverComponent
+                      definition={
                         <div>
-                          <span>Bonus : </span>
-                          <span>{spellSaveDCDetails.magicDCBonus}</span>
+                          <span className="font-bold">Bonus d&apos;attaque : </span>
+                          <div>
+                            <span>{`${ABILITY_NAME_MAP_TO_FR[weaponAttackBonusDetails.modifierName]} : `}</span>
+                            <span>{weaponAttackBonusDetails.abilityModifier}</span>
+                          </div>
+                          <div>
+                            <span>Maitrise : </span>
+                            <span>
+                              {weaponAttackBonusDetails.proficiencyBonus > 0
+                                ? weaponAttackBonusDetails.proficiencyBonus
+                                : "non"}
+                            </span>
+                            {weaponAttackBonusDetails.attackBonus > 0 && (
+                              <div>
+                                <span>Bonus : </span>
+                                <span>{weaponAttackBonusDetails.attackBonus}</span>
+                              </div>
+                            )}
+                          </div>
                         </div>
-                      )}
-                    </div>
+                      }
+                    >
+                      <span className="font-bold">{weaponAttackBonusDetails.total}</span>
+                    </PopoverComponent>
                   }
                 />
-                {!!spellsToPreparePerDay && (
-                  <StatCard
-                    icon={CopyCheck}
-                    iconColor="text-sky-500"
-                    value={spellsToPreparePerDay.total}
-                    definition={
-                      <div>
-                        <span className="font-bold">Sorts à préparer par jour</span>
-                        <div>
-                          <span>Quand : </span>
-                          <span>{spellsToPreparePerDay.when}</span>
-                        </div>
-                        <div>
-                          <span>Combien : </span>
-                          <span>{`${spellsToPreparePerDay.dailyAmount} par jour.`}</span>
-                        </div>
-                      </div>
+                <Damages weapon={weapon} character={character} />
+                {weapon.reach && (
+                  <InfoCell
+                    name="Melee"
+                    value={
+                      <div
+                        className={cn({
+                          "text-indigo-400": weapon.reach > 5,
+                        })}
+                      >{`${convertFeetDistanceIntoSquares(weapon.reach)} ${weapon.reach > 5 ? "cases" : "case"}`}</div>
                     }
                   />
                 )}
-              </div>
-
-              <SpellSlots character={character} spellsSlotsData={spellsSlots} />
-            </SheetCard>
-          </>
-        )}
-
-        <div className="flex flex-col gap-4">
-          <SheetCard className="flex flex-col">
-            <span className="mb-2 self-center text-2xl font-bold">Armes</span>
-            <div className="flex flex-col gap-4">
-              {character.weapons.map((weapon, index) => {
-                const weaponAttackBonusDetails = getWeaponAttackBonus(character, weapon);
-                return (
-                  <div key={weapon.id}>
-                    <div className="flex flex-col gap-2">
-                      <Name weapon={weapon} />
-                      <InfoCell
-                        name="Attaque"
-                        value={
-                          <PopoverComponent
-                            definition={
-                              <div>
-                                <span className="font-bold">Bonus d&apos;attaque : </span>
-                                <div>
-                                  <span>{`${ABILITY_NAME_MAP_TO_FR[weaponAttackBonusDetails.modifierName]} : `}</span>
-                                  <span>{weaponAttackBonusDetails.abilityModifier}</span>
-                                </div>
-                                <div>
-                                  <span>Maitrise : </span>
-                                  <span>
-                                    {weaponAttackBonusDetails.proficiencyBonus > 0
-                                      ? weaponAttackBonusDetails.proficiencyBonus
-                                      : "non"}
-                                  </span>
-                                  {weaponAttackBonusDetails.attackBonus > 0 && (
-                                    <div>
-                                      <span>Bonus : </span>
-                                      <span>{weaponAttackBonusDetails.attackBonus}</span>
-                                    </div>
-                                  )}
-                                </div>
-                              </div>
-                            }
-                          >
-                            {weaponAttackBonusDetails.total}
-                          </PopoverComponent>
-                        }
-                      />
-                      <Damages weapon={weapon} character={character} />
-                      {weapon.reach && (
-                        <InfoCell
-                          name="Melee"
-                          value={
-                            <div
-                              className={cn({
-                                "text-indigo-500": weapon.reach > 5,
-                              })}
-                            >{`${convertFeetDistanceIntoSquares(weapon.reach)} ${weapon.reach > 5 ? "cases" : "case"}`}</div>
-                          }
-                        />
-                      )}
-                      {weapon.range && weapon.longRange && (
-                        <InfoCell
-                          name="Distance"
-                          value={
-                            <div>{`${convertFeetDistanceIntoSquares(weapon.range)} - ${convertFeetDistanceIntoSquares(weapon.longRange)} cases`}</div>
-                          }
-                        />
-                      )}
-                      <AmmunitionForm weapon={weapon} />
-                      <ExtraEffects weapon={weapon} />
-                    </div>
-                    {index < character.weapons.length - 1 && (
-                      <Separator className="mt-4 bg-muted-foreground" />
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </SheetCard>
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Traits & capacités</span>
-          <ul className="flex flex-col gap-2">
-            {character.capacities.map((capacity) => (
-              <li key={capacity.id} className="leading-none">
-                <span className="mr-2 text-base">{capacity.name}</span>
-                {capacity.description && (
-                  <span className="whitespace-pre-line text-sm leading-4 text-muted-foreground">
-                    {capacity.description}
-                  </span>
+                {weapon.range && weapon.longRange && (
+                  <InfoCell
+                    name="Distance"
+                    value={
+                      <div>{`${convertFeetDistanceIntoSquares(weapon.range)} - ${convertFeetDistanceIntoSquares(weapon.longRange)} cases`}</div>
+                    }
+                  />
                 )}
-                <span></span>
-              </li>
-            ))}
-          </ul>
-        </SheetCard>
+                <AmmunitionForm weapon={weapon} />
+                <ExtraEffects weapon={weapon} />
+              </div>
+            );
+          })}
+        </SectionPanel>
       </div>
+
+      <SectionPanel
+        accent="emerald"
+        icon={Sparkles}
+        title="Traits & capacités"
+        contentClassName="gap-2"
+      >
+        {character.capacities.map((capacity) => (
+          <div key={capacity.id} className="rounded-lg bg-muted p-3">
+            <div className="font-bold leading-tight">{capacity.name}</div>
+            {capacity.description && (
+              <div className="mt-1 whitespace-pre-line text-sm leading-snug text-muted-foreground">
+                {capacity.description}
+              </div>
+            )}
+          </div>
+        ))}
+      </SectionPanel>
     </div>
   );
 }

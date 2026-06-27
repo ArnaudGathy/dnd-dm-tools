@@ -1,13 +1,13 @@
 "use client";
 
-import SheetCard from "@/components/ui/SheetCard";
 import { CharacterById, cn } from "@/lib/utils";
 import AddMagicItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddMagicItem";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, Plus, Sparkle } from "lucide-react";
+import { AlertCircle, Plus, Sparkle, Sparkles } from "lucide-react";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { MAGIC_ITEM_RARITY_COLOR_MAP } from "@/constants/maps";
 import { Progress } from "@/components/ui/progress";
+import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 
 export default function MagicItems({ character }: { character: CharacterById }) {
   const hasMagicItems = character.magicItems.length > 0;
@@ -16,18 +16,19 @@ export default function MagicItems({ character }: { character: CharacterById }) 
   const hasTooManyAttunedItems = numberOfAttunedItems > 3;
 
   return (
-    <>
-      <SheetCard className={cn("relative flex flex-col gap-4")}>
-        <AddMagicItem
-          characterId={character.id}
-          className="absolute right-4"
-          title="Ajouter un objet magique"
-        >
-          <Button size="sm">
+    <SectionPanel
+      accent="sky"
+      icon={Sparkles}
+      title="Objets Magiques"
+      action={
+        <AddMagicItem characterId={character.id} title="Ajouter un objet magique">
+          <Button size="icon">
             <Plus />
           </Button>
         </AddMagicItem>
-        <span className="mb-2 flex self-center text-2xl font-bold">Objets Magiques</span>
+      }
+    >
+      <>
         {hasTooManyAttunedItems && (
           <Alert className="bg-red-900">
             <AlertCircle className="h-6 w-6" />
@@ -89,7 +90,7 @@ export default function MagicItems({ character }: { character: CharacterById }) 
             </div>
           </div>
         )}
-      </SheetCard>
-    </>
+      </>
+    </SectionPanel>
   );
 }

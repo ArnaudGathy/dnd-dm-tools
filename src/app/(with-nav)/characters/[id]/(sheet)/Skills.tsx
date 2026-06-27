@@ -1,130 +1,133 @@
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
 import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP, SKILL_NAME_MAP } from "@/constants/maps";
-import SheetCard from "@/components/ui/SheetCard";
-import { Asterisk, Crown } from "lucide-react";
-import SheetSingleData from "@/components/ui/SheetSingleData";
+import { Asterisk, Award, Crown, Eye, ListChecks, ScrollText, Sparkles } from "lucide-react";
 import { addSignToNumber, getModifier, shortenAbilityName } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import SavingThrows from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/SavingThrows";
 import { getPassivePerception, getSkillModifier } from "@/utils/stats/skills";
+import { SectionPanel, StatLine, StatTile } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 
 export default function Skills({ character }: { character: CharacterById }) {
   const abilities = {
-    Charisme: character.charisma,
-    Constitution: character.constitution,
-    Dextérité: character.dexterity,
     Force: character.strength,
+    Dextérité: character.dexterity,
+    Constitution: character.constitution,
     Intelligence: character.intelligence,
     Sagesse: character.wisdom,
+    Charisme: character.charisma,
   };
 
   return (
-    <div className="flex w-full flex-col gap-4 p-0 md:grid md:grid-flow-col md:grid-cols-[1fr_1fr_1fr_auto] md:grid-rows-[auto] md:p-4 2xl:w-[75%]">
-      <SheetCard className="row-span-4 flex flex-col">
-        <span className="mb-2 self-center text-2xl font-bold">Compétences</span>
+    <div className="flex w-full flex-col gap-4 p-0 md:grid md:grid-cols-4 md:items-start md:p-4 2xl:w-[85%]">
+      <SectionPanel accent="indigo" icon={ListChecks} title="Compétences">
         {entries(SKILL_NAME_MAP).map(([skill, skillName]) => {
           const selectedSkill = character.skills.find(
             (characterSkill) => characterSkill.skill === skill,
           );
           const skillAbilityName = shortenAbilityName(SKILL_ABILITY_MAP[skill]);
-
           const skillDetails = getSkillModifier(character, skill);
 
           return (
-            <div key={skill} className="flex items-center justify-between">
-              <div className="flex items-center gap-1">
-                <div className="flex items-center gap-1 text-clip whitespace-nowrap">
-                  {skillName}
-                  <span className="text-xs text-muted-foreground">{skillAbilityName}</span>
-                </div>
-                {selectedSkill?.isProficient && !selectedSkill?.isExpert && (
-                  <PopoverComponent definition="Compétence maîtrisée : bonus de maitrise appliqué">
-                    <Asterisk className="size-4 text-indigo-500" />
-                  </PopoverComponent>
-                )}
-                {selectedSkill?.isExpert && (
-                  <PopoverComponent definition="Compétence expertisée : bonus de maitrise doublé">
-                    <Crown className="size-4 text-primary" />
-                  </PopoverComponent>
-                )}
-              </div>
-
-              <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
-              <PopoverComponent
-                definition={
-                  <div>
-                    <span className="font-bold">Bonus de {skillName}</span>
-                    <div>
-                      <span>Caractéristique ({skillAbilityName}) : </span>
-                      <span>{skillDetails.abilityModifier}</span>
-                    </div>
-                    {skillDetails.proficiencyModifier > 0 && (
-                      <div>
-                        <span>{skillDetails.isExpert ? "Expertise : " : "Maîtrise : "}</span>
-                        <span>{skillDetails.proficiencyModifier}</span>
-                      </div>
-                    )}
-                    {skillDetails.skillSpecial > 0 && skillDetails.skillSpecialName && (
-                      <div>
-                        <span>{`${skillDetails.skillSpecialName} : `}</span>
-                        <span>{skillDetails.skillSpecial}</span>
-                      </div>
-                    )}
-                    {skillDetails.bonusModifier > 0 && (
-                      <div>
-                        <span>{"Bonus (autres) : "}</span>
-                        <span>{skillDetails.bonusModifier}</span>
-                      </div>
-                    )}
-                  </div>
-                }
-              >
-                <span
-                  className={cn("text-lg font-bold", {
-                    "text-indigo-500": selectedSkill?.isProficient,
-                    "text-primary": selectedSkill?.isExpert,
-                  })}
-                >
-                  {addSignToNumber(skillDetails.total)}
+            <StatLine
+              key={skill}
+              label={
+                <span className="flex items-center gap-1 truncate">
+                  <span className="truncate">{skillName}</span>
+                  <span className="text-tiny uppercase text-muted-foreground">
+                    {skillAbilityName}
+                  </span>
+                  {selectedSkill?.isProficient && !selectedSkill?.isExpert && (
+                    <PopoverComponent definition="Compétence maîtrisée : bonus de maitrise appliqué">
+                      <Asterisk className="size-3.5 text-indigo-400" />
+                    </PopoverComponent>
+                  )}
+                  {selectedSkill?.isExpert && (
+                    <PopoverComponent definition="Compétence expertisée : bonus de maitrise doublé">
+                      <Crown className="size-3.5 text-primary" />
+                    </PopoverComponent>
+                  )}
                 </span>
-              </PopoverComponent>
-            </div>
+              }
+              value={
+                <PopoverComponent
+                  definition={
+                    <div>
+                      <span className="font-bold">Bonus de {skillName}</span>
+                      <div>
+                        <span>Caractéristique ({skillAbilityName}) : </span>
+                        <span>{skillDetails.abilityModifier}</span>
+                      </div>
+                      {skillDetails.proficiencyModifier > 0 && (
+                        <div>
+                          <span>{skillDetails.isExpert ? "Expertise : " : "Maîtrise : "}</span>
+                          <span>{skillDetails.proficiencyModifier}</span>
+                        </div>
+                      )}
+                      {skillDetails.skillSpecial > 0 && skillDetails.skillSpecialName && (
+                        <div>
+                          <span>{`${skillDetails.skillSpecialName} : `}</span>
+                          <span>{skillDetails.skillSpecial}</span>
+                        </div>
+                      )}
+                      {skillDetails.bonusModifier > 0 && (
+                        <div>
+                          <span>{"Bonus (autres) : "}</span>
+                          <span>{skillDetails.bonusModifier}</span>
+                        </div>
+                      )}
+                    </div>
+                  }
+                >
+                  <span
+                    className={cn({
+                      "text-indigo-400": selectedSkill?.isProficient,
+                      "text-primary": selectedSkill?.isExpert,
+                    })}
+                  >
+                    {addSignToNumber(skillDetails.total)}
+                  </span>
+                </PopoverComponent>
+              }
+            />
           );
         })}
-      </SheetCard>
+      </SectionPanel>
 
-      <SheetCard className="row-span-2 flex flex-col">
-        <span className="mb-2 self-center text-2xl font-bold">Caractéristiques</span>
-        {entries(abilities).map(([name, value]) => {
-          const modifier = getModifier(value);
-          return (
-            <div key={name} className="flex items-center justify-between">
-              <span>{name}</span>
-              <div className="mx-1 flex h-3 w-full border-b border-dashed border-muted-foreground opacity-25" />
-              <span className="w-4 text-right text-lg font-bold">{addSignToNumber(modifier)}</span>
-            </div>
-          );
-        })}
-      </SheetCard>
-
-      <SavingThrows character={character} className="row-span-2" />
-
-      <SheetCard className="row-span-4 flex flex-col">
-        <span className="mb-2 self-center text-2xl font-bold">Maîtrises</span>
-        <div className="flex flex-col gap-1">
-          {character.proficiencies.map((proficiency) => (
-            <div key={proficiency}>{proficiency}</div>
+      <div className="flex flex-col gap-4">
+        <SectionPanel accent="violet" icon={Sparkles} title="Caractéristiques">
+          {entries(abilities).map(([name, value]) => (
+            <StatLine key={name} label={name} value={addSignToNumber(getModifier(value))} />
           ))}
-        </div>
-      </SheetCard>
+        </SectionPanel>
 
-      <SheetSingleData
-        label="Bonus de maîtrise"
-        value={`+${PROFICIENCY_BONUS_BY_LEVEL[character.level]}`}
-      />
+        <SavingThrows character={character} />
+      </div>
 
-      <SheetSingleData label="Perception passive" value={getPassivePerception(character)} />
+      <SectionPanel accent="slate" icon={ScrollText} title="Maîtrises">
+        {character.proficiencies.map((proficiency) => (
+          <div key={proficiency} className="text-sm leading-snug">
+            {proficiency}
+          </div>
+        ))}
+      </SectionPanel>
+
+      <div className="grid grid-cols-2 gap-4 md:grid-cols-1">
+        <StatTile
+          icon={Award}
+          accent="indigo"
+          value={`+${PROFICIENCY_BONUS_BY_LEVEL[character.level]}`}
+          label="Bonus de maîtrise"
+          className="border border-border bg-card py-4"
+        />
+        <StatTile
+          icon={Eye}
+          accent="indigo"
+          value={getPassivePerception(character)}
+          label="Perception passive"
+          className="border border-border bg-card py-4"
+        />
+      </div>
     </div>
   );
 }

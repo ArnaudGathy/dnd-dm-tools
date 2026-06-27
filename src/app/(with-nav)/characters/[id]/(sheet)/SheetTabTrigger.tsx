@@ -35,7 +35,7 @@ export default function SheetTabTrigger() {
   };
 
   return (
-    <TabsList className="h-auto w-full flex-wrap">
+    <TabsList className="grid h-auto w-full grid-cols-7 gap-1 rounded-xl border border-border bg-card p-1">
       {entries(tabs).map(([key, { label, icon: Icon }]) => (
         <TabsTrigger
           value={key}
@@ -44,11 +44,10 @@ export default function SheetTabTrigger() {
             params.set("tab", key);
             updateParams();
           }}
+          className="flex-col gap-1 rounded-lg py-2 text-muted-foreground data-[state=active]:bg-primary data-[state=active]:text-primary-foreground md:flex-row md:gap-1.5"
         >
-          <div className="flex items-center gap-1">
-            <Icon className="size-5" />
-            <span className="hidden md:block">{label}</span>
-          </div>
+          <Icon className="size-5 shrink-0" />
+          <span className="hidden text-sm md:block">{label}</span>
         </TabsTrigger>
       ))}
     </TabsList>

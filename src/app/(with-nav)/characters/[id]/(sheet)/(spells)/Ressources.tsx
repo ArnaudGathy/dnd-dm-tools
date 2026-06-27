@@ -2,11 +2,12 @@
 
 import RessourceTracker from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourceTracker";
 import { CharacterById } from "@/lib/utils";
-import SheetCard from "@/components/ui/SheetCard";
 import RessourcesConfigMenu from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesConfigMenu";
 import dynamic from "next/dynamic";
 import { resetHp } from "@/lib/actions/characters";
 import { RessourcesData } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesWrapper";
+import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
+import { FlameKindling } from "lucide-react";
 
 function Ressources({
   character,
@@ -19,9 +20,11 @@ function Ressources({
     ressources;
 
   return (
-    <SheetCard>
-      <div className="flex items-center justify-between">
-        <span className="text-2xl font-bold">Ressources</span>
+    <SectionPanel
+      accent="emerald"
+      icon={FlameKindling}
+      title="Ressources"
+      action={
         <RessourcesConfigMenu
           ressources={characterRessources}
           shortRestAction={() => shortRest()}
@@ -31,15 +34,18 @@ function Ressources({
           }}
           sortRessourcesAction={sortRessources}
         />
-      </div>
+      }
+    >
       {displayedRessources.length > 0 && (
-        <div className="mt-4 grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-2 gap-3">
           {displayedRessources.map(({ name, icon, useRessource }) => (
-            <RessourceTracker key={name} name={name} icon={icon} useRessource={useRessource} />
+            <div key={name} className="rounded-lg bg-muted p-3">
+              <RessourceTracker name={name} icon={icon} useRessource={useRessource} />
+            </div>
           ))}
         </div>
       )}
-    </SheetCard>
+    </SectionPanel>
   );
 }
 

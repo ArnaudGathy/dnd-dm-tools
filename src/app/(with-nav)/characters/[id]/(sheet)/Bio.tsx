@@ -1,93 +1,95 @@
 import { CharacterById, cn } from "@/lib/utils";
-import SheetCard from "@/components/ui/SheetCard";
 import { StatCell } from "@/components/statblocks/StatCell";
 import { ALIGNMENT_MAP, BACKGROUND_MAP } from "@/constants/maps";
 import NotesForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/NotesForm";
+import {
+  BookText,
+  HeartCrack,
+  Link2,
+  ScrollText,
+  Sparkles,
+  StickyNote,
+  User,
+  Users,
+} from "lucide-react";
+import { SectionPanel, StatLine } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 
 export default function Bio({ character }: { character: CharacterById }) {
   const characterImageUrl = `/characters/${character.imageUrl ?? "avatar_warrior.png"}`;
 
   return (
-    <div className={cn("flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:p-4")}>
+    <div
+      className={cn(
+        "flex w-full flex-col gap-4 p-0 md:grid md:w-full md:grid-cols-4 md:items-start md:p-4",
+      )}
+    >
       <div className="flex flex-col gap-4">
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center bg-gradient-to-r from-blue-500 to-pink-500 bg-clip-text text-3xl font-bold text-transparent">
-            {character.name}
-          </span>
-          <div className="mb-4 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-pink-500 p-0.5">
+        <SectionPanel accent="pink" icon={User} title={character.name}>
+          <div className="mb-3 overflow-hidden rounded-xl bg-gradient-to-r from-blue-500 to-pink-500 p-0.5">
             <a href={character.imageUrl ? characterImageUrl : "#"}>
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={characterImageUrl} alt="Avatar" className="rounded-xl" />
+              <img src={characterImageUrl} alt="Avatar" className="w-full rounded-xl" />
             </a>
           </div>
 
-          <div className="flex justify-between">
-            <StatCell name="Age" stat={`${character.age} ans`} isInline />
-            <StatCell name="Peau" stat={character.skin} isInline />
-          </div>
-
-          <div className="flex justify-between">
-            <StatCell name="Poids" stat={`${character.weight} kg`} isInline />
-            <StatCell name="Taille" stat={`${character.height} cm`} isInline />
-          </div>
-
-          <div className="flex justify-between">
-            <StatCell name="Yeux" stat={character.eyeColor} isInline />
-            <StatCell name="Cheveux" stat={character.hair} isInline />
-          </div>
-
+          <StatLine label="Age" value={`${character.age} ans`} />
+          <StatLine label="Taille" value={`${character.height} cm`} />
+          <StatLine label="Poids" value={`${character.weight} kg`} />
+          <StatLine label="Peau" value={character.skin} />
+          <StatLine label="Yeux" value={character.eyeColor} />
+          <StatLine label="Cheveux" value={character.hair} />
           {!!character.physicalTraits && (
-            <StatCell name="Traits" stat={character.physicalTraits} isInline />
+            <StatLine label="Traits" value={character.physicalTraits} />
           )}
-        </SheetCard>
-        <SheetCard className="relative flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Notes</span>
-          <NotesForm character={character} />
-          <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
-            {character.notes || "Aucune notes"}
+        </SectionPanel>
+
+        <SectionPanel
+          accent="slate"
+          icon={StickyNote}
+          title="Notes"
+          action={<NotesForm character={character} />}
+        >
+          <div className="whitespace-pre-line text-sm leading-snug">
+            {character.notes || "Aucune note"}
           </div>
-        </SheetCard>
+        </SectionPanel>
       </div>
 
       <div className="flex flex-col gap-4">
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Traits de personnalité</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">
+        <SectionPanel accent="violet" icon={Sparkles} title="Traits de personnalité">
+          <div className="whitespace-pre-line text-sm leading-snug">
             {character.personalityTraits}
           </div>
-        </SheetCard>
+        </SectionPanel>
 
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Idéaux</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">{character.ideals}</div>
-        </SheetCard>
+        <SectionPanel accent="amber" icon={ScrollText} title="Idéaux">
+          <div className="whitespace-pre-line text-sm leading-snug">{character.ideals}</div>
+        </SectionPanel>
 
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Liens</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">{character.bonds}</div>
-        </SheetCard>
+        <SectionPanel accent="emerald" icon={Link2} title="Liens">
+          <div className="whitespace-pre-line text-sm leading-snug">{character.bonds}</div>
+        </SectionPanel>
 
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Défauts</span>
-          <div className="flex flex-col gap-1 whitespace-pre-line">{character.flaws}</div>
-        </SheetCard>
+        <SectionPanel accent="red" icon={HeartCrack} title="Défauts">
+          <div className="whitespace-pre-line text-sm leading-snug">{character.flaws}</div>
+        </SectionPanel>
       </div>
 
       <div className="col-span-2 flex flex-col gap-4">
-        <SheetCard className="flex flex-col">
-          <span className="mb-2 self-center text-2xl font-bold">Background</span>
-          <div className="flex gap-4">
+        <SectionPanel accent="pink" icon={BookText} title="Background">
+          <div className="mb-2 flex flex-wrap gap-x-6 gap-y-1">
             <StatCell name="Alignement" stat={ALIGNMENT_MAP[character.alignment]} isInline />
             <StatCell name="Historique" stat={BACKGROUND_MAP[character.background]} isInline />
           </div>
-          <div className="mt-2 flex flex-col gap-1 whitespace-pre-line">
+          <div className="whitespace-pre-line text-sm leading-snug">
             {character.lore || "Pas de lore."}
           </div>
-        </SheetCard>
-        <SheetCard className="flex flex-col gap-4">
-          <span className="mb-2 self-center text-2xl font-bold">Alliés et organisations</span>
-          <span className="whitespace-pre-line">{character.allies || "Pas d'alliés."}</span>
-        </SheetCard>
+        </SectionPanel>
+        <SectionPanel accent="sky" icon={Users} title="Alliés et organisations">
+          <div className="whitespace-pre-line text-sm leading-snug">
+            {character.allies || "Pas d'alliés."}
+          </div>
+        </SectionPanel>
       </div>
     </div>
   );

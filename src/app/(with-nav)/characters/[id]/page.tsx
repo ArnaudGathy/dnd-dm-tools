@@ -32,9 +32,7 @@ export default async function Character({
     <Tabs defaultValue={currentTab ?? SHEETS_TABS.GENERAL}>
       <SheetTabTrigger />
 
-      <Card
-        className={`mt-4 border-background bg-background md:mb-0 md:ml-0 md:mr-0 md:border-border md:bg-card`}
-      >
+      <Card className={`mt-4 border-0 bg-transparent p-0 shadow-none`}>
         <TabsContent value={SHEETS_TABS.GENERAL} className={tabContentClassName}>
           <Summary character={character} />
         </TabsContent>

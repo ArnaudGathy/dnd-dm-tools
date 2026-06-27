@@ -92,7 +92,7 @@ export default function RessourcesConfigMenu({
           </div>
         }
       >
-        <Button theme="neutral">
+        <Button theme="neutral" size="icon">
           <Settings />
         </Button>
       </PopoverComponent>

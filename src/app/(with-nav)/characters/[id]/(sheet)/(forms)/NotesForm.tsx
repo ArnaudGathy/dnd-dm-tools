@@ -23,7 +23,7 @@ export default function NotesForm({ character }: { character: CharacterById }) {
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger onClick={() => setIsOpen(true)} asChild>
-        <Button className="absolute right-4 top-4">
+        <Button size="icon">
           <Edit />
         </Button>
       </PopoverTrigger>
