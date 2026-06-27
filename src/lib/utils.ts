@@ -1,5 +1,5 @@
 import { clsx, type ClassValue } from "clsx";
-import { twMerge } from "tailwind-merge";
+import { extendTailwindMerge } from "tailwind-merge";
 import { auth } from "@/../auth";
 import { notFound, redirect } from "next/navigation";
 import { getCharacterById } from "@/lib/api/characters";
@@ -19,6 +19,13 @@ import {
   Weapon,
   WeaponDamage,
 } from "@prisma/client";
+
+// Register our custom `text-tiny` font size so tailwind-merge treats it as a
+// font-size (not a text-color). Without this, `cn("text-tiny", "text-sky-400")`
+// would wrongly drop `text-tiny`, since `tiny` isn't a size it knows by default.
+const twMerge = extendTailwindMerge({
+  extend: { classGroups: { "font-size": [{ text: ["tiny"] }] } },
+});
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
