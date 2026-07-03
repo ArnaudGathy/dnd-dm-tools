@@ -56,7 +56,9 @@ Pre-commit hooks run lint-staged automatically via Husky.
 
 ## Rules & Agents
 
-Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md · @.claude/rules/creature-data.md · @.claude/rules/spell-data.md
+Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md · @.claude/rules/creature-data.md · @.claude/rules/spell-data.md · @.claude/rules/detail-popovers.md
+
+UI work (implementing or redesigning pages/components): read `.claude/rules/detail-popovers.md` first — informational popovers must use the shared `StatBreakdown` component.
 
 Custom agents for scoped work: `prisma-agent` (schema/migrations/queries), `encounter-builder` (encounter data).
 

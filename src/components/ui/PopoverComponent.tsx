@@ -2,11 +2,13 @@
 
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { PopoverContentProps } from "@radix-ui/react-popover";
+import { cn } from "@/lib/utils";
 
 export default function PopoverComponent({
   children,
   definition,
   className,
+  contentClassName,
   asChild = false,
   side = "bottom",
   noFocus = false,
@@ -15,6 +17,7 @@ export default function PopoverComponent({
   children: React.ReactNode;
   definition: React.ReactNode;
   className?: string;
+  contentClassName?: string;
   side?: PopoverContentProps["side"];
   noFocus?: boolean;
 }) {
@@ -24,7 +27,7 @@ export default function PopoverComponent({
         {children}
       </PopoverTrigger>
       <PopoverContent
-        className="w-fit"
+        className={cn("w-fit", contentClassName)}
         side={side}
         onOpenAutoFocus={(event) => {
           if (noFocus) {

@@ -80,6 +80,9 @@ export type Ressource = z.infer<typeof ressourceSchema>;
 const ressourceStorageSchema = z.object({
   spellsSlots: z.record(z.number(), z.number()),
   ressources: z.record(z.enum(ressourceNames), ressourceSchema),
+  // Spell ids whose free once-per-long-rest cast has been used since the last
+  // long rest / slot reset (spells flagged `hasLongRestCast`).
+  usedFreeCasts: z.array(z.string()).optional(),
 });
 export type RessourceStorage = z.infer<typeof ressourceStorageSchema>;
 
@@ -271,7 +274,7 @@ export const useRessourceStorage = (character: CharacterById) => {
           available: newAvailable,
         };
       });
-      setStore({ ...store, ressources: newRessources, spellsSlots: allSlots });
+      setStore({ ...store, ressources: newRessources, spellsSlots: allSlots, usedFreeCasts: [] });
     }
   };
 
@@ -407,9 +410,24 @@ export const useRessourceStorage = (character: CharacterById) => {
     }
   };
 
+  // Resetting the slots is a "daily magic reset" — free long-rest casts come back too.
   const resetSlots = () => {
     if (store) {
-      setStore({ ...store, spellsSlots: allSlots });
+      setStore({ ...store, spellsSlots: allSlots, usedFreeCasts: [] });
+    }
+  };
+
+  const usedFreeCasts = store?.usedFreeCasts ?? [];
+
+  const spendFreeCast = (spellId: string) => {
+    if (store && !usedFreeCasts.includes(spellId)) {
+      setStore({ ...store, usedFreeCasts: [...usedFreeCasts, spellId] });
+    }
+  };
+
+  const regainFreeCast = (spellId: string) => {
+    if (store) {
+      setStore({ ...store, usedFreeCasts: usedFreeCasts.filter((id) => id !== spellId) });
     }
   };
 
@@ -422,6 +440,9 @@ export const useRessourceStorage = (character: CharacterById) => {
       baseSlots,
       spellSlots,
       resetSlots,
+      usedFreeCasts,
+      spendFreeCast,
+      regainFreeCast,
     },
   };
 };

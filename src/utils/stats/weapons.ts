@@ -51,6 +51,7 @@ export const getWeaponDamage = (character: Character, damage: WeaponDamage, weap
   const damageBonus = flatBonus + abilityModifier;
 
   return {
+    dices,
     flatBonus,
     modifierName,
     abilityModifier,

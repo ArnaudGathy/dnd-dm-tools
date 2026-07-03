@@ -96,13 +96,13 @@ export const getClassDice = (character: Character) => {
   if (character.className === Classes.MONK) {
     return {
       value: MONK_MARTIAL_DICE_PER_LEVEL[character.level],
-      name: "Dé d'arts martiaux",
+      name: "Arts martiaux",
     };
   }
   if (character.className === Classes.ROGUE) {
     return {
       value: ROGUE_BACKSTAB_DICE_PER_LEVEL[character.level],
-      name: "Dés d'attaque sournoise",
+      name: "Attaque sournoise",
     };
   }
   if (
@@ -111,7 +111,7 @@ export const getClassDice = (character: Character) => {
   ) {
     return {
       value: FIGHTER_SUPERIORITY_DICE_PER_LEVEL[character.level],
-      name: "Dés de supériorité",
+      name: "Supériorité",
     };
   }
   return undefined;
@@ -121,7 +121,7 @@ export const getSubClassDice = (character: Character) => {
   if (character.className === Classes.ROGUE && character.subclassName === Subclasses.SOULKNIFE) {
     return {
       value: ROGUE_SOULKNIFE_DICE_PER_LEVEL[character.level],
-      name: "Dés d'énergie d'âme acérée",
+      name: "Âme accérée",
     };
   }
 };

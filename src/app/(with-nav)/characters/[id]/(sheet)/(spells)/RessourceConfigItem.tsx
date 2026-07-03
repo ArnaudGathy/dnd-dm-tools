@@ -1,10 +1,6 @@
 import { cn } from "@/lib/utils";
-import PopoverComponent from "@/components/ui/PopoverComponent";
 import { entries } from "remeda";
-import { PopoverClose } from "@/components/ui/popover";
-import { Button } from "@/components/ui/button";
-import { GripHorizontal, Palette } from "lucide-react";
-import { Switch } from "@/components/ui/switch";
+import { Eye, EyeOff, GripVertical } from "lucide-react";
 import { Themes } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 import Icon from "@/components/ui/icon";
 import { useSortable } from "@dnd-kit/sortable";
@@ -33,12 +29,19 @@ const themes = {
   white: "bg-white",
 } satisfies Record<Themes, string>;
 
+/** One row of the resource display config: grip · icon · name · color dot ·
+ *  visibility eye. Tapping the dot expands an inline swatch strip under the
+ *  row (no nested popover) — the row updates live as swatches are tried. */
 export default function RessourceConfigItem({
   displayRessource,
   id,
+  isColorOpen,
+  onToggleColorAction,
 }: {
   id: string;
   displayRessource: DisplayRessource;
+  isColorOpen: boolean;
+  onToggleColorAction: () => void;
 }) {
   const [ressource, setRessource] = displayRessource.useRessource;
 
@@ -53,63 +56,73 @@ export default function RessourceConfigItem({
 
   return (
     <div
-      className={cn("flex justify-between gap-2 rounded-md border p-1", {
-        ["bg-white/10"]: isDragging,
-      })}
       ref={setNodeRef}
       style={style}
+      className={cn(
+        "relative rounded-lg transition-colors",
+        isDragging ? "z-10 bg-muted shadow-lg" : "hover:bg-muted/60",
+      )}
     >
-      <div
-        className={cn("flex items-center gap-2", {
-          ["opacity-50"]: !ressource.isEnabled,
-        })}
-      >
-        <div
-          className={cn("cursor-auto touch-none rounded-md p-1 transition", {
-            ["cursor-grab hover:bg-neutral-700"]: ressource.isEnabled,
-          })}
+      <div className="flex items-center gap-1.5 py-1 pl-0.5 pr-1.5">
+        <button
+          type="button"
+          title="Réordonner"
+          className="shrink-0 cursor-grab touch-none rounded-md p-1 text-muted-foreground transition-colors hover:text-foreground active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >
-          <GripHorizontal className="size-5" />
-        </div>
+          <GripVertical className="size-4" />
+        </button>
 
-        <Icon icon={displayRessource.icon} theme={ressource.theme} />
-        <span>{displayRessource.name}</span>
-      </div>
-      <div className="flex items-center gap-2">
-        <PopoverComponent
-          asChild
-          side="top"
-          definition={
-            <div className="flex max-w-[200px] flex-wrap gap-2">
-              {entries(themes).map(([theme, color]) => (
-                <PopoverClose key={theme}>
-                  <div
-                    className={cn("size-6 cursor-pointer rounded-2xl p-1", color, {
-                      ["border-2 border-white"]: theme === ressource.theme,
-                    })}
-                    onClick={() => setRessource({ ...ressource, theme })}
-                  />
-                </PopoverClose>
-              ))}
-            </div>
-          }
+        <span
+          className={cn(
+            "flex min-w-0 flex-1 items-center gap-2",
+            !ressource.isEnabled && "opacity-40",
+          )}
         >
-          <Button size="sm" disabled={!ressource.isEnabled} theme={ressource.theme}>
-            <Palette />
-          </Button>
-        </PopoverComponent>
-        <Switch
-          checked={ressource.isEnabled}
-          onCheckedChange={(checked) =>
-            setRessource({
-              ...ressource,
-              isEnabled: checked,
-            })
-          }
+          <Icon icon={displayRessource.icon} theme={ressource.theme} />
+          <span className="truncate text-sm font-semibold">{displayRessource.name}</span>
+        </span>
+
+        <button
+          type="button"
+          title="Changer la couleur"
+          className={cn(
+            "size-5 shrink-0 rounded-full transition-transform hover:scale-110",
+            themes[ressource.theme],
+            isColorOpen && "ring-2 ring-white/80 ring-offset-2 ring-offset-popover",
+            !ressource.isEnabled && "pointer-events-none opacity-30",
+          )}
+          onClick={onToggleColorAction}
         />
+
+        <button
+          type="button"
+          title={ressource.isEnabled ? "Masquer cette ressource" : "Afficher cette ressource"}
+          className="shrink-0 rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-white/5 hover:text-foreground"
+          onClick={() => setRessource({ ...ressource, isEnabled: !ressource.isEnabled })}
+        >
+          {ressource.isEnabled ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
+        </button>
       </div>
+
+      {isColorOpen && ressource.isEnabled && (
+        <div className="flex flex-wrap gap-1.5 px-2.5 pb-2.5 pt-1">
+          {entries(themes).map(([theme, colorClassName]) => (
+            <button
+              key={theme}
+              type="button"
+              title={theme}
+              className={cn(
+                "size-5 rounded-full transition-transform hover:scale-110",
+                colorClassName,
+                theme === ressource.theme && "ring-2 ring-white ring-offset-2 ring-offset-popover",
+              )}
+              onClick={() => setRessource({ ...ressource, theme })}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

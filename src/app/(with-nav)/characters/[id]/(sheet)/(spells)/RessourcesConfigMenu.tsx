@@ -1,7 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { FlameKindling, Settings, Tent } from "lucide-react";
+import { Settings } from "lucide-react";
 import PopoverComponent from "@/components/ui/PopoverComponent";
 import RessourceConfigItem from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourceConfigItem";
 import { closestCenter, DndContext } from "@dnd-kit/core";
@@ -9,20 +10,20 @@ import { arrayMove, SortableContext, verticalListSortingStrategy } from "@dnd-ki
 import type { DragEndEvent } from "@dnd-kit/core/dist/types";
 import { RessourceStorage } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 import { mapToObj } from "remeda";
-import { PopoverClose } from "@radix-ui/react-popover";
 import { DisplayRessource } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
 
+/** Display config for the Ressources panel: drag rows to reorder, tap the
+ *  color dot for an inline swatch strip, tap the eye to show/hide. Presented
+ *  as a mini-panel matching the amber accent of its parent section. */
 export default function RessourcesConfigMenu({
   ressources,
-  shortRestAction,
-  longRestAction,
   sortRessourcesAction,
 }: {
   ressources: DisplayRessource[];
-  shortRestAction: () => void;
-  longRestAction: () => void;
   sortRessourcesAction: (ressources: RessourceStorage["ressources"]) => void;
 }) {
+  const [colorEditFor, setColorEditFor] = useState<string | null>(null);
+
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
 
@@ -39,63 +40,49 @@ export default function RessourcesConfigMenu({
     }
   };
 
-  const canShortRest = ressources.some((ressource) => ressource.useRessource[0].canShortRest);
-
   return (
-    <div>
-      <PopoverComponent
-        asChild
-        side="top"
-        noFocus
-        definition={
-          <div className="flex min-w-[300px] flex-col gap-4">
-            <div>
-              <span className="mb-2 block text-lg font-bold">Réinitialiser</span>
+    <PopoverComponent
+      asChild
+      side="top"
+      noFocus
+      contentClassName="w-80 max-w-[calc(100vw-1rem)] overflow-hidden p-0"
+      definition={
+        <div className="flex flex-col">
+          <header className="flex items-center gap-2 border-l-4 border-l-amber-500 bg-amber-500/[0.07] px-3 py-2">
+            <Settings className="size-3.5 shrink-0 stroke-[2.5px] text-amber-400" />
+            <span className="text-xs font-bold uppercase tracking-[0.12em] text-foreground/80">
+              Affichage des ressources
+            </span>
+          </header>
 
-              <div className="flex gap-2">
-                <PopoverClose asChild>
-                  <Button size="sm" onClick={longRestAction}>
-                    <Tent /> Long repos
-                  </Button>
-                </PopoverClose>
-                {canShortRest && (
-                  <PopoverClose asChild>
-                    <Button theme="neutral" size="sm" onClick={shortRestAction}>
-                      <FlameKindling /> Court repos
-                    </Button>
-                  </PopoverClose>
-                )}
-              </div>
-            </div>
-
-            <div>
-              <span className="mb-2 block text-lg font-bold">Configuration</span>
-              <div className="flex flex-col gap-2">
-                <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-                  <SortableContext
-                    items={ressources.map((ressource) => ressource.name)}
-                    strategy={verticalListSortingStrategy}
-                  >
-                    {ressources.map((ressource) => {
-                      return (
-                        <RessourceConfigItem
-                          key={ressource.name}
-                          id={ressource.name}
-                          displayRessource={ressource}
-                        />
-                      );
-                    })}
-                  </SortableContext>
-                </DndContext>
-              </div>
-            </div>
+          <div className="flex flex-col p-1.5">
+            <DndContext collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+              <SortableContext
+                items={ressources.map((ressource) => ressource.name)}
+                strategy={verticalListSortingStrategy}
+              >
+                {ressources.map((ressource) => (
+                  <RessourceConfigItem
+                    key={ressource.name}
+                    id={ressource.name}
+                    displayRessource={ressource}
+                    isColorOpen={colorEditFor === ressource.name}
+                    onToggleColorAction={() =>
+                      setColorEditFor((current) =>
+                        current === ressource.name ? null : ressource.name,
+                      )
+                    }
+                  />
+                ))}
+              </SortableContext>
+            </DndContext>
           </div>
-        }
-      >
-        <Button theme="neutral" size="icon">
-          <Settings />
-        </Button>
-      </PopoverComponent>
-    </div>
+        </div>
+      }
+    >
+      <Button theme="neutral" size="icon" title="Configurer l'affichage des ressources">
+        <Settings />
+      </Button>
+    </PopoverComponent>
   );
 }

@@ -25,6 +25,9 @@ page first.
 - **Reuse, don't reinvent.** Prefer the project's existing UI primitives
   (`src/components/ui/*`), Tailwind tokens, and utility classes over new bespoke CSS.
   Match the surrounding code's idiom.
+- **Detail popovers have a mandated pattern.** Read `.claude/rules/detail-popovers.md`
+  before touching any informational popover — computation breakdowns and marker
+  explanations must use the shared `StatBreakdown` component, never bespoke markup.
 - **Keep it French.** All user-facing copy stays in French, consistent with the rest of
   the app. Don't translate or "improve" copy unless asked.
 - **Work in isolation.** Redesigns touch many lines — do it on a branch (see Step 3).

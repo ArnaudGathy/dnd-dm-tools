@@ -3,7 +3,7 @@ import "server-only";
 
 import prisma from "../prisma";
 import { z } from "zod";
-import { ArmorType, Classes, WeaponType } from "@prisma/client";
+import { ArmorType, Classes, Prisma, WeaponType } from "@prisma/client";
 import { BASE_HP_PER_CLASS_MAP, LEVEL_UP_HP_MAP } from "@/constants/maps";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { getModifier } from "@/utils/utils";
@@ -517,6 +517,58 @@ export const setTempHp = async (characterId: number, newTempHp: number) => {
   });
 
   revalidatePath(`/characters/${characterId}`);
+};
+
+/** Applies damage the D&D way: the temp HP pool absorbs it first, whatever
+ *  exceeds it overflows into real HP. The read-compute-write runs in a
+ *  serializable transaction so concurrent HP updates can't lose writes. */
+export const drainTempHp = async ({
+  characterId,
+  maxHp,
+  amount,
+}: {
+  characterId: number;
+  maxHp: number;
+  amount: number;
+}) => {
+  if (amount <= 0) {
+    return null;
+  }
+
+  const result = await prisma.$transaction(
+    async (tx) => {
+      const current = await tx.character.findUnique({
+        where: { id: characterId },
+        select: { currentHP: true, currentTempHP: true },
+      });
+      if (!current) {
+        return null;
+      }
+
+      const tempHp = Math.max(current.currentTempHP - amount, 0);
+      const overflow = Math.max(amount - current.currentTempHP, 0);
+      const hp = getHpWithinBounds(current.currentHP - overflow, maxHp);
+
+      const character = await tx.character.update({
+        where: { id: characterId },
+        data: { currentHP: hp, currentTempHP: tempHp },
+      });
+      return { name: character.name, hp, tempHp };
+    },
+    { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+  );
+
+  if (!result) {
+    return null;
+  }
+
+  await syncCharacterHPToFirebase(result.name, {
+    currentHP: result.hp,
+    currentTempHP: result.tempHp,
+  });
+
+  revalidatePath(`/characters/${characterId}`);
+  return { hp: result.hp, tempHp: result.tempHp };
 };
 
 export const resetHp = async (characterId: number, maxHp: number) => {

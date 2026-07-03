@@ -101,14 +101,14 @@ export default function useRessourceData({ character }: { character: CharacterBy
 
   const aasimar: RessourceDefinition[] = [
     {
-      name: "Mains Guéri.",
+      name: "Mains de guérison",
       icon: <HandHelping />,
       ressourceName: "healingHands",
       total: 1,
       condition: character.race === Races.AASIMAR,
     },
     {
-      name: "Révélation Cél.",
+      name: "Révélation Céleste",
       icon: <Drama />,
       ressourceName: "celestialRevelation",
       total: 1,
@@ -117,7 +117,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
   ];
   const goliath: RessourceDefinition[] = [
     {
-      name: "Asc. Géants",
+      name: "Ascendance du géant",
       icon: <Mountain />,
       ressourceName: "giantAncestry",
       total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
@@ -127,21 +127,21 @@ export default function useRessourceData({ character }: { character: CharacterBy
 
   const sorcerer: RessourceDefinition[] = [
     {
-      name: "Pts de Sorcell.",
+      name: "Points de Sorcellerie",
       icon: <Sparkles />,
       ressourceName: "sorceryPoints",
       total: character.level,
       condition: character.className === Classes.SORCERER && character.level >= 2,
     },
     {
-      name: "Sorcell. innée",
+      name: "Sorcellerie innée",
       icon: <Flame />,
       ressourceName: "innateSorcery",
       total: 2,
       condition: character.className === Classes.SORCERER,
     },
     {
-      name: "Marée",
+      name: "Marée du chaos",
       icon: <Waves />,
       ressourceName: "tidesOfChaos",
       total: 1,
@@ -151,7 +151,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
         character.level >= 3,
     },
     {
-      name: "Bouffée",
+      name: "Bouffée de chaos",
       icon: <GraduationCap />,
       ressourceName: "tamedSurge",
       total: 1,
@@ -173,7 +173,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
         character.level >= 3,
     },
     {
-      name: "Rupture spi.",
+      name: "Rupture spirituelle",
       icon: <BrainCircuit />,
       ressourceName: "spiritualRupture",
       total: 1,
@@ -199,14 +199,14 @@ export default function useRessourceData({ character }: { character: CharacterBy
       condition: character.className === Classes.RANGER,
     },
     {
-      name: "Infatiguable",
+      name: "Infatigable",
       icon: <HeartPlus />,
       ressourceName: "tireless",
       total: Math.max(1, getModifier(character.wisdom)),
       condition: character.className === Classes.RANGER && character.level >= 10,
     },
     {
-      name: "Voile Nature",
+      name: "Voile Naturel",
       icon: <EyeOff />,
       ressourceName: "naturesVeil",
       total: Math.max(1, getModifier(character.wisdom)),
@@ -239,7 +239,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
         character.level >= 11,
     },
     {
-      name: "Ult. Miséri.",
+      name: "Ultime Miséricorde",
       icon: <Cross />,
       ressourceName: "handOfUltimateMercy",
       total: 1,
@@ -251,7 +251,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
   ];
   const cleric: RessourceDefinition[] = [
     {
-      name: "Cond. Divin",
+      name: "Conduit Divin",
       icon: <Cross />,
       ressourceName: "channelDivinity",
       total: CLERIC_CHANNEL_DIVINITY_PER_LEVEL[character.level],
@@ -268,7 +268,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
         character.level >= 3,
     },
     {
-      name: "Inter. Divine",
+      name: "Intervention Divine",
       icon: <Sparkles />,
       ressourceName: "divineIntervention",
       total: 1,
@@ -353,7 +353,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
         character.level >= 3,
     },
     {
-      name: "Observation de l'enn.",
+      name: "Observation de l'ennemi",
       icon: <Eye />,
       ressourceName: "observeEnemy",
       total: 1,

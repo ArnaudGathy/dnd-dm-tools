@@ -1,24 +1,18 @@
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
-import {
-  ABILITY_NAME_MAP,
-  ABILITY_NAME_MAP_TO_FR,
-  PROFICIENCY_BONUS_BY_LEVEL,
-  SKILL_ABILITY_MAP,
-  SKILL_NAME_MAP,
-} from "@/constants/maps";
-import { Award, Eye, ListChecks, ShieldCheck } from "lucide-react";
+import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP, SKILL_NAME_MAP } from "@/constants/maps";
+import { Award, Eye, ListChecks } from "lucide-react";
 import { Skills as SkillsEnum } from "@prisma/client";
 import { ElementType } from "react";
-import { addSignToNumber, getModifier, shortenAbilityName } from "@/utils/utils";
+import { addSignToNumber, shortenAbilityName } from "@/utils/utils";
 import PopoverComponent from "@/components/ui/PopoverComponent";
-import {
-  getPassivePerception,
-  getSavingThrowModifier,
-  getSkillModifier,
-} from "@/utils/stats/skills";
+import { getPassivePerception, getSkillModifier } from "@/utils/stats/skills";
 import { SectionPanel, StatLine } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
+import StatBreakdown, {
+  breakdownContentClassName,
+} from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
 import CollapsibleProficiencies from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/CollapsibleProficiencies";
+import AbilityRolls from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/AbilityRolls";
 
 type Proficiency = "expert" | "proficient" | "none";
 
@@ -73,32 +67,33 @@ function SkillRow({
       }
       value={
         <PopoverComponent
+          contentClassName={breakdownContentClassName}
           definition={
-            <div>
-              <span className="font-bold">Bonus de {skillName}</span>
-              <div>
-                <span>Caractéristique ({abilityTag}) : </span>
-                <span>{details.abilityModifier}</span>
-              </div>
-              {details.proficiencyModifier > 0 && (
-                <div>
-                  <span>{details.isExpert ? "Expertise : " : "Maîtrise : "}</span>
-                  <span>{details.proficiencyModifier}</span>
-                </div>
-              )}
-              {details.skillSpecial > 0 && details.skillSpecialName && (
-                <div>
-                  <span>{`${details.skillSpecialName} : `}</span>
-                  <span>{details.skillSpecial}</span>
-                </div>
-              )}
-              {details.bonusModifier > 0 && (
-                <div>
-                  <span>{"Bonus (autres) : "}</span>
-                  <span>{details.bonusModifier}</span>
-                </div>
-              )}
-            </div>
+            <StatBreakdown
+              accent="indigo"
+              icon={ListChecks}
+              title={skillName}
+              rows={[
+                {
+                  label: `Caractéristique (${abilityTag})`,
+                  value: addSignToNumber(details.abilityModifier),
+                },
+                details.proficiencyModifier > 0 && {
+                  label: details.isExpert ? "Expertise" : "Maîtrise",
+                  value: addSignToNumber(details.proficiencyModifier),
+                },
+                details.skillSpecial > 0 &&
+                  !!details.skillSpecialName && {
+                    label: details.skillSpecialName,
+                    value: addSignToNumber(details.skillSpecial),
+                  },
+                details.bonusModifier > 0 && {
+                  label: "Bonus (autres)",
+                  value: addSignToNumber(details.bonusModifier),
+                },
+              ]}
+              total={addSignToNumber(details.total)}
+            />
           }
         >
           <span className="tabular-nums">{addSignToNumber(details.total)}</span>
@@ -128,102 +123,6 @@ function MiniStat({
         <span className="text-lg font-bold tabular-nums leading-none">{value}</span>
       </div>
     </div>
-  );
-}
-
-/** Ability checks ("Test") and saving throws ("JdS") share one tight table — both
- *  are keyed by ability name, which is how the DM calls the roll. Save proficiency
- *  uses the same left-of-name dot + header legend as the skills list. */
-function AbilityRolls({ character }: { character: CharacterById }) {
-  // Ordered alphabetically by French ability name: cha, con, dex, for, int, sag.
-  const abilities = {
-    charisma: "Charisme",
-    constitution: "Constitution",
-    dexterity: "Dextérité",
-    strength: "Force",
-    intelligence: "Intelligence",
-    wisdom: "Sagesse",
-  } as const;
-
-  return (
-    <SectionPanel
-      accent="teal"
-      icon={ShieldCheck}
-      title="Tests & Sauvegardes"
-      contentClassName="gap-0"
-      action={
-        <div className="flex items-center gap-1.5 text-tiny font-medium text-muted-foreground">
-          <Dot level="none" className="bg-teal-400" />
-          Maîtrise
-        </div>
-      }
-    >
-      <div className="flex items-center gap-2 pb-1">
-        <span className="flex-1" />
-        <span className="w-10 text-right text-tiny font-medium lowercase tracking-wide text-muted-foreground/60">
-          test
-        </span>
-        <span className="w-10 text-right text-tiny font-semibold uppercase tracking-wide text-teal-300/90">
-          JdS
-        </span>
-      </div>
-
-      {entries(abilities).map(([ability, displayName]) => {
-        const selectedSavingThrow = character.savingThrows.find(
-          ({ ability: abilityName }) => abilityName === ABILITY_NAME_MAP[ability],
-        );
-        const isProficient = !!selectedSavingThrow?.isProficient;
-        const save = getSavingThrowModifier(character, ability);
-        const checkModifier = getModifier(character[ability]);
-
-        return (
-          <div key={ability} className="flex items-center gap-2 py-1">
-            <span className="flex shrink-0 items-center gap-2">
-              <Dot level="none" className={isProficient ? "bg-teal-400" : undefined} />
-              <span className="text-[15px]">{displayName}</span>
-            </span>
-            <span className="mx-1 h-3 flex-1 border-b border-dashed border-muted-foreground/30" />
-            <span className="w-10 text-right text-base font-medium tabular-nums text-muted-foreground">
-              {addSignToNumber(checkModifier)}
-            </span>
-            <PopoverComponent
-              className="w-10 text-right text-lg font-bold tabular-nums"
-              definition={
-                <div>
-                  <span className="font-bold">
-                    JdS de {ABILITY_NAME_MAP_TO_FR[ABILITY_NAME_MAP[ability]]}
-                  </span>
-                  <div>
-                    <span>{`${displayName} : `}</span>
-                    <span>{save.abilityModifier}</span>
-                  </div>
-                  {save.proficiencyModifier > 0 && (
-                    <div>
-                      <span>Bonus de maîtrise : </span>
-                      <span>{save.proficiencyModifier}</span>
-                    </div>
-                  )}
-                  {save.protectionRingModifier > 0 && (
-                    <div>
-                      <span>Anneau de protection : </span>
-                      <span>{save.protectionRingModifier}</span>
-                    </div>
-                  )}
-                  {save.bonusModifier > 0 && (
-                    <div>
-                      <span>Bonus (autres) : </span>
-                      <span>{save.bonusModifier}</span>
-                    </div>
-                  )}
-                </div>
-              }
-            >
-              <span>{addSignToNumber(save.total)}</span>
-            </PopoverComponent>
-          </div>
-        );
-      })}
-    </SectionPanel>
   );
 }
 
