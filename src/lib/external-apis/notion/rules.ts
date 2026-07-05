@@ -8,8 +8,6 @@ const RULES_DATABASE_ID = "2f6d82fed61d80a7bcc5e884073ef7e3";
 export const getAllRules = async () => {
   const response = await notion.databases.query({
     database_id: RULES_DATABASE_ID,
-    archived: false,
-    in_trash: false,
     sorts: [{ property: "name", direction: "ascending" }],
   });
 

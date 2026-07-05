@@ -25,7 +25,7 @@ export default function AddInventoryItem({
       <PopoverTrigger onClick={() => setOpen(true)} className={className} asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-fit">
+      <PopoverContent className="w-fit overflow-hidden p-0">
         <AddInventoryItemForm
           characterId={characterId}
           item={item}

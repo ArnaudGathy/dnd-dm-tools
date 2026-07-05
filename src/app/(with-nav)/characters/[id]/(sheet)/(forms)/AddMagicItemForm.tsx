@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check, LoaderCircle, Trash } from "lucide-react";
+import { Check, LoaderCircle, Sparkle, Sparkles, Trash } from "lucide-react";
 import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
 import FormFieldSelect from "@/components/ui/inputs/FormFieldSelect";
 import { useForm } from "react-hook-form";
@@ -12,12 +12,17 @@ import { addMagicItem, deleteMagicItem } from "@/lib/actions/MagicItems";
 import TransferMagicItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/TransferMagicItem";
 import { useState } from "react";
 import { MagicItem, MagicItemRarity } from "@prisma/client";
-import { Checkbox } from "@/components/ui/checkbox";
+import { Switch } from "@/components/ui/switch";
 import { Label } from "@/components/ui/label";
 
 import { MAGIC_ITEM_RARITY_COLOR_MAP, MAGIC_ITEM_RARITY_MAP } from "@/constants/maps";
 import { mapValues } from "remeda";
 
+/**
+ * Popover body styled like a miniature SectionPanel: sky header (the magic
+ * domain), attunement as a switch row instead of a bare checkbox, and a
+ * footer where delete is a quiet icon next to the primary action.
+ */
 export default function AddMagicItemForm({
   characterId,
   campaignId,
@@ -70,85 +75,106 @@ export default function AddMagicItemForm({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">{title}</h1>
-        {error && <p className="max-w-[300px] text-red-500">{error}</p>}
+    <div className="flex w-[min(85vw,380px)] flex-col">
+      <header className="flex items-center gap-2 border-l-4 border-l-sky-500 bg-sky-500/[0.07] px-3 py-2">
+        <Sparkles className="size-3.5 shrink-0 stroke-[2.5px] text-sky-400" />
+        <span className="text-xs font-bold uppercase tracking-[0.12em] text-foreground/80">
+          {title}
+        </span>
+      </header>
 
-        <FormFieldInput formInstance={form} formFieldName="name" label="Nom" required />
-
-        <div className="grid w-[350px] grid-cols-[1fr_1fr] gap-2 md:w-[400px]">
-          <FormFieldSelect
-            formInstance={form}
-            formFieldName="rarity"
-            label="Rareté"
-            items={mapValues(MAGIC_ITEM_RARITY_MAP, (label, key) => (
-              <span className={MAGIC_ITEM_RARITY_COLOR_MAP[key]}>{label}</span>
-            ))}
-            required
-          />
-          <FormFieldInput formInstance={form} formFieldName="charges" label="Charges" />
-        </div>
-
-        <FormField
-          control={form.control}
-          name="isAttuned"
-          render={({ field }) => {
-            return (
-              <div className="flex items-center gap-2">
-                <Checkbox
-                  id="isAttuned"
-                  defaultChecked={field.value}
-                  onCheckedChange={field.onChange}
-                />
-                <Label htmlFor="isAttuned">Objet harmonisé avec le personnage</Label>
-              </div>
-            );
-          }}
-        />
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="description"
-          label="Description"
-          textarea
-        />
-
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? (
-            <LoaderCircle className="size-6 animate-spin" />
-          ) : (
-            <>
-              <Check /> {isEditMode ? "Modifier" : "Ajouter"}
-            </>
-          )}
-        </Button>
-      </form>
-
-      {isEditMode && (
-        <Button
-          variant="secondary"
-          className="mt-4 w-full"
-          onClick={() => handleDelete(item.id)}
-          disabled={isLoading}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-3 p-3 [&_input]:h-9 [&_label]:text-tiny [&_label]:font-semibold [&_label]:uppercase [&_label]:tracking-wide [&_label]:text-muted-foreground"
         >
-          {isLoading ? (
-            <LoaderCircle className="size-6 animate-spin" />
-          ) : (
-            <>
-              <Trash /> Supprimer
-            </>
+          {error && (
+            <p className="rounded-md border border-red-500/30 bg-red-500/10 p-2 text-sm text-red-400">
+              {error}
+            </p>
           )}
-        </Button>
-      )}
 
-      {isEditMode && characterId !== null && campaignId !== undefined && (
-        <TransferMagicItem
-          itemId={item.id}
-          campaignId={campaignId}
-          currentCharacterId={characterId}
-          closeAction={closeAction}
-        />
-      )}
-    </Form>
+          <FormFieldInput formInstance={form} formFieldName="name" label="Nom" required />
+
+          <div className="grid grid-cols-[1fr_5rem] gap-2">
+            <FormFieldSelect
+              formInstance={form}
+              formFieldName="rarity"
+              label="Rareté"
+              items={mapValues(MAGIC_ITEM_RARITY_MAP, (label, key) => (
+                <span className={MAGIC_ITEM_RARITY_COLOR_MAP[key]}>{label}</span>
+              ))}
+              required
+            />
+            <FormFieldInput formInstance={form} formFieldName="charges" label="Charges" />
+          </div>
+
+          <FormField
+            control={form.control}
+            name="isAttuned"
+            render={({ field }) => {
+              return (
+                <div className="flex items-center justify-between gap-2 rounded-lg bg-muted px-3 py-2.5">
+                  <Label
+                    htmlFor="isAttuned"
+                    className="flex cursor-pointer items-center gap-1.5 !text-sm !normal-case !tracking-normal !text-foreground"
+                  >
+                    <Sparkle className="size-3.5 fill-current text-sky-400" />
+                    Harmonisé avec le personnage
+                  </Label>
+                  <Switch
+                    id="isAttuned"
+                    className="data-[state=checked]:bg-sky-500 data-[state=unchecked]:bg-white/15"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </div>
+              );
+            }}
+          />
+
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="description"
+            label="Description"
+            textarea
+          />
+
+          <div className="mt-1 flex items-center gap-2 border-t border-border pt-3">
+            {isEditMode && (
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                aria-label="Supprimer l'objet magique"
+                className="h-10 w-10 shrink-0 text-red-400 hover:text-red-400"
+                onClick={() => handleDelete(item.id)}
+                disabled={isLoading}
+              >
+                <Trash />
+              </Button>
+            )}
+            <Button type="submit" className="flex-1" disabled={isLoading}>
+              {isLoading ? (
+                <LoaderCircle className="size-6 animate-spin" />
+              ) : (
+                <>
+                  <Check /> {isEditMode ? "Modifier" : "Ajouter"}
+                </>
+              )}
+            </Button>
+          </div>
+
+          {isEditMode && characterId !== null && campaignId !== undefined && (
+            <TransferMagicItem
+              itemId={item.id}
+              campaignId={campaignId}
+              currentCharacterId={characterId}
+              closeAction={closeAction}
+            />
+          )}
+        </form>
+      </Form>
+    </div>
   );
 }

@@ -27,7 +27,7 @@ export default function AddMagicItem({
       <PopoverTrigger onClick={() => setOpen(true)} className={className} asChild>
         {children}
       </PopoverTrigger>
-      <PopoverContent className="w-fit">
+      <PopoverContent className="w-fit overflow-hidden p-0">
         <AddMagicItemForm
           characterId={characterId}
           campaignId={campaignId}

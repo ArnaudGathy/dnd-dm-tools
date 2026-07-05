@@ -159,7 +159,7 @@ export default function WeaponCard({
             {`${convertFeetDistanceIntoSquares(weapon.range)} – ${convertFeetDistanceIntoSquares(weapon.longRange)} cases`}
           </span>
         )}
-        <AmmunitionForm weapon={weapon} asChip />
+        <AmmunitionForm weapon={weapon} />
       </div>
 
       {weapon.extraEffects && (

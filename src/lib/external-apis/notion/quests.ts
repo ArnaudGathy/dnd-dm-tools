@@ -10,8 +10,6 @@ export const getAllQuests = async (partyName: PartyId) => {
   if (partyName === PartyId.MIFA) {
     const response = await notion.databases.query({
       database_id: QUESTS_DATABASE_ID,
-      archived: false,
-      in_trash: false,
       filter: {
         property: "status",
         type: "status",

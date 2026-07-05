@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Check, LoaderCircle, Trash } from "lucide-react";
+import { Backpack, Check, LoaderCircle, Trash } from "lucide-react";
 import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +14,11 @@ import { addInventoryItem, deleteInventoryItem } from "@/lib/actions/InventoryIt
 import { useState } from "react";
 import { InventoryItem } from "@prisma/client";
 
+/**
+ * Popover body styled like a miniature SectionPanel: amber header (the
+ * inventory domain), compact uppercase field labels, and a footer where
+ * delete is a quiet icon and the primary action carries the weight.
+ */
 export default function AddInventoryItemForm({
   characterId,
   item,
@@ -56,50 +61,64 @@ export default function AddInventoryItemForm({
   };
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-4">
-        <h1 className="text-2xl font-bold">{title}</h1>
-        {error && <p className="max-w-[300px] text-red-500">{error}</p>}
-        <div className="grid w-[350px] grid-cols-[1fr_50px_60px] gap-2 md:w-[400px]">
-          <FormFieldInput formInstance={form} formFieldName="name" label="Nom" required />
-          <FormFieldInput formInstance={form} formFieldName="quantity" label="Qté" />
-          <FormFieldInput formInstance={form} formFieldName="value" label="Valeur" />
-        </div>
+    <div className="flex w-[min(85vw,380px)] flex-col">
+      <header className="flex items-center gap-2 border-l-4 border-l-amber-500 bg-amber-500/[0.07] px-3 py-2">
+        <Backpack className="size-3.5 shrink-0 stroke-[2.5px] text-amber-400" />
+        <span className="text-xs font-bold uppercase tracking-[0.12em] text-foreground/80">
+          {title}
+        </span>
+      </header>
 
-        <FormFieldInput
-          formInstance={form}
-          formFieldName="description"
-          label="Description"
-          textarea
-        />
-
-        <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? (
-            <LoaderCircle className="size-6 animate-spin" />
-          ) : (
-            <>
-              <Check /> {isEditMode ? "Modifier" : "Ajouter"}
-            </>
-          )}
-        </Button>
-      </form>
-
-      {isEditMode && (
-        <Button
-          variant="secondary"
-          className="mt-4 w-full"
-          onClick={() => handleDelete(item.id)}
-          disabled={isLoading}
+      <Form {...form}>
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-3 p-3 [&_input]:h-9 [&_label]:text-tiny [&_label]:font-semibold [&_label]:uppercase [&_label]:tracking-wide [&_label]:text-muted-foreground"
         >
-          {isLoading ? (
-            <LoaderCircle className="size-6 animate-spin" />
-          ) : (
-            <>
-              <Trash /> Supprimer
-            </>
+          {error && (
+            <p className="rounded-md border border-red-500/30 bg-red-500/10 p-2 text-sm text-red-400">
+              {error}
+            </p>
           )}
-        </Button>
-      )}
-    </Form>
+
+          <div className="grid grid-cols-[1fr_3.5rem_5rem] gap-2">
+            <FormFieldInput formInstance={form} formFieldName="name" label="Nom" required />
+            <FormFieldInput formInstance={form} formFieldName="quantity" label="Qté" />
+            <FormFieldInput formInstance={form} formFieldName="value" label="Valeur" />
+          </div>
+
+          <FormFieldInput
+            formInstance={form}
+            formFieldName="description"
+            label="Description"
+            textarea
+          />
+
+          <div className="mt-1 flex items-center gap-2 border-t border-border pt-3">
+            {isEditMode && (
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                aria-label="Supprimer l'objet"
+                className="h-10 w-10 shrink-0 text-red-400 hover:text-red-400"
+                onClick={() => handleDelete(item.id)}
+                disabled={isLoading}
+              >
+                <Trash />
+              </Button>
+            )}
+            <Button type="submit" className="flex-1" disabled={isLoading}>
+              {isLoading ? (
+                <LoaderCircle className="size-6 animate-spin" />
+              ) : (
+                <>
+                  <Check /> {isEditMode ? "Modifier" : "Ajouter"}
+                </>
+              )}
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   );
 }

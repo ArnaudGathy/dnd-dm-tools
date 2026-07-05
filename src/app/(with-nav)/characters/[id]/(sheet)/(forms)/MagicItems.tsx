@@ -3,94 +3,137 @@
 import { CharacterById, cn } from "@/lib/utils";
 import AddMagicItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/AddMagicItem";
 import { Button } from "@/components/ui/button";
-import { AlertCircle, Plus, Sparkle, Sparkles } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { MAGIC_ITEM_RARITY_COLOR_MAP } from "@/constants/maps";
-import { Progress } from "@/components/ui/progress";
+import { AlertCircle, Plus, Sparkle, Sparkles, Zap } from "lucide-react";
+import { MAGIC_ITEM_RARITY_COLOR_MAP, MAGIC_ITEM_RARITY_MAP } from "@/constants/maps";
 import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
+import PopoverComponent from "@/components/ui/PopoverComponent";
+import StatBreakdown, {
+  breakdownContentClassName,
+} from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
+import { weaponChipClassName } from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/WeaponCard";
+
+const MAX_ATTUNED_ITEMS = 3;
 
 export default function MagicItems({ character }: { character: CharacterById }) {
   const hasMagicItems = character.magicItems.length > 0;
-  const numberOfAttunedItems = character.magicItems.filter((item) => item.isAttuned).length;
-  const hasAtLeastOneAttunedItem = numberOfAttunedItems >= 1;
-  const hasTooManyAttunedItems = numberOfAttunedItems > 3;
+  const attunedItems = character.magicItems.filter((item) => item.isAttuned);
+  const numberOfAttunedItems = attunedItems.length;
+  const hasTooManyAttunedItems = numberOfAttunedItems > MAX_ATTUNED_ITEMS;
 
   return (
     <SectionPanel
       accent="sky"
       icon={Sparkles}
       title="Objets Magiques"
+      contentClassName="gap-2"
       action={
-        <AddMagicItem characterId={character.id} title="Ajouter un objet magique">
-          <Button size="icon">
-            <Plus />
-          </Button>
-        </AddMagicItem>
+        <div className="flex items-center gap-1.5">
+          {numberOfAttunedItems > 0 && (
+            <PopoverComponent
+              className={cn(
+                "flex items-center gap-1 rounded-md px-1.5 py-0.5 text-xs font-bold tabular-nums",
+                hasTooManyAttunedItems ? "bg-red-500/15 text-red-400" : "text-sky-400",
+              )}
+              contentClassName={breakdownContentClassName}
+              definition={
+                <StatBreakdown
+                  accent={hasTooManyAttunedItems ? "red" : "sky"}
+                  icon={Sparkle}
+                  title="Harmonisation"
+                  rows={attunedItems.map((item) => ({ label: item.name, value: "✦" }))}
+                  total={`${numberOfAttunedItems}/${MAX_ATTUNED_ITEMS}`}
+                  totalLabel="Harmonisés"
+                  note={`Un personnage ne peut être harmonisé qu'avec ${MAX_ATTUNED_ITEMS} objets magiques à la fois.`}
+                />
+              }
+            >
+              {Array.from({ length: MAX_ATTUNED_ITEMS }, (_, index) => (
+                <Sparkle
+                  key={index}
+                  className={cn(
+                    "size-3 fill-current",
+                    index >= numberOfAttunedItems && "opacity-25",
+                  )}
+                />
+              ))}
+              {numberOfAttunedItems}/{MAX_ATTUNED_ITEMS}
+            </PopoverComponent>
+          )}
+          <AddMagicItem characterId={character.id} title="Ajouter un objet magique">
+            <Button size="icon">
+              <Plus />
+            </Button>
+          </AddMagicItem>
+        </div>
       }
     >
-      <>
-        {hasTooManyAttunedItems && (
-          <Alert className="bg-red-900">
-            <AlertCircle className="h-6 w-6" />
-            <AlertTitle>Trop d&apos;objets magique harmonisés</AlertTitle>
-            <AlertDescription>
-              Il y en a {numberOfAttunedItems} sur un maximum de 3
-            </AlertDescription>
-          </Alert>
-        )}
-        <ul className="flex flex-col">
-          {!hasMagicItems && (
-            <li className="flex self-center p-2 leading-none">
-              <span className="text-sm text-muted-foreground">Aucun objet magique</span>
-            </li>
-          )}
-          {hasMagicItems &&
-            character.magicItems.map((magicItem) => (
-              <AddMagicItem
-                key={magicItem.id}
-                characterId={character.id}
-                campaignId={character.campaignId}
-                item={magicItem}
-                title="Modifier un objet magique"
-              >
-                <li className="flex cursor-pointer p-2 leading-none hover:bg-white/5">
-                  <div className="space-x-2">
-                    <span
-                      className={cn("leading-5", MAGIC_ITEM_RARITY_COLOR_MAP[magicItem.rarity])}
-                    >{`${magicItem.name}`}</span>
-                    {magicItem.isAttuned && (
-                      <span className="inline-block">
-                        <Sparkle className="size-3 text-sky-400" />
-                      </span>
-                    )}
-                    {magicItem.charges && (
-                      <span className="text-sm text-indigo-400">({magicItem.charges})</span>
-                    )}
+      {hasTooManyAttunedItems && (
+        <div className="flex items-start gap-2 rounded-md border border-red-500/30 bg-red-500/10 p-2.5 text-sm leading-snug">
+          <AlertCircle className="mt-0.5 size-4 shrink-0 text-red-400" />
+          <span>
+            <span className="font-bold text-red-400">Trop d&apos;objets harmonisés.</span> Il y en a{" "}
+            {numberOfAttunedItems} sur un maximum de {MAX_ATTUNED_ITEMS}.
+          </span>
+        </div>
+      )}
 
-                    {magicItem.description && (
-                      <span className="mt-1 block text-sm leading-4 text-muted-foreground">
-                        {magicItem.description}
-                      </span>
-                    )}
-                  </div>
-                </li>
-              </AddMagicItem>
-            ))}
-        </ul>
-        {hasMagicItems && hasAtLeastOneAttunedItem && (
-          <div className="flex w-full flex-col items-center justify-center">
-            <span className="text-sm text-muted-foreground">Harmonisation</span>
-            <div className="relative my-2 flex w-2/3 items-center gap-2">
-              <Progress value={numberOfAttunedItems >= 1 ? 100 : 0} className="bg-stone-700" />
-              <Progress value={numberOfAttunedItems >= 2 ? 100 : 0} className="bg-stone-700" />
-              <Progress value={numberOfAttunedItems >= 3 ? 100 : 0} className="bg-stone-700" />
-              <span className="absolute left-1/2 mt-0.5 -translate-x-1/2 text-base">
-                {numberOfAttunedItems}/3
+      {!hasMagicItems && (
+        <span className="p-2 text-center text-sm text-muted-foreground">Aucun objet magique</span>
+      )}
+
+      {character.magicItems.map((magicItem) => (
+        <AddMagicItem
+          key={magicItem.id}
+          characterId={character.id}
+          campaignId={character.campaignId}
+          item={magicItem}
+          title="Modifier un objet magique"
+        >
+          <div className="flex cursor-pointer flex-col gap-2 rounded-lg bg-muted p-3 text-left transition-colors hover:bg-white/10">
+            <div className="flex items-start justify-between gap-2">
+              <span
+                className={cn(
+                  "text-base font-bold leading-tight",
+                  MAGIC_ITEM_RARITY_COLOR_MAP[magicItem.rarity],
+                )}
+              >
+                {magicItem.name}
+              </span>
+              <span
+                className={cn(
+                  "shrink-0 rounded border border-current px-1.5 py-0.5 text-tiny font-semibold uppercase tracking-wide opacity-80",
+                  MAGIC_ITEM_RARITY_COLOR_MAP[magicItem.rarity],
+                )}
+              >
+                {MAGIC_ITEM_RARITY_MAP[magicItem.rarity]}
               </span>
             </div>
+
+            {(magicItem.isAttuned || magicItem.charges) && (
+              <div className="flex flex-wrap items-center gap-1.5">
+                {magicItem.isAttuned && (
+                  <span className={weaponChipClassName}>
+                    <Sparkle className="size-3.5 fill-current text-sky-400" />
+                    <span className="text-sky-400">Harmonisé</span>
+                  </span>
+                )}
+                {magicItem.charges && (
+                  <span className={weaponChipClassName}>
+                    <Zap className="size-3.5 text-indigo-400" />
+                    <span className="text-indigo-400">{magicItem.charges}</span>
+                  </span>
+                )}
+              </div>
+            )}
+
+            {magicItem.description && (
+              <span className="text-sm leading-snug text-muted-foreground">
+                {magicItem.description}
+              </span>
+            )}
           </div>
-        )}
-      </>
+        </AddMagicItem>
+      ))}
     </SectionPanel>
   );
 }

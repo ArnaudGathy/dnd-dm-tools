@@ -56,8 +56,10 @@ export default function TransferMagicItem({
   const hasCharacters = characters.length > 0;
 
   return (
-    <div className="mt-4 flex flex-col gap-2 border-t border-white/10 pt-4">
-      <span className="text-sm font-medium">Transférer à un autre personnage</span>
+    <div className="mt-1 flex flex-col gap-2 border-t border-border pt-3">
+      <span className="text-tiny font-semibold uppercase tracking-wide text-muted-foreground">
+        Transférer à un autre personnage
+      </span>
       {isFetching && (
         <span className="flex items-center gap-2 text-sm text-muted-foreground">
           <LoaderCircle className="size-4 animate-spin" /> Chargement...
