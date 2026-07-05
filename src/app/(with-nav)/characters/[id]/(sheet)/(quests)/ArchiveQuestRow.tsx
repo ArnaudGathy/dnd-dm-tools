@@ -14,7 +14,7 @@ export default function ArchiveQuestRow({ quest }: { quest: Quest }) {
         <span className="min-w-0 flex-1 truncate text-sm font-bold leading-tight">
           {quest.name}
         </span>
-        <span className="sm:block hidden max-w-[40%] truncate text-xs text-muted-foreground">
+        <span className="max-sm:hidden max-w-[40%] truncate text-xs text-muted-foreground">
           {quest.location}
         </span>
         <ChevronDown className="size-4 shrink-0 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
