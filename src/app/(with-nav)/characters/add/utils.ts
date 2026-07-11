@@ -21,32 +21,76 @@ import {
 import { CharacterById } from "@/lib/utils";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 
-export const formRequiredString = z.string().min(1, "Requis");
+export const formRequiredString = z.string().min(1, "Ce champ est requis");
 export const optionalNumberStringNotZero = z
   .string()
   .refine((val) => val === "" || /^\d+$/.test(val), {
-    message: "Chiffre",
+    message: "Doit être un nombre entier",
   })
   .refine((val) => val === "" || parseInt(val, 10) > 0, {
-    message: "Doit être > 0",
+    message: "Doit être supérieur à 0",
   })
   .optional();
+// Shared point-buy config (used by both the schema-level budget check and the
+// ability scores builder UI).
+export const POINT_BUY_BUDGET = 27;
+export const POINT_BUY_BASE_MIN = 8;
+export const POINT_BUY_BASE_MAX = 15;
+// 2024 point-buy costs (score 8 → 15).
+export const POINT_BUY_COST: Record<number, number> = {
+  8: 0,
+  9: 1,
+  10: 2,
+  11: 3,
+  12: 4,
+  13: 5,
+  14: 7,
+  15: 9,
+};
+export const clampPointBuyBase = (score: number) =>
+  Math.min(Math.max(score, POINT_BUY_BASE_MIN), POINT_BUY_BASE_MAX);
+export const pointBuyCost = (score: number) => POINT_BUY_COST[clampPointBuyBase(score)] ?? 0;
+export const POINT_BUY_BASE_KEYS = [
+  "strengthBase",
+  "dexterityBase",
+  "constitutionBase",
+  "intelligenceBase",
+  "wisdomBase",
+  "charismaBase",
+] as const;
+
+// Point-buy base score: optional digit string, clamped to 8–15 in the UI. Kept
+// lenient here because it's a client-only helper — the persisted total is what
+// `minMax(8, 20)` validates.
+export const pointBuyString = z.string().regex(/^\d*$/, "Doit être un nombre entier").optional();
+// Extra ability points (historique/dons): optional non-negative digit string.
+export const abilityBonusString = z
+  .string()
+  .regex(/^\d*$/, "Doit être un nombre entier")
+  .optional();
+
 export function minMax(min: number, max?: number) {
-  return formRequiredString.regex(/^\d+$/, "Chiffre").refine(
-    (val) => {
-      const numberVal = parseInt(val, 10);
-      return numberVal >= min && (!max || numberVal <= max);
-    },
-    {
-      message: max ? `${min} à ${max}` : `Min ${min}`,
-    },
-  );
+  return z
+    .string()
+    .min(1, "Ce champ est requis")
+    .regex(/^\d+$/, "Doit être un nombre entier")
+    .refine(
+      (val) => {
+        const numberVal = parseInt(val, 10);
+        return numberVal >= min && (!max || numberVal <= max);
+      },
+      {
+        message: max ? `Doit être compris entre ${min} et ${max}` : `Doit être au minimum ${min}`,
+      },
+    );
 }
 
 export const inventoryItemFormSchema = z.object({
   name: formRequiredString,
   description: z.string().nullish(),
-  quantity: z.union([z.number(), z.string().regex(/^\d+$/, "Chiffre")]).optional(),
+  quantity: z
+    .union([z.number(), z.string().regex(/^\d+$/, "Doit être un nombre entier")])
+    .optional(),
   value: z.string().nullish(),
 });
 export type InventoryFormSchema = z.infer<typeof inventoryItemFormSchema>;
@@ -61,7 +105,7 @@ export const magicItemFormSchema = z.object({
 });
 export type MagicItemFormSchema = z.infer<typeof magicItemFormSchema>;
 
-export const signUpFormSchema = z.object({
+const signUpFormBaseSchema = z.object({
   campaign: z.nativeEnum(CampaignId),
   party: z.nativeEnum(PartyId),
   status: z.nativeEnum(CharacterStatus),
@@ -77,18 +121,33 @@ export const signUpFormSchema = z.object({
   intelligence: minMax(8, 20),
   wisdom: minMax(8, 20),
   charisma: minMax(8, 20),
-  age: minMax(1),
-  height: minMax(1),
-  weight: minMax(1),
-  eyeColor: formRequiredString,
-  hair: formRequiredString,
-  skin: formRequiredString,
+  // Point-buy helper fields (creation only, never persisted). The `*Base` values
+  // are the 8–15 point-buy scores; the `*Bonus` values are extra points from
+  // historique/dons. Their sum is written into the persisted ability fields above.
+  strengthBase: pointBuyString,
+  dexterityBase: pointBuyString,
+  constitutionBase: pointBuyString,
+  intelligenceBase: pointBuyString,
+  wisdomBase: pointBuyString,
+  charismaBase: pointBuyString,
+  strengthBonus: abilityBonusString,
+  dexterityBonus: abilityBonusString,
+  constitutionBonus: abilityBonusString,
+  intelligenceBonus: abilityBonusString,
+  wisdomBonus: abilityBonusString,
+  charismaBonus: abilityBonusString,
+  age: optionalNumberStringNotZero,
+  height: optionalNumberStringNotZero,
+  weight: optionalNumberStringNotZero,
+  eyeColor: z.string().optional(),
+  hair: z.string().optional(),
+  skin: z.string().optional(),
   alignment: z.nativeEnum(Alignment),
-  personalityTraits: formRequiredString,
+  personalityTraits: z.string().optional(),
   physicalTraits: z.string().optional(),
-  ideals: formRequiredString,
-  bonds: formRequiredString,
-  flaws: formRequiredString,
+  ideals: z.string().optional(),
+  bonds: z.string().optional(),
+  flaws: z.string().optional(),
   lore: z.string().optional(),
   allies: z.string().optional(),
   notes: z.string().optional(),
@@ -139,7 +198,7 @@ export const signUpFormSchema = z.object({
         stealthDisadvantage: z.boolean(),
       })
       .refine((armor) => armor.type !== ArmorType.HEAVY || !!armor.strengthRequirement, {
-        message: "Requis",
+        message: "Requis pour une armure lourde",
         path: ["strengthRequirement"],
       }),
   ),
@@ -153,7 +212,7 @@ export const signUpFormSchema = z.object({
         attackBonus: z
           .string()
           .refine((val) => val === "" || /^\d+$/.test(val), {
-            message: "Chiffre",
+            message: "Doit être un nombre entier",
           })
           .optional(),
         reach: optionalNumberStringNotZero,
@@ -172,7 +231,7 @@ export const signUpFormSchema = z.object({
               flatBonus: z
                 .string()
                 .refine((val) => val === "" || /^\d+$/.test(val), {
-                  message: "Chiffre",
+                  message: "Doit être un nombre entier",
                 })
                 .optional(),
             }),
@@ -183,7 +242,7 @@ export const signUpFormSchema = z.object({
         (weapon) =>
           (weapon.type !== WeaponType.MELEE && weapon.type !== WeaponType.THROWN) || weapon.reach,
         {
-          message: "Requis",
+          message: "Requise pour une arme de mêlée ou de lancer",
           path: ["reach"],
         },
       )
@@ -191,7 +250,7 @@ export const signUpFormSchema = z.object({
         (weapon) =>
           (weapon.type !== WeaponType.RANGED && weapon.type !== WeaponType.THROWN) || weapon.range,
         {
-          message: "Requis",
+          message: "Requise pour une arme à distance ou de lancer",
           path: ["range"],
         },
       )
@@ -200,19 +259,45 @@ export const signUpFormSchema = z.object({
           (weapon.type !== WeaponType.RANGED && weapon.type !== WeaponType.THROWN) ||
           weapon.longRange,
         {
-          message: "Requis",
+          message: "Requise pour une arme à distance ou de lancer",
           path: ["longRange"],
         },
       )
       .refine((weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionType, {
-        message: "Requis",
+        message: "Requis pour une arme à distance",
         path: ["ammunitionType"],
       })
       .refine((weapon) => weapon.type !== WeaponType.RANGED || weapon.ammunitionCount, {
-        message: "Requis",
+        message: "Requise pour une arme à distance",
         path: ["ammunitionCount"],
       }),
   ),
+});
+
+export const signUpFormSchema = signUpFormBaseSchema.superRefine((data, ctx) => {
+  // Point-buy budget check (creation only; base fields are empty in edit mode, so
+  // this is a no-op there). The whole budget must be spent exactly — no more, no
+  // less. Blocks submission and surfaces one issue in the validation list rather
+  // than colouring the form.
+  const allBasesEmpty = POINT_BUY_BASE_KEYS.every((key) => !data[key]);
+  if (allBasesEmpty) {
+    return;
+  }
+  const spent = POINT_BUY_BASE_KEYS.reduce((total, key) => {
+    const score = parseInt(data[key] ?? "", 10);
+    return Number.isNaN(score) ? total : total + pointBuyCost(score);
+  }, 0);
+  if (spent !== POINT_BUY_BUDGET) {
+    const diff = Math.abs(spent - POINT_BUY_BUDGET);
+    ctx.addIssue({
+      code: z.ZodIssueCode.custom,
+      path: ["pointBuyBudget"],
+      message:
+        spent > POINT_BUY_BUDGET
+          ? `Budget d'acquisition par points dépassé de ${diff} point${diff > 1 ? "s" : ""} (${spent} / ${POINT_BUY_BUDGET}).`
+          : `Il reste ${diff} point${diff > 1 ? "s" : ""} à dépenser (${spent} / ${POINT_BUY_BUDGET}). Les ${POINT_BUY_BUDGET} points doivent être dépensés entièrement.`,
+    });
+  }
 });
 
 export const signupFormDefaultValues = {
@@ -221,7 +306,7 @@ export const signupFormDefaultValues = {
   name: "",
   campaign: CampaignId.TOMB,
   party: PartyId.MIFA,
-  className: Classes.ARTIFICER,
+  className: Classes.BARBARIAN,
   subclassName: null,
   race: Races.AASIMAR,
   background: Backgrounds.ACOLYTE,
@@ -231,6 +316,18 @@ export const signupFormDefaultValues = {
   intelligence: "",
   wisdom: "",
   charisma: "",
+  strengthBase: "8",
+  dexterityBase: "8",
+  constitutionBase: "8",
+  intelligenceBase: "8",
+  wisdomBase: "8",
+  charismaBase: "8",
+  strengthBonus: "",
+  dexterityBonus: "",
+  constitutionBonus: "",
+  intelligenceBonus: "",
+  wisdomBonus: "",
+  charismaBonus: "",
   age: "",
   height: "",
   weight: "",
@@ -261,14 +358,7 @@ export const signupFormDefaultValues = {
     { skill: Skills.ATHLETICS, isProficient: true, isExpert: false },
     { skill: Skills.ARCANA, isProficient: true, isExpert: false },
   ],
-  inventory: [
-    {
-      name: "Le bon 15m de corde",
-      description: "L'outil essentiel de tout aventurier",
-      quantity: "1",
-      value: "25po",
-    },
-  ],
+  inventory: [],
   magicItems: [],
   wealth: [
     { type: MoneyType.GOLD, quantity: "0" },
@@ -285,7 +375,18 @@ const optionalNullableString = z
   .nullable()
   .optional()
   .transform((v) => (v === null ? undefined : v));
+// Optional persisted string: empty string or null/undefined all collapse to null
+// so the column stores NULL rather than "".
+const backendOptionalString = z
+  .string()
+  .nullish()
+  .transform((v) => (v == null || v === "" ? null : v));
 const backendStringToNumber = z.coerce.number();
+// Optional persisted number from a form string: "" / null / undefined → null.
+const backendOptionalNumber = z
+  .union([z.literal(""), backendStringToNumber.min(1)])
+  .nullish()
+  .transform((v) => (v == null || v === "" ? null : v));
 
 export const backendInventoryItemSchema = z.object({
   name: backendRequiredString,
@@ -319,18 +420,18 @@ export const backendCharacterSchema = z.object({
   intelligence: backendStringToNumber.min(8).max(20),
   wisdom: backendStringToNumber.min(8).max(20),
   charisma: backendStringToNumber.min(8).max(20),
-  age: backendStringToNumber.min(1),
-  height: backendStringToNumber.min(1),
-  weight: backendStringToNumber.min(1),
-  eyeColor: backendRequiredString,
-  hair: backendRequiredString,
-  skin: backendRequiredString,
+  age: backendOptionalNumber,
+  height: backendOptionalNumber,
+  weight: backendOptionalNumber,
+  eyeColor: backendOptionalString,
+  hair: backendOptionalString,
+  skin: backendOptionalString,
   alignment: z.nativeEnum(Alignment),
-  personalityTraits: backendRequiredString,
+  personalityTraits: backendOptionalString,
   physicalTraits: z.string().optional(),
-  ideals: backendRequiredString,
-  bonds: backendRequiredString,
-  flaws: backendRequiredString,
+  ideals: backendOptionalString,
+  bonds: backendOptionalString,
+  flaws: backendOptionalString,
   lore: z.string().optional(),
   allies: z.string().optional(),
   notes: z.string().optional(),
@@ -523,9 +624,16 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
     intelligence: String(character.intelligence),
     wisdom: String(character.wisdom),
     charisma: String(character.charisma),
-    age: String(character.age),
-    height: String(character.height),
-    weight: String(character.weight),
+    age: character.age?.toString() ?? "",
+    height: character.height?.toString() ?? "",
+    weight: character.weight?.toString() ?? "",
+    eyeColor: character.eyeColor ?? "",
+    hair: character.hair ?? "",
+    skin: character.skin ?? "",
+    personalityTraits: character.personalityTraits ?? "",
+    ideals: character.ideals ?? "",
+    bonds: character.bonds ?? "",
+    flaws: character.flaws ?? "",
     physicalTraits: character.physicalTraits ?? undefined,
     lore: character.lore ?? undefined,
     allies: character.allies ?? undefined,

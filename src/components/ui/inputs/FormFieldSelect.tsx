@@ -27,6 +27,7 @@ type FormFieldSelectProps<
   label?: string;
   description?: string;
   className?: string;
+  labelClassName?: string;
   items: Record<string, ReactNode>;
 };
 
@@ -37,6 +38,7 @@ export default function FormFieldSelect<
   formInstance,
   description,
   className,
+  labelClassName,
   formFieldName,
   label,
   placeholder,
@@ -55,12 +57,14 @@ export default function FormFieldSelect<
       name={formFieldName}
       render={({ field }) => {
         return (
-          <FormItem className={cn("w-full", className)}>
+          <FormItem className={cn("w-full", className)} data-anchor={formFieldName}>
             {label && (
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-1">
-                  <FormLabel disabled={rest.disabled}>{label}</FormLabel>
-                  {required && <span className="text-primary">*</span>}
+                  <FormLabel disabled={rest.disabled} className={labelClassName}>
+                    {label}
+                  </FormLabel>
+                  {required && <span className="leading-none text-primary">*</span>}
                 </div>
                 <div>
                   {description && (

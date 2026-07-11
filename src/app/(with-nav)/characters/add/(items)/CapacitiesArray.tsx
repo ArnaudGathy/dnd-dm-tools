@@ -1,10 +1,8 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import ArrayAddButton from "@/app/(with-nav)/characters/add/(items)/ArrayAddButton";
-import ArrayDeleteButton from "@/app/(with-nav)/characters/add/(items)/ArrayDeleteButton";
-import { Textarea } from "@/components/ui/textarea";
+import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
+import { ItemCard } from "@/app/(with-nav)/characters/add/(items)/itemUI";
 
 export default function CapacitiesArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "capacities";
@@ -12,60 +10,49 @@ export default function CapacitiesArray({ form }: { form: UseFormReturn<Characte
     control: form.control,
     name: fieldName,
   });
+  const rootError = form.formState.errors.capacities?.root?.message;
+  const capacities = form.watch(fieldName);
 
   return (
-    <FormItem>
-      <div className="flex gap-1">
-        <FormLabel>Capacités</FormLabel>
-        <span className="text-primary">*</span>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        {fields.map((field, index) => (
-          <div key={field.id} className="flex w-full flex-col gap-1">
-            <div className="flex gap-1">
-              <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length < 2} />
-              <FormField
-                control={form.control}
-                name={`${fieldName}.${index}.name`}
-                render={({ field: inputField }) => (
-                  <FormItem className="flex-1">
-                    <FormControl>
-                      <Input
-                        {...inputField}
-                        value={inputField.value?.toString() ?? ""}
-                        placeholder="Nom"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-            <FormField
-              control={form.control}
-              name={`${fieldName}.${index}.description`}
-              render={({ field: inputField }) => (
-                <FormItem className="flex-1">
-                  <FormControl>
-                    <Textarea
-                      {...inputField}
-                      value={inputField.value?.toString() ?? ""}
-                      placeholder="Description"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
+    <div className="flex flex-col gap-3" data-anchor={fieldName}>
+      <p className="text-sm text-muted-foreground">
+        Les capacités de classe, de race, de don ou d&apos;historique du personnage.
+      </p>
+      {fields.map((field, index) => {
+        const capacityName = capacities[index]?.name;
+        return (
+          <ItemCard
+            key={field.id}
+            title={
+              capacityName ? `Capacité ${index + 1} — ${capacityName}` : `Capacité ${index + 1}`
+            }
+            onDelete={() => remove(index)}
+            deleteDisabled={fields.length < 2}
+          >
+            <FormFieldInput
+              formInstance={form}
+              formFieldName={`${fieldName}.${index}.name`}
+              label="Nom"
+              labelClassName="text-sm"
+              required
             />
-          </div>
-        ))}
-      </div>
+            <FormFieldInput
+              formInstance={form}
+              formFieldName={`${fieldName}.${index}.description`}
+              label="Description"
+              labelClassName="text-sm"
+              textarea
+            />
+          </ItemCard>
+        );
+      })}
+
+      {rootError && <p className="text-sm font-medium text-destructive">{rootError}</p>}
 
       <ArrayAddButton
         label="Ajouter une capacité"
         onClick={() => append({ name: "", description: "" })}
       />
-    </FormItem>
+    </div>
   );
 }

@@ -80,7 +80,14 @@ const getBaseHP = (
   );
 };
 
-export const createCharacter = async (data: CharacterCreationForm, owner: string) => {
+/** Thrown at the end of a dry-run transaction so Prisma rolls everything back. */
+class DryRunRollback extends Error {}
+
+export const createCharacter = async (
+  data: CharacterCreationForm,
+  owner: string,
+  { dryRun = false }: { dryRun?: boolean } = {},
+) => {
   const validation = backendCharacterSchema.safeParse({
     ...data,
     owner,
@@ -91,150 +98,176 @@ export const createCharacter = async (data: CharacterCreationForm, owner: string
     throw new Error(JSON.stringify(validation.error, null, 2));
   }
 
-  let party = await prisma.party.findFirst({
-    where: { name: validation.data.party },
-  });
-  if (!party) {
-    party = await prisma.party.create({
-      data: { name: validation.data.party },
-    });
-  }
-
-  const campaign = await prisma.campaign.upsert({
-    where: {
-      name_partyId: { name: validation.data.campaign, partyId: party.id },
-    },
-    update: {},
-    create: {
-      name: validation.data.campaign,
-      status: "ACTIVE",
-      partyId: party.id,
-    },
-  });
-
   const existingCharacter = await prisma.character.findFirst({
     where: { name: validation.data.name },
   });
 
-  if (!existingCharacter) {
-    const HP = getBaseHP(validation.data);
-
-    const character = await prisma.character.create({
-      data: {
-        owner: validation.data.owner,
-        status: validation.data.status,
-        maximumHP: HP,
-        currentHP: HP,
-        campaignId: campaign.id,
-        name: validation.data.name,
-        className: validation.data.className,
-        subclassName: validation.data.subclassName,
-        race: validation.data.race,
-        background: validation.data.background,
-        strength: validation.data.strength,
-        dexterity: validation.data.dexterity,
-        constitution: validation.data.constitution,
-        intelligence: validation.data.intelligence,
-        wisdom: validation.data.wisdom,
-        charisma: validation.data.charisma,
-        age: validation.data.age,
-        weight: validation.data.weight,
-        height: validation.data.height,
-        eyeColor: validation.data.eyeColor,
-        hair: validation.data.hair,
-        skin: validation.data.skin,
-        physicalTraits: validation.data.physicalTraits,
-        alignment: validation.data.alignment,
-        personalityTraits: validation.data.personalityTraits,
-        ideals: validation.data.ideals,
-        bonds: validation.data.bonds,
-        flaws: validation.data.flaws,
-        lore: validation.data.lore,
-        allies: validation.data.allies,
-        notes: validation.data.notes,
-        proficiencies: validation.data.proficiencies,
-      },
-    });
-
-    for (const savingThrow of validation.data.savingThrows || []) {
-      await prisma.savingThrow.create({
-        data: { ...savingThrow, characterId: character.id },
-      });
-    }
-
-    for (const skill of validation.data.skills || []) {
-      await prisma.skill.create({
-        data: { ...skill, characterId: character.id },
-      });
-    }
-
-    for (const capacity of validation.data.capacities || []) {
-      await prisma.capacity.create({
-        data: { ...capacity, characterId: character.id },
-      });
-    }
-
-    for (const armor of validation.data.armors || []) {
-      await prisma.armor.create({
-        data: {
-          ...armor,
-          strengthRequirement:
-            armor.type === ArmorType.HEAVY ? armor.strengthRequirement : undefined,
-          stealthDisadvantage:
-            armor.type !== ArmorType.SHIELD ? armor.stealthDisadvantage : undefined,
-          characterId: character.id,
-        },
-      });
-    }
-
-    for (const weapon of validation.data.weapons || []) {
-      const { damages, ...weaponData } = weapon;
-      const createdWeapon = await prisma.weapon.create({
-        data: {
-          ...weaponData,
-          reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : undefined,
-          range: weaponData.type !== WeaponType.MELEE ? weaponData.range : undefined,
-          longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : undefined,
-          ammunitionCount:
-            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : undefined,
-          ammunitionType:
-            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : undefined,
-          characterId: character.id,
-        },
-      });
-
-      for (const damage of damages || []) {
-        await prisma.weaponDamage.create({
-          data: {
-            ...damage,
-            weaponId: createdWeapon.id,
-          },
-        });
-      }
-    }
-
-    for (const item of validation.data.inventory || []) {
-      await prisma.inventoryItem.create({
-        data: { ...item, characterId: character.id },
-      });
-    }
-
-    for (const money of validation.data.wealth || []) {
-      await prisma.money.create({
-        data: { ...money, characterId: character.id },
-      });
-    }
-
-    await syncCharacterHPToFirebase(character.name, {
-      currentHP: HP,
-      currentTempHP: 0,
-      maximumHP: HP,
-    });
-
-    redirect(`/characters/${character.id}`);
-  } else {
+  if (existingCharacter) {
     throw new Error("Un personnage avec ce nom existe déjà.");
   }
+
+  const HP = getBaseHP(validation.data);
+
+  // All writes go through one transaction: a dry run performs every insert
+  // against the real schema (constraints, enums, relations) then rolls back,
+  // and a real run can no longer leave a half-created character behind.
+  let characterId: number;
+  try {
+    characterId = await prisma.$transaction(
+      async (tx) => {
+        let party = await tx.party.findFirst({
+          where: { name: validation.data.party },
+        });
+        if (!party) {
+          party = await tx.party.create({
+            data: { name: validation.data.party },
+          });
+        }
+
+        const campaign = await tx.campaign.upsert({
+          where: {
+            name_partyId: { name: validation.data.campaign, partyId: party.id },
+          },
+          update: {},
+          create: {
+            name: validation.data.campaign,
+            status: "ACTIVE",
+            partyId: party.id,
+          },
+        });
+
+        const character = await tx.character.create({
+          data: {
+            owner: validation.data.owner,
+            status: validation.data.status,
+            maximumHP: HP,
+            currentHP: HP,
+            campaignId: campaign.id,
+            name: validation.data.name,
+            className: validation.data.className,
+            subclassName: validation.data.subclassName,
+            race: validation.data.race,
+            background: validation.data.background,
+            strength: validation.data.strength,
+            dexterity: validation.data.dexterity,
+            constitution: validation.data.constitution,
+            intelligence: validation.data.intelligence,
+            wisdom: validation.data.wisdom,
+            charisma: validation.data.charisma,
+            age: validation.data.age,
+            weight: validation.data.weight,
+            height: validation.data.height,
+            eyeColor: validation.data.eyeColor,
+            hair: validation.data.hair,
+            skin: validation.data.skin,
+            physicalTraits: validation.data.physicalTraits,
+            alignment: validation.data.alignment,
+            personalityTraits: validation.data.personalityTraits,
+            ideals: validation.data.ideals,
+            bonds: validation.data.bonds,
+            flaws: validation.data.flaws,
+            lore: validation.data.lore,
+            allies: validation.data.allies,
+            notes: validation.data.notes,
+            proficiencies: validation.data.proficiencies,
+          },
+        });
+
+        for (const savingThrow of validation.data.savingThrows || []) {
+          await tx.savingThrow.create({
+            data: { ...savingThrow, characterId: character.id },
+          });
+        }
+
+        for (const skill of validation.data.skills || []) {
+          await tx.skill.create({
+            data: { ...skill, characterId: character.id },
+          });
+        }
+
+        for (const capacity of validation.data.capacities || []) {
+          await tx.capacity.create({
+            data: { ...capacity, characterId: character.id },
+          });
+        }
+
+        for (const armor of validation.data.armors || []) {
+          await tx.armor.create({
+            data: {
+              ...armor,
+              strengthRequirement:
+                armor.type === ArmorType.HEAVY ? armor.strengthRequirement : undefined,
+              stealthDisadvantage:
+                armor.type !== ArmorType.SHIELD ? armor.stealthDisadvantage : undefined,
+              characterId: character.id,
+            },
+          });
+        }
+
+        for (const weapon of validation.data.weapons || []) {
+          const { damages, ...weaponData } = weapon;
+          const createdWeapon = await tx.weapon.create({
+            data: {
+              ...weaponData,
+              reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : undefined,
+              range: weaponData.type !== WeaponType.MELEE ? weaponData.range : undefined,
+              longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : undefined,
+              ammunitionCount:
+                weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : undefined,
+              ammunitionType:
+                weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : undefined,
+              characterId: character.id,
+            },
+          });
+
+          for (const damage of damages || []) {
+            await tx.weaponDamage.create({
+              data: {
+                ...damage,
+                weaponId: createdWeapon.id,
+              },
+            });
+          }
+        }
+
+        for (const item of validation.data.inventory || []) {
+          await tx.inventoryItem.create({
+            data: { ...item, characterId: character.id },
+          });
+        }
+
+        for (const money of validation.data.wealth || []) {
+          await tx.money.create({
+            data: { ...money, characterId: character.id },
+          });
+        }
+
+        if (dryRun) {
+          throw new DryRunRollback();
+        }
+
+        return character.id;
+      },
+      // Many sequential inserts; the default 5 s interactive-transaction
+      // timeout is too tight over a slow connection.
+      { timeout: 20_000 },
+    );
+  } catch (error) {
+    if (error instanceof DryRunRollback) {
+      return {
+        message: `« ${validation.data.name} » passe la validation et toutes les insertions en base. Rien n'a été enregistré.`,
+      };
+    }
+    throw error;
+  }
+
+  await syncCharacterHPToFirebase(validation.data.name, {
+    currentHP: HP,
+    currentTempHP: 0,
+    maximumHP: HP,
+  });
+
+  redirect(`/characters/${characterId}`);
 };
 
 async function syncSimpleTable<Existing extends { id: number }, Incoming>(

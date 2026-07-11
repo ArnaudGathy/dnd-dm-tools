@@ -1,22 +1,13 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { useFieldArray, UseFormReturn } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { WEAPON_DAMAGE_TYPE_MAP, WEAPON_DICE_MAP } from "@/constants/maps";
 import { WeaponDamageDices, WeaponDamageType } from "@prisma/client";
-import { cn } from "@/lib/utils";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { entries } from "remeda";
-import { Label } from "@/components/ui/label";
+import { Star } from "lucide-react";
 import ArrayAddButton from "@/app/(with-nav)/characters/add/(items)/ArrayAddButton";
 import ArrayDeleteButton from "@/app/(with-nav)/characters/add/(items)/ArrayDeleteButton";
-import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
+import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
+import FormFieldSelect from "@/components/ui/inputs/FormFieldSelect";
+import FormFieldToggle from "@/components/ui/inputs/FormFieldToggle";
 
 import { getDamageTypeIconAndColor } from "@/utils/stats/weapons";
 
@@ -34,151 +25,83 @@ export default function WeaponDamagesArray({
   });
 
   const weapons = form.watch("weapons");
-  const currentWeaponDamages = weapons[index].damages;
+  const currentWeaponDamages = weapons[index]?.damages ?? [];
   const hasBaseDamages = currentWeaponDamages.some(({ isBaseDamage }) => isBaseDamage);
 
-  return (
-    <FormItem>
-      <div className="flex gap-1">
-        <FormLabel>Dégâts</FormLabel>
-        <span className="text-primary">*</span>
-      </div>
+  const damageTypeItems = Object.fromEntries(
+    Object.entries(WEAPON_DAMAGE_TYPE_MAP).map(([value, label]) => {
+      const { icon: Icon, color } = getDamageTypeIconAndColor(value as WeaponDamageType);
+      return [
+        value,
+        <div key={value} className="flex items-center gap-2">
+          <Icon className="size-4" />
+          <span style={{ color }}>{label}</span>
+        </div>,
+      ];
+    }),
+  );
 
-      {fields.length > 0 && (
-        <div className="flex flex-col gap-4 pb-2">
-          {fields.map((field, index) => {
-            const isCurrentBaseDamage = currentWeaponDamages[index].isBaseDamage;
-            return (
-              <div key={field.id} className="flex flex-col gap-2">
-                <div className="grid grid-cols-[auto_10%_15%_10%_32%_1fr] gap-1">
-                  <ArrayDeleteButton onClick={() => remove(index)} disabled={fields.length === 1} />
-                  <FormField
-                    control={form.control}
-                    name={`${fieldName}.${index}.numberOfDices`}
-                    render={({ field: inputField }) => (
-                      <FormItem className="flex-1">
-                        <FormControl>
-                          <Input
-                            {...inputField}
-                            value={inputField.value?.toString() ?? ""}
-                            placeholder="Dés"
-                          />
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`${fieldName}.${index}.dice`}
-                    render={({ field }) => {
-                      return (
-                        <FormItem className="w-full">
-                          <div className="flex w-full items-center gap-2">
-                            <Select defaultValue={field.value} onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger
-                                  className={cn({
-                                    "text-muted-foreground": !field.value,
-                                  })}
-                                >
-                                  <SelectValue />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {entries(WEAPON_DICE_MAP).map(([value, label]) => (
-                                  <SelectItem key={value} value={value}>
-                                    {label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      );
-                    }}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`${fieldName}.${index}.flatBonus`}
-                    render={({ field: inputField }) => (
-                      <FormItem className="relative flex-1">
-                        <FormControl>
-                          <Input
-                            {...inputField}
-                            value={inputField.value?.toString() ?? ""}
-                            placeholder="dgt"
-                          />
-                        </FormControl>
-                        <span className="absolute left-1 top-0">+</span>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`${fieldName}.${index}.type`}
-                    render={({ field }) => {
-                      return (
-                        <FormItem className="w-full">
-                          <div className="flex w-full items-center gap-2">
-                            <Select defaultValue={field.value} onValueChange={field.onChange}>
-                              <FormControl>
-                                <SelectTrigger
-                                  className={cn({
-                                    "text-muted-foreground": !field.value,
-                                  })}
-                                >
-                                  <SelectValue />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {entries(WEAPON_DAMAGE_TYPE_MAP).map(([value, label]) => {
-                                  const { icon: Icon, color } = getDamageTypeIconAndColor(value);
-                                  return (
-                                    <SelectItem key={value} value={value}>
-                                      <div className="flex items-center gap-2">
-                                        <Icon className="size-4" />
-                                        <span style={{ color }}>{label}</span>
-                                      </div>
-                                    </SelectItem>
-                                  );
-                                })}
-                              </SelectContent>
-                            </Select>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      );
-                    }}
-                  />
-                  <FormField
-                    control={form.control}
-                    name={`${fieldName}.${index}.isBaseDamage`}
-                    render={({ field }) => {
-                      return (
-                        <div className="flex items-center gap-2">
-                          <Checkbox
-                            id={`isBaseDamage${index}`}
-                            defaultChecked={field.value}
-                            onCheckedChange={field.onChange}
-                            disabled={hasBaseDamages && !isCurrentBaseDamage}
-                          />
-                          <Label htmlFor={`isBaseDamage${index}`}>Dgt de base</Label>
-                        </div>
-                      );
-                    }}
-                  />
-                </div>
+  return (
+    <div className="flex flex-col gap-2" data-anchor={fieldName}>
+      <span className="text-xs font-bold uppercase tracking-[0.12em] text-muted-foreground">
+        Dégâts
+      </span>
+
+      {fields.map((field, damageIndex) => {
+        const isCurrentBaseDamage = currentWeaponDamages[damageIndex]?.isBaseDamage;
+        return (
+          <div key={field.id} className="rounded-md border border-border/70 bg-background/40 p-2.5">
+            <div className="grid grid-cols-2 items-start gap-2 md:grid-cols-[4.5rem_5.5rem_5.5rem_1fr_auto]">
+              <FormFieldInput
+                formInstance={form}
+                formFieldName={`${fieldName}.${damageIndex}.numberOfDices`}
+                label="Dés"
+                labelClassName="text-sm"
+                inputMode="numeric"
+              />
+              <FormFieldSelect
+                formInstance={form}
+                formFieldName={`${fieldName}.${damageIndex}.dice`}
+                label="Type de dé"
+                labelClassName="text-sm"
+                items={WEAPON_DICE_MAP}
+              />
+              <FormFieldInput
+                formInstance={form}
+                formFieldName={`${fieldName}.${damageIndex}.flatBonus`}
+                label="Bonus fixe"
+                labelClassName="text-sm"
+                inputMode="numeric"
+              />
+              <FormFieldSelect
+                formInstance={form}
+                formFieldName={`${fieldName}.${damageIndex}.type`}
+                label="Type de dégâts"
+                labelClassName="text-sm"
+                items={damageTypeItems}
+              />
+              <div className="col-span-2 flex items-end justify-end gap-1.5 md:col-span-1 md:h-full">
+                <FormFieldToggle
+                  formInstance={form}
+                  formFieldName={`${fieldName}.${damageIndex}.isBaseDamage`}
+                  label="Dégâts de base"
+                  icon={Star}
+                  accent="amber"
+                  disabled={hasBaseDamages && !isCurrentBaseDamage}
+                />
+                <ArrayDeleteButton
+                  onClick={() => remove(damageIndex)}
+                  disabled={fields.length === 1}
+                  label={`Supprimer les dégâts ${damageIndex + 1}`}
+                />
               </div>
-            );
-          })}
-        </div>
-      )}
+            </div>
+          </div>
+        );
+      })}
 
       <ArrayAddButton
-        label="Ajouter un type de dégats"
+        label="Ajouter un type de dégâts"
         onClick={() =>
           append({
             isBaseDamage: false,
@@ -189,6 +112,6 @@ export default function WeaponDamagesArray({
           })
         }
       />
-    </FormItem>
+    </div>
   );
 }

@@ -54,14 +54,20 @@ const ACCENTS: Record<Accent, { marker: string; icon: string; label: string; tin
 
 /** A label-over-value block used for the physical-stat strip in the hero. */
 function Stat({ label, value }: { label: string; value: ReactNode }) {
+  const isEmpty = value == null || value === "";
   return (
     <div className="flex min-w-0 flex-col gap-0.5">
       <span className="text-tiny font-semibold uppercase tracking-wider text-muted-foreground">
         {label}
       </span>
       {/* Skin/eyes/hair can be full descriptive sentences — wrap, never truncate. */}
-      <span className="break-words text-sm font-semibold leading-snug text-foreground">
-        {value}
+      <span
+        className={cn(
+          "break-words text-sm font-semibold leading-snug",
+          isEmpty ? "italic text-muted-foreground" : "text-foreground",
+        )}
+      >
+        {isEmpty ? "Non renseigné" : value}
       </span>
     </div>
   );
@@ -149,7 +155,7 @@ function PersonalityEntry({
 }: {
   icon: ElementType;
   label: string;
-  value: string;
+  value: string | null;
   accent: Accent;
 }) {
   const a = ACCENTS[accent];
@@ -251,9 +257,15 @@ export default function Bio({ character }: { character: CharacterById }) {
             <div className="h-px bg-border" />
 
             <div className="grid grid-cols-2 gap-x-6 gap-y-3 text-left md:grid-cols-3">
-              <Stat label="Âge" value={`${character.age} ans`} />
-              <Stat label="Taille" value={`${character.height} cm`} />
-              <Stat label="Poids" value={`${character.weight} kg`} />
+              <Stat label="Âge" value={character.age != null ? `${character.age} ans` : null} />
+              <Stat
+                label="Taille"
+                value={character.height != null ? `${character.height} cm` : null}
+              />
+              <Stat
+                label="Poids"
+                value={character.weight != null ? `${character.weight} kg` : null}
+              />
               <Stat label="Peau" value={character.skin} />
               <Stat label="Yeux" value={character.eyeColor} />
               <Stat label="Cheveux" value={character.hair} />

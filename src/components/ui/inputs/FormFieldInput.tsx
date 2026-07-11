@@ -21,6 +21,8 @@ type FormFieldInputProps<
   label: string;
   description?: string;
   className?: string;
+  labelClassName?: string;
+  inputClassName?: string;
   textarea?: boolean;
 };
 
@@ -33,6 +35,8 @@ export default function FormFieldInput<
   label,
   description,
   className,
+  labelClassName,
+  inputClassName,
   textarea,
   ...rest
 }: FormFieldInputProps<TFieldValues, TName>) {
@@ -42,12 +46,14 @@ export default function FormFieldInput<
       name={formFieldName}
       render={({ field }) => {
         return (
-          <FormItem className={className}>
+          <FormItem className={className} data-anchor={formFieldName}>
             {label && (
               <div className="flex items-center justify-between">
                 <div className={cn("flex gap-1")}>
-                  <FormLabel disabled={rest.disabled}>{label}</FormLabel>
-                  {rest.required && <span className="text-primary">*</span>}
+                  <FormLabel disabled={rest.disabled} className={labelClassName}>
+                    {label}
+                  </FormLabel>
+                  {rest.required && <span className="leading-none text-primary">*</span>}
                 </div>
                 {description && (
                   <FormDescription className="leading-3" disabled={rest.disabled}>
@@ -62,10 +68,15 @@ export default function FormFieldInput<
                   {...field}
                   required={rest.required}
                   value={field.value?.toString() ?? ""}
-                  className="h-[100px]"
+                  className={cn("h-[100px]", inputClassName)}
                 />
               ) : (
-                <Input {...rest} {...field} value={field.value?.toString() ?? ""} />
+                <Input
+                  {...rest}
+                  {...field}
+                  value={field.value?.toString() ?? ""}
+                  className={inputClassName}
+                />
               )}
             </FormControl>
             <FormMessage className="text-left" />

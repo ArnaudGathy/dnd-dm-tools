@@ -20,7 +20,6 @@ import {
 import { AbilityNameType } from "@/types/types";
 
 export const CLASS_MAP = {
-  [Classes.ARTIFICER]: "Artificier",
   [Classes.BARBARIAN]: "Barbare",
   [Classes.BARD]: "Barde",
   [Classes.CLERIC]: "Clerc",
@@ -36,7 +35,6 @@ export const CLASS_MAP = {
 };
 
 export const HIT_DICE_MAP = {
-  [Classes.ARTIFICER]: "d8",
   [Classes.BARBARIAN]: "d12",
   [Classes.BARD]: "d8",
   [Classes.CLERIC]: "d8",
@@ -54,7 +52,6 @@ export const HIT_DICE_MAP = {
 export const LEVEL_UP_HP_MAP = {
   [Classes.SORCERER]: 4,
   [Classes.WIZARD]: 4,
-  [Classes.ARTIFICER]: 5,
   [Classes.BARD]: 5,
   [Classes.CLERIC]: 5,
   [Classes.DRUID]: 5,
@@ -68,7 +65,6 @@ export const LEVEL_UP_HP_MAP = {
 };
 
 export const BASE_HP_PER_CLASS_MAP = {
-  [Classes.ARTIFICER]: 8,
   [Classes.BARBARIAN]: 12,
   [Classes.BARD]: 8,
   [Classes.CLERIC]: 8,
@@ -86,7 +82,6 @@ export const BASE_HP_PER_CLASS_MAP = {
 export const SPELLCASTING_MODIFIER_MAP: {
   [key in Classes]: AbilityNameType | null;
 } = {
-  [Classes.ARTIFICER]: "intelligence",
   [Classes.BARD]: "charisma",
   [Classes.CLERIC]: "wisdom",
   [Classes.DRUID]: "wisdom",
@@ -102,12 +97,6 @@ export const SPELLCASTING_MODIFIER_MAP: {
 };
 
 export const SUBCLASS_MAP = {
-  // Artificier
-  [Subclasses.ALCHEMIST]: "Alchimiste",
-  [Subclasses.ARTILLERIST]: "Artilleur",
-  [Subclasses.BATTLE_SMITH]: "Forgeron de bataille",
-  [Subclasses.ARMORER]: "Porteguerre",
-
   // Barbare
   [Subclasses.PATH_OF_THE_BERSERKER]: "Voie du Berserker",
   [Subclasses.PATH_OF_THE_WILD_HEART]: "Voie du Coeur sauvage",
@@ -196,12 +185,6 @@ export const SUBCLASS_MAP = {
 };
 
 export const SUBCLASSES_BY_CLASS: Record<Classes, Subclasses[]> = {
-  [Classes.ARTIFICER]: [
-    Subclasses.ALCHEMIST,
-    Subclasses.ARMORER,
-    Subclasses.ARTILLERIST,
-    Subclasses.BATTLE_SMITH,
-  ],
   [Classes.BARBARIAN]: [
     Subclasses.PATH_OF_THE_BERSERKER,
     Subclasses.PATH_OF_THE_WILD_HEART,
@@ -1003,7 +986,6 @@ export const CLASS_SPELL_PROGRESSION_MAP: Record<Classes, Array<Record<number, n
   [Classes.WIZARD]: FULL_CASTER_PROGRESSION,
   [Classes.PALADIN]: HALF_CASTER_PROGRESSION,
   [Classes.RANGER]: HALF_CASTER_PROGRESSION,
-  [Classes.ARTIFICER]: HALF_CASTER_PROGRESSION,
   [Classes.WARLOCK]: PACT_MAGIC_PROGRESSION,
   [Classes.BARBARIAN]: [],
   [Classes.FIGHTER]: [],
@@ -1047,7 +1029,6 @@ export const CLASS_SPELLS_PREPARED_PROGRESSION_MAP: Record<Classes, number[]> = 
   [Classes.CLERIC]: PREPARED_SPELLS_PROGRESSION,
   [Classes.DRUID]: PREPARED_SPELLS_PROGRESSION,
   [Classes.WIZARD]: PREPARED_SPELLS_PROGRESSION_WIZARD,
-  [Classes.ARTIFICER]: PREPARED_SPELLS_PROGRESSION,
   [Classes.PALADIN]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
   [Classes.RANGER]: PREPARED_SPELLS_PROGRESSION_PALADIN_RANGER,
   [Classes.FIGHTER]: [], // No spells
@@ -1074,7 +1055,6 @@ export const CLASS_SPELLS_WHEN_TO_PREPARE_MAP: Record<
   [Classes.CLERIC]: SPELL_PREPARATION,
   [Classes.DRUID]: SPELL_PREPARATION,
   [Classes.WIZARD]: SPELL_PREPARATION,
-  [Classes.ARTIFICER]: SPELL_PREPARATION,
   [Classes.PALADIN]: SPELL_PREPARATION_PALADIN_RANGER,
   [Classes.RANGER]: SPELL_PREPARATION_PALADIN_RANGER,
   [Classes.FIGHTER]: null,

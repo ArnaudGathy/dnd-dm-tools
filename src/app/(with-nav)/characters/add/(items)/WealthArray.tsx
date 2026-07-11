@@ -1,9 +1,15 @@
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
 import { UseFormReturn, useFieldArray } from "react-hook-form";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { MONEY_TYPE_MAP } from "@/constants/maps";
 import { MoneyType } from "@prisma/client";
+import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
+import { cn } from "@/lib/utils";
+
+const MONEY_LABEL_COLOR: Record<MoneyType, string> = {
+  [MoneyType.GOLD]: "text-amber-400",
+  [MoneyType.SILVER]: "text-slate-400",
+  [MoneyType.COPPER]: "text-orange-400",
+};
 
 export default function WealthArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "wealth";
@@ -13,44 +19,17 @@ export default function WealthArray({ form }: { form: UseFormReturn<CharacterCre
   });
 
   return (
-    <FormItem className="w-1/2">
-      <div className="flex gap-1">
-        <FormLabel>Monnaies</FormLabel>
-        <span className="text-primary">*</span>
-      </div>
-
-      <div className="grid grid-cols-3 gap-4">
-        {fields.map((field, index) => {
-          const labelColor =
-            field.type === MoneyType.SILVER
-              ? "text-slate-400"
-              : field.type === MoneyType.COPPER
-                ? "text-orange-400"
-                : "text-amber-400";
-
-          return (
-            <div key={field.id} className="flex w-full flex-col gap-1">
-              <FormLabel className={labelColor}>{MONEY_TYPE_MAP[field.type]}</FormLabel>
-              <FormField
-                control={form.control}
-                name={`${fieldName}.${index}.quantity`}
-                render={({ field: inputField }) => (
-                  <FormItem className="flex-1">
-                    <FormControl>
-                      <Input
-                        {...inputField}
-                        value={inputField.value?.toString() ?? ""}
-                        placeholder="Qté"
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-            </div>
-          );
-        })}
-      </div>
-    </FormItem>
+    <div className="grid max-w-md grid-cols-3 gap-3" data-anchor={fieldName}>
+      {fields.map((field, index) => (
+        <FormFieldInput
+          key={field.id}
+          formInstance={form}
+          formFieldName={`${fieldName}.${index}.quantity`}
+          label={MONEY_TYPE_MAP[field.type]}
+          labelClassName={cn("text-sm font-semibold", MONEY_LABEL_COLOR[field.type])}
+          inputMode="numeric"
+        />
+      ))}
+    </div>
   );
 }

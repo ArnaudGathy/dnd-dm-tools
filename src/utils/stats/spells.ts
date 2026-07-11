@@ -52,8 +52,8 @@ export const getSpellSaveDC = (character: Character) => {
 };
 
 // A "prepared-from-list" class auto-shows its whole class spell list for the
-// spell levels it can cast, and prepares from it: Cleric, Druid, Artificer,
-// Paladin, Ranger.
+// spell levels it can cast, and prepares from it: Cleric, Druid, Paladin,
+// Ranger.
 //
 // Wizards are deliberately EXCLUDED: they also prepare daily (non-empty entry in
 // CLASS_SPELLS_PREPARED_PROGRESSION_MAP, so they still get a prepared-per-day

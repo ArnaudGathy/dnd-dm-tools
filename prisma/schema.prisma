@@ -63,7 +63,6 @@ model Capacity {
 }
 
 enum Classes {
-  ARTIFICER
   BARBARIAN
   BARD
   CLERIC
@@ -79,11 +78,6 @@ enum Classes {
 }
 
 enum Subclasses {
-  // Artificer
-  ALCHEMIST
-  ARMORER
-  ARTILLERIST
-  BATTLE_SMITH
   // Barbarian
   PATH_OF_THE_BERSERKER
   PATH_OF_THE_WILD_HEART
@@ -281,20 +275,20 @@ model Character {
   magicItems MagicItem[]
   wealth    Money[]
 
-  age            Int
-  weight         Int
-  height         Int
-  eyeColor       String
-  hair           String
-  skin           String
+  age            Int?
+  weight         Int?
+  height         Int?
+  eyeColor       String?
+  hair           String?
+  skin           String?
   physicalTraits String?
   imageUrl       String?
 
   alignment         Alignment
-  personalityTraits String
-  ideals            String
-  bonds             String
-  flaws             String
+  personalityTraits String?
+  ideals            String?
+  bonds             String?
+  flaws             String?
 
   lore   String?
   allies String?
