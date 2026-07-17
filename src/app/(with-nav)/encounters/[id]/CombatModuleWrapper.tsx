@@ -10,17 +10,9 @@ const CombatModule = dynamic(() => import("./CombatModule"), {
 export default function Wrapper({
   encounter,
   creatures,
-  otherZonesCreatures,
 }: {
   encounter: Encounter;
   creatures: Creature[];
-  otherZonesCreatures: Record<string, Creature[]>;
 }) {
-  return (
-    <CombatModule
-      encounter={encounter}
-      creatures={creatures}
-      otherZonesCreatures={otherZonesCreatures}
-    />
-  );
+  return <CombatModule encounter={encounter} creatures={creatures} />;
 }

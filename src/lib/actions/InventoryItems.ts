@@ -62,6 +62,53 @@ export const assignInventoryItemToCharacter = async ({
   revalidatePath(`/characters/${characterId}`);
 };
 
+export const transferInventoryItem = async ({
+  itemId,
+  fromCharacterId,
+  toCharacterId,
+  quantity,
+}: {
+  itemId: number;
+  fromCharacterId: number;
+  toCharacterId: number;
+  quantity: number;
+}) => {
+  const item = await prisma.inventoryItem.findUnique({ where: { id: itemId } });
+  if (!item) {
+    return;
+  }
+
+  const amount = Math.max(1, Math.min(Math.trunc(quantity), item.quantity));
+
+  if (amount >= item.quantity) {
+    // Transfer the whole stack: just reassign it to the target character.
+    await prisma.inventoryItem.update({
+      where: { id: itemId },
+      data: { characterId: toCharacterId },
+    });
+  } else {
+    // Split the stack: decrement the source, create a new stack on the target.
+    await prisma.$transaction([
+      prisma.inventoryItem.update({
+        where: { id: itemId },
+        data: { quantity: item.quantity - amount },
+      }),
+      prisma.inventoryItem.create({
+        data: {
+          name: item.name,
+          description: item.description,
+          value: item.value,
+          quantity: amount,
+          characterId: toCharacterId,
+        },
+      }),
+    ]);
+  }
+
+  revalidatePath(`/characters/${fromCharacterId}`);
+  revalidatePath(`/characters/${toCharacterId}`);
+};
+
 export const deleteInventoryItem = async (itemId: number) => {
   await prisma.inventoryItem.delete({
     where: { id: itemId },

@@ -7,12 +7,14 @@ import { InventoryItem } from "@prisma/client";
 
 export default function AddInventoryItem({
   characterId,
+  campaignId,
   item,
   children,
   className,
   title,
 }: {
   characterId: number | null;
+  campaignId?: number;
   item?: InventoryItem;
   children: ReactNode;
   className?: string;
@@ -28,6 +30,7 @@ export default function AddInventoryItem({
       <PopoverContent className="w-fit overflow-hidden p-0">
         <AddInventoryItemForm
           characterId={characterId}
+          campaignId={campaignId}
           item={item}
           closeAction={() => setOpen(false)}
           title={title}

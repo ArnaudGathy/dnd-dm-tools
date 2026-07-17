@@ -13,6 +13,7 @@ import { Form } from "@/components/ui/form";
 import { addInventoryItem, deleteInventoryItem } from "@/lib/actions/InventoryItems";
 import { useState } from "react";
 import { InventoryItem } from "@prisma/client";
+import TransferInventoryItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/TransferInventoryItem";
 
 /**
  * Popover body styled like a miniature SectionPanel: amber header (the
@@ -21,11 +22,13 @@ import { InventoryItem } from "@prisma/client";
  */
 export default function AddInventoryItemForm({
   characterId,
+  campaignId,
   item,
   closeAction,
   title,
 }: {
   characterId: number | null;
+  campaignId?: number;
   item?: InventoryItem;
   closeAction: () => void;
   title: string;
@@ -117,6 +120,16 @@ export default function AddInventoryItemForm({
               )}
             </Button>
           </div>
+
+          {isEditMode && characterId !== null && campaignId !== undefined && (
+            <TransferInventoryItem
+              itemId={item.id}
+              itemQuantity={item.quantity}
+              campaignId={campaignId}
+              currentCharacterId={characterId}
+              closeAction={closeAction}
+            />
+          )}
         </form>
       </Form>
     </div>

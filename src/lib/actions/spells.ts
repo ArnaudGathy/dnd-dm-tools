@@ -6,14 +6,17 @@ import { revalidatePath } from "next/cache";
 import {
   getEnSpellIdFromFrName,
   getSpellDataFromFrName,
+  getSpellDetails,
   getSummarySpellFromFR,
 } from "@/lib/external-apis/aidedd";
 import { z } from "zod";
-import { SummaryAPISpell } from "@/types/schemas";
-import { Prisma } from "@prisma/client";
+import { APISpell, SummaryAPISpell } from "@/types/schemas";
+import { Classes, Prisma, SpellAction } from "@prisma/client";
 import { kebabCaseify } from "@/utils/utils";
 import { getSessionData, restrictToAdmins } from "@/lib/utils";
 import { getMaxCastableSpellLevel, isPreparedListClass } from "@/utils/stats/spells";
+import { getGroupedCharacterSpells, SPELLS_GROUP_BY } from "@/lib/api/spells";
+import { isSpellFree } from "@/app/(with-nav)/characters/[id]/spells/spellStatus";
 
 export const clearSpellCache = async ({
   spellId,
@@ -259,4 +262,74 @@ export const deleteSpellAction = async ({
     },
   });
   revalidatePath(`/characters/${characterId}/spells`);
+};
+
+// The two reads below are queries, but they live here because the combat tracker calls them
+// from click handlers: the DM opens at most one caster's list per fight, so resolving every
+// player's spells (and their AideDD payloads) at render time would be wasted work.
+
+// What the mid-combat spell picker needs: identity + the tags shown on each row. The full
+// `data` payload is deliberately left out — it's only fetched for the spell actually opened.
+export type CombatSpell = {
+  id: string;
+  name: string;
+  level: number;
+  actionType: SpellAction | null;
+  concentration: boolean;
+  isRitual: boolean;
+  isFree: boolean;
+};
+
+export const getCharacterUsableSpells = async ({
+  characterId,
+}: {
+  characterId: number;
+}): Promise<CombatSpell[]> => {
+  await restrictToAdmins();
+
+  const character = await prisma.character.findUnique({
+    where: { id: characterId },
+    select: { className: true, level: true },
+  });
+
+  if (!character) {
+    return [];
+  }
+
+  const isWizard = character.className === Classes.WIZARD;
+  const { spells } = await getGroupedCharacterSpells({
+    characterId,
+    className: character.className,
+    characterLevel: character.level,
+    isWizard,
+    usableOnly: true,
+    groupBy: SPELLS_GROUP_BY.CHARACTER,
+  });
+
+  return Object.values(spells)
+    .flat()
+    .map((spell) => ({
+      id: spell.id,
+      name: spell.name,
+      level: spell.level,
+      actionType: spell.actionType,
+      concentration: spell.concentration,
+      isRitual: spell.isRitual,
+      isFree: isSpellFree(spell, isWizard),
+    }));
+};
+
+export const getSpellDetailsAction = async ({
+  spellId,
+}: {
+  spellId: string;
+}): Promise<APISpell | null> => {
+  await restrictToAdmins();
+
+  try {
+    return await getSpellDetails(spellId);
+  } catch (error) {
+    console.error(`Failed to load spell details for ${spellId}`, error);
+    return null;
+  }
 };

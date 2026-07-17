@@ -62,7 +62,7 @@ export const getSkillModifier = (
 export const getPassivePerception = (
   character: Character & { skills: Skill[]; capacities: Capacity[] },
 ) => {
-  return 8 + getSkillModifier(character, Skills.PERCEPTION).total;
+  return 10 + getSkillModifier(character, Skills.PERCEPTION).total;
 };
 
 export const getSavingThrowModifier = (

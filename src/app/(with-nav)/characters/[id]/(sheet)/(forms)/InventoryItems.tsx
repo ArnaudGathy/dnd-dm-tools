@@ -31,6 +31,7 @@ export default function InventoryItems({ character }: { character: CharacterById
           <AddInventoryItem
             key={inventoryItem.id}
             characterId={character.id}
+            campaignId={character.campaignId}
             item={inventoryItem}
             title="Modifier un objet"
           >

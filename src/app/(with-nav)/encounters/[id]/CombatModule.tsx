@@ -1,34 +1,29 @@
 "use client";
 
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Condition, Creature, Encounter, Participant, ParticipantToAdd } from "@/types/types";
 import {
   getEncounterFromLocation,
-  getInitiativeFromParticipant,
+  getEncountersFromLocationName,
   getParticipantFromCharacters,
   getParticipantFromEncounter,
   roll,
 } from "@/utils/utils";
+import { getZoneCreatures } from "@/lib/actions/encounters";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { v4 as uuidv4 } from "uuid";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { clsx } from "clsx";
 import { Input } from "@/components/ui/input";
-import { Progress } from "@/components/ui/progress";
-import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import Link from "next/link";
-import { TooltipComponent } from "@/components/ui/tooltip";
-import { EllipsisHorizontalIcon, PlayIcon, XMarkIcon } from "@heroicons/react/24/outline";
-import { ConditionImage } from "@/app/(with-nav)/encounters/[id]/ConditionImage";
+import { PlayIcon } from "@heroicons/react/24/outline";
 import { filter, isDefined, map, pipe, prop } from "remeda";
-import { ConfirmDialog } from "@/components/ConfirmDialog";
 import {
-  BookOpenIcon,
-  CheckIcon,
-  Dices,
+  ChevronRight,
   FastForwardIcon,
+  Loader2,
   RefreshCcw,
   SkullIcon,
   Swords,
@@ -40,18 +35,57 @@ import {
   useSetParticipantsListTracker,
   useSetTurnsTracker,
 } from "@/hooks/useParticipantsListTracker";
-import PopoverComponent from "@/components/ui/PopoverComponent";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import { conditions } from "@/data/conditions";
+import { InitiativePrompt } from "@/app/(with-nav)/encounters/[id]/InitiativePrompt";
+import { SpellQuickAccess } from "@/app/(with-nav)/encounters/[id]/SpellQuickAccess";
+import { DEFAULT_INIT, ParticipantRow } from "@/app/(with-nav)/encounters/[id]/ParticipantRow";
 
-const MAX_CONDITIONS_BEFORE_ELLIPSIS = 2;
+// Local recovery snapshot: the Firebase mirror is intentionally cleared on unmount so the
+// /tracker/character view disappears — localStorage is the only place a combat survives.
+// Single slot: starting to play another encounter overwrites the previous snapshot.
+const COMBAT_SNAPSHOT_KEY = "combat-tracker-snapshot";
 
-const DEFAULT_INIT = -999;
+type CombatSnapshot = {
+  encounterId: number;
+  savedAt: number;
+  listOfParticipants: Participant[];
+  currentTurnIndex: number | null;
+  turnsCounter: number;
+  anotherEncountersAdded: string[];
+};
+
+const loadCombatSnapshot = (encounterId: number): CombatSnapshot | null => {
+  try {
+    const raw = localStorage.getItem(COMBAT_SNAPSHOT_KEY);
+    if (!raw) {
+      return null;
+    }
+    const snapshot = JSON.parse(raw) as CombatSnapshot;
+    if (
+      snapshot.encounterId !== encounterId ||
+      !Array.isArray(snapshot.listOfParticipants) ||
+      snapshot.listOfParticipants.length === 0
+    ) {
+      return null;
+    }
+    return snapshot;
+  } catch {
+    return null;
+  }
+};
+
+// Restored conditions are JSON clones — remap them to the canonical `conditions` objects so
+// resumed combats pick up any data fixes (descriptions, bullets) shipped since the snapshot.
+const rehydrateConditions = (participant: Participant): Participant =>
+  participant.conditions
+    ? {
+        ...participant,
+        conditions: participant.conditions.map(
+          (condition) => conditions.find((known) => known.title === condition.title) ?? condition,
+        ),
+      }
+    : participant;
+
 const DEFAULT_STATE = {
   id: "",
   currentHp: "",
@@ -75,11 +109,12 @@ const getNextTurn = ({
 }) => {
   if (turnsCounter === null) {
     startAction?.();
-    return 0;
   }
 
-  const nextTurn = (turnsCounter + 1) % listOfParticipants.length;
-  if (nextTurn === 0) {
+  // Combat start lands on index 0 (without counting a new round); the dead/inactive
+  // check below still applies so an unplayable first participant is skipped too.
+  const nextTurn = turnsCounter === null ? 0 : (turnsCounter + 1) % listOfParticipants.length;
+  if (turnsCounter !== null && nextTurn === 0) {
     countTurn?.();
   }
 
@@ -112,39 +147,12 @@ const sortParticipant = (a: Participant, b: Participant) => {
   return aInit - bInit;
 };
 
-// "Stirge (2)" → the duplicate marker reads quieter than the name itself.
-const ParticipantName = ({ name }: { name: string }) => {
-  const match = name.match(/^(.*?)\s*(\(.*\))$/);
-  if (!match) {
-    return name;
-  }
-  return (
-    <>
-      {match[1]} <span className="text-muted-foreground">{match[2]}</span>
-    </>
-  );
-};
-
-const getHPBarColor = (hpPercent: number) => {
-  if (hpPercent <= 25) {
-    return "bg-red-600";
-  }
-
-  if (hpPercent <= 50) {
-    return "bg-orange-500";
-  }
-
-  return "bg-green-700";
-};
-
 export const CombatModule = ({
   encounter,
   creatures,
-  otherZonesCreatures,
 }: {
   encounter: Encounter;
   creatures: Creature[];
-  otherZonesCreatures: Record<string, Creature[]>;
 }) => {
   const { setParticipantsTracker } = useSetParticipantsListTracker();
   const { setActiveParticipantTracker, setNumberOfTurnsTracker, setHasStartedTracker } =
@@ -155,12 +163,16 @@ export const CombatModule = ({
   const pathName = usePathname();
 
   const [anotherEncountersAdded, setAnotherEncountersAdded] = useState<Array<string>>([]);
+  const [loadingZone, setLoadingZone] = useState<string | null>(null);
+  const [showZoneImport, setShowZoneImport] = useState(false);
   const [turnsCounter, setTurnsCounter] = useState(1);
   const [currentTurnIndex, setCurrentTurnIndex] = useState<number | null>(null);
   const hasCombatStarted = currentTurnIndex !== null;
 
   const [shouldShowAddParticipant, setShouldShowAddParticipant] = useState(false);
-  const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(
+  const [showDeadPile, setShowDeadPile] = useState(false);
+  const [showInitiativePrompt, setShowInitiativePrompt] = useState(false);
+  const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(() =>
     filter(
       [
         ...getParticipantFromEncounter({
@@ -183,6 +195,113 @@ export const CombatModule = ({
       isDefined,
     ).toSorted(sortParticipant),
   );
+
+  // A fight can spill over anywhere, so every other zone of the location is importable —
+  // their rosters are resolved on click, not up front (see getZoneCreatures).
+  const importableZones = useMemo(
+    () => [
+      // Deduped: two encounters can share a mapMarker (split rosters of one zone).
+      ...new Set(
+        pipe(
+          getEncountersFromLocationName(encounter.location.name),
+          map(({ location }) => location.mapMarker),
+          filter((mapMarker) => mapMarker !== encounter.location.mapMarker),
+        ),
+      ),
+    ],
+    [encounter.location.name, encounter.location.mapMarker],
+  );
+
+  const [snapshotToRestore, setSnapshotToRestore] = useState<CombatSnapshot | null>(null);
+  const isDirtyRef = useRef(false);
+
+  // Read the snapshot after mount: localStorage doesn't exist during SSR, so reading it in
+  // the state initializer makes the server and client HTML diverge (hydration mismatch).
+  useEffect(() => {
+    if (!isDirtyRef.current) {
+      setSnapshotToRestore(loadCombatSnapshot(encounter.id));
+    }
+  }, [encounter.id]);
+
+  const markCombatDirty = useCallback(() => {
+    isDirtyRef.current = true;
+    setSnapshotToRestore(null);
+  }, []);
+
+  const mutateParticipants = useCallback(
+    (updater: (current: Participant[]) => Participant[]) => {
+      markCombatDirty();
+      setListOfParticipants(updater);
+    },
+    [markCombatDirty],
+  );
+
+  // Mirrors listOfParticipants so callers that mutate after an await (importing another
+  // zone's enemies) reconcile against the live list rather than their render closure.
+  const listOfParticipantsRef = useRef(listOfParticipants);
+  useEffect(() => {
+    listOfParticipantsRef.current = listOfParticipants;
+  }, [listOfParticipants]);
+
+  // For mutations that re-sort the list (initiative edits, mid-combat additions): the
+  // active-turn highlight is index-based, so re-anchor currentTurnIndex to the same
+  // participant after rows move around.
+  const mutateParticipantsPreservingActive = (
+    updater: (current: Participant[]) => Participant[],
+  ) => {
+    markCombatDirty();
+    const previous = listOfParticipantsRef.current;
+    const next = updater(previous);
+    listOfParticipantsRef.current = next;
+    setListOfParticipants(next);
+    setCurrentTurnIndex((current) => {
+      if (current === null) {
+        return current;
+      }
+      const activeUuid = previous[current]?.uuid;
+      const newIndex = next.findIndex((p) => p.uuid === activeUuid);
+      return newIndex === -1 ? current : newIndex;
+    });
+  };
+
+  useEffect(() => {
+    if (!isDirtyRef.current) {
+      return;
+    }
+    const snapshot: CombatSnapshot = {
+      encounterId: encounter.id,
+      savedAt: Date.now(),
+      listOfParticipants,
+      currentTurnIndex,
+      turnsCounter,
+      anotherEncountersAdded,
+    };
+    try {
+      localStorage.setItem(COMBAT_SNAPSHOT_KEY, JSON.stringify(snapshot));
+    } catch {
+      // Snapshot is best-effort — a full/blocked localStorage must not break combat.
+    }
+  }, [encounter.id, listOfParticipants, currentTurnIndex, turnsCounter, anotherEncountersAdded]);
+
+  const handleRestoreSnapshot = () => {
+    if (!snapshotToRestore) {
+      return;
+    }
+    isDirtyRef.current = true;
+    setListOfParticipants(snapshotToRestore.listOfParticipants.map(rehydrateConditions));
+    setCurrentTurnIndex(snapshotToRestore.currentTurnIndex);
+    setTurnsCounter(snapshotToRestore.turnsCounter);
+    setAnotherEncountersAdded(snapshotToRestore.anotherEncountersAdded ?? []);
+    if (snapshotToRestore.currentTurnIndex !== null) {
+      setHasStartedTracker(true);
+    }
+    setSnapshotToRestore(null);
+  };
+
+  const handleDiscardSnapshot = () => {
+    localStorage.removeItem(COMBAT_SNAPSHOT_KEY);
+    setSnapshotToRestore(null);
+  };
 
   useEffect(() => {
     setHasStartedTracker(false);
@@ -222,16 +341,33 @@ export const CombatModule = ({
     },
   });
 
-  const handleAddAnotherEncounterParticipants = (mapMarker: string) => {
+  const handleAddAnotherEncounterParticipants = async (mapMarker: string) => {
+    // Already merged in (or being fetched) — a second click would duplicate every enemy.
+    if (anotherEncountersAdded.includes(mapMarker) || loadingZone !== null) {
+      return;
+    }
     const anotherEncounter = getEncounterFromLocation({
       mapMarker,
       name: encounter?.location.name,
     });
-    const anotherEncounterCreatures = otherZonesCreatures[mapMarker];
 
-    if (!!anotherEncounterCreatures && !!anotherEncounter) {
+    if (!anotherEncounter) {
+      return;
+    }
+
+    setLoadingZone(mapMarker);
+    try {
+      const anotherEncounterCreatures = await getZoneCreatures({
+        locationName: encounter.location.name,
+        mapMarker,
+      });
+
+      if (anotherEncounterCreatures.length === 0) {
+        return;
+      }
+
       setAnotherEncountersAdded((current) => [...current, mapMarker]);
-      setListOfParticipants((current) => {
+      mutateParticipantsPreservingActive((current) => {
         return [
           ...getParticipantFromEncounter({
             creatures: anotherEncounterCreatures,
@@ -240,74 +376,154 @@ export const CombatModule = ({
           ...current,
         ].toSorted(sortParticipant);
       });
+    } catch (error) {
+      console.error("Failed to load the enemies of zone", mapMarker, error);
+    } finally {
+      setLoadingZone(null);
     }
   };
 
   const [participant, setParticipant] = useState<ParticipantToAdd>(DEFAULT_STATE);
-  const [hpChangeMode, setHpChangeMode] = useState<"add" | "sub">("sub");
 
-  const handleAddParticipant = useCallback(() => {
+  const handleAddParticipant = () => {
     if (participant.name && participant.color) {
-      setListOfParticipants(
+      mutateParticipantsPreservingActive((current) =>
         [
-          ...listOfParticipants,
+          ...current,
           {
             ...participant,
             uuid: uuidv4(),
             isNPC: true,
             id: -1,
             currentHp: participant.hp,
-            init: participant.init || roll(20),
+            // DEFAULT_INIT means the field was left empty — roll for the newcomer.
+            init:
+              participant.init === DEFAULT_INIT || !participant.init ? roll(20) : participant.init,
             dexMod: 0,
           },
         ].toSorted(sortParticipant),
       );
       setParticipant(DEFAULT_STATE);
     }
-  }, [listOfParticipants, participant]);
-
-  const handleRemoveParticipant = (participant: Participant) => {
-    setListOfParticipants((current) => current.filter((p) => p.uuid !== participant.uuid));
   };
 
-  const handleNextTurn = useCallback(() => {
-    const nexTurn = getNextTurn({
-      turnsCounter: currentTurnIndex,
-      listOfParticipants: listOfParticipants,
-      countTurn: () => setTurnsCounter((current) => current + 1),
-      startAction: () => setHasStartedTracker(true),
-    });
-    const nextParticipantId = listOfParticipants[nexTurn].id;
-    if (nextParticipantId) {
-      router.replace(`${pathName}#${nextParticipantId}`);
-    } else {
-      router.replace(pathName);
-    }
+  const handleRemoveParticipant = (participant: Participant) => {
+    const removedIndex = listOfParticipants.findIndex((p) => p.uuid === participant.uuid);
+    mutateParticipants((current) => current.filter((p) => p.uuid !== participant.uuid));
 
-    setCurrentTurnIndex((current) =>
-      getNextTurn({
-        turnsCounter: current,
-        listOfParticipants: listOfParticipants,
-      }),
-    );
-  }, [currentTurnIndex, listOfParticipants, pathName, router, setHasStartedTracker]);
+    // The active-turn highlight is index-based, so removing a row above (or the) active
+    // participant would otherwise leave currentTurnIndex pointing at the wrong row.
+    if (removedIndex === -1) {
+      return;
+    }
+    setCurrentTurnIndex((current) => {
+      if (current === null) {
+        return current;
+      }
+      const newLength = listOfParticipants.length - 1;
+      if (newLength === 0) {
+        return null;
+      }
+      if (removedIndex < current) {
+        return current - 1;
+      }
+      if (removedIndex === current) {
+        // The active participant was removed: the next one slides into its slot
+        // (wrapping to the first if it was last in the order).
+        return current % newLength;
+      }
+      return current;
+    });
+  };
+
+  // Takes the list explicitly: the initiative prompt starts the combat from the freshly
+  // re-sorted list, which the render closure doesn't know about yet.
+  const advanceTurn = useCallback(
+    (participants: Participant[]) => {
+      // getNextTurn recurses until it finds a playable participant — with an empty list or
+      // only dead/inactive ones it would crash (index NaN) or recurse forever.
+      const hasPlayableParticipant = participants.some(
+        (p) => !(parseInt(p.currentHp, 10) <= 0) && !p.inactive,
+      );
+      if (!hasPlayableParticipant) {
+        return;
+      }
+
+      markCombatDirty();
+      const nexTurn = getNextTurn({
+        turnsCounter: currentTurnIndex,
+        listOfParticipants: participants,
+        countTurn: () => setTurnsCounter((current) => current + 1),
+        startAction: () => setHasStartedTracker(true),
+      });
+      const nextParticipantId = participants[nexTurn].id;
+      if (nextParticipantId) {
+        router.replace(`${pathName}#${nextParticipantId}`);
+      } else {
+        router.replace(pathName);
+      }
+
+      setCurrentTurnIndex((current) =>
+        getNextTurn({
+          turnsCounter: current,
+          listOfParticipants: participants,
+        }),
+      );
+    },
+    [currentTurnIndex, markCombatDirty, pathName, router, setHasStartedTracker],
+  );
+
+  const handleNextTurn = useCallback(() => {
+    advanceTurn(listOfParticipants);
+  }, [advanceTurn, listOfParticipants]);
+
+  const players = useMemo(
+    () => listOfParticipants.filter((participant) => !participant.isNPC),
+    [listOfParticipants],
+  );
+
+  // Starting a combat means collecting the party's initiative first — the prompt is the whole
+  // start button, not an extra step: submitting it plays the first turn.
+  const handleStartCombat = useCallback(() => {
+    if (!hasCombatStarted && players.length > 0) {
+      setShowInitiativePrompt(true);
+      return;
+    }
+    handleNextTurn();
+  }, [hasCombatStarted, players.length, handleNextTurn]);
+
+  const handleApplyInitiatives = (initiatives: Record<string, number>) => {
+    markCombatDirty();
+    const next = listOfParticipantsRef.current
+      .map((participant) =>
+        initiatives[participant.uuid] === undefined
+          ? participant
+          : { ...participant, init: initiatives[participant.uuid] },
+      )
+      .toSorted(sortParticipant);
+    listOfParticipantsRef.current = next;
+    setListOfParticipants(next);
+    setShowInitiativePrompt(false);
+    advanceTurn(next);
+  };
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
+      // The prompt owns the keyboard while it's open — space validates a player there.
+      if (showInitiativePrompt) {
+        return;
+      }
+
       const target = e.target as HTMLElement | null;
       const isTypingInInput =
         target?.tagName === "INPUT" || target?.tagName === "TEXTAREA" || target?.isContentEditable;
 
-      if (e.key === "Enter") {
-        e.preventDefault();
-        handleAddParticipant();
-      }
       if (e.key === " " && !isTypingInInput) {
         e.preventDefault();
-        handleNextTurn();
+        handleStartCombat();
       }
     },
-    [handleAddParticipant, handleNextTurn],
+    [handleStartCombat, showInitiativePrompt],
   );
 
   useEffect(() => {
@@ -316,6 +532,25 @@ export const CombatModule = ({
       document.removeEventListener("keydown", handleKeyDown, true);
     };
   }, [handleKeyDown]);
+
+  // When the active turn lands on a dead (0 HP) or inactive participant — mid-turn kill,
+  // removal sliding the index onto one — auto-skip to the next one. Only if someone else
+  // is still playable, otherwise getNextTurn would loop over an all-dead list.
+  useEffect(() => {
+    if (currentTurnIndex === null) {
+      return;
+    }
+    const active = listOfParticipants[currentTurnIndex];
+    if (!active || (active.currentHp !== "0" && !active.inactive)) {
+      return;
+    }
+    const hasOtherPlayable = listOfParticipants.some(
+      (p, index) => index !== currentTurnIndex && p.currentHp !== "0" && !p.inactive,
+    );
+    if (hasOtherPlayable) {
+      handleNextTurn();
+    }
+  }, [currentTurnIndex, listOfParticipants, handleNextTurn]);
 
   const playersWithSpells = useMemo(
     () =>
@@ -327,549 +562,399 @@ export const CombatModule = ({
     [group],
   );
 
-  const handleUpdateCurrentHP =
-    (participant: Participant) => (e: ChangeEvent<HTMLInputElement>) => {
-      const newHP = parseInt(e.target.value);
-      if (participant.hp && newHP <= parseInt(participant.hp) && newHP >= 0) {
-        setListOfParticipants((current) =>
-          current.map((p) =>
-            p.uuid === participant.uuid ? { ...p, currentHp: newHP.toString() } : p,
-          ),
-        );
-      }
-    };
+  const handleSetCurrentHp = (participant: Participant, value: number) => {
+    if (participant.hp && value <= parseInt(participant.hp) && value >= 0) {
+      mutateParticipants((current) =>
+        current.map((p) =>
+          p.uuid === participant.uuid ? { ...p, currentHp: value.toString() } : p,
+        ),
+      );
+    }
+  };
 
-  const handleUpdateMaxHP = (participant: Participant) => (e: ChangeEvent<HTMLInputElement>) => {
-    const newHP = parseInt(e.target.value);
-    if (participant.hp && newHP >= 0) {
-      setListOfParticipants((current) =>
-        current.map((p) => (p.uuid === participant.uuid ? { ...p, hp: newHP.toString() } : p)),
+  const handleSetMaxHp = (participant: Participant, value: number) => {
+    if (participant.hp && value >= 0) {
+      mutateParticipants((current) =>
+        current.map((p) => (p.uuid === participant.uuid ? { ...p, hp: value.toString() } : p)),
       );
     }
   };
 
   const handleUpdateInit = (participant: Participant, value: number) => {
-    setListOfParticipants((current) =>
+    mutateParticipantsPreservingActive((current) =>
       current
         .map((p) => (p.uuid === participant.uuid ? { ...p, init: value } : p))
         .toSorted(sortParticipant),
     );
   };
 
-  const handleChangeHp = (participant: Participant, hp: string) => {
-    if (hp === "") {
+  // Both inits must swap in a single mutation: two successive handleUpdateInit calls would
+  // each re-sort and re-anchor from a stale snapshot of the list.
+  const handleSwapInit = (a: Participant, b: Participant) => {
+    mutateParticipantsPreservingActive((current) =>
+      current
+        .map((p) =>
+          p.uuid === a.uuid
+            ? { ...p, init: b.init }
+            : p.uuid === b.uuid
+              ? { ...p, init: a.init }
+              : p,
+        )
+        .toSorted(sortParticipant),
+    );
+  };
+
+  const handleChangeHp = (participant: Participant, amount: number, mode: "sub" | "add") => {
+    if (isNaN(amount) || amount < 0) {
       return;
     }
 
+    const currentHp = parseInt(participant.currentHp, 10) || 0;
+    const maxHp = parseInt(participant.hp, 10);
     const newHp =
-      hpChangeMode === "sub"
-        ? Math.max(parseInt(participant.currentHp) - parseInt(hp), 0)
-        : parseInt(participant.currentHp) + parseInt(hp);
-    setListOfParticipants((current) =>
+      mode === "sub"
+        ? Math.max(currentHp - amount, 0)
+        : // Heals are capped at max HP, like the direct currentHp input.
+          Math.min(currentHp + amount, isNaN(maxHp) ? currentHp + amount : maxHp);
+    mutateParticipants((current) =>
       current.map((p) => (p.uuid === participant.uuid ? { ...p, currentHp: newHp.toString() } : p)),
     );
   };
 
+  // Toggle by title (not object reference): condition objects coming from a restored
+  // snapshot or built inline are not the canonical `conditions` instances.
   const handleSetCondition = (participant: Participant, condition: Condition) => {
-    setListOfParticipants((current) =>
+    mutateParticipants((current) =>
       current.map((p) => {
-        const newConditions = p.conditions?.includes(condition)
-          ? p.conditions?.filter((c) => c.title !== condition.title)
+        if (p.uuid !== participant.uuid) {
+          return p;
+        }
+        const newConditions = p.conditions?.some((c) => c.title === condition.title)
+          ? p.conditions.filter((c) => c.title !== condition.title)
           : [...(p.conditions || []), condition];
-        return p.uuid === participant.uuid ? { ...p, conditions: newConditions } : p;
+        return { ...p, conditions: newConditions };
       }),
     );
   };
 
+  // Free-text notes are upserted (one "Note" per participant): the toggle semantics of
+  // handleSetCondition would remove the note instead of replacing it on a second edit.
+  const handleSetNote = (participant: Participant, description: string) => {
+    if (!description.trim()) {
+      return;
+    }
+    mutateParticipants((current) =>
+      current.map((p) =>
+        p.uuid === participant.uuid
+          ? {
+              ...p,
+              conditions: [
+                ...(p.conditions || []).filter((c) => c.title !== "Note"),
+                { title: "Note", description, icon: "custom" },
+              ],
+            }
+          : p,
+      ),
+    );
+  };
+
   const handleMarkAsActive = (participant: Participant) => {
-    setListOfParticipants((current) =>
+    mutateParticipants((current) =>
       current.map((p) => (p.uuid === participant.uuid ? { ...p, inactive: false } : p)),
     );
   };
 
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>
-          <div className="flex items-center justify-between">
-            <span>{hasCombatStarted ? `Tour n°${turnsCounter}` : "Combat"}</span>
+  // The active-turn highlight is index-based, so rows keep their original index into
+  // listOfParticipants. Dead participants (0 HP) collapse into a "Morts" pile instead of
+  // taking a full row; the divider entry renders the toggle inline between the two groups.
+  const indexedParticipants = listOfParticipants.map((participant, index) => ({
+    participant,
+    index,
+  }));
+  const livingParticipants = indexedParticipants.filter(
+    ({ participant }) => participant.currentHp !== "0",
+  );
+  const deadParticipants = indexedParticipants.filter(
+    ({ participant }) => participant.currentHp === "0",
+  );
+  // "En vie" only counts enemies: players never die out of the tracker and the
+  // environment row has no HP, so both would pad the number meaninglessly.
+  const enemies = listOfParticipants.filter(
+    (participant) => participant.isNPC && participant.id !== -99,
+  );
+  const livingEnemies = enemies.filter((participant) => participant.currentHp !== "0");
 
-            <div className="space-x-2">
+  const combatRows: Array<{ participant: Participant; index: number } | { divider: true }> = [
+    ...livingParticipants,
+    ...(deadParticipants.length > 0 ? [{ divider: true as const }] : []),
+    ...(showDeadPile ? deadParticipants : []),
+  ];
+
+  const renderRow = (participant: Participant, index: number) => (
+    <ParticipantRow
+      key={participant.uuid}
+      participant={participant}
+      isActiveTurn={currentTurnIndex === index}
+      otherPlayers={players.filter((p) => p.uuid !== participant.uuid)}
+      spellAccess={
+        playersWithSpells.includes(participant.name) && participant.id !== undefined ? (
+          <SpellQuickAccess characterId={Number(participant.id)} characterName={participant.name} />
+        ) : undefined
+      }
+      onUpdateInit={handleUpdateInit}
+      onSwapInit={handleSwapInit}
+      onRemove={handleRemoveParticipant}
+      onMarkActive={handleMarkAsActive}
+      onApplyHpDelta={handleChangeHp}
+      onSetCurrentHp={handleSetCurrentHp}
+      onSetMaxHp={handleSetMaxHp}
+      onToggleCondition={handleSetCondition}
+      onSetNote={handleSetNote}
+    />
+  );
+
+  return (
+    <Card className="overflow-hidden">
+      {showInitiativePrompt && (
+        <InitiativePrompt
+          players={players}
+          onSubmit={handleApplyInitiatives}
+          onClose={() => setShowInitiativePrompt(false)}
+        />
+      )}
+
+      <Collapsible open={showZoneImport} onOpenChange={setShowZoneImport}>
+        <header className="border-b border-white/[0.06] px-4 py-3">
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex min-w-0 flex-col">
+              <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground">
+                {`Combat · ${livingEnemies.length}/${enemies.length} ennemis en vie`}
+              </span>
+              <span className="text-xl font-bold leading-tight">
+                {hasCombatStarted ? (
+                  <>
+                    {"Tour "}
+                    <span className="tabular-nums text-red-500">{`n°${turnsCounter}`}</span>
+                  </>
+                ) : (
+                  "Prêt au combat"
+                )}
+              </span>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-1">
+              {importableZones.length > 0 && (
+                <CollapsibleTrigger asChild>
+                  <Button
+                    variant={showZoneImport ? "secondary" : "ghost"}
+                    size="xs"
+                    title="Importer les ennemis d'une autre zone"
+                  >
+                    <ChevronRight
+                      className={clsx("size-3.5 transition-transform", {
+                        "rotate-90": showZoneImport,
+                      })}
+                    />
+                    <Swords className="size-4" />
+                    Renforts
+                    {anotherEncountersAdded.length > 0 && (
+                      <span className="tabular-nums text-muted-foreground">
+                        {anotherEncountersAdded.length}
+                      </span>
+                    )}
+                  </Button>
+                </CollapsibleTrigger>
+              )}
               <Button
-                variant={shouldShowAddParticipant ? "secondary" : "outline"}
-                size="default"
+                variant={shouldShowAddParticipant ? "secondary" : "ghost"}
+                size="xs"
+                title="Ajouter un participant"
                 onClick={() => setShouldShowAddParticipant((current) => !current)}
               >
-                <UserPlusIcon className="size-6" />
-                Participants
+                <UserPlusIcon className="size-4" />
               </Button>
               <Link target="_blank" href="/dm-tools">
-                <Button variant="outline">
-                  <SkullIcon />
+                <Button variant="ghost" size="xs" title="Outils DM">
+                  <SkullIcon className="size-4" />
                 </Button>
               </Link>
-              <Button size="lg" onClick={handleNextTurn}>
+              <Button size="sm" className="ml-1 gap-2" onClick={handleStartCombat}>
                 {hasCombatStarted ? (
-                  <FastForwardIcon className="size-6" />
+                  <>
+                    <FastForwardIcon className="size-4" />
+                    Suivant
+                  </>
                 ) : (
-                  <PlayIcon className="size-8" />
+                  <>
+                    <PlayIcon className="size-4" />
+                    Lancer
+                  </>
                 )}
+                <kbd className="rounded bg-white/25 px-1.5 py-px font-sans text-[10px] font-semibold">
+                  espace
+                </kbd>
               </Button>
             </div>
           </div>
-          <div className="flex items-center gap-2">
-            {!!encounter?.extraZonesEnnemies?.length &&
-              encounter.extraZonesEnnemies.map((zone) => (
+
+          <CollapsibleContent className="flex flex-wrap gap-1.5 pt-3">
+            {importableZones.map((zone) => {
+              const isAdded = anotherEncountersAdded.includes(zone);
+              return (
                 <Button
                   key={zone}
-                  size="sm"
-                  variant={anotherEncountersAdded.includes(zone) ? "secondary" : "outline"}
+                  size="xs"
+                  variant={isAdded ? "secondary" : "outline"}
+                  disabled={isAdded || loadingZone !== null}
                   onClick={() => {
                     handleAddAnotherEncounterParticipants(zone);
                   }}
                 >
+                  {loadingZone === zone && <Loader2 className="size-3.5 animate-spin" />}
                   {zone}
                 </Button>
-              ))}
+              );
+            })}
+          </CollapsibleContent>
+        </header>
+      </Collapsible>
+
+      {snapshotToRestore && (
+        <div className="flex items-center justify-between gap-3 border-b border-l-4 border-white/[0.06] border-l-amber-500 bg-amber-500/[0.07] px-3 py-2">
+          <span className="text-sm">
+            {`Combat sauvegardé à ${new Date(snapshotToRestore.savedAt).toLocaleTimeString(
+              "fr-FR",
+              { hour: "2-digit", minute: "2-digit" },
+            )}${
+              snapshotToRestore.currentTurnIndex !== null
+                ? ` (tour n°${snapshotToRestore.turnsCounter})`
+                : ""
+            }.`}
+          </span>
+          <div className="flex shrink-0 gap-1.5">
+            <Button size="xs" theme="amber" onClick={handleRestoreSnapshot}>
+              <RefreshCcw />
+              Reprendre
+            </Button>
+            <Button size="xs" variant="outline" onClick={handleDiscardSnapshot}>
+              Recommencer
+            </Button>
           </div>
-        </CardTitle>
-      </CardHeader>
+        </div>
+      )}
 
-      <CardContent className="max-h-[calc(100vh-6.5rem)] overflow-y-auto">
-        {shouldShowAddParticipant && (
-          <div className="mb-6 flex items-end space-x-4">
-            <div className="w-full">
-              <Label htmlFor="name">Nom</Label>
-              <Input
-                type="text"
-                id="name"
-                value={participant.name}
-                onChange={(e) => setParticipant({ ...participant, name: e.target.value })}
-              />
-            </div>
-            <div className="w-20">
-              <Label htmlFor="init">Init</Label>
-              <Input
-                type="number"
-                id="init"
-                value={participant.init}
-                onChange={(e) =>
-                  setParticipant({
-                    ...participant,
-                    init: Number(e.target.value),
-                  })
-                }
-              />
-            </div>
-            <div className="w-28">
-              <Label htmlFor="hp">PV</Label>
-              <Input
-                type="number"
-                id="hp"
-                value={participant.hp}
-                onChange={(e) => setParticipant({ ...participant, hp: e.target.value })}
-              />
-            </div>
-            <div className="w-36">
-              <Label htmlFor="color">Couleur</Label>
-              <Input
-                type="color"
-                id="color"
-                value={participant.color}
-                onChange={(e) => setParticipant({ ...participant, color: e.target.value })}
-              />
-            </div>
-            <div className="mb-1">
-              <Button onClick={handleAddParticipant} size="sm">
-                Add
-              </Button>
-            </div>
+      {shouldShowAddParticipant && (
+        <div
+          className="flex items-end gap-2 border-b border-white/[0.06] bg-white/[0.02] px-4 py-3"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              handleAddParticipant();
+            }
+          }}
+        >
+          <div className="flex min-w-0 flex-1 flex-col gap-1">
+            <label
+              htmlFor="name"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground"
+            >
+              Nom
+            </label>
+            <Input
+              type="text"
+              id="name"
+              className="h-8"
+              value={participant.name}
+              onChange={(e) => setParticipant({ ...participant, name: e.target.value })}
+            />
           </div>
-        )}
+          <div className="flex w-16 shrink-0 flex-col gap-1">
+            <label
+              htmlFor="init"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground"
+            >
+              Init
+            </label>
+            <Input
+              type="number"
+              id="init"
+              className="h-8"
+              value={participant.init === DEFAULT_INIT ? "" : participant.init}
+              onChange={(e) =>
+                setParticipant({
+                  ...participant,
+                  init: e.target.value === "" ? DEFAULT_INIT : Number(e.target.value),
+                })
+              }
+            />
+          </div>
+          <div className="flex w-20 shrink-0 flex-col gap-1">
+            <label
+              htmlFor="hp"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground"
+            >
+              PV
+            </label>
+            <Input
+              type="number"
+              id="hp"
+              className="h-8"
+              value={participant.hp}
+              onChange={(e) => setParticipant({ ...participant, hp: e.target.value })}
+            />
+          </div>
+          <div className="flex shrink-0 flex-col gap-1">
+            <label
+              htmlFor="color"
+              className="text-[10px] font-bold uppercase tracking-[0.14em] text-muted-foreground"
+            >
+              Couleur
+            </label>
+            <Input
+              type="color"
+              id="color"
+              className="h-8 w-10 cursor-pointer p-1"
+              value={participant.color}
+              onChange={(e) => setParticipant({ ...participant, color: e.target.value })}
+            />
+          </div>
+          <Button
+            size="xs"
+            className="h-8"
+            disabled={!participant.name}
+            onClick={handleAddParticipant}
+          >
+            Ajouter
+          </Button>
+        </div>
+      )}
 
-        <div className="flex flex-col gap-2">
-          {listOfParticipants.map((participant, index) => {
-            const isEnvironment = participant.id === -99;
-            const isActiveTurn = currentTurnIndex === index;
-            const hpPercent = (parseInt(participant.currentHp) / parseInt(participant.hp)) * 100;
-            return (
-              <div
-                key={participant.uuid}
-                className={clsx(
-                  "flex min-h-11 w-full items-center gap-3 rounded-lg border px-3 py-1.5 transition duration-300",
-                  {
-                    "opacity-20": participant.currentHp === "0",
-                    "scale-[102%] border-red-700/60 bg-red-950": isActiveTurn,
-                    "border-neutral-800 bg-neutral-800/30 hover:bg-neutral-800/50": !isActiveTurn,
-                    "bg-stone-950": isEnvironment && !isActiveTurn,
-                  },
-                  {
-                    "pointer-events-none [&>*:not(#markActive)]:opacity-40": participant.inactive,
-                  },
-                )}
-              >
-                <div className="flex w-5 items-center">
-                  <PopoverComponent
-                    definition={
-                      <div className="flex flex-col gap-2">
-                        {participant.isNPC ? (
-                          <>
-                            <Button
-                              size="sm"
-                              onClick={() =>
-                                handleUpdateInit(
-                                  participant,
-                                  getInitiativeFromParticipant(participant),
-                                )
-                              }
-                            >
-                              <Dices />
-                              Re-roll
-                            </Button>
-                            <Button
-                              size="sm"
-                              onClick={() => {
-                                const newRoll = getInitiativeFromParticipant(participant);
-                                if (newRoll > participant.init) {
-                                  handleUpdateInit(participant, newRoll);
-                                }
-                              }}
-                            >
-                              <RefreshCcw />
-                              Avantage
-                            </Button>
-                          </>
-                        ) : (
-                          <DropdownMenu>
-                            <DropdownMenuTrigger asChild>
-                              <Button
-                                size="sm"
-                                variant="secondary"
-                                disabled={participant.init === -1}
-                              >
-                                Échanger initiative
-                              </Button>
-                            </DropdownMenuTrigger>
-                            <DropdownMenuContent>
-                              {listOfParticipants.map((participantFromList) => {
-                                if (
-                                  participantFromList.isNPC ||
-                                  participantFromList.uuid === participant.uuid
-                                ) {
-                                  return null;
-                                }
-
-                                return (
-                                  <DropdownMenuItem
-                                    key={participantFromList.uuid}
-                                    onSelect={() => {
-                                      handleUpdateInit(participant, participantFromList.init);
-                                      handleUpdateInit(participantFromList, participant.init);
-                                    }}
-                                  >
-                                    {participantFromList.name}
-                                  </DropdownMenuItem>
-                                );
-                              })}
-                            </DropdownMenuContent>
-                          </DropdownMenu>
-                        )}
-                        <Button
-                          size="sm"
-                          onClick={() => handleUpdateInit(participant, participant.init + 0.2)}
-                          disabled={participant.init === -1}
-                        >
-                          <Swords />
-                          Gagne duel
-                        </Button>
-                      </div>
-                    }
-                  >
-                    {participant.isNPC ? (
-                      <div
-                        style={{
-                          backgroundColor: participant.color,
-                        }}
-                        className="h-5 w-5 cursor-pointer rounded-full"
-                      />
-                    ) : (
-                      <Dices className="size-5 cursor-pointer" />
-                    )}
-                  </PopoverComponent>
-                </div>
-                <div className="w-14 shrink-0">
-                  <Input
-                    type="number"
-                    className="w-14 text-center font-semibold tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
-                    id="init"
-                    value={participant.init}
-                    onChange={(e) => handleUpdateInit(participant, Number(e.target.value))}
-                    onFocus={(event) => event.target.select()}
-                  />
-                </div>
-                <div
-                  className={clsx("w-[200px] truncate px-2 text-left text-sm font-medium", {
-                    ["text-red-400 line-through"]: participant.currentHp === "0",
-                  })}
+      <div className="max-h-[calc(100vh-11rem)] overflow-y-auto">
+        <div className="divide-y divide-white/[0.05]">
+          {combatRows.map((entry) => {
+            if ("divider" in entry) {
+              return (
+                <button
+                  key="dead-pile-toggle"
+                  type="button"
+                  onClick={() => setShowDeadPile((current) => !current)}
+                  className="flex w-full items-center gap-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:bg-white/[0.03] hover:text-foreground"
                 >
-                  <TooltipComponent definition={participant.name}>
-                    {participant.isNPC ? (
-                      <Link href={`#${participant.id}`}>
-                        <ParticipantName name={participant.name} />
-                      </Link>
-                    ) : (
-                      <span>
-                        <ParticipantName name={participant.name} />
-                      </span>
-                    )}
-                  </TooltipComponent>
-                </div>
-                <div className="flex-1 text-center">
-                  {participant.hp !== "" ? (
-                    <div className="flex items-center gap-4">
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <div className="relative w-full hover:cursor-pointer">
-                            <Progress
-                              className="ring-1 ring-inset ring-white/10"
-                              classNameTop={clsx("transition-colors", getHPBarColor(hpPercent))}
-                              value={hpPercent}
-                            />
-                            <span className="absolute inset-0 flex items-center justify-center text-xs font-semibold tabular-nums leading-none drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]">
-                              {participant.currentHp} / {participant.hp}
-                            </span>
-                          </div>
-                        </PopoverTrigger>
-                        <PopoverContent
-                          className="flex h-[450px] w-[575px] flex-col gap-4 overflow-auto"
-                          onOpenAutoFocus={(event) => event.preventDefault()}
-                        >
-                          <h4 className="text-xl font-semibold tracking-tight">Points de vie</h4>
-                          <div className="flex items-center gap-1">
-                            <Input
-                              type="number"
-                              className="w-12"
-                              id="hp"
-                              value={participant.currentHp}
-                              onChange={handleUpdateCurrentHP(participant)}
-                              onFocus={(event) => event.target.select()}
-                            />
-                            <span>/</span>
-                            <Input
-                              type="number"
-                              className="w-12"
-                              id="currentHp"
-                              value={participant.hp}
-                              onChange={handleUpdateMaxHP(participant)}
-                              onFocus={(event) => event.target.select()}
-                            />
-                            <div className="flex items-center gap-2">
-                              <Button
-                                className="bg-green-900 font-mono text-xs"
-                                size="sm"
-                                variant="outline"
-                                onClick={() => setHpChangeMode("add")}
-                              >
-                                +
-                              </Button>
-                              <Button
-                                className="bg-red-900 font-mono text-xs"
-                                size="sm"
-                                variant="outline"
-                                onClick={() => setHpChangeMode("sub")}
-                              >
-                                -
-                              </Button>
-                              <span>{hpChangeMode === "sub" ? "Enlever" : "Ajouter"}</span>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="flex flex-wrap gap-2">
-                              {Array.from({ length: 29 }).map((_, index) => {
-                                const value = (index + 1).toString();
-                                return (
-                                  <Button
-                                    key={index}
-                                    className={clsx("h-8 w-11 font-mono text-xs", {
-                                      "bg-green-900": hpChangeMode === "add",
-                                      "bg-red-900": hpChangeMode === "sub",
-                                    })}
-                                    variant="secondary"
-                                    size="sm"
-                                    onClick={() => handleChangeHp(participant, value)}
-                                  >
-                                    {`${hpChangeMode === "sub" ? "-" : "+"}${value}`}
-                                  </Button>
-                                );
-                              })}
-                              <Input
-                                className="h-8 w-11"
-                                placeholder="PV"
-                                type="number"
-                                onBlur={(e) => handleChangeHp(participant, e.target.value)}
-                              />
-                            </div>
-                          </div>
-
-                          <h4 className="text-xl font-semibold tracking-tight">États et effets</h4>
-                          <div className="flex max-w-[500px] flex-wrap gap-2">
-                            {conditions.map((condition) => (
-                              <div
-                                key={condition.title}
-                                className={clsx("flex items-center gap-2")}
-                              >
-                                <ConditionImage
-                                  className={clsx("cursor-pointer", {
-                                    "box-border rounded-lg border-2 border-blue-600":
-                                      participant.conditions?.includes(condition),
-                                  })}
-                                  condition={condition}
-                                  onClick={() => handleSetCondition(participant, condition)}
-                                />
-                              </div>
-                            ))}
-                          </div>
-                          <div className="flex gap-2">
-                            <Input
-                              className="w-full"
-                              placeholder="Note"
-                              type="text"
-                              onBlur={(e) =>
-                                handleSetCondition(participant, {
-                                  title: "Note",
-                                  description: e.target.value,
-                                  icon: "custom",
-                                })
-                              }
-                            />
-                            <Button className="bg-red-900">+</Button>
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    </div>
-                  ) : (
-                    <div className="flex items-center gap-4">
-                      {playersWithSpells.includes(participant.name) && (
-                        <Link
-                          href={`/characters/${participant.id}/spells`}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          <BookOpenIcon className="size-6" />
-                        </Link>
-                      )}
-                    </div>
-                  )}
-                </div>
-                {participant.conditions && (
-                  <div className="flex gap-2">
-                    {participant.conditions.map((condition, index) => {
-                      const remainingElements = (participant.conditions?.length || 0) - index - 1;
-
-                      if (index > MAX_CONDITIONS_BEFORE_ELLIPSIS) {
-                        return null;
-                      }
-
-                      if (index === MAX_CONDITIONS_BEFORE_ELLIPSIS && remainingElements >= 1) {
-                        return (
-                          <Popover key={index}>
-                            <PopoverTrigger asChild>
-                              <EllipsisHorizontalIcon key={condition.icon} className="size-8" />
-                            </PopoverTrigger>
-                            <PopoverContent
-                              className="w-full"
-                              onOpenAutoFocus={(event) => event.preventDefault()}
-                            >
-                              <div className="flex gap-2">
-                                {participant.conditions
-                                  ?.toSpliced(0, index)
-                                  .map((condition) => (
-                                    <ConditionImage
-                                      key={condition.title}
-                                      className="size-8"
-                                      condition={condition}
-                                    />
-                                  ))}
-                              </div>
-                            </PopoverContent>
-                          </Popover>
-                        );
-                      }
-
-                      return (
-                        <Popover key={index}>
-                          <PopoverTrigger asChild>
-                            <div>
-                              <ConditionImage className="size-8" condition={condition} />
-                            </div>
-                          </PopoverTrigger>
-                          <PopoverContent
-                            className="min-w-[500px]"
-                            onOpenAutoFocus={(event) => event.preventDefault()}
-                          >
-                            <Card>
-                              <CardHeader>
-                                <CardTitle>
-                                  <div className="flex justify-between">
-                                    {condition.title}{" "}
-                                    <Button
-                                      variant="secondary"
-                                      size="xs"
-                                      onClick={() => handleSetCondition(participant, condition)}
-                                    >
-                                      -
-                                    </Button>
-                                  </div>
-                                </CardTitle>
-                                {condition.description && (
-                                  <CardDescription>{condition.description}</CardDescription>
-                                )}
-                              </CardHeader>
-                              {condition.bullets && !!condition.bullets.length && (
-                                <CardContent>
-                                  <ul className="list-inside list-disc space-y-2 leading-5">
-                                    {condition.bullets.map((bullet, index) => (
-                                      <li key={index}>{bullet}</li>
-                                    ))}
-                                  </ul>
-                                </CardContent>
-                              )}
-                            </Card>
-                          </PopoverContent>
-                        </Popover>
-                      );
+                  <ChevronRight
+                    className={clsx("size-3.5 transition-transform", {
+                      "rotate-90": showDeadPile,
                     })}
-                  </div>
-                )}
-                {participant.inactive ? (
-                  <Button
-                    variant="ghost"
-                    size="xs"
-                    id="markActive"
-                    className="pointer-events-auto"
-                    onClick={() => handleMarkAsActive(participant)}
-                  >
-                    <CheckIcon className="size-4" />
-                  </Button>
-                ) : (
-                  <ConfirmDialog
-                    description="Supprimer cet élément est irréversible."
-                    onConfirm={() => handleRemoveParticipant(participant)}
-                  >
-                    <Button
-                      variant="ghost"
-                      size="xs"
-                      className="text-muted-foreground hover:text-foreground"
-                    >
-                      <XMarkIcon className="size-4" />
-                    </Button>
-                  </ConfirmDialog>
-                )}
-              </div>
-            );
+                  />
+                  <SkullIcon className="size-3.5" />
+                  {`Morts (${deadParticipants.length})`}
+                  <span className="h-px flex-1 bg-white/10" />
+                </button>
+              );
+            }
+            return renderRow(entry.participant, entry.index);
           })}
         </div>
-      </CardContent>
+      </div>
     </Card>
   );
 };
