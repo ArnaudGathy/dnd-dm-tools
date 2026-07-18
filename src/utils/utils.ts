@@ -392,6 +392,14 @@ export const hasCreatures = ({
   );
 };
 
+// Accent- and case-insensitive comparisons for user-typed search terms
+// ("eclair" matches "Éclair").
+export const normalizeForSearch = (value: string) =>
+  value
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/\p{Diacritic}/gu, "");
+
 export const kebabCaseify = (input: string) => {
   return input
     .normalize("NFD") // Normalize accented characters

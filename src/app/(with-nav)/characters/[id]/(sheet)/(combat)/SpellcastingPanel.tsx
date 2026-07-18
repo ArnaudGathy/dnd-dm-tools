@@ -2,13 +2,16 @@
 
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
+import { useState } from "react";
 import { entries } from "remeda";
 import { CharacterById, cn } from "@/lib/utils";
 import { BookOpenIcon, ChevronDown, Infinity, RotateCw, WandSparkles, Zap } from "lucide-react";
 import { Classes } from "@prisma/client";
 import { PopoverClose } from "@radix-ui/react-popover";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import PopoverComponent from "@/components/ui/PopoverComponent";
+import SpellDetailsPopover from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/SpellDetailsPopover";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 import HudTile from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/HudTile";
@@ -17,7 +20,7 @@ import { RestConfirm } from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/R
 import StatBreakdown, {
   breakdownContentClassName,
 } from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
-import { addSignToNumber } from "@/utils/utils";
+import { addSignToNumber, normalizeForSearch } from "@/utils/utils";
 import { useRessourceStorage } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 import {
   ACTION_TAGS,
@@ -34,6 +37,8 @@ import {
 type SpellsSlotsData = ReturnType<typeof useRessourceStorage>["spellsSlots"];
 
 const longRestCastMarker = PLANNING_MARKERS.find(({ flag }) => flag === "hasLongRestCast");
+
+const SPELL_LIST_OPEN_KEY = "combat:spells:open";
 
 /** Everything spell-related in one place: casting stats, slot pips (the same
  *  pip language as the resource tracker) and the prepared-spells quick list
@@ -57,6 +62,18 @@ function SpellcastingPanel({
     regainFreeCast,
   } = spellsSlotsData;
 
+  // The component is client-only (dynamic ssr:false below), so localStorage is
+  // readable at first render — no flash of the wrong collapse state.
+  const [isSpellListOpen, setIsSpellListOpen] = useState(
+    () => window.localStorage.getItem(SPELL_LIST_OPEN_KEY) === "true",
+  );
+  const [spellSearch, setSpellSearch] = useState("");
+
+  const toggleSpellList = (open: boolean) => {
+    setIsSpellListOpen(open);
+    window.localStorage.setItem(SPELL_LIST_OPEN_KEY, String(open));
+  };
+
   const spellCastingDetails = getSpellCastingModifier(character);
   const spellSaveDCDetails = getSpellSaveDC(character);
   const spellsToPreparePerDay = getSpellsToPreparePerDay(character);
@@ -73,6 +90,10 @@ function SpellcastingPanel({
     .toSorted(
       (a, b) => a.spell.level - b.spell.level || a.spell.name.localeCompare(b.spell.name, "fr"),
     );
+  const searchTerm = normalizeForSearch(spellSearch.trim());
+  const visibleSpells = searchTerm
+    ? preparedSpells.filter(({ spell }) => normalizeForSearch(spell.name).includes(searchTerm))
+    : preparedSpells;
   // Only spells the player prepared themselves count toward the budget — exclude
   // always-prepared, free long-rest casts, wizard rituals and cantrips (level 0).
   // Same rule as the /characters/[id]/spells page so both counters agree.
@@ -216,7 +237,7 @@ function SpellcastingPanel({
       )}
 
       {preparedSpells.length > 0 && (
-        <Collapsible>
+        <Collapsible open={isSpellListOpen} onOpenChange={toggleSpellList}>
           <CollapsibleTrigger className="group flex w-full items-center justify-between gap-2 rounded-lg bg-muted px-3 py-2 text-sm font-semibold transition-colors hover:bg-muted/70">
             <span className="flex items-center gap-2">
               Sorts disponibles
@@ -227,8 +248,19 @@ function SpellcastingPanel({
             <ChevronDown className="size-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
           </CollapsibleTrigger>
           <CollapsibleContent>
+            <Input
+              value={spellSearch}
+              onChange={(event) => setSpellSearch(event.target.value)}
+              placeholder="Rechercher un sort…"
+              className="mt-1.5 h-8"
+            />
+            {visibleSpells.length === 0 && (
+              <div className="px-2 py-3 text-sm text-muted-foreground">
+                Aucun sort ne correspond.
+              </div>
+            )}
             <ul className="mt-1 flex flex-col">
-              {preparedSpells.map(({ spell, hasLongRestCast }) => {
+              {visibleSpells.map(({ spell, hasLongRestCast }) => {
                 const level = spell.level;
                 const availableSlots = level > 0 ? (spellSlots?.[level] ?? 0) : 0;
                 const canCast = level > 0 && hasSlots && availableSlots > 0;
@@ -287,12 +319,7 @@ function SpellcastingPanel({
                       {`Niv ${level}`}
                     </span>
 
-                    <NextLink
-                      href={`/spells/${spell.id}`}
-                      className="min-w-0 flex-1 truncate text-sm hover:text-foreground"
-                    >
-                      {spell.name}
-                    </NextLink>
+                    <SpellDetailsPopover spellId={spell.id} spellName={spell.name} />
 
                     <span className="flex shrink-0 items-center gap-1.5">
                       {hasLongRestCast && longRestCastMarker && (

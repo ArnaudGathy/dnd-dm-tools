@@ -675,6 +675,26 @@ export const deleteCharacter = async (characterId: number) => {
   redirect("/characters");
 };
 
+export const updateRichNotes = async (characterId: number, richNotes: string) => {
+  const validation = z
+    .object({
+      richNotes: z.string(),
+    })
+    .safeParse({
+      richNotes,
+    });
+
+  if (validation.success) {
+    await prisma.character.update({
+      where: { id: characterId },
+      data: { richNotes: validation.data.richNotes },
+    });
+    revalidatePath(`/characters/${characterId}`);
+  } else {
+    console.error(validation.error);
+  }
+};
+
 export const updateNotes = async (characterId: number, notes: string) => {
   const validation = z
     .object({

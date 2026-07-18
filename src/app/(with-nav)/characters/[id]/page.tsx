@@ -11,6 +11,8 @@ import Settings from "@/app/(with-nav)/characters/[id]/(sheet)/Settings";
 import { Suspense } from "react";
 import Quests from "@/app/(with-nav)/characters/[id]/(sheet)/Quests";
 import SheetTabTrigger from "./(sheet)/SheetTabTrigger";
+import CharacterNotesDialog from "./(sheet)/CharacterNotesDialog";
+import SheetFullscreenToggle from "./(sheet)/SheetFullscreenToggle";
 import { SHEETS_TABS } from "@/types/types";
 
 export default async function Character({
@@ -31,6 +33,8 @@ export default async function Character({
   return (
     <Tabs defaultValue={currentTab ?? SHEETS_TABS.GENERAL}>
       <SheetTabTrigger />
+      <SheetFullscreenToggle />
+      <CharacterNotesDialog characterId={character.id} richNotes={character.richNotes} />
 
       <Card className={`mt-4 border-0 bg-transparent p-0 shadow-none`}>
         <TabsContent value={SHEETS_TABS.GENERAL} className={tabContentClassName}>

@@ -11,7 +11,9 @@ export default async function layout({
   const { id } = await params;
   return (
     <div className="space-y-4">
-      <CharacterBreadcrumbs id={id} />
+      <div data-sheet-fullscreen-hide>
+        <CharacterBreadcrumbs id={id} />
+      </div>
       {children}
     </div>
   );

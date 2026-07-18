@@ -324,7 +324,12 @@ export const getSpellDetailsAction = async ({
 }: {
   spellId: string;
 }): Promise<APISpell | null> => {
-  await restrictToAdmins();
+  // Any logged-in user may read spell details (same exposure as the public
+  // /spells/[id] page) — players open them from their own sheet's combat tab.
+  const { isLoggedIn } = await getSessionData();
+  if (!isLoggedIn) {
+    return null;
+  }
 
   try {
     return await getSpellDetails(spellId);

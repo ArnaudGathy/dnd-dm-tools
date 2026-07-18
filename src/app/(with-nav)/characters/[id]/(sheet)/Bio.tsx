@@ -2,11 +2,13 @@ import { CharacterById, cn } from "@/lib/utils";
 import { ALIGNMENT_MAP, BACKGROUND_MAP } from "@/constants/maps";
 import { classColors } from "@/constants/colors";
 import NotesForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/NotesForm";
+import RichTextContent from "@/components/richText/RichTextContent";
 import {
   Briefcase,
   Compass,
   HeartCrack,
   Link2,
+  NotebookPen,
   ScrollText,
   Sparkles,
   StickyNote,
@@ -329,6 +331,14 @@ export default function Bio({ character }: { character: CharacterById }) {
         action={<NotesForm character={character} />}
       >
         <Prose text={character.notes} placeholder="Aucune note" />
+      </Panel>
+
+      {/* Notes de partie — rich text edited via the floating dialog (Ctrl+Q) */}
+      <Panel title="Notes de partie" icon={NotebookPen} accent="amber">
+        <RichTextContent
+          html={character.richNotes}
+          placeholder="Aucune note de partie — ouvrez l'éditeur avec le bouton flottant ou Ctrl + Q."
+        />
       </Panel>
     </div>
   );

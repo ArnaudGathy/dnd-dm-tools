@@ -21,8 +21,10 @@ export default async function WithNavLayout({
     <>
       <body className={`${geistSans.variable} ${geistMono.variable} overflow-y-auto antialiased`}>
         <Toaster position="bottom-center" />
-        <main className="mx-auto max-w-[1497px] p-4 md:p-8">
-          <NavBar />
+        <main className="app-main mx-auto max-w-[1497px] p-4 md:p-8">
+          <div data-sheet-fullscreen-hide>
+            <NavBar />
+          </div>
           {children}
         </main>
       </body>

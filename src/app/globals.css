@@ -57,3 +57,23 @@ body {
     @apply bg-background text-foreground;
   }
 }
+
+/* In-app fullscreen for the character sheet (SheetFullscreenToggle): hide the
+   navbar/breadcrumb and let the sheet use the whole viewport width. */
+html[data-sheet-fullscreen] [data-sheet-fullscreen-hide] {
+  display: none;
+}
+
+html[data-sheet-fullscreen] .app-main {
+  max-width: none;
+  padding: 0.75rem;
+}
+
+/* Tiptap placeholder (rich-text notes editor) */
+.tiptap p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+  @apply italic text-muted-foreground;
+}

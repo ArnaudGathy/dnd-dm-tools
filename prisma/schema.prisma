@@ -290,9 +290,10 @@ model Character {
   bonds             String?
   flaws             String?
 
-  lore   String?
-  allies String?
-  notes  String?
+  lore      String?
+  allies    String?
+  notes     String?
+  richNotes String?
 }
 
 model InventoryItem {
