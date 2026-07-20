@@ -19,6 +19,7 @@ const authorizedUsers = [
   "arnaud.gathy@gmail.com",
   // Logarcady
   "yves@leadonline.be",
+  "tourennegoran@gmail.com",
 ];
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
