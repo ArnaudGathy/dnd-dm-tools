@@ -1410,6 +1410,7 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
+        { id: "_xopal", color: "#56623D", inactive: true },
         { id: "yuan-ti-malison-type-3", color: "#5E7AAF", variant: "Issar" },
         { id: "_tyrannosaurus-zombie", color: "#efc0d8", variant: "" },
         { id: "zombie", color: "#aad09a", inactive: true },
