@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { conditions } from "@/data/conditions";
-import { Delete, Heart, NotebookPen } from "lucide-react";
+import { ChevronDown, Delete, Heart, NotebookPen } from "lucide-react";
 import { ConditionImage } from "@/app/(with-nav)/encounters/[id]/ConditionImage";
 import { getHpBarColor } from "@/app/(with-nav)/encounters/[id]/hpDisplay";
 
@@ -37,6 +37,7 @@ export const HpStatusPopover = ({
   const [isOpen, setIsOpen] = useState(false);
   const [amountStr, setAmountStr] = useState("");
   const [note, setNote] = useState("");
+  const [areConditionsOpen, setAreConditionsOpen] = useState(false);
 
   const currentHp = parseInt(participant.currentHp, 10) || 0;
   const maxHp = parseInt(participant.hp, 10) || 0;
@@ -223,35 +224,57 @@ export const HpStatusPopover = ({
           </div>
 
           <div className="mt-1 flex flex-col gap-1.5">
-            <span className="text-xs font-bold uppercase tracking-[0.12em] text-amber-400/90">
-              États
-            </span>
-            <div className="grid grid-cols-2 gap-1">
-              {conditions.map((condition) => {
-                const isActive = participant.conditions?.some((c) => c.title === condition.title);
-                return (
-                  <button
-                    key={condition.title}
-                    type="button"
-                    onClick={() => onToggleCondition(participant, condition)}
-                    className={cn(
-                      "flex h-8 items-center gap-2 rounded-md border border-transparent bg-muted px-2 text-left transition-colors hover:bg-muted/70",
-                      isActive && "border-amber-500/60 bg-amber-500/10",
-                    )}
-                  >
-                    <ConditionImage className="size-5 shrink-0" condition={condition} />
-                    <span
+            <button
+              type="button"
+              onClick={() => setAreConditionsOpen((open) => !open)}
+              aria-expanded={areConditionsOpen}
+              className="flex items-center justify-between gap-2 rounded-md px-1 py-0.5 text-left transition-colors hover:bg-white/5"
+            >
+              <span className="flex items-center gap-1.5">
+                <span className="text-xs font-bold uppercase tracking-[0.12em] text-amber-400/90">
+                  États
+                </span>
+                {(participant.conditions?.length ?? 0) > 0 && (
+                  <span className="rounded-full bg-amber-500/15 px-1.5 text-[10px] font-bold tabular-nums text-amber-200">
+                    {participant.conditions?.length}
+                  </span>
+                )}
+              </span>
+              <ChevronDown
+                className={cn(
+                  "size-4 shrink-0 text-muted-foreground transition-transform",
+                  areConditionsOpen && "rotate-180",
+                )}
+              />
+            </button>
+            {areConditionsOpen && (
+              <div className="grid grid-cols-2 gap-1">
+                {conditions.map((condition) => {
+                  const isActive = participant.conditions?.some((c) => c.title === condition.title);
+                  return (
+                    <button
+                      key={condition.title}
+                      type="button"
+                      onClick={() => onToggleCondition(participant, condition)}
                       className={cn(
-                        "truncate text-xs",
-                        isActive ? "font-semibold text-amber-200" : "text-foreground/80",
+                        "flex h-8 items-center gap-2 rounded-md border border-transparent bg-muted px-2 text-left transition-colors hover:bg-muted/70",
+                        isActive && "border-amber-500/60 bg-amber-500/10",
                       )}
                     >
-                      {condition.title}
-                    </span>
-                  </button>
-                );
-              })}
-            </div>
+                      <ConditionImage className="size-5 shrink-0" condition={condition} />
+                      <span
+                        className={cn(
+                          "truncate text-xs",
+                          isActive ? "font-semibold text-amber-200" : "text-foreground/80",
+                        )}
+                      >
+                        {condition.title}
+                      </span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
 
           <div className="flex items-center gap-1.5">
