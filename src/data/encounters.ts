@@ -1410,7 +1410,7 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_xopal", color: "#56623D", inactive: true },
+        { id: "_xopal", color: "#56623D", variant: "Seringue man" },
         { id: "yuan-ti-malison-type-3", color: "#5E7AAF", variant: "Issar" },
         { id: "_tyrannosaurus-zombie", color: "#efc0d8", variant: "" },
         { id: "zombie", color: "#aad09a", inactive: true },
@@ -1432,7 +1432,11 @@ export const encounters: Encounter[] = [
       mapMarker: "F21",
     },
     ennemies: {
-      "1": [{ id: "hydra", color: "#47810f", variant: "" }],
+      "1": [
+        { id: "_xopal", color: "#56623D", variant: "Seringue man" },
+        { id: "yuan-ti-malison-type-3", color: "#5E7AAF", variant: "Issar" },
+        { id: "hydra", color: "#47810f", variant: "" },
+      ],
     },
     youtubeId: "Yx-QqEc2Feg",
   },
