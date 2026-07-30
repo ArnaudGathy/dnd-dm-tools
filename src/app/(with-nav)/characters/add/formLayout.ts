@@ -45,6 +45,7 @@ const TAB_BY_FIELD: Record<keyof CharacterCreationForm, FormTabId> = {
   intelligence: "identity",
   wisdom: "identity",
   charisma: "identity",
+  spellCastingAbility: "identity",
   strengthBase: "identity",
   dexterityBase: "identity",
   constitutionBase: "identity",

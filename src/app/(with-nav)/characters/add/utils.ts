@@ -121,6 +121,9 @@ const signUpFormBaseSchema = z.object({
   intelligence: minMax(8, 20),
   wisdom: minMax(8, 20),
   charisma: minMax(8, 20),
+  // Only used by classes with no innate spellcasting (species/feat casters) —
+  // ignored otherwise, see getSpellCastingStat.
+  spellCastingAbility: z.nativeEnum(Abilities).nullish(),
   // Point-buy helper fields (creation only, never persisted). The `*Base` values
   // are the 8–15 point-buy scores; the `*Bonus` values are extra points from
   // historique/dons. Their sum is written into the persisted ability fields above.
@@ -316,6 +319,7 @@ export const signupFormDefaultValues = {
   intelligence: "",
   wisdom: "",
   charisma: "",
+  spellCastingAbility: null,
   strengthBase: "8",
   dexterityBase: "8",
   constitutionBase: "8",
@@ -420,6 +424,10 @@ export const backendCharacterSchema = z.object({
   intelligence: backendStringToNumber.min(8).max(20),
   wisdom: backendStringToNumber.min(8).max(20),
   charisma: backendStringToNumber.min(8).max(20),
+  spellCastingAbility: z
+    .nativeEnum(Abilities)
+    .nullish()
+    .transform((v) => v ?? null),
   age: backendOptionalNumber,
   height: backendOptionalNumber,
   weight: backendOptionalNumber,

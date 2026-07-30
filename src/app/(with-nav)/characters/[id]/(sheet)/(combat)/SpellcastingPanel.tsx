@@ -3,6 +3,7 @@
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
 import { useState } from "react";
+import { useLocalStorage } from "react-use";
 import { entries } from "remeda";
 import { CharacterById, cn } from "@/lib/utils";
 import { BookOpenIcon, ChevronDown, Infinity, RotateCw, WandSparkles, Zap } from "lucide-react";
@@ -39,16 +40,23 @@ type SpellsSlotsData = ReturnType<typeof useRessourceStorage>["spellsSlots"];
 const longRestCastMarker = PLANNING_MARKERS.find(({ flag }) => flag === "hasLongRestCast");
 
 const SPELL_LIST_OPEN_KEY = "combat:spells:open";
+const SPELL_PANEL_OPEN_KEY = "combat:spells:panel:open";
 
 /** Everything spell-related in one place: casting stats, slot pips (the same
  *  pip language as the resource tracker) and the prepared-spells quick list
- *  where casting a spell spends a slot of its level. */
+ *  where casting a spell spends a slot of its level.
+ *
+ *  `isCollapsible` is for casters whose spells come from a species or a feat
+ *  rather than their class: a handful of spells they rarely cast, so the whole
+ *  panel folds down to its header and stays closed until they need it. */
 function SpellcastingPanel({
   character,
   spellsSlotsData,
+  isCollapsible = false,
 }: {
   character: CharacterById;
   spellsSlotsData: SpellsSlotsData;
+  isCollapsible?: boolean;
 }) {
   const {
     addSlot,
@@ -62,17 +70,12 @@ function SpellcastingPanel({
     regainFreeCast,
   } = spellsSlotsData;
 
-  // The component is client-only (dynamic ssr:false below), so localStorage is
-  // readable at first render — no flash of the wrong collapse state.
-  const [isSpellListOpen, setIsSpellListOpen] = useState(
-    () => window.localStorage.getItem(SPELL_LIST_OPEN_KEY) === "true",
-  );
+  // The component is client-only (dynamic ssr:false below), so both collapse
+  // states are readable at first render — no flash of the wrong one.
+  const [isSpellListOpen = false, setIsSpellListOpen] = useLocalStorage(SPELL_LIST_OPEN_KEY, false);
+  // Open by default; folding it away is the player's call and it sticks.
+  const [isPanelOpen = true, setIsPanelOpen] = useLocalStorage(SPELL_PANEL_OPEN_KEY, true);
   const [spellSearch, setSpellSearch] = useState("");
-
-  const toggleSpellList = (open: boolean) => {
-    setIsSpellListOpen(open);
-    window.localStorage.setItem(SPELL_LIST_OPEN_KEY, String(open));
-  };
 
   const spellCastingDetails = getSpellCastingModifier(character);
   const spellSaveDCDetails = getSpellSaveDC(character);
@@ -109,30 +112,8 @@ function SpellcastingPanel({
   const preparedTone =
     preparedDiff === 0 ? "text-emerald-500" : preparedDiff < 0 ? "text-amber-500" : "text-red-500";
 
-  return (
-    <SectionPanel
-      accent="sky"
-      icon={WandSparkles}
-      title="Sorts"
-      action={
-        <div className="flex items-center gap-1">
-          <Button asChild theme="neutral" size="icon" title="Liste des sorts">
-            <NextLink href={`/characters/${character.id}/spells`}>
-              <BookOpenIcon />
-            </NextLink>
-          </Button>
-          {hasSlots && (
-            <RestConfirm
-              title="Réinitialiser les emplacements"
-              description="Restaure tous les emplacements de sorts et les lancements gratuits par long repos."
-              icon={<RotateCw />}
-              confirmAction={resetSlots}
-            />
-          )}
-        </div>
-      }
-      contentClassName="gap-3"
-    >
+  const body = (
+    <>
       <div className={cn("grid gap-2", spellsToPreparePerDay ? "grid-cols-3" : "grid-cols-2")}>
         <HudTile
           value={spellCastingDetails.total}
@@ -237,7 +218,7 @@ function SpellcastingPanel({
       )}
 
       {preparedSpells.length > 0 && (
-        <Collapsible open={isSpellListOpen} onOpenChange={toggleSpellList}>
+        <Collapsible open={isSpellListOpen} onOpenChange={setIsSpellListOpen}>
           <CollapsibleTrigger className="group flex w-full items-center justify-between gap-2 rounded-lg bg-muted px-3 py-2 text-sm font-semibold transition-colors hover:bg-muted/70">
             <span className="flex items-center gap-2">
               Sorts disponibles
@@ -425,7 +406,67 @@ function SpellcastingPanel({
           </CollapsibleContent>
         </Collapsible>
       )}
+    </>
+  );
+
+  // When collapsed the content wrapper drops its padding, so the panel shrinks
+  // down to its header instead of leaving an empty padded box.
+  const panel = (
+    <SectionPanel
+      accent="sky"
+      icon={WandSparkles}
+      // The casting ability rides in the header rather than taking its own row —
+      // it's a constant you check once, not a number you track.
+      title={
+        <span className="flex items-baseline gap-1.5">
+          Sorts
+          <span className="rounded bg-sky-500/15 px-1.5 py-px text-tiny font-bold text-sky-400">
+            {shortenAbilityName(spellCastingDetails.spellCastingStat)}
+          </span>
+        </span>
+      }
+      action={
+        <div className="flex items-center gap-1">
+          <Button asChild theme="neutral" size="icon" title="Liste des sorts">
+            <NextLink href={`/characters/${character.id}/spells`}>
+              <BookOpenIcon />
+            </NextLink>
+          </Button>
+          {hasSlots && (
+            <RestConfirm
+              title="Réinitialiser les emplacements"
+              description="Restaure tous les emplacements de sorts et les lancements gratuits par long repos."
+              icon={<RotateCw />}
+              confirmAction={resetSlots}
+            />
+          )}
+          {isCollapsible && (
+            <CollapsibleTrigger asChild>
+              <Button theme="neutral" size="icon" title={isPanelOpen ? "Replier" : "Déplier"}>
+                <ChevronDown
+                  className={cn("transition-transform", { "rotate-180": isPanelOpen })}
+                />
+              </Button>
+            </CollapsibleTrigger>
+          )}
+        </div>
+      }
+      contentClassName={cn("gap-3", { "p-0": isCollapsible && !isPanelOpen })}
+    >
+      {isCollapsible ? (
+        <CollapsibleContent className="flex flex-col gap-3">{body}</CollapsibleContent>
+      ) : (
+        body
+      )}
     </SectionPanel>
+  );
+
+  return isCollapsible ? (
+    <Collapsible open={isPanelOpen} onOpenChange={setIsPanelOpen}>
+      {panel}
+    </Collapsible>
+  ) : (
+    panel
   );
 }
 

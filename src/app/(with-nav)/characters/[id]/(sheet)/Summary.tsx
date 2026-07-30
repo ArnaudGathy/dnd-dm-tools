@@ -7,7 +7,6 @@ import {
   HIT_DICE_MAP,
   RACE_MAP,
   SIZE_BY_RACE_MAP,
-  SPELLCASTING_MODIFIER_MAP,
   SUBCLASS_MAP,
 } from "@/constants/maps";
 import { classColors } from "@/constants/colors";
@@ -17,7 +16,7 @@ import { addSignToNumber, getModifier, hasCreatures } from "@/utils/utils";
 import { ElementType, ReactNode } from "react";
 import Link from "next/link";
 import { getMovementSpeed } from "@/utils/stats/speed";
-import { getHasSpells } from "@/utils/stats/spells";
+import { getHasSpells, getSpellCastingStat } from "@/utils/stats/spells";
 
 /** A circular ability medallion: score in a ring, sign-tinted modifier badge, label below. */
 function AbilityMedallion({ name, value }: { name: keyof typeof ABILITIES_MAP; value: number }) {
@@ -117,7 +116,7 @@ export default function Summary({ character }: { character: CharacterById }) {
   };
 
   const hasSpells = getHasSpells(character);
-  const spellCastingModifier = SPELLCASTING_MODIFIER_MAP[character.className];
+  const spellCastingModifier = getSpellCastingStat(character);
   const conModifier = getModifier(character.constitution);
   const movementSpeedDetails = getMovementSpeed(character);
   const hasCreatureList = hasCreatures(character);

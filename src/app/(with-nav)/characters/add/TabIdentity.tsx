@@ -6,12 +6,14 @@ import FormFieldSelect from "@/components/ui/inputs/FormFieldSelect";
 import FormFieldAlignmentChart from "@/components/ui/inputs/FormFieldAlignmentChart";
 import {
   ABILITIES_MAP,
+  ABILITIES_MAP_TO_NAME,
   BACKGROUND_MAP,
   CAMPAIGN_MAP,
   CHARACTER_STATUS_MAP,
   CLASS_MAP,
   PARTY_MAP,
   RACE_MAP,
+  SPELLCASTING_MODIFIER_MAP,
   SUBCLASS_MAP,
   SUBCLASSES_BY_CLASS,
 } from "@/constants/maps";
@@ -19,10 +21,17 @@ import { shortenAbilityName } from "@/utils/utils";
 import { CampaignId, CharacterStatus } from "@prisma/client";
 import { ChartNoAxesColumn, Lock, Settings2, User } from "lucide-react";
 import PointBuyCounter, { ABILITY_FIELDS } from "@/app/(with-nav)/characters/add/PointBuyCounter";
+import { mapValues } from "remeda";
 
 // Odyssey of the Dragonlords (OotDL) enum values are prefixed with `OOTDL_`
 // and must only be selectable when the character belongs to that campaign.
 const OOTDL_PREFIX = "OOTDL_";
+
+// Abilities keyed by the Prisma enum, for the spellcasting-ability select.
+const SPELLCASTING_ABILITY_OPTIONS = mapValues(
+  ABILITIES_MAP_TO_NAME,
+  (abilityName) => ABILITIES_MAP[abilityName],
+);
 
 /** Small "these fields are locked" hint shown in panel headers in edit mode. */
 function LockedHint({ label }: { label: string }) {
@@ -213,6 +222,22 @@ export default function TabIdentity({
             </p>
             <PointBuyCounter form={form} />
           </>
+        )}
+
+        {/* Classes without innate spellcasting can still cast via a species or a
+            feat — the chosen ability drives attack, DD and the spell panel. */}
+        {!SPELLCASTING_MODIFIER_MAP[className] && (
+          <FormFieldSelect
+            className="md:w-1/3"
+            formInstance={form}
+            formFieldName="spellCastingAbility"
+            label="Caractéristique d'incantation"
+            description="Sorts d'espèce ou de don"
+            placeholder="Aucune"
+            items={SPELLCASTING_ABILITY_OPTIONS}
+            allowNoValue
+            noValueLabel="Aucune"
+          />
         )}
       </SectionPanel>
     </div>

@@ -258,6 +258,11 @@ model Character {
   wisdom       Int
   charisma     Int
 
+  // Spellcasting ability for characters whose class has none (spells granted by
+  // a species or a feat). Ignored when the class already defines one
+  // (SPELLCASTING_MODIFIER_MAP wins) — see getSpellCastingStat.
+  spellCastingAbility Abilities?
+
   savingThrows  SavingThrow[]
   skills        Skill[]
   proficiencies String[]      @db.VarChar(255)

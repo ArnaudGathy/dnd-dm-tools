@@ -3,8 +3,12 @@ import "server-only";
 
 import prisma from "../prisma";
 import { z } from "zod";
-import { ArmorType, Classes, Prisma, WeaponType } from "@prisma/client";
-import { BASE_HP_PER_CLASS_MAP, LEVEL_UP_HP_MAP } from "@/constants/maps";
+import { Abilities, ArmorType, Classes, Prisma, WeaponType } from "@prisma/client";
+import {
+  BASE_HP_PER_CLASS_MAP,
+  LEVEL_UP_HP_MAP,
+  SPELLCASTING_MODIFIER_MAP,
+} from "@/constants/maps";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import { getModifier } from "@/utils/utils";
 import { redirect } from "next/navigation";
@@ -80,6 +84,16 @@ const getBaseHP = (
   );
 };
 
+/** The manual spellcasting ability is only meaningful for classes that have
+ *  none of their own — a class-defined one always wins, so never store it. */
+const getSpellCastingAbilityToPersist = ({
+  className,
+  spellCastingAbility,
+}: {
+  className: Classes;
+  spellCastingAbility?: Abilities | null;
+}) => (SPELLCASTING_MODIFIER_MAP[className] ? null : (spellCastingAbility ?? null));
+
 /** Thrown at the end of a dry-run transaction so Prisma rolls everything back. */
 class DryRunRollback extends Error {}
 
@@ -154,6 +168,7 @@ export const createCharacter = async (
             intelligence: validation.data.intelligence,
             wisdom: validation.data.wisdom,
             charisma: validation.data.charisma,
+            spellCastingAbility: getSpellCastingAbilityToPersist(validation.data),
             age: validation.data.age,
             weight: validation.data.weight,
             height: validation.data.height,
@@ -362,6 +377,7 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
       intelligence: validation.data.intelligence,
       wisdom: validation.data.wisdom,
       charisma: validation.data.charisma,
+      spellCastingAbility: getSpellCastingAbilityToPersist(validation.data),
       age: validation.data.age,
       weight: validation.data.weight,
       height: validation.data.height,

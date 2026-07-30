@@ -1,5 +1,6 @@
 import { Character, Classes } from "@prisma/client";
 import {
+  ABILITIES_MAP_TO_NAME,
   CLASS_SPELL_PROGRESSION_MAP,
   CLASS_SPELLS_PREPARED_PROGRESSION_MAP,
   CLASS_SPELLS_WHEN_TO_PREPARE_MAP,
@@ -8,9 +9,19 @@ import {
 } from "@/constants/maps";
 import { addSignToNumber, getModifier } from "@/utils/utils";
 import { CharacterById, SpellsCreaturesCount } from "@/lib/utils";
+import { AbilityNameType } from "@/types/types";
+
+/** Ability a character casts with. The class always wins; `spellCastingAbility`
+ *  only kicks in for classes without innate spellcasting, where the spells come
+ *  from a species or a feat (e.g. a tiefling fighter casting with Sagesse). */
+export const getSpellCastingStat = (
+  character: Pick<Character, "className" | "spellCastingAbility">,
+): AbilityNameType | null =>
+  SPELLCASTING_MODIFIER_MAP[character.className] ??
+  (character.spellCastingAbility ? ABILITIES_MAP_TO_NAME[character.spellCastingAbility] : null);
 
 export const getSpellCastingModifier = (character: Character) => {
-  const spellCastingStat = SPELLCASTING_MODIFIER_MAP[character.className];
+  const spellCastingStat = getSpellCastingStat(character);
   const spellCastingAbilityModifier = spellCastingStat
     ? getModifier(character[spellCastingStat])
     : 0;
@@ -30,7 +41,7 @@ export const getSpellCastingModifier = (character: Character) => {
 
 export const getSpellSaveDC = (character: Character) => {
   const baseValue = 8;
-  const spellCastingStat = SPELLCASTING_MODIFIER_MAP[character.className];
+  const spellCastingStat = getSpellCastingStat(character);
   const spellCastingAbilityModifier = spellCastingStat
     ? getModifier(character[spellCastingStat])
     : 0;
@@ -92,7 +103,8 @@ export const getSpellsToPreparePerDay = (character: Character) => {
 
 export const getHasSpells = ({
   className,
+  spellCastingAbility,
   _count,
-}: { className: CharacterById["className"] } & SpellsCreaturesCount) => {
-  return !!SPELLCASTING_MODIFIER_MAP[className] || _count.spellsOnCharacters > 0;
+}: Pick<CharacterById, "className" | "spellCastingAbility"> & SpellsCreaturesCount) => {
+  return !!getSpellCastingStat({ className, spellCastingAbility }) || _count.spellsOnCharacters > 0;
 };
