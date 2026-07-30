@@ -1,0 +1,11 @@
+# Which dependencies may run their install scripts (pnpm >= 11).
+# Prisma needs them (engines download + client generation), sharp and esbuild
+# resolve their platform binaries; the rest are opt-out to keep installs lean.
+allowBuilds:
+  '@prisma/client': true
+  '@prisma/engines': true
+  prisma: true
+  sharp: true
+  esbuild: true
+  '@firebase/util': false
+  protobufjs: false
