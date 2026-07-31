@@ -2,6 +2,7 @@
   "name": "dnd-dm-tools",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@11.15.1",
   "scripts": {
     "predev": "open http://localhost:3000",
     "dev": "next dev --turbopack",
