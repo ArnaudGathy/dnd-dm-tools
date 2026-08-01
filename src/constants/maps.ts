@@ -581,6 +581,29 @@ export const ROGUE_BACKSTAB_DICE_PER_LEVEL: Record<number, string> = {
   20: "10d6",
 };
 
+export const BARD_BARDIC_DICE_PER_LEVEL: Record<number, string> = {
+  1: "d6",
+  2: "d6",
+  3: "d6",
+  4: "d6",
+  5: "d8",
+  6: "d8",
+  7: "d8",
+  8: "d8",
+  9: "d8",
+  10: "d10",
+  11: "d10",
+  12: "d10",
+  13: "d10",
+  14: "d10",
+  15: "d12",
+  16: "d12",
+  17: "d12",
+  18: "d12",
+  19: "d12",
+  20: "d12",
+};
+
 export const ROGUE_SOULKNIFE_DICE_PER_LEVEL: Record<number, string | undefined> = {
   1: undefined,
   2: undefined,

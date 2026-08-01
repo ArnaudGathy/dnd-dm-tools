@@ -4,6 +4,7 @@ import {
   useRessourceStorage,
 } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessouceStorage";
 import {
+  Feather,
   Book,
   Brain,
   BrainCircuit,
@@ -33,6 +34,7 @@ import {
   Star,
   SwordIcon,
   Waves,
+  Music,
 } from "lucide-react";
 import { Classes, Races, Subclasses } from "@prisma/client";
 import {
@@ -68,7 +70,14 @@ type RessourceDefinition = CommonRessource & {
 
 export default function useRessourceData({ character }: { character: CharacterById }) {
   const {
-    ressources: { getSpecificRessource, longRest, shortRest, sortRessources },
+    ressources: {
+      getSpecificRessource,
+      longRest,
+      shortRest,
+      sortRessources,
+      shortRestReset,
+      sorceryRestoration,
+    },
     spellsSlots,
   } = useRessourceStorage(character);
 
@@ -122,6 +131,22 @@ export default function useRessourceData({ character }: { character: CharacterBy
       ressourceName: "giantAncestry",
       total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
       condition: character.race === Races.GOLIATH,
+    },
+  ];
+  const dragonborn: RessourceDefinition[] = [
+    {
+      name: "Souffle draconique",
+      icon: <Flame />,
+      ressourceName: "draconicBreath",
+      total: PROFICIENCY_BONUS_BY_LEVEL[character.level],
+      condition: character.race === Races.DRAGONBORN,
+    },
+    {
+      name: "Vol draconique",
+      icon: <Feather />,
+      ressourceName: "draconicFlight",
+      total: 1,
+      condition: character.race === Races.DRAGONBORN && character.level >= 5,
     },
   ];
 
@@ -386,6 +411,15 @@ export default function useRessourceData({ character }: { character: CharacterBy
       condition: character.className === Classes.PALADIN && character.level >= 3,
     },
   ];
+  const bard: RessourceDefinition[] = [
+    {
+      name: "Inspiration bardique",
+      icon: <Music />,
+      ressourceName: "bardicInspiration",
+      total: Math.max(1, getModifier(character.charisma)),
+      condition: character.className === Classes.BARD,
+    },
+  ];
 
   const buildRessourceArray = (ressources: RessourceDefinition[]) => {
     return reduce(
@@ -415,6 +449,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       ...feats,
       ...aasimar,
       ...goliath,
+      ...dragonborn,
       ...sorcerer,
       ...rogue,
       ...ranger,
@@ -424,6 +459,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       ...druid,
       ...fighter,
       ...paladin,
+      ...bard,
     ]),
     ({ useRessource }) => useRessource[0].order,
   );
@@ -433,6 +469,12 @@ export default function useRessourceData({ character }: { character: CharacterBy
     ({ useRessource }) => useRessource[0].isEnabled,
   );
 
+  // The short rest button is only worth showing if the character owns at least
+  // one ressource a short rest actually restores.
+  const canShortRest =
+    characterRessources.some(({ ressourceName }) => shortRestReset[ressourceName]) ||
+    sorceryRestoration.isAvailable;
+
   return {
     ressources: {
       longRest,
@@ -440,6 +482,8 @@ export default function useRessourceData({ character }: { character: CharacterBy
       sortRessources,
       displayedRessources,
       characterRessources,
+      canShortRest,
+      sorceryRestoration,
     },
     spellsSlots,
   };

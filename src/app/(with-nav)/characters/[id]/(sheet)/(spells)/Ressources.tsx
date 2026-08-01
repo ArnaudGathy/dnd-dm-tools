@@ -14,7 +14,9 @@ import RestButtons from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/RestB
 export type RessourcesData = {
   characterRessources: DisplayRessource[];
   displayedRessources: DisplayRessource[];
-  shortRest: () => void;
+  canShortRest: boolean;
+  sorceryRestoration: { isAvailable: boolean; amount: number };
+  shortRest: (options?: { useSorceryRestoration?: boolean }) => void;
   longRest: (character: CharacterById) => void;
   sortRessources: (ressources: RessourceStorage["ressources"]) => void;
 };
@@ -26,10 +28,15 @@ function Ressources({
   character: CharacterById;
   ressources: RessourcesData;
 }) {
-  const { characterRessources, displayedRessources, shortRest, longRest, sortRessources } =
-    ressources;
-
-  const canShortRest = characterRessources.some(({ useRessource }) => useRessource[0].canShortRest);
+  const {
+    characterRessources,
+    displayedRessources,
+    canShortRest,
+    sorceryRestoration,
+    shortRest,
+    longRest,
+    sortRessources,
+  } = ressources;
 
   return (
     <SectionPanel
@@ -40,7 +47,14 @@ function Ressources({
         <div className="flex items-center gap-1">
           <RestButtons
             canShortRest={canShortRest}
-            shortRestAction={() => shortRest()}
+            shortRestOption={
+              sorceryRestoration.isAvailable
+                ? {
+                    label: `Récupérer ${sorceryRestoration.amount} points de sorcellerie (Restauration ensorcelée, 1x/long repos)`,
+                  }
+                : undefined
+            }
+            shortRestAction={(useSorceryRestoration) => shortRest({ useSorceryRestoration })}
             longRestAction={() => {
               longRest(character);
               void resetHp(character.id, character.maximumHP);

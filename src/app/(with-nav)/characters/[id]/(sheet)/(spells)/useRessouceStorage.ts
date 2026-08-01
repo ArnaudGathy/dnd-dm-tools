@@ -2,7 +2,7 @@ import { useLocalStorage } from "react-use";
 import { z } from "zod";
 import { mapValues } from "remeda";
 import { CharacterById } from "@/lib/utils";
-import { Races } from "@prisma/client";
+import { Classes, Races } from "@prisma/client";
 import { CLASS_SPELL_PROGRESSION_MAP } from "@/constants/maps";
 
 const themes = [
@@ -65,6 +65,9 @@ const ressourceNames = [
   "observeEnemy",
   "layOfHands",
   "divineConduit",
+  "draconicBreath",
+  "draconicFlight",
+  "bardicInspiration",
 ] as const;
 export type RessourceName = (typeof ressourceNames)[number];
 
@@ -74,7 +77,6 @@ const ressourceSchema = z.object({
   theme: z.enum(themes),
   isEnabled: z.boolean(),
   order: z.number(),
-  canShortRest: z.boolean(),
 });
 export type Ressource = z.infer<typeof ressourceSchema>;
 const ressourceStorageSchema = z.object({
@@ -83,6 +85,9 @@ const ressourceStorageSchema = z.object({
   // Spell ids whose free once-per-long-rest cast has been used since the last
   // long rest / slot reset (spells flagged `hasLongRestCast`).
   usedFreeCasts: z.array(z.string()).optional(),
+  // Whether the sorcerer already spent his "Restauration" on a short rest since
+  // the last long rest.
+  usedSorceryRestoration: z.boolean().optional(),
 });
 export type RessourceStorage = z.infer<typeof ressourceStorageSchema>;
 
@@ -91,8 +96,8 @@ const initialRessource: Omit<Ressource, "theme"> = {
   available: -1,
   isEnabled: true,
   order: 0,
-  canShortRest: false,
 };
+
 const initialValues: RessourceStorage = {
   spellsSlots: {},
   ressources: {
@@ -119,7 +124,6 @@ const initialValues: RessourceStorage = {
     psiDices: {
       ...initialRessource,
       theme: "fuchsia",
-      canShortRest: true,
     },
     spiritualRupture: {
       ...initialRessource,
@@ -144,7 +148,6 @@ const initialValues: RessourceStorage = {
     focusPoints: {
       ...initialRessource,
       theme: "white",
-      canShortRest: true,
     },
     uncannyMetabolism: {
       ...initialRessource,
@@ -173,7 +176,6 @@ const initialValues: RessourceStorage = {
     channelDivinity: {
       ...initialRessource,
       theme: "yellow",
-      canShortRest: true,
     },
     divineIntervention: {
       ...initialRessource,
@@ -182,7 +184,6 @@ const initialValues: RessourceStorage = {
     warPriest: {
       ...initialRessource,
       theme: "indigo",
-      canShortRest: true,
     },
     magicRestoration: {
       ...initialRessource,
@@ -191,7 +192,6 @@ const initialValues: RessourceStorage = {
     wildShape: {
       ...initialRessource,
       theme: "blue",
-      canShortRest: true,
     },
     wildResurgence: {
       ...initialRessource,
@@ -212,12 +212,10 @@ const initialValues: RessourceStorage = {
     secondWind: {
       ...initialRessource,
       theme: "green",
-      canShortRest: true,
     },
     actionSurge: {
       ...initialRessource,
       theme: "fuchsia",
-      canShortRest: true,
     },
     unyielding: {
       ...initialRessource,
@@ -226,7 +224,6 @@ const initialValues: RessourceStorage = {
     superiorityDice: {
       ...initialRessource,
       theme: "orange",
-      canShortRest: true,
     },
     observeEnemy: {
       ...initialRessource,
@@ -240,6 +237,18 @@ const initialValues: RessourceStorage = {
       ...initialRessource,
       theme: "yellow",
     },
+    draconicBreath: {
+      ...initialRessource,
+      theme: "orange",
+    },
+    draconicFlight: {
+      ...initialRessource,
+      theme: "sky",
+    },
+    bardicInspiration: {
+      ...initialRessource,
+      theme: "amber",
+    },
   },
 };
 
@@ -250,12 +259,42 @@ export const useRessourceStorage = (character: CharacterById) => {
   const allSlots = baseSlots[character.level - 1];
   const parsedCharacterName = character.name.toLowerCase().replace(/ /g, "_");
 
+  /** Which ressources a short rest gives back, and how much: "all" refills to
+   *  the total, "one" hands back a single charge. Absent = long rest only.
+   *  Derived from the character rather than stored, so level-gated rules stay
+   *  correct as the character levels up. */
+  const shortRestReset: Partial<Record<RessourceName, "all" | "one">> = {
+    focusPoints: "all",
+    warPriest: "all",
+    superiorityDice: "all",
+    /* Bardic inspiration only comes back on a short rest from level 5 */
+    bardicInspiration: character.level >= 5 ? "all" : undefined,
+
+    psiDices: "one",
+    channelDivinity: "one",
+    wildShape: "one",
+    secondWind: "one",
+    actionSurge: "one",
+    divineConduit: "one",
+  };
+
   const [store, setStore] = useLocalStorage<RessourceStorage>(`${parsedCharacterName}.ressources`, {
     ressources: {},
     spellsSlots: allSlots,
   });
   const ressources = store?.ressources;
   const spellSlots = store?.spellsSlots;
+
+  /** Sorcerer "Restauration" : from level 5, one short rest per long rest gives
+   *  back half the sorcerer level in sorcery points. The player picks which
+   *  short rest, so it is offered as an option instead of applied every time. */
+  const sorceryRestoration = {
+    isAvailable:
+      character.className === Classes.SORCERER &&
+      character.level >= 5 &&
+      !store?.usedSorceryRestoration,
+    amount: Math.floor(character.level / 2),
+  };
 
   const longRest = (character: CharacterById) => {
     // All ressources are maxed unless specified otherwise
@@ -274,54 +313,47 @@ export const useRessourceStorage = (character: CharacterById) => {
           available: newAvailable,
         };
       });
-      setStore({ ...store, ressources: newRessources, spellsSlots: allSlots, usedFreeCasts: [] });
+      setStore({
+        ...store,
+        ressources: newRessources,
+        spellsSlots: allSlots,
+        usedFreeCasts: [],
+        usedSorceryRestoration: false,
+      });
     }
   };
 
-  const shortRest = () => {
-    // Only specified ressources are reset
+  const shortRest = ({
+    useSorceryRestoration = false,
+  }: { useSorceryRestoration?: boolean } = {}) => {
+    // Only the ressources listed in `shortRestReset` are reset
     if (ressources) {
-      const newRessources = mapValues(ressources, (value, key) => {
-        if (!value.canShortRest) {
+      const restoresSorceryPoints = useSorceryRestoration && sorceryRestoration.isAvailable;
+
+      const newResources = mapValues(ressources, (value, key) => {
+        if (key === "sorceryPoints" && restoresSorceryPoints) {
+          return {
+            ...value,
+            available: Math.min(value.available + sorceryRestoration.amount, value.total),
+          };
+        }
+
+        const reset = shortRestReset[key];
+        if (!reset) {
           return value;
         }
 
-        let available = value.available;
-
-        /* All per short rest */
-        if (["focusPoints", "warPriest", "superiorityDice"].includes(key)) {
-          available = value.total;
-        }
-
-        /* One per short rest */
-        if (
-          [
-            "psiDices",
-            "channelDivinity",
-            "wildShape",
-            "secondWind",
-            "actionSurge",
-            "divineConduit",
-          ].includes(key)
-        ) {
-          available = Math.min(value.available + 1, value.total);
-        }
-
-        // const sorceryPointsResetAmount = Math.floor(character.level / 2);
-        // if (key === "sorceryPoints" && character.level >= 5 && resetCount < 1) {
-        //   available = Math.min(
-        //     sorceryPointsResetAmount + value.available,
-        //     value.total,
-        //   );
-        //   resetCount = 1;
-        // }
-
         return {
           ...value,
-          available,
+          available: reset === "all" ? value.total : Math.min(value.available + 1, value.total),
         };
       });
-      setStore({ ...store, ressources: newRessources });
+
+      setStore({
+        ...store,
+        ressources: newResources,
+        usedSorceryRestoration: store?.usedSorceryRestoration || restoresSorceryPoints,
+      });
     }
   };
 
@@ -432,7 +464,14 @@ export const useRessourceStorage = (character: CharacterById) => {
   };
 
   return {
-    ressources: { getSpecificRessource, longRest, shortRest, sortRessources },
+    ressources: {
+      getSpecificRessource,
+      longRest,
+      shortRest,
+      sortRessources,
+      shortRestReset,
+      sorceryRestoration,
+    },
     spellsSlots: {
       addSlot,
       removeSlot,
