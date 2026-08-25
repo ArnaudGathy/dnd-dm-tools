@@ -9,7 +9,7 @@ import {
   getParticipantFromEncounter,
   roll,
 } from "@/utils/utils";
-import { getZoneCreatures } from "@/lib/actions/encounters";
+import { getZoneReinforcements } from "@/lib/actions/encounters";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { v4 as uuidv4 } from "uuid";
 import { Card } from "@/components/ui/card";
@@ -23,6 +23,7 @@ import { filter, isDefined, map, pipe, prop } from "remeda";
 import {
   ChevronRight,
   FastForwardIcon,
+  Hourglass,
   Loader2,
   RefreshCcw,
   SkullIcon,
@@ -39,6 +40,14 @@ import { conditions } from "@/data/conditions";
 import { InitiativePrompt } from "@/app/(with-nav)/encounters/[id]/InitiativePrompt";
 import { SpellQuickAccess } from "@/app/(with-nav)/encounters/[id]/SpellQuickAccess";
 import { DEFAULT_INIT, ParticipantRow } from "@/app/(with-nav)/encounters/[id]/ParticipantRow";
+import {
+  CombatStatus,
+  getParticipantStatus,
+  mergeStatuses,
+  usePublishCombatStatuses,
+  usePublishZoneStatBlocks,
+} from "@/app/(with-nav)/encounters/[id]/CombatStatusContext";
+import { PileToggle } from "@/app/(with-nav)/encounters/[id]/PileToggle";
 
 // Local recovery snapshot: the Firebase mirror is intentionally cleared on unmount so the
 // /tracker/character view disappears — localStorage is the only place a combat survives.
@@ -171,6 +180,7 @@ export const CombatModule = ({
 
   const [shouldShowAddParticipant, setShouldShowAddParticipant] = useState(false);
   const [showDeadPile, setShowDeadPile] = useState(false);
+  const [showInactivePile, setShowInactivePile] = useState(false);
   const [showInitiativePrompt, setShowInitiativePrompt] = useState(false);
   const [listOfParticipants, setListOfParticipants] = useState<Participant[]>(() =>
     filter(
@@ -197,7 +207,7 @@ export const CombatModule = ({
   );
 
   // A fight can spill over anywhere, so every other zone of the location is importable —
-  // their rosters are resolved on click, not up front (see getZoneCreatures).
+  // their rosters are resolved on click, not up front (see getZoneReinforcements).
   const importableZones = useMemo(
     () => [
       // Deduped: two encounters can share a mapMarker (split rosters of one zone).
@@ -283,6 +293,27 @@ export const CombatModule = ({
     }
   }, [encounter.id, listOfParticipants, currentTurnIndex, turnsCounter, anotherEncountersAdded]);
 
+  const publishZoneStatBlocks = usePublishZoneStatBlocks();
+
+  // Reinforcement stat blocks live in the (client) tracker's memory only, so a restored
+  // combat has to fetch them again for every zone it had imported.
+  const loadZoneStatBlocks = useCallback(
+    (mapMarkers: string[]) => {
+      mapMarkers.forEach(async (mapMarker) => {
+        try {
+          const { statBlocks } = await getZoneReinforcements({
+            locationName: encounter.location.name,
+            mapMarker,
+          });
+          publishZoneStatBlocks?.(mapMarker, statBlocks);
+        } catch (error) {
+          console.error("Failed to load the stat blocks of zone", mapMarker, error);
+        }
+      });
+    },
+    [encounter.location.name, publishZoneStatBlocks],
+  );
+
   const handleRestoreSnapshot = () => {
     if (!snapshotToRestore) {
       return;
@@ -292,6 +323,7 @@ export const CombatModule = ({
     setCurrentTurnIndex(snapshotToRestore.currentTurnIndex);
     setTurnsCounter(snapshotToRestore.turnsCounter);
     setAnotherEncountersAdded(snapshotToRestore.anotherEncountersAdded ?? []);
+    loadZoneStatBlocks(snapshotToRestore.anotherEncountersAdded ?? []);
     if (snapshotToRestore.currentTurnIndex !== null) {
       setHasStartedTracker(true);
     }
@@ -357,7 +389,7 @@ export const CombatModule = ({
 
     setLoadingZone(mapMarker);
     try {
-      const anotherEncounterCreatures = await getZoneCreatures({
+      const { creatures: anotherEncounterCreatures, statBlocks } = await getZoneReinforcements({
         locationName: encounter.location.name,
         mapMarker,
       });
@@ -367,6 +399,7 @@ export const CombatModule = ({
       }
 
       setAnotherEncountersAdded((current) => [...current, mapMarker]);
+      publishZoneStatBlocks?.(mapMarker, statBlocks);
       mutateParticipantsPreservingActive((current) => {
         return [
           ...getParticipantFromEncounter({
@@ -481,6 +514,30 @@ export const CombatModule = ({
     () => listOfParticipants.filter((participant) => !participant.isNPC),
     [listOfParticipants],
   );
+
+  // Feed the stat block column: only NPCs coming from the roster carry a creature id (players
+  // use their numeric character id, ad-hoc participants -1 and the environment row -99).
+  const publishCombatStatuses = usePublishCombatStatuses();
+  const creatureStatuses = useMemo(
+    () =>
+      listOfParticipants.reduce<Record<string, CombatStatus>>((statuses, participant) => {
+        if (!participant.isNPC || typeof participant.id !== "string") {
+          return statuses;
+        }
+        return {
+          ...statuses,
+          [participant.id]: mergeStatuses(
+            statuses[participant.id],
+            getParticipantStatus(participant),
+          ),
+        };
+      }, {}),
+    [listOfParticipants],
+  );
+
+  useEffect(() => {
+    publishCombatStatuses?.(creatureStatuses);
+  }, [publishCombatStatuses, creatureStatuses]);
 
   // Starting a combat means collecting the party's initiative first — the prompt is the whole
   // start button, not an extra step: submitting it plays the first turn.
@@ -665,17 +722,22 @@ export const CombatModule = ({
   };
 
   // The active-turn highlight is index-based, so rows keep their original index into
-  // listOfParticipants. Dead participants (0 HP) collapse into a "Morts" pile instead of
-  // taking a full row; the divider entry renders the toggle inline between the two groups.
+  // listOfParticipants — the groups below only reorder the display. Dead (0 HP) and inactive
+  // participants collapse into their own pile instead of taking a full row in the order; the
+  // divider entries render the toggles inline between the groups. Activating an inactive
+  // participant simply moves it back into the living group at its initiative slot.
   const indexedParticipants = listOfParticipants.map((participant, index) => ({
     participant,
     index,
   }));
   const livingParticipants = indexedParticipants.filter(
-    ({ participant }) => participant.currentHp !== "0",
+    ({ participant }) => getParticipantStatus(participant) === "active",
+  );
+  const inactiveParticipants = indexedParticipants.filter(
+    ({ participant }) => getParticipantStatus(participant) === "inactive",
   );
   const deadParticipants = indexedParticipants.filter(
-    ({ participant }) => participant.currentHp === "0",
+    ({ participant }) => getParticipantStatus(participant) === "dead",
   );
   // "En vie" only counts enemies: players never die out of the tracker and the
   // environment row has no HP, so both would pad the number meaninglessly.
@@ -684,9 +746,13 @@ export const CombatModule = ({
   );
   const livingEnemies = enemies.filter((participant) => participant.currentHp !== "0");
 
-  const combatRows: Array<{ participant: Participant; index: number } | { divider: true }> = [
+  const combatRows: Array<
+    { participant: Participant; index: number } | { divider: "inactive" | "dead" }
+  > = [
     ...livingParticipants,
-    ...(deadParticipants.length > 0 ? [{ divider: true as const }] : []),
+    ...(inactiveParticipants.length > 0 ? [{ divider: "inactive" as const }] : []),
+    ...(showInactivePile ? inactiveParticipants : []),
+    ...(deadParticipants.length > 0 ? [{ divider: "dead" as const }] : []),
     ...(showDeadPile ? deadParticipants : []),
   ];
 
@@ -933,22 +999,24 @@ export const CombatModule = ({
         <div className="divide-y divide-white/[0.05]">
           {combatRows.map((entry) => {
             if ("divider" in entry) {
-              return (
-                <button
+              return entry.divider === "inactive" ? (
+                <PileToggle
+                  key="inactive-pile-toggle"
+                  label="Inactifs"
+                  count={inactiveParticipants.length}
+                  icon={Hourglass}
+                  isOpen={showInactivePile}
+                  onToggle={() => setShowInactivePile((current) => !current)}
+                />
+              ) : (
+                <PileToggle
                   key="dead-pile-toggle"
-                  type="button"
-                  onClick={() => setShowDeadPile((current) => !current)}
-                  className="flex w-full items-center gap-2 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.12em] text-muted-foreground transition-colors hover:bg-white/[0.03] hover:text-foreground"
-                >
-                  <ChevronRight
-                    className={clsx("size-3.5 transition-transform", {
-                      "rotate-90": showDeadPile,
-                    })}
-                  />
-                  <SkullIcon className="size-3.5" />
-                  {`Morts (${deadParticipants.length})`}
-                  <span className="h-px flex-1 bg-white/10" />
-                </button>
+                  label="Morts"
+                  count={deadParticipants.length}
+                  icon={SkullIcon}
+                  isOpen={showDeadPile}
+                  onToggle={() => setShowDeadPile((current) => !current)}
+                />
               );
             }
             return renderRow(entry.participant, entry.index);

@@ -2654,10 +2654,13 @@ export const localCreatures: Record<string, Creature> = {
     ],
     bonusActions: [
       {
-        name: "Second souffle (1/long repos)",
-        description: "Récupère 40 PV.",
+        name: "Menace de Ras Nsi",
+        description:
+          "A 50% de Sekelok, il utilise second souffle (+40 PV) et Ras Nsi invoque 4 goules",
       },
     ],
+    behavior:
+      "Attaque en priorité le porteur du bouclier de Sekelok. 3x Epee, a 50% utilise second souffle + invoque goule",
     spellStats: {
       attackMod: 5,
       spellDC: 13,

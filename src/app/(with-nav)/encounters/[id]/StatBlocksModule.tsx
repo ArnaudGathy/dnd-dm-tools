@@ -1,17 +1,9 @@
 import { Creature } from "@/types/types";
-import { StatBlock } from "@/components/statblocks/StatBlock";
-import { prop, uniqueBy } from "remeda";
+import { StatBlockSections } from "@/app/(with-nav)/encounters/[id]/StatBlockSections";
+import { buildStatBlockEntries } from "@/app/(with-nav)/encounters/[id]/statBlockEntries";
 
-const StatBlocksModule = async ({ creatures }: { creatures: Creature[] }) => {
-  const uniqueCreatures = uniqueBy(creatures, prop("name"));
-  return (
-    <div className="flex flex-col gap-4">
-      {uniqueCreatures.map((creature) => (
-        <StatBlock key={creature.id} creature={creature} />
-      ))}
-      <div className="h-[800px]" />
-    </div>
-  );
-};
+const StatBlocksModule = async ({ creatures }: { creatures: Creature[] }) => (
+  <StatBlockSections entries={buildStatBlockEntries(creatures)} />
+);
 
 export default StatBlocksModule;
