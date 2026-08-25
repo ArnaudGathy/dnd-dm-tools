@@ -1266,7 +1266,7 @@ export const encounters: Encounter[] = [
     youtubeId: "KPSVPFwOLyE",
   },
   {
-    name: "Salle du trône (Ras Nsi)",
+    name: "Salle du trône (Sekelok)",
     id: 106,
     scenario: "La tombe de l'annihilation",
     location: {
@@ -1275,20 +1275,39 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_ras-nsi", color: "#e3320a", variant: "" },
+        { id: "_ras-nsi", color: "#e3320a", variant: "", inactive: true },
         { id: "_sekelok", color: "#745C74", variant: "" },
         { id: "yuan-ti-malison-type-1", color: "#DCBB54", variant: "" },
         { id: "yuan-ti-malison-type-1", color: "#56623D", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#638880", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#8F6F61", variant: "" },
         { id: "_yuan-ti-broodguard", color: "#BBA66F", variant: "" },
-        { id: "ghoul", variant: "homme", color: "#1fa483" },
-        { id: "ghoul", variant: "femme", color: "#8dd549" },
-        { id: "ghoul", variant: "homme", color: "#A0A667" },
-        { id: "ghoul", variant: "femme", color: "#1fa483" },
+        { id: "ghoul", variant: "homme", color: "#1fa483", inactive: true },
+        { id: "ghoul", variant: "femme", color: "#8dd549", inactive: true },
+        { id: "ghoul", variant: "homme", color: "#A0A667", inactive: true },
+        { id: "ghoul", variant: "femme", color: "#1fa483", inactive: true },
+        { id: "ghoul", variant: "homme", color: "#1fa483", inactive: true },
       ],
     },
     youtubeId: "m-1S1V1PZHA",
+  },
+  {
+    name: "Ras Nsi",
+    id: 118,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Fanum du serpent nocturne",
+      mapMarker: "F11 / F12",
+    },
+    ennemies: {
+      "1": [
+        { id: "_ras-nsi", color: "#e3320a", variant: "" },
+        { id: "ghoul", variant: "f invoqué", color: "#8dd549", inactive: true },
+        { id: "ghoul", variant: "h invoqué", color: "#A0A667", inactive: true },
+        { id: "ghoul", variant: "f invoqué", color: "#1fa483", inactive: true },
+      ],
+    },
+    youtubeId: "R3ShTCWDlGM",
   },
   {
     name: "Réserve",

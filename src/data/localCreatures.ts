@@ -2444,8 +2444,8 @@ export const localCreatures: Record<string, Creature> = {
     type: "Monstrosity (Shapechanger, Yuan-ti)",
     size: "Medium",
     alignment: "Neutral Evil",
-    armorClass: 16,
-    hitPoints: "135",
+    armorClass: 15,
+    hitPoints: "150",
     speed: {
       walk: "9 m",
     },
@@ -2479,6 +2479,10 @@ export const localCreatures: Record<string, Creature> = {
         name: "Résistance magique",
         description: "Avantage aux JdS contre les sorts et effets magiques.",
       },
+      {
+        name: "Résistance légendaire (2)",
+        description: "En cas d'échec de JdS, peut choisir de le réussir à la place.",
+      },
     ],
     actions: [
       {
@@ -2503,7 +2507,7 @@ export const localCreatures: Record<string, Creature> = {
     bonusActions: [
       {
         name: "Repli expéditif N1",
-        description: "Sprint (concentration) + refaire en action bonus tant qu'actif",
+        description: "Sprint (concentration) + recast en action bonus tant que concentré",
       },
       { name: "Foulée brumeuse N2", description: "TP de 6 cases (pas d'opportunité)" },
       {
@@ -2580,7 +2584,7 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
     behavior:
-      "Réactions > déplacements en actions bonus > Création de morts vivants si <= 3 morts > Boule de feu groupée > 3x épée langue-de-feu en mêlée. Fuit en zone 12 si domino.",
+      "T1 Boucliers (bonus) + Création de morts vivants (Action) > Réactions > déplacements en actions bonus > Boule de feu groupée > 3x épée langue-de-feu en mêlée. Fuit en zone 12 si dominé.",
   },
   sekelok: {
     name: "Sekelok",
@@ -2590,7 +2594,7 @@ export const localCreatures: Record<string, Creature> = {
     size: "Medium",
     alignment: "Neutral Evil",
     armorClass: 18,
-    hitPoints: "150 (22d8 + 44)",
+    hitPoints: "135 (22d8 + 44)",
     speed: {
       walk: "10.5 m",
     },
