@@ -1401,7 +1401,7 @@ export const encounters: Encounter[] = [
     youtubeId: "l6pwrEnOUSA",
   },
   {
-    name: "Grotte des esclaves",
+    name: "Grotte des esclaves (T-REX)",
     id: 114,
     scenario: "La tombe de l'annihilation",
     location: {
@@ -1410,8 +1410,6 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_xopal", color: "#56623D", variant: "Seringue man" },
-        { id: "yuan-ti-malison-type-3", color: "#5E7AAF", variant: "Issar" },
         { id: "_tyrannosaurus-zombie", color: "#efc0d8", variant: "" },
         { id: "zombie", color: "#aad09a", inactive: true },
         { id: "zombie", color: "#57abbb", inactive: true },
@@ -1421,7 +1419,7 @@ export const encounters: Encounter[] = [
         { id: "zombie", variant: "plante", color: "#566142", inactive: true },
       ],
     },
-    youtubeId: "GMXiYs-wi3A",
+    youtubeId: "8MPw7yueLEE",
   },
   {
     name: "Antre de l'hydre",

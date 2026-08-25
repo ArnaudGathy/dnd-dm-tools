@@ -3160,6 +3160,10 @@ export const localCreatures: Record<string, Creature> = {
         description:
           "Si il reste des zombies en stock (Décharge de zombie), 1d4 zombie apparaissent à la mort.",
       },
+      {
+        name: "Résistance légendaire (1)",
+        description: "En cas d'échec de JdS, peut choisir de le réussir à la place.",
+      },
     ],
     actions: [
       {
