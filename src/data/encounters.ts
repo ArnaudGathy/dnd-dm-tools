@@ -1286,7 +1286,6 @@ export const encounters: Encounter[] = [
         { id: "ghoul", variant: "femme", color: "#8dd549", inactive: true },
         { id: "ghoul", variant: "homme", color: "#A0A667", inactive: true },
         { id: "ghoul", variant: "femme", color: "#1fa483", inactive: true },
-        { id: "ghoul", variant: "homme", color: "#1fa483", inactive: true },
       ],
     },
     youtubeId: "m-1S1V1PZHA",
