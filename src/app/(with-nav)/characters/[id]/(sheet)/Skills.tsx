@@ -13,6 +13,7 @@ import StatBreakdown, {
 } from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
 import CollapsibleProficiencies from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/CollapsibleProficiencies";
 import AbilityRolls from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/AbilityRolls";
+import JumpDistances from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/JumpDistances";
 
 type Proficiency = "expert" | "proficient" | "none";
 
@@ -174,6 +175,8 @@ export default function Skills({ character }: { character: CharacterById }) {
               value={getPassivePerception(character)}
             />
           </div>
+
+          <JumpDistances character={character} />
 
           <CollapsibleProficiencies proficiencies={character.proficiencies} />
         </div>
