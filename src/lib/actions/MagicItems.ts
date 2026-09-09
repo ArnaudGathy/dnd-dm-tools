@@ -85,3 +85,22 @@ export const deleteMagicItem = async (itemId: number) => {
   revalidatePath("/characters");
   revalidatePath("/magic-items");
 };
+
+/** Toggles whether the item is mirrored in the Combat tab's "Objets de combat"
+ *  panel. Purely a display flag — the item stays in the inventory either way. */
+export const setMagicItemCombatRelevance = async ({
+  itemId,
+  characterId,
+  isCombatRelevant,
+}: {
+  itemId: number;
+  characterId: number;
+  isCombatRelevant: boolean;
+}) => {
+  await prisma.magicItem.update({
+    where: { id: itemId },
+    data: { isCombatRelevant },
+  });
+
+  revalidatePath(`/characters/${characterId}`);
+};

@@ -307,8 +307,10 @@ model InventoryItem {
   characterId Int?
   name        String
   description String?
-  quantity    Int       @default(1)
+  quantity    Int        @default(1)
   value       String?
+
+  isCombatRelevant Boolean @default(false)
 }
 
 enum MagicItemRarity {
@@ -332,6 +334,8 @@ model MagicItem {
 
   rarity      MagicItemRarity
   isAttuned   Boolean         @default(false)
+
+  isCombatRelevant Boolean    @default(false)
 }
 
 enum MoneyType {

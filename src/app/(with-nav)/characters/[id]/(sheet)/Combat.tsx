@@ -10,6 +10,7 @@ import CombatHud from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/CombatH
 import WeaponCard from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/WeaponCard";
 import SpellcastingPanel from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/SpellcastingPanel";
 import TraitsPanel from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/TraitsPanel";
+import CombatItemsPanel from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/CombatItemsPanel";
 import Ressources from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/Ressources";
 import useRessourceData from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
 
@@ -56,7 +57,10 @@ export default function Combat({ character }: { character: CharacterById }) {
           <AbilityRolls character={character} />
         </div>
 
-        <TraitsPanel character={character} />
+        <div className="flex flex-col gap-4">
+          <TraitsPanel character={character} />
+          <CombatItemsPanel character={character} />
+        </div>
       </div>
     </div>
   );

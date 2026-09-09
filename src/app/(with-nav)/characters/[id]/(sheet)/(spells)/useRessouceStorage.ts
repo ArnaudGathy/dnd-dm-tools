@@ -285,6 +285,11 @@ export const useRessourceStorage = (character: CharacterById) => {
   const ressources = store?.ressources;
   const spellSlots = store?.spellsSlots;
 
+  /** Warlock "Magie de pacte" : the few pact slots come back on every short
+   *  rest, so a short rest is always worth taking even when the warlock owns no
+   *  short-rest ressource. */
+  const restoresSpellSlotsOnShortRest = character.className === Classes.WARLOCK;
+
   /** Sorcerer "Restauration" : from level 5, one short rest per long rest gives
    *  back half the sorcerer level in sorcery points. The player picks which
    *  short rest, so it is offered as an option instead of applied every time. */
@@ -326,35 +331,39 @@ export const useRessourceStorage = (character: CharacterById) => {
   const shortRest = ({
     useSorceryRestoration = false,
   }: { useSorceryRestoration?: boolean } = {}) => {
+    if (!store) {
+      return;
+    }
+
+    const restoresSorceryPoints = useSorceryRestoration && sorceryRestoration.isAvailable;
+
     // Only the ressources listed in `shortRestReset` are reset
-    if (ressources) {
-      const restoresSorceryPoints = useSorceryRestoration && sorceryRestoration.isAvailable;
-
-      const newResources = mapValues(ressources, (value, key) => {
-        if (key === "sorceryPoints" && restoresSorceryPoints) {
-          return {
-            ...value,
-            available: Math.min(value.available + sorceryRestoration.amount, value.total),
-          };
-        }
-
-        const reset = shortRestReset[key];
-        if (!reset) {
-          return value;
-        }
-
+    const newResources = mapValues(ressources ?? {}, (value, key) => {
+      if (key === "sorceryPoints" && restoresSorceryPoints) {
         return {
           ...value,
-          available: reset === "all" ? value.total : Math.min(value.available + 1, value.total),
+          available: Math.min(value.available + sorceryRestoration.amount, value.total),
         };
-      });
+      }
 
-      setStore({
-        ...store,
-        ressources: newResources,
-        usedSorceryRestoration: store?.usedSorceryRestoration || restoresSorceryPoints,
-      });
-    }
+      const reset = shortRestReset[key];
+      if (!reset) {
+        return value;
+      }
+
+      return {
+        ...value,
+        available: reset === "all" ? value.total : Math.min(value.available + 1, value.total),
+      };
+    });
+
+    setStore({
+      ...store,
+      ressources: newResources,
+      // Pact magic slots are back to full; free long-rest casts are not.
+      spellsSlots: restoresSpellSlotsOnShortRest ? allSlots : store.spellsSlots,
+      usedSorceryRestoration: store.usedSorceryRestoration || restoresSorceryPoints,
+    });
   };
 
   const sortRessources = (ressources: RessourceStorage["ressources"]) => {
@@ -471,6 +480,7 @@ export const useRessourceStorage = (character: CharacterById) => {
       sortRessources,
       shortRestReset,
       sorceryRestoration,
+      restoresSpellSlotsOnShortRest,
     },
     spellsSlots: {
       addSlot,

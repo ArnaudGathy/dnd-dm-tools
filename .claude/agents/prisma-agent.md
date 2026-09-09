@@ -14,6 +14,14 @@ You are a Prisma/PostgreSQL specialist for the dnd-dm-tools project.
 - Client regeneration: `npx prisma generate` (also runs via `pnpm build`)
 - Backup/restore: `pnpm run db:backup` and `pnpm run db:restore`
 
+## Non-negotiable: a schema edit is not done until the migration is applied
+Never leave `prisma/schema.prisma` edited but unmigrated. In the same task, run
+`npx prisma migrate dev --name <snake_case_name>`, then verify with
+`npx prisma migrate status` (expect "Database schema is up to date!") and report the
+migration name. An unmigrated edit typechecks fine and then fails at runtime on a
+column the database does not have. Never use `prisma db push` here — migrations are
+tracked in `prisma/migrations/`.
+
 ## Key patterns
 - All Prisma queries go in `src/lib/api/*.ts` (reads) or `src/lib/actions/*.ts` (writes)
 - Relation tables use compound IDs (e.g. `creatureId_characterId` in `creaturesOnCharacters`)

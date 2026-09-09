@@ -5,6 +5,8 @@ import AddInventoryItem from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/A
 import { Button } from "@/components/ui/button";
 import { Backpack, Plus } from "lucide-react";
 import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
+import CombatRelevanceToggle from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/CombatRelevanceToggle";
+import { setInventoryItemCombatRelevance } from "@/lib/actions/InventoryItems";
 
 export default function InventoryItems({ character }: { character: CharacterById }) {
   const hasItems = character.inventory.length > 0;
@@ -35,7 +37,7 @@ export default function InventoryItems({ character }: { character: CharacterById
             item={inventoryItem}
             title="Modifier un objet"
           >
-            <li className="grid cursor-pointer grid-cols-[2rem_1fr_auto] items-baseline gap-x-2 rounded-md px-2 py-1.5 hover:bg-white/5">
+            <li className="grid cursor-pointer grid-cols-[2rem_1fr_auto_1.5rem] items-baseline gap-x-2 rounded-md px-2 py-1.5 hover:bg-white/5">
               <span className="text-right text-sm font-semibold tabular-nums text-muted-foreground">
                 {inventoryItem.quantity}×
               </span>
@@ -47,6 +49,17 @@ export default function InventoryItems({ character }: { character: CharacterById
               ) : (
                 <span />
               )}
+              <CombatRelevanceToggle
+                className="self-center"
+                isCombatRelevant={inventoryItem.isCombatRelevant}
+                toggleAction={async (isCombatRelevant) => {
+                  await setInventoryItemCombatRelevance({
+                    itemId: inventoryItem.id,
+                    characterId: character.id,
+                    isCombatRelevant,
+                  });
+                }}
+              />
               {inventoryItem.description && (
                 <span className="col-span-2 col-start-2 text-sm leading-snug text-muted-foreground">
                   {inventoryItem.description}

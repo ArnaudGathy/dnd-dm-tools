@@ -11,6 +11,8 @@ import StatBreakdown, {
   breakdownContentClassName,
 } from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
 import { weaponChipClassName } from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/WeaponCard";
+import CombatRelevanceToggle from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/CombatRelevanceToggle";
+import { setMagicItemCombatRelevance } from "@/lib/actions/MagicItems";
 
 const MAX_ATTUNED_ITEMS = 3;
 
@@ -99,14 +101,27 @@ export default function MagicItems({ character }: { character: CharacterById }) 
               >
                 {magicItem.name}
               </span>
-              <span
-                className={cn(
-                  "shrink-0 rounded border border-current px-1.5 py-0.5 text-tiny font-semibold uppercase tracking-wide opacity-80",
-                  MAGIC_ITEM_RARITY_COLOR_MAP[magicItem.rarity],
-                )}
-              >
-                {MAGIC_ITEM_RARITY_MAP[magicItem.rarity]}
-              </span>
+              <div className="flex shrink-0 items-center gap-1.5">
+                <span
+                  className={cn(
+                    "rounded border border-current px-1.5 py-0.5 text-tiny font-semibold uppercase tracking-wide opacity-80",
+                    MAGIC_ITEM_RARITY_COLOR_MAP[magicItem.rarity],
+                  )}
+                >
+                  {MAGIC_ITEM_RARITY_MAP[magicItem.rarity]}
+                </span>
+                <CombatRelevanceToggle
+                  className="-my-0.5"
+                  isCombatRelevant={magicItem.isCombatRelevant}
+                  toggleAction={async (isCombatRelevant) => {
+                    await setMagicItemCombatRelevance({
+                      itemId: magicItem.id,
+                      characterId: character.id,
+                      isCombatRelevant,
+                    });
+                  }}
+                />
+              </div>
             </div>
 
             {(magicItem.isAttuned || magicItem.charges) && (

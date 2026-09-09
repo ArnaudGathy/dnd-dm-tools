@@ -77,6 +77,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       sortRessources,
       shortRestReset,
       sorceryRestoration,
+      restoresSpellSlotsOnShortRest,
     },
     spellsSlots,
   } = useRessourceStorage(character);
@@ -470,10 +471,12 @@ export default function useRessourceData({ character }: { character: CharacterBy
   );
 
   // The short rest button is only worth showing if the character owns at least
-  // one ressource a short rest actually restores.
+  // one ressource a short rest actually restores — or, for pact magic casters,
+  // spell slots to get back.
   const canShortRest =
     characterRessources.some(({ ressourceName }) => shortRestReset[ressourceName]) ||
-    sorceryRestoration.isAvailable;
+    sorceryRestoration.isAvailable ||
+    restoresSpellSlotsOnShortRest;
 
   return {
     ressources: {
@@ -484,6 +487,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       characterRessources,
       canShortRest,
       sorceryRestoration,
+      restoresSpellSlotsOnShortRest,
     },
     spellsSlots,
   };

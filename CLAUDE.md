@@ -50,6 +50,15 @@ Pre-commit hooks run lint-staged automatically via Husky.
 
 **Database:** 21 Prisma models in `prisma/schema.prisma` — core models are Character, Campaign, Party, Creature, Encounter; character stats spread across SavingThrow, Skill, SpellsOnCharacters, CreaturesOnCharacters, Weapon, Armor, MagicItem, InventoryItem, Money.
 
+**Never edit `prisma/schema.prisma` without immediately applying a migration.** Any schema
+change — a new model, column, enum value or default — must be followed in the same task by
+`npx prisma migrate dev --name <snake_case_name>` (or the `/db-migrate` command), then
+`pnpm typecheck && pnpm lint`. Editing the schema and stopping there leaves the generated
+client ahead of the real database: the code typechecks, then blows up at runtime on a column
+that does not exist. Confirm with `npx prisma migrate status` (expect "Database schema is up
+to date!") and report the migration name when done. Do not use `prisma db push` — this
+project tracks migrations in `prisma/migrations/`.
+
 **Firebase sync:** Character HP values are bidirectionally synced between PostgreSQL and Firebase Realtime DB to support the `/tracker/character` real-time combat view.
 
 **Path alias:** `@/*` maps to `./src/*`.
