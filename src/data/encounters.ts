@@ -949,7 +949,34 @@ export const encounters: Encounter[] = [
       mapMarker: "T1",
     },
     ennemies: {
-      "1": [{ id: "nalfeshnee", color: "#479BAD" }],
+      "1": [
+        { id: "nalfeshnee", color: "#479BAD" },
+        {
+          id: "_king-of-feathers",
+          color: "#93dc1e",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#30850e",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#d52c06",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#30616C",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#B2457B",
+          inactive: true,
+        },
+      ],
     },
     youtubeId: "L9dhkINF5Vk",
   },

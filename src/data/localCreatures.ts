@@ -1103,7 +1103,7 @@ export const localCreatures: Record<string, Creature> = {
       },
       {
         name: "Cri d'invocation (Recharge 5–6)",
-        description: "Invoque un deinonychus qui joue a son propre tour d'initiative.",
+        description: "Invoque 1d4 deinonychus qui joue a son propre tour d'initiative.",
       },
     ],
     bonusActions: [

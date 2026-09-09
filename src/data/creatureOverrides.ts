@@ -474,4 +474,83 @@ export const creatureOverrides: Partial<Record<string, Partial<Creature>>> = {
       },
     ],
   },
+  nalfeshnee: {
+    id: "_nalfeshnee",
+    name: "Nalfeshnee",
+    size: "Large",
+    type: "Fiend (Demon)",
+    speed: {
+      fly: "9 m",
+      walk: "6 m",
+    },
+    senses: {
+      trueSight: "36 m",
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Demonic Restoration",
+        description:
+          "If the nalfeshnee dies outside the Abyss, its body dissolves into ichor, and it gains a new body instantly, reviving with all its Hit Points somewhere in the Abyss.",
+      },
+      {
+        name: "Magic Resistance",
+        description:
+          "The nalfeshnee has Advantage on saving throws against spells and other magical effects.",
+      },
+    ],
+    actions: [
+      {
+        name: "Multiattack",
+        description: "3x déchirure",
+      },
+      {
+        hit: "16 (2d10 + 5) Slashing damage plus 11 (2d10) Force damage.",
+        name: "Déchirure",
+        type: "Melee",
+        reach: "3 m",
+        modifier: "+10",
+      },
+      {
+        name: "Teleport",
+        description: "Téléporte jusqu'à 24 cases",
+      },
+    ],
+    abilities: {
+      wisdom: 12,
+      charisma: 15,
+      strength: 21,
+      dexterity: 10,
+      constitution: 22,
+      intelligence: 19,
+    },
+    alignment: "Chaotic Evil",
+    hitPoints: "230 (16d10 + 96)",
+    languages: ["abyssal", "telepathy 24 cases"],
+    reactions: [
+      {
+        name: "Poursuite",
+        description:
+          "Une créature fini un mouvement a 24 cases. Se téléporte à 2 cases de distance de la cible.",
+      },
+    ],
+    armorClass: "18",
+    immunities: ["poison", "frightened", "poisoned"],
+    resistances: ["cold", "fire", "lightning"],
+    bonusActions: [
+      {
+        name: "Nuage de terreur (Recharge 5–6)",
+        description:
+          "Nuage de 3 cases de rayon, JdS SAG 15 (immunisé à l'effet) ou 8d6 dégats psi et effet effrayé pour 1min. Jusqu'à subir des dégats ou que le nalfeshnee s'éloigne hors champs de vision.",
+      },
+    ],
+    savingThrows: {
+      wisdom: "+6",
+      charisma: "+7",
+      strength: "+5",
+      constitution: "+11",
+      intelligence: "+9",
+    },
+    challengeRating: 13,
+  },
 };
