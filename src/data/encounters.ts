@@ -1536,8 +1536,7 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": [{ id: "shadow-demon", color: "", variant: "" }],
     },
-    informations: ["Tapi dans la cavité derrière le visage de diable en 5B."],
-    youtubeId: "",
+    youtubeId: "5Y7oXb_Vmsc",
   },
   {
     name: "Grand escalier",
