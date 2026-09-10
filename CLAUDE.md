@@ -75,3 +75,4 @@ Custom commands: `/db-migrate`, `/commit`.
 
 Custom skills: `/add-creature <english name> [source]` — import a monster from the sibling `../5etools-src` repo into `src/data/localCreatures.ts`, converted to the `Creature` type and translated/summarized in French.
 Custom skills: `/translate-readalouds <adventure> <chapter>` — translate read-aloud text from `../5etools-src/data/adventure/adventure-<id>.json` and format it for DM use.
+Custom skills: `/tomb-level-encounters <level>` — build the encounters of a Tomb of the Nine Gods level from `../5etools-src/tomb-of-the-nine-gods-level-<N>-enemies.md`, importing any missing creature first.

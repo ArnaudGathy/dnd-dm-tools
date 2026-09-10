@@ -3200,4 +3200,578 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
   },
+  "skeleton-key": {
+    name: "Squeléclé",
+    id: "_skeleton-key",
+    fiveETools: { name: "Skeleton Key", source: "ToA" },
+    type: "Undead",
+    size: "Medium",
+    alignment: "Unaligned",
+    armorClass: 13,
+    hitPoints: "13 (2d8 + 4)",
+    speed: {
+      walk: "9 m",
+      climb: "9 m",
+    },
+    challengeRating: 0.25,
+    abilities: {
+      strength: 10,
+      dexterity: 14,
+      constitution: 15,
+      intelligence: 6,
+      wisdom: 8,
+      charisma: 5,
+    },
+    immunities: ["poison", "poisoned", "exhaustion"],
+    vulnerabilities: ["bludgeoning"],
+    languages: ["understands all languages it spoke in life but can't speak"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 9,
+    },
+    traits: [
+      {
+        name: "Déplacement sur les murs",
+        description:
+          "Grimpe les surfaces difficiles, y compris les plafonds tête en bas, sans test de caractéristique.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x dague.",
+      },
+      {
+        name: "Dague",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "4 (1d4 + 2) dégâts perçants.",
+      },
+    ],
+  },
+  "tomb-guardian": {
+    name: "Gardien de tombe",
+    id: "_tomb-guardian",
+    fiveETools: { name: "Tomb Guardian", source: "ToA" },
+    type: "Construct",
+    size: "Medium",
+    alignment: "Neutral",
+    armorClass: 17,
+    hitPoints: "93 (11d8 + 44)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 5,
+    abilities: {
+      strength: 19,
+      dexterity: 9,
+      constitution: 18,
+      intelligence: 6,
+      wisdom: 10,
+      charisma: 5,
+    },
+    immunities: [
+      "lightning",
+      "poison",
+      "bludgeoning, piercing, and slashing from nonmagical attacks that aren't adamantine",
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+    ],
+    languages: ["understands the languages of its creator but can't speak"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 10,
+    },
+    traits: [
+      {
+        name: "Berserk",
+        description:
+          "S'il commence son tour à 40 PV ou moins, lancer 1d6 : sur un 6, il devient berserk. Il attaque alors la créature la plus proche qu'il voit (à défaut un objet, de préférence plus petit que lui), jusqu'à sa destruction ou la récupération de tous ses PV. Son créateur, à 12 cases ou moins et audible, peut le calmer avec une action et un test de Charisme (Persuasion) DD 15. S'il subit des dégâts en étant toujours à 40 PV ou moins, il peut redevenir berserk.",
+      },
+      {
+        name: "Aversion du feu",
+        description:
+          "S'il subit des dégâts de feu : désavantage aux jets d'attaque et tests de caractéristique jusqu'à la fin de son prochain tour.",
+      },
+      {
+        name: "Forme immuable",
+        description: "Immunisé à tout sort ou effet modifiant sa forme.",
+      },
+      {
+        name: "Absorption de la foudre",
+        description: "Les dégâts de foudre ne lui font rien : il regagne à la place autant de PV.",
+      },
+      {
+        name: "Résistance à la magie",
+        description: "Avantage aux jets de sauvegarde contre les sorts et effets magiques.",
+      },
+      {
+        name: "Armes magiques",
+        description: "Ses attaques d'arme sont magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x coup.",
+      },
+      {
+        name: "Coup",
+        type: "Melee",
+        modifier: "+7",
+        reach: "1.5 m",
+        hit: "13 (2d8 + 4) dégâts contondants.",
+      },
+    ],
+  },
+  otyugh: {
+    name: "Otyugh",
+    id: "_otyugh",
+    type: "Aberration",
+    size: "Large",
+    alignment: "Neutral",
+    armorClass: 14,
+    hitPoints: "104 (11d10 + 44)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 5,
+    abilities: {
+      strength: 16,
+      dexterity: 11,
+      constitution: 19,
+      intelligence: 6,
+      wisdom: 13,
+      charisma: 6,
+    },
+    savingThrows: {
+      constitution: "+7",
+    },
+    languages: [
+      "Otyugh; telepathy 120 ft. (doesn't allow the receiving creature to respond telepathically)",
+    ],
+    senses: {
+      darkvision: "36 m",
+      passivePerception: 11,
+    },
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "1x morsure + 2x tentacule.",
+      },
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+6",
+        reach: "1.5 m",
+        hit: "12 (2d8 + 3) dégâts perçants, et la cible est empoisonnée. À chaque long repos terminé en étant empoisonnée : JdS CON 15, échec = maximum de PV réduit de 5 (1d10) jusqu'à la fin de l'empoisonnement ; réussite = l'empoisonnement prend fin.",
+      },
+      {
+        name: "Tentacule",
+        type: "Melee",
+        modifier: "+6",
+        reach: "3 m",
+        hit: "12 (2d8 + 3) dégâts perçants. Cible de taille M ou moins : agrippée (DD 13 pour se libérer) par l'un des deux tentacules.",
+      },
+      {
+        name: "Coup de tentacules",
+        description:
+          "Chaque créature agrippée par l'otyugh : JdS CON 14, échec = 16 (3d8 + 3) dégâts contondants et étourdie jusqu'au début du prochain tour de l'otyugh ; réussite = moitié des dégâts seulement.",
+      },
+    ],
+  },
+  "giant-four-armed-gargoyle": {
+    name: "Gargouille géante à quatre bras",
+    id: "_giant-four-armed-gargoyle",
+    fiveETools: { name: "Giant Four-Armed Gargoyle", source: "ToA" },
+    type: "Elemental",
+    size: "Large",
+    alignment: "Chaotic Evil",
+    armorClass: 17,
+    hitPoints: "147 (14d10 + 70)",
+    speed: {
+      walk: "9 m",
+      fly: "18 m",
+    },
+    challengeRating: 10,
+    abilities: {
+      strength: 19,
+      dexterity: 11,
+      constitution: 20,
+      intelligence: 6,
+      wisdom: 11,
+      charisma: 9,
+    },
+    savingThrows: {
+      wisdom: "+4",
+    },
+    skills: {
+      perception: "+4",
+    },
+    resistances: [
+      "bludgeoning, piercing, and slashing from nonmagical attacks that aren't adamantine",
+    ],
+    immunities: ["poison", "exhaustion", "petrified", "poisoned"],
+    languages: ["Terran"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 14,
+    },
+    traits: [
+      {
+        name: "Fausse apparence",
+        description: "Immobile, elle est indiscernable d'une statue inanimée.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "1x morsure + 4x griffes.",
+      },
+      {
+        name: "Morsure",
+        type: "Melee",
+        modifier: "+8",
+        reach: "1.5 m",
+        hit: "11 (2d6 + 4) dégâts perçants.",
+      },
+      {
+        name: "Griffes",
+        type: "Melee",
+        modifier: "+8",
+        reach: "1.5 m",
+        hit: "9 (2d4 + 4) dégâts tranchants.",
+      },
+    ],
+  },
+  "tomb-dwarf": {
+    name: "Nain de tombe",
+    id: "_tomb-dwarf",
+    fiveETools: { name: "Tomb Dwarf", source: "ToA" },
+    type: "Undead",
+    size: "Medium",
+    alignment: "Lawful Evil",
+    armorClass: 14,
+    hitPoints: "45 (6d8 + 18)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 3,
+    abilities: {
+      strength: 15,
+      dexterity: 14,
+      constitution: 16,
+      intelligence: 10,
+      wisdom: 13,
+      charisma: 15,
+    },
+    skills: {
+      perception: "+3",
+      stealth: "+4",
+    },
+    resistances: [
+      "necrotic",
+      "bludgeoning, piercing, and slashing from nonmagical attacks that aren't silvered",
+    ],
+    immunities: ["poison", "exhaustion", "poisoned"],
+    languages: ["the languages it knew in life"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    traits: [
+      {
+        name: "Sensibilité au soleil",
+        description:
+          "En plein soleil : désavantage aux jets d'attaque et aux tests de Sagesse (Perception) basés sur la vue.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description:
+          "2x hache d'armes ou 2x arbalète. Peut remplacer une attaque de hache par Absorption de vie.",
+      },
+      {
+        name: "Absorption de vie",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "5 (1d6 + 2) dégâts nécrotiques. JdS CON 13 ou maximum de PV réduit d'autant jusqu'au prochain long repos (mort si le maximum tombe à 0). Un humanoïde tué se relève en zombie sous son contrôle 24 h plus tard (12 zombies max).",
+      },
+      {
+        name: "Hache d'armes",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "6 (1d8 + 2) dégâts tranchants, ou 7 (1d10 + 2) à deux mains.",
+      },
+      {
+        name: "Arbalète légère",
+        type: "Ranged",
+        modifier: "+4",
+        reach: "24/96 m",
+        hit: "6 (1d8 + 2) dégâts perçants.",
+      },
+    ],
+  },
+  nepartak: {
+    name: "Nepartak",
+    id: "_nepartak",
+    fiveETools: { name: "Nepartak", source: "ToA" },
+    type: "Undead",
+    size: "Tiny",
+    alignment: "Neutral Evil",
+    armorClass: 13,
+    hitPoints: "40 (9d4 + 18)",
+    speed: {
+      walk: "0 m",
+      fly: "12 m (stationnaire)",
+    },
+    challengeRating: 4,
+    abilities: {
+      strength: 1,
+      dexterity: 17,
+      constitution: 14,
+      intelligence: 16,
+      wisdom: 10,
+      charisma: 11,
+    },
+    skills: {
+      arcana: "+5",
+      perception: "+2",
+    },
+    resistances: ["lightning", "necrotic", "piercing"],
+    immunities: ["cold", "fire", "poison", "charmed", "frightened", "paralyzed", "prone"],
+    languages: ["Common", "telepathy 30 ft."],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 12,
+    },
+    traits: [
+      {
+        name: "Illumination",
+        description:
+          "Émet une lumière faible dans un rayon de 3 cases, ou une lumière vive sur 3 cases et faible sur 3 cases de plus. Bascule d'un mode à l'autre par une action.",
+      },
+      {
+        name: "Résistance à la magie",
+        description: "Avantage aux jets de sauvegarde contre les sorts et effets magiques.",
+      },
+      {
+        name: "Renaissance",
+        description:
+          "Détruite, elle regagne tous ses PV en 1 heure, sauf si ses restes sont aspergés d'eau bénite ou visés par dissipation de la magie ou délivrance des malédictions.",
+      },
+      {
+        name: "Muette",
+        description:
+          "Ne parle pas : communique uniquement par télépathie dans un rayon de 6 cases.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x rayon de feu.",
+      },
+      {
+        name: "Rayon de feu",
+        type: "Ranged",
+        modifier: "+5",
+        reach: "9 m",
+        hit: "10 (3d6) dégâts de feu.",
+      },
+    ],
+    spellStats: {
+      attackMod: 5,
+      spellDC: 13,
+      slots: {
+        "1": 3,
+        "2": 2,
+        "3": 1,
+      },
+    },
+    spells: [
+      {
+        id: "mage-hand",
+        summary: "Main spectrale, manipulation d'objets à 6 cases",
+      },
+      {
+        id: "magic-missile",
+        summary: "3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
+      },
+      {
+        id: "shield",
+        summary: "Réaction. +5 CA et immunité à projectile magique jusqu'au prochain tour",
+      },
+      {
+        id: "blur",
+        summary: "Désavantage des attaques adverses (concentration, 1 min)",
+      },
+      {
+        id: "flaming-sphere",
+        summary:
+          "Sphère de feu déplaçable de 6 cases. JdS DEX 13 ou 2d6 feu (concentration, 1 min)",
+      },
+      {
+        id: "fireball",
+        summary: "Sphère de 4 cases de rayon. JdS DEX 13 ou 8d6 feu (moitié si réussi)",
+      },
+    ],
+    behavior:
+      "Boule de feu dès que 2+ cibles groupées > Flou si prise pour cible > 2x rayon de feu",
+  },
+  "swarm-of-undead-spiders": {
+    name: "Nuée d'araignées mortes-vivantes",
+    id: "_swarm-of-undead-spiders",
+    fiveETools: { name: "Swarm of Spiders", source: "MM" },
+    type: "Undead (Swarm of Tiny Spiders)",
+    size: "Medium",
+    alignment: "Unaligned",
+    armorClass: 12,
+    hitPoints: "22 (5d8)",
+    speed: {
+      walk: "6 m",
+      climb: "6 m",
+    },
+    challengeRating: 0.5,
+    abilities: {
+      strength: 3,
+      dexterity: 13,
+      constitution: 10,
+      intelligence: 1,
+      wisdom: 7,
+      charisma: 1,
+    },
+    resistances: ["bludgeoning", "piercing", "slashing"],
+    immunities: [
+      "charmed",
+      "frightened",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "prone",
+      "restrained",
+      "stunned",
+    ],
+    senses: {
+      blindSight: "3 m",
+      passivePerception: 8,
+    },
+    traits: [
+      {
+        name: "Nuée",
+        description:
+          "Occupe l'espace d'une autre créature et inversement, et passe par toute ouverture assez grande pour une araignée TP. Ne peut ni regagner de PV ni gagner de PV temporaires.",
+      },
+      {
+        name: "Mortes-vivantes",
+        description:
+          "Momifiées : sensibles à tout effet ciblant les morts-vivants (renvoi des morts-vivants, dégâts radiants…) malgré leur profil de nuée d'insectes.",
+      },
+      {
+        name: "Déplacement sur les murs",
+        description:
+          "Grimpe les surfaces difficiles, plafonds compris, sans test de caractéristique.",
+      },
+      {
+        name: "Perception des toiles",
+        description:
+          "En contact avec une toile, connaît la position exacte de toute créature en contact avec cette même toile.",
+      },
+      {
+        name: "Marche sur toile",
+        description: "Ignore les restrictions de déplacement dues aux toiles.",
+      },
+    ],
+    actions: [
+      {
+        name: "Morsures",
+        type: "Melee",
+        modifier: "+3",
+        reach: "0 m",
+        hit: "10 (4d4) dégâts perçants, ou 5 (2d4) si la nuée est à la moitié de ses PV ou moins.",
+      },
+    ],
+  },
+  "wongo-mummy": {
+    name: "Momie de Wongo (monstre de Su)",
+    id: "_wongo-mummy",
+    type: "Undead",
+    size: "Medium",
+    alignment: "Lawful Evil",
+    armorClass: 11,
+    hitPoints: "58 (9d8 + 18)",
+    speed: {
+      walk: "6 m",
+    },
+    challengeRating: 3,
+    abilities: {
+      strength: 16,
+      dexterity: 8,
+      constitution: 15,
+      intelligence: 6,
+      wisdom: 12,
+      charisma: 12,
+    },
+    savingThrows: {
+      wisdom: "+3",
+    },
+    immunities: [
+      "necrotic",
+      "poison",
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "poisoned",
+    ],
+    vulnerabilities: ["fire"],
+    languages: ["Common plus two other languages"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Sarcophage cristallisé",
+        description:
+          "Reste dormante tant que le sarcophage n'est pas brisé. Une fois cristallisé, celui-ci a CA 5, 10 PV, vulnérabilité aux dégâts contondants et de tonnerre, immunité aux dégâts de poison et psychiques. Réduit à 0 PV, il vole en éclats et la momie s'anime.",
+      },
+      {
+        name: "Esprit de Wongo",
+        description:
+          "L'esprit de Wongo est lié à la masse d'armes : au contact d'un personnage, il tente de l'habiter. La momie est alors amicale envers ce personnage.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x poing pourrissant + Regard terrifiant.",
+      },
+      {
+        name: "Poing pourrissant",
+        type: "Melee",
+        modifier: "+5",
+        reach: "1.5 m",
+        hit: "8 (1d10 + 3) dégâts contondants + 10 (3d6) dégâts nécrotiques. La cible est maudite : elle ne peut plus regagner de PV, son maximum de PV ne revient pas à la normale après un long repos et diminue de 10 (3d6) toutes les 24 h. Réduite à 0 PV par cette attaque, elle meurt et tombe en poussière.",
+      },
+      {
+        name: "Regard terrifiant",
+        description:
+          "JdS SAG 11 pour une créature qu'elle voit à 12 cases ou moins. Échec = effrayée jusqu'à la fin du prochain tour de la momie. Réussite = immunisée à ce regard pendant 24 h.",
+      },
+      {
+        name: "Masse d'armes de terreur (3 charges)",
+        description:
+          "1er tour de combat : vague de terreur. Créatures au choix à 6 cases ou moins : JdS SAG 15 ou effrayées 1 min (fuite forcée, pas de réaction, action Course uniquement, nouveau jet en fin de chaque tour). Sinon, attaque de mêlée +5, 1.5 m, 6 (1d6 + 3) dégâts contondants.",
+      },
+    ],
+    behavior: "Masse d'armes de terreur au 1er tour > 2x poing pourrissant + regard terrifiant",
+  },
 };

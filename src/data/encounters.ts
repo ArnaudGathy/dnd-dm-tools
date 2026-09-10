@@ -941,46 +941,6 @@ export const encounters: Encounter[] = [
     environmentTurnInitiative: "20",
   },
   {
-    name: "Avertissement d'Acererak",
-    id: 90,
-    scenario: "La tombe de l'annihilation",
-    location: {
-      name: "Tombe des neufs dieux",
-      mapMarker: "T1",
-    },
-    ennemies: {
-      "1": [
-        { id: "nalfeshnee", color: "#479BAD" },
-        {
-          id: "_king-of-feathers",
-          color: "#93dc1e",
-          inactive: true,
-        },
-        {
-          id: "_deinonychus",
-          color: "#30850e",
-          inactive: true,
-        },
-        {
-          id: "_deinonychus",
-          color: "#d52c06",
-          inactive: true,
-        },
-        {
-          id: "_deinonychus",
-          color: "#30616C",
-          inactive: true,
-        },
-        {
-          id: "_deinonychus",
-          color: "#B2457B",
-          inactive: true,
-        },
-      ],
-    },
-    youtubeId: "L9dhkINF5Vk",
-  },
-  {
     name: "Sanctuaire de Nangnang",
     id: 91,
     scenario: "La tombe de l'annihilation",
@@ -1507,5 +1467,215 @@ export const encounters: Encounter[] = [
       ],
     },
     youtubeId: "C5LWRU_RyBg",
+  },
+  {
+    name: "Gardiens de la tombe",
+    id: 200,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T0",
+    },
+    ennemies: {
+      "1": [
+        { id: "_tomb-guardian", color: "" },
+        { id: "_tomb-guardian", color: "" },
+        { id: "_tomb-guardian", color: "" },
+      ],
+    },
+    youtubeId: "",
+  },
+  {
+    name: "Avertissement d'Acererak",
+    id: 90,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T1",
+    },
+    ennemies: {
+      "1": [
+        { id: "nalfeshnee", color: "#479BAD" },
+        {
+          id: "_king-of-feathers",
+          color: "#93dc1e",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#30850e",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#d52c06",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#30616C",
+          inactive: true,
+        },
+        {
+          id: "_deinonychus",
+          color: "#B2457B",
+          inactive: true,
+        },
+      ],
+    },
+    youtubeId: "L9dhkINF5Vk",
+  },
+  {
+    name: "Couloir piégé",
+    id: 205,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T5",
+    },
+    ennemies: {
+      "1": [{ id: "shadow-demon", color: "", variant: "" }],
+    },
+    informations: ["Tapi dans la cavité derrière le visage de diable en 5B."],
+    youtubeId: "",
+  },
+  {
+    name: "Grand escalier",
+    id: 207,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T7",
+    },
+    ennemies: {
+      "1": [
+        { id: "_tomb-dwarf", color: "", variant: "" },
+        { id: "_skeleton-key", color: "", variant: "" },
+      ],
+    },
+    informations: ["En 7A. S'enfuit par la porte secrète s'il n'est pas maîtrisé immédiatement."],
+    youtubeId: "",
+  },
+  {
+    name: "Tombe d'Obo'laka",
+    id: 210,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T10",
+    },
+    ennemies: {
+      "1": [
+        { id: "wight", color: "", variant: "" },
+        { id: "wight", color: "", variant: "" },
+        { id: "wight", color: "", variant: "" },
+        { id: "wight", color: "", variant: "" },
+        { id: "wight", color: "", variant: "" },
+        { id: "wight", color: "", variant: "" },
+      ],
+    },
+    informations: [
+      "Dormantes sur leurs trônes : se lèvent si le disque aux yeux repère un humanoïde ou si l'une d'elles subit des dégâts.",
+    ],
+    youtubeId: "",
+  },
+  {
+    name: "Tombe de Moa",
+    id: 214,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T14",
+    },
+    ennemies: {
+      "1": [
+        { id: "_nepartak", color: "", variant: "" },
+        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+      ],
+    },
+    informations: [
+      "Nepartak est dormante dans la boîte de cristal : hostile uniquement si on la met en colère.",
+      "Les 6 nuées sortent des galeries des murs au début du round suivant la première attaque de Nepartak.",
+    ],
+    youtubeId: "",
+  },
+  {
+    name: "Tombe de Wongo",
+    id: 216,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T16",
+    },
+    ennemies: {
+      "1": [{ id: "_wongo-mummy", color: "", variant: "" }],
+    },
+    informations: [
+      "Dormante : ne s'anime qu'une fois le sarcophage cristallisé brisé (CA 5, 10 PV).",
+    ],
+    youtubeId: "",
+  },
+  {
+    name: "Cascade souterraine",
+    id: 217,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T17",
+    },
+    ennemies: {
+      "1": [{ id: "mimic", color: "", variant: "" }],
+    },
+    informations: ["Déguisé en coffre au trésor ouvragé, sur la corniche."],
+    youtubeId: "",
+  },
+  {
+    name: "Gargouilles gardiennes",
+    id: 245,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T45",
+    },
+    ennemies: {
+      "1": [
+        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
+        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
+        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
+        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
+      ],
+    },
+    youtubeId: "2nmn1AkRsbE",
+  },
+  {
+    name: "Oubliettes",
+    id: 257,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T57",
+    },
+    ennemies: {
+      "1": [{ id: "Otyugh", color: "#ba882b" }],
+    },
+    youtubeId: "Mr-T13aG6iE",
+  },
+  {
+    name: "Lac sous-terrain",
+    id: 265,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T65",
+    },
+    ennemies: {
+      "1": [{ id: "Aboleth", color: "#384163" }],
+    },
+    youtubeId: "EnKmg16Zqkc",
   },
 ];
