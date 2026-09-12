@@ -61,7 +61,7 @@ export default function InventoryItems({ character }: { character: CharacterById
                 }}
               />
               {inventoryItem.description && (
-                <span className="col-span-2 col-start-2 text-sm leading-snug text-muted-foreground">
+                <span className="col-span-2 col-start-2 whitespace-pre-wrap text-sm leading-snug text-muted-foreground">
                   {inventoryItem.description}
                 </span>
               )}

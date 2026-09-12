@@ -142,7 +142,7 @@ export default function MagicItems({ character }: { character: CharacterById }) 
             )}
 
             {magicItem.description && (
-              <span className="text-sm leading-snug text-muted-foreground">
+              <span className="whitespace-pre-wrap text-sm leading-snug text-muted-foreground">
                 {magicItem.description}
               </span>
             )}

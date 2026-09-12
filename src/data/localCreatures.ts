@@ -3258,7 +3258,7 @@ export const localCreatures: Record<string, Creature> = {
     size: "Medium",
     alignment: "Neutral",
     armorClass: 17,
-    hitPoints: "93 (11d8 + 44)",
+    hitPoints: "100 (11d8 + 44)",
     speed: {
       walk: "9 m",
     },
@@ -3274,7 +3274,9 @@ export const localCreatures: Record<string, Creature> = {
     immunities: [
       "lightning",
       "poison",
-      "bludgeoning, piercing, and slashing from nonmagical attacks that aren't adamantine",
+      "bludgeoning",
+      "piercing",
+      "slashing",
       "charmed",
       "exhaustion",
       "frightened",
@@ -3291,12 +3293,12 @@ export const localCreatures: Record<string, Creature> = {
       {
         name: "Berserk",
         description:
-          "S'il commence son tour à 40 PV ou moins, lancer 1d6 : sur un 6, il devient berserk. Il attaque alors la créature la plus proche qu'il voit (à défaut un objet, de préférence plus petit que lui), jusqu'à sa destruction ou la récupération de tous ses PV. Son créateur, à 12 cases ou moins et audible, peut le calmer avec une action et un test de Charisme (Persuasion) DD 15. S'il subit des dégâts en étant toujours à 40 PV ou moins, il peut redevenir berserk.",
+          "A <= 50 PV (50%), 1d6 => sur 6 il devient berserk et attaque la cible la plus proche, y compris ses alliés",
       },
       {
         name: "Aversion du feu",
         description:
-          "S'il subit des dégâts de feu : désavantage aux jets d'attaque et tests de caractéristique jusqu'à la fin de son prochain tour.",
+          "Subir dgts de feu : désavantage aux jets d'attaque et tests de caractéristique jusqu'à la fin de son prochain tour.",
       },
       {
         name: "Forme immuable",
@@ -3318,14 +3320,14 @@ export const localCreatures: Record<string, Creature> = {
     actions: [
       {
         name: "Attaques multiples",
-        description: "2x coup.",
+        description: "2x coup",
       },
       {
         name: "Coup",
         type: "Melee",
         modifier: "+7",
         reach: "1.5 m",
-        hit: "13 (2d8 + 4) dégâts contondants.",
+        hit: "13 (2d8 + 4) dégâts force.",
       },
     ],
   },
@@ -3484,18 +3486,11 @@ export const localCreatures: Record<string, Creature> = {
       darkvision: "18 m",
       passivePerception: 13,
     },
-    traits: [
-      {
-        name: "Sensibilité au soleil",
-        description:
-          "En plein soleil : désavantage aux jets d'attaque et aux tests de Sagesse (Perception) basés sur la vue.",
-      },
-    ],
     actions: [
       {
         name: "Attaques multiples",
         description:
-          "2x hache d'armes ou 2x arbalète. Peut remplacer une attaque de hache par Absorption de vie.",
+          "2x hache ou 2x arbalète. Peut remplacer une attaque de hache par Absorption de vie.",
       },
       {
         name: "Absorption de vie",
@@ -3509,7 +3504,7 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+4",
         reach: "1.5 m",
-        hit: "6 (1d8 + 2) dégâts tranchants, ou 7 (1d10 + 2) à deux mains.",
+        hit: "6 (1d10 + 2) dégâts tranchants",
       },
       {
         name: "Arbalète légère",
@@ -3548,30 +3543,15 @@ export const localCreatures: Record<string, Creature> = {
     },
     resistances: ["lightning", "necrotic", "piercing"],
     immunities: ["cold", "fire", "poison", "charmed", "frightened", "paralyzed", "prone"],
-    languages: ["Common", "telepathy 30 ft."],
+    languages: ["Common", "telepathy 6 cases"],
     senses: {
       darkvision: "18 m",
       passivePerception: 12,
     },
     traits: [
       {
-        name: "Illumination",
-        description:
-          "Émet une lumière faible dans un rayon de 3 cases, ou une lumière vive sur 3 cases et faible sur 3 cases de plus. Bascule d'un mode à l'autre par une action.",
-      },
-      {
         name: "Résistance à la magie",
         description: "Avantage aux jets de sauvegarde contre les sorts et effets magiques.",
-      },
-      {
-        name: "Renaissance",
-        description:
-          "Détruite, elle regagne tous ses PV en 1 heure, sauf si ses restes sont aspergés d'eau bénite ou visés par dissipation de la magie ou délivrance des malédictions.",
-      },
-      {
-        name: "Muette",
-        description:
-          "Ne parle pas : communique uniquement par télépathie dans un rayon de 6 cases.",
       },
     ],
     actions: [
@@ -3587,6 +3567,9 @@ export const localCreatures: Record<string, Creature> = {
         hit: "10 (3d6) dégâts de feu.",
       },
     ],
+    reactions: [
+      { name: "Bouclier (Sort N1)", description: "+5CA jusqu'au début du prochain tour." },
+    ],
     spellStats: {
       attackMod: 5,
       spellDC: 13,
@@ -3598,25 +3581,12 @@ export const localCreatures: Record<string, Creature> = {
     },
     spells: [
       {
-        id: "mage-hand",
-        summary: "Main spectrale, manipulation d'objets à 6 cases",
-      },
-      {
         id: "magic-missile",
         summary: "3 projectiles, 1d4 + 1 force chacun, touche automatiquement",
       },
       {
-        id: "shield",
-        summary: "Réaction. +5 CA et immunité à projectile magique jusqu'au prochain tour",
-      },
-      {
         id: "blur",
         summary: "Désavantage des attaques adverses (concentration, 1 min)",
-      },
-      {
-        id: "flaming-sphere",
-        summary:
-          "Sphère de feu déplaçable de 6 cases. JdS DEX 13 ou 2d6 feu (concentration, 1 min)",
       },
       {
         id: "fireball",
@@ -3624,13 +3594,13 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
     behavior:
-      "Boule de feu dès que 2+ cibles groupées > Flou si prise pour cible > 2x rayon de feu",
+      "Réaction bouclier > Boule de feu dès que 2+ cibles groupées > Flou si prise pour cible > 2x rayon de feu",
   },
   "swarm-of-undead-spiders": {
     name: "Nuée d'araignées mortes-vivantes",
     id: "_swarm-of-undead-spiders",
     fiveETools: { name: "Swarm of Spiders", source: "MM" },
-    type: "Undead (Swarm of Tiny Spiders)",
+    type: "Undead",
     size: "Medium",
     alignment: "Unaligned",
     armorClass: 12,
@@ -3666,27 +3636,7 @@ export const localCreatures: Record<string, Creature> = {
     traits: [
       {
         name: "Nuée",
-        description:
-          "Occupe l'espace d'une autre créature et inversement, et passe par toute ouverture assez grande pour une araignée TP. Ne peut ni regagner de PV ni gagner de PV temporaires.",
-      },
-      {
-        name: "Mortes-vivantes",
-        description:
-          "Momifiées : sensibles à tout effet ciblant les morts-vivants (renvoi des morts-vivants, dégâts radiants…) malgré leur profil de nuée d'insectes.",
-      },
-      {
-        name: "Déplacement sur les murs",
-        description:
-          "Grimpe les surfaces difficiles, plafonds compris, sans test de caractéristique.",
-      },
-      {
-        name: "Perception des toiles",
-        description:
-          "En contact avec une toile, connaît la position exacte de toute créature en contact avec cette même toile.",
-      },
-      {
-        name: "Marche sur toile",
-        description: "Ignore les restrictions de déplacement dues aux toiles.",
+        description: "Peu occuper une case ennemie. Pas de régen de PV ou PV temporaire",
       },
     ],
     actions: [
@@ -3694,7 +3644,7 @@ export const localCreatures: Record<string, Creature> = {
         name: "Morsures",
         type: "Melee",
         modifier: "+3",
-        reach: "0 m",
+        reach: "1,5 m",
         hit: "10 (4d4) dégâts perçants, ou 5 (2d4) si la nuée est à la moitié de ses PV ou moins.",
       },
     ],

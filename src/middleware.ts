@@ -18,5 +18,6 @@ export const config = {
     "/dm-screen",
     "/rules",
     "/magic-items",
+    "/musics",
   ],
 };

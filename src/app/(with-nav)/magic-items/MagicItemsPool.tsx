@@ -54,7 +54,7 @@ export default function MagicItemsPool({ items }: { items: MagicItem[] }) {
                     <span className="text-sm text-indigo-400">({magicItem.charges})</span>
                   )}
                   {magicItem.description && (
-                    <span className="mt-1 block text-sm leading-4 text-muted-foreground">
+                    <span className="mt-1 block whitespace-pre-wrap text-sm leading-4 text-muted-foreground">
                       {magicItem.description}
                     </span>
                   )}

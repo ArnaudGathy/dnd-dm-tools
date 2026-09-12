@@ -46,7 +46,7 @@ export default function InventoryItemsPool({ items }: { items: InventoryItem[] }
                     <span className="text-sm text-slate-400">({inventoryItem.value})</span>
                   )}
                   {inventoryItem.description && (
-                    <span className="mt-1 block text-sm leading-4 text-muted-foreground">
+                    <span className="mt-1 block whitespace-pre-wrap text-sm leading-4 text-muted-foreground">
                       {inventoryItem.description}
                     </span>
                   )}

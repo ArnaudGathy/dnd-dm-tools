@@ -67,7 +67,7 @@ export default function CombatItemsPanel({ character }: { character: CharacterBy
                 />
               </div>
               {magicItem.description && (
-                <span className="col-start-1 text-sm leading-snug text-muted-foreground">
+                <span className="col-start-1 whitespace-pre-wrap text-sm leading-snug text-muted-foreground">
                   {magicItem.description}
                 </span>
               )}
@@ -104,7 +104,7 @@ export default function CombatItemsPanel({ character }: { character: CharacterBy
                 }}
               />
               {inventoryItem.description && (
-                <span className="col-start-1 text-sm leading-snug text-muted-foreground">
+                <span className="col-start-1 whitespace-pre-wrap text-sm leading-snug text-muted-foreground">
                   {inventoryItem.description}
                 </span>
               )}

@@ -1,7 +1,7 @@
 import { restrictToAdmins } from "@/lib/utils";
 import { getUnassignedMagicItems } from "@/lib/api/magicItems";
 import { getUnassignedInventoryItems } from "@/lib/api/inventoryItems";
-import { BookOpenText, HeartPulse } from "lucide-react";
+import { BookOpenText, HeartPulse, Music } from "lucide-react";
 import DmToolLinkCard from "@/app/(with-nav)/dm-tools/DmToolLinkCard";
 import DmToolsTabs from "@/app/(with-nav)/dm-tools/DmToolsTabs";
 import DeathList from "@/app/(with-nav)/death/DeathList";
@@ -48,6 +48,12 @@ const DmToolsPage = async () => {
             description="Écran du MJ : stats des personnages, conditions et références."
             icon={BookOpenText}
             openInNewTab
+          />
+          <DmToolLinkCard
+            to="/musics"
+            label="Musiques"
+            description="Écoutez les thèmes de combat et copiez leur identifiant YouTube."
+            icon={Music}
           />
         </div>
       </section>

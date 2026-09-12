@@ -1552,8 +1552,7 @@ export const encounters: Encounter[] = [
         { id: "_skeleton-key", color: "", variant: "" },
       ],
     },
-    informations: ["En 7A. S'enfuit par la porte secrète s'il n'est pas maîtrisé immédiatement."],
-    youtubeId: "",
+    youtubeId: "2GX9lVHfnxs",
   },
   {
     name: "Tombe d'Obo'laka",
@@ -1573,10 +1572,7 @@ export const encounters: Encounter[] = [
         { id: "wight", color: "", variant: "" },
       ],
     },
-    informations: [
-      "Dormantes sur leurs trônes : se lèvent si le disque aux yeux repère un humanoïde ou si l'une d'elles subit des dégâts.",
-    ],
-    youtubeId: "",
+    youtubeId: "KwlVP3IfSLA",
   },
   {
     name: "Tombe de Moa",
@@ -1597,11 +1593,8 @@ export const encounters: Encounter[] = [
         { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
       ],
     },
-    informations: [
-      "Nepartak est dormante dans la boîte de cristal : hostile uniquement si on la met en colère.",
-      "Les 6 nuées sortent des galeries des murs au début du round suivant la première attaque de Nepartak.",
-    ],
-    youtubeId: "",
+    informations: ["Les 6 nuées sortent des galeries des murs au début du round 2."],
+    youtubeId: "G2jwtYdYVhg",
   },
   {
     name: "Tombe de Wongo",
@@ -1630,8 +1623,7 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": [{ id: "mimic", color: "", variant: "" }],
     },
-    informations: ["Déguisé en coffre au trésor ouvragé, sur la corniche."],
-    youtubeId: "",
+    youtubeId: "QnX4rkyygOg",
   },
   {
     name: "Gargouilles gardiennes",
@@ -1665,12 +1657,12 @@ export const encounters: Encounter[] = [
     youtubeId: "Mr-T13aG6iE",
   },
   {
-    name: "Lac sous-terrain",
-    id: 265,
+    name: "Base de la cascade",
+    id: 264,
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Tombeau des neuf dieux",
-      mapMarker: "T65",
+      mapMarker: "T64",
     },
     ennemies: {
       "1": [{ id: "Aboleth", color: "#384163" }],

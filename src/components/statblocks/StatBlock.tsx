@@ -21,6 +21,7 @@ import { getSpellByIds } from "@/lib/api/spells";
 import Abilities from "@/components/statblocks/Abilities";
 import { cn, getSessionData } from "@/lib/utils";
 import ClearCreatureCacheButton from "@/components/statblocks/ClearCreatureCacheButton";
+import EditCreatureJsonButton from "@/components/statblocks/EditCreatureJsonButton";
 import { creatureOverrides } from "@/data/creatureOverrides";
 
 const isNonEmptyArray = <T,>(value: T[] | undefined | null): value is T[] =>
@@ -51,6 +52,10 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
     aideDDName && (!creature.id.includes("_") || aideDDName in creatureOverrides)
       ? `https://www.aidedd.org/public/monster/${aideDDName}`
       : undefined;
+  // The JSON editor only makes sense for creatures whose rendered data is exactly the
+  // CachedCreature row: local creatures live in source code, and an override would
+  // silently win over any edit made to the cached JSON.
+  const canEditJson = !!linkToAideDD && !(aideDDName! in creatureOverrides);
 
   // 5e.tools encodes a monster hash as `encodeURIComponent(x.toLowerCase()).toLowerCase()`
   // for both the name and the source, joined by an underscore.
@@ -75,6 +80,7 @@ export const StatBlock = async ({ creature }: { creature: Creature }) => {
                 AideDD
               </Link>
               {isAdmin && <ClearCreatureCacheButton creatureId={aideDDName!} />}
+              {isAdmin && canEditJson && <EditCreatureJsonButton creature={creature} />}
             </span>
           )}
           {!linkToAideDD && linkTo5eTools && (
