@@ -1478,9 +1478,9 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_tomb-guardian", color: "" },
-        { id: "_tomb-guardian", color: "" },
-        { id: "_tomb-guardian", color: "" },
+        { id: "_tomb-guardian", color: "#AF706E" },
+        { id: "_tomb-guardian", color: "#C9D4D9" },
+        { id: "_tomb-guardian", color: "#C3A065" },
       ],
     },
     youtubeId: "",
@@ -1495,7 +1495,11 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "nalfeshnee", color: "#479BAD" },
+        { id: "gargoyle", color: "#D7AB38" },
+        { id: "gargoyle", color: "#6F5236" },
+        { id: "gargoyle", color: "#DDEEF9" },
+        { id: "gargoyle", color: "#555554" },
+        { id: "gargoyle", color: "#65aaca" },
         {
           id: "_king-of-feathers",
           color: "#93dc1e",
@@ -1521,6 +1525,7 @@ export const encounters: Encounter[] = [
           color: "#B2457B",
           inactive: true,
         },
+        { id: "nalfeshnee", color: "#479BAD", inactive: true },
       ],
     },
     youtubeId: "L9dhkINF5Vk",
@@ -1534,7 +1539,7 @@ export const encounters: Encounter[] = [
       mapMarker: "T5",
     },
     ennemies: {
-      "1": [{ id: "shadow-demon", color: "", variant: "" }],
+      "1": [{ id: "shadow-demon", color: "#334355", variant: "" }],
     },
     youtubeId: "5Y7oXb_Vmsc",
   },
@@ -1548,8 +1553,8 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_tomb-dwarf", color: "", variant: "" },
-        { id: "_skeleton-key", color: "", variant: "" },
+        { id: "_tomb-dwarf", color: "#66534B", variant: "" },
+        { id: "_skeleton-key", color: "#D0C3A7", variant: "" },
       ],
     },
     youtubeId: "2GX9lVHfnxs",
@@ -1564,12 +1569,12 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "wight", color: "", variant: "" },
-        { id: "wight", color: "", variant: "" },
-        { id: "wight", color: "", variant: "" },
-        { id: "wight", color: "", variant: "" },
-        { id: "wight", color: "", variant: "" },
-        { id: "wight", color: "", variant: "" },
+        { id: "wight", color: "#fb7100", variant: "1" },
+        { id: "wight", color: "#ff0000", variant: "1" },
+        { id: "wight", color: "#0525c3", variant: "1" },
+        { id: "wight", color: "#fb7100", variant: "2" },
+        { id: "wight", color: "#ff0000", variant: "2" },
+        { id: "wight", color: "#0525c3", variant: "2" },
       ],
     },
     youtubeId: "KwlVP3IfSLA",
@@ -1584,13 +1589,13 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_nepartak", color: "", variant: "" },
-        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
-        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
-        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
-        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
-        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
-        { id: "_swarm-of-undead-spiders", color: "", variant: "", inactive: true },
+        { id: "_nepartak", color: "#80CA8F", variant: "" },
+        { id: "_swarm-of-undead-spiders", color: "#98755C", variant: "1", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "#98755C", variant: "2", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "#DFD9C6", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "#4B618C", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "#62D8D2", variant: "", inactive: true },
+        { id: "_swarm-of-undead-spiders", color: "#9BCA4E", variant: "", inactive: true },
       ],
     },
     informations: ["Les 6 nuées sortent des galeries des murs au début du round 2."],
@@ -1605,7 +1610,7 @@ export const encounters: Encounter[] = [
       mapMarker: "T16",
     },
     ennemies: {
-      "1": [{ id: "_wongo-mummy", color: "", variant: "" }],
+      "1": [{ id: "_wongo-mummy", color: "#8B7855", variant: "" }],
     },
     youtubeId: "zp8ZlBUGdgs",
   },
@@ -1618,7 +1623,7 @@ export const encounters: Encounter[] = [
       mapMarker: "T17",
     },
     ennemies: {
-      "1": [{ id: "mimic", color: "", variant: "" }],
+      "1": [{ id: "mimic", color: "#8F8171", variant: "" }],
     },
     youtubeId: "QnX4rkyygOg",
   },
@@ -1632,10 +1637,10 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
-        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
-        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
-        { id: "_giant-four-armed-gargoyle", color: "#ba882b" },
+        { id: "_giant-four-armed-gargoyle", color: "#D7AB38" },
+        { id: "_giant-four-armed-gargoyle", color: "#6F5236" },
+        { id: "_giant-four-armed-gargoyle", color: "#DDEEF9" },
+        { id: "_giant-four-armed-gargoyle", color: "#555554" },
       ],
     },
     youtubeId: "2nmn1AkRsbE",
@@ -1649,7 +1654,7 @@ export const encounters: Encounter[] = [
       mapMarker: "T57",
     },
     ennemies: {
-      "1": [{ id: "Otyugh", color: "#ba882b" }],
+      "1": [{ id: "Otyugh", color: "#CAB366" }],
     },
     youtubeId: "Mr-T13aG6iE",
   },
@@ -1662,7 +1667,7 @@ export const encounters: Encounter[] = [
       mapMarker: "T64",
     },
     ennemies: {
-      "1": [{ id: "Aboleth", color: "#384163" }],
+      "1": [{ id: "Aboleth", color: "#723B4C" }],
     },
     youtubeId: "EnKmg16Zqkc",
   },
