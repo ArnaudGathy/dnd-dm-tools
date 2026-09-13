@@ -1607,10 +1607,7 @@ export const encounters: Encounter[] = [
     ennemies: {
       "1": [{ id: "_wongo-mummy", color: "", variant: "" }],
     },
-    informations: [
-      "Dormante : ne s'anime qu'une fois le sarcophage cristallisé brisé (CA 5, 10 PV).",
-    ],
-    youtubeId: "",
+    youtubeId: "zp8ZlBUGdgs",
   },
   {
     name: "Cascade souterraine",

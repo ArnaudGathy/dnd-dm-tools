@@ -3687,18 +3687,6 @@ export const localCreatures: Record<string, Creature> = {
       darkvision: "18 m",
       passivePerception: 11,
     },
-    traits: [
-      {
-        name: "Sarcophage cristallisé",
-        description:
-          "Reste dormante tant que le sarcophage n'est pas brisé. Une fois cristallisé, celui-ci a CA 5, 10 PV, vulnérabilité aux dégâts contondants et de tonnerre, immunité aux dégâts de poison et psychiques. Réduit à 0 PV, il vole en éclats et la momie s'anime.",
-      },
-      {
-        name: "Esprit de Wongo",
-        description:
-          "L'esprit de Wongo est lié à la masse d'armes : au contact d'un personnage, il tente de l'habiter. La momie est alors amicale envers ce personnage.",
-      },
-    ],
     actions: [
       {
         name: "Attaques multiples",
@@ -3709,17 +3697,17 @@ export const localCreatures: Record<string, Creature> = {
         type: "Melee",
         modifier: "+5",
         reach: "1.5 m",
-        hit: "8 (1d10 + 3) dégâts contondants + 10 (3d6) dégâts nécrotiques. La cible est maudite : elle ne peut plus regagner de PV, son maximum de PV ne revient pas à la normale après un long repos et diminue de 10 (3d6) toutes les 24 h. Réduite à 0 PV par cette attaque, elle meurt et tombe en poussière.",
+        hit: "8 (1d10 + 3) dégâts contondants + 10 (3d6) dégâts nécrotiques. Maudit : Pas de soin possible (même long repos)",
       },
       {
         name: "Regard terrifiant",
         description:
-          "JdS SAG 11 pour une créature qu'elle voit à 12 cases ou moins. Échec = effrayée jusqu'à la fin du prochain tour de la momie. Réussite = immunisée à ce regard pendant 24 h.",
+          "JdS SAG 11 à 9m. Échec = effrayée jusqu'à la fin du prochain tour de la momie. Réussite = immunisée pendant 24 h.",
       },
       {
-        name: "Masse d'armes de terreur (3 charges)",
+        name: "Masse d'armes terrifiante (3 charges)",
         description:
-          "1er tour de combat : vague de terreur. Créatures au choix à 6 cases ou moins : JdS SAG 15 ou effrayées 1 min (fuite forcée, pas de réaction, action Course uniquement, nouveau jet en fin de chaque tour). Sinon, attaque de mêlée +5, 1.5 m, 6 (1d6 + 3) dégâts contondants.",
+          "1er tour de combat : vague de terreur. Créatures au choix à 6 cases ou moins : JdS SAG 15 ou effrayées 1 min (fuite forcée, pas de réaction, action Course uniquement, nouveau jet en fin de chaque tour).",
       },
     ],
     behavior: "Masse d'armes de terreur au 1er tour > 2x poing pourrissant + regard terrifiant",
