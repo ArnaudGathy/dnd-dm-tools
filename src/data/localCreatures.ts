@@ -3478,10 +3478,12 @@ export const localCreatures: Record<string, Creature> = {
     },
     resistances: [
       "necrotic",
-      "bludgeoning, piercing, and slashing from nonmagical attacks that aren't silvered",
+      "piercing",
+      "slashing",
+      "bludgeoning",
+      "physical, nonmagical attacks that aren't silvered",
     ],
     immunities: ["poison", "exhaustion", "poisoned"],
-    languages: ["the languages it knew in life"],
     senses: {
       darkvision: "18 m",
       passivePerception: 13,
@@ -3711,5 +3713,320 @@ export const localCreatures: Record<string, Creature> = {
       },
     ],
     behavior: "Masse d'armes de terreur au 1er tour > 2x poing pourrissant + regard terrifiant",
+  },
+  "wine-weird": {
+    name: "Élémentaire de vin",
+    id: "_wine-weird",
+    type: "Elemental",
+    size: "Large",
+    alignment: "Neutral",
+    armorClass: 13,
+    hitPoints: "65 (10d10 + 10)",
+    speed: {
+      walk: "1.5 m",
+      swim: "18 m",
+    },
+    challengeRating: 3,
+    abilities: {
+      strength: 17,
+      dexterity: 16,
+      constitution: 13,
+      intelligence: 11,
+      wisdom: 10,
+      charisma: 10,
+    },
+    resistances: ["fire"],
+    immunities: [
+      "poison",
+      "exhaustion",
+      "grappled",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+      "prone",
+      "restrained",
+      "unconscious",
+    ],
+    languages: ["understands Primordial but can't speak"],
+    senses: {
+      blindSight: "9 m",
+      passivePerception: 10,
+    },
+    traits: [
+      {
+        name: "Invisible dans le vin",
+        description: "Invisible tant qu'il est entièrement immergé dans le vin.",
+      },
+    ],
+    actions: [
+      {
+        name: "Déferlement",
+        type: "Melee",
+        modifier: "+5",
+        reach: "3 m",
+        hit: "13 (3d6 + 3) dégâts de froid. Cible M ou plus petite : agrippée (DD 13 pour se libérer) et entravée jusqu'à la fin de l'agrippement.",
+      },
+    ],
+  },
+  "shield-hunter": {
+    name: "Chasseur du bouclier",
+    id: "_shield-hunter",
+    type: "Artificial",
+    size: "Medium",
+    alignment: "Unaligned",
+    armorClass: 15,
+    hitPoints: "10",
+    challengeRating: 0,
+    immunities: ["all damage except force"],
+    traits: [
+      {
+        name: "Neutralisation",
+        description:
+          "Aveuglé si on drape quelque chose d'opaque sur le bouclier ou si on le tourne face au mur. Emporté hors de la salle, il disparaît et réapparaît au mur.",
+      },
+    ],
+    actions: [
+      {
+        name: "Lance de force (proche)",
+        type: "Ranged",
+        modifier: "+10",
+        reach: "150 m",
+        hit: "18 (4d8) dégâts de force sur le personnage visible le plus proche.",
+      },
+    ],
+  },
+  "keshma-al-wazir": {
+    name: "Keshma al-Wazir",
+    id: "_keshma-al-wazir",
+    type: "Elemental (Genie)",
+    size: "Large",
+    alignment: "Neutral",
+    armorClass: 18,
+    hitPoints: "200 (16d10 + 112)",
+    speed: {
+      walk: "9 m",
+      fly: "9 m (stationnaire)",
+    },
+    challengeRating: 11,
+    abilities: {
+      strength: 23,
+      dexterity: 12,
+      constitution: 24,
+      intelligence: 12,
+      wisdom: 13,
+      charisma: 18,
+    },
+    savingThrows: {
+      dexterity: "+5",
+      wisdom: "+5",
+    },
+    immunities: ["petrified"],
+    languages: ["Primordial (Terran)"],
+    senses: {
+      darkvision: "36 m",
+      passivePerception: 11,
+    },
+    traits: [
+      {
+        name: "Résistance à la magie",
+        description: "Avantage aux JdS contre les sorts et effets magiques.",
+      },
+      {
+        name: "Souhaits",
+        description:
+          "30 % de chances de connaître Souhait. Ne peut le lancer que pour un non-génie qui formule un vœu ; aucune fatigue pour elle. 3 fois max, puis 365 jours d'attente.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "3x maillet de terre ou 2x explosion de terre.",
+      },
+      {
+        name: "Maillet de terre",
+        type: "Melee",
+        modifier: "+10",
+        reach: "1.5 m",
+        hit: "20 (4d6 + 6) dégâts contondants. Cible G ou plus petite : au sol.",
+      },
+      {
+        name: "Explosion de terre",
+        type: "Ranged",
+        modifier: "+10",
+        reach: "36 m",
+        hit: "15 (2d8 + 6) dégâts contondants, puis la terre explose : JdS DEX 16 pour chaque créature dans une émanation de 2 cases autour de la cible (cible incluse) ou 10 (3d6) dégâts de tonnerre.",
+      },
+    ],
+    spellStats: {
+      attackMod: 8,
+      spellDC: 16,
+      slots: {
+        "1": Infinity,
+      },
+    },
+    spells: [
+      {
+        id: "detect-evil-and-good",
+        summary:
+          "À volonté. Détecte aberrations, célestes, élémentaires, fées, fiélons, morts-vivants",
+      },
+      { id: "detect-magic", summary: "À volonté. Perçoit la magie à 6 cases" },
+      { id: "stone-shape", summary: "À volonté. Façonne un bloc de pierre" },
+      {
+        id: "gaseous-form",
+        summary: "(1/jour) Forme gazeuse, vol 2 cases, résistance aux dégâts non magiques",
+      },
+      {
+        id: "invisibility",
+        summary: "(1/jour) Invisible jusqu'à attaquer ou lancer un sort (concentration, 1 h)",
+      },
+      { id: "move-earth", summary: "(1/jour) Remodèle le terrain (concentration, 2 h)" },
+      { id: "plane-shift", summary: "(1/jour) Change de plan (échoue dans la tombe : zone 57)" },
+      { id: "tongues", summary: "(1/jour) Comprend et parle toutes les langues (1 h)" },
+      {
+        id: "wall-of-stone",
+        summary: "(1/jour) Mur de pierre, 10 panneaux de 2x2 cases (concentration, 10 min)",
+      },
+    ],
+  },
+  withers: {
+    name: "Flétri",
+    id: "_withers",
+    fiveETools: { name: "Withers", source: "ToA" },
+    type: "Undead",
+    size: "Medium",
+    alignment: "Neutral Evil",
+    armorClass: 14,
+    hitPoints: "82 (11d8 + 33)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 4,
+    abilities: {
+      strength: 15,
+      dexterity: 14,
+      constitution: 16,
+      intelligence: 16,
+      wisdom: 13,
+      charisma: 15,
+    },
+    skills: {
+      perception: "+3",
+      stealth: "+4",
+    },
+    resistances: ["necrotic"],
+    immunities: ["poison", "exhaustion", "poisoned"],
+    languages: ["Common", "Old Omuan"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 13,
+    },
+    traits: [
+      {
+        name: "Sensibilité à la lumière du soleil",
+        description:
+          "Désavantage aux tests de caractéristique et aux jets d'attaque en plein soleil.",
+      },
+      {
+        name: "Amulette du crâne noir",
+        description:
+          "6 charges: Se téléporte n'importe ou dans la tombe dans un rayon de 20 cases.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x épée nécrotique. Peut remplacer une attaque par Absorption de vie.",
+      },
+      {
+        name: "Épée nécrotique",
+        type: "Melee",
+        modifier: "+4",
+        reach: "1.5 m",
+        hit: "6 (1d8 + 2) dégâts tranchants + 4 (1d8) dégâts nécrotiques.",
+      },
+      {
+        name: "Absorption de vie",
+        description:
+          "JdS CON 13 pour une créature à 1 case ou 6 (1d8 + 2) dégâts nécrotiques et maximum de PV réduit d'autant. Un humanoïde tué se relève en zombie sous son contrôle 24 h plus tard (12 zombies max).",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Repli expéditif (sort niv. 1)",
+        description:
+          "Action Foncer immédiate, puis en action bonus à chaque tour (concentration, 10 min).",
+      },
+    ],
+    spellStats: {
+      attackMod: 5,
+      spellDC: 13,
+      slots: {
+        "1": 4,
+        "2": 3,
+        "3": 3,
+        "4": 3,
+        "5": 1,
+      },
+    },
+    spells: [
+      { id: "acid-splash", summary: "JdS DEX ou 2d6 acide, jusqu'à 2 créatures adjacentes" },
+      { id: "detect-magic", summary: "Perçoit la magie à 6 cases (concentration, 10 min)" },
+      {
+        id: "thunderwave",
+        summary: "Cube de 3 cases : JdS CON ou 2d8 tonnerre et repoussé de 2 cases",
+      },
+      {
+        id: "darkness",
+        summary: "Sphère de ténèbres magiques de 3 cases de rayon (concentration, 10 min)",
+      },
+      { id: "hold-person", summary: "JdS SAG ou humanoïde paralysé (concentration, 1 min)" },
+      { id: "rope-trick", summary: "Espace extradimensionnel refuge pour 8 créatures (1 h)" },
+      { id: "dispel-magic", summary: "Met fin aux sorts de niveau 3 ou moins sur une cible" },
+      {
+        id: "lightning-bolt",
+        summary: "Ligne de 20 cases : JdS DEX ou 8d6 foudre (moitié si réussi)",
+      },
+      {
+        id: "blight",
+        summary: "JdS CON ou 8d8 nécrotiques (moitié si réussi), désavantage pour les plantes",
+      },
+      {
+        id: "wall-of-fire",
+        summary:
+          "Mur de feu : JdS DEX ou 5d8 feu ; garde pour couvrir sa fuite (concentration, 1 min)",
+      },
+      {
+        id: "telekinesis",
+        summary: "Déplace créature (JdS FOR) ou objet de 500 kg à 6 cases (concentration, 10 min)",
+      },
+    ],
+  },
+  "glass-cauldron": {
+    name: "Chaudron de verre",
+    id: "_glass-cauldron",
+    armorClass: 15,
+    hitPoints: "22",
+    type: "Décor",
+    size: "M",
+    alignment: "N/A",
+    vulnerabilities: ["Contondant", "Tonnerre"],
+    immunities: ["Poison", "Psychique"],
+    speed: {
+      walk: "0 m",
+    },
+    abilities: {
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10,
+    },
+    senses: {
+      passivePerception: 0,
+    },
+    challengeRating: 0,
+    actions: [],
   },
 };

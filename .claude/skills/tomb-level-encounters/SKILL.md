@@ -81,7 +81,6 @@ Append one `Encounter` per kept zone, inserted in id order among the other
       // one object per individual creature — 3 gargoyles = 3 entries
     ],
   },
-  informations: ["<French note carrying the italic condition>"],
   youtubeId: "",
 },
 ```
@@ -93,9 +92,7 @@ Rules:
 - Add `inactive: true` to creatures the roster marks as **conditional or arriving
   late** ("only if…", "pour out the round after…", reinforcements). Creatures merely
   *dormant* that are the encounter's whole point (a mummy in its sarcophagus, wights on
-  their thrones) stay active — their dormancy goes in `informations` instead.
-- `informations`: short French lines, one per italic note (position in the room,
-  trigger, escape behaviour, harmlessness). Skip when the row has no note.
+  their thrones) stay active.
 - Encounter names are French; ids and lookup keys stay English kebab-case.
 
 ## Step 4 — Verify

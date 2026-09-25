@@ -1469,6 +1469,50 @@ export const encounters: Encounter[] = [
     youtubeId: "C5LWRU_RyBg",
   },
   {
+    name: "Gargouilles gardiennes",
+    id: 245,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T45",
+    },
+    ennemies: {
+      "1": [
+        { id: "_giant-four-armed-gargoyle", color: "#D7AB38" },
+        { id: "_giant-four-armed-gargoyle", color: "#6F5236" },
+        { id: "_giant-four-armed-gargoyle", color: "#DDEEF9" },
+        { id: "_giant-four-armed-gargoyle", color: "#555554" },
+      ],
+    },
+    youtubeId: "2nmn1AkRsbE",
+  },
+  {
+    name: "Oubliettes",
+    id: 257,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T57",
+    },
+    ennemies: {
+      "1": [{ id: "Otyugh", color: "#CAB366" }],
+    },
+    youtubeId: "Mr-T13aG6iE",
+  },
+  {
+    name: "Base de la cascade",
+    id: 264,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T64",
+    },
+    ennemies: {
+      "1": [{ id: "Aboleth", color: "#723B4C" }],
+    },
+    youtubeId: "EnKmg16Zqkc",
+  },
+  {
     name: "Gardiens de la tombe",
     id: 200,
     scenario: "La tombe de l'annihilation",
@@ -1483,7 +1527,7 @@ export const encounters: Encounter[] = [
         { id: "_tomb-guardian", color: "#C3A065" },
       ],
     },
-    youtubeId: "",
+    youtubeId: "GMXiYs-wi3A",
   },
   {
     name: "Avertissement d'Acererak",
@@ -1628,47 +1672,160 @@ export const encounters: Encounter[] = [
     youtubeId: "QnX4rkyygOg",
   },
   {
-    name: "Gargouilles gardiennes",
-    id: 245,
+    name: "Fausse tombe",
+    id: 220,
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Tombeau des neuf dieux",
-      mapMarker: "T45",
+      mapMarker: "T20",
     },
     ennemies: {
       "1": [
-        { id: "_giant-four-armed-gargoyle", color: "#D7AB38" },
-        { id: "_giant-four-armed-gargoyle", color: "#6F5236" },
-        { id: "_giant-four-armed-gargoyle", color: "#DDEEF9" },
-        { id: "_giant-four-armed-gargoyle", color: "#555554" },
+        { id: "_wine-weird", color: "", variant: "", inactive: true },
+        { id: "_wine-weird", color: "", variant: "", inactive: true },
+        { id: "_wine-weird", color: "", variant: "", inactive: true },
       ],
     },
-    youtubeId: "2nmn1AkRsbE",
+    informations: [
+      "Tour 3 : déplacement des sybilles qui sont invisibles",
+      "Tour 12 : eau jusq'au plafond, règles de combat sous marin et respiration",
+    ],
+    youtubeId: "2staFuc00xo",
   },
   {
-    name: "Oubliettes",
-    id: 257,
+    name: "Porte aux zombies",
+    id: 221,
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Tombeau des neuf dieux",
-      mapMarker: "T57",
+      mapMarker: "T21",
     },
     ennemies: {
-      "1": [{ id: "Otyugh", color: "#CAB366" }],
+      "1": [
+        { id: "zombie", color: "", variant: "" },
+        { id: "zombie", color: "", variant: "" },
+        { id: "zombie", color: "", variant: "" },
+      ],
     },
-    youtubeId: "Mr-T13aG6iE",
+    youtubeId: "2GX9lVHfnxs",
   },
   {
-    name: "Base de la cascade",
-    id: 264,
+    name: "Tombe de Papazotl",
+    id: 222,
     scenario: "La tombe de l'annihilation",
     location: {
       name: "Tombeau des neuf dieux",
-      mapMarker: "T64",
+      mapMarker: "T22",
     },
     ennemies: {
-      "1": [{ id: "Aboleth", color: "#723B4C" }],
+      "1": [
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "skeleton", color: "", variant: "", fixedInitiative: 14 },
+        { id: "_glass-cauldron", color: "", variant: "1", fixedInitiative: 14 },
+        { id: "_glass-cauldron", color: "", variant: "2", fixedInitiative: 14 },
+        { id: "_glass-cauldron", color: "", variant: "3", fixedInitiative: 14 },
+        { id: "_glass-cauldron", color: "", variant: "4", fixedInitiative: 14 },
+        { id: "_glass-cauldron", color: "", variant: "5", fixedInitiative: 14 },
+        { id: "_glass-cauldron", color: "", variant: "6", fixedInitiative: 14 },
+        { id: "_shield-hunter", color: "", variant: "", fixedInitiative: 20 },
+      ],
     },
-    youtubeId: "EnKmg16Zqkc",
+    informations: [
+      "+1 squelette par chaudron par tour",
+      "Le combat s'arrête si quelqu'un s'incline devant la statue sans tête",
+    ],
+    youtubeId: "zp8ZlBUGdgs",
+  },
+  {
+    name: "Génie en bouteille",
+    id: 223,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T23",
+    },
+    ennemies: {
+      "1": [{ id: "_keshma-al-wazir", color: "", variant: "" }],
+    },
+    youtubeId: "ZNKZYLdnJHQ",
+  },
+  {
+    name: "Tombe de Nangnang",
+    id: 224,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T24",
+    },
+    ennemies: {
+      "1": [{ id: "gray-slaad", color: "#b3abab", variant: "" }],
+    },
+    youtubeId: "5Y7oXb_Vmsc",
+  },
+  {
+    name: "Bassin de divination",
+    id: 225,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T25",
+    },
+    ennemies: {
+      "1": [{ id: "_tomb-guardian", color: "", variant: "" }],
+    },
+    youtubeId: "GMXiYs-wi3A",
+  },
+  {
+    name: "Forge des nains de la tombe",
+    id: 227,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T27",
+    },
+    ennemies: {
+      "1": [
+        { id: "_tomb-dwarf", color: "", variant: "" },
+        { id: "_tomb-dwarf", color: "", variant: "" },
+        { id: "_tomb-dwarf", color: "", variant: "" },
+        { id: "_tomb-dwarf", color: "", variant: "" },
+        { id: "_tomb-dwarf", color: "", variant: "" },
+        { id: "_tomb-guardian", color: "", variant: "", inactive: true },
+      ],
+    },
+    informations: ["Au tour 2, le gardien de la tombe sors de la vierge de fer"],
+    youtubeId: "t4nfHGBrVkQ",
+  },
+  {
+    name: "Bureau de Flétri",
+    id: 228,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T28",
+    },
+    ennemies: {
+      "1": [
+        { id: "_withers", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+        { id: "crawling-claw", color: "", variant: "" },
+      ],
+    },
+    youtubeId: "k9H-qtO2E8I",
   },
 ];
