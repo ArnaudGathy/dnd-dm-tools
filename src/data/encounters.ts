@@ -1681,6 +1681,7 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
+        { id: "_skeleton-key", color: "#D0C3A7", variant: "" },
         { id: "_wine-weird", color: "#971c2c", variant: "1", inactive: true },
         { id: "_wine-weird", color: "#971c2c", variant: "2", inactive: true },
         { id: "_wine-weird", color: "#971c2c", variant: "3", inactive: true },
