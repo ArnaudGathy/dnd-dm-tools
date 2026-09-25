@@ -1,6 +1,7 @@
 import { SPELLS_GROUP_BY, getAllSpells } from "@/lib/api/spells";
 import { Badge } from "@/components/ui/badge";
 import { entries } from "remeda";
+import { compareLocale } from "@/utils/sort";
 import { getSessionData } from "@/lib/utils";
 import { getAllFilteredCharacters, getFilteredCharactersByOwner } from "@/lib/api/characters";
 import { SPELL_SCHOOLS } from "@/constants/maps";
@@ -60,7 +61,7 @@ export default async function AllSpellsList({
 
   const isGrouped = groupBy !== SPELLS_GROUP_BY.NONE;
   const groups = entries(spells).toSorted(([a], [b]) =>
-    groupBy === SPELLS_GROUP_BY.LEVEL ? parseInt(a, 10) - parseInt(b, 10) : a.localeCompare(b),
+    groupBy === SPELLS_GROUP_BY.LEVEL ? parseInt(a, 10) - parseInt(b, 10) : compareLocale(a, b),
   );
   const totalCount = Object.values(spells).reduce((sum, list) => sum + list.length, 0);
 

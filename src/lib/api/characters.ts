@@ -10,6 +10,17 @@ import {
   PartyId,
   Skill,
 } from "@prisma/client";
+import { applyMagicItemEffects } from "@/utils/items";
+import { compareLocale, sortByName } from "@/utils/sort";
+
+const STATUS_ORDER = Object.values(CharacterStatus);
+
+const sortCharacters = <T extends { status: CharacterStatus; name: string }>(characters: T[]) =>
+  characters.toSorted(
+    (a, b) =>
+      STATUS_ORDER.indexOf(a.status) - STATUS_ORDER.indexOf(b.status) ||
+      compareLocale(a.name, b.name),
+  );
 
 export const getNumberOfCharactersByOwner = async ({ ownerEmail }: { ownerEmail?: string }) => {
   return prisma.character.count({
@@ -32,7 +43,7 @@ export const getFilteredCharactersByOwner = async ({
   party?: PartyId;
   status?: CharacterStatus;
 }) => {
-  return prisma.character.findMany({
+  const characters = await prisma.character.findMany({
     where: {
       OR: [{ owner: ownerEmail }, { campaign: { owner: { has: ownerEmail } } }],
       AND: [
@@ -70,8 +81,8 @@ export const getFilteredCharactersByOwner = async ({
         },
       },
     },
-    orderBy: [{ status: "asc" }, { name: "asc" }],
   });
+  return sortCharacters(characters);
 };
 
 export const getAllFilteredCharacters = async ({
@@ -85,7 +96,7 @@ export const getAllFilteredCharacters = async ({
   party?: PartyId;
   status?: CharacterStatus;
 }) => {
-  return prisma.character.findMany({
+  const characters = await prisma.character.findMany({
     where: {
       name: {
         contains: search,
@@ -114,12 +125,12 @@ export const getAllFilteredCharacters = async ({
         },
       },
     },
-    orderBy: [{ status: "asc" }, { name: "asc" }],
   });
+  return sortCharacters(characters);
 };
 
 export const getCharacterById = async ({ characterId }: { characterId: number }) => {
-  return prisma.character.findUnique({
+  const character = await prisma.character.findUnique({
     where: {
       id: characterId,
     },
@@ -137,30 +148,21 @@ export const getCharacterById = async ({ characterId }: { characterId: number })
       skills: {
         orderBy: [{ skill: "asc" }],
       },
-      capacities: {
-        orderBy: [{ name: "asc" }],
-      },
+      capacities: true,
       savingThrows: {
         orderBy: [{ ability: "asc" }],
       },
-      armors: {
-        orderBy: [{ name: "asc" }],
-      },
+      armors: true,
       weapons: {
         include: {
           damages: true,
         },
-        orderBy: [{ name: "asc" }],
       },
-      inventory: {
-        orderBy: [{ name: "asc" }],
-      },
+      inventory: true,
       wealth: {
         orderBy: [{ id: "asc" }],
       },
-      magicItems: {
-        orderBy: [{ name: "asc" }],
-      },
+      magicItems: true,
       _count: {
         select: {
           spellsOnCharacters: true,
@@ -169,6 +171,17 @@ export const getCharacterById = async ({ characterId }: { characterId: number })
       },
     },
   });
+
+  return (
+    character && {
+      ...character,
+      capacities: sortByName(character.capacities),
+      armors: sortByName(character.armors),
+      weapons: sortByName(character.weapons),
+      inventory: sortByName(character.inventory),
+      magicItems: sortByName(character.magicItems),
+    }
+  );
 };
 
 export const getCharactersFromCampaignId = (campaignId: number) => {
@@ -212,7 +225,7 @@ export const getDMScreenCharactersFromCampaignId = async (
     });
 
     if (campaign) {
-      return prisma.character.findMany({
+      const characters = await prisma.character.findMany({
         where: {
           campaignId: campaign.id,
           status: CharacterStatus.ACTIVE,
@@ -225,6 +238,7 @@ export const getDMScreenCharactersFromCampaignId = async (
           magicItems: true,
         },
       });
+      return characters.map(applyMagicItemEffects);
     }
   }
 

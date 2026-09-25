@@ -10,7 +10,7 @@ import {
 } from "@prisma/client";
 import { getModifier } from "@/utils/utils";
 import { ABILITY_NAME_MAP_TO_FR } from "@/constants/maps";
-import { hasMagicItem } from "@/utils/items";
+import { hasAttunedMagicItem } from "@/utils/items";
 
 const getAcModifierByArmor = (character: Character, armor?: Armor) => {
   if (!armor) {
@@ -74,8 +74,12 @@ export const getTotalAC = (
   const { abilityACModifier, modifierName } = getAcModifierByArmor(character, equippedBodyArmor);
   const equippedShield = equippedArmors.find(({ type }) => type === ArmorType.SHIELD);
   const shieldAc = !!equippedShield ? equippedShield.AC : 0;
-  const protectionRingModifier = hasMagicItem(character, "anneau de protection") ? 1 : 0;
+  const protectionRingModifier = hasAttunedMagicItem(character, "anneau de protection") ? 1 : 0;
   const featAc = getFeatAC(character);
+  const defenseBracersModifier =
+    !equippedBodyArmor && !equippedShield && hasAttunedMagicItem(character, "bracelets de défense")
+      ? 2
+      : 0;
 
   return {
     armorAC,
@@ -84,6 +88,7 @@ export const getTotalAC = (
     modifierName,
     shieldAc,
     protectionRingModifier,
+    defenseBracersModifier,
     ACBonus: character.ACBonus,
     featAc,
     total:
@@ -92,6 +97,7 @@ export const getTotalAC = (
       shieldAc +
       character.ACBonus +
       protectionRingModifier +
+      defenseBracersModifier +
       featAc.modifier,
   };
 };

@@ -3,7 +3,7 @@ import CreateCharacterForm from "../../add/CreateCharacterForm";
 
 export default async function UpdateCharacter({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const character = await getValidCharacter(id);
+  const character = await getValidCharacter(id, { raw: true });
 
   return <CreateCharacterForm character={character} />;
 }

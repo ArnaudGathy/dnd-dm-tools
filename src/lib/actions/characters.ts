@@ -20,6 +20,7 @@ import { database } from "@/lib/firebase/firebase";
 import { CharacterTracking } from "@/hooks/useCharacterTracker";
 
 import { getBonusHP } from "@/utils/stats/hp";
+import { applyMagicItemEffects } from "@/utils/items";
 
 const syncCharacterHPToFirebase = async (
   characterName: string,
@@ -314,7 +315,8 @@ async function syncSimpleTable<Existing extends { id: number }, Incoming>(
   await Promise.all(tasks);
 }
 
-const getNewHP = (character: CharacterById, newLevel: number) => {
+const getNewHP = (rawCharacter: CharacterById, newLevel: number) => {
+  const character = applyMagicItemEffects(rawCharacter);
   const baseHp = getBaseHP(character, newLevel);
 
   if (newLevel > 1) {
@@ -357,12 +359,16 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
   });
 
   const newHP = getNewHP(character, validation.data.level);
+  // A character at full HP follows the new maximum (e.g. on level up); a wounded
+  // one keeps its current HP, clamped in case the maximum went down.
+  const newCurrentHP =
+    character.currentHP >= character.maximumHP ? newHP : Math.min(character.currentHP, newHP);
 
   await prisma.character.update({
     where: { id: character.id },
     data: {
       maximumHP: newHP,
-      currentHP: newHP,
+      currentHP: newCurrentHP,
       level: validation.data.level,
       status: validation.data.status,
       campaignId: campaign.id,
@@ -522,7 +528,7 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
   });
 
   await syncCharacterHPToFirebase(validation.data.name, {
-    currentHP: newHP,
+    currentHP: newCurrentHP,
     maximumHP: newHP,
   });
 

@@ -103,6 +103,10 @@ export default function CombatHud({ character }: { character: CharacterById }) {
                   label: "Anneau de protection",
                   value: addSignToNumber(ACDetails.protectionRingModifier),
                 },
+                ACDetails.defenseBracersModifier > 0 && {
+                  label: "Bracelets de défense",
+                  value: addSignToNumber(ACDetails.defenseBracersModifier),
+                },
               ]}
               total={ACDetails.total}
             />

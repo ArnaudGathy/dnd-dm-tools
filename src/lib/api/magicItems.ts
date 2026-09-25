@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
+import { sortByName } from "@/utils/sort";
 
 export const getUnassignedMagicItems = async () => {
-  return prisma.magicItem.findMany({
+  const items = await prisma.magicItem.findMany({
     where: { characterId: null },
-    orderBy: [{ name: "asc" }],
   });
+  return sortByName(items);
 };

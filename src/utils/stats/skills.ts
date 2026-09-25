@@ -11,7 +11,7 @@ import {
 import { ABILITY_NAME_MAP, PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP } from "@/constants/maps";
 import { getModifier } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
-import { hasMagicItem } from "@/utils/items";
+import { hasAttunedMagicItem } from "@/utils/items";
 
 export const getSkillSpecial = (
   character: Character & { capacities: Capacity[] },
@@ -81,7 +81,7 @@ export const getSavingThrowModifier = (
     : 0;
   const bonusModifier = selectedSavingThrow?.modifier ?? 0;
   const abilityModifier = getModifier(character[ability]);
-  const protectionRingModifier = hasMagicItem(character, "anneau de protection") ? 1 : 0;
+  const protectionRingModifier = hasAttunedMagicItem(character, "anneau de protection") ? 1 : 0;
 
   return {
     proficiencyModifier,

@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
+import { sortByName } from "@/utils/sort";
 
 export const getUnassignedInventoryItems = async () => {
-  return prisma.inventoryItem.findMany({
+  const items = await prisma.inventoryItem.findMany({
     where: { characterId: null },
-    orderBy: [{ name: "asc" }],
   });
+  return sortByName(items);
 };

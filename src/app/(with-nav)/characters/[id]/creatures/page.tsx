@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Link } from "@/components/ui/Link";
 import { entries } from "remeda";
+import { compareLocale } from "@/utils/sort";
 import { getValidCharacter } from "@/lib/utils";
 import CreatureFavoriteIcon from "@/app/(with-nav)/characters/[id]/creatures/CreatureFavoriteIcon";
 import EditModeButton from "@/app/(with-nav)/characters/[id]/spells/EditModeButton";
@@ -42,7 +43,7 @@ export default async function CreatureList({
   });
 
   const groups = entries(creatures).toSorted(([a], [b]) =>
-    groupBy === CREATURES_GROUP_BY.CR ? parseFloat(a) - parseFloat(b) : a.localeCompare(b),
+    groupBy === CREATURES_GROUP_BY.CR ? parseFloat(a) - parseFloat(b) : compareLocale(a, b),
   );
   const totalCount = Object.values(creatures).reduce((sum, list) => sum + list.length, 0);
 

@@ -5,6 +5,7 @@ import { Creature as FullCreature } from "@/types/types";
 import { localCreatures } from "@/data/localCreatures";
 import { creatureOverrides } from "@/data/creatureOverrides";
 import { creatureSchema } from "@/types/schemas";
+import { compareLocale, sortByName } from "@/utils/sort";
 
 export enum CREATURES_GROUP_BY {
   CR = "challengeRating",
@@ -16,6 +17,9 @@ export enum CREATURES_FILTER_BY {
 }
 
 export type FlatCreature = CreaturesOnCharacters & Creature;
+
+const sortByCreatureName = <T extends { creature: { name: string } }>(items: T[]) =>
+  items.toSorted((a, b) => compareLocale(a.creature.name, b.creature.name));
 
 export async function getCharacterCreatures({
   characterId,
@@ -40,12 +44,9 @@ export async function getCharacterCreatures({
     include: {
       creature: true,
     },
-    orderBy: {
-      creature: { name: "asc" },
-    },
   });
 
-  const flattenedCreatures = map(creaturesList, (creatureOnCharacter) => ({
+  const flattenedCreatures = map(sortByCreatureName(creaturesList), (creatureOnCharacter) => ({
     ...creatureOnCharacter,
     ...creatureOnCharacter.creature,
     creature: undefined,
@@ -75,7 +76,6 @@ export async function getAllAvailableCreatures({
   const cached = cachedRows.flatMap((row) => {
     const parsed = creatureSchema.safeParse(row.data);
     if (!parsed.success) {
-       
       console.error(`Failed to parse cached creature "${row.id}":`, parsed.error);
       return [];
     }
@@ -84,9 +84,7 @@ export async function getAllAvailableCreatures({
     return [(override ? mergeDeep(parsed.data, override) : parsed.data) as FullCreature];
   });
 
-  const allCreatures = [...local, ...cached].sort((a, b) =>
-    a.name.localeCompare(b.name, "fr", { sensitivity: "base" }),
-  );
+  const allCreatures = sortByName([...local, ...cached]);
 
   if (groupBy === CREATURES_GROUP_BY.CR) {
     return remedaGroupBy(allCreatures, (creature) => creature.challengeRating.toString());
