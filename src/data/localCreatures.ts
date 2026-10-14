@@ -3293,7 +3293,7 @@ export const localCreatures: Record<string, Creature> = {
       {
         name: "Berserk",
         description:
-          "A <= 50 PV (50%), 1d6 => sur 6 il devient berserk et attaque la cible la plus proche, y compris ses alliés",
+          "A <= 50 PV (50%), chaque tour 1d6 => sur 6 il devient berserk et attaque la cible la plus proche, y compris ses alliés",
       },
       {
         name: "Aversion du feu",
@@ -4028,5 +4028,351 @@ export const localCreatures: Record<string, Creature> = {
     },
     challengeRating: 0,
     actions: [],
+  },
+  "spiked-tomb-guardian": {
+    name: "Gardien de tombe à pointes",
+    id: "_spiked-tomb-guardian",
+    fiveETools: { name: "Tomb Guardian", source: "ToA" },
+    type: "Construct",
+    size: "Medium",
+    alignment: "Neutral",
+    armorClass: 17,
+    hitPoints: "100 (11d8 + 44)",
+    speed: {
+      walk: "9 m",
+    },
+    challengeRating: 5,
+    abilities: {
+      strength: 19,
+      dexterity: 9,
+      constitution: 18,
+      intelligence: 6,
+      wisdom: 10,
+      charisma: 5,
+    },
+    immunities: [
+      "lightning",
+      "poison",
+      "bludgeoning",
+      "piercing",
+      "slashing",
+      "charmed",
+      "exhaustion",
+      "frightened",
+      "paralyzed",
+      "petrified",
+      "poisoned",
+    ],
+    languages: ["understands the languages of its creator but can't speak"],
+    senses: {
+      darkvision: "18 m",
+      passivePerception: 10,
+    },
+    traits: [
+      {
+        name: "Enchaînés",
+        description:
+          "Ne peut pas s'éloigner de l'autre à plus de 3c, dégâts répartis entre les deux. Si cassé (voir ennemi), devient instantanément berserk.",
+      },
+      {
+        name: "Berserk",
+        description:
+          "A <= 50 PV (50%), chaque tour 1d6 => sur 6 il devient berserk et attaque la cible la plus proche, y compris ses alliés",
+      },
+      {
+        name: "Aversion du feu",
+        description:
+          "Subir dgts de feu : désavantage aux jets d'attaque et tests de caractéristique jusqu'à la fin de son prochain tour.",
+      },
+      {
+        name: "Forme immuable",
+        description: "Immunisé à tout sort ou effet modifiant sa forme.",
+      },
+      {
+        name: "Absorption de la foudre",
+        description: "Les dégâts de foudre ne lui font rien : il regagne à la place autant de PV.",
+      },
+      {
+        name: "Résistance à la magie",
+        description: "Avantage aux jets de sauvegarde contre les sorts et effets magiques.",
+      },
+    ],
+    actions: [
+      {
+        name: "Attaques multiples",
+        description: "2x gantelet à pointes",
+      },
+      {
+        name: "Coup",
+        type: "Melee",
+        modifier: "+7",
+        reach: "1.5 m",
+        hit: "13 (2d8 + 4) dégâts contondants + 7 (2d6) dégâts perçants.",
+      },
+    ],
+  },
+  "lord-of-the-feast": {
+    name: "Seigneur du festin",
+    id: "_lord-of-the-feast",
+    type: "Décor",
+    size: "Medium",
+    alignment: "N/A",
+    armorClass: 5,
+    hitPoints: "22",
+    speed: {
+      walk: "0 m",
+    },
+    challengeRating: 0,
+    abilities: {
+      strength: 10,
+      dexterity: 10,
+      constitution: 10,
+      intelligence: 10,
+      wisdom: 10,
+      charisma: 10,
+    },
+    immunities: ["poison", "psychic"],
+    senses: {
+      passivePerception: 0,
+    },
+    traits: [
+      {
+        name: "Tête de sanglier géant",
+        description:
+          "Tête pourrissante fixée au mur derrière le 3e rideau. Objet M. Le détruire met fin au charme sur toutes les créatures.",
+      },
+      {
+        name: "Charme du festin",
+        description:
+          "Tout humanoïde qui voit la tête : JdS SAG 16 ou charmé. À son tour, le charmé ne fait que s'approcher et mettre sa tête dans la gueule (une seule à la fois, les autres attendent). Relance le JdS à chaque fois qu'il subit des dégâts. Réussite : immunisé 24 h.",
+      },
+      {
+        name: "Mâchoires",
+        description:
+          "Créature qui finit son tour la tête dans la gueule : 22 (4d10) dégâts tranchants. Décapitée si réduite à 0 PV.",
+      },
+    ],
+    actions: [],
+  },
+  "rotating-room": {
+    name: "Salle tournante",
+    id: "_rotating-room",
+    type: "Décor",
+    size: "TG",
+    alignment: "N/A",
+    armorClass: 0,
+    hitPoints: "1",
+    challengeRating: 0,
+    actions: [
+      {
+        name: "Effet de la salle",
+        description: "lancer 1d20 pour déterminer l'effet déclenché par les visages de démons.",
+      },
+    ],
+    traits: [
+      {
+        name: "1-6. Gaz soporifique",
+        description:
+          "Les visages de démons exhalent des jets de gaz soporifique qui se dissipe rapidement. JdS CON 15 ou tomber inconsciente. Une créature inconsciente peut refaire le JdS chaque fois qu'elle subit des dégâts, mettant fin à l'effet en cas de réussite.",
+      },
+      {
+        name: "7-12. Poussière scintillante",
+        description:
+          "Les visages de démons exhalent des jets de poussière scintillante. Chaque créature dans la salle qui rate un JdS SAG 15 est aveuglée. La cécité dure jusqu'à ce qu'elle soit soignée par Restauration partielle ou une magie similaire.",
+      },
+      {
+        name: "13-18. Pointes de pierre",
+        description:
+          "Des pointes de pierre de 15 cm jaillissent magiquement des murs. Toute créature qui subit des dégâts de la salle au début de son tour subit 11 (2d10) dégâts perforants supplémentaires.",
+      },
+      {
+        name: "19-20. Gaz incendiaire",
+        description:
+          "Les visages de démons crachent des jets de gaz incendiaire qui s'enflamme aussitôt, remplissant la salle de flammes. Chaque créature dans la salle subit 45 (10d8) dégâts de feu.",
+      },
+    ],
+  },
+  "escape-door": {
+    name: "Porte de sortie",
+    id: "_escape-door",
+    type: "Décor",
+    size: "G",
+    alignment: "N/A",
+    armorClass: 17,
+    hitPoints: "50",
+    challengeRating: 0,
+    immunities: ["Feu", "Perforant", "Poison", "Psychique", "Tranchant", "Tonnerre"],
+    traits: [
+      {
+        name: "Forcer la porte",
+        description: "Peut être arrachée avec un test de FOR (Athlétisme) DD 26, ou détruite.",
+      },
+    ],
+    actions: [],
+  },
+  "guardian-chain": {
+    name: "Chaîne",
+    id: "_guardian-chain",
+    type: "Décor",
+    size: "M",
+    alignment: "N/A",
+    armorClass: 18,
+    hitPoints: "5",
+    challengeRating: 0,
+    immunities: ["Poison", "Psychique"],
+    traits: [
+      {
+        name: "Seuil de dégâts",
+        description:
+          "Immunisée contre toute instance de moins de 10 dégâts ; une instance de 10 dégâts ou plus inflige ses dégâts normalement.",
+      },
+      {
+        name: "Rupture",
+        description: "Si la chaîne casse, les deux gardiens deviennent immédiatement berserk.",
+      },
+    ],
+    actions: [],
+  },
+  "magnetic-sphere": {
+    name: "Sphère magnétique",
+    id: "_magnetic-sphere",
+    type: "Objet",
+    size: "G",
+    alignment: "N/A",
+    armorClass: 20,
+    hitPoints: "100",
+    challengeRating: 0,
+    resistances: ["Contondant", "Perçant", "tranchant"],
+    immunities: ["Poison", "Psychique"],
+    traits: [
+      {
+        name: "Champ magnétique",
+        description:
+          "Tant que le champ est actif, toute attaque contre la sphère avec une arme en métal touche automatiquement, mais l'arme reste collée à la sphère après l'impact.",
+      },
+    ],
+    actions: [],
+  },
+  belchorzh: {
+    name: "Belchorzh l'Invisible",
+    id: "_belchorzh",
+    type: "Aberration",
+    size: "Large",
+    alignment: "Lawful Evil",
+    armorClass: 18,
+    hitPoints: "240 (20d10 + 80)",
+    speed: {
+      walk: "1.5 m",
+      fly: "12 m (stationnaire)",
+    },
+    challengeRating: 13,
+    abilities: {
+      strength: 16,
+      dexterity: 14,
+      constitution: 18,
+      intelligence: 17,
+      wisdom: 15,
+      charisma: 17,
+    },
+    savingThrows: {
+      constitution: "+9",
+      wisdom: "+7",
+    },
+    skills: {
+      perception: "+12",
+    },
+    immunities: ["prone"],
+    languages: ["Deep Speech", "Undercommon"],
+    senses: {
+      darkvision: "36 m",
+      passivePerception: 22,
+    },
+    traits: [
+      {
+        name: "Résistance légendaire (3/jour)",
+        description: "Réussir un JdS après avoir raté",
+      },
+      {
+        name: "Invisibilité",
+        description: "Première série d'attaques avec avantage avant de se dévoiler",
+      },
+    ],
+    actions: [
+      {
+        name: "2x Morsure",
+        type: "Melee",
+        modifier: "+8",
+        reach: "1.5 m",
+        hit: "13 (3d6 + 3) dégâts perçants.",
+      },
+      {
+        name: "3x Rayons oculaires",
+        description: "Cible visible à 24 cases, 1d10 (relancer si déjà utilisé ce tour)",
+      },
+      {
+        name: "1. Charme",
+        description: "JdS SAG 16 (moitié) 3d8 psychiques + charmé 1 h ou jusqu'à subir des dégâts",
+      },
+      {
+        name: "2. Paralysie",
+        description: "JdS CON 16 paralysé pendant 10 tours, relancer JdS en fin de tour",
+      },
+      {
+        name: "3. Peur",
+        description:
+          "JdS SAG 16 (moitié) 4d6 psychiques + effrayé jusqu'à la fin de son prochain tour",
+      },
+      {
+        name: "4. Lenteur",
+        description:
+          "JdS CON 18 (moitié) 4d8 nécrotiques ; jusqu'à la fin de son prochain tour vitesse /2, pas de réaction, action OU action bonus.",
+      },
+      {
+        name: "5. Affaiblissement",
+        description:
+          "JdS CON 16 (moitié) 3d8 poison + empoisonné jusqu'à la fin de son prochain tour (ne peut regagner de PV)",
+      },
+      {
+        name: "6. Télékinésie",
+        description:
+          "JdS FOR 16, déplacé jusqu'à 6 cases + entravé jusqu'au début du prochain tour du tyrannoeil",
+      },
+      {
+        name: "7. Sommeil",
+        description:
+          "JdS SAG 16, inconscient 10 tours, finit si dégâts ou réveillé (action via un allié adjacent).",
+      },
+      {
+        name: "8. Pétrification",
+        description:
+          "JdS CON 16 échec = entravé, relance fin de son prochain tour ; 2e échec = pétrifié.",
+      },
+      {
+        name: "9. Désintégration",
+        description: "JdS DEX 16 (moitié) 8d8 force. Désintégré si 0 PV",
+      },
+      {
+        name: "10. Mort",
+        description: "JdS DEX 16 (moitié) 10d10 nécrotiques. Meurt si 0 PV",
+      },
+    ],
+    bonusActions: [
+      {
+        name: "Cône antimagie",
+        description:
+          "L'œil central émet un cône de 6 cases qui agit comme Champ antimagie jusqu'au début de son prochain tour (bloque aussi ses propres rayons). Champ antimagie : aucun lancement de sort, suppression des buffs magiques et effet magiques des objets. Aucune nouvelle application d'effet magique dans le champ",
+      },
+    ],
+    legendaryActions: [
+      {
+        name: "Croquer",
+        description: "2x morsure",
+      },
+      {
+        name: "Regard",
+        description: "3x rayons oculaires",
+      },
+    ],
+    legendaryActionsSlots: "3",
   },
 };

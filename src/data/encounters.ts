@@ -1820,4 +1820,118 @@ export const encounters: Encounter[] = [
     },
     youtubeId: "k9H-qtO2E8I",
   },
+  {
+    name: "Couloirs refléchis",
+    id: 231,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T31",
+    },
+    ennemies: {
+      "1": [
+        { id: "_tomb-guardian", color: "#AF706E" },
+        { id: "_tomb-guardian", color: "#C9D4D9" },
+      ],
+    },
+    youtubeId: "GMXiYs-wi3A",
+  },
+  {
+    name: "Tombe de Papazotl (skeleton)",
+    id: 235,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T35",
+    },
+    ennemies: {
+      "1": [{ id: "_skeleton-key", color: "#D0C3A7", variant: "" }],
+    },
+    youtubeId: "zp8ZlBUGdgs",
+  },
+  {
+    name: "Piège de la salle tournante",
+    id: 238,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T38",
+    },
+    ennemies: {
+      "1": [
+        { id: "_tomb-guardian", color: "#AF706E", variant: "" },
+        { id: "_rotating-room", color: "", variant: "", fixedInitiative: 10 },
+        { id: "_escape-door", color: "", variant: "", fixedInitiative: -10 },
+      ],
+    },
+    youtubeId: "GMXiYs-wi3A",
+  },
+  {
+    name: "Fosse du golem",
+    id: 239,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T39",
+    },
+    ennemies: {
+      "1": [{ id: "clay-golem", color: "rgb(0 224 255 / 0.9)", variant: "" }],
+    },
+    youtubeId: "2nmn1AkRsbE",
+  },
+  {
+    name: "Gardiens de tombe enchaînés",
+    id: 241,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T41",
+    },
+    ennemies: {
+      "1": [
+        { id: "_spiked-tomb-guardian", color: "#AF706E", variant: "" },
+        { id: "_spiked-tomb-guardian", color: "#C9D4D9", variant: "" },
+        { id: "_guardian-chain", color: "#000", variant: "", fixedInitiative: -10 },
+      ],
+    },
+    youtubeId: "oVZ8KGtZtwY",
+  },
+  {
+    name: "Tombe de Kubazan",
+    id: 242,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T42",
+    },
+    ennemies: {
+      "1": [
+        { id: "wraith", color: "#D0562A", variant: "" },
+        { id: "wraith", color: "#60E696", variant: "" },
+        { id: "wraith", color: "#9C88B1", variant: "" },
+        { id: "wraith", color: "#E7AFEB", variant: "" },
+      ],
+    },
+    youtubeId: "k9H-qtO2E8I",
+  },
+  {
+    name: "Caveau de Belcorzh",
+    id: 244,
+    scenario: "La tombe de l'annihilation",
+    location: {
+      name: "Tombeau des neuf dieux",
+      mapMarker: "T44",
+    },
+    ennemies: {
+      "1": [
+        { id: "_belchorzh", color: "#B7317E", variant: "" },
+        { id: "_magnetic-sphere", color: "", variant: "", fixedInitiative: -10 },
+      ],
+    },
+    informations: [
+      "Sol glissant : JdS DEX 10à chaque déplacement ou au sol",
+      "Sphère aimantée : Fleches désavantage, attire personnages en armur et coince les armes qui le frapent.",
+    ],
+    youtubeId: "8P2gQlpGso0",
+  },
 ];
