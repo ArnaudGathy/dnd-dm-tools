@@ -19,8 +19,8 @@ import { get, ref, set } from "firebase/database";
 import { database } from "@/lib/firebase/firebase";
 import { CharacterTracking } from "@/hooks/useCharacterTracker";
 
-import { getBonusHP } from "@/utils/stats/hp";
-import { applyMagicItemEffects } from "@/utils/items";
+import { getBonusHP, getEffectiveMaxHP } from "@/utils/stats/hp";
+import { applyCharacterEffects } from "@/utils/stats/effects";
 
 const syncCharacterHPToFirebase = async (
   characterName: string,
@@ -316,7 +316,7 @@ async function syncSimpleTable<Existing extends { id: number }, Incoming>(
 }
 
 const getNewHP = (rawCharacter: CharacterById, newLevel: number) => {
-  const character = applyMagicItemEffects(rawCharacter);
+  const character = applyCharacterEffects(rawCharacter);
   const baseHp = getBaseHP(character, newLevel);
 
   if (newLevel > 1) {
@@ -359,10 +359,23 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
   });
 
   const newHP = getNewHP(character, validation.data.level);
+  // HP state is read fresh: `character` is the snapshot the edit form was opened
+  // with, and HP may have changed since (combat tracker, another tab).
+  const hpState = await prisma.character.findUniqueOrThrow({
+    where: { id: character.id },
+    select: { currentHP: true, maximumHP: true, maximumHPAdjustment: true },
+  });
+  // The temporary adjustment is a delta, so it carries over onto the new base.
+  const newEffectiveMaxHP = getEffectiveMaxHP({
+    maximumHP: newHP,
+    maximumHPAdjustment: hpState.maximumHPAdjustment,
+  });
   // A character at full HP follows the new maximum (e.g. on level up); a wounded
   // one keeps its current HP, clamped in case the maximum went down.
   const newCurrentHP =
-    character.currentHP >= character.maximumHP ? newHP : Math.min(character.currentHP, newHP);
+    hpState.currentHP >= getEffectiveMaxHP(hpState)
+      ? newEffectiveMaxHP
+      : Math.min(hpState.currentHP, newEffectiveMaxHP);
 
   await prisma.character.update({
     where: { id: character.id },
@@ -529,7 +542,7 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
 
   await syncCharacterHPToFirebase(validation.data.name, {
     currentHP: newCurrentHP,
-    maximumHP: newHP,
+    maximumHP: newEffectiveMaxHP,
   });
 
   redirect(`/characters/${character.id}`);
@@ -634,6 +647,87 @@ export const resetHp = async (characterId: number, maxHp: number) => {
 
   await syncCharacterHPToFirebase(character.name, {
     currentHP: maxHp,
+  });
+
+  revalidatePath(`/characters/${characterId}`);
+};
+
+/** Overrides the max HP in effect (Life Drain, Aid…) while keeping the computed
+ *  `maximumHP` intact, so it can be restored later. Lowering clamps current HP to
+ *  the new max; raising above the base grants the extra HP (Aid-style), but
+ *  restoring lost max HP never heals. */
+export const setMaximumHP = async (characterId: number, newMaxHp: number) => {
+  const validation = z.number().int().min(0).max(999).safeParse(newMaxHp);
+  if (!validation.success) {
+    return { error: "PV max invalides." };
+  }
+  const newMax = validation.data;
+
+  const result = await prisma.$transaction(
+    async (tx) => {
+      const current = await tx.character.findUnique({
+        where: { id: characterId },
+        select: { maximumHP: true, maximumHPAdjustment: true, currentHP: true },
+      });
+      if (!current) {
+        return null;
+      }
+
+      const oldMax = getEffectiveMaxHP(current);
+      const gain = Math.max(0, newMax - Math.max(oldMax, current.maximumHP));
+      const hp = Math.min(current.currentHP + gain, newMax);
+
+      const character = await tx.character.update({
+        where: { id: characterId },
+        data: { maximumHPAdjustment: newMax - current.maximumHP, currentHP: hp },
+      });
+      return { name: character.name, hp };
+    },
+    { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+  );
+
+  if (!result) {
+    return { error: "Personnage introuvable." };
+  }
+
+  await syncCharacterHPToFirebase(result.name, { currentHP: result.hp, maximumHP: newMax });
+
+  revalidatePath(`/characters/${characterId}`);
+  return { error: "" };
+};
+
+/** Drops the temporary adjustment and goes back to the computed max HP.
+ *  `refill` (long rest) also sets current HP to that max; otherwise current HP
+ *  is only clamped down, in case the adjustment had raised the max. */
+export const resetMaximumHP = async (characterId: number, { refill = false } = {}) => {
+  const result = await prisma.$transaction(
+    async (tx) => {
+      const current = await tx.character.findUnique({
+        where: { id: characterId },
+        select: { maximumHP: true, currentHP: true },
+      });
+      if (!current) {
+        return null;
+      }
+
+      const hp = refill ? current.maximumHP : Math.min(current.currentHP, current.maximumHP);
+      const character = await tx.character.update({
+        where: { id: characterId },
+        data: { maximumHPAdjustment: 0, currentHP: hp },
+      });
+      return { name: character.name, hp, maxHp: current.maximumHP };
+    },
+    { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+  );
+
+  if (!result) {
+    console.error(`resetMaximumHP: character ${characterId} not found`);
+    return;
+  }
+
+  await syncCharacterHPToFirebase(result.name, {
+    currentHP: result.hp,
+    maximumHP: result.maxHp,
   });
 
   revalidatePath(`/characters/${characterId}`);

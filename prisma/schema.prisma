@@ -247,6 +247,9 @@ model Character {
   background    Backgrounds
   inspiration   Int         @default(0)
   maximumHP     Int
+  /// Temporary change to the computed maximumHP (Life Drain, Aid…).
+  /// Effective max = max(0, maximumHP + maximumHPAdjustment).
+  maximumHPAdjustment Int @default(0)
   currentHP     Int
   currentTempHP Int         @default(0)
   HPModifier    Int         @default(0)

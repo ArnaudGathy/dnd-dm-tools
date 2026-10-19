@@ -10,7 +10,7 @@ import {
   PartyId,
   Skill,
 } from "@prisma/client";
-import { applyMagicItemEffects } from "@/utils/items";
+import { applyCharacterEffects } from "@/utils/stats/effects";
 import { compareLocale, sortByName } from "@/utils/sort";
 
 const STATUS_ORDER = Object.values(CharacterStatus);
@@ -238,7 +238,7 @@ export const getDMScreenCharactersFromCampaignId = async (
           magicItems: true,
         },
       });
-      return characters.map(applyMagicItemEffects);
+      return characters.map(applyCharacterEffects);
     }
   }
 

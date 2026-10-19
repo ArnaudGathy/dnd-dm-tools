@@ -2,14 +2,22 @@
 
 import { Delete, Heart, RotateCcw } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { drainTempHp, resetHp, setHp, setTempHp } from "@/lib/actions/characters";
+import {
+  drainTempHp,
+  resetHp,
+  resetMaximumHP,
+  setHp,
+  setMaximumHP,
+  setTempHp,
+} from "@/lib/actions/characters";
 import { CharacterById, cn } from "@/lib/utils";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { useState } from "react";
+import { getEffectiveMaxHP } from "@/utils/stats/hp";
 
 const AMOUNT_MAX_DIGITS = 3;
 
-type HpVerb = "damage" | "heal" | "tempAdd" | "tempRemove" | "set";
+type HpVerb = "damage" | "heal" | "tempAdd" | "tempRemove" | "set" | "setMax";
 
 /** Compact "17+5" readout of an (hp, temp) pair. `tempClassName` defaults to
  *  teal but must be overridden to inherit on colored surfaces (verb buttons). */
@@ -41,7 +49,10 @@ export default function HPForm({ character }: { character: CharacterById }) {
   const [amountStr, setAmountStr] = useState("");
   const [isPending, setIsPending] = useState(false);
 
-  const maxHP = character.maximumHP;
+  // `maximumHP` is the computed max; the adjustment (Life Drain, Aid…) sits on top.
+  const computedMaxHP = character.maximumHP;
+  const maxHP = getEffectiveMaxHP(character);
+  const isMaxAdjusted = maxHP !== computedMaxHP;
   const currentHP = character.currentHP;
   const currentTemp = character.currentTempHP;
   const amount = amountStr === "" ? 0 : parseInt(amountStr, 10);
@@ -58,6 +69,11 @@ export default function HPForm({ character }: { character: CharacterById }) {
     tempAdd: { hp: currentHP, temp: currentTemp + amount },
     tempRemove: { hp: currentHP, temp: Math.max(currentTemp - amount, 0) },
     set: { hp: clampHp(amount), temp: currentTemp },
+    // Mirrors setMaximumHP: only the part above the computed max grants HP.
+    setMax: {
+      hp: Math.min(currentHP + Math.max(0, amount - Math.max(maxHP, computedMaxHP)), amount),
+      temp: currentTemp,
+    },
   };
 
   const applyVerb = async (verb: HpVerb) => {
@@ -74,6 +90,8 @@ export default function HPForm({ character }: { character: CharacterById }) {
         await setTempHp(character.id, currentTemp + amount);
       } else if (verb === "tempRemove") {
         await setTempHp(character.id, currentTemp - amount);
+      } else if (verb === "setMax") {
+        await setMaximumHP(character.id, amount);
       } else {
         await setHp(character.id, maxHP, amount);
       }
@@ -91,6 +109,20 @@ export default function HPForm({ character }: { character: CharacterById }) {
     setIsPending(true);
     try {
       await resetHp(character.id, maxHP);
+      setAmountStr("");
+      setIsOpen(false);
+    } finally {
+      setIsPending(false);
+    }
+  };
+
+  const handleResetMax = async () => {
+    if (isPending) {
+      return;
+    }
+    setIsPending(true);
+    try {
+      await resetMaximumHP(character.id);
       setAmountStr("");
       setIsOpen(false);
     } finally {
@@ -116,6 +148,17 @@ export default function HPForm({ character }: { character: CharacterById }) {
     "bg-red-500": currentHP <= maxHP * 0.2,
     "bg-stone-500": currentHP <= 0,
   });
+
+  // An adjusted max is tinted (amber when lowered, teal when raised) so a
+  // reduced pool is never mistaken for the character's normal maximum.
+  const maxDisplay = (
+    <span
+      className={cn(isMaxAdjusted && (maxHP < computedMaxHP ? "text-amber-500" : "text-teal-500"))}
+      title={isMaxAdjusted ? `Reset max : ${computedMaxHP}` : undefined}
+    >
+      {maxHP}
+    </span>
+  );
 
   const verbPreview = (verb: HpVerb) =>
     hasAmount && (
@@ -148,7 +191,10 @@ export default function HPForm({ character }: { character: CharacterById }) {
             </span>
             <div className="text-2xl font-bold tabular-nums leading-none">
               <HpValue hp={baseHP} temp={currentTemp} />
-              <span className="text-base font-semibold text-muted-foreground">{` / ${maxHP}`}</span>
+              <span className="text-base font-semibold text-muted-foreground">
+                {" / "}
+                {maxDisplay}
+              </span>
             </div>
           </div>
           <div className="flex h-2 w-full overflow-hidden rounded-full bg-background/60">
@@ -172,7 +218,8 @@ export default function HPForm({ character }: { character: CharacterById }) {
           </span>
           <span className="text-sm font-bold text-muted-foreground">
             <HpValue hp={baseHP} temp={currentTemp} />
-            {` / ${maxHP}`}
+            {" / "}
+            {maxDisplay}
           </span>
         </header>
 
@@ -308,6 +355,31 @@ export default function HPForm({ character }: { character: CharacterById }) {
               }}
             >
               <RotateCcw /> MAX
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 gap-1">
+            <Button
+              theme="neutral"
+              size="xs"
+              disabled={!hasAmount || isPending}
+              title="Modifier les PV max (absorption de vie, Aide…). Baisser le max réduit les PV actuels s'ils le dépassent."
+              onClick={() => {
+                void applyVerb("setMax");
+              }}
+            >
+              {hasAmount ? `Max = ${amount} → ${projections.setMax.hp} PV` : "PV max"}
+            </Button>
+            <Button
+              theme="white"
+              size="xs"
+              disabled={!isMaxAdjusted || isPending}
+              title="Revenir aux PV max calculés"
+              onClick={() => {
+                void handleResetMax();
+              }}
+            >
+              <RotateCcw /> {`Reset max (${computedMaxHP})`}
             </Button>
           </div>
         </div>

@@ -62,6 +62,7 @@ export const assignInventoryItemToCharacter = async ({
   revalidatePath(`/characters/${characterId}`);
 };
 
+/** `toCharacterId: null` returns the item to the DM's pool (/dm-tools). */
 export const transferInventoryItem = async ({
   itemId,
   fromCharacterId,
@@ -70,7 +71,7 @@ export const transferInventoryItem = async ({
 }: {
   itemId: number;
   fromCharacterId: number;
-  toCharacterId: number;
+  toCharacterId: number | null;
   quantity: number;
 }) => {
   const item = await prisma.inventoryItem.findUnique({ where: { id: itemId } });
@@ -84,7 +85,10 @@ export const transferInventoryItem = async ({
     // Transfer the whole stack: just reassign it to the target character.
     await prisma.inventoryItem.update({
       where: { id: itemId },
-      data: { characterId: toCharacterId },
+      data:
+        toCharacterId === null
+          ? { characterId: null, isCombatRelevant: false }
+          : { characterId: toCharacterId },
     });
   } else {
     // Split the stack: decrement the source, create a new stack on the target.
@@ -106,7 +110,12 @@ export const transferInventoryItem = async ({
   }
 
   revalidatePath(`/characters/${fromCharacterId}`);
-  revalidatePath(`/characters/${toCharacterId}`);
+  if (toCharacterId === null) {
+    revalidatePath("/dm-tools");
+    revalidatePath("/inventory-items");
+  } else {
+    revalidatePath(`/characters/${toCharacterId}`);
+  }
 };
 
 export const deleteInventoryItem = async (itemId: number) => {

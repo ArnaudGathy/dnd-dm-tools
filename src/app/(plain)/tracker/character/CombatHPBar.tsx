@@ -13,6 +13,10 @@ interface CombatHPBarProps {
   currentTempHP: number;
 }
 
+// Max HP can be reduced to 0 (Life Drain), so never divide by it directly.
+const toPercent = (hp: number, maximumHP: number) =>
+  maximumHP > 0 ? Math.max(0, Math.min(100, Math.round((hp / maximumHP) * 100))) : 0;
+
 export default function CombatHPBar({
   name,
   currentHP,
@@ -22,11 +26,11 @@ export default function CombatHPBar({
   const prevHPRef = useRef(currentHP);
   const [isHit, setIsHit] = useState(false);
   const [isHealing, setIsHealing] = useState(false);
-  const [ghostPercent, setGhostPercent] = useState(Math.round((currentHP / maximumHP) * 100));
+  const [ghostPercent, setGhostPercent] = useState(toPercent(currentHP, maximumHP));
   const hitCountRef = useRef(0);
   const healCountRef = useRef(0);
 
-  const currentPercent = Math.max(0, Math.min(100, Math.round((currentHP / maximumHP) * 100)));
+  const currentPercent = toPercent(currentHP, maximumHP);
 
   useEffect(() => {
     const prevHP = prevHPRef.current;
@@ -36,7 +40,7 @@ export default function CombatHPBar({
       hitCountRef.current += 1;
 
       // Ghost bar still shows the old value — it will animate via CSS transition
-      setGhostPercent(Math.round((prevHP / maximumHP) * 100));
+      setGhostPercent(toPercent(prevHP, maximumHP));
 
       setIsHit(true);
 

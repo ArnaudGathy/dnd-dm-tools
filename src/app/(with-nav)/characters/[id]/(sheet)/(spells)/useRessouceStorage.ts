@@ -68,6 +68,12 @@ const ressourceNames = [
   "draconicBreath",
   "draconicFlight",
   "bardicInspiration",
+  "rage",
+  "persistentRage",
+  "intimidatingPresence",
+  "warriorOfTheGods",
+  "zealousPresence",
+  "rageOfTheGods",
 ] as const;
 export type RessourceName = (typeof ressourceNames)[number];
 
@@ -249,6 +255,30 @@ const initialValues: RessourceStorage = {
       ...initialRessource,
       theme: "amber",
     },
+    rage: {
+      ...initialRessource,
+      theme: "red",
+    },
+    persistentRage: {
+      ...initialRessource,
+      theme: "orange",
+    },
+    intimidatingPresence: {
+      ...initialRessource,
+      theme: "violet",
+    },
+    warriorOfTheGods: {
+      ...initialRessource,
+      theme: "emerald",
+    },
+    zealousPresence: {
+      ...initialRessource,
+      theme: "amber",
+    },
+    rageOfTheGods: {
+      ...initialRessource,
+      theme: "yellow",
+    },
   },
 };
 
@@ -276,6 +306,7 @@ export const useRessourceStorage = (character: CharacterById) => {
     secondWind: "one",
     actionSurge: "one",
     divineConduit: "one",
+    rage: "one",
   };
 
   const [store, setStore] = useLocalStorage<RessourceStorage>(`${parsedCharacterName}.ressources`, {

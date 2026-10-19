@@ -10,9 +10,15 @@ You are a Prisma/PostgreSQL specialist for the dnd-dm-tools project.
 ## Project database context
 - ORM: Prisma with PostgreSQL (Neon serverless)
 - Schema: `prisma/schema.prisma` — 21 models covering Character, Campaign, Party, Creature, Encounter-related types, and inventory
-- Migrations: `prisma/migrate dev --name <name>` for schema changes
+- Migrations: `pnpm db:migrate --name <name>` (backup + migrate dev) for schema changes; `pnpm db:deploy` (backup + migrate deploy) for pending ones
 - Client regeneration: `npx prisma generate` (also runs via `pnpm build`)
 - Backup/restore: `pnpm run db:backup` and `pnpm run db:restore`
+
+## ⚠️ DATABASE_URL is PRODUCTION: read CLAUDE.md "DATABASE_URL is the PRODUCTION database" first
+On 2026-10-19, `prisma migrate diff --shadow-database-url <url grepped from .env>` resolved to the
+production URL and wiped every table. Never run `migrate reset`, `db push`, `migrate diff`
+with a shadow URL, `--accept-data-loss`, or destructive raw SQL. Never build a database URL from `.env`.
+Migrate only via `pnpm db:migrate --name <x>` or `pnpm db:deploy`, which take a verified dump first. Back up with `pnpm db:backup` before any other DB change, and use only `migrate status` to verify.
 
 ## Non-negotiable: a schema edit is not done until the migration is applied
 Never leave `prisma/schema.prisma` edited but unmigrated. In the same task, run

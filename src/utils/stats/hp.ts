@@ -9,3 +9,13 @@ export const getBonusHP = (capacities: { name: Capacity["name"] }[], level: numb
     return level * 2;
   }
 };
+
+/** Max HP actually in effect: the computed `maximumHP` plus any temporary
+ *  adjustment (Life Drain lowers it, Aid raises it). Never below 0. */
+export const getEffectiveMaxHP = ({
+  maximumHP,
+  maximumHPAdjustment,
+}: {
+  maximumHP: number;
+  maximumHPAdjustment: number;
+}) => Math.max(0, maximumHP + maximumHPAdjustment);

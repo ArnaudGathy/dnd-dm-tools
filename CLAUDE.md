@@ -16,10 +16,11 @@ pnpm start        # Start production server
 pnpm lint         # ESLint with auto-fix (0 warnings allowed)
 pnpm typecheck    # TypeScript type checking
 
-# Database
-pnpm db:migrate   # Run Prisma migrations
-pnpm db:backup    # PostgreSQL backup to backups/
-pnpm db:restore   # PostgreSQL restore from backup
+# Database: DATABASE_URL is PRODUCTION, read the warning under Architecture first
+pnpm db:backup    # Verified pg_dump to backups/ (scripts/backup-db.sh). Run before ANY DB change
+pnpm db:migrate --name <snake_case>  # Backup, then prisma migrate dev (create + apply a new migration)
+pnpm db:deploy    # Backup, then prisma migrate deploy (apply pending migrations only, never resets)
+pnpm db:restore   # PostgreSQL restore from backup (destructive, only the user runs it)
 
 # Spell cache (AideDD — see .claude/rules/spell-data.md)
 pnpm spells:sync          # Insert missing creature-referenced spells into the Spell table
@@ -50,10 +51,48 @@ Pre-commit hooks run lint-staged automatically via Husky.
 
 **Database:** 21 Prisma models in `prisma/schema.prisma` — core models are Character, Campaign, Party, Creature, Encounter; character stats spread across SavingThrow, Skill, SpellsOnCharacters, CreaturesOnCharacters, Weapon, Armor, MagicItem, InventoryItem, Money.
 
-**Never edit `prisma/schema.prisma` without immediately applying a migration.** Any schema
+### ⚠️ `DATABASE_URL` is the PRODUCTION database
+
+There is no local dev database: every Prisma command, script and query in this repo hits
+production data.
+
+**Incident (2026-10-19):** after a migration, Claude ran
+`prisma migrate diff --from-migrations prisma/migrations --to-schema-datamodel … --shadow-database-url "$(grep -E '^SHADOW|^DATABASE_URL' .env | head -1 …)"`
+to check the schema. There was no `SHADOW*` variable, so the grep fell back to
+`DATABASE_URL`. Prisma **resets the shadow database** before using it, which wiped every
+production table. The data had to be restored from a backup.
+
+Rules (no exceptions, even in auto mode or when a command "only verifies"):
+- **Never run a command that can reset or drop data:** `prisma migrate reset`, `prisma db push`
+  (any flags), `--force-reset`, `--accept-data-loss`, `prisma migrate diff` with
+  `--shadow-database-url` or `--from-migrations`, `pnpm db:restore`, and raw
+  `DROP`/`TRUNCATE`/`DELETE`/`ALTER` through `prisma db execute`, `psql` or `$executeRaw`.
+- **Never build connection strings from `.env`** with grep/cut/fallbacks, and never pass a
+  database URL to a CLI flag. Prisma reads the URLs from the datasource config by itself.
+- **Use `npx prisma migrate status` to check that schema and migrations match.** It is read-only
+  and is the only verification needed.
+- **Back up before ANY database change:** migrations, `spells:*` and other bulk scripts,
+  manual SQL, or data fixes. Run `pnpm db:backup` (`scripts/backup-db.sh`). It is a read-only
+  `pg_dump` into `backups/backup_<timestamp>.sql`. It exits non-zero if the dump lacks pg_dump's
+  completion marker or contains 0 `Character` rows. On success it prints
+  `backup-db: OK → <file> (<size>, <n> characters)`. Quote that line to the user. If it fails,
+  stop and do not touch the database.
+- **Claude may create and apply migrations on production without asking,** provided a verified
+  dump was taken first. Always go through the wrappers, which back up and then migrate:
+  `pnpm db:migrate --name <snake_case>` to create and apply a new migration, and `pnpm db:deploy`
+  to apply migrations that already exist. Never call `prisma migrate dev`/`deploy` directly. Report
+  the `backup-db: OK` line and the migration name so the dump can be restored if something goes
+  wrong. If the output mentions drift, a reset, or data loss, abort and ask. Never accept the prompt.
+- These rules are also enforced by `deny` rules in `.claude/settings.json` (migrate reset/diff,
+  db push, shadow URL, accept-data-loss, force-reset, db:restore). Do not remove them.
+- Bulk-write scripts (`spells:*`, backfills) also write to production. Run them only when the user
+  asks.
+
+**Never edit `prisma/schema.prisma` without applying a migration in the same task.** Any schema
 change — a new model, column, enum value or default — must be followed in the same task by
-`npx prisma migrate dev --name <snake_case_name>` (or the `/db-migrate` command), then
-`pnpm typecheck && pnpm lint`. Editing the schema and stopping there leaves the generated
+`pnpm db:migrate --name <snake_case_name>` (backup + migrate; or the `/db-migrate` command), then
+`pnpm typecheck && pnpm lint`. After a migration, tell the user to restart `pnpm dev` (and the IDE TS
+server): a running dev server keeps the old Prisma client, so new columns read as `undefined`. Editing the schema and stopping there leaves the generated
 client ahead of the real database: the code typechecks, then blows up at runtime on a column
 that does not exist. Confirm with `npx prisma migrate status` (expect "Database schema is up
 to date!") and report the migration name when done. Do not use `prisma db push` — this

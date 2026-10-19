@@ -3,7 +3,7 @@
 import { CharacterById } from "@/lib/utils";
 import RessourcesConfigMenu from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/RessourcesConfigMenu";
 import dynamic from "next/dynamic";
-import { resetHp } from "@/lib/actions/characters";
+import { resetMaximumHP } from "@/lib/actions/characters";
 import { SectionPanel } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 import { FlameKindling } from "lucide-react";
 import { DisplayRessource } from "@/app/(with-nav)/characters/[id]/(sheet)/(spells)/useRessourceData";
@@ -57,7 +57,8 @@ function Ressources({
             shortRestAction={(useSorceryRestoration) => shortRest({ useSorceryRestoration })}
             longRestAction={() => {
               longRest(character);
-              void resetHp(character.id, character.maximumHP);
+              // A long rest ends max HP reductions/boosts and refills HP.
+              void resetMaximumHP(character.id, { refill: true });
             }}
           />
           <RessourcesConfigMenu

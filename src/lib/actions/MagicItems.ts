@@ -60,6 +60,7 @@ export const assignMagicItemToCharacter = async ({
   revalidatePath(`/characters/${characterId}`);
 };
 
+/** `toCharacterId: null` returns the item to the DM's pool (/dm-tools). */
 export const transferMagicItem = async ({
   itemId,
   fromCharacterId,
@@ -67,15 +68,23 @@ export const transferMagicItem = async ({
 }: {
   itemId: number;
   fromCharacterId: number;
-  toCharacterId: number;
+  toCharacterId: number | null;
 }) => {
   await prisma.magicItem.update({
     where: { id: itemId },
-    data: { characterId: toCharacterId },
+    data:
+      toCharacterId === null
+        ? { characterId: null, isAttuned: false, isCombatRelevant: false }
+        : { characterId: toCharacterId },
   });
 
   revalidatePath(`/characters/${fromCharacterId}`);
-  revalidatePath(`/characters/${toCharacterId}`);
+  if (toCharacterId === null) {
+    revalidatePath("/dm-tools");
+    revalidatePath("/magic-items");
+  } else {
+    revalidatePath(`/characters/${toCharacterId}`);
+  }
 };
 
 export const deleteMagicItem = async (itemId: number) => {

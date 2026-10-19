@@ -2,6 +2,7 @@ import { getTotalAC } from "@/utils/stats/ac";
 import { DMScreenCharacter } from "@/lib/api/characters";
 import { getSaveDC } from "@/utils/stats/classSpecific";
 import { getPassivePerception } from "@/utils/stats/skills";
+import { getEffectiveMaxHP } from "@/utils/stats/hp";
 import SimpleTable from "@/app/dm-screen/SimpleTable";
 import TableTitle from "@/app/dm-screen/TableTitle";
 
@@ -18,7 +19,7 @@ export default function CharacterStatsTable({ characters }: { characters: DMScre
             <tr key={character.id}>
               <td>{character.name}</td>
               <td>{AC}</td>
-              <td>{character.maximumHP}</td>
+              <td>{getEffectiveMaxHP(character)}</td>
               <td>{saveDC}</td>
               <td>{getPassivePerception(character)}</td>
             </tr>

@@ -3,7 +3,7 @@ import { extendTailwindMerge } from "tailwind-merge";
 import { auth } from "@/../auth";
 import { notFound, redirect } from "next/navigation";
 import { getCharacterById } from "@/lib/api/characters";
-import { applyMagicItemEffects } from "@/utils/items";
+import { applyCharacterEffects } from "@/utils/stats/effects";
 import {
   Armor,
   Campaign,
@@ -75,7 +75,7 @@ export type CharacterByOwner = Character &
     campaign: Campaign & { party: Party };
   };
 
-/** `raw: true` skips magic item effects — use it where the base scores are edited. */
+/** `raw: true` skips class feature & magic item effects — use it where the base scores are edited. */
 export async function getValidCharacter(characterId: string, { raw = false } = {}) {
   const { userMail, isAdmin } = await getSessionData();
   const character = await getCharacterById({
@@ -91,7 +91,7 @@ export async function getValidCharacter(characterId: string, { raw = false } = {
     userMail === character.owner ||
     (!!userMail && character.campaign.owner.includes(userMail))
   ) {
-    return raw ? character : applyMagicItemEffects(character);
+    return raw ? character : applyCharacterEffects(character);
   }
 
   return redirect("/");

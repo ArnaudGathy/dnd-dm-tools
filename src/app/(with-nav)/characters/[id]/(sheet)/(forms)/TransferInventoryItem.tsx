@@ -15,6 +15,8 @@ import { ArrowRightLeft, LoaderCircle } from "lucide-react";
 import { transferInventoryItem } from "@/lib/actions/InventoryItems";
 import { Group } from "@/hooks/useGroupFromCampaign";
 
+const DM_TARGET = "dm";
+
 export default function TransferInventoryItem({
   itemId,
   itemQuantity,
@@ -54,32 +56,26 @@ export default function TransferInventoryItem({
     await transferInventoryItem({
       itemId,
       fromCharacterId: currentCharacterId,
-      toCharacterId: Number(targetId),
+      toCharacterId: targetId === DM_TARGET ? null : Number(targetId),
       quantity: amount,
     });
     setIsLoading(false);
     closeAction();
   };
 
-  const hasCharacters = characters.length > 0;
   const canSplit = itemQuantity > 1;
 
   return (
     <div className="mt-1 flex flex-col gap-2 border-t border-border pt-3">
       <span className="text-tiny font-semibold uppercase tracking-wide text-muted-foreground">
-        Transférer à un autre personnage
+        Transférer
       </span>
       {isFetching && (
         <span className="flex items-center gap-2 text-sm text-muted-foreground">
           <LoaderCircle className="size-4 animate-spin" /> Chargement...
         </span>
       )}
-      {!isFetching && !hasCharacters && (
-        <span className="text-sm text-muted-foreground">
-          Aucun autre personnage actif dans cette campagne
-        </span>
-      )}
-      {!isFetching && hasCharacters && (
+      {!isFetching && (
         <div className="flex gap-2">
           {canSplit && (
             <Input
@@ -94,9 +90,10 @@ export default function TransferInventoryItem({
           )}
           <Select value={targetId} onValueChange={setTargetId}>
             <SelectTrigger className="w-full">
-              <SelectValue placeholder="Choisir un personnage" />
+              <SelectValue placeholder="Choisir un destinataire" />
             </SelectTrigger>
             <SelectContent>
+              <SelectItem value={DM_TARGET}>Rendre au MJ</SelectItem>
               {characters.map((character) => (
                 <SelectItem key={character.id} value={String(character.id)}>
                   {character.name}

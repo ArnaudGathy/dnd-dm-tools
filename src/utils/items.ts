@@ -60,6 +60,6 @@ export const applyMagicItemEffects = <T extends Character & { magicItems: MagicI
     ...character,
     constitution: hasHealthAmulet ? Math.max(character.constitution, 19) : character.constitution,
     strength: hasKubazanBracers ? 23 : character.strength,
-    charisma: hasIjinWand ? 23 : character.charisma,
+    dexterity: hasIjinWand ? 23 : character.dexterity,
   };
 };

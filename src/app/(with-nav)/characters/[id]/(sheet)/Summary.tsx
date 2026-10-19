@@ -16,6 +16,7 @@ import { addSignToNumber, getModifier, hasCreatures } from "@/utils/utils";
 import { ElementType, ReactNode } from "react";
 import Link from "next/link";
 import { getMovementSpeed } from "@/utils/stats/speed";
+import { getEffectiveMaxHP } from "@/utils/stats/hp";
 import { getHasSpells, getSpellCastingStat } from "@/utils/stats/spells";
 
 /** A circular ability medallion: score in a ring, sign-tinted modifier badge, label below. */
@@ -204,7 +205,7 @@ export default function Summary({ character }: { character: CharacterById }) {
               }
             />
             <div className="hidden h-8 w-px self-center bg-border/70 md:block" />
-            <Constant label="Points de vie" value={character.maximumHP} />
+            <Constant label="Points de vie" value={getEffectiveMaxHP(character)} />
             <div className="hidden h-8 w-px self-center bg-border/70 md:block" />
             <Constant label="Vitesse" value={`${movementSpeedDetails.total} cases`} />
             {spellCastingModifier && (

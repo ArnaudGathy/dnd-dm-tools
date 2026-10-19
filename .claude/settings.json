@@ -14,7 +14,20 @@
       "Bash(git log *)",
       "Bash(git status)",
       "Bash(git add *)",
-      "Bash(git commit *)"
+      "Bash(git commit *)",
+      "Bash(pnpm db:backup)",
+      "Bash(pnpm db:deploy)",
+      "Bash(pnpm db:migrate)",
+      "Bash(pnpm db:migrate *)"
+    ],
+    "deny": [
+      "Bash(*prisma migrate reset*)",
+      "Bash(*prisma db push*)",
+      "Bash(*prisma migrate diff*)",
+      "Bash(*--shadow-database-url*)",
+      "Bash(*--accept-data-loss*)",
+      "Bash(*--force-reset*)",
+      "Bash(pnpm db:restore*)"
     ]
   },
   "plansDirectory": ".claude/plans"

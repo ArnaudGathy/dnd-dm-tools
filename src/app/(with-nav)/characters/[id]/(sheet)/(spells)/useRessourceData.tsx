@@ -35,6 +35,12 @@ import {
   SwordIcon,
   Waves,
   Music,
+  Angry,
+  Hourglass,
+  Skull,
+  HeartPulse,
+  Megaphone,
+  Sun,
 } from "lucide-react";
 import { Classes, Races, Subclasses } from "@prisma/client";
 import {
@@ -47,6 +53,8 @@ import {
   FIGHTER_ACTION_SURGE_PER_LEVEL,
   FIGHTER_UNYIELDING_PER_LEVEL,
   FIGHTER_WAR_MASTER_SUPERIORITY_DICE_PER_LEVEL,
+  BARBARIAN_RAGES_PER_LEVEL,
+  BARBARIAN_ZEALOT_WARRIOR_OF_THE_GODS_PER_LEVEL,
 } from "@/constants/maps";
 import { getModifier } from "@/utils/utils";
 import { filter, reduce, sortBy } from "remeda";
@@ -421,6 +429,63 @@ export default function useRessourceData({ character }: { character: CharacterBy
       condition: character.className === Classes.BARD,
     },
   ];
+  const barbarian: RessourceDefinition[] = [
+    {
+      name: "Rage",
+      icon: <Angry />,
+      ressourceName: "rage",
+      total: BARBARIAN_RAGES_PER_LEVEL[character.level],
+      condition: character.className === Classes.BARBARIAN,
+    },
+    {
+      /* Regain all rages when rolling initiative, once per long rest */
+      name: "Rage persistante",
+      icon: <Hourglass />,
+      ressourceName: "persistentRage",
+      total: 1,
+      condition: character.className === Classes.BARBARIAN && character.level >= 15,
+    },
+    {
+      name: "Présence intimidante",
+      icon: <Skull />,
+      ressourceName: "intimidatingPresence",
+      total: 1,
+      condition:
+        character.className === Classes.BARBARIAN &&
+        character.subclassName === Subclasses.PATH_OF_THE_BERSERKER &&
+        character.level >= 14,
+    },
+    {
+      name: "Guerrier des dieux",
+      icon: <HeartPulse />,
+      ressourceName: "warriorOfTheGods",
+      total: BARBARIAN_ZEALOT_WARRIOR_OF_THE_GODS_PER_LEVEL[character.level],
+      condition:
+        character.className === Classes.BARBARIAN &&
+        character.subclassName === Subclasses.PATH_OF_THE_ZEALOT &&
+        character.level >= 3,
+    },
+    {
+      name: "Présence zélée",
+      icon: <Megaphone />,
+      ressourceName: "zealousPresence",
+      total: 1,
+      condition:
+        character.className === Classes.BARBARIAN &&
+        character.subclassName === Subclasses.PATH_OF_THE_ZEALOT &&
+        character.level >= 10,
+    },
+    {
+      name: "Rage des dieux",
+      icon: <Sun />,
+      ressourceName: "rageOfTheGods",
+      total: 1,
+      condition:
+        character.className === Classes.BARBARIAN &&
+        character.subclassName === Subclasses.PATH_OF_THE_ZEALOT &&
+        character.level >= 14,
+    },
+  ];
 
   const buildRessourceArray = (ressources: RessourceDefinition[]) => {
     return reduce(
@@ -461,6 +526,7 @@ export default function useRessourceData({ character }: { character: CharacterBy
       ...fighter,
       ...paladin,
       ...bard,
+      ...barbarian,
     ]),
     ({ useRessource }) => useRessource[0].order,
   );

@@ -350,6 +350,11 @@ export const MONK_SPEED_IN_SQUARE: Record<number, number> = {
 
 export const RANGER_ROVING_LEVEL = 6;
 export const RANGER_SPEED_BONUS_IN_SQUARE = 2; // Roving (level 6+): +10 ft / +3 m
+export const BARBARIAN_FAST_MOVEMENT_LEVEL = 5;
+export const BARBARIAN_SPEED_BONUS_IN_SQUARE = 2; // Fast Movement (level 5+, no heavy armor): +10 ft / +3 m
+export const BARBARIAN_PRIMAL_CHAMPION_LEVEL = 20;
+export const BARBARIAN_PRIMAL_CHAMPION_BONUS = 4; // Primal Champion: +4 STR
+export const BARBARIAN_PRIMAL_CHAMPION_MAX = 25;
 
 export const ROGUE_SOULKNIFE_PSI_DICES_PER_LEVEL: Record<number, number> = {
   1: 0,
@@ -533,6 +538,53 @@ export const FIGHTER_UNYIELDING_PER_LEVEL: Record<number, number> = {
   18: 3,
   19: 3,
   20: 3,
+};
+
+export const BARBARIAN_RAGES_PER_LEVEL: Record<number, number> = {
+  1: 2,
+  2: 2,
+  3: 3,
+  4: 3,
+  5: 3,
+  6: 4,
+  7: 4,
+  8: 4,
+  9: 4,
+  10: 4,
+  11: 4,
+  12: 5,
+  13: 5,
+  14: 5,
+  15: 5,
+  16: 5,
+  17: 6,
+  18: 6,
+  19: 6,
+  20: 6,
+};
+
+/* Zealot "Guerrier des dieux" : pool of d12s to heal yourself */
+export const BARBARIAN_ZEALOT_WARRIOR_OF_THE_GODS_PER_LEVEL: Record<number, number> = {
+  1: 0,
+  2: 0,
+  3: 4,
+  4: 4,
+  5: 4,
+  6: 5,
+  7: 5,
+  8: 5,
+  9: 5,
+  10: 5,
+  11: 5,
+  12: 6,
+  13: 6,
+  14: 6,
+  15: 6,
+  16: 6,
+  17: 7,
+  18: 7,
+  19: 7,
+  20: 7,
 };
 
 export const MONK_MARTIAL_DICE_PER_LEVEL: Record<number, string> = {
