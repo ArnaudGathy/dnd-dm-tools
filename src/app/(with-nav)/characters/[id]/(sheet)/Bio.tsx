@@ -335,10 +335,23 @@ export default function Bio({ character }: { character: CharacterById }) {
 
       {/* Notes de partie — rich text edited via the floating dialog (Ctrl+Q) */}
       <Panel title="Notes de partie" icon={NotebookPen} accent="amber">
-        <RichTextContent
-          html={character.richNotes}
-          placeholder="Aucune note de partie — ouvrez l'éditeur avec le bouton flottant ou Ctrl + Q."
-        />
+        {character.characterNotes.length === 0 ? (
+          <RichTextContent
+            html={null}
+            placeholder="Aucune note de partie — ouvrez l'éditeur avec le bouton flottant ou Ctrl + Q."
+          />
+        ) : (
+          <div className="flex flex-col divide-y divide-border">
+            {character.characterNotes.map((note) => (
+              <article key={note.id} className="py-4 first:pt-0 last:pb-0">
+                <h3 className="mb-2 text-sm font-semibold uppercase tracking-wide text-amber-300/90">
+                  {note.title}
+                </h3>
+                <RichTextContent html={note.content} placeholder="Note vide." />
+              </article>
+            ))}
+          </div>
+        )}
       </Panel>
     </div>
   );

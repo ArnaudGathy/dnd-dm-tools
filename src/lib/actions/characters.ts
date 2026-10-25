@@ -778,6 +778,7 @@ export const deleteCharacter = async (characterId: number) => {
       prisma.inventoryItem.deleteMany({ where: { characterId } }),
       prisma.magicItem.deleteMany({ where: { characterId } }),
       prisma.money.deleteMany({ where: { characterId } }),
+      prisma.characterNote.deleteMany({ where: { characterId } }),
       prisma.character.delete({ where: { id: characterId } }),
     ]);
   } catch (error) {
@@ -789,26 +790,6 @@ export const deleteCharacter = async (characterId: number) => {
 
   revalidatePath("/characters");
   redirect("/characters");
-};
-
-export const updateRichNotes = async (characterId: number, richNotes: string) => {
-  const validation = z
-    .object({
-      richNotes: z.string(),
-    })
-    .safeParse({
-      richNotes,
-    });
-
-  if (validation.success) {
-    await prisma.character.update({
-      where: { id: characterId },
-      data: { richNotes: validation.data.richNotes },
-    });
-    revalidatePath(`/characters/${characterId}`);
-  } else {
-    console.error(validation.error);
-  }
 };
 
 export const updateNotes = async (characterId: number, notes: string) => {

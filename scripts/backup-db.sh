@@ -28,7 +28,17 @@ target="backups/backup_$(date +%Y-%m-%d_%H-%M-%S).sql"
 tmp="${target}.partial"
 trap 'rm -f "$tmp"' EXIT
 
-pg_dump --clean --if-exists "$DATABASE_URL_BACKUP" > "$tmp"
+# pg_dump refuses servers newer than itself (Neon runs PG 17). Prefer Homebrew's keg-only
+# libpq client, which tracks the latest major version, over an older pg_dump on the PATH.
+PG_DUMP=pg_dump
+for candidate in /opt/homebrew/opt/libpq/bin/pg_dump /usr/local/opt/libpq/bin/pg_dump; do
+  if [[ -x "$candidate" ]]; then
+    PG_DUMP="$candidate"
+    break
+  fi
+done
+
+"$PG_DUMP" --clean --if-exists "$DATABASE_URL_BACKUP" > "$tmp"
 
 if ! tail -n 20 "$tmp" | grep -q "PostgreSQL database dump complete"; then
   echo "backup-db: dump is incomplete (no completion marker), aborting" >&2

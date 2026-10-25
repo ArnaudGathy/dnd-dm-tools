@@ -15,7 +15,7 @@
     "pre-commit": "lint-staged",
     "seedOld": "prisma db push && node prisma/seedOld.js",
     "db:backup": "bash scripts/backup-db.sh",
-    "db:restore": "echo 'Usage: npm run db:restore -- backups/your_backup_file.sql' && set -a && . ./.env && set +a && psql \"$DATABASE_URL_BACKUP\" < ",
+    "db:restore": "echo 'Usage: npm run db:restore -- backups/your_backup_file.sql' && set -a && . ./.env && set +a && $([ -x /opt/homebrew/opt/libpq/bin/psql ] && echo /opt/homebrew/opt/libpq/bin/psql || echo psql) \"$DATABASE_URL_BACKUP\" < ",
     "db:migrate": "bash scripts/backup-db.sh && prisma migrate dev",
     "db:deploy": "bash scripts/backup-db.sh && prisma migrate deploy",
     "spells:sync": "tsx --env-file=.env scripts/sync-creature-spells.ts",

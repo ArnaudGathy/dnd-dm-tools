@@ -9,6 +9,7 @@ import {
   Campaign,
   Capacity,
   Character,
+  CharacterNote,
   InventoryItem,
   MagicItem,
   Money,
@@ -68,6 +69,7 @@ export type CharacterById = Character &
     inventory: InventoryItem[];
     magicItems: MagicItem[];
     wealth: Money[];
+    characterNotes: CharacterNote[];
   };
 
 export type CharacterByOwner = Character &

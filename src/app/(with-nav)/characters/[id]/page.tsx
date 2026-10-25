@@ -34,7 +34,7 @@ export default async function Character({
     <Tabs defaultValue={currentTab ?? SHEETS_TABS.GENERAL}>
       <SheetTabTrigger />
       <SheetFullscreenToggle />
-      <CharacterNotesDialog characterId={character.id} richNotes={character.richNotes} />
+      <CharacterNotesDialog characterId={character.id} notes={character.characterNotes} />
 
       <Card className={`mt-4 border-0 bg-transparent p-0 shadow-none`}>
         <TabsContent value={SHEETS_TABS.GENERAL} className={tabContentClassName}>

@@ -301,7 +301,24 @@ model Character {
   lore      String?
   allies    String?
   notes     String?
-  richNotes String?
+
+  characterNotes CharacterNote[]
+}
+
+/// Rich-text "Notes de partie" written by a player for one character (hence one campaign + party).
+model CharacterNote {
+  id          Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId Int
+  title       String    @db.VarChar(255)
+  /// User-defined order in the note list (0 = first), set by drag and drop.
+  position    Int       @default(0)
+  /// Tiptap HTML
+  content     String    @default("")
+
+  @@index([characterId])
 }
 
 model InventoryItem {

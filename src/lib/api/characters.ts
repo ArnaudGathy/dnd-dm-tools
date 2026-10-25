@@ -163,6 +163,9 @@ export const getCharacterById = async ({ characterId }: { characterId: number })
         orderBy: [{ id: "asc" }],
       },
       magicItems: true,
+      characterNotes: {
+        orderBy: [{ position: "asc" }, { id: "asc" }],
+      },
       _count: {
         select: {
           spellsOnCharacters: true,
