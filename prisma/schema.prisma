@@ -552,6 +552,8 @@ model Weapon {
   character       Character       @relation(fields: [characterId], references: [id])
   characterId     Int
   name            String
+  /// User-defined order on the sheet (0 = first), set by drag and drop in the edit form.
+  position        Int             @default(0)
   type            WeaponType
   isProficient    Boolean         @default(true)
   abilityModifier Abilities

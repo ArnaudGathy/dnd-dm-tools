@@ -208,6 +208,9 @@ const signUpFormBaseSchema = z.object({
   weapons: z.array(
     z
       .object({
+        // DB id of an existing weapon (edit mode): lets the update match rows by
+        // identity rather than by position, so reordering never moves damages.
+        weaponId: z.number().int().optional(),
         name: formRequiredString,
         type: z.nativeEnum(WeaponType),
         isProficient: z.boolean(),
@@ -496,6 +499,7 @@ export const backendCharacterSchema = z.object({
   weapons: z.array(
     z
       .object({
+        weaponId: z.number().int().optional(),
         name: backendRequiredString,
         type: z.nativeEnum(WeaponType),
         isProficient: z.boolean(),
@@ -586,6 +590,7 @@ export function dataToForm(character: CharacterById): CharacterCreationForm {
     ...{ skill: Skills; isProficient: boolean; isExpert: boolean }[],
   ];
   const weapons = character.weapons.map((weapon) => ({
+    weaponId: weapon.id,
     name: weapon.name,
     type: weapon.type,
     isProficient: weapon.isProficient,

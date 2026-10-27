@@ -1,5 +1,21 @@
 import { useFieldArray, UseFormReturn } from "react-hook-form";
-import { useEffect, useRef, useState } from "react";
+import { ReactNode, useEffect, useRef, useState } from "react";
+import {
+  closestCenter,
+  DndContext,
+  DragEndEvent,
+  KeyboardSensor,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core";
+import {
+  SortableContext,
+  sortableKeyboardCoordinates,
+  useSortable,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 import { CharacterCreationForm } from "@/app/(with-nav)/characters/add/CreateCharacterForm";
 import {
   ABILITY_NAME_MAP_TO_FR,
@@ -9,7 +25,7 @@ import {
   WEAPON_TYPE_MAP,
 } from "@/constants/maps";
 import { Abilities, WeaponDamageDices, WeaponDamageType, WeaponType } from "@prisma/client";
-import { Asterisk, ChevronRight, Trash2 } from "lucide-react";
+import { Asterisk, ChevronRight, GripVertical, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import FormFieldInput from "@/components/ui/inputs/FormFieldInput";
@@ -35,17 +51,62 @@ const WEAPON_PICKER_GROUPS = WEAPON_PRESET_GROUPS.map(({ label, keys }) => ({
   }),
 }));
 
+/** A weapon row draggable by its grip handle (the rest of the row stays clickable). */
+function SortableWeaponRow({
+  id,
+  label,
+  children,
+}: {
+  id: string;
+  label: string;
+  children: (handle: ReactNode) => ReactNode;
+}) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    setActivatorNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id });
+
+  const handle = (
+    <button
+      type="button"
+      ref={setActivatorNodeRef}
+      {...attributes}
+      {...listeners}
+      aria-label={`Déplacer : ${label}`}
+      className="flex cursor-grab touch-none items-center self-stretch text-muted-foreground/50 hover:text-foreground active:cursor-grabbing"
+    >
+      <GripVertical className="size-4" />
+    </button>
+  );
+
+  return (
+    <div
+      ref={setNodeRef}
+      style={{ transform: CSS.Transform.toString(transform), transition }}
+      className={cn("relative bg-background", isDragging && "z-10 opacity-80 shadow-lg")}
+    >
+      {children(handle)}
+    </div>
+  );
+}
+
 /**
  * Weapons as a quick-add search plus one compact line per weapon, like the
  * inventory. A base weapon from the 2024 table lands fully filled (properties
  * without a dedicated field go to extraEffects) and stays collapsed; a custom
  * weapon opens its row for editing right away. Rows expand to edit any field,
  * and rows with validation errors are forced open so the error summary can
- * reach their inputs.
+ * reach their inputs. Rows reorder by drag and drop; the order is saved as
+ * each weapon's `position`.
  */
 export default function WeaponsArray({ form }: { form: UseFormReturn<CharacterCreationForm> }) {
   const fieldName = "weapons";
-  const { fields, append, remove } = useFieldArray({
+  const { fields, append, remove, move } = useFieldArray({
     control: form.control,
     name: fieldName,
   });
@@ -114,6 +175,17 @@ export default function WeaponsArray({ form }: { form: UseFormReturn<CharacterCr
     });
   };
 
+  const sensors = useSensors(
+    useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
+    useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
+  );
+
+  const handleDragEnd = ({ active, over }: DragEndEvent) => {
+    if (!over || active.id === over.id) return;
+    const ids = fields.map((field) => field.id);
+    move(ids.indexOf(String(active.id)), ids.indexOf(String(over.id)));
+  };
+
   const toggleRow = (id: string) => {
     setOpenRows((open) => (open.includes(id) ? open.filter((row) => row !== id) : [...open, id]));
   };
@@ -136,181 +208,197 @@ export default function WeaponsArray({ form }: { form: UseFormReturn<CharacterCr
           personnalisée.
         </p>
       ) : (
-        <div className="divide-y divide-border rounded-lg border border-border">
-          {fields.map((field, index) => {
-            const weapon = weapons[index];
-            const currentWeaponType = weapon?.type;
-            const hasReach = currentWeaponType !== WeaponType.RANGED;
-            const hasRange = currentWeaponType !== WeaponType.MELEE;
-            const hasAmmunition = currentWeaponType === WeaponType.RANGED;
-            const hasError = !!itemErrors?.[index];
-            const isOpen = openedRows.has(field.id) || hasError;
-            const baseDamage = weapon?.damages?.[0];
+        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+          <SortableContext
+            items={fields.map((field) => field.id)}
+            strategy={verticalListSortingStrategy}
+          >
+            <div className="divide-y divide-border rounded-lg border border-border">
+              {fields.map((field, index) => {
+                const weapon = weapons[index];
+                const currentWeaponType = weapon?.type;
+                const hasReach = currentWeaponType !== WeaponType.RANGED;
+                const hasRange = currentWeaponType !== WeaponType.MELEE;
+                const hasAmmunition = currentWeaponType === WeaponType.RANGED;
+                const hasError = !!itemErrors?.[index];
+                const isOpen = openedRows.has(field.id) || hasError;
+                const baseDamage = weapon?.damages?.[0];
 
-            return (
-              <div key={field.id} data-anchor={`${fieldName}.${index}`}>
-                <div className="flex items-center gap-1 py-1 pl-1 pr-2">
-                  <button
-                    type="button"
-                    className="flex min-w-0 flex-1 items-center gap-1.5 rounded-md px-1 py-1.5 text-left hover:bg-muted/60"
-                    onClick={() => toggleRow(field.id)}
-                    aria-expanded={isOpen}
-                    aria-label={`Modifier : ${weapon?.name || `arme ${index + 1}`}`}
+                return (
+                  <SortableWeaponRow
+                    key={field.id}
+                    id={field.id}
+                    label={weapon?.name || `arme ${index + 1}`}
                   >
-                    <ChevronRight
-                      className={cn(
-                        "size-4 shrink-0 text-muted-foreground transition-transform",
-                        isOpen && "rotate-90",
-                      )}
-                    />
-                    <span
-                      className={cn(
-                        "truncate text-sm font-medium",
-                        !weapon?.name && "font-normal italic text-muted-foreground",
-                        hasError && "text-destructive",
-                      )}
-                    >
-                      {weapon?.name || "Arme sans nom"}
-                    </span>
-                  </button>
+                    {(handle) => (
+                      <div data-anchor={`${fieldName}.${index}`}>
+                        <div className="flex items-center gap-1 py-1 pl-1 pr-2">
+                          {handle}
+                          <button
+                            type="button"
+                            className="flex min-w-0 flex-1 items-center gap-1.5 rounded-md px-1 py-1.5 text-left hover:bg-muted/60"
+                            onClick={() => toggleRow(field.id)}
+                            aria-expanded={isOpen}
+                            aria-label={`Modifier : ${weapon?.name || `arme ${index + 1}`}`}
+                          >
+                            <ChevronRight
+                              className={cn(
+                                "size-4 shrink-0 text-muted-foreground transition-transform",
+                                isOpen && "rotate-90",
+                              )}
+                            />
+                            <span
+                              className={cn(
+                                "truncate text-sm font-medium",
+                                !weapon?.name && "font-normal italic text-muted-foreground",
+                                hasError && "text-destructive",
+                              )}
+                            >
+                              {weapon?.name || "Arme sans nom"}
+                            </span>
+                          </button>
 
-                  {baseDamage && (
-                    <span className="shrink-0 text-xs text-muted-foreground">
-                      {baseDamage.numberOfDices}
-                      {WEAPON_DICE_MAP[baseDamage.dice]}{" "}
-                      {WEAPON_DAMAGE_TYPE_MAP[baseDamage.type].toLowerCase()}
-                    </span>
-                  )}
+                          {baseDamage && (
+                            <span className="shrink-0 text-xs text-muted-foreground">
+                              {baseDamage.numberOfDices}
+                              {WEAPON_DICE_MAP[baseDamage.dice]}{" "}
+                              {WEAPON_DAMAGE_TYPE_MAP[baseDamage.type].toLowerCase()}
+                            </span>
+                          )}
 
-                  <Button
-                    type="button"
-                    variant="ghost"
-                    size="icon"
-                    className="size-7 shrink-0 text-muted-foreground hover:text-destructive"
-                    onClick={() => remove(index)}
-                    aria-label={`Supprimer : ${weapon?.name || `arme ${index + 1}`}`}
-                  >
-                    <Trash2 className="size-4" />
-                  </Button>
-                </div>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon"
+                            className="size-7 shrink-0 text-muted-foreground hover:text-destructive"
+                            onClick={() => remove(index)}
+                            aria-label={`Supprimer : ${weapon?.name || `arme ${index + 1}`}`}
+                          >
+                            <Trash2 className="size-4" />
+                          </Button>
+                        </div>
 
-                {isOpen && (
-                  <div className="flex flex-col gap-3 px-3 pb-3 pt-1">
-                    <div className="grid gap-3 md:grid-cols-2">
-                      <FormFieldInput
-                        formInstance={form}
-                        formFieldName={`${fieldName}.${index}.name`}
-                        label="Nom"
-                        labelClassName="text-sm"
-                        required
-                      />
-                      <FormFieldSelect
-                        formInstance={form}
-                        formFieldName={`${fieldName}.${index}.type`}
-                        label="Type"
-                        labelClassName="text-sm"
-                        items={WEAPON_TYPE_MAP}
-                      />
-                      <FormFieldSelect
-                        formInstance={form}
-                        formFieldName={`${fieldName}.${index}.abilityModifier`}
-                        label="Caractéristique"
-                        labelClassName="text-sm"
-                        items={ABILITY_NAME_MAP_TO_FR}
-                      />
-                      <FormFieldInput
-                        formInstance={form}
-                        formFieldName={`${fieldName}.${index}.attackBonus`}
-                        label="Bonus d'attaque"
-                        description="Armes magique uniquement"
-                        labelClassName="text-sm"
-                        inputMode="numeric"
-                      />
-                    </div>
+                        {isOpen && (
+                          <div className="flex flex-col gap-3 px-3 pb-3 pt-1">
+                            <div className="grid gap-3 md:grid-cols-2">
+                              <FormFieldInput
+                                formInstance={form}
+                                formFieldName={`${fieldName}.${index}.name`}
+                                label="Nom"
+                                labelClassName="text-sm"
+                                required
+                              />
+                              <FormFieldSelect
+                                formInstance={form}
+                                formFieldName={`${fieldName}.${index}.type`}
+                                label="Type"
+                                labelClassName="text-sm"
+                                items={WEAPON_TYPE_MAP}
+                              />
+                              <FormFieldSelect
+                                formInstance={form}
+                                formFieldName={`${fieldName}.${index}.abilityModifier`}
+                                label="Caractéristique"
+                                labelClassName="text-sm"
+                                items={ABILITY_NAME_MAP_TO_FR}
+                              />
+                              <FormFieldInput
+                                formInstance={form}
+                                formFieldName={`${fieldName}.${index}.attackBonus`}
+                                label="Bonus d'attaque"
+                                description="Armes magique uniquement"
+                                labelClassName="text-sm"
+                                inputMode="numeric"
+                              />
+                            </div>
 
-                    {(hasReach || hasRange || hasAmmunition) && (
-                      <div className="grid gap-3 md:grid-cols-2">
-                        {hasReach && (
-                          <FormFieldInput
-                            formInstance={form}
-                            formFieldName={`${fieldName}.${index}.reach`}
-                            label="Allonge"
-                            description="En cases"
-                            labelClassName="text-sm"
-                            inputMode="numeric"
-                            required
-                          />
-                        )}
-                        {hasRange && (
-                          <FormFieldInput
-                            formInstance={form}
-                            formFieldName={`${fieldName}.${index}.range`}
-                            label="Portée"
-                            description="En cases"
-                            labelClassName="text-sm"
-                            inputMode="numeric"
-                            required
-                          />
-                        )}
-                        {hasRange && (
-                          <FormFieldInput
-                            formInstance={form}
-                            formFieldName={`${fieldName}.${index}.longRange`}
-                            label="Portée longue"
-                            description="En cases"
-                            labelClassName="text-sm"
-                            inputMode="numeric"
-                            required
-                          />
-                        )}
-                        {hasAmmunition && (
-                          <FormFieldSelect
-                            formInstance={form}
-                            formFieldName={`${fieldName}.${index}.ammunitionType`}
-                            label="Munitions"
-                            labelClassName="text-sm"
-                            placeholder="Type de munitions"
-                            items={AMMUNITION_TYPE_MAP}
-                            required
-                          />
-                        )}
-                        {hasAmmunition && (
-                          <FormFieldInput
-                            formInstance={form}
-                            formFieldName={`${fieldName}.${index}.ammunitionCount`}
-                            label="Quantité de munitions"
-                            labelClassName="text-sm"
-                            inputMode="numeric"
-                            required
-                          />
+                            {(hasReach || hasRange || hasAmmunition) && (
+                              <div className="grid gap-3 md:grid-cols-2">
+                                {hasReach && (
+                                  <FormFieldInput
+                                    formInstance={form}
+                                    formFieldName={`${fieldName}.${index}.reach`}
+                                    label="Allonge"
+                                    description="En cases"
+                                    labelClassName="text-sm"
+                                    inputMode="numeric"
+                                    required
+                                  />
+                                )}
+                                {hasRange && (
+                                  <FormFieldInput
+                                    formInstance={form}
+                                    formFieldName={`${fieldName}.${index}.range`}
+                                    label="Portée"
+                                    description="En cases"
+                                    labelClassName="text-sm"
+                                    inputMode="numeric"
+                                    required
+                                  />
+                                )}
+                                {hasRange && (
+                                  <FormFieldInput
+                                    formInstance={form}
+                                    formFieldName={`${fieldName}.${index}.longRange`}
+                                    label="Portée longue"
+                                    description="En cases"
+                                    labelClassName="text-sm"
+                                    inputMode="numeric"
+                                    required
+                                  />
+                                )}
+                                {hasAmmunition && (
+                                  <FormFieldSelect
+                                    formInstance={form}
+                                    formFieldName={`${fieldName}.${index}.ammunitionType`}
+                                    label="Munitions"
+                                    labelClassName="text-sm"
+                                    placeholder="Type de munitions"
+                                    items={AMMUNITION_TYPE_MAP}
+                                    required
+                                  />
+                                )}
+                                {hasAmmunition && (
+                                  <FormFieldInput
+                                    formInstance={form}
+                                    formFieldName={`${fieldName}.${index}.ammunitionCount`}
+                                    label="Quantité de munitions"
+                                    labelClassName="text-sm"
+                                    inputMode="numeric"
+                                    required
+                                  />
+                                )}
+                              </div>
+                            )}
+
+                            <div className="grid items-end gap-3 md:grid-cols-[1fr_auto]">
+                              <FormFieldInput
+                                formInstance={form}
+                                formFieldName={`${fieldName}.${index}.extraEffects`}
+                                label="Effets supplémentaires"
+                                description="Armes magiques, bottes d'armes"
+                                labelClassName="text-sm"
+                              />
+                              <FormFieldToggle
+                                formInstance={form}
+                                formFieldName={`${fieldName}.${index}.isProficient`}
+                                label="Maîtrisée"
+                                icon={Asterisk}
+                                accent="indigo"
+                              />
+                            </div>
+
+                            <WeaponDamagesArray form={form} index={index} />
+                          </div>
                         )}
                       </div>
                     )}
-
-                    <div className="grid items-end gap-3 md:grid-cols-[1fr_auto]">
-                      <FormFieldInput
-                        formInstance={form}
-                        formFieldName={`${fieldName}.${index}.extraEffects`}
-                        label="Effets supplémentaires"
-                        description="Armes magiques, bottes d'armes"
-                        labelClassName="text-sm"
-                      />
-                      <FormFieldToggle
-                        formInstance={form}
-                        formFieldName={`${fieldName}.${index}.isProficient`}
-                        label="Maîtrisée"
-                        icon={Asterisk}
-                        accent="indigo"
-                      />
-                    </div>
-
-                    <WeaponDamagesArray form={form} index={index} />
-                  </div>
-                )}
-              </div>
-            );
-          })}
-        </div>
+                  </SortableWeaponRow>
+                );
+              })}
+            </div>
+          </SortableContext>
+        </DndContext>
       )}
     </div>
   );

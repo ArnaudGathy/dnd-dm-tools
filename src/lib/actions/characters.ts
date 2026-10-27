@@ -221,11 +221,13 @@ export const createCharacter = async (
           });
         }
 
-        for (const weapon of validation.data.weapons || []) {
-          const { damages, ...weaponData } = weapon;
+        for (const [position, weapon] of (validation.data.weapons || []).entries()) {
+          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+          const { damages, weaponId, ...weaponData } = weapon;
           const createdWeapon = await tx.weapon.create({
             data: {
               ...weaponData,
+              position,
               reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : undefined,
               range: weaponData.type !== WeaponType.MELEE ? weaponData.range : undefined,
               longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : undefined,
@@ -315,6 +317,78 @@ async function syncSimpleTable<Existing extends { id: number }, Incoming>(
 
   await Promise.all(tasks);
 }
+
+type IncomingWeapon = z.infer<typeof backendCharacterSchema>["weapons"][number];
+
+/**
+ * Weapons are matched by DB id (`weaponId`, carried by the edit form), never by
+ * index: the user can reorder them, and an index match would overwrite one
+ * weapon's row with another's data. Damages are still matched by index, but only
+ * within their own weapon. Existing weapons are read fresh and only ids owned by
+ * this character are updated; any other row is created. Everything runs in one
+ * transaction so a failure can't leave a half-applied order.
+ */
+const syncWeapons = async (characterId: number, incoming: IncomingWeapon[]) => {
+  await prisma.$transaction(
+    async (tx) => {
+      const existing = await tx.weapon.findMany({
+        where: { characterId },
+        include: { damages: { orderBy: [{ id: "asc" }] } },
+      });
+      const existingById = new Map(existing.map((weapon) => [weapon.id, weapon]));
+      const keptIds = new Set<number>();
+
+      for (const [position, weapon] of incoming.entries()) {
+        const { damages, weaponId, ...weaponData } = weapon;
+        const data = {
+          ...weaponData,
+          position,
+          reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
+          range: weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
+          longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
+          ammunitionCount:
+            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : null,
+          ammunitionType: weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : null,
+        };
+        const current = weaponId !== undefined ? existingById.get(weaponId) : undefined;
+
+        if (!current || keptIds.has(current.id)) {
+          const created = await tx.weapon.create({ data: { ...data, characterId } });
+          await tx.weaponDamage.createMany({
+            data: damages.map((damage) => ({ ...damage, weaponId: created.id })),
+          });
+          continue;
+        }
+
+        keptIds.add(current.id);
+        await tx.weapon.update({ where: { id: current.id }, data });
+
+        const maxDamages = Math.max(current.damages.length, damages.length);
+        for (let j = 0; j < maxDamages; j++) {
+          const existingDamage = current.damages[j];
+          const incomingDamage = damages[j];
+          if (existingDamage && incomingDamage) {
+            await tx.weaponDamage.update({
+              where: { id: existingDamage.id },
+              data: incomingDamage,
+            });
+          } else if (incomingDamage) {
+            await tx.weaponDamage.create({ data: { ...incomingDamage, weaponId: current.id } });
+          } else if (existingDamage) {
+            await tx.weaponDamage.delete({ where: { id: existingDamage.id } });
+          }
+        }
+      }
+
+      // Damages of removed weapons go with them (ON DELETE CASCADE).
+      const removedIds = existing.filter((weapon) => !keptIds.has(weapon.id)).map(({ id }) => id);
+      if (removedIds.length > 0) {
+        await tx.weapon.deleteMany({ where: { id: { in: removedIds }, characterId } });
+      }
+    },
+    { timeout: 20000 },
+  );
+};
 
 const getNewHP = (rawCharacter: CharacterById, newLevel: number) => {
   const character = applyCharacterEffects(rawCharacter);
@@ -452,79 +526,7 @@ export const updateCharacter = async (data: CharacterCreationForm, character: Ch
     },
   );
 
-  const weaponOps = [];
-
-  const maxWeapons = Math.max(character.weapons.length, validation.data.weapons.length);
-
-  for (let i = 0; i < maxWeapons; i++) {
-    const existingWeapon = character.weapons[i];
-    const incoming = validation.data.weapons[i];
-    if (existingWeapon && incoming) {
-      const { damages, ...weaponData } = incoming;
-      weaponOps.push(
-        prisma.weapon.update({
-          where: { id: existingWeapon.id },
-          data: {
-            ...weaponData,
-            reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
-            range: weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
-            longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
-            ammunitionCount:
-              weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : null,
-            ammunitionType:
-              weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : null,
-          },
-        }),
-      );
-
-      const maxDamages = Math.max(existingWeapon.damages.length, damages.length);
-      for (let j = 0; j < maxDamages; j++) {
-        const existingDmg = existingWeapon.damages[j];
-        const incomingDamages = damages[j];
-        if (existingDmg && incomingDamages) {
-          weaponOps.push(
-            prisma.weaponDamage.update({
-              where: { id: existingDmg.id },
-              data: incomingDamages,
-            }),
-          );
-        } else if (!existingDmg && incomingDamages) {
-          weaponOps.push(
-            prisma.weaponDamage.create({
-              data: { ...incomingDamages, weaponId: existingWeapon.id },
-            }),
-          );
-        } else if (existingDmg && !incomingDamages) {
-          weaponOps.push(prisma.weaponDamage.delete({ where: { id: existingDmg.id } }));
-        }
-      }
-    } else if (!existingWeapon && incoming) {
-      const { damages, ...weaponData } = incoming;
-      const newWeapon = await prisma.weapon.create({
-        data: {
-          ...weaponData,
-          reach: weaponData.type !== WeaponType.RANGED ? weaponData.reach : null,
-          range: weaponData.type !== WeaponType.MELEE ? weaponData.range : null,
-          longRange: weaponData.type !== WeaponType.MELEE ? weaponData.longRange : null,
-          ammunitionCount:
-            weaponData.type === WeaponType.RANGED ? weaponData.ammunitionCount : null,
-          ammunitionType: weaponData.type === WeaponType.RANGED ? weaponData.ammunitionType : null,
-          characterId: character.id,
-        },
-      });
-      for (const dmg of damages) {
-        weaponOps.push(
-          prisma.weaponDamage.create({
-            data: { ...dmg, weaponId: newWeapon.id },
-          }),
-        );
-      }
-    } else if (existingWeapon && !incoming) {
-      weaponOps.push(prisma.weapon.delete({ where: { id: existingWeapon.id } }));
-    }
-  }
-
-  await Promise.all(weaponOps);
+  await syncWeapons(character.id, validation.data.weapons);
 
   await syncSimpleTable(character.inventory, validation.data.inventory, {
     create: (inv) =>

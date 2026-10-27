@@ -155,8 +155,9 @@ export const getCharacterById = async ({ characterId }: { characterId: number })
       armors: true,
       weapons: {
         include: {
-          damages: true,
+          damages: { orderBy: [{ id: "asc" }] },
         },
+        orderBy: [{ position: "asc" }, { id: "asc" }],
       },
       inventory: true,
       wealth: {
@@ -180,7 +181,6 @@ export const getCharacterById = async ({ characterId }: { characterId: number })
       ...character,
       capacities: sortByName(character.capacities),
       armors: sortByName(character.armors),
-      weapons: sortByName(character.weapons),
       inventory: sortByName(character.inventory),
       magicItems: sortByName(character.magicItems),
     }
