@@ -102,6 +102,28 @@ project tracks migrations in `prisma/migrations/`.
 
 **Path alias:** `@/*` maps to `./src/*`.
 
+## D&D rules: `../5etools-src` is the source of truth
+
+The sibling repo `../5etools-src` (`/Users/arnaudgathy/Documents/projects/5etools-src`) is the
+**absolute source of truth for game rules and mechanics**. Before implementing or answering
+anything about a class feature, spell, feat, item, condition, action or rule, read it there. Do
+not rely on memory, and do not reverse-engineer a rule from existing app code.
+
+- **Edition: 2024 rules.** Prefer entries with source `XPHB` (Player's Handbook 2024), `XDMG` and
+  `XMM`. Most files also hold the 2014 version (`PHB`, `DMG`, `MM`); fall back to those only for
+  content that has no 2024 version.
+- Where to look (all under `data/`):
+  - Classes: `class/class-<name>.json` → `class[]` (core table and proficiencies), `subclass[]`,
+    `classFeature[]` / `subclassFeature[]` (filter on `source` + `className` + `level`).
+    Flavor text is in `fluff-class-<name>.json`.
+  - Spells: `spells/spells-<source>.json` (e.g. `spells-xphb.json`).
+  - Monsters: `bestiary/` (see `.claude/rules/creature-data.md` for how to navigate it).
+  - Everything else: `feats.json`, `items.json` + `items-base.json`, `actions.json`,
+    `conditionsdiseases.json`, `variantrules.json`, `races.json`, `backgrounds.json`,
+    `optionalfeatures.json`.
+- Parse the JSON with a small Python script rather than grep. Text uses `{@tag …}` markup
+  (`{@variantrule Short Rest|XPHB}`, `{@damage 1d6}`…): the visible text is the part before the first `|`.
+
 ## Rules & Agents
 
 Detailed coding rules: @.claude/rules/server-actions.md · @.claude/rules/auth.md · @.claude/rules/creature-data.md · @.claude/rules/spell-data.md · @.claude/rules/detail-popovers.md

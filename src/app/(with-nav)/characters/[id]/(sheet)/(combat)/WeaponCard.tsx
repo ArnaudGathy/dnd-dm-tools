@@ -14,6 +14,7 @@ import StatBreakdown, {
   breakdownContentClassName,
 } from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
 import { addSignToNumber } from "@/utils/utils";
+import { useRageStatus } from "@/hooks/useRageStatus";
 
 export const weaponChipClassName =
   "inline-flex items-center gap-1 rounded-md bg-background/40 px-2 py-1 text-xs font-medium text-foreground/80";
@@ -30,6 +31,7 @@ export default function WeaponCard({
   weapon: CharacterById["weapons"][number];
 }) {
   const attackDetails = getWeaponAttackBonus(character, weapon);
+  const [isRaging] = useRageStatus(character);
 
   return (
     <div className="flex flex-col gap-2.5 rounded-lg bg-muted p-3">
@@ -98,7 +100,7 @@ export default function WeaponCard({
             {weapon.damages.map((damage, index) => {
               const isLast = index === weapon.damages.length - 1;
               const { icon: Icon, color } = getDamageTypeIconAndColor(damage.type);
-              const damageDetails = getWeaponDamage(character, damage, weapon);
+              const damageDetails = getWeaponDamage(character, damage, weapon, isRaging);
 
               return (
                 <Fragment key={damage.id}>
@@ -120,13 +122,20 @@ export default function WeaponCard({
                             label: "Bonus",
                             value: addSignToNumber(damageDetails.flatBonus),
                           },
+                          damageDetails.rageBonus > 0 && {
+                            label: "Rage",
+                            value: addSignToNumber(damageDetails.rageBonus),
+                          },
                         ]}
                         total={<span style={{ color }}>{damageDetails.totalString}</span>}
                       />
                     }
                   >
                     <span
-                      className="border-b-2 text-lg font-bold tabular-nums leading-tight"
+                      className={cn(
+                        "border-b-2 text-lg font-bold tabular-nums leading-tight",
+                        damageDetails.rageBonus > 0 && "text-red-500",
+                      )}
                       style={{ borderBottomColor: color }}
                     >
                       {damageDetails.totalString}

@@ -563,6 +563,43 @@ export const BARBARIAN_RAGES_PER_LEVEL: Record<number, number> = {
   20: 6,
 };
 
+/* Rage damage bonus on Strength attacks (PHB 2024, "Rage Damage" column) */
+export const BARBARIAN_RAGE_DAMAGE_PER_LEVEL: Record<number, number> = {
+  1: 2,
+  2: 2,
+  3: 2,
+  4: 2,
+  5: 2,
+  6: 2,
+  7: 2,
+  8: 2,
+  9: 3,
+  10: 3,
+  11: 3,
+  12: 3,
+  13: 3,
+  14: 3,
+  15: 3,
+  16: 4,
+  17: 4,
+  18: 4,
+  19: 4,
+  20: 4,
+};
+
+/* Primal Knowledge (level 3+): while raging, these skills can be rolled as Strength checks */
+export const BARBARIAN_PRIMAL_KNOWLEDGE_LEVEL = 3;
+export const BARBARIAN_PRIMAL_KNOWLEDGE_SKILLS: Skills[] = [
+  Skills.ACROBATICS,
+  Skills.INTIMIDATION,
+  Skills.PERCEPTION,
+  Skills.STEALTH,
+  Skills.SURVIVAL,
+];
+
+/* World Tree "Vitality Surge" (level 3+): temp HP equal to the Barbarian level on entering Rage */
+export const BARBARIAN_WORLD_TREE_LEVEL = 3;
+
 /* Zealot "Guerrier des dieux" : pool of d12s to heal yourself */
 export const BARBARIAN_ZEALOT_WARRIOR_OF_THE_GODS_PER_LEVEL: Record<number, number> = {
   1: 0,

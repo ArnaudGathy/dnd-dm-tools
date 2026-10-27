@@ -1,8 +1,8 @@
 "use client";
 
-import { ReactNode } from "react";
+import { ElementType, ReactNode } from "react";
 import { CharacterById } from "@/lib/utils";
-import { ChevronsUp, Dice6, Footprints, Hand, Shield } from "lucide-react";
+import { ChevronsUp, Dice6, Footprints, Hand, HandGrab, Shield } from "lucide-react";
 import { getTotalAC } from "@/utils/stats/ac";
 import { getMovementSpeed } from "@/utils/stats/speed";
 import { getInitiativeModifier } from "@/utils/stats/initiative";
@@ -11,25 +11,32 @@ import {
   getMartialClassDC,
   getSubClassDice,
   getSubMartialClassDC,
+  getUnarmedStrikeDC,
 } from "@/utils/stats/classSpecific";
 import HPForm from "@/app/(with-nav)/characters/[id]/(sheet)/(forms)/HPForm";
 import HudTile from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/HudTile";
+import RageToggle from "@/app/(with-nav)/characters/[id]/(sheet)/(combat)/RageToggle";
 import StatBreakdown from "@/app/(with-nav)/characters/[id]/(sheet)/StatBreakdown";
 import { Accent } from "@/app/(with-nav)/characters/[id]/(sheet)/sheetUI";
 import { addSignToNumber } from "@/utils/utils";
+import { canRage } from "@/utils/stats/rage";
 
 function MartialDCDefinition({
   accent,
   details,
+  icon = Hand,
+  title = `DD martial (${details.modifierName})`,
 }: {
   accent: Accent;
   details: NonNullable<ReturnType<typeof getMartialClassDC>>;
+  icon?: ElementType;
+  title?: string;
 }) {
   return (
     <StatBreakdown
       accent={accent}
-      icon={Hand}
-      title={`DD martial (${details.modifierName})`}
+      icon={icon}
+      title={title}
       rows={[
         { label: "Base", value: details.base },
         details.modifier !== 0 && {
@@ -63,6 +70,7 @@ export default function CombatHud({ character }: { character: CharacterById }) {
   const movementSpeedDetails = getMovementSpeed(character);
   const martialClassDC = getMartialClassDC(character);
   const subMartialClassDC = getSubMartialClassDC(character);
+  const unarmedStrikeDC = getUnarmedStrikeDC(character);
   const classDice = getClassDice(character);
   const subClassDice = getSubClassDice(character);
 
@@ -167,14 +175,32 @@ export default function CombatHud({ character }: { character: CharacterById }) {
             />
           }
         />
+        {canRage(character) && <RageToggle character={character} />}
+        {unarmedStrikeDC && (
+          <HudTile
+            className="flex-auto px-3"
+            icon={HandGrab}
+            iconColor="text-slate-400"
+            value={unarmedStrikeDC.total}
+            label={<NowrapLabel>DD Lutte</NowrapLabel>}
+            definition={
+              <MartialDCDefinition
+                accent="slate"
+                details={unarmedStrikeDC}
+                icon={HandGrab}
+                title="Lutte & bousculade"
+              />
+            }
+          />
+        )}
         {martialClassDC && (
           <HudTile
             className="flex-auto px-3"
             icon={Hand}
-            iconColor="text-slate-400"
+            iconColor="text-violet-400"
             value={martialClassDC.total}
             label={<NowrapLabel>{`DD ${martialClassDC.modifierName}`}</NowrapLabel>}
-            definition={<MartialDCDefinition accent="slate" details={martialClassDC} />}
+            definition={<MartialDCDefinition accent="violet" details={martialClassDC} />}
           />
         )}
         {subMartialClassDC && (

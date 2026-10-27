@@ -12,16 +12,6 @@ import {
 import { getSpellSaveDC } from "@/utils/stats/spells";
 
 export const getMartialClassDCModifier = (character: Character) => {
-  if (
-    (character.className === Classes.FIGHTER &&
-      character.subclassName === Subclasses.BATTLE_MASTER) ||
-    character.className === Classes.PALADIN
-  ) {
-    const modifier = getModifier(character.strength);
-    const name = ABILITY_NAME_MAP_TO_FR[Abilities.STRENGTH];
-    return { modifier, name };
-  }
-
   if (character.className === Classes.MONK) {
     const modifier = getModifier(character.wisdom);
     const name = ABILITY_NAME_MAP_TO_FR[Abilities.WISDOM];
@@ -37,13 +27,7 @@ export const getMartialClassDCModifier = (character: Character) => {
 };
 
 export const getMartialClassDC = (character: Character) => {
-  if (
-    (character.className === Classes.FIGHTER &&
-      character.subclassName === Subclasses.BATTLE_MASTER) ||
-    character.className === Classes.PALADIN ||
-    character.className === Classes.MONK ||
-    character.className === Classes.ROGUE
-  ) {
+  if (character.className === Classes.MONK || character.className === Classes.ROGUE) {
     const base = 8;
     const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
     const { name, modifier } = getMartialClassDCModifier(character);
@@ -83,6 +67,26 @@ export const getSubMartialClassDC = (character: Character) => {
     };
   }
   return null;
+};
+
+// Unarmed Strike grapple/shove save DC (XPHB): 8 + STR + PB, for every character.
+// Monks use DEX instead (Dexterous Attacks), already shown by getSubMartialClassDC.
+export const getUnarmedStrikeDC = (character: Character) => {
+  if (character.className === Classes.MONK) {
+    return null;
+  }
+
+  const base = 8;
+  const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
+  const modifier = getModifier(character.strength);
+
+  return {
+    base,
+    proficiencyBonus,
+    modifier,
+    modifierName: ABILITY_NAME_MAP_TO_FR[Abilities.STRENGTH],
+    total: base + proficiencyBonus + modifier,
+  };
 };
 
 export const getSaveDC = (character: Character) => {

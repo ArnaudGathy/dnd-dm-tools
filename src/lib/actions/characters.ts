@@ -21,6 +21,7 @@ import { CharacterTracking } from "@/hooks/useCharacterTracker";
 
 import { getBonusHP, getEffectiveMaxHP } from "@/utils/stats/hp";
 import { applyCharacterEffects } from "@/utils/stats/effects";
+import { getRageTempHP } from "@/utils/stats/rage";
 
 const syncCharacterHPToFirebase = async (
   characterName: string,
@@ -585,6 +586,45 @@ export const setTempHp = async (characterId: number, newTempHp: number) => {
   });
 
   revalidatePath(`/characters/${characterId}`);
+};
+
+/** World Tree "Vitality Surge", applied when a Barbarian enters Rage (the Rage
+ *  flag itself lives in the device's localStorage). Temp HP never stack, so the
+ *  pool is topped up to that amount, never added to. They outlast the Rage. */
+export const applyRageTempHp = async (characterId: number) => {
+  const result = await prisma.$transaction(
+    async (tx) => {
+      const current = await tx.character.findUnique({
+        where: { id: characterId },
+        select: { className: true, subclassName: true, level: true, currentTempHP: true },
+      });
+      if (!current) {
+        return null;
+      }
+
+      const tempHp = Math.max(current.currentTempHP, getRageTempHP(current));
+      if (tempHp === current.currentTempHP) {
+        return { name: null, tempHp };
+      }
+
+      const character = await tx.character.update({
+        where: { id: characterId },
+        data: { currentTempHP: tempHp },
+      });
+      return { name: character.name, tempHp };
+    },
+    { isolationLevel: Prisma.TransactionIsolationLevel.Serializable },
+  );
+
+  if (!result) {
+    return { error: "Personnage introuvable." };
+  }
+
+  if (result.name) {
+    await syncCharacterHPToFirebase(result.name, { currentTempHP: result.tempHp });
+    revalidatePath(`/characters/${characterId}`);
+  }
+  return { error: "" };
 };
 
 /** Applies damage the D&D way: the temp HP pool absorbs it first, whatever

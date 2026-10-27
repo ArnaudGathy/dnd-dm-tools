@@ -5,6 +5,7 @@ import {
   WEAPON_DICE_MAP,
 } from "@/constants/maps";
 import { addSignToNumber, getModifier } from "@/utils/utils";
+import { getRageDamageBonus } from "@/utils/stats/rage";
 import {
   AudioLines,
   Droplet,
@@ -41,18 +42,26 @@ export const getWeaponAttackBonus = (character: Character, weapon: Weapon) => {
   };
 };
 
-export const getWeaponDamage = (character: Character, damage: WeaponDamage, weapon: Weapon) => {
+export const getWeaponDamage = (
+  character: Character,
+  damage: WeaponDamage,
+  weapon: Weapon,
+  isRaging = false,
+) => {
   const dices = `${damage.numberOfDices}${WEAPON_DICE_MAP[damage.dice]}`;
   const { modifierName: baseModifierName, abilityModifier: baseAbilityModifier } =
     getWeaponAbilityModifier(character, weapon);
   const modifierName = damage.isBaseDamage ? baseModifierName : null;
   const abilityModifier = damage.isBaseDamage ? baseAbilityModifier : 0;
   const flatBonus = damage.flatBonus ?? 0;
-  const damageBonus = flatBonus + abilityModifier;
+  // Rage adds once per hit, so only on the base damage line.
+  const rageBonus = damage.isBaseDamage ? getRageDamageBonus(character, weapon, isRaging) : 0;
+  const damageBonus = flatBonus + abilityModifier + rageBonus;
 
   return {
     dices,
     flatBonus,
+    rageBonus,
     modifierName,
     abilityModifier,
     totalString: `${dices}${damageBonus >= 1 ? `+${damageBonus}` : damageBonus < 0 ? damageBonus : ""}`,

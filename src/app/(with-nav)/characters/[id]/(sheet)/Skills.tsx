@@ -1,6 +1,8 @@
+"use client";
+
 import { CharacterById, cn } from "@/lib/utils";
 import { entries } from "remeda";
-import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP, SKILL_NAME_MAP } from "@/constants/maps";
+import { PROFICIENCY_BONUS_BY_LEVEL, SKILL_NAME_MAP } from "@/constants/maps";
 import { Award, Eye, ListChecks } from "lucide-react";
 import { Skills as SkillsEnum } from "@prisma/client";
 import { ElementType } from "react";
@@ -14,6 +16,7 @@ import StatBreakdown, {
 import CollapsibleProficiencies from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/CollapsibleProficiencies";
 import AbilityRolls from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/AbilityRolls";
 import JumpDistances from "@/app/(with-nav)/characters/[id]/(sheet)/(skills)/JumpDistances";
+import { useRageStatus } from "@/hooks/useRageStatus";
 
 type Proficiency = "expert" | "proficient" | "none";
 
@@ -41,13 +44,15 @@ function SkillRow({
   character,
   skill,
   skillName,
+  isRaging,
 }: {
   character: CharacterById;
   skill: SkillsEnum;
   skillName: string;
+  isRaging: boolean;
 }) {
-  const abilityTag = shortenAbilityName(SKILL_ABILITY_MAP[skill]);
-  const details = getSkillModifier(character, skill);
+  const details = getSkillModifier(character, skill, isRaging);
+  const abilityTag = shortenAbilityName(details.ability);
   const level: Proficiency = details.isExpert
     ? "expert"
     : details.isProficient
@@ -61,7 +66,12 @@ function SkillRow({
         <span className="flex min-w-0 items-center gap-2">
           <Dot level={level} />
           <span className="truncate text-[15px] text-foreground">{skillName}</span>
-          <span className="text-tiny font-semibold uppercase tracking-wide text-muted-foreground">
+          <span
+            className={cn(
+              "text-tiny font-semibold uppercase tracking-wide text-muted-foreground",
+              details.isPrimalKnowledge && "text-red-500",
+            )}
+          >
             {abilityTag}
           </span>
         </span>
@@ -76,7 +86,9 @@ function SkillRow({
               title={skillName}
               rows={[
                 {
-                  label: `Caractéristique (${abilityTag})`,
+                  label: details.isPrimalKnowledge
+                    ? `Savoir primitif (${abilityTag})`
+                    : `Caractéristique (${abilityTag})`,
                   value: addSignToNumber(details.abilityModifier),
                 },
                 details.proficiencyModifier > 0 && {
@@ -97,7 +109,9 @@ function SkillRow({
             />
           }
         >
-          <span className="tabular-nums">{addSignToNumber(details.total)}</span>
+          <span className={cn("tabular-nums", details.isPrimalKnowledge && "text-red-500")}>
+            {addSignToNumber(details.total)}
+          </span>
         </PopoverComponent>
       }
     />
@@ -129,6 +143,7 @@ function MiniStat({
 
 export default function Skills({ character }: { character: CharacterById }) {
   const hasExpertise = character.skills.some((skill) => skill.isExpert);
+  const [isRaging] = useRageStatus(character);
 
   return (
     <div className="mx-auto flex w-full max-w-[900px] flex-col gap-4 p-0 md:p-4">
@@ -154,7 +169,13 @@ export default function Skills({ character }: { character: CharacterById }) {
           }
         >
           {entries(SKILL_NAME_MAP).map(([skill, skillName]) => (
-            <SkillRow key={skill} character={character} skill={skill} skillName={skillName} />
+            <SkillRow
+              key={skill}
+              character={character}
+              skill={skill}
+              skillName={skillName}
+              isRaging={isRaging}
+            />
           ))}
         </SectionPanel>
 
@@ -172,7 +193,7 @@ export default function Skills({ character }: { character: CharacterById }) {
             <MiniStat
               icon={Eye}
               label="Perception passive"
-              value={getPassivePerception(character)}
+              value={getPassivePerception(character, isRaging)}
             />
           </div>
 

@@ -12,6 +12,7 @@ import { ABILITY_NAME_MAP, PROFICIENCY_BONUS_BY_LEVEL, SKILL_ABILITY_MAP } from 
 import { getModifier } from "@/utils/utils";
 import { AbilityNameType } from "@/types/types";
 import { hasAttunedMagicItem } from "@/utils/items";
+import { hasPrimalKnowledge } from "@/utils/stats/rage";
 
 export const getSkillSpecial = (
   character: Character & { capacities: Capacity[] },
@@ -33,6 +34,7 @@ export const getSkillSpecial = (
 export const getSkillModifier = (
   character: Character & { skills: Skill[]; capacities: Capacity[] },
   skillName: Skills,
+  isRaging = false,
 ) => {
   const proficiencyBonus = PROFICIENCY_BONUS_BY_LEVEL[character.level];
   const selectedSkill = character.skills.find(({ skill }) => skill === skillName);
@@ -44,10 +46,19 @@ export const getSkillModifier = (
         ? Math.floor(proficiencyBonus / 2)
         : 0;
   const bonusModifier = selectedSkill?.modifier ?? 0;
-  const abilityModifier = getModifier(character[SKILL_ABILITY_MAP[skillName]]);
+  const baseAbility = SKILL_ABILITY_MAP[skillName];
+  // Primal Knowledge lets the check use Strength; only worth it when Strength is better.
+  const ability: AbilityNameType =
+    hasPrimalKnowledge(character, skillName, isRaging) &&
+    getModifier(character.strength) > getModifier(character[baseAbility])
+      ? "strength"
+      : baseAbility;
+  const abilityModifier = getModifier(character[ability]);
   const { skillSpecial, skillSpecialName } = getSkillSpecial(character, skillName);
 
   return {
+    ability,
+    isPrimalKnowledge: ability !== baseAbility,
     abilityModifier,
     proficiencyModifier,
     isProficient: selectedSkill?.isProficient,
@@ -61,8 +72,9 @@ export const getSkillModifier = (
 
 export const getPassivePerception = (
   character: Character & { skills: Skill[]; capacities: Capacity[] },
+  isRaging = false,
 ) => {
-  return 10 + getSkillModifier(character, Skills.PERCEPTION).total;
+  return 10 + getSkillModifier(character, Skills.PERCEPTION, isRaging).total;
 };
 
 export const getSavingThrowModifier = (
