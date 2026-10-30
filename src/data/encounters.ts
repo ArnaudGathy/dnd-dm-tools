@@ -1495,7 +1495,10 @@ export const encounters: Encounter[] = [
       mapMarker: "T57",
     },
     ennemies: {
-      "1": [{ id: "Otyugh", color: "#CAB366" }],
+      "1": [
+        { id: "Otyugh", color: "#CAB366" },
+        { id: "_keshma-al-wazir", color: "", variant: "" },
+      ],
     },
     youtubeId: "Mr-T13aG6iE",
   },
@@ -1830,8 +1833,9 @@ export const encounters: Encounter[] = [
     },
     ennemies: {
       "1": [
-        { id: "_tomb-guardian", color: "#AF706E" },
-        { id: "_tomb-guardian", color: "#C9D4D9" },
+        { id: "_tomb-dwarf", color: "#7D6458", variant: "hache" },
+        { id: "_tomb-dwarf", color: "#45517E", variant: "marteau chauve" },
+        { id: "_tomb-dwarf", color: "#5B4D68", variant: "marteau cheveux" },
       ],
     },
     youtubeId: "GMXiYs-wi3A",

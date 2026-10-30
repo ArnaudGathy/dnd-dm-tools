@@ -202,7 +202,7 @@ export default function EditCreatureJsonButton({ creature }: { creature: Creatur
           }}
           onKeyDown={handleKeyDown}
           spellCheck={false}
-          className="min-h-0 flex-1 resize-none whitespace-pre font-mono text-xs leading-relaxed md:text-xs"
+          className="min-h-0 flex-1 resize-none whitespace-pre-wrap break-words font-mono text-xs leading-relaxed md:text-xs"
         />
 
         {error && (
